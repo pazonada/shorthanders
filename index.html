@@ -399,7 +399,85 @@ function App() {
       </nav>
 
       {/* ─── HERO ─── */}
-      <section className="hero">              </div>
+      <section className="hero">
+        <div className="hero-bg">
+          <div className="hero-bg-gradient1"></div>
+          <div className="hero-bg-gradient2"></div>
+          <div className="hero-bg-dots"></div>
+        </div>
+        <div className="container">
+          <div className="hero-content">
+            <div className="hero-badge">
+              <span className="hero-badge-dot"></span>
+              Now Serving California Courts
+            </div>
+            <h1>Court transcripts,<br /><span className="gradient-text">finally simple.</span></h1>
+            <p className="hero-subtitle">
+              Briscoe Sholes matches attorneys with certified court reporters for live hearings and audio transcription — with transparent pricing, verified credentials, and delivery you can count on.
+            </p>
+            <div className="hero-actions">
+              <button className="btn btn-primary">
+                Order a Transcript
+                <Icon name="arrowRight" size={16} color="#fff" />
+              </button>
+              <button className="btn btn-secondary">
+                Join as a Reporter
+                <Icon name="chevronRight" size={16} color="#64748B" />
+              </button>
+            </div>
+            <div className="hero-trust">
+              <span><Icon name="shield" size={16} color="#059669" /> CSR license-verified</span>
+              <span><Icon name="clock" size={16} color="#2563EB" /> 24-hour rush available</span>
+              <span><Icon name="scale" size={16} color="#D97706" /> Statutory pricing — no surprises</span>
+            </div>
+          </div>
+
+          {/* Hero visual */}
+          <div className="hero-visual">
+            <div className="hero-card-glow">
+              <div className="hero-card">
+                <div className="hero-card-bar">
+                  <div className="hero-card-dot"></div>
+                  <div className="hero-card-dot"></div>
+                  <div className="hero-card-dot"></div>
+                  <div className="hero-card-url"><span>app.briscoesholes.com/new-order</span></div>
+                </div>
+                <div className="hero-card-body">
+                  <div className="card-tabs">
+                    <span className="card-tab active">Live Attendance</span>
+                    <span className="card-tab">Transcription</span>
+                  </div>
+                  <div className="card-fields">
+                    <div className="card-field">
+                      <label>Court</label>
+                      <div className="card-field-value">LA Superior Court — Stanley Mosk</div>
+                    </div>
+                    <div className="card-field">
+                      <label>Department</label>
+                      <div className="card-field-value">Dept. 56</div>
+                    </div>
+                  </div>
+                  <div className="card-fields card-fields-3">
+                    <div className="card-field">
+                      <label>Case Number</label>
+                      <div className="card-field-value">24STFL09821</div>
+                    </div>
+                    <div className="card-field">
+                      <label>Hearing Date</label>
+                      <div className="card-field-value">Mar 28, 2026</div>
+                    </div>
+                    <div className="card-field">
+                      <label>Turnaround</label>
+                      <div className="card-field-value highlight">Standard (3–5 days)</div>
+                    </div>
+                  </div>
+                  <div className="card-footer">
+                    <div>
+                      <div className="card-footer-label">Estimated Cost</div>
+                      <div className="card-footer-price">$142 <span>– $218</span></div>
+                    </div>
+                    <button className="btn btn-primary btn-sm">Submit Order →</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -715,4 +793,3 @@ ReactDOM.render(<App />, document.getElementById("root"));
 </script>
 </body>
 </html>
-
