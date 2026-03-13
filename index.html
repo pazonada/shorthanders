@@ -3,18 +3,22 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Briscoe Sholes â Court Transcripts, Finally Simple</title>
+<title>Briscoe Sholes. Court Transcripts, Finally Simple</title>
+<meta property="og:title" content="Briscoe Sholes. Court Transcripts, Finally Simple" />
+<meta property="og:description" content="Briscoe Sholes matches attorneys with certified court reporters for live hearings and audio transcription with transparent pricing, verified credentials, and delivery you can count on." />
+<meta property="og:type" content="website" />
+<meta name="description" content="Briscoe Sholes matches attorneys with certified court reporters for live hearings and audio transcription with transparent pricing, verified credentials, and delivery you can count on." />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%230F172A'/%3E%3Ccircle cx='21' cy='20' r='6.5' fill='white'/%3E%3Ccircle cx='40' cy='20' r='6.5' fill='white'/%3E%3Cpath d='M14.5,27 C12,35 12.5,40 17.5,45' stroke='white' stroke-width='4.5' stroke-linecap='round' fill='none'/%3E%3Cpath d='M33.5,27 C31,35 31.5,40 36.5,45' stroke='white' stroke-width='4.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='13' fill='%230F172A'/%3E%3Cpath d='M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50' fill='none' stroke='white' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
   body { font-family: 'Inter', system-ui, -apple-system, sans-serif; color: #0F172A; background: #fff; }
 
-  /* âââ Utility classes ââââââââââââââââââââââââââââ */
+  /* ─── Utility classes ──────────────────────────── */
   .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
   @media (min-width: 1024px) { .container { padding: 0 32px; } }
 
@@ -37,12 +41,12 @@
   .btn-white { background: #fff; color: #1E40AF; padding: 16px 32px; font-size: 16px; }
   .btn-white:hover { box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15); }
 
-  /* âââ Custom Logo ââââââââââââââââââââââââââââââââ */
+  /* ─── Custom Logo ──────────────────────────────── */
   .logo-mark {
     width: 36px; height: 36px; position: relative;
   }
 
-  /* âââ Nav ââââââââââââââââââââââââââââââââââââââââ */
+  /* ─── Nav ──────────────────────────────────────── */
   .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; transition: all 0.3s; }
   .nav.scrolled { background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-bottom: 1px solid #F1F5F9; }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
@@ -58,7 +62,7 @@
   .nav-actions .btn-getstarted:hover { box-shadow: 0 8px 20px -6px rgba(37,99,235,0.35); transform: translateY(-1px); }
   @media (min-width: 768px) { .nav-links, .nav-actions { display: flex; } }
 
-  /* âââ Hero âââââââââââââââââââââââââââââââââââââââ */
+  /* ─── Hero ─────────────────────────────────────── */
   .hero { padding: 140px 0 80px; position: relative; overflow: hidden; }
   @media (min-width: 1024px) { .hero { padding: 176px 0 120px; } }
   .hero-bg { position: absolute; inset: 0; z-index: -1; }
@@ -78,7 +82,7 @@
   .hero-trust { margin-top: 56px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 24px; font-size: 13px; color: #94A3B8; }
   .hero-trust span { display: flex; align-items: center; gap: 6px; }
 
-  /* âââ Hero Visual (Order Card) âââââââââââââââââââ */
+  /* ─── Hero Visual (Order Card) ─────────────────── */
   .hero-visual { margin-top: 64px; max-width: 780px; margin-left: auto; margin-right: auto; }
   @media (min-width: 1024px) { .hero-visual { margin-top: 80px; } }
   .hero-card-glow { position: relative; }
@@ -104,7 +108,7 @@
   .card-footer-price span { font-size: 14px; font-weight: 400; color: #94A3B8; }
   .card-footer .btn { font-size: 14px; padding: 12px 24px; }
 
-  /* âââ Stats ââââââââââââââââââââââââââââââââââââââ */
+  /* ─── Stats ────────────────────────────────────── */
   .stats { padding: 64px 0; background: #0F172A; position: relative; overflow: hidden; }
   .stats-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(30,64,175,0.12), transparent 50%, rgba(67,56,202,0.12)); }
   .stats-grid { display: grid; grid-template-columns: 1fr; gap: 32px; position: relative; }
@@ -114,7 +118,7 @@
   @media (min-width: 1024px) { .stat-value { font-size: 48px; } }
   .stat-label { margin-top: 8px; font-size: 13px; color: #94A3B8; max-width: 280px; margin-left: auto; margin-right: auto; line-height: 1.5; }
 
-  /* âââ How It Works âââââââââââââââââââââââââââââââ */
+  /* ─── How It Works ─────────────────────────────── */
   .how { padding: 96px 0; background: #fff; }
   @media (min-width: 1024px) { .how { padding: 128px 0; } }
   .section-header { text-align: center; margin-bottom: 64px; }
@@ -135,7 +139,7 @@
   .step h3 { font-size: 20px; font-weight: 700; color: #0F172A; margin-bottom: 8px; }
   .step p { font-size: 15px; color: #64748B; line-height: 1.7; }
 
-  /* âââ Use Cases ââââââââââââââââââââââââââââââââââ */
+  /* ─── Use Cases ────────────────────────────────── */
   .usecases { padding: 96px 0; background: #F8FAFC; }
   @media (min-width: 1024px) { .usecases { padding: 128px 0; } }
   .usecases-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
@@ -159,7 +163,7 @@
   .usecase-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #475569; }
   .usecase-list li svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; }
 
-  /* âââ For Attorneys ââââââââââââââââââââââââââââââ */
+  /* ─── For Attorneys ────────────────────────────── */
   .attorneys { padding: 96px 0; background: #fff; }
   @media (min-width: 1024px) { .attorneys { padding: 128px 0; } }
   .attorneys-grid { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; }
@@ -178,7 +182,7 @@
   .feature-card h3 { font-size: 14px; font-weight: 700; color: #0F172A; margin-bottom: 6px; }
   .feature-card p { font-size: 12px; color: #64748B; line-height: 1.6; }
 
-  /* âââ For Reporters ââââââââââââââââââââââââââââââ */
+  /* ─── For Reporters ────────────────────────────── */
   .reporters { padding: 96px 0; background: #0F172A; position: relative; overflow: hidden; }
   @media (min-width: 1024px) { .reporters { padding: 128px 0; } }
   .reporters-bg1 { position: absolute; top: 0; right: 0; width: 600px; height: 600px; background: radial-gradient(ellipse, rgba(37,99,235,0.06) 0%, transparent 70%); }
@@ -197,7 +201,7 @@
   .reporter-card p { font-size: 14px; color: #94A3B8; line-height: 1.7; }
   .reporters-cta { margin-top: 48px; text-align: center; }
 
-  /* âââ Pricing ââââââââââââââââââââââââââââââââââââ */
+  /* ─── Pricing ──────────────────────────────────── */
   .pricing { padding: 96px 0; background: #fff; }
   @media (min-width: 1024px) { .pricing { padding: 128px 0; } }
   .pricing-card { max-width: 640px; margin: 0 auto; background: linear-gradient(135deg, #F8FAFC 0%, rgba(239,246,255,0.3) 100%); border-radius: 16px; border: 1px solid #E2E8F0; overflow: hidden; }
@@ -219,7 +223,7 @@
   .pricing-footer .btn { color: #60A5FA; border: 1px solid rgba(96,165,250,0.3); padding: 10px 20px; font-size: 13px; background: transparent; white-space: nowrap; }
   .pricing-footer .btn:hover { background: rgba(96,165,250,0.1); }
 
-  /* âââ Compliance âââââââââââââââââââââââââââââââââ */
+  /* ─── Compliance ───────────────────────────────── */
   .compliance { padding: 96px 0; background: #F8FAFC; }
   @media (min-width: 1024px) { .compliance { padding: 128px 0; } }
   .compliance-grid { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; }
@@ -238,7 +242,7 @@
   .compliance-item strong { display: block; font-size: 14px; font-weight: 600; color: #0F172A; }
   .compliance-item .sub { font-size: 12px; color: #64748B; margin-top: 2px; }
 
-  /* âââ SRL Callout ââââââââââââââââââââââââââââââââ */
+  /* ─── SRL Callout ──────────────────────────────── */
   .srl { padding: 80px 0; background: #fff; }
   .srl-card { background: linear-gradient(135deg, #2563EB, #1D4ED8, #4338CA); border-radius: 24px; padding: 48px; position: relative; overflow: hidden; }
   @media (min-width: 1024px) { .srl-card { padding: 64px; } }
@@ -252,7 +256,7 @@
   .srl p { margin-top: 16px; font-size: 18px; color: #BFDBFE; line-height: 1.7; }
   .srl .btn { margin-top: 32px; }
 
-  /* âââ Final CTA ââââââââââââââââââââââââââââââââââ */
+  /* ─── Final CTA ────────────────────────────────── */
   .final-cta { padding: 96px 0; background: #F8FAFC; text-align: center; }
   @media (min-width: 1024px) { .final-cta { padding: 128px 0; } }
   .final-cta h2 { font-size: 32px; font-weight: 800; color: #0F172A; letter-spacing: -0.02em; }
@@ -261,7 +265,7 @@
   .final-cta-actions { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
   @media (min-width: 640px) { .final-cta-actions { flex-direction: row; justify-content: center; } }
 
-  /* âââ Footer âââââââââââââââââââââââââââââââââââââ */
+  /* ─── Footer ───────────────────────────────────── */
   .footer { background: #0F172A; color: #94A3B8; padding: 64px 0; }
   .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 48px; }
   @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; } }
@@ -278,7 +282,7 @@
   @media (min-width: 640px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
   .footer-bottom .sub { color: #64748B; }
 
-  /* âââ Responsive Mobile Fix ââââââââââââââââââââââ */
+  /* ─── Responsive Mobile Fix ────────────────────── */
   @media (max-width: 640px) {
     .card-fields, .card-fields-3 { grid-template-columns: 1fr; }
     .card-footer { flex-direction: column; gap: 16px; text-align: center; }
@@ -292,7 +296,7 @@
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
 
-// âââ SVG Icons (inline) âââââââââââââââââââââââââââââââââââââââââ
+// ─── SVG Icons (inline) ─────────────────────────────────────────
 const Icon = ({ name, size = 20, color = "currentColor", strokeWidth = 2 }) => {
   const icons = {
     fileText: <><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></>,
@@ -315,21 +319,19 @@ const Icon = ({ name, size = 20, color = "currentColor", strokeWidth = 2 }) => {
   );
 };
 
-// âââ Custom Briscoe Sholes Logo âââââââââââââââââââââââââââââââââ
-// Quotation-mark icon â navy rounded square with open-quote glyph
+// ─── Custom Briscoe Sholes Logo ─────────────────────────────────
+// Quotation-mark icon — navy rounded square with open-quote glyph
 const BriscoeLogo = ({ size = 36 }) => {
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="64" height="64" rx="15" fill="#0F172A"/>
-      <circle cx="21" cy="20" r="6.5" fill="white"/>
-      <circle cx="40" cy="20" r="6.5" fill="white"/>
-      <path d="M14.5,27 C12,35 12.5,40 17.5,45" stroke="white" strokeWidth="4.5" strokeLinecap="round" fill="none"/>
-      <path d="M33.5,27 C31,35 31.5,40 36.5,45" stroke="white" strokeWidth="4.5" strokeLinecap="round" fill="none"/>
+    <svg width={size} height={size} viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="60" height="60" rx="13" fill="#0F172A"/>
+      <path d="M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50"
+            fill="none" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 };
 
-// âââ Animated Counter âââââââââââââââââââââââââââââââââââââââââââ
+// ─── Animated Counter ───────────────────────────────────────────
 function Counter({ end, suffix = "" }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -348,7 +350,7 @@ function Counter({ end, suffix = "" }) {
   return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
 }
 
-// âââ App ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── App ────────────────────────────────────────────────────────
 function App() {
   const [scrolled, setScrolled] = useState(false);
   const [tab, setTab] = useState("attorney");
@@ -362,19 +364,19 @@ function App() {
   const stepsData = {
     attorney: [
       { icon: "fileText", title: "Place your order", desc: "Select live attendance or post-hearing transcription. Enter case details, upload supporting docs, and choose your turnaround." },
-      { icon: "zap", title: "We match a reporter", desc: "A licensed, jurisdiction-verified CSR accepts your job â usually within hours. You're notified instantly." },
+      { icon: "zap", title: "We match a reporter", desc: "A licensed, jurisdiction-verified CSR accepts your job — usually within hours. You're notified instantly." },
       { icon: "checkCircle", title: "Certified transcript, delivered", desc: "Your court-admissible transcript arrives on schedule with the reporter's certification attached. Payment is automatic." },
     ],
     reporter: [
       { icon: "mic", title: "Get notified of matching jobs", desc: "See live attendance and transcription jobs filtered to your jurisdiction, case type preferences, and availability." },
-      { icon: "fileText", title: "Accept and produce", desc: "Commit to a turnaround, access case materials, and produce the transcript â using your own tools or our built-in workspace." },
-      { icon: "star", title: "Certify and get paid", desc: "Sign your certification digitally. Payment releases automatically upon delivery â no invoicing, no chasing." },
+      { icon: "fileText", title: "Accept and produce", desc: "Commit to a turnaround, access case materials, and produce the transcript — using your own tools or our built-in workspace." },
+      { icon: "star", title: "Certify and get paid", desc: "Sign your certification digitally. Payment releases automatically upon delivery — no invoicing, no chasing." },
     ],
   };
 
   return (
     <div>
-      {/* âââ NAV âââ */}
+      {/* ─── NAV ─── */}
       <nav className={"nav" + (scrolled ? " scrolled" : "")}>
         <div className="container">
           <div className="nav-inner">
@@ -396,86 +398,8 @@ function App() {
         </div>
       </nav>
 
-      {/* âââ HERO âââ */}
-      <section className="hero">
-        <div className="hero-bg">
-          <div className="hero-bg-gradient1"></div>
-          <div className="hero-bg-gradient2"></div>
-          <div className="hero-bg-dots"></div>
-        </div>
-        <div className="container">
-          <div className="hero-content">
-            <div className="hero-badge">
-              <span className="hero-badge-dot"></span>
-              Now Serving California Courts
-            </div>
-            <h1>Court transcripts,<br /><span className="gradient-text">finally simple.</span></h1>
-            <p className="hero-subtitle">
-              Briscoe Sholes matches attorneys with certified court reporters for live hearings and audio transcription â with transparent pricing, verified credentials, and delivery you can count on.
-            </p>
-            <div className="hero-actions">
-              <button className="btn btn-primary">
-                Order a Transcript
-                <Icon name="arrowRight" size={16} color="#fff" />
-              </button>
-              <button className="btn btn-secondary">
-                Join as a Reporter
-                <Icon name="chevronRight" size={16} color="#64748B" />
-              </button>
-            </div>
-            <div className="hero-trust">
-              <span><Icon name="shield" size={16} color="#059669" /> CSR license-verified</span>
-              <span><Icon name="clock" size={16} color="#2563EB" /> 24-hour rush available</span>
-              <span><Icon name="scale" size={16} color="#D97706" /> Statutory pricing â no surprises</span>
-            </div>
-          </div>
-
-          {/* Hero visual */}
-          <div className="hero-visual">
-            <div className="hero-card-glow">
-              <div className="hero-card">
-                <div className="hero-card-bar">
-                  <div className="hero-card-dot"></div>
-                  <div className="hero-card-dot"></div>
-                  <div className="hero-card-dot"></div>
-                  <div className="hero-card-url"><span>app.briscoesholes.com/new-order</span></div>
-                </div>
-                <div className="hero-card-body">
-                  <div className="card-tabs">
-                    <span className="card-tab active">Live Attendance</span>
-                    <span className="card-tab">Transcription</span>
-                  </div>
-                  <div className="card-fields">
-                    <div className="card-field">
-                      <label>Court</label>
-                      <div className="card-field-value">LA Superior Court â Stanley Mosk</div>
-                    </div>
-                    <div className="card-field">
-                      <label>Department</label>
-                      <div className="card-field-value">Dept. 56</div>
-                    </div>
-                  </div>
-                  <div className="card-fields card-fields-3">
-                    <div className="card-field">
-                      <label>Case Number</label>
-                      <div className="card-field-value">24STFL09821</div>
-                    </div>
-                    <div className="card-field">
-                      <label>Hearing Date</label>
-                      <div className="card-field-value">Mar 28, 2026</div>
-                    </div>
-                    <div className="card-field">
-                      <label>Turnaround</label>
-                      <div className="card-field-value highlight">Standard (3â5 days)</div>
-                    </div>
-                  </div>
-                  <div className="card-footer">
-                    <div>
-                      <div className="card-footer-label">Estimated Cost</div>
-                      <div className="card-footer-price">$142 <span>â $218</span></div>
-                    </div>
-                    <button className="btn btn-primary btn-sm">Submit Order â</button>
-                  </div>
+      {/* ─── HERO ─── */}
+      <section className="hero">              </div>
                 </div>
               </div>
             </div>
@@ -483,7 +407,7 @@ function App() {
         </div>
       </section>
 
-      {/* âââ STATS âââ */}
+      {/* ─── STATS ─── */}
       <section className="stats">
         <div className="stats-overlay"></div>
         <div className="container">
@@ -504,7 +428,7 @@ function App() {
         </div>
       </section>
 
-      {/* âââ HOW IT WORKS âââ */}
+      {/* ─── HOW IT WORKS ─── */}
       <section id="how-it-works" className="how">
         <div className="container">
           <div className="section-header">
@@ -532,12 +456,12 @@ function App() {
         </div>
       </section>
 
-      {/* âââ USE CASES âââ */}
+      {/* ─── USE CASES ─── */}
       <section className="usecases">
         <div className="container">
           <div className="section-header">
             <h2>Two ways to get your record</h2>
-            <p>Whether the hearing is upcoming or already happened â we've got you covered.</p>
+            <p>Whether the hearing is upcoming or already happened — we've got you covered.</p>
           </div>
           <div className="usecases-grid">
             <div className="usecase-card">
@@ -545,7 +469,7 @@ function App() {
               <div className="usecase-icon blue"><Icon name="mapPin" size={28} color="#2563EB" /></div>
               <div className="usecase-label blue">Use Case A</div>
               <h3>Live Attendance</h3>
-              <p>Need a reporter at an upcoming hearing? We'll match you with a licensed CSR who can attend in person or remotely â and deliver your transcript on the turnaround you choose.</p>
+              <p>Need a reporter at an upcoming hearing? We'll match you with a licensed CSR who can attend in person or remotely — and deliver your transcript on the turnaround you choose.</p>
               <ul className="usecase-list">
                 {["In-person or remote attendance", "Real-time or same-day options", "Reporter confirmed before your hearing", "Supports cost-splitting across parties"].map((t, i) => (
                   <li key={i}><Icon name="checkCircle" size={16} color="#2563EB" />{t}</li>
@@ -557,7 +481,7 @@ function App() {
               <div className="usecase-icon amber"><Icon name="mic" size={28} color="#D97706" /></div>
               <div className="usecase-label amber">Use Case B</div>
               <h3>Post-Hearing Transcription</h3>
-              <p>Already have the court audio? Upload it and we'll match you with a certified reporter who'll transcribe, certify, and deliver â with your case docs pre-loaded for accuracy.</p>
+              <p>Already have the court audio? Upload it and we'll match you with a certified reporter who'll transcribe, certify, and deliver — with your case docs pre-loaded for accuracy.</p>
               <ul className="usecase-list">
                 {["Upload MP3, WAV, or court-format audio", "AI-assisted workspace for faster turnaround", "Supporting docs reduce back-and-forth", "Interpreter-aware page estimates"].map((t, i) => (
                   <li key={i}><Icon name="checkCircle" size={16} color="#D97706" />{t}</li>
@@ -568,7 +492,7 @@ function App() {
         </div>
       </section>
 
-      {/* âââ FOR ATTORNEYS âââ */}
+      {/* ─── FOR ATTORNEYS ─── */}
       <section id="attorneys" className="attorneys">
         <div className="container">
           <div className="attorneys-grid">
@@ -576,7 +500,7 @@ function App() {
               <div className="attorneys-label">For Attorneys & Law Firms</div>
               <h2>Stop chasing reporters.<br /><span>Start tracking cases.</span></h2>
               <p style={{marginTop: 24, fontSize: 18, color: "#64748B", lineHeight: 1.7}}>
-                Your firm handles dozens of active matters. Briscoe Sholes gives you a persistent case management layer â not just one-off order forms â so your entire transcript history lives in one place.
+                Your firm handles dozens of active matters. Briscoe Sholes gives you a persistent case management layer — not just one-off order forms — so your entire transcript history lives in one place.
               </p>
               <div className="attorneys-actions">
                 <button className="btn btn-primary btn-sm">Start Ordering <Icon name="arrowRight" size={16} color="#fff" /></button>
@@ -585,9 +509,9 @@ function App() {
             </div>
             <div className="features-grid">
               {[
-                { icon: "fileText", title: "Case library that remembers", desc: "Create a case once. Every future order auto-fills from your case record â court, parties, judge, department." },
+                { icon: "fileText", title: "Case library that remembers", desc: "Create a case once. Every future order auto-fills from your case record — court, parties, judge, department." },
                 { icon: "users", title: "Firm-wide visibility", desc: "Multiple attorneys and staff under one account. Role-based access. Consolidated billing itemized by case and matter number." },
-                { icon: "star", title: "Preferred reporters", desc: "Designate reporters you trust. They get first right of refusal on your jobs â with all compliance protections in place." },
+                { icon: "star", title: "Preferred reporters", desc: "Designate reporters you trust. They get first right of refusal on your jobs — with all compliance protections in place." },
                 { icon: "clock", title: "Delivery commitments", desc: "Reporters commit to a specific date. Late delivery triggers automatic partial refunds. No more chasing." },
               ].map((f, i) => (
                 <div className="feature-card" key={i}>
@@ -601,7 +525,7 @@ function App() {
         </div>
       </section>
 
-      {/* âââ FOR REPORTERS âââ */}
+      {/* ─── FOR REPORTERS ─── */}
       <section id="reporters" className="reporters">
         <div className="reporters-bg1"></div>
         <div className="reporters-bg2"></div>
@@ -630,12 +554,12 @@ function App() {
         </div>
       </section>
 
-      {/* âââ PRICING âââ */}
+      {/* ─── PRICING ─── */}
       <section id="pricing" className="pricing">
         <div className="container">
           <div className="section-header">
             <h2>Pricing set by <span className="gradient-text">California statute</span></h2>
-            <p>No hidden fees, no negotiation games. Transcript rates are set by law â we just make them easy to understand.</p>
+            <p>No hidden fees, no negotiation games. Transcript rates are set by law — we just make them easy to understand.</p>
           </div>
           <div className="pricing-card">
             <div className="pricing-body">
@@ -652,7 +576,7 @@ function App() {
                 <div className="price">~$0.85 <span>/ page</span></div>
               </div>
               <div className="pricing-note">
-                <strong>Why "approximately"?</strong> California prices transcripts per 100 words (Gov. Code Â§ 69950), not per page. We display per-page estimates using the standard conversion of ~325 words per page. Your final invoice is calculated from the certified word count.
+                <strong>Why "approximately"?</strong> California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using the standard conversion of ~325 words per page. Your final invoice is calculated from the certified word count.
               </div>
             </div>
             <div className="pricing-footer">
@@ -666,16 +590,16 @@ function App() {
         </div>
       </section>
 
-      {/* âââ COMPLIANCE âââ */}
+      {/* ─── COMPLIANCE ─── */}
       <section className="compliance">
         <div className="container">
           <div className="compliance-grid">
             <div style={{order: 2}}>
               <div className="compliance-card">
                 {[
-                  { label: "CSR License #14892", sub: "Verified active â California Court Reporters Board" },
+                  { label: "CSR License #14892", sub: "Verified active — California Court Reporters Board" },
                   { label: "Jurisdiction: Los Angeles County", sub: "Matched to case filing jurisdiction" },
-                  { label: "CA MTFS format compliance", sub: "25 lines/page, ~65 characters/line â auto-enforced" },
+                  { label: "CA MTFS format compliance", sub: "25 lines/page, ~65 characters/line — auto-enforced" },
                   { label: "Certification statement attached", sub: "Meets CA Rules of Court Rule 8.144" },
                 ].map((item, i) => (
                   <div className="compliance-item" key={i}>
@@ -689,7 +613,7 @@ function App() {
               <div className="compliance-label">Compliance Built In</div>
               <h2>Every transcript is court-admissible. Period.</h2>
               <p className="compliance-text">
-                Credentials aren't just checked at signup â they're verified at every job acceptance. Jurisdiction matching, format standards, and certification requirements are enforced automatically.
+                Credentials aren't just checked at signup — they're verified at every job acceptance. Jurisdiction matching, format standards, and certification requirements are enforced automatically.
               </p>
               <div className="compliance-features">
                 {[
@@ -705,7 +629,7 @@ function App() {
         </div>
       </section>
 
-      {/* âââ SRL CALLOUT âââ */}
+      {/* ─── SRL CALLOUT ─── */}
       <section className="srl">
         <div className="container">
           <div className="srl-card">
@@ -718,15 +642,15 @@ function App() {
               </div>
               <h2>Representing yourself in court?<br />You still have a right to a transcript.</h2>
               <p>
-                Briscoe Sholes walks self-represented litigants through the process step by step â in plain language, with built-in glossaries, and full support for court fee waivers.
+                Briscoe Sholes walks self-represented litigants through the process step by step — in plain language, with built-in glossaries, and full support for court fee waivers.
               </p>
-              <button className="btn btn-white">Get Started â It's Simple <Icon name="arrowRight" size={16} color="#1E40AF" /></button>
+              <button className="btn btn-white">Get Started — It's Simple <Icon name="arrowRight" size={16} color="#1E40AF" /></button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* âââ FINAL CTA âââ */}
+      {/* ─── FINAL CTA ─── */}
       <section className="final-cta">
         <div className="container">
           <h2>The transcript process is broken.<br /><span className="gradient-text">Let's fix it.</span></h2>
@@ -738,7 +662,7 @@ function App() {
         </div>
       </section>
 
-      {/* âââ FOOTER âââ */}
+      {/* ─── FOOTER ─── */}
       <footer className="footer">
         <div className="container">
           <div className="footer-grid">
