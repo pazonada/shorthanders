@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Briscoe Sholes. Court Transcripts, Finally Simple</title>
+<meta property="og:title" content="Briscoe Sholes. Court Transcripts, Finally Simple" />
+<meta property="og:description" content="Briscoe Sholes matches attorneys with certified court reporters for live hearings and audio transcription with transparent pricing, verified credentials, and delivery you can count on." />
+<meta property="og:type" content="website" />
+<meta name="description" content="Briscoe Sholes matches attorneys with certified court reporters for live hearings and audio transcription with transparent pricing, verified credentials, and delivery you can count on." />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='13' fill='%230F172A'/%3E%3Cpath d='M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50' fill='none' stroke='white' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; color: #0F172A; background: #fff; }
+
+  /* ─── Utility classes ──────────────────────────── */
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+  @media (min-width: 1024px) { .container { padding: 0 32px; } }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #2563EB 0%, #4F46E5 50%, #6366F1 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Buttons */
+  .btn { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; border-radius: 12px; transition: all 0.2s; border: none; cursor: pointer; text-decoration: none; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+  .btn-primary { background: linear-gradient(135deg, #2563EB, #4F46E5); color: #fff; padding: 16px 32px; font-size: 16px; }
+  .btn-primary:hover { box-shadow: 0 20px 40px -10px rgba(37,99,235,0.3); }
+  .btn-secondary { background: #fff; color: #475569; border: 1px solid #E2E8F0; padding: 16px 32px; font-size: 16px; }
+  .btn-secondary:hover { border-color: #CBD5E1; box-shadow: 0 10px 25px -10px rgba(0,0,0,0.1); }
+  .btn-sm { padding: 10px 20px; font-size: 14px; border-radius: 8px; }
+  .btn-white { background: #fff; color: #1E40AF; padding: 16px 32px; font-size: 16px; }
+  .btn-white:hover { box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15); }
+
+  /* ─── Custom Logo ──────────────────────────────── */
+  .logo-mark {
+    width: 36px; height: 36px; position: relative;
+  }
+
+  /* ─── Nav ──────────────────────────────────────── */
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; transition: all 0.3s; }
+  .nav.scrolled { background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-bottom: 1px solid #F1F5F9; }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-brand-text { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; color: #0F172A; }
+  .nav-links { display: none; align-items: center; gap: 32px; }
+  .nav-links a { font-size: 14px; color: #64748B; text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: #0F172A; }
+  .nav-actions { display: none; align-items: center; gap: 12px; }
+  .nav-actions .btn-signin { font-size: 14px; font-weight: 500; color: #475569; padding: 8px 16px; border-radius: 8px; background: none; border: none; cursor: pointer; }
+  .nav-actions .btn-signin:hover { background: #F8FAFC; }
+  .nav-actions .btn-getstarted { font-size: 14px; font-weight: 600; color: #fff; background: linear-gradient(135deg, #2563EB, #4F46E5); padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; transition: all 0.2s; }
+  .nav-actions .btn-getstarted:hover { box-shadow: 0 8px 20px -6px rgba(37,99,235,0.35); transform: translateY(-1px); }
+  @media (min-width: 768px) { .nav-links, .nav-actions { display: flex; } }
+
+  /* ─── Hero ─────────────────────────────────────── */
+  .hero { padding: 140px 0 80px; position: relative; overflow: hidden; }
+  @media (min-width: 1024px) { .hero { padding: 176px 0 120px; } }
+  .hero-bg { position: absolute; inset: 0; z-index: -1; }
+  .hero-bg-gradient1 { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 900px; height: 700px; background: radial-gradient(ellipse, rgba(219,234,254,0.6) 0%, rgba(224,231,255,0.3) 40%, transparent 70%); }
+  .hero-bg-gradient2 { position: absolute; top: 80px; right: -100px; width: 500px; height: 500px; background: radial-gradient(ellipse, rgba(254,243,199,0.4) 0%, transparent 70%); }
+  .hero-bg-dots { position: absolute; inset: 0; background-image: radial-gradient(circle at 1px 1px, rgba(148,163,184,0.07) 1px, transparent 0); background-size: 32px 32px; }
+  .hero-content { max-width: 720px; margin: 0 auto; text-align: center; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: #EFF6FF; border: 1px solid #BFDBFE; color: #1D4ED8; font-size: 11px; font-weight: 700; padding: 6px 16px; border-radius: 100px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 32px; }
+  .hero-badge-dot { width: 6px; height: 6px; background: #3B82F6; border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .hero h1 { font-size: 48px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; color: #0F172A; }
+  @media (min-width: 1024px) { .hero h1 { font-size: 72px; } }
+  .hero-subtitle { margin-top: 24px; font-size: 18px; color: #64748B; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+  @media (min-width: 1024px) { .hero-subtitle { font-size: 20px; } }
+  .hero-actions { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  @media (min-width: 640px) { .hero-actions { flex-direction: row; justify-content: center; } }
+  .hero-trust { margin-top: 56px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 24px; font-size: 13px; color: #94A3B8; }
+  .hero-trust span { display: flex; align-items: center; gap: 6px; }
+
+  /* ─── Hero Visual (Order Card) ─────────────────── */
+  .hero-visual { margin-top: 64px; max-width: 780px; margin-left: auto; margin-right: auto; }
+  @media (min-width: 1024px) { .hero-visual { margin-top: 80px; } }
+  .hero-card-glow { position: relative; }
+  .hero-card-glow::before { content: ''; position: absolute; inset: -16px; background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(79,70,229,0.08), rgba(139,92,246,0.08)); border-radius: 24px; filter: blur(20px); }
+  .hero-card { position: relative; background: #fff; border-radius: 16px; box-shadow: 0 25px 60px -15px rgba(15,23,42,0.12); border: 1px solid rgba(226,232,240,0.6); overflow: hidden; }
+  .hero-card-bar { display: flex; align-items: center; gap: 8px; padding: 14px 20px; background: #F8FAFC; border-bottom: 1px solid #F1F5F9; }
+  .hero-card-dot { width: 12px; height: 12px; border-radius: 50%; background: #E2E8F0; }
+  .hero-card-url { flex: 1; display: flex; justify-content: center; }
+  .hero-card-url span { background: #fff; border: 1px solid #E2E8F0; border-radius: 8px; padding: 4px 16px; font-size: 12px; color: #94A3B8; }
+  .hero-card-body { padding: 24px; }
+  @media (min-width: 1024px) { .hero-card-body { padding: 32px; } }
+  .card-tabs { display: flex; gap: 4px; margin-bottom: 24px; }
+  .card-tab { padding: 8px 16px; font-size: 13px; font-weight: 600; border-radius: 8px; border: 1px solid #E2E8F0; background: #fff; color: #64748B; cursor: default; }
+  .card-tab.active { background: #EFF6FF; border-color: #BFDBFE; color: #2563EB; }
+  .card-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .card-fields-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .card-field label { display: block; font-size: 10px; font-weight: 600; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .card-field-value { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #334155; }
+  .card-field-value.highlight { background: #EFF6FF; border-color: #BFDBFE; color: #1D4ED8; font-weight: 500; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid #F1F5F9; }
+  .card-footer-label { font-size: 10px; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.08em; }
+  .card-footer-price { font-size: 28px; font-weight: 800; color: #0F172A; }
+  .card-footer-price span { font-size: 14px; font-weight: 400; color: #94A3B8; }
+  .card-footer .btn { font-size: 14px; padding: 12px 24px; }
+
+  /* ─── Stats ────────────────────────────────────── */
+  .stats { padding: 64px 0; background: #0F172A; position: relative; overflow: hidden; }
+  .stats-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(30,64,175,0.12), transparent 50%, rgba(67,56,202,0.12)); }
+  .stats-grid { display: grid; grid-template-columns: 1fr; gap: 32px; position: relative; }
+  @media (min-width: 768px) { .stats-grid { grid-template-columns: 1fr 1fr 1fr; gap: 48px; } }
+  .stat { text-align: center; }
+  .stat-value { font-size: 40px; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+  @media (min-width: 1024px) { .stat-value { font-size: 48px; } }
+  .stat-label { margin-top: 8px; font-size: 13px; color: #94A3B8; max-width: 280px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+
+  /* ─── How It Works ─────────────────────────────── */
+  .how { padding: 96px 0; background: #fff; }
+  @media (min-width: 1024px) { .how { padding: 128px 0; } }
+  .section-header { text-align: center; margin-bottom: 64px; }
+  .section-header h2 { font-size: 32px; font-weight: 800; color: #0F172A; letter-spacing: -0.02em; }
+  @media (min-width: 1024px) { .section-header h2 { font-size: 48px; } }
+  .section-header p { margin-top: 16px; font-size: 18px; color: #64748B; max-width: 540px; margin-left: auto; margin-right: auto; }
+  .tab-toggle { display: flex; justify-content: center; margin-bottom: 56px; }
+  .tab-toggle-inner { display: inline-flex; background: #F1F5F9; border-radius: 12px; padding: 6px; }
+  .tab-btn { padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; background: transparent; color: #64748B; }
+  .tab-btn.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .steps-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
+  @media (min-width: 768px) { .steps-grid { grid-template-columns: 1fr 1fr 1fr; gap: 48px; } }
+  .step { position: relative; }
+  .step-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .step-icon { width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #2563EB, #4F46E5); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px -6px rgba(37,99,235,0.3); flex-shrink: 0; }
+  .step-icon svg { width: 20px; height: 20px; color: #fff; }
+  .step-number { font-size: 13px; font-weight: 800; color: #CBD5E1; }
+  .step h3 { font-size: 20px; font-weight: 700; color: #0F172A; margin-bottom: 8px; }
+  .step p { font-size: 15px; color: #64748B; line-height: 1.7; }
+
+  /* ─── Use Cases ────────────────────────────────── */
+  .usecases { padding: 96px 0; background: #F8FAFC; }
+  @media (min-width: 1024px) { .usecases { padding: 128px 0; } }
+  .usecases-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
+  @media (min-width: 1024px) { .usecases-grid { grid-template-columns: 1fr 1fr; } }
+  .usecase-card { position: relative; background: #fff; border-radius: 16px; border: 1px solid #E2E8F0; padding: 40px; transition: all 0.3s; overflow: hidden; }
+  .usecase-card:hover { box-shadow: 0 25px 50px -12px rgba(0,0,0,0.06); transform: translateY(-4px); }
+  .usecase-card .accent-bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; opacity: 0; transition: opacity 0.3s; }
+  .usecase-card:hover .accent-bar { opacity: 1; }
+  .usecase-card .accent-bar.blue { background: linear-gradient(90deg, #2563EB, #4F46E5); }
+  .usecase-card .accent-bar.amber { background: linear-gradient(90deg, #F59E0B, #F97316); }
+  .usecase-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+  .usecase-icon.blue { background: #EFF6FF; }
+  .usecase-icon.amber { background: #FFFBEB; }
+  .usecase-icon svg { width: 28px; height: 28px; }
+  .usecase-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .usecase-label.blue { color: #2563EB; }
+  .usecase-label.amber { color: #D97706; }
+  .usecase-card h3 { font-size: 24px; font-weight: 700; color: #0F172A; margin-bottom: 12px; }
+  .usecase-card > p { font-size: 15px; color: #64748B; line-height: 1.7; margin-bottom: 24px; }
+  .usecase-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .usecase-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #475569; }
+  .usecase-list li svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; }
+
+  /* ─── For Attorneys ────────────────────────────── */
+  .attorneys { padding: 96px 0; background: #fff; }
+  @media (min-width: 1024px) { .attorneys { padding: 128px 0; } }
+  .attorneys-grid { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; }
+  @media (min-width: 1024px) { .attorneys-grid { grid-template-columns: 1fr 1fr; } }
+  .attorneys-label { font-size: 11px; font-weight: 700; color: #2563EB; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+  .attorneys h2 { font-size: 32px; font-weight: 800; color: #0F172A; letter-spacing: -0.02em; line-height: 1.2; }
+  @media (min-width: 1024px) { .attorneys h2 { font-size: 40px; } }
+  .attorneys h2 span { color: #94A3B8; }
+  .attorneys > div > div > p { margin-top: 24px; font-size: 18px; color: #64748B; line-height: 1.7; }
+  .attorneys-actions { margin-top: 32px; display: flex; gap: 16px; }
+  .features-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  @media (min-width: 640px) { .features-grid { grid-template-columns: 1fr 1fr; } }
+  .feature-card { background: #F8FAFC; border-radius: 12px; padding: 24px; transition: background 0.2s; }
+  .feature-card:hover { background: #EFF6FF; }
+  .feature-card svg { width: 20px; height: 20px; color: #2563EB; margin-bottom: 12px; }
+  .feature-card h3 { font-size: 14px; font-weight: 700; color: #0F172A; margin-bottom: 6px; }
+  .feature-card p { font-size: 12px; color: #64748B; line-height: 1.6; }
+
+  /* ─── For Reporters ────────────────────────────── */
+  .reporters { padding: 96px 0; background: #0F172A; position: relative; overflow: hidden; }
+  @media (min-width: 1024px) { .reporters { padding: 128px 0; } }
+  .reporters-bg1 { position: absolute; top: 0; right: 0; width: 600px; height: 600px; background: radial-gradient(ellipse, rgba(37,99,235,0.06) 0%, transparent 70%); }
+  .reporters-bg2 { position: absolute; bottom: 0; left: 0; width: 400px; height: 400px; background: radial-gradient(ellipse, rgba(79,70,229,0.06) 0%, transparent 70%); }
+  .reporters .section-header h2 { color: #fff; }
+  .reporters .section-header h2 span { color: #64748B; }
+  .reporters .section-header p { color: #94A3B8; }
+  .reporters-label { font-size: 11px; font-weight: 700; color: #60A5FA; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; text-align: center; }
+  .reporters-grid { display: grid; grid-template-columns: 1fr; gap: 24px; position: relative; }
+  @media (min-width: 768px) { .reporters-grid { grid-template-columns: 1fr 1fr 1fr; } }
+  .reporter-card { background: rgba(255,255,255,0.04); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 32px; transition: background 0.2s; }
+  .reporter-card:hover { background: rgba(255,255,255,0.08); }
+  .reporter-card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 8px 20px -4px rgba(0,0,0,0.2); }
+  .reporter-card-icon svg { width: 20px; height: 20px; color: #fff; }
+  .reporter-card h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .reporter-card p { font-size: 14px; color: #94A3B8; line-height: 1.7; }
+  .reporters-cta { margin-top: 48px; text-align: center; }
+
+  /* ─── Pricing ──────────────────────────────────── */
+  .pricing { padding: 96px 0; background: #fff; }
+  @media (min-width: 1024px) { .pricing { padding: 128px 0; } }
+  .pricing-card { max-width: 640px; margin: 0 auto; background: linear-gradient(135deg, #F8FAFC 0%, rgba(239,246,255,0.3) 100%); border-radius: 16px; border: 1px solid #E2E8F0; overflow: hidden; }
+  .pricing-body { padding: 32px; }
+  @media (min-width: 1024px) { .pricing-body { padding: 40px; } }
+  .pricing-row { display: flex; align-items: baseline; justify-content: space-between; padding: 24px 0; }
+  .pricing-row:not(:last-child) { border-bottom: 1px solid #E2E8F0; }
+  .pricing-row h3 { font-size: 16px; font-weight: 700; color: #0F172A; }
+  .pricing-row .sub { font-size: 13px; color: #64748B; margin-top: 2px; }
+  .pricing-row .price { font-size: 32px; font-weight: 800; text-align: right; }
+  .pricing-row .price.green { color: #059669; }
+  .pricing-row .price span { font-size: 14px; font-weight: 400; color: #94A3B8; }
+  .pricing-note { margin-top: 32px; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 12px; padding: 16px; font-size: 13px; color: #92400E; line-height: 1.7; }
+  .pricing-note strong { font-weight: 700; }
+  .pricing-footer { background: #0F172A; padding: 24px 32px; display: flex; flex-direction: column; gap: 16px; align-items: center; }
+  @media (min-width: 640px) { .pricing-footer { flex-direction: row; justify-content: space-between; } }
+  .pricing-footer p { color: #fff; font-weight: 600; font-size: 15px; }
+  .pricing-footer .sub { color: #94A3B8; font-size: 13px; font-weight: 400; }
+  .pricing-footer .btn { color: #60A5FA; border: 1px solid rgba(96,165,250,0.3); padding: 10px 20px; font-size: 13px; background: transparent; white-space: nowrap; }
+  .pricing-footer .btn:hover { background: rgba(96,165,250,0.1); }
+
+  /* ─── Compliance ───────────────────────────────── */
+  .compliance { padding: 96px 0; background: #F8FAFC; }
+  @media (min-width: 1024px) { .compliance { padding: 128px 0; } }
+  .compliance-grid { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; }
+  @media (min-width: 1024px) { .compliance-grid { grid-template-columns: 1fr 1fr; } }
+  .compliance-label { font-size: 11px; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+  .compliance h2 { font-size: 32px; font-weight: 800; color: #0F172A; letter-spacing: -0.02em; line-height: 1.2; }
+  @media (min-width: 1024px) { .compliance h2 { font-size: 40px; } }
+  .compliance-text { margin-top: 24px; font-size: 18px; color: #64748B; line-height: 1.7; }
+  .compliance-features { margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
+  .compliance-features div { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #475569; }
+  .compliance-features svg { width: 16px; height: 16px; color: #059669; flex-shrink: 0; margin-top: 3px; }
+  .compliance-card { background: #fff; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08); padding: 32px; display: flex; flex-direction: column; gap: 20px; }
+  .compliance-item { display: flex; align-items: flex-start; gap: 16px; }
+  .compliance-check { width: 32px; height: 32px; border-radius: 50%; background: #ECFDF5; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .compliance-check svg { width: 16px; height: 16px; color: #059669; }
+  .compliance-item strong { display: block; font-size: 14px; font-weight: 600; color: #0F172A; }
+  .compliance-item .sub { font-size: 12px; color: #64748B; margin-top: 2px; }
+
+  /* ─── SRL Callout ──────────────────────────────── */
+  .srl { padding: 80px 0; background: #fff; }
+  .srl-card { background: linear-gradient(135deg, #2563EB, #1D4ED8, #4338CA); border-radius: 24px; padding: 48px; position: relative; overflow: hidden; }
+  @media (min-width: 1024px) { .srl-card { padding: 64px; } }
+  .srl-bg1 { position: absolute; top: -50%; right: -10%; width: 400px; height: 400px; background: rgba(255,255,255,0.04); border-radius: 50%; filter: blur(40px); }
+  .srl-bg2 { position: absolute; bottom: -30%; left: -5%; width: 300px; height: 300px; background: rgba(129,140,248,0.08); border-radius: 50%; filter: blur(40px); }
+  .srl-content { position: relative; max-width: 640px; }
+  .srl-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); color: #fff; font-size: 11px; font-weight: 700; padding: 6px 16px; border-radius: 100px; margin-bottom: 24px; }
+  .srl-badge svg { width: 14px; height: 14px; }
+  .srl h2 { font-size: 32px; font-weight: 800; color: #fff; line-height: 1.2; }
+  @media (min-width: 1024px) { .srl h2 { font-size: 40px; } }
+  .srl p { margin-top: 16px; font-size: 18px; color: #BFDBFE; line-height: 1.7; }
+  .srl .btn { margin-top: 32px; }
+
+  /* ─── Final CTA ────────────────────────────────── */
+  .final-cta { padding: 96px 0; background: #F8FAFC; text-align: center; }
+  @media (min-width: 1024px) { .final-cta { padding: 128px 0; } }
+  .final-cta h2 { font-size: 32px; font-weight: 800; color: #0F172A; letter-spacing: -0.02em; }
+  @media (min-width: 1024px) { .final-cta h2 { font-size: 48px; } }
+  .final-cta p { margin-top: 24px; font-size: 18px; color: #64748B; max-width: 540px; margin-left: auto; margin-right: auto; }
+  .final-cta-actions { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  @media (min-width: 640px) { .final-cta-actions { flex-direction: row; justify-content: center; } }
+
+  /* ─── Footer ───────────────────────────────────── */
+  .footer { background: #0F172A; color: #94A3B8; padding: 64px 0; }
+  .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+  @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+  .footer-brand { grid-column: span 2; }
+  @media (min-width: 768px) { .footer-brand { grid-column: span 1; } }
+  .footer-brand-inner { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .footer-brand-name { color: #fff; font-weight: 700; font-size: 16px; }
+  .footer-brand p { font-size: 13px; line-height: 1.6; }
+  .footer h4 { color: #fff; font-size: 13px; font-weight: 600; margin-bottom: 16px; }
+  .footer ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer ul a { color: #94A3B8; text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer ul a:hover { color: #fff; }
+  .footer-bottom { padding-top: 32px; border-top: 1px solid #1E293B; display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
+  @media (min-width: 640px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
+  .footer-bottom .sub { color: #64748B; }
+
+  /* ─── Responsive Mobile Fix ────────────────────── */
+  @media (max-width: 640px) {
+    .card-fields, .card-fields-3 { grid-template-columns: 1fr; }
+    .card-footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+// ─── SVG Icons (inline) ─────────────────────────────────────────
+const Icon = ({ name, size = 20, color = "currentColor", strokeWidth = 2 }) => {
+  const icons = {
+    fileText: <><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></>,
+    clock: <><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></>,
+    shield: <><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></>,
+    chevronRight: <><polyline points="9 18 15 12 9 6"/></>,
+    users: <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>,
+    zap: <><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></>,
+    arrowRight: <><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></>,
+    checkCircle: <><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></>,
+    mic: <><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></>,
+    mapPin: <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></>,
+    star: <><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></>,
+    scale: <><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></>,
+  };
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
+      {icons[name]}
+    </svg>
+  );
+};
+
+// ─── Custom Briscoe Sholes Logo ─────────────────────────────────
+// Full logo lockup — navy icon + BRISCOE / SHOLES text in Courier New
+// theme="light" for light backgrounds, theme="dark" for dark backgrounds
+const BriscoeFullLogo = ({ height = 40, theme = "light" }) => {
+  const briscoeColor = theme === "dark" ? "#FFFFFF" : "#0F172A";
+  const sholesColor = theme === "dark" ? "#818CF8" : "#4361EE";
+  return (
+    <svg height={height} viewBox="0 0 310 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="60" height="60" rx="13" fill="#0F172A"/>
+      <path d="M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50"
+            fill="none" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"/>
+      <text x="76" y="27" fontFamily="'Courier New',Courier,monospace" fontSize="18" fontWeight="700" fill={briscoeColor} letterSpacing="4">BRISCOE</text>
+      <text x="76" y="53" fontFamily="'Courier New',Courier,monospace" fontSize="18" fontWeight="700" fill={sholesColor} letterSpacing="4">SHOLES</text>
+    </svg>
+  );
+};
+
+// Icon-only version for favicon / small contexts
+const BriscoeLogo = ({ size = 36 }) => {
+  return (
+    <svg width={size} height={size} viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="60" height="60" rx="13" fill="#0F172A"/>
+      <path d="M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50"
+            fill="none" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+};
+
+// ─── Animated Counter ───────────────────────────────────────────
+function Counter({ end, suffix = "" }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const [started, setStarted] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setStarted(true); }, { threshold: 0.3 });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+  useEffect(() => {
+    if (!started) return;
+    let n = 0; const step = end / 120;
+    const t = setInterval(() => { n += step; if (n >= end) { setCount(end); clearInterval(t); } else setCount(Math.floor(n)); }, 16);
+    return () => clearInterval(t);
+  }, [started, end]);
+  return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
+}
+
+// ─── App ────────────────────────────────────────────────────────
+function App() {
+  const [scrolled, setScrolled] = useState(false);
+  const [tab, setTab] = useState("attorney");
+
+  useEffect(() => {
+    const h = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", h);
+    return () => window.removeEventListener("scroll", h);
+  }, []);
+
+  const stepsData = {
+    attorney: [
+      { icon: "fileText", title: "Place your order", desc: "Select live attendance or post-hearing transcription. Enter case details, upload supporting docs, and choose your turnaround." },
+      { icon: "zap", title: "We match a reporter", desc: "A licensed, jurisdiction-verified CSR accepts your job — usually within hours. You're notified instantly." },
+      { icon: "checkCircle", title: "Certified transcript, delivered", desc: "Your court-admissible transcript arrives on schedule with the reporter's certification attached. Payment is automatic." },
+    ],
+    reporter: [
+      { icon: "mic", title: "Get notified of matching jobs", desc: "See live attendance and transcription jobs filtered to your jurisdiction, case type preferences, and availability." },
+      { icon: "fileText", title: "Accept and produce", desc: "Commit to a turnaround, access case materials, and produce the transcript — using your own tools or our built-in workspace." },
+      { icon: "star", title: "Certify and get paid", desc: "Sign your certification digitally. Payment releases automatically upon delivery — no invoicing, no chasing." },
+    ],
+  };
+
+  return (
+    <div>
+      {/* ─── NAV ─── */}
+      <nav className={"nav" + (scrolled ? " scrolled" : "")}>
+        <div className="container">
+          <div className="nav-inner">
+            <a href="#" className="nav-brand">
+              <BriscoeFullLogo height={38} theme="light" />
+            </a>
+            <div className="nav-links">
+              <a href="#how-it-works">How It Works</a>
+              <a href="#attorneys">For Attorneys</a>
+              <a href="#reporters">For Reporters</a>
+              <a href="#pricing">Pricing</a>
+            </div>
+            <div className="nav-actions">
+              <button className="btn-signin">Sign In</button>
+              <button className="btn-getstarted">Get Started</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* ─── HERO ─── */}
+      <section className="hero">
+        <div className="hero-bg">
+          <div className="hero-bg-gradient1"></div>
+          <div className="hero-bg-gradient2"></div>
+          <div className="hero-bg-dots"></div>
+        </div>
+        <div className="container">
+          <div className="hero-content">
+            <div className="hero-badge">
+              <span className="hero-badge-dot"></span>
+              Now Serving California Courts
+            </div>
+            <h1>Court transcripts,<br /><span className="gradient-text">finally simple.</span></h1>
+            <p className="hero-subtitle">
+              Briscoe Sholes matches attorneys with certified court reporters for live hearings and audio transcription — with transparent pricing, verified credentials, and delivery you can count on.
+            </p>
+            <div className="hero-actions">
+              <button className="btn btn-primary">
+                Order a Transcript
+                <Icon name="arrowRight" size={16} color="#fff" />
+              </button>
+              <button className="btn btn-secondary">
+                Join as a Reporter
+                <Icon name="chevronRight" size={16} color="#64748B" />
+              </button>
+            </div>
+            <div className="hero-trust">
+              <span><Icon name="shield" size={16} color="#059669" /> CSR license-verified</span>
+              <span><Icon name="clock" size={16} color="#2563EB" /> 24-hour rush available</span>
+              <span><Icon name="scale" size={16} color="#D97706" /> Statutory pricing — no surprises</span>
+            </div>
+          </div>
+
+          {/* Hero visual */}
+          <div className="hero-visual">
+            <div className="hero-card-glow">
+              <div className="hero-card">
+                <div className="hero-card-bar">
+                  <div className="hero-card-dot"></div>
+                  <div className="hero-card-dot"></div>
+                  <div className="hero-card-dot"></div>
+                  <div className="hero-card-url"><span>app.briscoesholes.com/new-order</span></div>
+                </div>
+                <div className="hero-card-body">
+                  <div className="card-tabs">
+                    <span className="card-tab active">Live Attendance</span>
+                    <span className="card-tab">Transcription</span>
+                  </div>
+                  <div className="card-fields">
+                    <div className="card-field">
+                      <label>Court</label>
+                      <div className="card-field-value">LA Superior Court — Stanley Mosk</div>
+                    </div>
+                    <div className="card-field">
+                      <label>Department</label>
+                      <div className="card-field-value">Dept. 56</div>
+                    </div>
+                  </div>
+                  <div className="card-fields card-fields-3">
+                    <div className="card-field">
+                      <label>Case Number</label>
+                      <div className="card-field-value">24STFL09821</div>
+                    </div>
+                    <div className="card-field">
+                      <label>Hearing Date</label>
+                      <div className="card-field-value">Mar 28, 2026</div>
+                    </div>
+                    <div className="card-field">
+                      <label>Turnaround</label>
+                      <div className="card-field-value highlight">Standard (3–5 days)</div>
+                    </div>
+                  </div>
+                  <div className="card-footer">
+                    <div>
+                      <div className="card-footer-label">Estimated Cost</div>
+                      <div className="card-footer-price">$142 <span>– $218</span></div>
+                    </div>
+                    <button className="btn btn-primary btn-sm">Submit Order →</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── STATS ─── */}
+      <section className="stats">
+        <div className="stats-overlay"></div>
+        <div className="container">
+          <div className="stats-grid">
+            <div className="stat">
+              <div className="stat-value"><Counter end={4400} suffix="+" /></div>
+              <p className="stat-label">Hearings daily without a verbatim record in CA</p>
+            </div>
+            <div className="stat">
+              <div className="stat-value"><Counter end={19} suffix="%" /></div>
+              <p className="stat-label">Decline in the CA reporter workforce over the past decade</p>
+            </div>
+            <div className="stat">
+              <div className="stat-value"><Counter end={525} suffix="K+" /></div>
+              <p className="stat-label">Unrecorded proceedings in LA County alone (18 months)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── HOW IT WORKS ─── */}
+      <section id="how-it-works" className="how">
+        <div className="container">
+          <div className="section-header">
+            <h2>How <span className="gradient-text">Briscoe Sholes</span> works</h2>
+            <p>Three steps. No phone calls, no fax machines, no mysteries.</p>
+          </div>
+          <div className="tab-toggle">
+            <div className="tab-toggle-inner">
+              <button className={"tab-btn" + (tab === "attorney" ? " active" : "")} onClick={() => setTab("attorney")}>I need a transcript</button>
+              <button className={"tab-btn" + (tab === "reporter" ? " active" : "")} onClick={() => setTab("reporter")}>I'm a court reporter</button>
+            </div>
+          </div>
+          <div className="steps-grid">
+            {stepsData[tab].map((s, i) => (
+              <div className="step" key={tab + i}>
+                <div className="step-header">
+                  <div className="step-icon"><Icon name={s.icon} size={20} color="#fff" /></div>
+                  <span className="step-number">0{i + 1}</span>
+                </div>
+                <h3>{s.title}</h3>
+                <p>{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── USE CASES ─── */}
+      <section className="usecases">
+        <div className="container">
+          <div className="section-header">
+            <h2>Two ways to get your record</h2>
+            <p>Whether the hearing is upcoming or already happened — we've got you covered.</p>
+          </div>
+          <div className="usecases-grid">
+            <div className="usecase-card">
+              <div className="accent-bar blue"></div>
+              <div className="usecase-icon blue"><Icon name="mapPin" size={28} color="#2563EB" /></div>
+              <div className="usecase-label blue">Use Case A</div>
+              <h3>Live Attendance</h3>
+              <p>Need a reporter at an upcoming hearing? We'll match you with a licensed CSR who can attend in person or remotely — and deliver your transcript on the turnaround you choose.</p>
+              <ul className="usecase-list">
+                {["In-person or remote attendance", "Real-time or same-day options", "Reporter confirmed before your hearing", "Supports cost-splitting across parties"].map((t, i) => (
+                  <li key={i}><Icon name="checkCircle" size={16} color="#2563EB" />{t}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="usecase-card">
+              <div className="accent-bar amber"></div>
+              <div className="usecase-icon amber"><Icon name="mic" size={28} color="#D97706" /></div>
+              <div className="usecase-label amber">Use Case B</div>
+              <h3>Post-Hearing Transcription</h3>
+              <p>Already have the court audio? Upload it and we'll match you with a certified reporter who'll transcribe, certify, and deliver — with your case docs pre-loaded for accuracy.</p>
+              <ul className="usecase-list">
+                {["Upload MP3, WAV, or court-format audio", "AI-assisted workspace for faster turnaround", "Supporting docs reduce back-and-forth", "Interpreter-aware page estimates"].map((t, i) => (
+                  <li key={i}><Icon name="checkCircle" size={16} color="#D97706" />{t}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── FOR ATTORNEYS ─── */}
+      <section id="attorneys" className="attorneys">
+        <div className="container">
+          <div className="attorneys-grid">
+            <div>
+              <div className="attorneys-label">For Attorneys & Law Firms</div>
+              <h2>Stop chasing reporters.<br /><span>Start tracking cases.</span></h2>
+              <p style={{marginTop: 24, fontSize: 18, color: "#64748B", lineHeight: 1.7}}>
+                Your firm handles dozens of active matters. Briscoe Sholes gives you a persistent case management layer — not just one-off order forms — so your entire transcript history lives in one place.
+              </p>
+              <div className="attorneys-actions">
+                <button className="btn btn-primary btn-sm">Start Ordering <Icon name="arrowRight" size={16} color="#fff" /></button>
+                <button className="btn btn-secondary btn-sm">See Pricing</button>
+              </div>
+            </div>
+            <div className="features-grid">
+              {[
+                { icon: "fileText", title: "Case library that remembers", desc: "Create a case once. Every future order auto-fills from your case record — court, parties, judge, department." },
+                { icon: "users", title: "Firm-wide visibility", desc: "Multiple attorneys and staff under one account. Role-based access. Consolidated billing itemized by case and matter number." },
+                { icon: "star", title: "Preferred reporters", desc: "Designate reporters you trust. They get first right of refusal on your jobs — with all compliance protections in place." },
+                { icon: "clock", title: "Delivery commitments", desc: "Reporters commit to a specific date. Late delivery triggers automatic partial refunds. No more chasing." },
+              ].map((f, i) => (
+                <div className="feature-card" key={i}>
+                  <Icon name={f.icon} size={20} color="#2563EB" />
+                  <h3>{f.title}</h3>
+                  <p>{f.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── FOR REPORTERS ─── */}
+      <section id="reporters" className="reporters">
+        <div className="reporters-bg1"></div>
+        <div className="reporters-bg2"></div>
+        <div className="container" style={{position: "relative"}}>
+          <div className="reporters-label">For Court Reporters</div>
+          <div className="section-header">
+            <h2>Your license. Your tools.<br /><span>Our platform handles the rest.</span></h2>
+            <p>Accept jobs that match your jurisdiction and availability. Use your own CAT software or our built-in workspace. Get paid automatically.</p>
+          </div>
+          <div className="reporters-grid">
+            {[
+              { icon: "zap", title: "Jobs that find you", desc: "Get notified of live attendance and transcription jobs matching your jurisdiction, case type, and geographic preferences.", bg: "linear-gradient(135deg, #2563EB, #06B6D4)" },
+              { icon: "shield", title: "Your credentials, verified", desc: "License verification is automated. Your CSR number is confirmed at onboarding and re-checked continuously.", bg: "linear-gradient(135deg, #059669, #14B8A6)" },
+              { icon: "clock", title: "Transparent earnings", desc: "See your expected payout before accepting. Statutory rates, clear platform fees, automatic payment on delivery.", bg: "linear-gradient(135deg, #F59E0B, #F97316)" },
+            ].map((c, i) => (
+              <div className="reporter-card" key={i}>
+                <div className="reporter-card-icon" style={{background: c.bg}}><Icon name={c.icon} size={20} color="#fff" /></div>
+                <h3>{c.title}</h3>
+                <p>{c.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="reporters-cta">
+            <button className="btn btn-white">Apply to Join the Network <Icon name="arrowRight" size={16} color="#1E40AF" /></button>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── PRICING ─── */}
+      <section id="pricing" className="pricing">
+        <div className="container">
+          <div className="section-header">
+            <h2>Pricing set by <span className="gradient-text">California statute</span></h2>
+            <p>No hidden fees, no negotiation games. Transcript rates are set by law — we just make them easy to understand.</p>
+          </div>
+          <div className="pricing-card">
+            <div className="pricing-body">
+              <div className="pricing-row">
+                <div><h3>Original transcript</h3><div className="sub">First copy ordered</div></div>
+                <div className="price">~$3.67 <span>/ page</span></div>
+              </div>
+              <div className="pricing-row">
+                <div><h3>Simultaneous copy</h3><div className="sub">Ordered at same time as original</div></div>
+                <div className="price green">~$0.65 <span>/ page</span></div>
+              </div>
+              <div className="pricing-row">
+                <div><h3>Separate copy</h3><div className="sub">Ordered after original production</div></div>
+                <div className="price">~$0.85 <span>/ page</span></div>
+              </div>
+              <div className="pricing-note">
+                <strong>Why "approximately"?</strong> California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using the standard conversion of ~325 words per page. Your final invoice is calculated from the certified word count.
+              </div>
+            </div>
+            <div className="pricing-footer">
+              <div>
+                <p>Have a fee waiver on file?</p>
+                <div className="sub">We route payment to the court or Transcript Reimbursement Fund.</div>
+              </div>
+              <button className="btn">Learn More</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── COMPLIANCE ─── */}
+      <section className="compliance">
+        <div className="container">
+          <div className="compliance-grid">
+            <div style={{order: 2}}>
+              <div className="compliance-card">
+                {[
+                  { label: "CSR License #14892", sub: "Verified active — California Court Reporters Board" },
+                  { label: "Jurisdiction: Los Angeles County", sub: "Matched to case filing jurisdiction" },
+                  { label: "CA MTFS format compliance", sub: "25 lines/page, ~65 characters/line — auto-enforced" },
+                  { label: "Certification statement attached", sub: "Meets CA Rules of Court Rule 8.144" },
+                ].map((item, i) => (
+                  <div className="compliance-item" key={i}>
+                    <div className="compliance-check"><Icon name="checkCircle" size={16} color="#059669" /></div>
+                    <div><strong>{item.label}</strong><div className="sub">{item.sub}</div></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div style={{order: 1}}>
+              <div className="compliance-label">Compliance Built In</div>
+              <h2>Every transcript is court-admissible. Period.</h2>
+              <p className="compliance-text">
+                Credentials aren't just checked at signup — they're verified at every job acceptance. Jurisdiction matching, format standards, and certification requirements are enforced automatically.
+              </p>
+              <div className="compliance-features">
+                {[
+                  "Automated CSR license verification against state databases",
+                  "Jurisdiction-reporter matching prevents out-of-scope assignments",
+                  "Compliance rules updated on CA's statutory schedule (Jan 1 / Jul 1)",
+                ].map((t, i) => (
+                  <div key={i}><Icon name="shield" size={16} color="#059669" /><span>{t}</span></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── SRL CALLOUT ─── */}
+      <section className="srl">
+        <div className="container">
+          <div className="srl-card">
+            <div className="srl-bg1"></div>
+            <div className="srl-bg2"></div>
+            <div className="srl-content">
+              <div className="srl-badge">
+                <Icon name="scale" size={14} color="#fff" />
+                Access to Justice
+              </div>
+              <h2>Representing yourself in court?<br />You still have a right to a transcript.</h2>
+              <p>
+                Briscoe Sholes walks self-represented litigants through the process step by step — in plain language, with built-in glossaries, and full support for court fee waivers.
+              </p>
+              <button className="btn btn-white">Get Started — It's Simple <Icon name="arrowRight" size={16} color="#1E40AF" /></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── FINAL CTA ─── */}
+      <section className="final-cta">
+        <div className="container">
+          <h2>The transcript process is broken.<br /><span className="gradient-text">Let's fix it.</span></h2>
+          <p>Join the attorneys and reporters already using Briscoe Sholes to bring court transcripts into the modern era.</p>
+          <div className="final-cta-actions">
+            <button className="btn btn-primary">Order a Transcript <Icon name="arrowRight" size={16} color="#fff" /></button>
+            <button className="btn btn-secondary">Join as a Reporter <Icon name="chevronRight" size={16} color="#64748B" /></button>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── FOOTER ─── */}
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-grid">
+            <div className="footer-brand">
+              <div className="footer-brand-inner">
+                <BriscoeFullLogo height={34} theme="dark" />
+              </div>
+              <p>A modern marketplace for court transcript ordering and certified reporter matching.</p>
+            </div>
+            <div>
+              <h4>Platform</h4>
+              <ul>
+                <li><a href="#">How It Works</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">For Attorneys</a></li>
+                <li><a href="#">For Reporters</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>Resources</h4>
+              <ul>
+                <li><a href="#">SRL Guide</a></li>
+                <li><a href="#">Fee Waiver Info</a></li>
+                <li><a href="#">CA Statutory Rates</a></li>
+                <li><a href="#">Reporter FAQ</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <span>&copy; 2026 Briscoe Sholes. All rights reserved.</span>
+            <span className="sub">Serving California courts. More jurisdictions coming soon.</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
+</script>
+</body>
+</html>

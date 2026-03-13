@@ -320,7 +320,23 @@ const Icon = ({ name, size = 20, color = "currentColor", strokeWidth = 2 }) => {
 };
 
 // ─── Custom Briscoe Sholes Logo ─────────────────────────────────
-// Quotation-mark icon — navy rounded square with open-quote glyph
+// Full logo lockup — navy icon + BRISCOE / SHOLES text in Courier New
+// theme="light" for light backgrounds, theme="dark" for dark backgrounds
+const BriscoeFullLogo = ({ height = 40, theme = "light" }) => {
+  const briscoeColor = theme === "dark" ? "#FFFFFF" : "#0F172A";
+  const sholesColor = theme === "dark" ? "#818CF8" : "#4361EE";
+  return (
+    <svg height={height} viewBox="0 0 310 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="60" height="60" rx="13" fill="#0F172A"/>
+      <path d="M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50"
+            fill="none" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"/>
+      <text x="76" y="27" fontFamily="'Courier New',Courier,monospace" fontSize="18" fontWeight="700" fill={briscoeColor} letterSpacing="4">BRISCOE</text>
+      <text x="76" y="53" fontFamily="'Courier New',Courier,monospace" fontSize="18" fontWeight="700" fill={sholesColor} letterSpacing="4">SHOLES</text>
+    </svg>
+  );
+};
+
+// Icon-only version for favicon / small contexts
 const BriscoeLogo = ({ size = 36 }) => {
   return (
     <svg width={size} height={size} viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -381,8 +397,7 @@ function App() {
         <div className="container">
           <div className="nav-inner">
             <a href="#" className="nav-brand">
-              <BriscoeLogo size={34} />
-              <span className="nav-brand-text">Briscoe Sholes</span>
+              <BriscoeFullLogo height={38} theme="light" />
             </a>
             <div className="nav-links">
               <a href="#how-it-works">How It Works</a>
@@ -746,8 +761,7 @@ function App() {
           <div className="footer-grid">
             <div className="footer-brand">
               <div className="footer-brand-inner">
-                <BriscoeLogo size={30} />
-                <span className="footer-brand-name">Briscoe Sholes</span>
+                <BriscoeFullLogo height={34} theme="dark" />
               </div>
               <p>A modern marketplace for court transcript ordering and certified reporter matching.</p>
             </div>
