@@ -366,6 +366,13 @@ function Counter({ end, suffix = "" }) {
   return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
 }
 
+// ─── Dynamic hearing date (always ~2 weeks from today) ──────────
+function getHearingDate() {
+  const d = new Date();
+  d.setDate(d.getDate() + 14);
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
 // ─── App ────────────────────────────────────────────────────────
 function App() {
   const [scrolled, setScrolled] = useState(false);
@@ -479,7 +486,7 @@ function App() {
                     </div>
                     <div className="card-field">
                       <label>Hearing Date</label>
-                      <div className="card-field-value">Mar 28, 2026</div>
+                      <div className="card-field-value">{getHearingDate()}</div>
                     </div>
                     <div className="card-field">
                       <label>Turnaround</label>
@@ -510,8 +517,8 @@ function App() {
               <p className="stat-label">Hearings daily without a verbatim record in CA</p>
             </div>
             <div className="stat">
-              <div className="stat-value"><Counter end={19} suffix="%" /></div>
-              <p className="stat-label">Decline in the CA reporter workforce over the past decade</p>
+              <div className="stat-value"><Counter end={25} suffix="%" /></div>
+              <p className="stat-label">Decline in the CA reporter workforce since 2010</p>
             </div>
             <div className="stat">
               <div className="stat-value"><Counter end={525} suffix="K+" /></div>
@@ -604,7 +611,7 @@ function App() {
               {[
                 { icon: "fileText", title: "Case library that remembers", desc: "Create a case once. Every future order auto-fills from your case record — court, parties, judge, department." },
                 { icon: "users", title: "Firm-wide visibility", desc: "Multiple attorneys and staff under one account. Role-based access. Consolidated billing itemized by case and matter number." },
-                { icon: "star", title: "Preferred reporters", desc: "Designate reporters you trust. They get first right of refusal on your jobs — with all compliance protections in place." },
+                { icon: "checkCircle", title: "Tax docs handled", desc: "Every reporter's W-9 is collected at onboarding. Year-end 1099s generated automatically. No more chasing." },
                 { icon: "clock", title: "Delivery commitments", desc: "Reporters commit to a specific date. Late delivery triggers automatic partial refunds. No more chasing." },
               ].map((f, i) => (
                 <div className="feature-card" key={i}>
@@ -631,7 +638,7 @@ function App() {
           <div className="reporters-grid">
             {[
               { icon: "zap", title: "Jobs that find you", desc: "Get notified of live attendance and transcription jobs matching your jurisdiction, case type, and geographic preferences.", bg: "linear-gradient(135deg, #2563EB, #06B6D4)" },
-              { icon: "shield", title: "Your credentials, verified", desc: "License verification is automated. Your CSR number is confirmed at onboarding and re-checked continuously.", bg: "linear-gradient(135deg, #059669, #14B8A6)" },
+              { icon: "shield", title: "Your credentials, verified", desc: "License verification is automated. Your CSR number is confirmed at onboarding and re-checked continuously. Tax information (W-9) is collected once at signup — you'll never be chased for it again.", bg: "linear-gradient(135deg, #059669, #14B8A6)" },
               { icon: "clock", title: "Transparent earnings", desc: "See your expected payout before accepting. Statutory rates, clear platform fees, automatic payment on delivery.", bg: "linear-gradient(135deg, #F59E0B, #F97316)" },
             ].map((c, i) => (
               <div className="reporter-card" key={i}>
@@ -668,14 +675,17 @@ function App() {
                 <div><h3>Separate copy</h3><div className="sub">Ordered after original production</div></div>
                 <div className="price">~$0.85 <span>/ page</span></div>
               </div>
+              <div style={{marginTop: 16, background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: 12, padding: 16, fontSize: 13, color: "#1E40AF", lineHeight: 1.7}}>
+                <strong>Note:</strong> Prices shown are statutory transcript rates set by CA Gov. Code § 69950. A platform service fee will be added — total price shown at order entry.
+              </div>
               <div className="pricing-note">
-                <strong>Why "approximately"?</strong> California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using the standard conversion of ~325 words per page. Your final invoice is calculated from the certified word count.
+                <strong>Why "approximately"?</strong> California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count — not the estimate.
               </div>
             </div>
             <div className="pricing-footer">
               <div>
                 <p>Have a fee waiver on file?</p>
-                <div className="sub">We route payment to the court or Transcript Reimbursement Fund.</div>
+                <div className="sub">Order through us like any other transcript. We'll generate your TRF reimbursement application automatically.</div>
               </div>
               <button className="btn">Learn More</button>
             </div>
@@ -713,6 +723,7 @@ function App() {
                   "Automated CSR license verification against state databases",
                   "Jurisdiction-reporter matching prevents out-of-scope assignments",
                   "Compliance rules updated on CA's statutory schedule (Jan 1 / Jul 1)",
+                  "W-9 collected at onboarding — no year-end tax document chasing",
                 ].map((t, i) => (
                   <div key={i}><Icon name="shield" size={16} color="#059669" /><span>{t}</span></div>
                 ))}
