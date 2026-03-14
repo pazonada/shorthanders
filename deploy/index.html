@@ -320,7 +320,7 @@ const Icon = ({ name, size = 20, color = "currentColor", strokeWidth = 2 }) => {
 };
 
 // ─── Custom Briscoe Sholes Logo ─────────────────────────────────
-// Full logo lockup — navy icon + BRISCOE / SHOLES text in Courier New
+// Full logo lockup – navy icon + BRISCOE / SHOLES text in Courier New
 // theme="light" for light backgrounds, theme="dark" for dark backgrounds
 const BriscoeFullLogo = ({ height = 40, theme = "light" }) => {
   const briscoeColor = theme === "dark" ? "#FFFFFF" : "#0F172A";
@@ -387,13 +387,13 @@ function App() {
   const stepsData = {
     attorney: [
       { icon: "fileText", title: "Place your order", desc: "Select live attendance or post-hearing transcription. Enter case details, upload supporting docs, and choose your turnaround." },
-      { icon: "zap", title: "We match a reporter", desc: "A licensed, jurisdiction-verified CSR accepts your job — usually within hours. You're notified instantly." },
+      { icon: "zap", title: "We match a reporter", desc: "A licensed, jurisdiction-verified CSR accepts your job, usually within hours. You're notified instantly." },
       { icon: "checkCircle", title: "Certified transcript, delivered", desc: "Your court-admissible transcript arrives on schedule with the reporter's certification attached. Payment is automatic." },
     ],
     reporter: [
       { icon: "mic", title: "Get notified of matching jobs", desc: "See live attendance and transcription jobs filtered to your jurisdiction, case type preferences, and availability." },
-      { icon: "fileText", title: "Accept and produce", desc: "Commit to a turnaround, access case materials, and produce the transcript — using your own tools or our built-in workspace." },
-      { icon: "star", title: "Certify and get paid", desc: "Sign your certification digitally. Payment releases automatically upon delivery — no invoicing, no chasing." },
+      { icon: "fileText", title: "Accept and produce", desc: "Commit to a turnaround, access case materials, and produce the transcript. Use your own tools or our built-in workspace." },
+      { icon: "star", title: "Certify and get paid", desc: "Sign your certification digitally. Payment releases automatically upon delivery. No invoicing, no chasing." },
     ],
   };
 
@@ -435,7 +435,7 @@ function App() {
             </div>
             <h1>Court transcripts,<br /><span className="gradient-text">finally simple.</span></h1>
             <p className="hero-subtitle">
-              Briscoe Sholes matches attorneys with certified court reporters for live hearings and audio transcription — with transparent pricing, verified credentials, and delivery you can count on.
+              Briscoe Sholes matches attorneys with certified court reporters for live hearings and audio transcription. Transparent pricing, verified credentials, and delivery you can count on.
             </p>
             <div className="hero-actions">
               <button className="btn btn-primary">
@@ -450,7 +450,7 @@ function App() {
             <div className="hero-trust">
               <span><Icon name="shield" size={16} color="#059669" /> CSR license-verified</span>
               <span><Icon name="clock" size={16} color="#2563EB" /> 24-hour rush available</span>
-              <span><Icon name="scale" size={16} color="#D97706" /> Statutory pricing — no surprises</span>
+              <span><Icon name="scale" size={16} color="#D97706" /> Statutory pricing, no surprises</span>
             </div>
           </div>
 
@@ -472,7 +472,7 @@ function App() {
                   <div className="card-fields">
                     <div className="card-field">
                       <label>Court</label>
-                      <div className="card-field-value">LA Superior Court — Stanley Mosk</div>
+                      <div className="card-field-value">LA Superior Court – Stanley Mosk</div>
                     </div>
                     <div className="card-field">
                       <label>Department</label>
@@ -561,7 +561,7 @@ function App() {
         <div className="container">
           <div className="section-header">
             <h2>Two ways to get your record</h2>
-            <p>Whether the hearing is upcoming or already happened — we've got you covered.</p>
+            <p>Whether the hearing is upcoming or already happened, we've got you covered.</p>
           </div>
           <div className="usecases-grid">
             <div className="usecase-card">
@@ -569,7 +569,7 @@ function App() {
               <div className="usecase-icon blue"><Icon name="mapPin" size={28} color="#2563EB" /></div>
               <div className="usecase-label blue">Use Case A</div>
               <h3>Live Attendance</h3>
-              <p>Need a reporter at an upcoming hearing? We'll match you with a licensed CSR who can attend in person or remotely — and deliver your transcript on the turnaround you choose.</p>
+              <p>Need a reporter at an upcoming hearing? We'll match you with a licensed CSR who can attend in person or remotely and deliver your transcript on the turnaround you choose.</p>
               <ul className="usecase-list">
                 {["In-person or remote attendance", "Real-time or same-day options", "Reporter confirmed before your hearing", "Supports cost-splitting across parties"].map((t, i) => (
                   <li key={i}><Icon name="checkCircle" size={16} color="#2563EB" />{t}</li>
@@ -581,7 +581,7 @@ function App() {
               <div className="usecase-icon amber"><Icon name="mic" size={28} color="#D97706" /></div>
               <div className="usecase-label amber">Use Case B</div>
               <h3>Post-Hearing Transcription</h3>
-              <p>Already have the court audio? Upload it and we'll match you with a certified reporter who'll transcribe, certify, and deliver — with your case docs pre-loaded for accuracy.</p>
+              <p>Already have the court audio? Upload it and we'll match you with a certified reporter who'll transcribe, certify, and deliver, with your case docs pre-loaded for accuracy.</p>
               <ul className="usecase-list">
                 {["Upload MP3, WAV, or court-format audio", "AI-assisted workspace for faster turnaround", "Supporting docs reduce back-and-forth", "Interpreter-aware page estimates"].map((t, i) => (
                   <li key={i}><Icon name="checkCircle" size={16} color="#D97706" />{t}</li>
@@ -600,7 +600,7 @@ function App() {
               <div className="attorneys-label">For Attorneys & Law Firms</div>
               <h2>Stop chasing reporters.<br /><span>Start tracking cases.</span></h2>
               <p style={{marginTop: 24, fontSize: 18, color: "#64748B", lineHeight: 1.7}}>
-                Your firm handles dozens of active matters. Briscoe Sholes gives you a persistent case management layer — not just one-off order forms — so your entire transcript history lives in one place.
+                Your firm handles dozens of active matters. Briscoe Sholes gives you a persistent case management layer, not just one-off order forms, so your entire transcript history lives in one place.
               </p>
               <div className="attorneys-actions">
                 <button className="btn btn-primary btn-sm">Start Ordering <Icon name="arrowRight" size={16} color="#fff" /></button>
@@ -609,7 +609,7 @@ function App() {
             </div>
             <div className="features-grid">
               {[
-                { icon: "fileText", title: "Case library that remembers", desc: "Create a case once. Every future order auto-fills from your case record — court, parties, judge, department." },
+                { icon: "fileText", title: "Case library that remembers", desc: "Create a case once. Every future order auto-fills from your case record: court, parties, judge, department." },
                 { icon: "users", title: "Firm-wide visibility", desc: "Multiple attorneys and staff under one account. Role-based access. Consolidated billing itemized by case and matter number." },
                 { icon: "checkCircle", title: "Tax docs handled", desc: "Every reporter's W-9 is collected at onboarding. Year-end 1099s generated automatically. No more chasing." },
                 { icon: "clock", title: "Delivery commitments", desc: "Reporters commit to a specific date. Late delivery triggers automatic partial refunds. No more chasing." },
@@ -638,7 +638,7 @@ function App() {
           <div className="reporters-grid">
             {[
               { icon: "zap", title: "Jobs that find you", desc: "Get notified of live attendance and transcription jobs matching your jurisdiction, case type, and geographic preferences.", bg: "linear-gradient(135deg, #2563EB, #06B6D4)" },
-              { icon: "shield", title: "Your credentials, verified", desc: "License verification is automated. Your CSR number is confirmed at onboarding and re-checked continuously. Tax information (W-9) is collected once at signup — you'll never be chased for it again.", bg: "linear-gradient(135deg, #059669, #14B8A6)" },
+              { icon: "shield", title: "Your credentials, verified", desc: "License verification is automated. Your CSR number is confirmed at onboarding and re-checked continuously. Tax information (W-9) is collected once at signup. You'll never be chased for it again.", bg: "linear-gradient(135deg, #059669, #14B8A6)" },
               { icon: "clock", title: "Transparent earnings", desc: "See your expected payout before accepting. Statutory rates, clear platform fees, automatic payment on delivery.", bg: "linear-gradient(135deg, #F59E0B, #F97316)" },
             ].map((c, i) => (
               <div className="reporter-card" key={i}>
@@ -659,7 +659,7 @@ function App() {
         <div className="container">
           <div className="section-header">
             <h2>Pricing set by <span className="gradient-text">California statute</span></h2>
-            <p>No hidden fees, no negotiation games. Transcript rates are set by law — we just make them easy to understand.</p>
+            <p>No hidden fees, no negotiation games. Transcript rates are set by law. We just make them easy to understand.</p>
           </div>
           <div className="pricing-card">
             <div className="pricing-body">
@@ -676,10 +676,10 @@ function App() {
                 <div className="price">~$0.85 <span>/ page</span></div>
               </div>
               <div style={{marginTop: 16, background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: 12, padding: 16, fontSize: 13, color: "#1E40AF", lineHeight: 1.7}}>
-                <strong>Note:</strong> Prices shown are statutory transcript rates set by CA Gov. Code § 69950. A platform service fee will be added — total price shown at order entry.
+                <strong>Note:</strong> Prices shown are statutory transcript rates set by CA Gov. Code § 69950. A platform service fee will be added. Total price shown at order entry.
               </div>
               <div className="pricing-note">
-                <strong>Why "approximately"?</strong> California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count — not the estimate.
+                <strong>Why "approximately"?</strong> California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count, not the estimate.
               </div>
             </div>
             <div className="pricing-footer">
@@ -700,9 +700,9 @@ function App() {
             <div style={{order: 2}}>
               <div className="compliance-card">
                 {[
-                  { label: "CSR License #14892", sub: "Verified active — California Court Reporters Board" },
+                  { label: "CSR License #14892", sub: "Verified active – California Court Reporters Board" },
                   { label: "Jurisdiction: Los Angeles County", sub: "Matched to case filing jurisdiction" },
-                  { label: "CA MTFS format compliance", sub: "25 lines/page, ~65 characters/line — auto-enforced" },
+                  { label: "CA MTFS format compliance", sub: "25 lines/page, ~65 characters/line, auto-enforced" },
                   { label: "Certification statement attached", sub: "Meets CA Rules of Court Rule 8.144" },
                 ].map((item, i) => (
                   <div className="compliance-item" key={i}>
@@ -716,14 +716,14 @@ function App() {
               <div className="compliance-label">Compliance Built In</div>
               <h2>Every transcript is court-admissible. Period.</h2>
               <p className="compliance-text">
-                Credentials aren't just checked at signup — they're verified at every job acceptance. Jurisdiction matching, format standards, and certification requirements are enforced automatically.
+                Credentials aren't just checked at signup; they're verified at every job acceptance. Jurisdiction matching, format standards, and certification requirements are enforced automatically.
               </p>
               <div className="compliance-features">
                 {[
                   "Automated CSR license verification against state databases",
                   "Jurisdiction-reporter matching prevents out-of-scope assignments",
                   "Compliance rules updated on CA's statutory schedule (Jan 1 / Jul 1)",
-                  "W-9 collected at onboarding — no year-end tax document chasing",
+                  "W-9 collected at onboarding; no year-end tax document chasing",
                 ].map((t, i) => (
                   <div key={i}><Icon name="shield" size={16} color="#059669" /><span>{t}</span></div>
                 ))}
@@ -746,9 +746,9 @@ function App() {
               </div>
               <h2>Representing yourself in court?<br />You still have a right to a transcript.</h2>
               <p>
-                Briscoe Sholes walks self-represented litigants through the process step by step — in plain language, with built-in glossaries, and full support for court fee waivers.
+                Briscoe Sholes walks self-represented litigants through the process step by step: plain language, built-in glossaries, and full support for court fee waivers.
               </p>
-              <button className="btn btn-white">Get Started — It's Simple <Icon name="arrowRight" size={16} color="#1E40AF" /></button>
+              <button className="btn btn-white">Get Started – It's Simple <Icon name="arrowRight" size={16} color="#1E40AF" /></button>
             </div>
           </div>
         </div>
