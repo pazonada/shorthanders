@@ -14,9 +14,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='13' fill='%230F172A'/%3E%3Cpath d='M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50' fill='none' stroke='white' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
 <style>
+  :root {
+    --bg: #fff; --bg-page: #F8FAFC; --bg-card: #fff; --bg-input: #fff; --bg-nav: #fff;
+    --bg-hover: #F1F5F9; --bg-selected: #EFF6FF; --bg-muted: #F8FAFC;
+    --text: #0F172A; --text-secondary: #475569; --text-muted: #64748B; --text-dim: #94A3B8;
+    --border: #E2E8F0; --border-light: #F1F5F9;
+    --brand: #2563EB; --brand-dark: #1D4ED8; --brand-light: #EFF6FF; --brand-border: #BFDBFE;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05); --shadow-md: 0 8px 24px -8px rgba(0,0,0,0.08);
+    --shadow-lg: 0 25px 60px -15px rgba(15,23,42,0.12);
+  }
+  [data-theme="dark"] {
+    --bg: #0F172A; --bg-page: #0F172A; --bg-card: #1E293B; --bg-input: #1E293B; --bg-nav: #1E293B;
+    --bg-hover: #334155; --bg-selected: #1E3A5F; --bg-muted: #1E293B;
+    --text: #F1F5F9; --text-secondary: #CBD5E1; --text-muted: #94A3B8; --text-dim: #64748B;
+    --border: #334155; --border-light: #1E293B;
+    --brand: #3B82F6; --brand-dark: #2563EB; --brand-light: #1E3A5F; --brand-border: #1E40AF;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3); --shadow-md: 0 8px 24px -8px rgba(0,0,0,0.4);
+    --shadow-lg: 0 25px 60px -15px rgba(0,0,0,0.5);
+  }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; color: #0F172A; background: #fff; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; color: var(--text); background: var(--bg); transition: background 0.3s, color 0.3s; }
 
   /* ─── Utility classes ──────────────────────────── */
   .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
@@ -682,6 +700,372 @@
   .modal-option:hover { border-color: #BFDBFE; background: #EFF6FF; }
   .modal-option h3 { font-size: 15px; font-weight: 600; color: #0F172A; }
   .modal-option p { font-size: 12px; color: #64748B; margin: 2px 0 0; }
+
+  /* ─── Settings Page ─────────────────────────────── */
+  .settings-section { margin-bottom: 32px; }
+  .settings-section h3 { font-size: 16px; font-weight: 700; color: #0F172A; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #E2E8F0; }
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #F1F5F9; }
+  .toggle-row:last-child { border-bottom: none; }
+  .toggle-row .toggle-label { font-size: 14px; color: #334155; }
+  .toggle-row .toggle-sub { font-size: 12px; color: #94A3B8; margin-top: 2px; }
+  .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-switch .slider { position: absolute; inset: 0; background: #CBD5E1; border-radius: 12px; cursor: pointer; transition: background 0.2s; }
+  .toggle-switch .slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: transform 0.2s; }
+  .toggle-switch input:checked + .slider { background: #2563EB; }
+  .toggle-switch input:checked + .slider::before { transform: translateX(20px); }
+  .payment-card { display: flex; align-items: center; gap: 16px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+  .payment-card .card-brand { font-size: 20px; font-weight: 800; color: #1E40AF; }
+  .payment-card .card-num { font-size: 14px; color: #334155; font-family: monospace; }
+  .payment-card .card-exp { font-size: 12px; color: #94A3B8; }
+  .payment-card .card-default { font-size: 11px; font-weight: 600; color: #059669; background: #D1FAE5; padding: 2px 8px; border-radius: 4px; margin-left: auto; }
+  [data-theme="dark"] .settings-section h3 { color: var(--text); border-bottom-color: var(--border); }
+  [data-theme="dark"] .toggle-row { border-bottom-color: var(--border); }
+  [data-theme="dark"] .toggle-row .toggle-label { color: var(--text-secondary); }
+  [data-theme="dark"] .toggle-row .toggle-sub { color: var(--text-dim); }
+  [data-theme="dark"] .toggle-switch .slider { background: var(--bg-hover); }
+  [data-theme="dark"] .payment-card { background: var(--bg-muted); border-color: var(--border); }
+  [data-theme="dark"] .payment-card .card-num { color: var(--text-secondary); }
+
+  /* ─── Invoice View ─────────────────────────────── */
+  .invoice-overlay { position: fixed; inset: 0; background: #F1F5F9; z-index: 200; display: flex; flex-direction: column; }
+  .invoice-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; background: #0F172A; color: #fff; flex-shrink: 0; }
+  .invoice-toolbar-group { display: flex; align-items: center; gap: 8px; }
+  .invoice-toolbar button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: #fff; border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 4px; transition: background 0.15s; }
+  .invoice-toolbar button:hover { background: rgba(255,255,255,0.2); }
+  .invoice-body { flex: 1; overflow-y: auto; display: flex; justify-content: center; padding: 32px 20px; }
+  .invoice-page { background: #fff; width: 100%; max-width: 680px; padding: 48px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-radius: 2px; }
+  .invoice-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 2px solid #0F172A; }
+  .invoice-header h2 { font-size: 28px; font-weight: 800; color: #0F172A; }
+  .invoice-header .invoice-num { font-size: 13px; color: #64748B; margin-top: 4px; }
+  .invoice-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; font-size: 13px; color: #475569; }
+  .invoice-meta strong { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #94A3B8; margin-bottom: 4px; }
+  .invoice-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+  .invoice-table th { text-align: left; padding: 10px 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #94A3B8; border-bottom: 1px solid #E2E8F0; }
+  .invoice-table td { padding: 12px 0; font-size: 14px; color: #334155; border-bottom: 1px solid #F1F5F9; }
+  .invoice-table td:last-child { text-align: right; font-weight: 600; }
+  .invoice-totals { margin-left: auto; width: 240px; }
+  .invoice-totals .row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; color: #475569; }
+  .invoice-totals .row.total { padding-top: 12px; margin-top: 4px; border-top: 2px solid #0F172A; font-size: 18px; font-weight: 800; color: #0F172A; }
+  .invoice-totals .row .paid-badge { background: #D1FAE5; color: #065F46; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+  @media print { .invoice-toolbar { display: none; } .invoice-body { padding: 0; } .invoice-page { box-shadow: none; max-width: 100%; } }
+
+  /* ─── Order Detail Page ────────────────────────── */
+  .detail-timeline { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+  .detail-timeline h3 { font-size: 14px; font-weight: 700; color: #0F172A; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; } }
+  .detail-section { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 24px; }
+  .detail-section h3 { font-size: 14px; font-weight: 700; color: #0F172A; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .doc-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #F1F5F9; font-size: 13px; color: #475569; }
+  .doc-row:last-child { border-bottom: none; }
+  .doc-row .doc-icon { width: 32px; height: 32px; border-radius: 8px; background: #EFF6FF; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .doc-row .doc-info { flex: 1; }
+  .doc-row .doc-size { font-size: 11px; color: #94A3B8; }
+  [data-theme="dark"] .detail-timeline { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .detail-timeline h3 { color: var(--text); }
+  [data-theme="dark"] .detail-section { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .detail-section h3 { color: var(--text); }
+  [data-theme="dark"] .doc-row { border-bottom-color: var(--border); color: var(--text-secondary); }
+
+  /* ─── Pricing Calculator ───────────────────────── */
+  .calc-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 32px; max-width: 640px; margin: 32px auto 0; }
+  .calc-card h3 { font-size: 18px; font-weight: 700; color: #0F172A; margin-bottom: 20px; text-align: center; }
+  .calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  @media (max-width: 640px) { .calc-row { grid-template-columns: 1fr; } }
+  .calc-result { margin-top: 24px; background: linear-gradient(135deg, #EFF6FF 0%, #E0E7FF 100%); border-radius: 12px; padding: 24px; text-align: center; }
+  .calc-result .calc-total { font-size: 36px; font-weight: 800; color: #2563EB; margin-bottom: 8px; }
+  .calc-result .calc-total span { font-size: 14px; font-weight: 400; color: #64748B; }
+  .calc-breakdown { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 12px; font-size: 12px; color: #64748B; }
+  .calc-breakdown span { display: flex; align-items: center; gap: 4px; }
+  [data-theme="dark"] .calc-card { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .calc-card h3 { color: var(--text); }
+  [data-theme="dark"] .calc-result { background: linear-gradient(135deg, #1E3A5F 0%, #312E81 100%); }
+  [data-theme="dark"] .calc-result .calc-total { color: #60A5FA; }
+  [data-theme="dark"] .calc-breakdown { color: var(--text-dim); }
+
+  /* ─── Analytics ────────────────────────────────── */
+  .analytics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  @media (max-width: 768px) { .analytics-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .analytics-grid { grid-template-columns: 1fr; } }
+  .analytics-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; }
+  .analytics-card .a-label { font-size: 12px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; }
+  .analytics-card .a-value { font-size: 24px; font-weight: 800; color: #0F172A; margin-top: 4px; }
+  .analytics-card .a-trend { font-size: 12px; font-weight: 600; color: #059669; margin-top: 4px; }
+  [data-theme="dark"] .analytics-card { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .analytics-card .a-value { color: var(--text); }
+  [data-theme="dark"] .analytics-card .a-label { color: var(--text-muted); }
+
+  /* ─── Responsive / Mobile ──────────────────────── */
+  .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 6px; color: var(--text-secondary, #475569); }
+  .mobile-drawer { position: fixed; inset: 0; z-index: 200; }
+  .mobile-drawer-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); }
+  .mobile-drawer-panel { position: absolute; top: 0; right: 0; bottom: 0; width: 280px; background: var(--bg-card, #fff); padding: 20px; display: flex; flex-direction: column; gap: 8px; box-shadow: -4px 0 20px rgba(0,0,0,0.15); animation: drawerSlide 0.2s ease-out; }
+  @keyframes drawerSlide { from { transform: translateX(100%); } to { transform: translateX(0); } }
+  .mobile-drawer-panel .drawer-close { align-self: flex-end; background: none; border: none; cursor: pointer; padding: 4px; color: var(--text-muted, #64748B); }
+  .mobile-drawer-panel .drawer-link { display: block; padding: 12px 16px; border-radius: 8px; font-size: 15px; font-weight: 500; color: var(--text-secondary, #475569); cursor: pointer; border: none; background: none; text-align: left; width: 100%; text-decoration: none; }
+  .mobile-drawer-panel .drawer-link:hover { background: var(--bg-hover, #F1F5F9); }
+  .mobile-drawer-panel .drawer-link.active { background: var(--bg-selected, #EFF6FF); color: var(--brand, #2563EB); font-weight: 600; }
+
+  @media (max-width: 768px) {
+    .mobile-menu-btn { display: flex; }
+    .app-nav-links { display: none; }
+    .app-nav-user > span:last-of-type:not(.app-nav-avatar) { display: none; }
+    .app-nav-user > a[href*="settings"] { display: none; }
+    .app-nav-user { gap: 6px; }
+    .hero h1 { font-size: 36px; }
+    .hero-subtitle { font-size: 16px; }
+    .hero-visual { display: none; }
+    .stats-grid { grid-template-columns: 1fr; gap: 24px; }
+    .stat-value { font-size: 32px; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .usecases-grid { grid-template-columns: 1fr; }
+    .attorneys-grid { grid-template-columns: 1fr; }
+    .reporters-grid { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
+    .filter-bar { flex-direction: column; }
+    .filter-input { min-width: unset; }
+    .dash-cards { grid-template-columns: 1fr; }
+    .order-row { grid-template-columns: 1fr; gap: 8px; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .metric-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .profile-overlay { padding: 0; }
+    .profile-card { border-radius: 0; max-width: 100%; }
+    .modal { width: 95%; }
+    .invoice-page { padding: 24px; }
+    .calc-row { grid-template-columns: 1fr; }
+    .analytics-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 28px; }
+    .hero-actions { gap: 12px; }
+    .hero-actions .btn { width: 100%; justify-content: center; }
+    .stat-cards { grid-template-columns: 1fr; }
+    .profile-stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .calendar-day { min-height: 56px; }
+    .analytics-grid { grid-template-columns: 1fr; }
+    .nav-inner { height: 60px; }
+    .app-nav-avatar { display: none; }
+  }
+
+  /* ─── Dark Mode Overrides ───────────────────────── */
+  [data-theme="dark"] body { background: var(--bg); color: var(--text); }
+  [data-theme="dark"] .nav.scrolled { background: rgba(30,41,59,0.95); border-bottom-color: var(--border); }
+  [data-theme="dark"] .nav-brand-text { color: var(--text); }
+  [data-theme="dark"] .nav-links a { color: var(--text-muted); }
+  [data-theme="dark"] .nav-links a:hover { color: var(--text); }
+  [data-theme="dark"] .nav-actions .btn-signin { color: var(--text-secondary); }
+  [data-theme="dark"] .nav-actions .btn-signin:hover { background: var(--bg-hover); }
+  [data-theme="dark"] .hero { background: var(--bg); }
+  [data-theme="dark"] .hero h1 { color: var(--text); }
+  [data-theme="dark"] .hero-subtitle { color: var(--text-muted); }
+  [data-theme="dark"] .hero-badge { background: #1E3A5F; border-color: #1E40AF; color: #60A5FA; }
+  [data-theme="dark"] .hero-bg-gradient1 { background: radial-gradient(ellipse, rgba(37,99,235,0.15) 0%, transparent 70%); }
+  [data-theme="dark"] .hero-bg-gradient2 { background: radial-gradient(ellipse, rgba(99,102,241,0.1) 0%, transparent 70%); }
+  [data-theme="dark"] .hero-bg-dots { background-image: radial-gradient(circle at 1px 1px, rgba(148,163,184,0.04) 1px, transparent 0); }
+  [data-theme="dark"] .hero-card { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .hero-card-bar { background: var(--bg-muted); border-bottom-color: var(--border); }
+  [data-theme="dark"] .hero-card-url span { background: var(--bg-card); border-color: var(--border); color: var(--text-dim); }
+  [data-theme="dark"] .card-tab { background: var(--bg-card); border-color: var(--border); color: var(--text-muted); }
+  [data-theme="dark"] .card-tab.active { background: var(--bg-selected); border-color: var(--brand-border); color: var(--brand); }
+  [data-theme="dark"] .card-field label { color: var(--text-dim); }
+  [data-theme="dark"] .card-field-value { background: var(--bg-muted); border-color: var(--border); color: var(--text-secondary); }
+  [data-theme="dark"] .card-field-value.highlight { background: var(--bg-selected); border-color: var(--brand-border); color: #60A5FA; }
+  [data-theme="dark"] .card-footer { border-top-color: var(--border); }
+  [data-theme="dark"] .card-footer-price { color: var(--text); }
+  [data-theme="dark"] .btn-secondary { background: var(--bg-card); color: var(--text-secondary); border-color: var(--border); }
+  [data-theme="dark"] .btn-secondary:hover { border-color: var(--text-dim); }
+  [data-theme="dark"] .hero-trust { color: var(--text-dim); }
+  [data-theme="dark"] .how { background: var(--bg); }
+  [data-theme="dark"] .section-header h2 { color: var(--text); }
+  [data-theme="dark"] .section-header p { color: var(--text-muted); }
+  [data-theme="dark"] .tab-toggle-inner { background: var(--bg-card); }
+  [data-theme="dark"] .tab-btn { color: var(--text-muted); }
+  [data-theme="dark"] .tab-btn.active { background: var(--bg-hover); color: var(--text); }
+  [data-theme="dark"] .step h3 { color: var(--text); }
+  [data-theme="dark"] .step p { color: var(--text-muted); }
+  [data-theme="dark"] .step-number { color: var(--text-dim); }
+  [data-theme="dark"] .usecases { background: var(--bg-card); }
+  [data-theme="dark"] .usecase-card { background: var(--bg-muted); border-color: var(--border); }
+  [data-theme="dark"] .usecase-card h3 { color: var(--text); }
+  [data-theme="dark"] .usecase-card > p { color: var(--text-muted); }
+  [data-theme="dark"] .usecase-list li { color: var(--text-secondary); }
+  [data-theme="dark"] .attorneys { background: var(--bg); }
+  [data-theme="dark"] .attorneys h2 { color: var(--text); }
+  [data-theme="dark"] .attorneys h2 span { color: var(--text-dim); }
+  [data-theme="dark"] .attorneys > div > div > p { color: var(--text-muted); }
+  [data-theme="dark"] .feature-card { background: var(--bg-card); }
+  [data-theme="dark"] .feature-card:hover { background: var(--bg-selected); }
+  [data-theme="dark"] .feature-card h3 { color: var(--text); }
+  [data-theme="dark"] .feature-card p { color: var(--text-muted); }
+  [data-theme="dark"] .pricing { background: var(--bg); }
+  [data-theme="dark"] .pricing-card { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .pricing-row:not(:last-child) { border-bottom-color: var(--border); }
+  [data-theme="dark"] .pricing-row h3 { color: var(--text); }
+  [data-theme="dark"] .pricing-row .sub { color: var(--text-muted); }
+  [data-theme="dark"] .pricing-row .price { color: var(--text); }
+  [data-theme="dark"] .pricing-row .price span { color: var(--text-dim); }
+  [data-theme="dark"] .pricing-note { background: #1E293B; border-color: #92400E; color: #FBBF24; }
+  [data-theme="dark"] .compliance { background: var(--bg-card); }
+  [data-theme="dark"] .compliance h2 { color: var(--text); }
+  [data-theme="dark"] .compliance-text { color: var(--text-muted); }
+  [data-theme="dark"] .compliance-features div { color: var(--text-secondary); }
+  [data-theme="dark"] .compliance-card { background: var(--bg-muted); border-color: var(--border); }
+  [data-theme="dark"] .compliance-item strong { color: var(--text); }
+  [data-theme="dark"] .compliance-item .sub { color: var(--text-muted); }
+  [data-theme="dark"] .final-cta { background: var(--bg-card); }
+  [data-theme="dark"] .final-cta h2 { color: var(--text); }
+  [data-theme="dark"] .final-cta p { color: var(--text-muted); }
+  [data-theme="dark"] .srl { background: var(--bg); }
+  /* Dashboard pages */
+  [data-theme="dark"] .app-nav { background: var(--bg-nav); border-bottom-color: var(--border); }
+  [data-theme="dark"] .app-nav-link { color: var(--text-muted); }
+  [data-theme="dark"] .app-nav-link:hover { background: var(--bg-hover); color: var(--text); }
+  [data-theme="dark"] .app-nav-link.active { background: var(--bg-selected); color: var(--brand); }
+  [data-theme="dark"] .app-nav-user { color: var(--text-secondary); }
+  [data-theme="dark"] .page { background: var(--bg-page); }
+  [data-theme="dark"] .page-header h1 { color: var(--text); }
+  [data-theme="dark"] .page-header p { color: var(--text-muted); }
+  [data-theme="dark"] .dash-card { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .dash-card:hover { box-shadow: var(--shadow-md); }
+  [data-theme="dark"] .dash-card h3 { color: var(--text); }
+  [data-theme="dark"] .dash-card .case-num { color: var(--text-muted); }
+  [data-theme="dark"] .dash-card .case-meta { color: var(--text-dim); }
+  [data-theme="dark"] .dash-card-footer { border-top-color: var(--border); color: var(--text-muted); }
+  [data-theme="dark"] .detail-header { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .detail-header h2 { color: var(--text); }
+  [data-theme="dark"] .detail-meta { color: var(--text-muted); }
+  [data-theme="dark"] .detail-back { color: var(--text-muted); }
+  [data-theme="dark"] .order-row { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .order-info h4 { color: var(--text); }
+  [data-theme="dark"] .order-info .sub { color: var(--text-dim); }
+  [data-theme="dark"] .order-cost .amount { color: var(--text); }
+  [data-theme="dark"] .filter-input { background: var(--bg-input); border-color: var(--border); color: var(--text); }
+  [data-theme="dark"] .filter-input:focus { border-color: var(--brand); }
+  [data-theme="dark"] .filter-select { background-color: var(--bg-input); border-color: var(--border); color: var(--text); }
+  [data-theme="dark"] .form-input { background: var(--bg-input); border-color: var(--border); color: var(--text); }
+  [data-theme="dark"] .form-input:focus { border-color: var(--brand); }
+  [data-theme="dark"] .form-input::placeholder { color: var(--text-dim); }
+  [data-theme="dark"] .calendar { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .calendar-header h3 { color: var(--text); }
+  [data-theme="dark"] .calendar-nav button { background: var(--bg-hover); border-color: var(--border); color: var(--text-secondary); }
+  [data-theme="dark"] .calendar-day:hover { background: var(--bg-hover); }
+  [data-theme="dark"] .calendar-day.today { background: var(--bg-selected); }
+  [data-theme="dark"] .calendar-day-num { color: var(--text-secondary); }
+  [data-theme="dark"] .calendar-day.today .calendar-day-num { color: var(--brand); }
+  [data-theme="dark"] .calendar-detail { background: var(--bg-muted); }
+  [data-theme="dark"] .calendar-detail h4 { color: var(--text); }
+  [data-theme="dark"] .calendar-detail-item { color: var(--text-secondary); border-bottom-color: var(--border); }
+  [data-theme="dark"] .job-card { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .job-card h3 { color: var(--text); }
+  [data-theme="dark"] .job-card .job-detail { color: var(--text-muted); }
+  [data-theme="dark"] .job-card-bottom { border-top-color: var(--border); }
+  [data-theme="dark"] .job-card-posted { color: var(--text-dim); }
+  [data-theme="dark"] .btn-decline { background: var(--bg-card); color: var(--text-muted); border-color: var(--border); }
+  [data-theme="dark"] .team-row { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .team-name { color: var(--text); }
+  [data-theme="dark"] .team-email { color: var(--text-dim); }
+  [data-theme="dark"] .team-role { background: var(--bg-hover); color: var(--text-secondary); }
+  [data-theme="dark"] .stat-card { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .stat-card .stat-card-value { color: var(--text); }
+  [data-theme="dark"] .stat-card .stat-card-label { color: var(--text-muted); }
+  [data-theme="dark"] .payout-table { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .payout-table th { background: var(--bg-muted); color: var(--text-muted); }
+  [data-theme="dark"] .payout-table td { color: var(--text-secondary); border-top-color: var(--border); }
+  [data-theme="dark"] .metric-card { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .metric-card .metric-value { color: var(--text); }
+  [data-theme="dark"] .metric-card .metric-label { color: var(--text-muted); }
+  [data-theme="dark"] .bar-chart { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .bar-chart h3 { color: var(--text); }
+  [data-theme="dark"] .bar-row .bar-label { color: var(--text-muted); }
+  [data-theme="dark"] .bar-row .bar-track { background: var(--bg-hover); }
+  [data-theme="dark"] .verify-table { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .verify-table th { background: var(--bg-muted); color: var(--text-muted); border-bottom-color: var(--border); }
+  [data-theme="dark"] .verify-table td { color: var(--text-secondary); border-bottom-color: var(--border); }
+  [data-theme="dark"] .compliance-list .compliance-item { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .compliance-info h4 { color: var(--text); }
+  [data-theme="dark"] .compliance-info p { color: var(--text-muted); }
+  [data-theme="dark"] .notif-panel { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .notif-panel-header { border-bottom-color: var(--border); color: var(--text); }
+  [data-theme="dark"] .notif-item { border-bottom-color: var(--border); }
+  [data-theme="dark"] .notif-item:hover { background: var(--bg-hover); }
+  [data-theme="dark"] .notif-item.unread { background: var(--bg-selected); }
+  [data-theme="dark"] .notif-text h4 { color: var(--text); }
+  [data-theme="dark"] .notif-text p { color: var(--text-muted); }
+  [data-theme="dark"] .notif-bell { color: var(--text-secondary); }
+  [data-theme="dark"] .notif-bell:hover { background: var(--bg-hover); }
+  [data-theme="dark"] .toast { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .toast h4 { color: var(--text); }
+  [data-theme="dark"] .toast p { color: var(--text-muted); }
+  [data-theme="dark"] .chat-panel { background: var(--bg-card); }
+  [data-theme="dark"] .chat-header { border-bottom-color: var(--border); }
+  [data-theme="dark"] .chat-header-info h3 { color: var(--text); }
+  [data-theme="dark"] .chat-header-info p { color: var(--text-muted); }
+  [data-theme="dark"] .chat-bubble-other { background: var(--bg-hover); color: var(--text); }
+  [data-theme="dark"] .chat-input-bar { border-top-color: var(--border); }
+  [data-theme="dark"] .chat-input { background: var(--bg-input); border-color: var(--border); color: var(--text); }
+  [data-theme="dark"] .profile-card { background: var(--bg-card); }
+  [data-theme="dark"] .profile-body { color: var(--text); }
+  [data-theme="dark"] .profile-section h3 { color: var(--text-muted); }
+  [data-theme="dark"] .profile-stat { background: var(--bg-muted); }
+  [data-theme="dark"] .profile-stat .val { color: var(--text); }
+  [data-theme="dark"] .profile-stat .lbl { color: var(--text-muted); }
+  [data-theme="dark"] .profile-courts li { color: var(--text-secondary); }
+  [data-theme="dark"] .review-card { background: var(--bg-muted); }
+  [data-theme="dark"] .review-card .review-name { color: var(--text); }
+  [data-theme="dark"] .review-card p { color: var(--text-secondary); }
+  [data-theme="dark"] .modal-overlay { background: rgba(0,0,0,0.6); }
+  [data-theme="dark"] .modal { background: var(--bg-card); }
+  [data-theme="dark"] .modal h2 { color: var(--text); }
+  [data-theme="dark"] .modal p { color: var(--text-muted); }
+  [data-theme="dark"] .modal-option { background: var(--bg-muted); border-color: var(--border); }
+  [data-theme="dark"] .modal-option:hover { border-color: var(--brand-border); background: var(--bg-selected); }
+  [data-theme="dark"] .modal-option h3 { color: var(--text); }
+  [data-theme="dark"] .modal-option p { color: var(--text-muted); }
+  [data-theme="dark"] .type-card { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .type-card:hover { border-color: var(--brand-border); }
+  [data-theme="dark"] .type-card.selected { background: var(--bg-selected); border-color: var(--brand); }
+  [data-theme="dark"] .type-card h3 { color: var(--text); }
+  [data-theme="dark"] .type-card p { color: var(--text-muted); }
+  [data-theme="dark"] .turnaround-card { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .turnaround-card:hover { border-color: var(--brand-border); }
+  [data-theme="dark"] .turnaround-card.selected { background: var(--bg-selected); border-color: var(--brand); }
+  [data-theme="dark"] .turnaround-card h4 { color: var(--text); }
+  [data-theme="dark"] .turnaround-card .time { color: var(--text-muted); }
+  [data-theme="dark"] .price-box { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .price-box h3 { color: var(--text); }
+  [data-theme="dark"] .price-line { color: var(--text-secondary); border-bottom-color: var(--border); }
+  [data-theme="dark"] .price-line strong { color: var(--text); }
+  [data-theme="dark"] .price-total { color: var(--text); border-top-color: var(--text); }
+  [data-theme="dark"] .review-grid .review-field label { color: var(--text-dim); }
+  [data-theme="dark"] .review-field .val { background: var(--bg-muted); border-color: var(--border); color: var(--text-secondary); }
+  [data-theme="dark"] .confirm-box h2 { color: var(--text); }
+  [data-theme="dark"] .confirm-box .order-num { color: var(--text-muted); }
+  [data-theme="dark"] .form-label { color: var(--text-secondary); }
+  [data-theme="dark"] .form-select { background-color: var(--bg-input); border-color: var(--border); color: var(--text); }
+  [data-theme="dark"] .onboarding-page h1 { color: var(--text); }
+  [data-theme="dark"] .onboarding-page > p { color: var(--text-muted); }
+  [data-theme="dark"] .checkbox-item { border-color: var(--border); color: var(--text-secondary); }
+  [data-theme="dark"] .checkbox-item:hover { border-color: var(--brand-border); background: var(--bg-hover); }
+  [data-theme="dark"] .checkbox-item.checked { border-color: var(--brand); background: var(--bg-selected); color: #60A5FA; }
+  /* Theme toggle */
+  .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all 0.15s; }
+  .theme-toggle:hover { background: var(--bg-hover); color: var(--text); }
+
+  /* ─── Micro-animations ─────────────────────────── */
+  .dash-card { transition: all 0.2s ease; }
+  .dash-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .job-card { transition: all 0.2s ease; }
+  .feature-card { transition: all 0.2s ease; }
+  .usecase-card { transition: all 0.3s ease; }
+  .btn { transition: all 0.2s ease; }
+  .badge-progress { animation: badgePulse 2s infinite; }
+  @keyframes badgePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+  .calendar-day { transition: background 0.15s; }
+  .modal-option { transition: all 0.2s ease; }
+  .type-card { transition: all 0.2s ease; }
+  .turnaround-card { transition: all 0.2s ease; }
 </style>
 </head>
 <body>
@@ -689,7 +1073,19 @@
 <div id="root"></div>
 
 <script type="text/babel">
-const { useState, useEffect, useRef } = React;
+const { useState, useEffect, useRef, createContext, useContext } = React;
+
+// ─── Theme Context ──────────────────────────────────────────────
+const ThemeContext = createContext({ dark: false, toggle: () => {} });
+function useTheme() { return useContext(ThemeContext); }
+function ThemeToggle() {
+  const { dark, toggle } = useTheme();
+  return (
+    <button className="theme-toggle" onClick={toggle} title={dark ? "Light mode" : "Dark mode"}>
+      <Icon name={dark ? "sun" : "moon"} size={16} />
+    </button>
+  );
+}
 
 // ─── SVG Icons (inline) ─────────────────────────────────────────
 const Icon = ({ name, size = 20, color = "currentColor", strokeWidth = 2 }) => {
@@ -717,6 +1113,14 @@ const Icon = ({ name, size = 20, color = "currentColor", strokeWidth = 2 }) => {
     calendar: <><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></>,
     award: <><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></>,
     globe: <><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></>,
+    sun: <><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></>,
+    moon: <><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></>,
+    settings: <><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></>,
+    creditCard: <><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></>,
+    printer: <><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></>,
+    dollarSign: <><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></>,
+    trendingUp: <><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></>,
+    menu: <><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></>,
   };
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
@@ -1037,6 +1441,73 @@ const MOCK_PLATFORM_METRICS = {
     { month: "Dec", count: 142 }, { month: "Jan", count: 201 },
     { month: "Feb", count: 224 }, { month: "Mar", count: 335 },
   ],
+};
+
+// ─── Mock Data: Order Detail ──────────────────────────────────────
+const MOCK_ORDER_DETAIL = {
+  "ORD-2024-1847": {
+    id: "ORD-2024-1847", caseName: "Walsh v. Thompson", caseNumber: "23STFL-04521",
+    court: "LA Superior Court - Stanley Mosk, Dept. 41", caseType: "Family Law",
+    status: "in-progress",
+    timeline: [
+      { step: "Order Placed", date: "2026-03-01", done: true },
+      { step: "Reporter Assigned", date: "2026-03-02", done: true },
+      { step: "In Progress", date: "2026-03-10", done: true, active: true },
+      { step: "Under Review", date: null, done: false },
+      { step: "Delivered", date: null, done: false },
+    ],
+    reporter: { name: "Sarah Chen", csrNumber: "CSR #14892", initials: "SC", rating: 4.9 },
+    documents: [
+      { name: "Hearing Notice.pdf", type: "PDF", date: "2026-03-01", size: "245 KB" },
+      { name: "Case Filing.pdf", type: "PDF", date: "2026-03-01", size: "1.2 MB" },
+      { name: "Partial Transcript (Draft).pdf", type: "PDF", date: "2026-03-12", size: "890 KB" },
+    ],
+    invoice: {
+      number: "INV-2026-0342", date: "2026-03-01",
+      billTo: { name: "Jennifer Walsh, Esq.", firm: "Walsh Family Law Group", address: "123 Main St, Los Angeles, CA 90012" },
+      items: [
+        { desc: "Original transcript – Family Law hearing", qty: "~35 pages", rate: "$3.67", amount: "$128.45" },
+        { desc: "Rush turnaround (1.5x)", qty: "1", rate: "$64.23", amount: "$64.23" },
+      ],
+      subtotal: "$192.68", platformFee: "$19.27", total: "$211.95", status: "pending",
+    },
+  },
+};
+
+// ─── Mock Data: Settings ────────────────────────────────────────
+const MOCK_SETTINGS = {
+  profile: { name: "Jennifer Walsh", email: "jennifer@walshlaw.com", phone: "(213) 555-0100", firm: "Walsh Family Law Group", barNumber: "CA-287451" },
+  notifications: [
+    { label: "Order updates", sub: "Status changes, assignments", email: true, sms: false, push: true },
+    { label: "New messages", sub: "Chat messages from reporters", email: true, sms: true, push: true },
+    { label: "Delivery alerts", sub: "Transcript ready for download", email: true, sms: false, push: true },
+    { label: "Marketing", sub: "Product updates and tips", email: false, sms: false, push: false },
+  ],
+  billing: {
+    cards: [{ brand: "Visa", last4: "4242", expiry: "12/27", isDefault: true }, { brand: "Amex", last4: "1001", expiry: "06/26", isDefault: false }],
+    address: "123 Main St, Los Angeles, CA 90012",
+    invoices: [
+      { id: "INV-2026-0342", date: "2026-03-01", amount: "$211.95", status: "Pending" },
+      { id: "INV-2026-0298", date: "2026-02-14", amount: "$387.20", status: "Paid" },
+      { id: "INV-2026-0201", date: "2026-01-22", amount: "$156.80", status: "Paid" },
+    ],
+  },
+};
+
+// ─── Mock Data: Analytics ───────────────────────────────────────
+const MOCK_ANALYTICS = {
+  monthlySpend: [
+    { month: "Oct", amount: 2400 }, { month: "Nov", amount: 3100 },
+    { month: "Dec", amount: 1800 }, { month: "Jan", amount: 4200 },
+    { month: "Feb", amount: 3600 }, { month: "Mar", amount: 2900 },
+  ],
+  byType: [
+    { type: "Family Law", count: 12, amount: 4800 },
+    { type: "Civil", count: 8, amount: 3200 },
+    { type: "Probate", count: 5, amount: 2100 },
+    { type: "Criminal", count: 3, amount: 1400 },
+  ],
+  metrics: { totalSpent: "$18,000", avgPerOrder: "$450", avgTurnaround: "4.2 days", ordersThisMonth: 7, trend: "+12%" },
 };
 
 function calculateEstimate(durationMin, turnaround, hasInterpreter) {
@@ -1456,9 +1927,10 @@ function CalendarView({ events }) {
 
 // ─── Shared Components ──────────────────────────────────────────
 function AppNav({ variant, activeTab, onTabChange }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
   const tabMap = {
     reporter: [["jobs", "Available Jobs"], ["active", "My Jobs"], ["calendar", "Calendar"], ["earnings", "Earnings"]],
-    buyer: [["cases", "My Cases"], ["calendar", "Calendar"], ["team", "Team"]],
+    buyer: [["cases", "My Cases"], ["calendar", "Calendar"], ["analytics", "Analytics"], ["team", "Team"]],
     admin: [["overview", "Overview"], ["verifications", "Verifications"], ["compliance", "Compliance"]],
   };
   const tabs = tabMap[variant] || tabMap.buyer;
@@ -1473,7 +1945,7 @@ function AppNav({ variant, activeTab, onTabChange }) {
       <div className="container">
         <div className="app-nav-inner">
           <div style={{display: "flex", alignItems: "center", gap: 24}}>
-            <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
+            <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
             <div className="app-nav-links">
               {tabs.map(([key, label]) => (
                 <button key={key} className={"app-nav-link" + (activeTab === key ? " active" : "")} onClick={() => onTabChange(key)}>{label}</button>
@@ -1481,12 +1953,28 @@ function AppNav({ variant, activeTab, onTabChange }) {
             </div>
           </div>
           <div className="app-nav-user">
+            <ThemeToggle />
+            <a href="#/settings" style={{color: "var(--text-muted, #64748B)", padding: 6, borderRadius: 8, display: "flex"}} title="Settings"><Icon name="settings" size={16} /></a>
             <NotificationBell variant={variant} />
             <span className="app-nav-avatar">{user.initials}</span>
             <span>{user.name}</span>
+            <button className="mobile-menu-btn" onClick={() => setMobileOpen(true)}><Icon name="menu" size={20} /></button>
           </div>
         </div>
       </div>
+      {mobileOpen && (
+        <div className="mobile-drawer">
+          <div className="mobile-drawer-overlay" onClick={() => setMobileOpen(false)} />
+          <div className="mobile-drawer-panel">
+            <button className="drawer-close" onClick={() => setMobileOpen(false)}><Icon name="x" size={20} /></button>
+            {tabs.map(([key, label]) => (
+              <button key={key} className={"drawer-link" + (activeTab === key ? " active" : "")} onClick={() => { onTabChange(key); setMobileOpen(false); }}>{label}</button>
+            ))}
+            <hr style={{border: "none", borderTop: "1px solid var(--border, #E2E8F0)", margin: "8px 0"}} />
+            <a className="drawer-link" href="#/settings" onClick={() => setMobileOpen(false)}><Icon name="settings" size={16} style={{marginRight: 8}} />Settings</a>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
@@ -1540,7 +2028,7 @@ function OrderFlow() {
     return (
       <div>
         <nav className="app-nav"><div className="container"><div className="app-nav-inner">
-          <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
+          <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
           <div />
         </div></div></nav>
         <div className="page page-enter"><div className="container">
@@ -1566,7 +2054,7 @@ function OrderFlow() {
   return (
     <div>
       <nav className="app-nav"><div className="container"><div className="app-nav-inner">
-        <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
+        <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
         <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Cancel</button>
       </div></div></nav>
       <div className="page page-enter">
@@ -1889,7 +2377,7 @@ function BuyerDashboard() {
                           <Icon name={o.type === "live" ? "mapPin" : "mic"} size={18} color={o.type === "live" ? "#2563EB" : "#D97706"} />
                         </div>
                         <div className="order-info">
-                          <h4>{o.type === "live" ? "Live Attendance" : "Transcription"} - {o.hearingDate}</h4>
+                          <h4><a href={"#/order/" + o.id} style={{color: "inherit", textDecoration: "none"}} onMouseOver={e => e.target.style.color="#2563EB"} onMouseOut={e => e.target.style.color="inherit"}>{o.type === "live" ? "Live Attendance" : "Transcription"} - {o.hearingDate}</a></h4>
                           <div className="sub">
                             {o.reporter ? (
                               <a href="#" onClick={e => { e.preventDefault(); setProfileReporter(o.reporter); }} style={{color: "#2563EB", textDecoration: "none", fontWeight: 500}}>{o.reporter}</a>
@@ -1935,6 +2423,50 @@ function BuyerDashboard() {
               <CalendarView events={calendarEvents} />
             </div>
           )}
+
+          {tab === "analytics" && (() => {
+            const maxSpend = Math.max(...MOCK_ANALYTICS.monthlySpend.map(m => m.amount));
+            const maxType = Math.max(...MOCK_ANALYTICS.byType.map(t => t.amount));
+            return (
+              <div>
+                <div className="page-header">
+                  <div><h1>Analytics</h1><p>Spending trends and order insights.</p></div>
+                </div>
+                <div className="analytics-grid">
+                  {[
+                    { label: "Total Spent", value: MOCK_ANALYTICS.metrics.totalSpent },
+                    { label: "Avg per Order", value: MOCK_ANALYTICS.metrics.avgPerOrder },
+                    { label: "Avg Turnaround", value: MOCK_ANALYTICS.metrics.avgTurnaround },
+                    { label: "Orders This Month", value: MOCK_ANALYTICS.metrics.ordersThisMonth, trend: MOCK_ANALYTICS.metrics.trend },
+                  ].map((m, i) => (
+                    <div className="analytics-card" key={i}>
+                      <div className="a-label">{m.label}</div>
+                      <div className="a-value">{m.value}</div>
+                      {m.trend && <div className="a-trend"><Icon name="trendingUp" size={12} /> {m.trend}</div>}
+                    </div>
+                  ))}
+                </div>
+                <div className="bar-chart">
+                  <h3>Monthly Spending</h3>
+                  {MOCK_ANALYTICS.monthlySpend.map(m => (
+                    <div className="bar-row" key={m.month}>
+                      <div className="bar-label">{m.month}</div>
+                      <div className="bar-track"><div className="bar-fill" style={{width: (m.amount / maxSpend * 100) + "%"}}>${m.amount.toLocaleString()}</div></div>
+                    </div>
+                  ))}
+                </div>
+                <div className="bar-chart" style={{marginTop: 20}}>
+                  <h3>Spending by Case Type</h3>
+                  {MOCK_ANALYTICS.byType.map(t => (
+                    <div className="bar-row" key={t.type}>
+                      <div className="bar-label" style={{width: 80}}>{t.type}</div>
+                      <div className="bar-track"><div className="bar-fill" style={{width: (t.amount / maxType * 100) + "%"}}>${t.amount.toLocaleString()} ({t.count})</div></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
 
           {tab === "team" && (
             <div>
@@ -2525,6 +3057,334 @@ function AdminDashboard() {
   );
 }
 
+// ─── Order Detail Page ──────────────────────────────────────────
+function OrderDetailPage({ orderId }) {
+  const [showInvoice, setShowInvoice] = useState(false);
+  const [showChat, setShowChat] = useState(false);
+  const detail = MOCK_ORDER_DETAIL[orderId] || MOCK_ORDER_DETAIL["ORD-2024-1847"];
+  const { toasts, addToast, removeToast } = useToast();
+  return (
+    <div>
+      <AppNav variant="buyer" activeTab="cases" onTabChange={() => navigate("/dashboard")} />
+      <div className="page page-enter">
+        <div className="container">
+          <button className="detail-back" onClick={() => navigate("/dashboard")}>
+            <Icon name="chevronRight" size={14} color="#64748B" style={{transform: "rotate(180deg)"}} /> Back to Dashboard
+          </button>
+          <div className="detail-header">
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12}}>
+              <div>
+                <h2>{detail.caseName}</h2>
+                <div className="detail-meta">
+                  <span><Icon name="fileText" size={14} /> {detail.caseNumber}</span>
+                  <span><Icon name="mapPin" size={14} /> {detail.court}</span>
+                  <span><Icon name="scale" size={14} /> {detail.caseType}</span>
+                </div>
+              </div>
+              <StatusBadge status={detail.status} />
+            </div>
+          </div>
+
+          <div className="detail-timeline">
+            <h3>Order Timeline</h3>
+            <div className="timeline">
+              {detail.timeline.map((t, i) => (
+                <React.Fragment key={i}>
+                  {i > 0 && <div className={"timeline-line" + (t.done ? " done" : "")} />}
+                  <div className={"timeline-step " + (t.done && !t.active ? "done" : t.active ? "current" : "")}>
+                    <div className="timeline-dot" />
+                    <div>{t.step}{t.date && <span style={{display: "block", fontSize: 10, fontWeight: 400, color: "#94A3B8"}}>{t.date}</span>}</div>
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+
+          <div className="detail-grid">
+            <div className="detail-section">
+              <h3>Assigned Reporter</h3>
+              <div style={{display: "flex", alignItems: "center", gap: 12, marginBottom: 16}}>
+                <span className="app-nav-avatar" style={{width: 40, height: 40, fontSize: 14}}>{detail.reporter.initials}</span>
+                <div>
+                  <div style={{fontWeight: 600, color: "var(--text, #0F172A)"}}>{detail.reporter.name}</div>
+                  <div style={{fontSize: 12, color: "var(--text-muted, #64748B)"}}>{detail.reporter.csrNumber} &middot; &#9733; {detail.reporter.rating}</div>
+                </div>
+              </div>
+              <button className="btn btn-secondary btn-sm" onClick={() => setShowChat(true)} style={{width: "100%", justifyContent: "center"}}>
+                <Icon name="messageCircle" size={14} /> Message Reporter
+              </button>
+            </div>
+
+            <div className="detail-section">
+              <h3>Documents</h3>
+              {detail.documents.map((doc, i) => (
+                <div className="doc-row" key={i}>
+                  <div className="doc-icon"><Icon name="fileText" size={16} color="#2563EB" /></div>
+                  <div className="doc-info">
+                    <div style={{fontWeight: 500, color: "var(--text, #334155)"}}>{doc.name}</div>
+                    <div className="doc-size">{doc.date} &middot; {doc.size}</div>
+                  </div>
+                  <button style={{background: "none", border: "none", cursor: "pointer", color: "var(--text-muted, #64748B)"}}><Icon name="download" size={16} /></button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="detail-section" style={{marginTop: 20}}>
+            <h3>Invoice Summary</h3>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16}}>
+              <span style={{fontSize: 13, color: "var(--text-muted, #64748B)"}}>{detail.invoice.number} &middot; {detail.invoice.date}</span>
+              <span className="badge badge-pending">{detail.invoice.status}</span>
+            </div>
+            {detail.invoice.items.map((item, i) => (
+              <div className="price-line" key={i}><span>{item.desc}</span><strong>{item.amount}</strong></div>
+            ))}
+            <div className="price-line"><span>Platform fee</span><strong>{detail.invoice.platformFee}</strong></div>
+            <div className="price-total"><span>Total</span><span>{detail.invoice.total}</span></div>
+            <div style={{marginTop: 16, display: "flex", gap: 8}}>
+              <button className="btn btn-primary btn-sm" onClick={() => setShowInvoice(true)}><Icon name="eye" size={14} color="#fff" /> View Full Invoice</button>
+              <button className="btn btn-secondary btn-sm" onClick={() => addToast("Downloaded", "Invoice PDF saved", "success")}><Icon name="download" size={14} /> Download</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {showInvoice && <InvoiceView invoice={detail.invoice} onClose={() => setShowInvoice(false)} />}
+      {showChat && <ChatPanel orderId="ORD-2024-1847" role="buyer" onClose={() => setShowChat(false)} />}
+      <ToastContainer toasts={toasts} removeToast={removeToast} />
+    </div>
+  );
+}
+
+// ─── Invoice View ───────────────────────────────────────────────
+function InvoiceView({ invoice, onClose }) {
+  return (
+    <div className="invoice-overlay">
+      <div className="invoice-toolbar">
+        <div className="invoice-toolbar-group">
+          <span style={{fontWeight: 700}}>Invoice {invoice.number}</span>
+        </div>
+        <div className="invoice-toolbar-group">
+          <button onClick={() => window.print()}><Icon name="printer" size={14} color="#fff" /> Print</button>
+          <button><Icon name="download" size={14} color="#fff" /> Download PDF</button>
+          <button onClick={onClose}><Icon name="x" size={14} color="#fff" /> Close</button>
+        </div>
+      </div>
+      <div className="invoice-body">
+        <div className="invoice-page">
+          <div className="invoice-header">
+            <div>
+              <h2>INVOICE</h2>
+              <div className="invoice-num">{invoice.number}</div>
+            </div>
+            <div style={{textAlign: "right"}}>
+              <div style={{fontWeight: 800, fontSize: 16, color: "#0F172A"}}>Dewey Sholes</div>
+              <div style={{fontSize: 12, color: "#64748B", marginTop: 4}}>Court Transcript Services<br />Los Angeles, CA</div>
+            </div>
+          </div>
+          <div className="invoice-meta">
+            <div>
+              <strong>Bill To</strong>
+              <div>{invoice.billTo.name}</div>
+              <div>{invoice.billTo.firm}</div>
+              <div>{invoice.billTo.address}</div>
+            </div>
+            <div>
+              <strong>Invoice Date</strong>
+              <div>{invoice.date}</div>
+              <div style={{marginTop: 12}}><strong>Status</strong></div>
+              <div>{invoice.status === "pending" ? "Payment Pending" : "Paid"}</div>
+            </div>
+          </div>
+          <table className="invoice-table">
+            <thead><tr><th>Description</th><th>Qty</th><th>Rate</th><th style={{textAlign: "right"}}>Amount</th></tr></thead>
+            <tbody>
+              {invoice.items.map((item, i) => (
+                <tr key={i}><td>{item.desc}</td><td>{item.qty}</td><td>{item.rate}</td><td>{item.amount}</td></tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="invoice-totals">
+            <div className="row"><span>Subtotal</span><span>{invoice.subtotal}</span></div>
+            <div className="row"><span>Platform fee</span><span>{invoice.platformFee}</span></div>
+            <div className="row total"><span>Total</span><span>{invoice.total}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Settings Page ──────────────────────────────────────────────
+function SettingsPage() {
+  const [tab, setTab] = useState("profile");
+  const [notifs, setNotifs] = useState(MOCK_SETTINGS.notifications.map(n => ({...n})));
+  const { toasts, addToast, removeToast } = useToast();
+
+  const toggleNotif = (idx, channel) => {
+    setNotifs(n => n.map((item, i) => i === idx ? {...item, [channel]: !item[channel]} : item));
+  };
+
+  return (
+    <div>
+      <AppNav variant="buyer" activeTab="settings" onTabChange={t => { if (t !== "settings") { navigate("/dashboard"); }}} />
+      <div className="page page-enter">
+        <div className="container" style={{maxWidth: 720}}>
+          <div className="page-header">
+            <div>
+              <h1>Settings</h1>
+              <p>Manage your account preferences.</p>
+            </div>
+          </div>
+          <div style={{display: "flex", gap: 4, marginBottom: 24}}>
+            {[["profile", "Profile"], ["notifications", "Notifications"], ["billing", "Billing"]].map(([key, label]) => (
+              <button key={key} className={"app-nav-link" + (tab === key ? " active" : "")} onClick={() => setTab(key)}>{label}</button>
+            ))}
+          </div>
+
+          {tab === "profile" && (
+            <div className="detail-section">
+              <div className="settings-section">
+                <h3>Personal Information</h3>
+                <div className="form-row" style={{marginBottom: 16}}>
+                  <div className="form-group"><label className="form-label">Full Name</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.name} /></div>
+                  <div className="form-group"><label className="form-label">Email</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.email} /></div>
+                </div>
+                <div className="form-row">
+                  <div className="form-group"><label className="form-label">Phone</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.phone} /></div>
+                  <div className="form-group"><label className="form-label">Bar Number</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.barNumber} /></div>
+                </div>
+              </div>
+              <div className="settings-section">
+                <h3>Firm</h3>
+                <div className="form-group"><label className="form-label">Firm Name</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.firm} /></div>
+              </div>
+              <button className="btn btn-primary btn-sm" onClick={() => addToast("Saved", "Profile updated", "success")}>Save Changes</button>
+            </div>
+          )}
+
+          {tab === "notifications" && (
+            <div className="detail-section">
+              <div className="settings-section">
+                <h3>Notification Preferences</h3>
+                <div style={{display: "grid", gridTemplateColumns: "1fr auto auto auto", gap: 0, fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", padding: "0 0 8px"}}>
+                  <span></span><span style={{textAlign: "center", width: 60}}>Email</span><span style={{textAlign: "center", width: 60}}>SMS</span><span style={{textAlign: "center", width: 60}}>Push</span>
+                </div>
+                {notifs.map((n, i) => (
+                  <div key={i} className="toggle-row">
+                    <div style={{flex: 1}}>
+                      <div className="toggle-label">{n.label}</div>
+                      <div className="toggle-sub">{n.sub}</div>
+                    </div>
+                    {["email", "sms", "push"].map(ch => (
+                      <label key={ch} className="toggle-switch" style={{margin: "0 8px"}}>
+                        <input type="checkbox" checked={n[ch]} onChange={() => toggleNotif(i, ch)} />
+                        <span className="slider"></span>
+                      </label>
+                    ))}
+                  </div>
+                ))}
+              </div>
+              <button className="btn btn-primary btn-sm" onClick={() => addToast("Saved", "Notification preferences updated", "success")}>Save Preferences</button>
+            </div>
+          )}
+
+          {tab === "billing" && (
+            <div className="detail-section">
+              <div className="settings-section">
+                <h3>Payment Methods</h3>
+                {MOCK_SETTINGS.billing.cards.map((card, i) => (
+                  <div className="payment-card" key={i}>
+                    <div className="card-brand">{card.brand}</div>
+                    <div>
+                      <div className="card-num">&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; {card.last4}</div>
+                      <div className="card-exp">Expires {card.expiry}</div>
+                    </div>
+                    {card.isDefault && <span className="card-default">Default</span>}
+                  </div>
+                ))}
+                <button className="btn btn-secondary btn-sm" style={{marginTop: 8}}>+ Add Payment Method</button>
+              </div>
+              <div className="settings-section">
+                <h3>Billing Address</h3>
+                <p style={{fontSize: 14, color: "var(--text-secondary, #475569)"}}>{MOCK_SETTINGS.billing.address}</p>
+              </div>
+              <div className="settings-section">
+                <h3>Recent Invoices</h3>
+                <table className="payout-table">
+                  <thead><tr><th>Invoice</th><th>Date</th><th>Amount</th><th>Status</th></tr></thead>
+                  <tbody>
+                    {MOCK_SETTINGS.billing.invoices.map((inv, i) => (
+                      <tr key={i}><td>{inv.id}</td><td>{inv.date}</td><td>{inv.amount}</td><td><span className={"badge badge-" + (inv.status === "Paid" ? "completed" : "pending")}>{inv.status}</span></td></tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      <ToastContainer toasts={toasts} removeToast={removeToast} />
+    </div>
+  );
+}
+
+// ─── Pricing Calculator ─────────────────────────────────────────
+function PricingCalculator() {
+  const [pages, setPages] = useState(35);
+  const [turnaround, setTurnaround] = useState("standard");
+  const [hearingType, setHearingType] = useState("live");
+
+  const mult = PRICING[turnaround + "Multiplier"] || 1;
+  const base = pages * PRICING.ratePerPage;
+  const turnaroundFee = base * (mult - 1);
+  const platformFee = base * PRICING.platformFee;
+  const total = (base + turnaroundFee + platformFee);
+
+  return (
+    <div className="calc-card">
+      <h3>Estimate Your Cost</h3>
+      <div className="calc-row">
+        <div className="form-group">
+          <label className="form-label">Hearing Type</label>
+          <select className="form-input form-select" value={hearingType} onChange={e => setHearingType(e.target.value)}>
+            <option value="live">Live Attendance</option>
+            <option value="audio">Audio Transcription</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Estimated Pages</label>
+          <input className="form-input" type="number" min="5" max="500" value={pages} onChange={e => setPages(parseInt(e.target.value) || 0)} />
+        </div>
+      </div>
+      <div className="form-group">
+        <label className="form-label">Turnaround</label>
+        <div style={{display: "flex", gap: 8}}>
+          {[["rush", "Rush (24h)", "1.5x"], ["standard", "Standard (5d)", "1.0x"], ["economy", "Economy (10d)", "0.8x"]].map(([key, label, mult]) => (
+            <button key={key}
+              className={"turnaround-card" + (turnaround === key ? " selected" : "")}
+              onClick={() => setTurnaround(key)}
+              style={{flex: 1, padding: "12px 8px"}}>
+              <h4 style={{fontSize: 13}}>{label.split(" (")[0]}</h4>
+              <div className="time" style={{fontSize: 11}}>{label.match(/\((.+)\)/)?.[1]}</div>
+              <div className="multiplier">{mult}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="calc-result">
+        <div className="calc-total">${total.toFixed(2)} <span>estimated</span></div>
+        <div className="calc-breakdown">
+          <span>Base: ${base.toFixed(2)}</span>
+          {turnaroundFee > 0 && <span>Turnaround: +${turnaroundFee.toFixed(2)}</span>}
+          {turnaroundFee < 0 && <span>Discount: -${Math.abs(turnaroundFee).toFixed(2)}</span>}
+          <span>Platform: +${platformFee.toFixed(2)}</span>
+        </div>
+        <a href="#/order" className="btn btn-primary btn-sm" style={{marginTop: 16}}>Order Now <Icon name="arrowRight" size={14} color="#fff" /></a>
+      </div>
+    </div>
+  );
+}
+
 // ─── Sign-In Modal ──────────────────────────────────────────────
 function SignInModal({ onClose }) {
   return (
@@ -2586,7 +3446,7 @@ function LandingPage() {
         <div className="container">
           <div className="nav-inner">
             <a href="#" className="nav-brand">
-              <DeweyFullLogo height={38} theme="light" />
+              <DeweyFullLogo height={38} theme={useTheme().dark ? "dark" : "light"} />
             </a>
             <div className="nav-links">
               <a href="#how-it-works">How It Works</a>
@@ -2595,6 +3455,7 @@ function LandingPage() {
               <a href="#pricing">Pricing</a>
             </div>
             <div className="nav-actions">
+              <ThemeToggle />
               <button className="btn-signin" onClick={() => setShowSignIn(true)}>Sign In</button>
               <a href="#/order" className="btn-getstarted">Get Started</a>
             </div>
@@ -2872,6 +3733,7 @@ function LandingPage() {
               <button className="btn">Learn More</button>
             </div>
           </div>
+          <PricingCalculator />
         </div>
       </section>
 
@@ -2999,14 +3861,28 @@ function LandingPage() {
 }
 
 // ─── Router App ─────────────────────────────────────────────────
-function App() {
+function AppRouter() {
   const route = useRoute();
+  const m = route.match(/^#\/order\/(.+)$/);
+  if (m) return <OrderDetailPage orderId={m[1]} />;
   if (route.startsWith("#/order")) return <OrderFlow />;
   if (route.startsWith("#/dashboard")) return <BuyerDashboard />;
   if (route.startsWith("#/reporter")) return <ReporterDashboard />;
   if (route.startsWith("#/admin")) return <AdminDashboard />;
   if (route.startsWith("#/onboarding")) return <OnboardingFlow />;
+  if (route.startsWith("#/settings")) return <SettingsPage />;
   return <LandingPage />;
+}
+
+function App() {
+  const [dark, setDark] = useState(false);
+  const toggle = () => setDark(d => !d);
+  useEffect(() => { document.documentElement.dataset.theme = dark ? "dark" : "light"; }, [dark]);
+  return (
+    <ThemeContext.Provider value={{ dark, toggle }}>
+      <AppRouter />
+    </ThemeContext.Provider>
+  );
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));
