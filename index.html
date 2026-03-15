@@ -2545,15 +2545,10 @@ function SignInModal({ onClose }) {
             </div>
             <div><h3>Court Reporter</h3><p>View and accept transcript jobs</p></div>
           </a>
-          <a className="modal-option" href="#/admin" onClick={onClose}>
-            <div style={{width: 40, height: 40, borderRadius: 10, background: "#F3E8FF", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
-              <Icon name="shield" size={20} color="#7C3AED" />
-            </div>
-            <div><h3>Platform Admin</h3><p>Manage compliance and verifications</p></div>
-          </a>
         </div>
-        <div style={{textAlign: "center", marginTop: 16, paddingTop: 16, borderTop: "1px solid #E2E8F0"}}>
+        <div style={{textAlign: "center", marginTop: 16, paddingTop: 16, borderTop: "1px solid #E2E8F0", display: "flex", flexDirection: "column", gap: 8}}>
           <a href="#/onboarding" onClick={onClose} style={{color: "#2563EB", fontSize: 13, fontWeight: 600, textDecoration: "none"}}>Create an account</a>
+          <a href="#/admin" onClick={onClose} style={{color: "#64748B", fontSize: 12, textDecoration: "none"}}>Platform admin login</a>
         </div>
       </div>
     </div>
