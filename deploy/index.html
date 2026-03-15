@@ -287,6 +287,197 @@
     .card-fields, .card-fields-3 { grid-template-columns: 1fr; }
     .card-footer { flex-direction: column; gap: 16px; text-align: center; }
   }
+
+  /* ─── Page Transitions ───────────────────────── */
+  .page-enter { animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ─── App Nav (for dashboard pages) ──────────── */
+  .app-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: #fff; border-bottom: 1px solid #E2E8F0; }
+  .app-nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .app-nav-links { display: flex; align-items: center; gap: 4px; }
+  .app-nav-link { font-size: 14px; font-weight: 500; color: #64748B; text-decoration: none; padding: 8px 16px; border-radius: 8px; transition: all 0.15s; border: none; background: none; cursor: pointer; }
+  .app-nav-link:hover { background: #F1F5F9; color: #0F172A; }
+  .app-nav-link.active { background: #EFF6FF; color: #2563EB; font-weight: 600; }
+  .app-nav-user { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #475569; }
+  .app-nav-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #2563EB, #4F46E5); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 12px; }
+
+  /* ─── Page Layout ────────────────────────────── */
+  .page { padding-top: 96px; padding-bottom: 64px; min-height: 100vh; background: #F8FAFC; }
+  .page-header { margin-bottom: 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .page-header h1 { font-size: 28px; font-weight: 800; color: #0F172A; letter-spacing: -0.02em; }
+  .page-header p { font-size: 15px; color: #64748B; margin-top: 4px; }
+
+  /* ─── Form Inputs ────────────────────────────── */
+  .form-group { margin-bottom: 20px; }
+  .form-label { display: block; font-size: 12px; font-weight: 600; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .form-input { width: 100%; background: #fff; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 14px; font-size: 14px; color: #0F172A; font-family: inherit; transition: border-color 0.15s; outline: none; }
+  .form-input:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+  .form-input::placeholder { color: #94A3B8; }
+  .form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
+  .form-checkbox { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px; color: #334155; }
+  .form-checkbox input[type="checkbox"] { width: 18px; height: 18px; accent-color: #2563EB; cursor: pointer; }
+  .form-file { border: 2px dashed #E2E8F0; border-radius: 12px; padding: 32px; text-align: center; cursor: pointer; transition: all 0.15s; background: #FAFBFD; }
+  .form-file:hover { border-color: #BFDBFE; background: #EFF6FF; }
+  .form-file p { font-size: 14px; color: #64748B; margin-top: 8px; }
+  .form-file .uploaded { color: #059669; font-weight: 600; }
+
+  /* ─── Status Badges ──────────────────────────── */
+  .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .badge-pending { background: #FEF3C7; color: #92400E; }
+  .badge-assigned { background: #DBEAFE; color: #1E40AF; }
+  .badge-progress { background: #E0E7FF; color: #3730A3; }
+  .badge-completed { background: #D1FAE5; color: #065F46; }
+  .badge-live { background: #EFF6FF; color: #2563EB; }
+  .badge-transcription { background: #FFFBEB; color: #D97706; }
+  .badge-rush { background: #FEE2E2; color: #991B1B; }
+  .badge-standard { background: #DBEAFE; color: #1E40AF; }
+  .badge-economy { background: #D1FAE5; color: #065F46; }
+
+  /* ─── Step Indicator (Order Flow) ────────────── */
+  .step-indicator-bar { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 40px; }
+  .step-dot-num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; transition: all 0.2s; }
+  .step-dot-num.active { background: linear-gradient(135deg, #2563EB, #4F46E5); color: #fff; box-shadow: 0 4px 12px rgba(37,99,235,0.3); }
+  .step-dot-num.done { background: #059669; color: #fff; }
+  .step-dot-num.upcoming { background: #E2E8F0; color: #94A3B8; }
+  .step-line-bar { width: 48px; height: 2px; background: #E2E8F0; }
+  .step-line-bar.done { background: #059669; }
+  @media (min-width: 640px) { .step-line-bar { width: 80px; } }
+
+  /* ─── Order Type Cards ───────────────────────── */
+  .type-cards { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 700px; margin: 0 auto; }
+  @media (min-width: 640px) { .type-cards { grid-template-columns: 1fr 1fr; } }
+  .type-card { background: #fff; border: 2px solid #E2E8F0; border-radius: 16px; padding: 32px; cursor: pointer; transition: all 0.2s; text-align: center; }
+  .type-card:hover { border-color: #BFDBFE; box-shadow: 0 10px 30px -10px rgba(37,99,235,0.1); transform: translateY(-2px); }
+  .type-card.selected { border-color: #2563EB; background: #EFF6FF; }
+  .type-card-icon { width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+  .type-card h3 { font-size: 18px; font-weight: 700; color: #0F172A; margin-bottom: 8px; }
+  .type-card p { font-size: 13px; color: #64748B; line-height: 1.6; }
+
+  /* ─── Turnaround Cards ───────────────────────── */
+  .turnaround-cards { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 32px; }
+  @media (min-width: 640px) { .turnaround-cards { grid-template-columns: 1fr 1fr 1fr; } }
+  .turnaround-card { background: #fff; border: 2px solid #E2E8F0; border-radius: 12px; padding: 24px; cursor: pointer; transition: all 0.2s; text-align: center; }
+  .turnaround-card:hover { border-color: #BFDBFE; }
+  .turnaround-card.selected { border-color: #2563EB; background: #EFF6FF; }
+  .turnaround-card h4 { font-size: 16px; font-weight: 700; color: #0F172A; margin-bottom: 4px; }
+  .turnaround-card .time { font-size: 13px; color: #64748B; }
+  .turnaround-card .multiplier { font-size: 11px; font-weight: 700; color: #2563EB; margin-top: 8px; }
+
+  /* ─── Price Breakdown ────────────────────────── */
+  .price-box { background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 32px; }
+  .price-box h3 { font-size: 14px; font-weight: 700; color: #0F172A; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .price-line { display: flex; justify-content: space-between; padding: 10px 0; font-size: 14px; color: #475569; }
+  .price-line:not(:last-child) { border-bottom: 1px solid #F1F5F9; }
+  .price-line strong { color: #0F172A; }
+  .price-total { display: flex; justify-content: space-between; padding: 16px 0 0; margin-top: 8px; border-top: 2px solid #0F172A; font-size: 18px; font-weight: 800; color: #0F172A; }
+
+  /* ─── Review Summary ─────────────────────────── */
+  .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  @media (max-width: 640px) { .review-grid { grid-template-columns: 1fr; } }
+  .review-field label { display: block; font-size: 10px; font-weight: 600; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .review-field .val { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #334155; }
+
+  /* ─── Confirmation ───────────────────────────── */
+  .confirm-box { text-align: center; max-width: 480px; margin: 0 auto; padding: 48px 0; }
+  .confirm-check { width: 72px; height: 72px; border-radius: 50%; background: #D1FAE5; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; }
+  .confirm-box h2 { font-size: 28px; font-weight: 800; color: #0F172A; margin-bottom: 8px; }
+  .confirm-box .order-num { font-size: 16px; color: #64748B; margin-bottom: 24px; }
+  .confirm-box .order-num strong { color: #2563EB; }
+
+  /* ─── Dashboard Cards ────────────────────────── */
+  .dash-cards { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 768px) { .dash-cards { grid-template-columns: 1fr 1fr; } }
+  .dash-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 24px; transition: all 0.15s; cursor: pointer; }
+  .dash-card:hover { box-shadow: 0 8px 24px -8px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .dash-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+  .dash-card h3 { font-size: 16px; font-weight: 700; color: #0F172A; }
+  .dash-card .case-num { font-size: 13px; color: #64748B; font-family: 'Courier New', monospace; margin-top: 2px; }
+  .dash-card .case-meta { font-size: 12px; color: #94A3B8; margin-top: 8px; }
+  .dash-card-footer { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding-top: 12px; border-top: 1px solid #F1F5F9; font-size: 12px; color: #64748B; }
+
+  /* ─── Case Detail ────────────────────────────── */
+  .detail-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #64748B; text-decoration: none; margin-bottom: 16px; cursor: pointer; background: none; border: none; font-family: inherit; }
+  .detail-back:hover { color: #2563EB; }
+  .detail-header { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+  .detail-header h2 { font-size: 22px; font-weight: 800; color: #0F172A; }
+  .detail-meta { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 12px; font-size: 13px; color: #64748B; }
+  .detail-meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* ─── Order Row ──────────────────────────────── */
+  .order-list { display: flex; flex-direction: column; gap: 12px; }
+  .order-row { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px 24px; display: grid; grid-template-columns: auto 1fr auto auto; gap: 20px; align-items: center; }
+  @media (max-width: 768px) { .order-row { grid-template-columns: 1fr; gap: 12px; } }
+  .order-type-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .order-info h4 { font-size: 14px; font-weight: 600; color: #0F172A; }
+  .order-info .sub { font-size: 12px; color: #94A3B8; margin-top: 2px; }
+  .order-cost { text-align: right; }
+  .order-cost .amount { font-size: 16px; font-weight: 700; color: #0F172A; }
+  .order-cost .sub { font-size: 11px; color: #94A3B8; }
+
+  /* ─── Status Timeline ────────────────────────── */
+  .timeline { display: flex; align-items: center; gap: 0; margin-top: 16px; flex-wrap: wrap; }
+  .timeline-step { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: #94A3B8; white-space: nowrap; }
+  .timeline-step.done { color: #059669; }
+  .timeline-step.current { color: #2563EB; }
+  .timeline-dot { width: 8px; height: 8px; border-radius: 50%; background: #E2E8F0; flex-shrink: 0; }
+  .timeline-step.done .timeline-dot { background: #059669; }
+  .timeline-step.current .timeline-dot { background: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.2); }
+  .timeline-line { width: 24px; height: 2px; background: #E2E8F0; flex-shrink: 0; }
+  .timeline-step.done + .timeline-line { background: #059669; }
+
+  /* ─── Team Members ───────────────────────────── */
+  .team-list { display: flex; flex-direction: column; gap: 12px; }
+  .team-row { display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; padding: 14px 16px; }
+  .team-row .team-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .team-row .team-info { flex: 1; }
+  .team-row .team-name { font-size: 14px; font-weight: 600; color: #0F172A; }
+  .team-row .team-email { font-size: 12px; color: #94A3B8; }
+  .team-row .team-role { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: #F1F5F9; color: #475569; }
+
+  /* ─── Job Cards (Reporter) ───────────────────── */
+  .job-cards { display: flex; flex-direction: column; gap: 16px; }
+  .job-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 24px; transition: all 0.15s; }
+  .job-card:hover { box-shadow: 0 8px 24px -8px rgba(0,0,0,0.06); }
+  .job-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+  .job-card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .job-card-posted { font-size: 12px; color: #94A3B8; }
+  .job-card h3 { font-size: 16px; font-weight: 700; color: #0F172A; margin-bottom: 4px; }
+  .job-card .job-detail { font-size: 13px; color: #64748B; margin-bottom: 12px; }
+  .job-card .job-detail span { display: inline-flex; align-items: center; gap: 4px; margin-right: 16px; }
+  .job-card-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid #F1F5F9; flex-wrap: wrap; gap: 12px; }
+  .job-card .earnings { font-size: 22px; font-weight: 800; color: #059669; }
+  .job-card .earnings span { font-size: 12px; font-weight: 400; color: #94A3B8; }
+  .job-card-actions { display: flex; gap: 8px; }
+  .btn-accept { background: #059669; color: #fff; padding: 10px 20px; font-size: 13px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: all 0.15s; }
+  .btn-accept:hover { background: #047857; }
+  .btn-decline { background: #fff; color: #64748B; border: 1px solid #E2E8F0; padding: 10px 16px; font-size: 13px; font-weight: 500; border-radius: 8px; cursor: pointer; }
+
+  /* ─── Stat Cards (Reporter Earnings) ─────────── */
+  .stat-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  @media (max-width: 640px) { .stat-cards { grid-template-columns: 1fr; } }
+  .stat-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; }
+  .stat-card .stat-card-label { font-size: 12px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat-card .stat-card-value { font-size: 28px; font-weight: 800; color: #0F172A; margin-top: 4px; }
+  .stat-card .stat-card-value.green { color: #059669; }
+
+  /* ─── Payout Table ───────────────────────────── */
+  .payout-table { width: 100%; background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; overflow: hidden; }
+  .payout-table th { background: #F8FAFC; padding: 12px 16px; font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; text-align: left; }
+  .payout-table td { padding: 14px 16px; font-size: 13px; color: #334155; border-top: 1px solid #F1F5F9; }
+
+  /* ─── Sign-In Modal ──────────────────────────── */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.5); backdrop-filter: blur(4px); z-index: 100; display: flex; align-items: center; justify-content: center; }
+  .modal { background: #fff; border-radius: 16px; padding: 32px; max-width: 400px; width: 90%; box-shadow: 0 25px 60px -15px rgba(0,0,0,0.3); }
+  .modal h2 { font-size: 20px; font-weight: 800; color: #0F172A; margin-bottom: 8px; }
+  .modal p { font-size: 14px; color: #64748B; margin-bottom: 24px; }
+  .modal-options { display: flex; flex-direction: column; gap: 12px; }
+  .modal-option { display: flex; align-items: center; gap: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.15s; text-decoration: none; color: inherit; }
+  .modal-option:hover { border-color: #BFDBFE; background: #EFF6FF; }
+  .modal-option h3 { font-size: 15px; font-weight: 600; color: #0F172A; }
+  .modal-option p { font-size: 12px; color: #64748B; margin: 2px 0 0; }
 </style>
 </head>
 <body>
@@ -373,10 +564,717 @@ function getHearingDate() {
   return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
-// ─── App ────────────────────────────────────────────────────────
-function App() {
+// ─── Hash Router ────────────────────────────────────────────────
+function useRoute() {
+  const [hash, setHash] = useState(window.location.hash || "#/");
+  useEffect(() => {
+    const handler = () => { setHash(window.location.hash || "#/"); window.scrollTo(0, 0); };
+    window.addEventListener("hashchange", handler);
+    return () => window.removeEventListener("hashchange", handler);
+  }, []);
+  return hash;
+}
+function navigate(path) { window.location.hash = path; }
+
+// ─── Mock Data ──────────────────────────────────────────────────
+const COURTS = [
+  { id: "lasc-mosk", name: "LA Superior Court - Stanley Mosk", county: "Los Angeles" },
+  { id: "lasc-spring", name: "LA Superior Court - Spring Street", county: "Los Angeles" },
+  { id: "lasc-van-nuys", name: "LA Superior Court - Van Nuys", county: "Los Angeles" },
+  { id: "sfsc", name: "SF Superior Court", county: "San Francisco" },
+  { id: "sdsc", name: "San Diego Superior Court", county: "San Diego" },
+  { id: "ocsc", name: "Orange County Superior Court", county: "Orange" },
+];
+
+const MOCK_CASES = [
+  {
+    id: "case-1", name: "Martinez v. Pacific Holdings", number: "24STFL09821",
+    court: "LA Superior Court - Stanley Mosk", county: "Los Angeles", dept: "Dept. 56",
+    caseType: "Family Law", status: "active",
+    orders: [
+      { id: "ord-1", type: "live", hearingDate: "2026-03-28", turnaround: "standard", status: "in-progress", reporter: "Sarah Chen, CSR #14892", pages: 45, cost: 165.15, created: "2026-03-10", delivery: "2026-04-02", statusStep: 3 },
+      { id: "ord-2", type: "transcription", hearingDate: "2026-02-14", turnaround: "economy", status: "completed", reporter: "Michael Torres, CSR #11247", pages: 62, cost: 227.54, created: "2026-02-20", delivery: "2026-03-08", statusStep: 5 },
+    ],
+  },
+  {
+    id: "case-2", name: "Chen v. Westbrook Properties", number: "25STCV01482",
+    court: "LA Superior Court - Spring Street", county: "Los Angeles", dept: "Dept. 12",
+    caseType: "Civil", status: "active",
+    orders: [
+      { id: "ord-3", type: "live", hearingDate: "2026-04-10", turnaround: "rush", status: "pending", reporter: null, pages: null, cost: null, created: "2026-03-14", delivery: null, statusStep: 0 },
+    ],
+  },
+  {
+    id: "case-3", name: "In re Estate of Williams", number: "24STPB08334",
+    court: "LA Superior Court - Stanley Mosk", county: "Los Angeles", dept: "Dept. 29",
+    caseType: "Probate", status: "active",
+    orders: [
+      { id: "ord-4", type: "transcription", hearingDate: "2026-01-22", turnaround: "standard", status: "completed", reporter: "Lisa Nakamura, CSR #13561", pages: 38, cost: 139.46, created: "2026-01-30", delivery: "2026-02-05", statusStep: 5 },
+      { id: "ord-5", type: "live", hearingDate: "2026-03-05", turnaround: "standard", status: "completed", reporter: "Sarah Chen, CSR #14892", pages: 28, cost: 102.76, created: "2026-02-25", delivery: "2026-03-10", statusStep: 5 },
+    ],
+  },
+  {
+    id: "case-4", name: "Okafor v. Sunrise Medical Group", number: "25STCV02901",
+    court: "SF Superior Court", county: "San Francisco", dept: "Dept. 302",
+    caseType: "Civil", status: "active",
+    orders: [],
+  },
+];
+
+const MOCK_JOBS = [
+  { id: "job-1", court: "LA Superior Court - Stanley Mosk", dept: "Dept. 41", county: "Los Angeles", caseType: "Family Law", hearingDate: "2026-03-28", time: "9:00 AM", turnaround: "standard", type: "live", duration: 90, estimatedPages: 35, earnings: 128.45, posted: "2 hours ago", interpreter: false },
+  { id: "job-2", court: "LA Superior Court - Van Nuys", dept: "Dept. 7", county: "Los Angeles", caseType: "Civil", hearingDate: "2026-04-02", time: "1:30 PM", turnaround: "rush", type: "live", duration: 120, estimatedPages: 48, earnings: 264.24, posted: "45 min ago", interpreter: false },
+  { id: "job-3", court: "SF Superior Court", dept: "Dept. 501", county: "San Francisco", caseType: "Family Law", hearingDate: "2026-03-15", time: null, turnaround: "standard", type: "transcription", duration: 75, estimatedPages: 30, earnings: 110.10, posted: "5 hours ago", interpreter: true },
+  { id: "job-4", court: "Orange County Superior Court", dept: "Dept. 72", county: "Orange", caseType: "Probate", hearingDate: "2026-04-08", time: "10:00 AM", turnaround: "economy", type: "live", duration: 60, estimatedPages: 22, earnings: 68.63, posted: "1 day ago", interpreter: false },
+];
+
+const MOCK_ACTIVE_JOBS = [
+  { id: "aj-1", court: "LA Superior Court - Stanley Mosk", dept: "Dept. 56", caseType: "Family Law", type: "live", hearingDate: "2026-03-28", dueDate: "2026-04-02", pages: 45, earnings: 165.15, status: "transcribing" },
+  { id: "aj-2", court: "SF Superior Court", dept: "Dept. 301", caseType: "Civil", type: "transcription", hearingDate: "2026-03-10", dueDate: "2026-03-17", pages: 52, earnings: 190.84, status: "review" },
+];
+
+const MOCK_PAYOUTS = [
+  { case: "In re Estate of Williams", date: "2026-03-10", pages: 28, amount: 102.76, status: "Paid" },
+  { case: "Davis v. Metro Transit", date: "2026-03-05", pages: 54, amount: 198.18, status: "Paid" },
+  { case: "Park v. Golden Gate Ins.", date: "2026-02-28", pages: 41, amount: 150.47, status: "Paid" },
+  { case: "Thompson custody hearing", date: "2026-02-20", pages: 33, amount: 121.11, status: "Paid" },
+];
+
+const TEAM = [
+  { name: "Jennifer Walsh", email: "j.walsh@walshfamilylaw.com", role: "Admin", initials: "JW", color: "#2563EB" },
+  { name: "David Park", email: "d.park@walshfamilylaw.com", role: "Attorney", initials: "DP", color: "#059669" },
+  { name: "Maria Santos", email: "m.santos@walshfamilylaw.com", role: "Paralegal", initials: "MS", color: "#D97706" },
+  { name: "Kevin Liu", email: "k.liu@walshfamilylaw.com", role: "Legal Asst.", initials: "KL", color: "#7C3AED" },
+];
+
+const PRICING = {
+  ratePerPage: 3.67,
+  simultaneousCopy: 0.65,
+  separateCopy: 0.85,
+  platformFee: 0.15,
+  rushMultiplier: 1.5,
+  standardMultiplier: 1.0,
+  economyMultiplier: 0.85,
+  pagesPerHour: 35,
+};
+
+function calculateEstimate(durationMin, turnaround, hasInterpreter) {
+  let pages = (durationMin / 60) * PRICING.pagesPerHour;
+  if (hasInterpreter) pages *= 0.75;
+  const mult = PRICING[turnaround + "Multiplier"] || 1;
+  const low = Math.round(pages * 0.8);
+  const high = Math.round(pages * 1.2);
+  const lowCost = low * PRICING.ratePerPage * mult;
+  const highCost = high * PRICING.ratePerPage * mult;
+  return { pages: Math.round(pages), low, high, lowCost: Math.round(lowCost * 100) / 100, highCost: Math.round(highCost * 100) / 100, mult };
+}
+
+// ─── Shared Components ──────────────────────────────────────────
+function AppNav({ variant, activeTab, onTabChange }) {
+  const isReporter = variant === "reporter";
+  const tabs = isReporter
+    ? [["jobs", "Available Jobs"], ["active", "My Jobs"], ["earnings", "Earnings"]]
+    : [["cases", "My Cases"], ["team", "Team"]];
+  return (
+    <nav className="app-nav">
+      <div className="container">
+        <div className="app-nav-inner">
+          <div style={{display: "flex", alignItems: "center", gap: 24}}>
+            <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
+            <div className="app-nav-links">
+              {tabs.map(([key, label]) => (
+                <button key={key} className={"app-nav-link" + (activeTab === key ? " active" : "")} onClick={() => onTabChange(key)}>{label}</button>
+              ))}
+            </div>
+          </div>
+          <div className="app-nav-user">
+            <span style={{display: "none"}}>{/* mobile hide */}</span>
+            <span className="app-nav-avatar">{isReporter ? "SC" : "JW"}</span>
+            <span>{isReporter ? "Sarah Chen, CSR #14892" : "Jennifer Walsh, Esq."}</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+function StepIndicator({ current, total }) {
+  const items = [];
+  for (let i = 1; i <= total; i++) {
+    if (i > 1) items.push(<div key={"l" + i} className={"step-line-bar" + (i <= current ? " done" : "")} />);
+    items.push(<div key={i} className={"step-dot-num" + (i < current ? " done" : i === current ? " active" : " upcoming")}>{i < current ? "\u2713" : i}</div>);
+  }
+  return <div className="step-indicator-bar">{items}</div>;
+}
+
+function StatusBadge({ status }) {
+  const map = { pending: "pending", assigned: "assigned", "in-progress": "progress", completed: "completed" };
+  const labels = { pending: "Pending", assigned: "Assigned", "in-progress": "In Progress", completed: "Completed" };
+  return <span className={"badge badge-" + (map[status] || "pending")}>{labels[status] || status}</span>;
+}
+
+function OrderTimeline({ step }) {
+  const steps = ["Submitted", "Reporter Assigned", "In Progress", "Certification", "Delivered"];
+  return (
+    <div className="timeline">
+      {steps.map((s, i) => {
+        const cls = i < step ? "done" : i === step ? "current" : "";
+        return (
+          <React.Fragment key={i}>
+            {i > 0 && <div className={"timeline-line" + (i <= step ? " done" : "")} />}
+            <div className={"timeline-step " + cls}><div className="timeline-dot" />{s}</div>
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── Order Flow ─────────────────────────────────────────────────
+function OrderFlow() {
+  const [step, setStep] = useState(1);
+  const [form, setForm] = useState({
+    type: "", court: "", dept: "", caseNumber: "", caseName: "", caseType: "family",
+    hearingDate: "", hearingTime: "", duration: "60", interpreter: false,
+    audioFile: "", turnaround: "standard", feeWaiver: false,
+  });
+  const [submitted, setSubmitted] = useState(false);
+  const update = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  const est = calculateEstimate(parseInt(form.duration) || 60, form.turnaround, form.interpreter);
+
+  if (submitted) {
+    return (
+      <div>
+        <nav className="app-nav"><div className="container"><div className="app-nav-inner">
+          <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
+          <div />
+        </div></div></nav>
+        <div className="page page-enter"><div className="container">
+          <div className="confirm-box">
+            <div className="confirm-check"><Icon name="checkCircle" size={36} color="#059669" /></div>
+            <h2>Order Submitted</h2>
+            <p className="order-num">Order number: <strong>DS-2026-0042</strong></p>
+            <p style={{fontSize: 15, color: "#64748B", marginBottom: 32, lineHeight: 1.7}}>
+              {form.type === "live"
+                ? "We're matching you with a licensed reporter for your hearing. You'll receive a notification once a reporter accepts."
+                : "Your audio has been received. A certified reporter will be assigned shortly."}
+            </p>
+            <div style={{display: "flex", gap: 12, justifyContent: "center"}}>
+              <button className="btn btn-primary btn-sm" onClick={() => navigate("/dashboard")}>View Dashboard <Icon name="arrowRight" size={14} color="#fff" /></button>
+              <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Back to Home</button>
+            </div>
+          </div>
+        </div></div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <nav className="app-nav"><div className="container"><div className="app-nav-inner">
+        <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
+        <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Cancel</button>
+      </div></div></nav>
+      <div className="page page-enter">
+        <div className="container" style={{maxWidth: 760}}>
+          <div className="page-header" style={{justifyContent: "center", textAlign: "center", display: "block"}}>
+            <h1>New Transcript Order</h1>
+          </div>
+          <StepIndicator current={step} total={4} />
+
+          {/* Step 1: Type */}
+          {step === 1 && (
+            <div>
+              <div className="section-header" style={{marginBottom: 32}}>
+                <h2 style={{fontSize: 24}}>What type of transcript do you need?</h2>
+              </div>
+              <div className="type-cards">
+                <div className={"type-card" + (form.type === "live" ? " selected" : "")} onClick={() => { update("type", "live"); setStep(2); }}>
+                  <div className="type-card-icon" style={{background: "#EFF6FF"}}><Icon name="mapPin" size={32} color="#2563EB" /></div>
+                  <h3>Live Attendance</h3>
+                  <p>A reporter attends your upcoming hearing in person or remotely and produces the transcript.</p>
+                </div>
+                <div className={"type-card" + (form.type === "transcription" ? " selected" : "")} onClick={() => { update("type", "transcription"); setStep(2); }}>
+                  <div className="type-card-icon" style={{background: "#FFFBEB"}}><Icon name="mic" size={32} color="#D97706" /></div>
+                  <h3>Post-Hearing Transcription</h3>
+                  <p>Upload court audio from a completed proceeding and we'll match a reporter to transcribe it.</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Step 2: Details */}
+          {step === 2 && (
+            <div>
+              <div className="section-header" style={{marginBottom: 32}}>
+                <h2 style={{fontSize: 24}}>Case &amp; hearing details</h2>
+                <p>{form.type === "live" ? "Tell us about the upcoming hearing." : "Tell us about the proceeding that was recorded."}</p>
+              </div>
+              <div style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 16, padding: 32}}>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label">Court</label>
+                    <select className="form-input form-select" value={form.court} onChange={e => update("court", e.target.value)}>
+                      <option value="">Select a court...</option>
+                      {COURTS.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Department</label>
+                    <input className="form-input" placeholder="e.g. Dept. 56" value={form.dept} onChange={e => update("dept", e.target.value)} />
+                  </div>
+                </div>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label">Case Number</label>
+                    <input className="form-input" placeholder="e.g. 24STFL09821" value={form.caseNumber} onChange={e => update("caseNumber", e.target.value)} />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Case Type</label>
+                    <select className="form-input form-select" value={form.caseType} onChange={e => update("caseType", e.target.value)}>
+                      <option value="family">Family Law</option>
+                      <option value="civil">Civil</option>
+                      <option value="probate">Probate</option>
+                      <option value="criminal">Criminal</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Case Name / Caption</label>
+                  <input className="form-input" placeholder="e.g. Martinez v. Pacific Holdings" value={form.caseName} onChange={e => update("caseName", e.target.value)} />
+                </div>
+
+                {form.type === "live" ? (
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label className="form-label">Hearing Date</label>
+                      <input className="form-input" type="date" value={form.hearingDate} onChange={e => update("hearingDate", e.target.value)} />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Hearing Time</label>
+                      <input className="form-input" type="time" value={form.hearingTime} onChange={e => update("hearingTime", e.target.value)} />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="form-group">
+                    <label className="form-label">Audio File</label>
+                    <div className="form-file" onClick={() => update("audioFile", "hearing_recording_2026-03-15.mp3")}>
+                      {form.audioFile
+                        ? <p className="uploaded"><Icon name="checkCircle" size={16} color="#059669" /> {form.audioFile}</p>
+                        : <><Icon name="mic" size={24} color="#94A3B8" /><p>Click to upload MP3, WAV, or MP4</p></>}
+                    </div>
+                  </div>
+                )}
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label">{form.type === "live" ? "Expected Duration" : "Audio Duration"}</label>
+                    <select className="form-input form-select" value={form.duration} onChange={e => update("duration", e.target.value)}>
+                      <option value="30">30 minutes</option>
+                      <option value="60">1 hour</option>
+                      <option value="90">1.5 hours</option>
+                      <option value="120">2 hours</option>
+                      <option value="180">3+ hours</option>
+                    </select>
+                  </div>
+                  <div className="form-group" style={{display: "flex", alignItems: "flex-end", paddingBottom: 20}}>
+                    <label className="form-checkbox">
+                      <input type="checkbox" checked={form.interpreter} onChange={e => update("interpreter", e.target.checked)} />
+                      Interpreter present
+                    </label>
+                  </div>
+                </div>
+
+                <div style={{display: "flex", gap: 12, marginTop: 8}}>
+                  <button className="btn btn-secondary btn-sm" onClick={() => setStep(1)}>Back</button>
+                  <button className="btn btn-primary btn-sm" onClick={() => setStep(3)}>Continue <Icon name="arrowRight" size={14} color="#fff" /></button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Turnaround & Pricing */}
+          {step === 3 && (
+            <div>
+              <div className="section-header" style={{marginBottom: 32}}>
+                <h2 style={{fontSize: 24}}>Turnaround &amp; pricing</h2>
+                <p>Select your delivery speed. Pricing is based on CA statutory rates.</p>
+              </div>
+              <div className="turnaround-cards">
+                {[
+                  { key: "rush", label: "Rush", time: "24 hours", note: "1.5x rate" },
+                  { key: "standard", label: "Standard", time: "3-5 business days", note: "Statutory rate" },
+                  { key: "economy", label: "Economy", time: "2+ weeks", note: "15% savings" },
+                ].map(t => (
+                  <div key={t.key} className={"turnaround-card" + (form.turnaround === t.key ? " selected" : "")} onClick={() => update("turnaround", t.key)}>
+                    <h4>{t.label}</h4>
+                    <div className="time">{t.time}</div>
+                    <div className="multiplier">{t.note}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="price-box">
+                <h3>Price Estimate</h3>
+                <div className="price-line"><span>Estimated pages</span><strong>{est.low} - {est.high} pages</strong></div>
+                <div className="price-line"><span>Statutory rate (per page)</span><strong>${PRICING.ratePerPage.toFixed(2)}</strong></div>
+                <div className="price-line"><span>Turnaround adjustment</span><strong>{est.mult === 1 ? "None" : est.mult > 1 ? "+" + ((est.mult - 1) * 100).toFixed(0) + "%" : "-" + ((1 - est.mult) * 100).toFixed(0) + "%"}</strong></div>
+                <div className="price-line"><span>Platform fee ({(PRICING.platformFee * 100).toFixed(0)}%)</span><strong>${((est.lowCost + est.highCost) / 2 * PRICING.platformFee).toFixed(2)}</strong></div>
+                <div className="price-total">
+                  <span>Estimated Total</span>
+                  <span>${(est.lowCost * (1 + PRICING.platformFee)).toFixed(0)} - ${(est.highCost * (1 + PRICING.platformFee)).toFixed(0)}</span>
+                </div>
+                <p style={{marginTop: 16, fontSize: 12, color: "#64748B", lineHeight: 1.6}}>
+                  Final cost based on certified page count. Statutory rate: $1.13 per 100 words (CA Gov. Code 69950).
+                </p>
+              </div>
+              <div style={{marginTop: 16}}>
+                <label className="form-checkbox">
+                  <input type="checkbox" checked={form.feeWaiver} onChange={e => update("feeWaiver", e.target.checked)} />
+                  Litigant has a fee waiver on file with the court
+                </label>
+              </div>
+              <div style={{display: "flex", gap: 12, marginTop: 24}}>
+                <button className="btn btn-secondary btn-sm" onClick={() => setStep(2)}>Back</button>
+                <button className="btn btn-primary btn-sm" onClick={() => setStep(4)}>Review Order <Icon name="arrowRight" size={14} color="#fff" /></button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 4: Review */}
+          {step === 4 && (
+            <div>
+              <div className="section-header" style={{marginBottom: 32}}>
+                <h2 style={{fontSize: 24}}>Review your order</h2>
+                <p>Confirm the details below and submit.</p>
+              </div>
+              <div style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 16, padding: 32}}>
+                <div style={{marginBottom: 16, display: "flex", gap: 8}}>
+                  <span className={"badge badge-" + (form.type === "live" ? "live" : "transcription")}>{form.type === "live" ? "Live Attendance" : "Transcription"}</span>
+                  <span className={"badge badge-" + form.turnaround}>{form.turnaround.charAt(0).toUpperCase() + form.turnaround.slice(1)}</span>
+                </div>
+                <div className="review-grid">
+                  <div className="review-field"><label>Court</label><div className="val">{form.court || "Not specified"}</div></div>
+                  <div className="review-field"><label>Department</label><div className="val">{form.dept || "Not specified"}</div></div>
+                  <div className="review-field"><label>Case Number</label><div className="val">{form.caseNumber || "Not specified"}</div></div>
+                  <div className="review-field"><label>Case Name</label><div className="val">{form.caseName || "Not specified"}</div></div>
+                  {form.type === "live" && <div className="review-field"><label>Hearing Date</label><div className="val">{form.hearingDate || "Not specified"}</div></div>}
+                  {form.type === "live" && <div className="review-field"><label>Hearing Time</label><div className="val">{form.hearingTime || "Not specified"}</div></div>}
+                  {form.type === "transcription" && <div className="review-field"><label>Audio File</label><div className="val">{form.audioFile || "Not uploaded"}</div></div>}
+                  <div className="review-field"><label>Duration</label><div className="val">{form.duration} minutes</div></div>
+                  <div className="review-field"><label>Interpreter</label><div className="val">{form.interpreter ? "Yes" : "No"}</div></div>
+                </div>
+                <div style={{background: "#F8FAFC", borderRadius: 12, padding: 20, marginTop: 8}}>
+                  <div style={{display: "flex", justifyContent: "space-between", alignItems: "baseline"}}>
+                    <span style={{fontSize: 14, color: "#64748B"}}>Estimated Total</span>
+                    <span style={{fontSize: 28, fontWeight: 800, color: "#0F172A"}}>${(est.lowCost * (1 + PRICING.platformFee)).toFixed(0)} <span style={{fontSize: 14, fontWeight: 400, color: "#94A3B8"}}>- ${(est.highCost * (1 + PRICING.platformFee)).toFixed(0)}</span></span>
+                  </div>
+                  {form.feeWaiver && <p style={{fontSize: 12, color: "#2563EB", marginTop: 8}}>Fee waiver indicated. TRF reimbursement paperwork will be generated upon delivery.</p>}
+                </div>
+                <div style={{display: "flex", gap: 12, marginTop: 24}}>
+                  <button className="btn btn-secondary btn-sm" onClick={() => setStep(3)}>Back</button>
+                  <button className="btn btn-primary" onClick={() => setSubmitted(true)}>Submit Order <Icon name="arrowRight" size={16} color="#fff" /></button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Buyer Dashboard ────────────────────────────────────────────
+function BuyerDashboard() {
+  const [tab, setTab] = useState("cases");
+  const [selectedCase, setSelectedCase] = useState(null);
+
+  return (
+    <div>
+      <AppNav variant="buyer" activeTab={tab} onTabChange={t => { setTab(t); setSelectedCase(null); }} />
+      <div className="page page-enter">
+        <div className="container">
+          {tab === "cases" && !selectedCase && (
+            <div>
+              <div className="page-header">
+                <div>
+                  <h1>Your Cases</h1>
+                  <p>Manage transcript orders across your active matters.</p>
+                </div>
+                <button className="btn btn-primary btn-sm" onClick={() => navigate("/order")}>New Order <Icon name="arrowRight" size={14} color="#fff" /></button>
+              </div>
+              <div className="dash-cards">
+                {MOCK_CASES.map(c => (
+                  <div className="dash-card" key={c.id} onClick={() => setSelectedCase(c)}>
+                    <div className="dash-card-header">
+                      <div>
+                        <h3>{c.name}</h3>
+                        <div className="case-num">{c.number}</div>
+                      </div>
+                      <StatusBadge status={c.orders.length > 0 ? (c.orders.some(o => o.status === "in-progress") ? "in-progress" : c.orders.some(o => o.status === "pending") ? "pending" : "completed") : "pending"} />
+                    </div>
+                    <div className="case-meta">
+                      <Icon name="mapPin" size={14} color="#94A3B8" /> {c.court}, {c.dept}
+                    </div>
+                    <div className="dash-card-footer">
+                      <span><Icon name="fileText" size={14} color="#94A3B8" /> {c.orders.length} order{c.orders.length !== 1 ? "s" : ""}</span>
+                      <span><Icon name="scale" size={14} color="#94A3B8" /> {c.caseType}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {tab === "cases" && selectedCase && (
+            <div>
+              <button className="detail-back" onClick={() => setSelectedCase(null)}>
+                <Icon name="chevronRight" size={14} color="#64748B" style={{transform: "rotate(180deg)"}} /> All Cases
+              </button>
+              <div className="detail-header">
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12}}>
+                  <div>
+                    <h2>{selectedCase.name}</h2>
+                    <div className="detail-meta">
+                      <span><Icon name="fileText" size={14} /> {selectedCase.number}</span>
+                      <span><Icon name="mapPin" size={14} /> {selectedCase.court}, {selectedCase.dept}</span>
+                      <span><Icon name="scale" size={14} /> {selectedCase.caseType}</span>
+                    </div>
+                  </div>
+                  <button className="btn btn-primary btn-sm" onClick={() => navigate("/order")}>New Order <Icon name="arrowRight" size={14} color="#fff" /></button>
+                </div>
+              </div>
+              <h3 style={{fontSize: 16, fontWeight: 700, color: "#0F172A", marginBottom: 16}}>Order History</h3>
+              {selectedCase.orders.length === 0 ? (
+                <div style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, padding: 48, textAlign: "center"}}>
+                  <Icon name="fileText" size={32} color="#CBD5E1" />
+                  <p style={{color: "#94A3B8", marginTop: 12}}>No orders yet for this case.</p>
+                  <button className="btn btn-primary btn-sm" style={{marginTop: 16}} onClick={() => navigate("/order")}>Place First Order</button>
+                </div>
+              ) : (
+                <div className="order-list">
+                  {selectedCase.orders.map(o => (
+                    <div key={o.id}>
+                      <div className="order-row">
+                        <div className="order-type-icon" style={{background: o.type === "live" ? "#EFF6FF" : "#FFFBEB"}}>
+                          <Icon name={o.type === "live" ? "mapPin" : "mic"} size={18} color={o.type === "live" ? "#2563EB" : "#D97706"} />
+                        </div>
+                        <div className="order-info">
+                          <h4>{o.type === "live" ? "Live Attendance" : "Transcription"} - {o.hearingDate}</h4>
+                          <div className="sub">{o.reporter || "Awaiting reporter assignment"} | <span className={"badge badge-" + o.turnaround} style={{fontSize: 10}}>{o.turnaround}</span></div>
+                        </div>
+                        <StatusBadge status={o.status} />
+                        <div className="order-cost">
+                          {o.cost ? <><div className="amount">${o.cost.toFixed(2)}</div><div className="sub">{o.pages} pages</div></> : <div className="sub">Pending</div>}
+                        </div>
+                      </div>
+                      <div style={{padding: "0 24px 16px"}}>
+                        <OrderTimeline step={o.statusStep} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {tab === "team" && (
+            <div>
+              <div className="page-header">
+                <div>
+                  <h1>Team Members</h1>
+                  <p>Walsh Family Law Group - firm account</p>
+                </div>
+                <button className="btn btn-secondary btn-sm">Invite Member</button>
+              </div>
+              <div className="team-list">
+                {TEAM.map((m, i) => (
+                  <div className="team-row" key={i}>
+                    <div className="team-avatar" style={{background: m.color}}>{m.initials}</div>
+                    <div className="team-info">
+                      <div className="team-name">{m.name}</div>
+                      <div className="team-email">{m.email}</div>
+                    </div>
+                    <span className="team-role">{m.role}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Reporter Dashboard ─────────────────────────────────────────
+function ReporterDashboard() {
+  const [tab, setTab] = useState("jobs");
+  const [accepted, setAccepted] = useState({});
+  const [declined, setDeclined] = useState({});
+
+  return (
+    <div>
+      <AppNav variant="reporter" activeTab={tab} onTabChange={setTab} />
+      <div className="page page-enter">
+        <div className="container">
+          {tab === "jobs" && (
+            <div>
+              <div className="page-header">
+                <div>
+                  <h1>Available Jobs</h1>
+                  <p>Jobs matching your jurisdiction and preferences.</p>
+                </div>
+              </div>
+              <div className="job-cards">
+                {MOCK_JOBS.filter(j => !accepted[j.id] && !declined[j.id]).map(j => (
+                  <div className="job-card" key={j.id}>
+                    <div className="job-card-top">
+                      <div className="job-card-badges">
+                        <span className={"badge badge-" + (j.type === "live" ? "live" : "transcription")}>{j.type === "live" ? "Live Attendance" : "Transcription"}</span>
+                        <span className={"badge badge-" + j.turnaround}>{j.turnaround}</span>
+                        {j.interpreter && <span className="badge" style={{background: "#F3E8FF", color: "#6B21A8"}}>Interpreter</span>}
+                      </div>
+                      <span className="job-card-posted">{j.posted}</span>
+                    </div>
+                    <h3>{j.court}, {j.dept}</h3>
+                    <div className="job-detail">
+                      <span><Icon name="scale" size={13} color="#94A3B8" /> {j.caseType}</span>
+                      <span><Icon name="clock" size={13} color="#94A3B8" /> {j.hearingDate}{j.time ? " at " + j.time : ""}</span>
+                      <span><Icon name="fileText" size={13} color="#94A3B8" /> ~{j.estimatedPages} pages</span>
+                    </div>
+                    <div className="job-card-bottom">
+                      <div className="earnings">${j.earnings.toFixed(2)} <span>estimated</span></div>
+                      <div className="job-card-actions">
+                        <button className="btn-decline" onClick={() => setDeclined(d => ({...d, [j.id]: true}))}>Decline</button>
+                        <button className="btn-accept" onClick={() => { setAccepted(a => ({...a, [j.id]: true})); setTab("active"); }}>Accept Job</button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {MOCK_JOBS.filter(j => !accepted[j.id] && !declined[j.id]).length === 0 && (
+                  <div style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, padding: 48, textAlign: "center"}}>
+                    <Icon name="checkCircle" size={32} color="#059669" />
+                    <p style={{color: "#64748B", marginTop: 12}}>All caught up. New jobs will appear as they're posted.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {tab === "active" && (
+            <div>
+              <div className="page-header">
+                <div>
+                  <h1>My Active Jobs</h1>
+                  <p>Jobs you've accepted and are currently working on.</p>
+                </div>
+              </div>
+              <div className="job-cards">
+                {MOCK_ACTIVE_JOBS.map(j => (
+                  <div className="job-card" key={j.id}>
+                    <div className="job-card-top">
+                      <div className="job-card-badges">
+                        <span className={"badge badge-" + (j.type === "live" ? "live" : "transcription")}>{j.type === "live" ? "Live" : "Transcription"}</span>
+                        <span className="badge badge-progress">{j.status === "transcribing" ? "Transcribing" : "In Review"}</span>
+                      </div>
+                      <span style={{fontSize: 13, fontWeight: 600, color: j.status === "review" ? "#D97706" : "#2563EB"}}>
+                        Due {j.dueDate}
+                      </span>
+                    </div>
+                    <h3>{j.court}, {j.dept}</h3>
+                    <div className="job-detail">
+                      <span><Icon name="scale" size={13} color="#94A3B8" /> {j.caseType}</span>
+                      <span><Icon name="fileText" size={13} color="#94A3B8" /> {j.pages} pages</span>
+                    </div>
+                    <div className="job-card-bottom">
+                      <div className="earnings">${j.earnings.toFixed(2)}</div>
+                      <button className="btn btn-primary btn-sm">
+                        {j.status === "transcribing" ? "Upload Transcript" : "Submit for Certification"}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {tab === "earnings" && (
+            <div>
+              <div className="page-header">
+                <div>
+                  <h1>Earnings</h1>
+                  <p>Your earnings summary and payout history.</p>
+                </div>
+              </div>
+              <div className="stat-cards">
+                <div className="stat-card">
+                  <div className="stat-card-label">This Month</div>
+                  <div className="stat-card-value green">$572.52</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-card-label">Pending</div>
+                  <div className="stat-card-value">$355.99</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-card-label">Jobs Completed</div>
+                  <div className="stat-card-value">12</div>
+                </div>
+              </div>
+              <h3 style={{fontSize: 16, fontWeight: 700, color: "#0F172A", marginBottom: 16}}>Recent Payouts</h3>
+              <table className="payout-table">
+                <thead><tr><th>Case</th><th>Date</th><th>Pages</th><th>Amount</th><th>Status</th></tr></thead>
+                <tbody>
+                  {MOCK_PAYOUTS.map((p, i) => (
+                    <tr key={i}>
+                      <td style={{fontWeight: 500}}>{p.case}</td>
+                      <td>{p.date}</td>
+                      <td>{p.pages}</td>
+                      <td style={{fontWeight: 600}}>${p.amount.toFixed(2)}</td>
+                      <td><span className="badge badge-completed">{p.status}</span></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Sign-In Modal ──────────────────────────────────────────────
+function SignInModal({ onClose }) {
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" onClick={e => e.stopPropagation()}>
+        <h2>Sign in to Dewey Sholes</h2>
+        <p>Choose your role to continue.</p>
+        <div className="modal-options">
+          <a className="modal-option" href="#/dashboard" onClick={onClose}>
+            <div style={{width: 40, height: 40, borderRadius: 10, background: "#EFF6FF", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
+              <Icon name="scale" size={20} color="#2563EB" />
+            </div>
+            <div><h3>Attorney / Law Firm</h3><p>Place orders and manage cases</p></div>
+          </a>
+          <a className="modal-option" href="#/reporter" onClick={onClose}>
+            <div style={{width: 40, height: 40, borderRadius: 10, background: "#ECFDF5", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
+              <Icon name="mic" size={20} color="#059669" />
+            </div>
+            <div><h3>Court Reporter</h3><p>View and accept transcript jobs</p></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Landing Page (formerly App) ────────────────────────────────
+function LandingPage() {
   const [scrolled, setScrolled] = useState(false);
   const [tab, setTab] = useState("attorney");
+  const [showSignIn, setShowSignIn] = useState(false);
 
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 20);
@@ -413,8 +1311,8 @@ function App() {
               <a href="#pricing">Pricing</a>
             </div>
             <div className="nav-actions">
-              <button className="btn-signin">Sign In</button>
-              <button className="btn-getstarted">Get Started</button>
+              <button className="btn-signin" onClick={() => setShowSignIn(true)}>Sign In</button>
+              <a href="#/order" className="btn-getstarted">Get Started</a>
             </div>
           </div>
         </div>
@@ -438,14 +1336,14 @@ function App() {
               Dewey Sholes matches attorneys with certified court reporters for live hearings and audio transcription. Transparent pricing, verified credentials, and delivery you can count on.
             </p>
             <div className="hero-actions">
-              <button className="btn btn-primary">
+              <a href="#/order" className="btn btn-primary">
                 Order a Transcript
                 <Icon name="arrowRight" size={16} color="#fff" />
-              </button>
-              <button className="btn btn-secondary">
+              </a>
+              <a href="#/reporter" className="btn btn-secondary">
                 Join as a Reporter
                 <Icon name="chevronRight" size={16} color="#64748B" />
-              </button>
+              </a>
             </div>
             <div className="hero-trust">
               <span><Icon name="shield" size={16} color="#059669" /> CSR license-verified</span>
@@ -498,7 +1396,7 @@ function App() {
                       <div className="card-footer-label">Estimated Cost</div>
                       <div className="card-footer-price">$142 <span>– $218</span></div>
                     </div>
-                    <button className="btn btn-primary btn-sm">Submit Order →</button>
+                    <a href="#/order" className="btn btn-primary btn-sm">Submit Order →</a>
                   </div>
                 </div>
               </div>
@@ -603,8 +1501,8 @@ function App() {
                 Your firm handles dozens of active matters. Dewey Sholes gives you a persistent case management layer, not just one-off order forms, so your entire transcript history lives in one place.
               </p>
               <div className="attorneys-actions">
-                <button className="btn btn-primary btn-sm">Start Ordering <Icon name="arrowRight" size={16} color="#fff" /></button>
-                <button className="btn btn-secondary btn-sm">See Pricing</button>
+                <a href="#/order" className="btn btn-primary btn-sm">Start Ordering <Icon name="arrowRight" size={16} color="#fff" /></a>
+                <a href="#pricing" className="btn btn-secondary btn-sm">See Pricing</a>
               </div>
             </div>
             <div className="features-grid">
@@ -649,7 +1547,7 @@ function App() {
             ))}
           </div>
           <div className="reporters-cta">
-            <button className="btn btn-white">Apply to Join the Network <Icon name="arrowRight" size={16} color="#1E40AF" /></button>
+            <a href="#/reporter" className="btn btn-white">Apply to Join the Network <Icon name="arrowRight" size={16} color="#1E40AF" /></a>
           </div>
         </div>
       </section>
@@ -748,7 +1646,7 @@ function App() {
               <p>
                 Dewey Sholes walks self-represented litigants through the process step by step: plain language, built-in glossaries, and full support for court fee waivers.
               </p>
-              <button className="btn btn-white">Get Started – It's Simple <Icon name="arrowRight" size={16} color="#1E40AF" /></button>
+              <a href="#/order" className="btn btn-white">Get Started - It's Simple <Icon name="arrowRight" size={16} color="#1E40AF" /></a>
             </div>
           </div>
         </div>
@@ -760,8 +1658,8 @@ function App() {
           <h2>The transcript process is broken.<br /><span className="gradient-text">Let's fix it.</span></h2>
           <p>Join the attorneys and reporters already using Dewey Sholes to bring court transcripts into the modern era.</p>
           <div className="final-cta-actions">
-            <button className="btn btn-primary">Order a Transcript <Icon name="arrowRight" size={16} color="#fff" /></button>
-            <button className="btn btn-secondary">Join as a Reporter <Icon name="chevronRight" size={16} color="#64748B" /></button>
+            <a href="#/order" className="btn btn-primary">Order a Transcript <Icon name="arrowRight" size={16} color="#fff" /></a>
+            <a href="#/reporter" className="btn btn-secondary">Join as a Reporter <Icon name="chevronRight" size={16} color="#64748B" /></a>
           </div>
         </div>
       </section>
@@ -779,19 +1677,19 @@ function App() {
             <div>
               <h4>Platform</h4>
               <ul>
-                <li><a href="#">How It Works</a></li>
-                <li><a href="#">Pricing</a></li>
-                <li><a href="#">For Attorneys</a></li>
-                <li><a href="#">For Reporters</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#attorneys">For Attorneys</a></li>
+                <li><a href="#reporters">For Reporters</a></li>
               </ul>
             </div>
             <div>
               <h4>Resources</h4>
               <ul>
-                <li><a href="#">SRL Guide</a></li>
-                <li><a href="#">Fee Waiver Info</a></li>
-                <li><a href="#">CA Statutory Rates</a></li>
-                <li><a href="#">Reporter FAQ</a></li>
+                <li><a href="#/order">SRL Guide</a></li>
+                <li><a href="#pricing">Fee Waiver Info</a></li>
+                <li><a href="#pricing">CA Statutory Rates</a></li>
+                <li><a href="#/reporter">Reporter FAQ</a></li>
               </ul>
             </div>
             <div>
@@ -810,8 +1708,19 @@ function App() {
           </div>
         </div>
       </footer>
+
+      {showSignIn && <SignInModal onClose={() => setShowSignIn(false)} />}
     </div>
   );
+}
+
+// ─── Router App ─────────────────────────────────────────────────
+function App() {
+  const route = useRoute();
+  if (route.startsWith("#/order")) return <OrderFlow />;
+  if (route.startsWith("#/dashboard")) return <BuyerDashboard />;
+  if (route.startsWith("#/reporter")) return <ReporterDashboard />;
+  return <LandingPage />;
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));
