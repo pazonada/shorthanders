@@ -1053,6 +1053,85 @@
   .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all 0.15s; }
   .theme-toggle:hover { background: var(--bg-hover); color: var(--text); }
 
+  /* ─── Reporter Onboarding ────────────────────────── */
+  .reporter-onboarding { max-width: 640px; margin: 0 auto; padding: 48px 24px 80px; min-height: 100vh; }
+  .reporter-welcome { max-width: 800px; margin: 0 auto; padding: 80px 24px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .reporter-welcome h1 { font-size: 44px; font-weight: 800; color: var(--text, #0F172A); margin-bottom: 12px; line-height: 1.15; }
+  .reporter-welcome h1 span { color: #2563EB; }
+  .reporter-welcome .welcome-sub { font-size: 18px; color: var(--text-secondary, #475569); max-width: 520px; margin-bottom: 48px; line-height: 1.6; }
+  .value-prop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 48px; width: 100%; max-width: 720px; }
+  .value-prop-card { background: var(--bg-card, #fff); border: 1px solid var(--border, #E2E8F0); border-radius: 16px; padding: 28px 20px; text-align: center; transition: all 0.2s; }
+  .value-prop-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .value-prop-card .vp-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+  .value-prop-card .vp-icon.green { background: #ECFDF5; color: #059669; }
+  .value-prop-card .vp-icon.blue { background: #EFF6FF; color: #2563EB; }
+  .value-prop-card .vp-icon.amber { background: #FFFBEB; color: #D97706; }
+  .value-prop-card h3 { font-size: 16px; font-weight: 700; color: var(--text, #0F172A); margin-bottom: 8px; }
+  .value-prop-card p { font-size: 13px; color: var(--text-muted, #64748B); line-height: 1.5; }
+  .welcome-social-proof { font-size: 13px; color: var(--text-muted, #64748B); margin-top: 24px; }
+  .reporter-step-header { margin-bottom: 32px; }
+  .reporter-step-header h2 { font-size: 24px; font-weight: 700; color: var(--text, #0F172A); margin-bottom: 6px; }
+  .reporter-step-header p { font-size: 14px; color: var(--text-secondary, #475569); }
+  .method-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+  .method-card { display: flex; align-items: center; gap: 12px; padding: 16px; border: 2px solid var(--border, #E2E8F0); border-radius: 12px; cursor: pointer; transition: all 0.15s; background: var(--bg-card, #fff); }
+  .method-card:hover { border-color: #93C5FD; }
+  .method-card.selected { border-color: #2563EB; background: var(--bg-selected, #EFF6FF); }
+  .method-card .mc-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: #EFF6FF; color: #2563EB; flex-shrink: 0; }
+  .method-card.selected .mc-icon { background: #2563EB; color: #fff; }
+  .method-card .mc-text { font-size: 14px; font-weight: 600; color: var(--text, #0F172A); }
+  .method-card .mc-sub { font-size: 12px; color: var(--text-muted, #64748B); margin-top: 2px; }
+  .form-helper { font-size: 12px; color: var(--text-muted, #64748B); margin-top: 6px; }
+  .section-divider { border: none; border-top: 1px solid var(--border, #E2E8F0); margin: 28px 0; }
+  .stripe-card { display: flex; align-items: center; gap: 16px; padding: 20px; border: 2px dashed var(--border, #E2E8F0); border-radius: 12px; background: var(--bg-muted, #F8FAFC); margin-bottom: 8px; }
+  .stripe-card .stripe-icon { width: 48px; height: 48px; border-radius: 10px; background: #635BFF; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .stripe-card .stripe-text { flex: 1; }
+  .stripe-card .stripe-text strong { display: block; font-size: 14px; color: var(--text, #0F172A); margin-bottom: 4px; }
+  .stripe-card .stripe-text span { font-size: 12px; color: var(--text-muted, #64748B); }
+  .info-callout { display: flex; gap: 12px; padding: 14px 16px; border-radius: 10px; background: #EFF6FF; border: 1px solid #BFDBFE; margin-bottom: 24px; }
+  .info-callout .callout-icon { flex-shrink: 0; color: #2563EB; margin-top: 1px; }
+  .info-callout p { font-size: 13px; color: #1E40AF; line-height: 1.5; }
+  .success-screen { text-align: center; padding: 48px 24px; }
+  .success-icon { color: #059669; margin-bottom: 20px; }
+  @keyframes successPop { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.2); } 100% { transform: scale(1); opacity: 1; } }
+  .success-icon svg { animation: successPop 0.5s ease forwards; }
+  .success-screen h1 { font-size: 28px; font-weight: 800; color: var(--text, #0F172A); margin-bottom: 8px; }
+  .success-screen .success-sub { font-size: 15px; color: var(--text-secondary, #475569); margin-bottom: 32px; }
+  .verification-card { text-align: left; background: var(--bg-card, #fff); border: 1px solid var(--border, #E2E8F0); border-radius: 12px; padding: 20px; margin-bottom: 28px; }
+  .verification-card .vc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .verification-card .vc-header strong { font-size: 14px; color: var(--text, #0F172A); }
+  .verification-card p { font-size: 13px; color: var(--text-muted, #64748B); line-height: 1.5; }
+  .what-next { text-align: left; margin-bottom: 32px; }
+  .what-next h3 { font-size: 15px; font-weight: 700; color: var(--text, #0F172A); margin-bottom: 16px; }
+  .what-next-step { display: flex; gap: 14px; margin-bottom: 16px; }
+  .what-next-step .wn-num { width: 28px; height: 28px; border-radius: 50%; background: #EFF6FF; color: #2563EB; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .what-next-step .wn-text { font-size: 14px; color: var(--text-secondary, #475569); line-height: 1.5; padding-top: 3px; }
+  .profile-summary { text-align: left; background: var(--bg-muted, #F8FAFC); border: 1px solid var(--border, #E2E8F0); border-radius: 12px; padding: 20px; margin-bottom: 28px; }
+  .profile-summary h3 { font-size: 14px; font-weight: 700; color: var(--text, #0F172A); margin-bottom: 12px; }
+  .profile-summary .ps-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; }
+  .profile-summary .ps-row .ps-label { color: var(--text-muted, #64748B); }
+  .profile-summary .ps-row .ps-value { color: var(--text, #0F172A); font-weight: 500; }
+  .promo-callout { background: linear-gradient(135deg, #059669, #10B981); color: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; text-align: center; }
+  .promo-callout strong { font-size: 15px; display: block; margin-bottom: 4px; }
+  .promo-callout span { font-size: 13px; opacity: 0.9; }
+  .onboarding-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; }
+
+  /* Dark mode overrides for reporter onboarding */
+  [data-theme="dark"] .value-prop-card .vp-icon.green { background: rgba(5,150,105,0.15); }
+  [data-theme="dark"] .value-prop-card .vp-icon.blue { background: rgba(37,99,235,0.15); }
+  [data-theme="dark"] .value-prop-card .vp-icon.amber { background: rgba(217,119,6,0.15); }
+  [data-theme="dark"] .method-card .mc-icon { background: rgba(37,99,235,0.15); }
+  [data-theme="dark"] .method-card.selected .mc-icon { background: #2563EB; }
+  [data-theme="dark"] .info-callout { background: rgba(37,99,235,0.1); border-color: rgba(37,99,235,0.2); }
+  [data-theme="dark"] .info-callout p { color: #93C5FD; }
+  [data-theme="dark"] .stripe-card { border-color: var(--border); background: var(--bg-card); }
+  [data-theme="dark"] .what-next-step .wn-num { background: rgba(37,99,235,0.15); }
+
+  @media (max-width: 768px) {
+    .value-prop-grid { grid-template-columns: 1fr; }
+    .reporter-welcome h1 { font-size: 32px; }
+    .method-cards { grid-template-columns: 1fr; }
+  }
+
   /* ─── Micro-animations ─────────────────────────── */
   .dash-card { transition: all 0.2s ease; }
   .dash-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
@@ -3385,6 +3464,256 @@ function PricingCalculator() {
   );
 }
 
+// ─── Reporter Onboarding ────────────────────────────────────────
+function ReporterOnboarding() {
+  const [screen, setScreen] = useState(0); // 0=welcome, 1-4=steps, 5=success
+  const [form, setForm] = useState({
+    csrNumber: "", method: "", certs: [], languages: [],
+    jobTypes: [], caseTypes: [], courts: [], turnarounds: [],
+    phone: "", notifSmsJobs: true, notifEmail: true, notifSmsReminders: true,
+    name: "", email: "", password: ""
+  });
+  const update = (k, v) => setForm(prev => ({ ...prev, [k]: v }));
+  const toggleArr = (k, v) => setForm(prev => ({
+    ...prev,
+    [k]: prev[k].includes(v) ? prev[k].filter(x => x !== v) : [...prev[k], v]
+  }));
+
+  // Screen 0: Welcome / Pitch
+  if (screen === 0) {
+    return (
+      <div className="reporter-welcome" style={{background: "var(--bg-page, #F8FAFC)"}}>
+        <DeweyFullLogo height={44} theme={useTheme().dark ? "dark" : "light"} />
+        <div style={{height: 48}} />
+        <h1>You report.<br /><span>We handle the rest.</span></h1>
+        <p className="welcome-sub">Dewey Sholes connects you with attorneys who need certified court reporters. We handle the booking, communication, and payment. You focus on what you do best.</p>
+        <div className="value-prop-grid">
+          <div className="value-prop-card">
+            <div className="vp-icon green"><Icon name="dollarSign" size={24} /></div>
+            <h3>Get paid in 48 hours</h3>
+            <p>No more chasing invoices. Payment hits your account within 48 hours of delivery, every time.</p>
+          </div>
+          <div className="value-prop-card">
+            <div className="vp-icon blue"><Icon name="bell" size={24} /></div>
+            <h3>Jobs come to you</h3>
+            <p>Get SMS alerts for new jobs matching your jurisdiction and preferences. Accept with one tap.</p>
+          </div>
+          <div className="value-prop-card">
+            <div className="vp-icon amber"><Icon name="zap" size={24} /></div>
+            <h3>Zero admin work</h3>
+            <p>We handle booking, communication, and payment processing. You just show up and report.</p>
+          </div>
+        </div>
+        <button className="btn btn-primary" style={{fontSize: 17, padding: "16px 48px"}} onClick={() => setScreen(1)}>Get Started <Icon name="arrowRight" size={18} /></button>
+        <p className="welcome-social-proof" style={{marginTop: 20}}>
+          <a href="#/reporter" style={{color: "var(--brand, #2563EB)", textDecoration: "none"}}>Already have an account? Sign in</a>
+        </p>
+        <p className="welcome-social-proof">Join 47 reporters already on the platform</p>
+      </div>
+    );
+  }
+
+  // Screen 5: Success
+  if (screen === 5) {
+    const jobTypeLabels = form.jobTypes.length ? form.jobTypes.join(", ") : "Not specified";
+    const courtLabels = form.courts.length ? form.courts.map(id => { const c = COURTS.find(x => x.id === id); return c ? c.name : id; }).slice(0, 3).join(", ") + (form.courts.length > 3 ? ` +${form.courts.length - 3} more` : "") : "Not specified";
+    return (
+      <div className="reporter-onboarding" style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "100vh"}}>
+        <div className="success-screen" style={{width: "100%", maxWidth: 560}}>
+          <div className="success-icon"><Icon name="checkCircle" size={64} /></div>
+          <h1>Welcome to Dewey Sholes!</h1>
+          <p className="success-sub">Your account has been created. Here's what happens next.</p>
+          <div className="verification-card">
+            <div className="vc-header">
+              <strong>CSR #{form.csrNumber || "—"}</strong>
+              <span className="badge badge-pending" style={{fontSize: 11}}>Verification Pending</span>
+            </div>
+            <p>We're checking your license with the CA Court Reporters Board. You'll get an email confirmation within 24 hours.</p>
+          </div>
+          <div className="what-next">
+            <h3>What happens next</h3>
+            <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">We verify your CSR license (usually within 24 hours)</div></div>
+            <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">You'll get an SMS when jobs matching your preferences are posted</div></div>
+            <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Accept a job, do your thing, get paid within 48 hours</div></div>
+          </div>
+          <div className="profile-summary">
+            <h3>Your Profile</h3>
+            <div className="ps-row"><span className="ps-label">Name</span><span className="ps-value">{form.name || "—"}</span></div>
+            <div className="ps-row"><span className="ps-label">CSR Number</span><span className="ps-value">{form.csrNumber || "—"}</span></div>
+            <div className="ps-row"><span className="ps-label">Method</span><span className="ps-value">{form.method || "—"}</span></div>
+            <div className="ps-row"><span className="ps-label">Job Types</span><span className="ps-value">{jobTypeLabels}</span></div>
+            <div className="ps-row"><span className="ps-label">Courts</span><span className="ps-value">{courtLabels}</span></div>
+          </div>
+          <div className="promo-callout">
+            <strong>Your first 10 jobs are fee-free!</strong>
+            <span>Code PIONEER2026 has been applied to your account</span>
+          </div>
+          <button className="btn btn-primary" style={{width: "100%", justifyContent: "center", fontSize: 16}} onClick={() => navigate("#/reporter")}>Go to Dashboard <Icon name="arrowRight" size={16} /></button>
+        </div>
+      </div>
+    );
+  }
+
+  const step = screen; // 1-4
+  const stepTitles = [
+    null,
+    ["Your Credentials", "Tell us about your certification and qualifications."],
+    ["Your Preferences", "What kind of work are you looking for?"],
+    ["Payment & Notifications", "How you'll get paid and stay informed."],
+    ["Create Your Account", "Almost there — just the basics."]
+  ];
+
+  return (
+    <div className="reporter-onboarding" style={{background: "var(--bg-page, #F8FAFC)"}}>
+      <div style={{marginBottom: 32, textAlign: "center"}}>
+        <a href="#/" style={{display: "inline-flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+      </div>
+      <StepIndicator current={step} total={4} />
+      <div style={{height: 28}} />
+      <div className="reporter-step-header">
+        <h2>{stepTitles[step][0]}</h2>
+        <p>{stepTitles[step][1]}</p>
+      </div>
+
+      {step === 1 && (<>
+        <div className="form-group">
+          <label className="form-label">CSR License Number</label>
+          <input className="form-input" placeholder="e.g. 14892" value={form.csrNumber} onChange={e => update("csrNumber", e.target.value)} style={{fontSize: 18, padding: "14px 16px", letterSpacing: 1}} />
+          <p className="form-helper">We'll verify this with the CA Court Reporters Board.</p>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Reporting Method</label>
+          <div className="method-cards">
+            <div className={"method-card" + (form.method === "Steno Machine" ? " selected" : "")} onClick={() => update("method", "Steno Machine")}>
+              <div className="mc-icon"><Icon name="fileText" size={20} /></div>
+              <div><div className="mc-text">Steno Machine</div><div className="mc-sub">Stenotype / CAT software</div></div>
+            </div>
+            <div className={"method-card" + (form.method === "Voice Writer" ? " selected" : "")} onClick={() => update("method", "Voice Writer")}>
+              <div className="mc-icon"><Icon name="mic" size={20} /></div>
+              <div><div className="mc-text">Voice Writer</div><div className="mc-sub">Voice recognition / respeaking</div></div>
+            </div>
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Certifications</label>
+          <div className="checkbox-group">
+            {["CSR", "RMR", "CRR", "RPR"].map(c => (
+              <div key={c} className={"checkbox-item" + (form.certs.includes(c) ? " checked" : "")} onClick={() => toggleArr("certs", c)}>{c}</div>
+            ))}
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Languages</label>
+          <div className="checkbox-group">
+            {["English", "Spanish", "Mandarin", "Japanese", "Korean", "Vietnamese", "Other"].map(l => (
+              <div key={l} className={"checkbox-item" + (form.languages.includes(l) ? " checked" : "")} onClick={() => toggleArr("languages", l)}>{l}</div>
+            ))}
+          </div>
+        </div>
+      </>)}
+
+      {step === 2 && (<>
+        <div className="form-group">
+          <label className="form-label">Job Types</label>
+          <p className="form-helper" style={{marginTop: 0, marginBottom: 10}}>Select all that apply</p>
+          <div className="method-cards">
+            <div className={"method-card" + (form.jobTypes.includes("Live Attendance") ? " selected" : "")} onClick={() => toggleArr("jobTypes", "Live Attendance")}>
+              <div className="mc-icon"><Icon name="mapPin" size={20} /></div>
+              <div><div className="mc-text">Live Attendance</div><div className="mc-sub">Attend hearings in person or remotely</div></div>
+            </div>
+            <div className={"method-card" + (form.jobTypes.includes("Audio Transcription") ? " selected" : "")} onClick={() => toggleArr("jobTypes", "Audio Transcription")}>
+              <div className="mc-icon"><Icon name="mic" size={20} /></div>
+              <div><div className="mc-text">Audio Transcription</div><div className="mc-sub">Transcribe from court recordings</div></div>
+            </div>
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Case Types</label>
+          <div className="checkbox-group">
+            {["Family Law", "Civil", "Probate", "Criminal", "Other"].map(t => (
+              <div key={t} className={"checkbox-item" + (form.caseTypes.includes(t) ? " checked" : "")} onClick={() => toggleArr("caseTypes", t)}>{t}</div>
+            ))}
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Courts You Serve</label>
+          <div className="checkbox-group">
+            {COURTS.map(c => (
+              <div key={c.id} className={"checkbox-item" + (form.courts.includes(c.id) ? " checked" : "")} onClick={() => toggleArr("courts", c.id)}>{c.name}</div>
+            ))}
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Turnaround Capabilities</label>
+          <div className="checkbox-group">
+            {[["rush", "Rush (24 hours)"], ["standard", "Standard (3-5 days)"], ["economy", "Economy (2+ weeks)"]].map(([k, l]) => (
+              <div key={k} className={"checkbox-item" + (form.turnarounds.includes(k) ? " checked" : "")} onClick={() => toggleArr("turnarounds", k)}>{l}</div>
+            ))}
+          </div>
+        </div>
+      </>)}
+
+      {step === 3 && (<>
+        <div className="form-group">
+          <label className="form-label" style={{fontSize: 13, fontWeight: 700, marginBottom: 12, display: "block"}}>How You'll Get Paid</label>
+          <div className="stripe-card">
+            <div className="stripe-icon">S</div>
+            <div className="stripe-text">
+              <strong>Connect your bank account</strong>
+              <span>Powered by Stripe. You'll receive payment within 48 hours of transcript delivery via direct deposit.</span>
+            </div>
+            <button className="btn btn-sm btn-secondary">Connect</button>
+          </div>
+          <p className="form-helper">You can complete this step later from your dashboard.</p>
+        </div>
+        <div className="info-callout">
+          <div className="callout-icon"><Icon name="shield" size={16} /></div>
+          <p>Dewey Sholes charges a small annual listing fee. No per-job fees — you keep the full statutory rate for every transcript.</p>
+        </div>
+        <hr className="section-divider" />
+        <div className="form-group">
+          <label className="form-label" style={{fontSize: 13, fontWeight: 700, marginBottom: 12, display: "block"}}>How You'll Get Notified</label>
+          <div className="form-group">
+            <label className="form-label">Phone Number</label>
+            <input className="form-input" type="tel" placeholder="(555) 555-0100" value={form.phone} onChange={e => update("phone", e.target.value)} />
+            <p className="form-helper">We'll text you when new jobs match your preferences.</p>
+          </div>
+          <div className="toggle-row"><div><div className="toggle-label">SMS alerts for new matching jobs</div><div className="toggle-sub">Get notified instantly when a job fits your preferences</div></div><label className="toggle-switch"><input type="checkbox" checked={form.notifSmsJobs} onChange={() => update("notifSmsJobs", !form.notifSmsJobs)} /><span className="slider"></span></label></div>
+          <div className="toggle-row"><div><div className="toggle-label">Email for confirmations & receipts</div><div className="toggle-sub">Job acceptance, payment receipts, and delivery confirmations</div></div><label className="toggle-switch"><input type="checkbox" checked={form.notifEmail} onChange={() => update("notifEmail", !form.notifEmail)} /><span className="slider"></span></label></div>
+          <div className="toggle-row"><div><div className="toggle-label">SMS reminders for due dates</div><div className="toggle-sub">Get a reminder 24 hours before a transcript is due</div></div><label className="toggle-switch"><input type="checkbox" checked={form.notifSmsReminders} onChange={() => update("notifSmsReminders", !form.notifSmsReminders)} /><span className="slider"></span></label></div>
+        </div>
+      </>)}
+
+      {step === 4 && (<>
+        <div className="form-row">
+          <div className="form-group"><label className="form-label">Full Name</label><input className="form-input" placeholder="Sarah Chen" value={form.name} onChange={e => update("name", e.target.value)} /></div>
+          <div className="form-group"><label className="form-label">Email</label><input className="form-input" type="email" placeholder="sarah@example.com" value={form.email} onChange={e => update("email", e.target.value)} /></div>
+        </div>
+        <div className="form-group"><label className="form-label">Password</label><input className="form-input" type="password" placeholder="Create a password" value={form.password} onChange={e => update("password", e.target.value)} /><p className="form-helper">At least 8 characters with one number and one special character.</p></div>
+        <div className="info-callout" style={{marginTop: 24}}>
+          <div className="callout-icon"><Icon name="shield" size={16} /></div>
+          <p>By creating an account, you agree to Dewey Sholes' Terms of Service and Privacy Policy. Your data is encrypted and never shared without your consent.</p>
+        </div>
+      </>)}
+
+      <div className="onboarding-nav">
+        <button className="btn btn-secondary" onClick={() => setScreen(screen === 1 ? 0 : screen - 1)}>
+          <Icon name="chevronRight" size={14} style={{transform: "rotate(180deg)"}} /> Back
+        </button>
+        {step < 4 ? (
+          <button className="btn btn-primary" onClick={() => setScreen(screen + 1)}>
+            Continue <Icon name="arrowRight" size={14} />
+          </button>
+        ) : (
+          <button className="btn btn-primary" style={{background: "linear-gradient(135deg, #059669, #10B981)"}} onClick={() => setScreen(5)}>
+            Create Account <Icon name="checkCircle" size={14} />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── Sign-In Modal ──────────────────────────────────────────────
 function SignInModal({ onClose }) {
   return (
@@ -3485,7 +3814,7 @@ function LandingPage() {
                 Order a Transcript
                 <Icon name="arrowRight" size={16} color="#fff" />
               </a>
-              <a href="#/reporter" className="btn btn-secondary">
+              <a href="#/reporter-signup" className="btn btn-secondary">
                 Join as a Reporter
                 <Icon name="chevronRight" size={16} color="#64748B" />
               </a>
@@ -3692,7 +4021,7 @@ function LandingPage() {
             ))}
           </div>
           <div className="reporters-cta">
-            <a href="#/reporter" className="btn btn-white">Apply to Join the Network <Icon name="arrowRight" size={16} color="#1E40AF" /></a>
+            <a href="#/reporter-signup" className="btn btn-white">Apply to Join the Network <Icon name="arrowRight" size={16} color="#1E40AF" /></a>
           </div>
         </div>
       </section>
@@ -3805,7 +4134,7 @@ function LandingPage() {
           <p>Join the attorneys and reporters already using Dewey Sholes to bring court transcripts into the modern era.</p>
           <div className="final-cta-actions">
             <a href="#/order" className="btn btn-primary">Order a Transcript <Icon name="arrowRight" size={16} color="#fff" /></a>
-            <a href="#/reporter" className="btn btn-secondary">Join as a Reporter <Icon name="chevronRight" size={16} color="#64748B" /></a>
+            <a href="#/reporter-signup" className="btn btn-secondary">Join as a Reporter <Icon name="chevronRight" size={16} color="#64748B" /></a>
           </div>
         </div>
       </section>
@@ -3867,6 +4196,7 @@ function AppRouter() {
   if (m) return <OrderDetailPage orderId={m[1]} />;
   if (route.startsWith("#/order")) return <OrderFlow />;
   if (route.startsWith("#/dashboard")) return <BuyerDashboard />;
+  if (route.startsWith("#/reporter-signup")) return <ReporterOnboarding />;
   if (route.startsWith("#/reporter")) return <ReporterDashboard />;
   if (route.startsWith("#/admin")) return <AdminDashboard />;
   if (route.startsWith("#/onboarding")) return <OnboardingFlow />;
