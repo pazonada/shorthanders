@@ -1132,6 +1132,98 @@
     .method-cards { grid-template-columns: 1fr; }
   }
 
+  /* ─── Order Flow Polish ─────────────────────────── */
+  .order-flow-wrap { max-width: 760px; margin: 0 auto; }
+  .order-flow-wrap.accent-blue .step-dot-num.active { background: linear-gradient(135deg, #2563EB, #4F46E5); }
+  .order-flow-wrap.accent-amber .step-dot-num.active { background: linear-gradient(135deg, #D97706, #F59E0B); }
+  .type-card-enhanced { background: var(--bg-card, #fff); border: 2px solid var(--border, #E2E8F0); border-radius: 16px; padding: 28px 24px; cursor: pointer; transition: all 0.2s ease; text-align: left; }
+  .type-card-enhanced:hover { border-color: #BFDBFE; transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .type-card-enhanced.selected { border-color: #2563EB; background: #F8FAFF; }
+  .type-card-enhanced.selected.amber { border-color: #D97706; background: #FFFCF5; }
+  .type-card-enhanced .tce-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .type-card-enhanced h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; color: var(--text, #0F172A); }
+  .type-card-enhanced .tce-desc { font-size: 14px; color: var(--text-secondary, #475569); line-height: 1.5; margin-bottom: 16px; }
+  .tce-features { list-style: none; padding: 0; margin: 0 0 20px; }
+  .tce-features li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary, #475569); padding: 5px 0; }
+  .form-file-enhanced { border: 2px dashed var(--border, #E2E8F0); border-radius: 14px; padding: 32px 24px; text-align: center; cursor: pointer; transition: all 0.2s ease; background: var(--bg-muted, #F8FAFC); }
+  .form-file-enhanced:hover { border-color: #BFDBFE; background: #F0F5FF; }
+  .form-file-enhanced.uploaded { border-style: solid; border-color: #059669; background: #F0FDF4; }
+  .form-file-enhanced .file-upload-text { font-size: 15px; color: var(--text-secondary, #475569); margin: 12px 0 6px; font-weight: 500; }
+  .form-file-enhanced .file-upload-formats { font-size: 12px; color: var(--text-muted, #94A3B8); }
+  .file-uploaded-state { display: flex; align-items: center; gap: 14px; text-align: left; }
+  .file-uploaded-state .file-name { font-weight: 600; color: var(--text, #0F172A); font-size: 14px; }
+  .file-uploaded-state .file-meta { font-size: 12px; color: var(--text-muted, #94A3B8); margin-top: 2px; }
+  .turnaround-comparison { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+  .turnaround-card-enhanced { background: var(--bg-card, #fff); border: 2px solid var(--border, #E2E8F0); border-radius: 14px; padding: 20px 16px; text-align: center; cursor: pointer; transition: all 0.2s ease; position: relative; }
+  .turnaround-card-enhanced:hover { border-color: #BFDBFE; transform: translateY(-2px); }
+  .turnaround-card-enhanced.selected { border-color: #2563EB; box-shadow: 0 4px 16px rgba(37,99,235,0.12); }
+  .turnaround-card-enhanced .tc-check { position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; }
+  .turnaround-card-enhanced h4 { font-size: 16px; font-weight: 700; color: var(--text, #0F172A); margin: 10px 0 4px; }
+  .turnaround-card-enhanced .tc-time { font-size: 13px; color: var(--text-secondary, #475569); margin-bottom: 10px; }
+  .turnaround-card-enhanced .tc-price { font-size: 18px; font-weight: 800; color: var(--text, #0F172A); margin-bottom: 4px; }
+  .turnaround-card-enhanced .tc-delivery { font-size: 12px; color: var(--text-muted, #94A3B8); margin-bottom: 6px; }
+  .turnaround-card-enhanced .tc-note { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 100px; display: inline-block; }
+  .turnaround-card-enhanced.rush .tc-note { background: #FEE2E2; color: #991B1B; }
+  .turnaround-card-enhanced.standard .tc-note { background: #DBEAFE; color: #1E40AF; }
+  .turnaround-card-enhanced.economy .tc-note { background: #D1FAE5; color: #065F46; }
+  .review-banner { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; margin-bottom: 20px; }
+  .review-banner.blue { background: #EFF6FF; color: #1E40AF; }
+  .review-banner.amber { background: #FFFBEB; color: #92400E; }
+  .review-section-card { background: var(--bg-card, #fff); border: 1px solid var(--border, #E2E8F0); border-radius: 14px; padding: 24px; margin-bottom: 16px; }
+  .review-section-card h3 { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--text, #0F172A); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.03em; }
+  @media (max-width: 768px) {
+    .turnaround-comparison { grid-template-columns: 1fr; }
+  }
+  [data-theme="dark"] .type-card-enhanced { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .type-card-enhanced.selected { border-color: #3B82F6; background: rgba(37,99,235,0.08); }
+  [data-theme="dark"] .type-card-enhanced.selected.amber { border-color: #F59E0B; background: rgba(245,158,11,0.08); }
+  [data-theme="dark"] .form-file-enhanced { border-color: var(--border); background: var(--bg-muted); }
+  [data-theme="dark"] .form-file-enhanced.uploaded { border-color: #059669; background: rgba(5,150,105,0.1); }
+  [data-theme="dark"] .turnaround-card-enhanced { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .turnaround-card-enhanced.selected { border-color: #3B82F6; }
+  [data-theme="dark"] .review-banner.blue { background: rgba(37,99,235,0.12); color: #93C5FD; }
+  [data-theme="dark"] .review-banner.amber { background: rgba(217,119,6,0.12); color: #FCD34D; }
+  [data-theme="dark"] .review-section-card { background: var(--bg-card); border-color: var(--border); }
+
+  /* ─── Reporter Dashboard Polish ─────────────────── */
+  .quick-stats-row { display: flex; gap: 12px; margin-bottom: 20px; }
+  .quick-stat { flex: 1; display: flex; align-items: center; gap: 10px; background: var(--bg-card, #fff); border: 1px solid var(--border, #E2E8F0); border-radius: 12px; padding: 14px 16px; }
+  .quick-stat-value { font-size: 22px; font-weight: 800; color: var(--text, #0F172A); }
+  .quick-stat-label { font-size: 12px; color: var(--text-muted, #94A3B8); }
+  .profile-nudge { display: flex; align-items: center; gap: 20px; background: linear-gradient(135deg, #EFF6FF, #F0F5FF); border: 1px solid #BFDBFE; border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; }
+  .nudge-content { flex: 1; }
+  .nudge-content h3 { font-size: 16px; font-weight: 700; color: #1E40AF; margin-bottom: 4px; }
+  .nudge-content p { font-size: 13px; color: #475569; margin-bottom: 10px; }
+  .nudge-progress { display: flex; align-items: center; gap: 10px; }
+  .nudge-bar { flex: 1; height: 6px; background: #DBEAFE; border-radius: 3px; overflow: hidden; max-width: 200px; }
+  .nudge-fill { height: 100%; background: linear-gradient(90deg, #2563EB, #4F46E5); border-radius: 3px; }
+  .nudge-progress span { font-size: 12px; color: #64748B; white-space: nowrap; }
+  .badge-match { background: #D1FAE5; color: #065F46; }
+  .deadlines-widget { background: var(--bg-card, #fff); border: 1px solid var(--border, #E2E8F0); border-radius: 14px; padding: 20px; margin-bottom: 20px; }
+  .deadlines-widget h3 { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; margin-bottom: 14px; color: var(--text, #0F172A); }
+  .deadline-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-light, #F1F5F9); }
+  .deadline-item:last-child { border-bottom: none; }
+  .deadline-date { font-weight: 700; font-size: 13px; color: var(--text, #0F172A); min-width: 80px; }
+  .deadline-case { flex: 1; font-size: 13px; color: var(--text-secondary, #475569); }
+  .job-card-detail { padding: 16px 0 0; border-top: 1px solid var(--border-light, #F1F5F9); margin-top: 14px; }
+  .job-card-detail .jcd-row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; }
+  .job-card-detail .jcd-label { color: var(--text-muted, #94A3B8); }
+  .job-card-detail .jcd-value { color: var(--text, #0F172A); font-weight: 500; }
+  .job-card-detail .jcd-match { font-size: 12px; color: #059669; margin-top: 8px; font-style: italic; }
+  .empty-state { text-align: center; padding: 60px 20px; }
+  .empty-state .empty-icon { margin-bottom: 16px; }
+  .empty-state h3 { font-size: 18px; font-weight: 700; color: var(--text, #0F172A); margin-bottom: 8px; }
+  .empty-state p { font-size: 14px; color: var(--text-secondary, #475569); line-height: 1.6; }
+  .empty-state .empty-hint { font-size: 12px; color: var(--text-muted, #94A3B8); margin-top: 12px; }
+  @media (max-width: 768px) {
+    .quick-stats-row { flex-direction: column; gap: 8px; }
+    .profile-nudge { flex-direction: column; text-align: center; }
+  }
+  [data-theme="dark"] .profile-nudge { background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(79,70,229,0.1)); border-color: rgba(37,99,235,0.3); }
+  [data-theme="dark"] .nudge-content h3 { color: #93C5FD; }
+  [data-theme="dark"] .nudge-bar { background: rgba(37,99,235,0.2); }
+  [data-theme="dark"] .badge-match { background: rgba(5,150,105,0.15); color: #34D399; }
+
   /* ─── Micro-animations ─────────────────────────── */
   .dash-card { transition: all 0.2s ease; }
   .dash-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
@@ -1336,6 +1428,11 @@ const MOCK_PAYOUTS = [
   { case: "Davis v. Metro Transit", date: "2026-03-05", pages: 54, amount: 198.18, status: "Paid" },
   { case: "Park v. Golden Gate Ins.", date: "2026-02-28", pages: 41, amount: 150.47, status: "Paid" },
   { case: "Thompson custody hearing", date: "2026-02-20", pages: 33, amount: 121.11, status: "Paid" },
+];
+
+const MOCK_REPORTER_EARNINGS = [
+  { month: "Oct", amount: 420 }, { month: "Nov", amount: 580 }, { month: "Dec", amount: 310 },
+  { month: "Jan", amount: 720 }, { month: "Feb", amount: 650 }, { month: "Mar", amount: 572 },
 ];
 
 const TEAM = [
@@ -2095,13 +2192,15 @@ function OrderFlow() {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
     type: "", court: "", dept: "", caseNumber: "", caseName: "", caseType: "family",
-    hearingDate: "", hearingTime: "", duration: "60", interpreter: false,
+    hearingDate: "", hearingTime: "", duration: "60", interpreter: false, interpreterLang: "",
     audioFile: "", turnaround: "standard", feeWaiver: false,
   });
   const [submitted, setSubmitted] = useState(false);
   const update = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const accentClass = form.type === "live" ? "accent-blue" : form.type === "transcription" ? "accent-amber" : "";
 
   const est = calculateEstimate(parseInt(form.duration) || 60, form.turnaround, form.interpreter);
+  const getDeliveryDate = (t) => { const d = new Date(); d.setDate(d.getDate() + (t === "rush" ? 1 : t === "standard" ? 5 : 14)); return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }); };
 
   if (submitted) {
     return (
@@ -2110,16 +2209,28 @@ function OrderFlow() {
           <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
           <div />
         </div></div></nav>
-        <div className="page page-enter"><div className="container">
+        <div className="page page-enter"><div className="container" style={{maxWidth: 640, margin: "0 auto"}}>
           <div className="confirm-box">
-            <div className="confirm-check"><Icon name="checkCircle" size={36} color="#059669" /></div>
-            <h2>Order Submitted</h2>
+            <div className="confirm-check" style={{animation: "successPop 0.5s ease"}}><Icon name="checkCircle" size={48} color="#059669" /></div>
+            <h2 style={{fontSize: 28, marginBottom: 8}}>Order Submitted!</h2>
             <p className="order-num">Order number: <strong>DS-2026-0042</strong></p>
-            <p style={{fontSize: 15, color: "#64748B", marginBottom: 32, lineHeight: 1.7}}>
+            <p style={{fontSize: 15, color: "var(--text-secondary, #64748B)", marginBottom: 32, lineHeight: 1.7}}>
               {form.type === "live"
-                ? "We're matching you with a licensed reporter for your hearing. You'll receive a notification once a reporter accepts."
+                ? "We're matching you with a licensed reporter for your hearing."
                 : "Your audio has been received. A certified reporter will be assigned shortly."}
             </p>
+            <div className="what-next" style={{maxWidth: 440, margin: "0 auto 32px", textAlign: "left"}}>
+              <h3 style={{fontSize: 16, marginBottom: 14}}>What happens next</h3>
+              {form.type === "live" ? (<>
+                <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">A CSR-verified reporter in {form.court ? form.court.split(" - ")[0] : "your jurisdiction"} is being matched now</div></div>
+                <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">You'll get a notification when your reporter confirms (usually within hours)</div></div>
+                <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Reporter attends your hearing. Transcript delivered by {getDeliveryDate(form.turnaround)}</div></div>
+              </>) : (<>
+                <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">Your audio file is being processed and assigned to a qualified reporter</div></div>
+                <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">The reporter transcribes and certifies your proceedings</div></div>
+                <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Certified transcript delivered by {getDeliveryDate(form.turnaround)}</div></div>
+              </>)}
+            </div>
             <div style={{display: "flex", gap: 12, justifyContent: "center"}}>
               <button className="btn btn-primary btn-sm" onClick={() => navigate("/dashboard")}>View Dashboard <Icon name="arrowRight" size={14} color="#fff" /></button>
               <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Back to Home</button>
@@ -2137,7 +2248,7 @@ function OrderFlow() {
         <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Cancel</button>
       </div></div></nav>
       <div className="page page-enter">
-        <div className="container" style={{maxWidth: 760}}>
+        <div className={"order-flow-wrap " + accentClass}>
           <div className="page-header" style={{justifyContent: "center", textAlign: "center", display: "block"}}>
             <h1>New Transcript Order</h1>
           </div>
@@ -2148,19 +2259,37 @@ function OrderFlow() {
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
                 <h2 style={{fontSize: 24}}>What type of transcript do you need?</h2>
+                <p style={{color: "var(--text-secondary, #64748B)"}}>Choose the option that fits your situation.</p>
               </div>
-              <div className="type-cards">
-                <div className={"type-card" + (form.type === "live" ? " selected" : "")} onClick={() => { update("type", "live"); setStep(2); }}>
-                  <div className="type-card-icon" style={{background: "#EFF6FF"}}><Icon name="mapPin" size={32} color="#2563EB" /></div>
+              <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16}}>
+                <div className={"type-card-enhanced" + (form.type === "live" ? " selected" : "")} onClick={() => update("type", "live")}>
+                  <div className="tce-icon" style={{background: "#EFF6FF"}}><Icon name="mapPin" size={28} color="#2563EB" /></div>
                   <h3>Live Attendance</h3>
-                  <p>A reporter attends your upcoming hearing in person or remotely and produces the transcript.</p>
+                  <p className="tce-desc">For upcoming hearings where you need a reporter present</p>
+                  <ul className="tce-features">
+                    <li><Icon name="checkCircle" size={14} color="#2563EB" /> Reporter attends in person or remotely</li>
+                    <li><Icon name="checkCircle" size={14} color="#2563EB" /> Real-time or same-day options</li>
+                    <li><Icon name="checkCircle" size={14} color="#2563EB" /> Reporter confirmed before your hearing</li>
+                    <li><Icon name="checkCircle" size={14} color="#2563EB" /> Certified transcript delivered on schedule</li>
+                  </ul>
                 </div>
-                <div className={"type-card" + (form.type === "transcription" ? " selected" : "")} onClick={() => { update("type", "transcription"); setStep(2); }}>
-                  <div className="type-card-icon" style={{background: "#FFFBEB"}}><Icon name="mic" size={32} color="#D97706" /></div>
+                <div className={"type-card-enhanced amber" + (form.type === "transcription" ? " selected" : "")} onClick={() => update("type", "transcription")}>
+                  <div className="tce-icon" style={{background: "#FFFBEB"}}><Icon name="mic" size={28} color="#D97706" /></div>
                   <h3>Post-Hearing Transcription</h3>
-                  <p>Upload court audio from a completed proceeding and we'll match a reporter to transcribe it.</p>
+                  <p className="tce-desc">Got audio from a hearing? We'll match you with a reporter</p>
+                  <ul className="tce-features">
+                    <li><Icon name="checkCircle" size={14} color="#D97706" /> Upload MP3, WAV, or court-format audio</li>
+                    <li><Icon name="checkCircle" size={14} color="#D97706" /> AI-assisted workspace for faster turnaround</li>
+                    <li><Icon name="checkCircle" size={14} color="#D97706" /> Supporting docs pre-loaded for accuracy</li>
+                    <li><Icon name="checkCircle" size={14} color="#D97706" /> Interpreter-aware page estimates</li>
+                  </ul>
                 </div>
               </div>
+              {form.type && (
+                <div style={{textAlign: "center", marginTop: 24}}>
+                  <button className="btn btn-primary" onClick={() => setStep(2)}>Continue <Icon name="arrowRight" size={16} color="#fff" /></button>
+                </div>
+              )}
             </div>
           )}
 
@@ -2169,9 +2298,9 @@ function OrderFlow() {
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
                 <h2 style={{fontSize: 24}}>Case &amp; hearing details</h2>
-                <p>{form.type === "live" ? "Tell us about the upcoming hearing." : "Tell us about the proceeding that was recorded."}</p>
+                <p style={{color: "var(--text-secondary, #64748B)"}}>{form.type === "live" ? "Tell us about the upcoming hearing." : "Tell us about the proceeding that was recorded."}</p>
               </div>
-              <div style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 16, padding: 32}}>
+              <div className="review-section-card" style={{padding: 32}}>
                 <div className="form-row">
                   <div className="form-group">
                     <label className="form-label">Court</label>
@@ -2219,10 +2348,18 @@ function OrderFlow() {
                 ) : (
                   <div className="form-group">
                     <label className="form-label">Audio File</label>
-                    <div className="form-file" onClick={() => update("audioFile", "hearing_recording_2026-03-15.mp3")}>
-                      {form.audioFile
-                        ? <p className="uploaded"><Icon name="checkCircle" size={16} color="#059669" /> {form.audioFile}</p>
-                        : <><Icon name="mic" size={24} color="#94A3B8" /><p>Click to upload MP3, WAV, or MP4</p></>}
+                    <div className={"form-file-enhanced" + (form.audioFile ? " uploaded" : "")} onClick={() => !form.audioFile && update("audioFile", "hearing_recording_2026-03-15.mp3")}>
+                      {form.audioFile ? (
+                        <div className="file-uploaded-state">
+                          <Icon name="checkCircle" size={24} color="#059669" />
+                          <div><p className="file-name">{form.audioFile}</p><p className="file-meta">MP3 — 45.2 MB — 1h 15m</p></div>
+                          <button className="btn btn-sm btn-secondary" onClick={(e) => { e.stopPropagation(); update("audioFile", ""); }}>Remove</button>
+                        </div>
+                      ) : (<>
+                        <Icon name="mic" size={32} color="#D97706" />
+                        <p className="file-upload-text">Drag and drop your audio file, or click to browse</p>
+                        <p className="file-upload-formats">Accepted: MP3, WAV, MP4, M4A, AAC | Max size: 500 MB</p>
+                      </>)}
                     </div>
                   </div>
                 )}
@@ -2245,6 +2382,15 @@ function OrderFlow() {
                     </label>
                   </div>
                 </div>
+                {form.interpreter && (
+                  <div className="form-group">
+                    <label className="form-label">Interpreter Language</label>
+                    <select className="form-input form-select" value={form.interpreterLang} onChange={e => update("interpreterLang", e.target.value)}>
+                      <option value="">Select language...</option>
+                      {["Spanish", "Mandarin", "Japanese", "Korean", "Vietnamese", "Other"].map(l => <option key={l} value={l}>{l}</option>)}
+                    </select>
+                  </div>
+                )}
 
                 <div style={{display: "flex", gap: 12, marginTop: 8}}>
                   <button className="btn btn-secondary btn-sm" onClick={() => setStep(1)}>Back</button>
@@ -2259,32 +2405,39 @@ function OrderFlow() {
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
                 <h2 style={{fontSize: 24}}>Turnaround &amp; pricing</h2>
-                <p>Select your delivery speed. Pricing is based on CA statutory rates.</p>
+                <p style={{color: "var(--text-secondary, #64748B)"}}>Select your delivery speed. Pricing is based on CA statutory rates.</p>
               </div>
-              <div className="turnaround-cards">
+              <div className="turnaround-comparison">
                 {[
-                  { key: "rush", label: "Rush", time: "24 hours", note: "1.5x rate" },
-                  { key: "standard", label: "Standard", time: "3-5 business days", note: "Statutory rate" },
-                  { key: "economy", label: "Economy", time: "2+ weeks", note: "15% savings" },
-                ].map(t => (
-                  <div key={t.key} className={"turnaround-card" + (form.turnaround === t.key ? " selected" : "")} onClick={() => update("turnaround", t.key)}>
-                    <h4>{t.label}</h4>
-                    <div className="time">{t.time}</div>
-                    <div className="multiplier">{t.note}</div>
-                  </div>
-                ))}
+                  { key: "rush", label: "Rush", time: "24 hours", icon: "zap", note: "1.5x rate", color: "#DC2626" },
+                  { key: "standard", label: "Standard", time: "3-5 business days", icon: "clock", note: "Statutory rate", color: "#2563EB" },
+                  { key: "economy", label: "Economy", time: "2+ weeks", icon: "dollarSign", note: "15% savings", color: "#059669" },
+                ].map(t => {
+                  const estT = calculateEstimate(parseInt(form.duration) || 60, t.key, form.interpreter);
+                  return (
+                    <div key={t.key} className={"turnaround-card-enhanced " + t.key + (form.turnaround === t.key ? " selected" : "")} onClick={() => update("turnaround", t.key)}>
+                      {form.turnaround === t.key && <div className="tc-check"><Icon name="checkCircle" size={14} color="#fff" /></div>}
+                      <Icon name={t.icon} size={22} color={t.color} />
+                      <h4>{t.label}</h4>
+                      <div className="tc-time">{t.time}</div>
+                      <div className="tc-price">${(estT.lowCost * (1 + PRICING.platformFee)).toFixed(0)} – ${(estT.highCost * (1 + PRICING.platformFee)).toFixed(0)}</div>
+                      <div className="tc-delivery">Est. delivery: {getDeliveryDate(t.key)}</div>
+                      <div className="tc-note">{t.note}</div>
+                    </div>
+                  );
+                })}
               </div>
               <div className="price-box">
                 <h3>Price Estimate</h3>
-                <div className="price-line"><span>Estimated pages</span><strong>{est.low} - {est.high} pages</strong></div>
+                <div className="price-line"><span>Estimated pages</span><strong>{est.low} – {est.high} pages</strong></div>
                 <div className="price-line"><span>Statutory rate (per page)</span><strong>${PRICING.ratePerPage.toFixed(2)}</strong></div>
                 <div className="price-line"><span>Turnaround adjustment</span><strong>{est.mult === 1 ? "None" : est.mult > 1 ? "+" + ((est.mult - 1) * 100).toFixed(0) + "%" : "-" + ((1 - est.mult) * 100).toFixed(0) + "%"}</strong></div>
                 <div className="price-line"><span>Platform fee ({(PRICING.platformFee * 100).toFixed(0)}%)</span><strong>${((est.lowCost + est.highCost) / 2 * PRICING.platformFee).toFixed(2)}</strong></div>
                 <div className="price-total">
                   <span>Estimated Total</span>
-                  <span>${(est.lowCost * (1 + PRICING.platformFee)).toFixed(0)} - ${(est.highCost * (1 + PRICING.platformFee)).toFixed(0)}</span>
+                  <span>${(est.lowCost * (1 + PRICING.platformFee)).toFixed(0)} – ${(est.highCost * (1 + PRICING.platformFee)).toFixed(0)}</span>
                 </div>
-                <p style={{marginTop: 16, fontSize: 12, color: "#64748B", lineHeight: 1.6}}>
+                <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
                   Final cost based on certified page count. Statutory rate: $1.13 per 100 words (CA Gov. Code 69950).
                 </p>
               </div>
@@ -2306,35 +2459,47 @@ function OrderFlow() {
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
                 <h2 style={{fontSize: 24}}>Review your order</h2>
-                <p>Confirm the details below and submit.</p>
+                <p style={{color: "var(--text-secondary, #64748B)"}}>Confirm the details below and submit.</p>
               </div>
-              <div style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 16, padding: 32}}>
-                <div style={{marginBottom: 16, display: "flex", gap: 8}}>
-                  <span className={"badge badge-" + (form.type === "live" ? "live" : "transcription")}>{form.type === "live" ? "Live Attendance" : "Transcription"}</span>
-                  <span className={"badge badge-" + form.turnaround}>{form.turnaround.charAt(0).toUpperCase() + form.turnaround.slice(1)}</span>
-                </div>
+              <div className={"review-banner " + (form.type === "live" ? "blue" : "amber")}>
+                <Icon name={form.type === "live" ? "mapPin" : "mic"} size={18} />
+                {form.type === "live" ? "Live Attendance" : "Post-Hearing Transcription"}
+                <span className={"badge badge-" + form.turnaround} style={{marginLeft: "auto"}}>{form.turnaround.charAt(0).toUpperCase() + form.turnaround.slice(1)}</span>
+              </div>
+              <div className="review-section-card">
+                <h3><Icon name="scale" size={14} /> Case Details</h3>
                 <div className="review-grid">
                   <div className="review-field"><label>Court</label><div className="val">{form.court || "Not specified"}</div></div>
                   <div className="review-field"><label>Department</label><div className="val">{form.dept || "Not specified"}</div></div>
                   <div className="review-field"><label>Case Number</label><div className="val">{form.caseNumber || "Not specified"}</div></div>
                   <div className="review-field"><label>Case Name</label><div className="val">{form.caseName || "Not specified"}</div></div>
-                  {form.type === "live" && <div className="review-field"><label>Hearing Date</label><div className="val">{form.hearingDate || "Not specified"}</div></div>}
-                  {form.type === "live" && <div className="review-field"><label>Hearing Time</label><div className="val">{form.hearingTime || "Not specified"}</div></div>}
+                </div>
+              </div>
+              <div className="review-section-card">
+                <h3><Icon name={form.type === "live" ? "calendar" : "mic"} size={14} /> {form.type === "live" ? "Hearing Schedule" : "Audio File"}</h3>
+                <div className="review-grid">
+                  {form.type === "live" && <div className="review-field"><label>Date</label><div className="val">{form.hearingDate || "Not specified"}</div></div>}
+                  {form.type === "live" && <div className="review-field"><label>Time</label><div className="val">{form.hearingTime || "Not specified"}</div></div>}
                   {form.type === "transcription" && <div className="review-field"><label>Audio File</label><div className="val">{form.audioFile || "Not uploaded"}</div></div>}
                   <div className="review-field"><label>Duration</label><div className="val">{form.duration} minutes</div></div>
-                  <div className="review-field"><label>Interpreter</label><div className="val">{form.interpreter ? "Yes" : "No"}</div></div>
+                  <div className="review-field"><label>Interpreter</label><div className="val">{form.interpreter ? `Yes (${form.interpreterLang || "language TBD"})` : "No"}</div></div>
                 </div>
-                <div style={{background: "#F8FAFC", borderRadius: 12, padding: 20, marginTop: 8}}>
+              </div>
+              <div className="review-section-card">
+                <h3><Icon name="dollarSign" size={14} /> Pricing</h3>
+                <div className="price-line"><span>Estimated pages</span><strong>{est.low} – {est.high}</strong></div>
+                <div className="price-line"><span>Delivery by</span><strong>{getDeliveryDate(form.turnaround)}</strong></div>
+                <div style={{background: "var(--bg-muted, #F8FAFC)", borderRadius: 12, padding: 20, marginTop: 12}}>
                   <div style={{display: "flex", justifyContent: "space-between", alignItems: "baseline"}}>
-                    <span style={{fontSize: 14, color: "#64748B"}}>Estimated Total</span>
-                    <span style={{fontSize: 28, fontWeight: 800, color: "#0F172A"}}>${(est.lowCost * (1 + PRICING.platformFee)).toFixed(0)} <span style={{fontSize: 14, fontWeight: 400, color: "#94A3B8"}}>- ${(est.highCost * (1 + PRICING.platformFee)).toFixed(0)}</span></span>
+                    <span style={{fontSize: 14, color: "var(--text-secondary, #64748B)"}}>Estimated Total</span>
+                    <span style={{fontSize: 28, fontWeight: 800, color: "var(--text, #0F172A)"}}>${(est.lowCost * (1 + PRICING.platformFee)).toFixed(0)} <span style={{fontSize: 14, fontWeight: 400, color: "var(--text-muted, #94A3B8)"}}>– ${(est.highCost * (1 + PRICING.platformFee)).toFixed(0)}</span></span>
                   </div>
                   {form.feeWaiver && <p style={{fontSize: 12, color: "#2563EB", marginTop: 8}}>Fee waiver indicated. TRF reimbursement paperwork will be generated upon delivery.</p>}
                 </div>
-                <div style={{display: "flex", gap: 12, marginTop: 24}}>
-                  <button className="btn btn-secondary btn-sm" onClick={() => setStep(3)}>Back</button>
-                  <button className="btn btn-primary" onClick={() => setSubmitted(true)}>Submit Order <Icon name="arrowRight" size={16} color="#fff" /></button>
-                </div>
+              </div>
+              <div style={{display: "flex", gap: 12, marginTop: 24}}>
+                <button className="btn btn-secondary btn-sm" onClick={() => setStep(3)}>Back</button>
+                <button className="btn btn-primary" onClick={() => setSubmitted(true)}>Submit Order <Icon name="arrowRight" size={16} color="#fff" /></button>
               </div>
             </div>
           )}
@@ -2596,6 +2761,8 @@ function ReporterDashboard() {
   const [declined, setDeclined] = useState({});
   const [chatJob, setChatJob] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
+  const [profileComplete, setProfileComplete] = useState(false);
+  const [expandedJob, setExpandedJob] = useState(null);
   const [countyFilter, setCountyFilter] = useState("all");
   const [turnFilter, setTurnFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
@@ -2609,6 +2776,14 @@ function ReporterDashboard() {
     return true;
   });
 
+  const getMatchPercent = (j) => {
+    let s = 85;
+    if (j.county === "Los Angeles") s += 8;
+    if (j.type === "live") s += 4;
+    if (j.turnaround === "standard") s += 2;
+    return Math.min(s, 99);
+  };
+
   const calendarEvents = [
     ...MOCK_JOBS.map(j => ({ date: j.hearingDate, label: j.court.split(" - ")[0], color: "blue", type: "hearing" })),
     ...MOCK_ACTIVE_JOBS.map(j => ({ date: j.dueDate, label: j.caseType + " due", color: "amber", type: "due" })),
@@ -2621,11 +2796,47 @@ function ReporterDashboard() {
     addToast("Job Accepted", j.court + ", " + j.dept + " - $" + j.earnings.toFixed(2), "success");
   };
 
+  const maxEarning = Math.max(...MOCK_REPORTER_EARNINGS.map(e => e.amount));
+
   return (
     <div>
       <AppNav variant="reporter" activeTab={tab} onTabChange={setTab} />
       <div className="page page-enter">
         <div className="container">
+          {/* Quick Stats Row */}
+          <div className="quick-stats-row">
+            <div className="quick-stat">
+              <Icon name="zap" size={18} color="#2563EB" />
+              <span className="quick-stat-value">{filteredJobs.length}</span>
+              <span className="quick-stat-label">jobs available</span>
+            </div>
+            <div className="quick-stat">
+              <Icon name="clock" size={18} color="#D97706" />
+              <span className="quick-stat-value">{MOCK_ACTIVE_JOBS.length}</span>
+              <span className="quick-stat-label">active</span>
+            </div>
+            <div className="quick-stat">
+              <Icon name="dollarSign" size={18} color="#059669" />
+              <span className="quick-stat-value">$572</span>
+              <span className="quick-stat-label">earned this month</span>
+            </div>
+          </div>
+
+          {/* Profile Nudge */}
+          {!profileComplete && (
+            <div className="profile-nudge">
+              <div className="nudge-content">
+                <h3>Complete Your Profile</h3>
+                <p>Add your availability and payment info to start receiving more jobs.</p>
+                <div className="nudge-progress">
+                  <div className="nudge-bar"><div className="nudge-fill" style={{width: "60%"}} /></div>
+                  <span>3 of 5 steps complete</span>
+                </div>
+              </div>
+              <button className="btn btn-primary btn-sm" onClick={() => setProfileComplete(true)}>Complete Profile</button>
+            </div>
+          )}
+
           {tab === "jobs" && (
             <div>
               <div className="page-header">
@@ -2656,11 +2867,12 @@ function ReporterDashboard() {
               </div>
               <div className="job-cards">
                 {filteredJobs.map(j => (
-                  <div className="job-card" key={j.id}>
+                  <div className="job-card" key={j.id} style={{cursor: "pointer"}} onClick={(e) => { if (!e.target.closest('.btn-accept') && !e.target.closest('.btn-decline')) setExpandedJob(expandedJob === j.id ? null : j.id); }}>
                     <div className="job-card-top">
                       <div className="job-card-badges">
                         <span className={"badge badge-" + (j.type === "live" ? "live" : "transcription")}>{j.type === "live" ? "Live Attendance" : "Transcription"}</span>
                         <span className={"badge badge-" + j.turnaround}>{j.turnaround}</span>
+                        <span className="badge badge-match"><Icon name="star" size={10} /> {getMatchPercent(j)}% match</span>
                         {j.interpreter && <span className="badge" style={{background: "#F3E8FF", color: "#6B21A8"}}>Interpreter</span>}
                       </div>
                       <span className="job-card-posted">{j.posted}</span>
@@ -2671,6 +2883,14 @@ function ReporterDashboard() {
                       <span><Icon name="clock" size={13} color="#94A3B8" /> {j.hearingDate}{j.time ? " at " + j.time : ""}</span>
                       <span><Icon name="fileText" size={13} color="#94A3B8" /> ~{j.estimatedPages} pages</span>
                     </div>
+                    {expandedJob === j.id && (
+                      <div className="job-card-detail">
+                        <div className="jcd-row"><span className="jcd-label">Case Name</span><span className="jcd-value">{j.caseType === "Family Law" ? "In re Marriage of Johnson" : j.caseType === "Civil" ? "Davis v. Metro Transit" : "Estate of Williams"}</span></div>
+                        <div className="jcd-row"><span className="jcd-label">Duration</span><span className="jcd-value">{j.duration || 60} min ({j.estimatedPages} est. pages)</span></div>
+                        <div className="jcd-row"><span className="jcd-label">Rate</span><span className="jcd-value">${PRICING.ratePerPage.toFixed(2)}/page × {j.turnaround === "rush" ? "1.5x" : j.turnaround === "economy" ? "0.85x" : "1.0x"}</span></div>
+                        <p className="jcd-match">This job matches your {j.county} County jurisdiction and {j.caseType} preference.</p>
+                      </div>
+                    )}
                     <div className="job-card-bottom">
                       <div className="earnings">${j.earnings.toFixed(2)} <span>estimated</span></div>
                       <div className="job-card-actions">
@@ -2681,9 +2901,11 @@ function ReporterDashboard() {
                   </div>
                 ))}
                 {filteredJobs.length === 0 && (
-                  <div style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, padding: 48, textAlign: "center"}}>
-                    <Icon name="checkCircle" size={32} color="#059669" />
-                    <p style={{color: "#64748B", marginTop: 12}}>All caught up. New jobs will appear as they're posted.</p>
+                  <div className="empty-state">
+                    <div className="empty-icon"><Icon name="checkCircle" size={40} color="#059669" /></div>
+                    <h3>All caught up!</h3>
+                    <p>No jobs matching your current filters. New jobs are posted throughout the day.</p>
+                    <p className="empty-hint">Tip: Broaden your filters or update your court preferences to see more jobs.</p>
                   </div>
                 )}
               </div>
@@ -2697,6 +2919,16 @@ function ReporterDashboard() {
                   <h1>My Active Jobs</h1>
                   <p>Jobs you've accepted and are currently working on.</p>
                 </div>
+              </div>
+              <div className="deadlines-widget">
+                <h3><Icon name="clock" size={14} color="#D97706" /> Upcoming Deadlines</h3>
+                {MOCK_ACTIVE_JOBS.sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate)).map(j => (
+                  <div className="deadline-item" key={j.id}>
+                    <span className="deadline-date">{new Date(j.dueDate).toLocaleDateString("en-US", {month: "short", day: "numeric"})}</span>
+                    <span className="deadline-case">{j.caseType} — {j.court.split(" - ")[0]}</span>
+                    <span className={"badge badge-" + (j.status === "review" ? "pending" : "progress")}>{j.status === "review" ? "In Review" : "Transcribing"}</span>
+                  </div>
+                ))}
               </div>
               <div className="job-cards">
                 {MOCK_ACTIVE_JOBS.map(j => (
@@ -2767,7 +2999,21 @@ function ReporterDashboard() {
                   <div className="stat-card-value">12</div>
                 </div>
               </div>
-              <h3 style={{fontSize: 16, fontWeight: 700, color: "#0F172A", marginBottom: 16}}>Recent Payouts</h3>
+              <div className="analytics-card" style={{marginBottom: 24}}>
+                <h3 style={{fontSize: 16, fontWeight: 700, marginBottom: 16, color: "var(--text, #0F172A)"}}>Monthly Earnings</h3>
+                <div className="bar-chart">
+                  {MOCK_REPORTER_EARNINGS.map((e, i) => (
+                    <div className="bar-row" key={i}>
+                      <span className="bar-label">{e.month}</span>
+                      <div className="bar-track">
+                        <div className="bar-fill" style={{width: (e.amount / maxEarning * 100) + "%", background: "linear-gradient(90deg, #059669, #10B981)"}} />
+                      </div>
+                      <span className="bar-value">${e.amount}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <h3 style={{fontSize: 16, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 16}}>Recent Payouts</h3>
               <table className="payout-table">
                 <thead><tr><th>Case</th><th>Date</th><th>Pages</th><th>Amount</th><th>Status</th></tr></thead>
                 <tbody>
@@ -3714,6 +3960,220 @@ function ReporterOnboarding() {
   );
 }
 
+// ─── Attorney Onboarding ────────────────────────────────────────
+function AttorneyOnboarding() {
+  const [screen, setScreen] = useState(0);
+  const [form, setForm] = useState({
+    name: "", email: "", firmName: "", phone: "",
+    barNumber: "", practiceAreas: [],
+    courts: [], currentMethod: "",
+    billingPref: "", notifStatus: true, notifAssignment: true, notifDelivery: true, notifMarketing: false,
+    password: "", confirmPassword: "",
+  });
+  const update = (k, v) => setForm(f => ({...f, [k]: v}));
+  const toggleArr = (k, v) => setForm(f => ({...f, [k]: f[k].includes(v) ? f[k].filter(x => x !== v) : [...f[k], v]}));
+
+  // Screen 0: Welcome pitch
+  if (screen === 0) {
+    return (
+      <div className="reporter-welcome" style={{background: "var(--bg-page, #F8FAFC)"}}>
+        <a href="#/" style={{display: "inline-flex", marginBottom: 40}}><DeweyFullLogo height={40} theme={useTheme().dark ? "dark" : "light"} /></a>
+        <h1 style={{fontSize: 44, fontWeight: 800, color: "var(--text, #0F172A)", lineHeight: 1.15, marginBottom: 12}}>Stop chasing reporters.<br /><span style={{color: "#4F46E5"}}>Start tracking cases.</span></h1>
+        <p className="welcome-sub">Dewey Sholes matches you with certified court reporters, handles payment, and keeps every transcript in one place. You focus on your cases.</p>
+        <div className="value-prop-grid">
+          <div className="value-prop-card">
+            <div className="vp-icon green"><Icon name="dollarSign" size={24} color="#059669" /></div>
+            <h3>Transparent pricing</h3>
+            <p>California statutory rates. See your price before you order. No negotiation, no surprises.</p>
+          </div>
+          <div className="value-prop-card">
+            <div className="vp-icon blue"><Icon name="fileText" size={24} color="#2563EB" /></div>
+            <h3>Track every case</h3>
+            <p>Create a case once. Every future order auto-fills. Your entire transcript history in one place.</p>
+          </div>
+          <div className="value-prop-card">
+            <div className="vp-icon amber"><Icon name="shield" size={24} color="#D97706" /></div>
+            <h3>Verified reporters only</h3>
+            <p>Every reporter is CSR-verified against state databases. Jurisdiction-matched. Credentials checked.</p>
+          </div>
+        </div>
+        <button className="btn btn-primary" style={{fontSize: 18, padding: "16px 40px", marginTop: 40}} onClick={() => setScreen(1)}>Create Your Account <Icon name="arrowRight" size={18} color="#fff" /></button>
+        <div style={{marginTop: 16}}>
+          <a href="#/dashboard" style={{color: "var(--brand, #2563EB)", textDecoration: "none"}}>Already have an account? Sign in</a>
+        </div>
+        <p style={{marginTop: 32, fontSize: 13, color: "var(--text-dim, #94A3B8)"}}>Join 312 attorneys already on the platform</p>
+      </div>
+    );
+  }
+
+  // Screen 6: Success
+  if (screen === 6) {
+    const courtLabels = form.courts.length ? form.courts.map(id => { const c = COURTS.find(x => x.id === id); return c ? c.name : id; }).slice(0, 3).join(", ") + (form.courts.length > 3 ? ` +${form.courts.length - 3} more` : "") : "Not specified";
+    const practiceLabels = form.practiceAreas.length ? form.practiceAreas.join(", ") : "Not specified";
+    return (
+      <div className="reporter-onboarding" style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", minHeight: "100vh", paddingTop: 60, paddingBottom: 60}}>
+        <div className="success-screen" style={{width: "100%", maxWidth: 560}}>
+          <div className="success-icon"><Icon name="checkCircle" size={64} /></div>
+          <h1>Welcome to Dewey Sholes!</h1>
+          <p className="success-sub">Your account has been created. Here's what happens next.</p>
+          <div className="verification-card">
+            <div className="vc-header">
+              <strong>CA Bar #{form.barNumber || "—"}</strong>
+              <span className="badge badge-pending" style={{fontSize: 11}}>Verification Pending</span>
+            </div>
+            <p>We're verifying your CA Bar membership. You'll get an email confirmation within 24 hours.</p>
+          </div>
+          <div className="what-next">
+            <h3>What happens next</h3>
+            <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">We verify your CA Bar membership (usually within 24 hours)</div></div>
+            <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">Your case library is ready — start adding cases and placing orders</div></div>
+            <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Reporters are matched automatically. Track everything from your dashboard.</div></div>
+          </div>
+          <div className="profile-summary">
+            <h3>Your Profile</h3>
+            <div className="ps-row"><span className="ps-label">Name</span><span className="ps-value">{form.name || "—"}</span></div>
+            <div className="ps-row"><span className="ps-label">Firm</span><span className="ps-value">{form.firmName || "—"}</span></div>
+            <div className="ps-row"><span className="ps-label">Bar Number</span><span className="ps-value">{form.barNumber || "—"}</span></div>
+            <div className="ps-row"><span className="ps-label">Practice Areas</span><span className="ps-value">{practiceLabels}</span></div>
+            <div className="ps-row"><span className="ps-label">Courts</span><span className="ps-value">{courtLabels}</span></div>
+          </div>
+          <div className="promo-callout">
+            <strong>Your first order ships free of platform fees!</strong>
+            <span>Code ATTORNEY2026 has been applied to your account</span>
+          </div>
+          <button className="btn btn-primary" style={{width: "100%", justifyContent: "center", fontSize: 16}} onClick={() => navigate("#/dashboard")}>Go to Dashboard <Icon name="arrowRight" size={16} /></button>
+        </div>
+      </div>
+    );
+  }
+
+  const step = screen;
+  const stepTitles = [
+    null,
+    ["About You & Your Firm", "We'll use this to set up your account and match you with reporters."],
+    ["Your Practice", "Help us understand what kind of cases you handle."],
+    ["Courts & Workflow", "Where do you practice, and how do you currently order transcripts?"],
+    ["Billing & Notifications", "How you'll pay and stay informed."],
+    ["Set Your Password", "Almost there — just set your password."]
+  ];
+
+  return (
+    <div className="reporter-onboarding" style={{background: "var(--bg-page, #F8FAFC)"}}>
+      <div style={{marginBottom: 32, textAlign: "center"}}>
+        <a href="#/" style={{display: "inline-flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+      </div>
+      <StepIndicator current={step} total={5} />
+      <div style={{height: 28}} />
+      <div className="reporter-step-header" style={{textAlign: "left"}}>
+        <h2 style={{fontSize: 24, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 6}}>{stepTitles[step][0]}</h2>
+        <p style={{fontSize: 14, color: "var(--text-secondary, #475569)", marginBottom: 28}}>{stepTitles[step][1]}</p>
+      </div>
+
+      {step === 1 && (<>
+        <div className="form-row">
+          <div className="form-group"><label className="form-label">Full Name</label><input className="form-input" placeholder="Jennifer Walsh" value={form.name} onChange={e => update("name", e.target.value)} /></div>
+          <div className="form-group"><label className="form-label">Email</label><input className="form-input" type="email" placeholder="jennifer@walshlaw.com" value={form.email} onChange={e => update("email", e.target.value)} /></div>
+        </div>
+        <div className="form-row">
+          <div className="form-group"><label className="form-label">Firm Name</label><input className="form-input" placeholder="Walsh Family Law" value={form.firmName} onChange={e => update("firmName", e.target.value)} /></div>
+          <div className="form-group"><label className="form-label">Phone</label><input className="form-input" type="tel" placeholder="(555) 555-0100" value={form.phone} onChange={e => update("phone", e.target.value)} /></div>
+        </div>
+      </>)}
+
+      {step === 2 && (<>
+        <div className="form-group">
+          <label className="form-label">CA State Bar Number</label>
+          <input className="form-input" placeholder="e.g. 287654" value={form.barNumber} onChange={e => update("barNumber", e.target.value)} style={{fontSize: 18, padding: "14px 16px", letterSpacing: 1}} />
+          <p className="form-helper">We'll verify this with the State Bar of California.</p>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Practice Areas</label>
+          <div className="checkbox-group">
+            {["Family Law", "Civil Litigation", "Probate", "Criminal", "Personal Injury", "Real Estate"].map(a => (
+              <div key={a} className={"checkbox-item" + (form.practiceAreas.includes(a) ? " checked" : "")} onClick={() => toggleArr("practiceAreas", a)}>{a}</div>
+            ))}
+          </div>
+        </div>
+      </>)}
+
+      {step === 3 && (<>
+        <div className="form-group">
+          <label className="form-label">Courts You Practice In</label>
+          <div className="checkbox-group">
+            {COURTS.map(c => (
+              <div key={c.id} className={"checkbox-item" + (form.courts.includes(c.id) ? " checked" : "")} onClick={() => toggleArr("courts", c.id)}>{c.name}</div>
+            ))}
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="form-label">How do you currently order transcripts?</label>
+          <div className="method-cards" style={{gridTemplateColumns: "1fr 1fr"}}>
+            {[
+              {val: "direct", label: "Directly contact reporters", icon: "messageCircle"},
+              {val: "agency", label: "Through a reporting agency", icon: "users"},
+              {val: "court", label: "Through the court", icon: "scale"},
+              {val: "never", label: "Haven't ordered before", icon: "zap"},
+            ].map(m => (
+              <div key={m.val} className={"method-card" + (form.currentMethod === m.val ? " selected" : "")} onClick={() => update("currentMethod", m.val)}>
+                <div className="mc-icon"><Icon name={m.icon} size={18} /></div>
+                <div className="mc-text">{m.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </>)}
+
+      {step === 4 && (<>
+        <div className="form-group">
+          <label className="form-label">Billing Preference</label>
+          <div className="method-cards">
+            <div className={"method-card" + (form.billingPref === "per-order" ? " selected" : "")} onClick={() => update("billingPref", "per-order")}>
+              <div className="mc-icon"><Icon name="creditCard" size={18} /></div>
+              <div><div className="mc-text">Pay per order</div><div className="mc-sub">Credit card charged when order is placed</div></div>
+            </div>
+            <div className={"method-card" + (form.billingPref === "monthly" ? " selected" : "")} onClick={() => update("billingPref", "monthly")}>
+              <div className="mc-icon"><Icon name="fileText" size={18} /></div>
+              <div><div className="mc-text">Monthly invoice</div><div className="mc-sub">Net-30 terms for firms</div></div>
+            </div>
+          </div>
+        </div>
+        <hr style={{border: "none", borderTop: "1px solid var(--border, #E2E8F0)", margin: "24px 0"}} />
+        <div className="form-group">
+          <label className="form-label" style={{fontSize: 13, fontWeight: 700, marginBottom: 12, display: "block"}}>Notification Preferences</label>
+          <div className="toggle-row"><div><div className="toggle-label">Order status updates</div><div className="toggle-sub">Track your orders from submission to delivery</div></div><label className="toggle-switch"><input type="checkbox" checked={form.notifStatus} onChange={() => update("notifStatus", !form.notifStatus)} /><span className="slider"></span></label></div>
+          <div className="toggle-row"><div><div className="toggle-label">Reporter assignment alerts</div><div className="toggle-sub">Know when a reporter accepts your job</div></div><label className="toggle-switch"><input type="checkbox" checked={form.notifAssignment} onChange={() => update("notifAssignment", !form.notifAssignment)} /><span className="slider"></span></label></div>
+          <div className="toggle-row"><div><div className="toggle-label">Transcript delivery notifications</div><div className="toggle-sub">Get notified the moment your transcript is ready</div></div><label className="toggle-switch"><input type="checkbox" checked={form.notifDelivery} onChange={() => update("notifDelivery", !form.notifDelivery)} /><span className="slider"></span></label></div>
+          <div className="toggle-row"><div><div className="toggle-label">Marketing & product updates</div><div className="toggle-sub">New features, pricing changes, and platform news</div></div><label className="toggle-switch"><input type="checkbox" checked={form.notifMarketing} onChange={() => update("notifMarketing", !form.notifMarketing)} /><span className="slider"></span></label></div>
+        </div>
+      </>)}
+
+      {step === 5 && (<>
+        <div className="form-group"><label className="form-label">Password</label><input className="form-input" type="password" placeholder="Create a password" value={form.password} onChange={e => update("password", e.target.value)} /><p className="form-helper">At least 8 characters with one number and one special character.</p></div>
+        <div className="form-group"><label className="form-label">Confirm Password</label><input className="form-input" type="password" placeholder="Confirm your password" value={form.confirmPassword} onChange={e => update("confirmPassword", e.target.value)} /></div>
+        <div className="info-callout" style={{marginTop: 24}}>
+          <div className="callout-icon"><Icon name="shield" size={16} /></div>
+          <p>By creating an account, you agree to Dewey Sholes' Terms of Service and Privacy Policy. Your data is encrypted and never shared without your consent.</p>
+        </div>
+      </>)}
+
+      <div className="onboarding-nav">
+        <button className="btn btn-secondary" onClick={() => setScreen(screen === 1 ? 0 : screen - 1)}>
+          <Icon name="chevronRight" size={14} style={{transform: "rotate(180deg)"}} /> Back
+        </button>
+        {step < 5 ? (
+          <button className="btn btn-primary" onClick={() => setScreen(screen + 1)}>
+            Continue <Icon name="arrowRight" size={14} />
+          </button>
+        ) : (
+          <button className="btn btn-primary" style={{background: "linear-gradient(135deg, #059669, #10B981)"}} onClick={() => setScreen(6)}>
+            Create Account <Icon name="checkCircle" size={14} />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── Sign-In Modal ──────────────────────────────────────────────
 function SignInModal({ onClose }) {
   return (
@@ -3786,7 +4246,7 @@ function LandingPage() {
             <div className="nav-actions">
               <ThemeToggle />
               <button className="btn-signin" onClick={() => setShowSignIn(true)}>Sign In</button>
-              <a href="#/order" className="btn-getstarted">Get Started</a>
+              <a href="#/attorney-signup" className="btn-getstarted">Get Started</a>
             </div>
           </div>
         </div>
@@ -3975,7 +4435,7 @@ function LandingPage() {
                 Your firm handles dozens of active matters. Dewey Sholes gives you a persistent case management layer, not just one-off order forms, so your entire transcript history lives in one place.
               </p>
               <div className="attorneys-actions">
-                <a href="#/order" className="btn btn-primary btn-sm">Start Ordering <Icon name="arrowRight" size={16} color="#fff" /></a>
+                <a href="#/attorney-signup" className="btn btn-primary btn-sm">Start Ordering <Icon name="arrowRight" size={16} color="#fff" /></a>
                 <a href="#pricing" className="btn btn-secondary btn-sm">See Pricing</a>
               </div>
             </div>
@@ -4196,6 +4656,7 @@ function AppRouter() {
   if (m) return <OrderDetailPage orderId={m[1]} />;
   if (route.startsWith("#/order")) return <OrderFlow />;
   if (route.startsWith("#/dashboard")) return <BuyerDashboard />;
+  if (route.startsWith("#/attorney-signup")) return <AttorneyOnboarding />;
   if (route.startsWith("#/reporter-signup")) return <ReporterOnboarding />;
   if (route.startsWith("#/reporter")) return <ReporterDashboard />;
   if (route.startsWith("#/admin")) return <AdminDashboard />;
