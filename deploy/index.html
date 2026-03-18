@@ -1224,6 +1224,81 @@
   [data-theme="dark"] .nudge-bar { background: rgba(37,99,235,0.2); }
   [data-theme="dark"] .badge-match { background: rgba(5,150,105,0.15); color: #34D399; }
 
+  /* ─── Kanban Board ─────────────────────────── */
+  .kanban-board { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 16px; min-height: calc(100vh - 280px); -webkit-overflow-scrolling: touch; }
+  .kanban-board::-webkit-scrollbar { height: 6px; }
+  .kanban-board::-webkit-scrollbar-track { background: transparent; }
+  .kanban-board::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+  .kanban-column { min-width: 280px; max-width: 320px; flex: 1 0 280px; display: flex; flex-direction: column; background: #F1F5F9; border-radius: 12px; padding: 12px; max-height: calc(100vh - 240px); }
+  .kanban-col-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 8px 12px; font-size: 13px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; }
+  .kanban-col-count { background: #E2E8F0; color: #64748B; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px; }
+  .kanban-col-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 2px; min-height: 60px; }
+  .kanban-col-body::-webkit-scrollbar { width: 4px; }
+  .kanban-col-body::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 2px; }
+  .kanban-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; padding: 14px; padding-left: 18px; cursor: grab; transition: all 0.15s; position: relative; }
+  .kanban-card:hover { box-shadow: 0 4px 12px -4px rgba(0,0,0,0.08); transform: translateY(-1px); }
+  .kanban-card:active { cursor: grabbing; }
+  .kanban-card.dragging { opacity: 0.5; transform: rotate(2deg); }
+  .kanban-card-title { font-size: 13px; font-weight: 600; color: #0F172A; margin-bottom: 6px; line-height: 1.4; }
+  .kanban-card-desc { font-size: 12px; color: #64748B; line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .kanban-card-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .kanban-priority { width: 4px; height: 100%; position: absolute; left: 0; top: 0; border-radius: 10px 0 0 10px; }
+  .kanban-priority.critical { background: #DC2626; }
+  .kanban-priority.high { background: #F59E0B; }
+  .kanban-priority.medium { background: #3B82F6; }
+  .kanban-priority.low { background: #94A3B8; }
+  .kanban-badge { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .kanban-badge-legal { background: #E0E7FF; color: #3730A3; }
+  .kanban-badge-financial { background: #D1FAE5; color: #065F46; }
+  .kanban-badge-product { background: #DBEAFE; color: #1E40AF; }
+  .kanban-badge-marketing { background: #FEF3C7; color: #92400E; }
+  .kanban-badge-operations { background: #FCE7F3; color: #9D174D; }
+  .kanban-badge-research { background: #EDE9FE; color: #5B21B6; }
+  .kanban-assignee { font-size: 10px; font-weight: 600; color: #475569; background: #F1F5F9; padding: 2px 8px; border-radius: 100px; }
+  .kanban-card-actions { position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; opacity: 0; transition: opacity 0.15s; }
+  .kanban-card:hover .kanban-card-actions { opacity: 1; }
+  .kanban-card-btn { width: 24px; height: 24px; border-radius: 6px; border: none; background: #F1F5F9; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #64748B; transition: all 0.15s; }
+  .kanban-card-btn:hover { background: #E2E8F0; color: #0F172A; }
+  .kanban-card-btn.delete:hover { background: #FEE2E2; color: #DC2626; }
+  .kanban-drop-zone { border: 2px dashed #93C5FD; background: #EFF6FF; border-radius: 10px; min-height: 60px; transition: all 0.15s; }
+  .kanban-add-btn { width: 100%; padding: 10px; border: 1px dashed #CBD5E1; border-radius: 8px; background: transparent; color: #94A3B8; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; margin-top: 4px; }
+  .kanban-add-btn:hover { border-color: #93C5FD; color: #2563EB; background: #EFF6FF; }
+  .kanban-modal { max-width: 520px; width: 90%; }
+  .kanban-modal .form-group { margin-bottom: 16px; }
+  .kanban-modal textarea.form-input { min-height: 80px; resize: vertical; }
+  .kanban-modal-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid #E2E8F0; }
+  .kanban-stats { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .kanban-stat { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #64748B; font-weight: 500; }
+  .kanban-stat-num { font-weight: 800; font-size: 16px; color: #0F172A; }
+
+  /* Kanban dark mode */
+  [data-theme="dark"] .kanban-column { background: #1E293B; }
+  [data-theme="dark"] .kanban-col-header { color: #94A3B8; }
+  [data-theme="dark"] .kanban-col-count { background: #334155; color: #94A3B8; }
+  [data-theme="dark"] .kanban-card { background: #0F172A; border-color: #334155; }
+  [data-theme="dark"] .kanban-card:hover { box-shadow: 0 4px 12px -4px rgba(0,0,0,0.3); }
+  [data-theme="dark"] .kanban-card-title { color: #F1F5F9; }
+  [data-theme="dark"] .kanban-card-desc { color: #94A3B8; }
+  [data-theme="dark"] .kanban-assignee { background: #334155; color: #94A3B8; }
+  [data-theme="dark"] .kanban-card-btn { background: #334155; color: #94A3B8; }
+  [data-theme="dark"] .kanban-card-btn:hover { background: #475569; color: #F1F5F9; }
+  [data-theme="dark"] .kanban-card-btn.delete:hover { background: rgba(220,38,38,0.15); color: #FCA5A5; }
+  [data-theme="dark"] .kanban-drop-zone { border-color: #3B82F6; background: rgba(59,130,246,0.1); }
+  [data-theme="dark"] .kanban-add-btn { border-color: #334155; color: #64748B; }
+  [data-theme="dark"] .kanban-add-btn:hover { border-color: #3B82F6; color: #3B82F6; background: rgba(59,130,246,0.1); }
+  [data-theme="dark"] .kanban-modal-actions { border-top-color: #334155; }
+  [data-theme="dark"] .kanban-stat { color: #94A3B8; }
+  [data-theme="dark"] .kanban-stat-num { color: #F1F5F9; }
+  [data-theme="dark"] .kanban-board::-webkit-scrollbar-thumb { background: #334155; }
+  [data-theme="dark"] .kanban-col-body::-webkit-scrollbar-thumb { background: #334155; }
+
+  /* Kanban responsive */
+  @media (max-width: 768px) {
+    .kanban-board { flex-direction: column; overflow-x: visible; }
+    .kanban-column { min-width: 100%; max-width: 100%; max-height: none; }
+    .kanban-col-body { max-height: 300px; }
+  }
+
   /* ─── Micro-animations ─────────────────────────── */
   .dash-card { transition: all 0.2s ease; }
   .dash-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
@@ -4174,6 +4249,288 @@ function AttorneyOnboarding() {
   );
 }
 
+// ─── Kanban Board ────────────────────────────────────────────────
+const KANBAN_COLUMNS = [
+  { id: "backlog", label: "Backlog", color: "#94A3B8" },
+  { id: "todo", label: "To Do", color: "#3B82F6" },
+  { id: "in_progress", label: "In Progress", color: "#8B5CF6" },
+  { id: "waiting", label: "Waiting", color: "#F59E0B" },
+  { id: "done", label: "Done", color: "#059669" },
+];
+
+const DEFAULT_KANBAN_TASKS = [
+  // ── Done (22) ──
+  { id: "t01", title: "AB 5 / IC Classification Research", description: "AB 3136 exempts CSRs from ABC test. Borello test applies. Memo documents analysis for lawyer review.", column: "done", priority: "high", assignee: "Dev", category: "legal", dueDate: "", createdAt: "2026-03-13", notes: "Research complete. Memo finalized." },
+  { id: "t02", title: "TRF Research Memo", description: "$2,500/case cap, 8-10 week processing, $300K annual funding. Platform will NOT carry TRF float.", column: "done", priority: "high", assignee: "Dev", category: "research", dueDate: "", createdAt: "2026-03-13", notes: "Founder decision: no float. Firm pays upfront, platform generates reimbursement paperwork." },
+  { id: "t03", title: "Rate Regulation & Pricing Memo", description: "Folio multiplier problem, SB 478 compliance, statutory rates ($1.13/100 words). Feeds pricing UX.", column: "done", priority: "high", assignee: "Dev", category: "research", dueDate: "", createdAt: "2026-03-13", notes: "" },
+  { id: "t04", title: "State Bar / Confidentiality Memo", description: "CA Rule 1.6 applies to attorney-client audio. Platform needs contractual safeguards, encryption, SOC 2.", column: "done", priority: "high", assignee: "Dev", category: "legal", dueDate: "", createdAt: "2026-03-13", notes: "" },
+  { id: "t05", title: "CRB Briefing Doc", description: "Prep document for Court Reporters Board: license verification, TRF coordination, information sharing.", column: "done", priority: "medium", assignee: "Dev", category: "operations", dueDate: "", createdAt: "2026-03-14", notes: "" },
+  { id: "t06", title: "Judicial Council Briefing Doc", description: "Focus: fee waiver flow, ER integration, access-to-justice framing. 1M+ proceedings without transcripts.", column: "done", priority: "medium", assignee: "Dev", category: "operations", dueDate: "", createdAt: "2026-03-14", notes: "" },
+  { id: "t07", title: "Legal Entity Memo", description: "LLC vs. C-Corp tradeoffs. C-Corp recommended if raising capital within 12-18 months.", column: "done", priority: "high", assignee: "Dev", category: "legal", dueDate: "", createdAt: "2026-03-14", notes: "" },
+  { id: "t08", title: "Platform Liability Memo", description: "Transcript challenge risk analysis. No quality representations, license verification, no editorial touch.", column: "done", priority: "critical", assignee: "Dev", category: "legal", dueDate: "", createdAt: "2026-03-14", notes: "Recommends E&O insurance ($2-5K/year)." },
+  { id: "t09", title: "Data Security Checklist", description: "SOC 2 baseline, BigLaw vendor approval requirements, CA Rule 1.6, encryption standards, MFA.", column: "done", priority: "high", assignee: "Dev", category: "operations", dueDate: "", createdAt: "2026-03-14", notes: "" },
+  { id: "t10", title: "Attorney Survey Draft", description: "15-question survey to quantify staff time costs, pain points, platform fee tolerance. Target 15-25 responses.", column: "done", priority: "medium", assignee: "Dev", category: "research", dueDate: "", createdAt: "2026-03-14", notes: "Rosie to distribute." },
+  { id: "t11", title: "CSR Discovery Interview Guide", description: "20-question interview guide for reporter discovery calls + post-interview tracking template.", column: "done", priority: "medium", assignee: "Dev", category: "research", dueDate: "", createdAt: "2026-03-14", notes: "" },
+  { id: "t12", title: "Reporter Outreach Materials", description: "Email templates (warm, cold, referral, semi-retired), FAQ, quick reference card for CSR recruitment.", column: "done", priority: "medium", assignee: "Dev", category: "marketing", dueDate: "", createdAt: "2026-03-14", notes: "" },
+  { id: "t13", title: "Beta Firm Recruitment One-Pager", description: "Marketing pitch to law firms: staff time savings, cost transparency, compliance guarantees.", column: "done", priority: "high", assignee: "Both", category: "marketing", dueDate: "", createdAt: "2026-03-14", notes: "" },
+  { id: "t14", title: "Late Delivery Policy", description: "Tiered consequences: grace period, routing priority demotion. Non-financial consequences over pay docking.", column: "done", priority: "medium", assignee: "Dev", category: "operations", dueDate: "", createdAt: "2026-03-14", notes: "" },
+  { id: "t15", title: "CRB MOU Template", description: "Framework for API access, TRF coordination, license verification data sharing. No endorsement clause.", column: "done", priority: "medium", assignee: "Dev", category: "legal", dueDate: "", createdAt: "2026-03-14", notes: "" },
+  { id: "t16", title: "Stakeholder Messaging Framework", description: "Tailored messaging for law firms, reporters, CRB, Judicial Council, CCRA, legal aid orgs, court admin.", column: "done", priority: "medium", assignee: "Both", category: "marketing", dueDate: "", createdAt: "2026-03-14", notes: "" },
+  { id: "t17", title: "Go-to-Market Strategy", description: "4-phase rollout: pre-launch → supply seeding → demand seeding → prove unit economics → scale CA.", column: "done", priority: "high", assignee: "Both", category: "marketing", dueDate: "", createdAt: "2026-03-14", notes: "" },
+  { id: "t18", title: "POC: Landing page & dashboards", description: "Landing page, buyer dashboard, reporter dashboard, admin dashboard, order flow, dark mode, responsive.", column: "done", priority: "critical", assignee: "Dev", category: "product", dueDate: "", createdAt: "2026-03-15", notes: "" },
+  { id: "t19", title: "POC: Reporter onboarding flow", description: "6-screen onboarding at #/reporter-signup. Credentials, preferences, payment, account creation.", column: "done", priority: "high", assignee: "Dev", category: "product", dueDate: "", createdAt: "2026-03-16", notes: "" },
+  { id: "t20", title: "POC: Attorney onboarding flow", description: "7-screen onboarding at #/attorney-signup. Firm details, bar number, courts, billing, success with promo.", column: "done", priority: "high", assignee: "Dev", category: "product", dueDate: "", createdAt: "2026-03-17", notes: "" },
+  { id: "t21", title: "POC: Reporter dashboard polish", description: "Quick stats, profile nudge, match badges, expandable cards, deadlines widget, earnings chart, empty states.", column: "done", priority: "medium", assignee: "Dev", category: "product", dueDate: "", createdAt: "2026-03-17", notes: "" },
+  { id: "t22", title: "POC: Order flow polish", description: "Color-coded paths (blue/amber), feature checklists, file upload, interpreter lang, turnaround comparison.", column: "done", priority: "medium", assignee: "Dev", category: "product", dueDate: "", createdAt: "2026-03-17", notes: "" },
+
+  // ── Waiting (5) ──
+  { id: "t23", title: "Volume assumptions from Rosie", description: "How many transcripts do her attorney contacts order per month? Critical for Year 1 revenue model.", column: "waiting", priority: "critical", assignee: "Rosie", category: "financial", dueDate: "", createdAt: "2026-03-15", notes: "Blocks the platform fee financial model." },
+  { id: "t24", title: "Anchor firm names/contacts for beta", description: "Identify 3-5 firms for pilot launch. Ideally family law/civil lit, 5-50 attorneys, in pilot counties.", column: "waiting", priority: "critical", assignee: "Rosie", category: "marketing", dueDate: "", createdAt: "2026-03-15", notes: "" },
+  { id: "t25", title: "Pilot county priorities", description: "Which staff-reporter county (Rosie's relationships) + which ER county? Drives reporter recruitment geography.", column: "waiting", priority: "high", assignee: "Rosie", category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "LA is assumed for ER. Need the staff-reporter county." },
+  { id: "t26", title: "Warm-contact reporter network", description: "Confirm 10-15 reporters from Rosie's 22-year network who would join. First supply-side cohort.", column: "waiting", priority: "high", assignee: "Rosie", category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "Target: 10-15 covering LA before first firm launches." },
+  { id: "t27", title: "Questions for Rosie (pending response)", description: "Consolidated question list covering volume data, contacts, county priorities, and reporter universe.", column: "waiting", priority: "high", assignee: "Rosie", category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "Sent 3/15. Still waiting." },
+
+  // ── To Do (7) ──
+  { id: "t28", title: "AB 5 memo: Lawyer review & sign-off", description: "Research is complete. Needs employment attorney to review and provide formal sign-off.", column: "todo", priority: "critical", assignee: "Lawyer", category: "legal", dueDate: "2026-04-15", createdAt: "2026-03-15", notes: "" },
+  { id: "t29", title: "Platform liability memo: Lawyer sign-off", description: "Transcript challenge risk analysis memo complete. Lawyer must sign off before launch.", column: "todo", priority: "critical", assignee: "Lawyer", category: "legal", dueDate: "2026-04-15", createdAt: "2026-03-15", notes: "" },
+  { id: "t30", title: "Legal entity decision (LLC vs C-Corp)", description: "Tradeoffs memo done. Founders + lawyer need to make the call. C-Corp if raising capital.", column: "todo", priority: "high", assignee: "Both", category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "" },
+  { id: "t31", title: "Verify AB 3136 enactment", description: "Research confirms bill exists but needs definitive confirmation it was enacted (not rolled into another bill).", column: "todo", priority: "medium", assignee: "Dev", category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "" },
+  { id: "t32", title: "Platform fee financial model", description: "Statutory rates fixed. Model fee %, reporter payout, volume scenarios. Skeleton ready, needs Rosie's data.", column: "todo", priority: "high", assignee: "Dev", category: "financial", dueDate: "", createdAt: "2026-03-15", notes: "Blocked until task t23 (volume assumptions) is resolved." },
+  { id: "t33", title: "CRB database pull", description: "Extract full active CSR licensee list from Court Reporters Board public database. Starting universe for outreach.", column: "todo", priority: "medium", assignee: "Dev", category: "research", dueDate: "", createdAt: "2026-03-15", notes: "" },
+  { id: "t34", title: "SOC 2 Type I readiness assessment", description: "Pre-beta security baseline. Encryption, auth, access controls, incident response plan.", column: "todo", priority: "medium", assignee: "Dev", category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "Full Type II within 12 months." },
+
+  // ── Backlog (9) ──
+  { id: "t35", title: "Jurisdiction matrix (NY, TX, IL, FL)", description: "ER rules, CSR requirements, licensing boards, rate structures for Tier 1 expansion states.", column: "backlog", priority: "low", assignee: "Dev", category: "research", dueDate: "", createdAt: "2026-03-15", notes: "Post-launch." },
+  { id: "t36", title: "Dispute resolution research", description: "Court rules for transcript correction in CA + expansion states.", column: "backlog", priority: "low", assignee: "Dev", category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "" },
+  { id: "t37", title: "CCRA relationship prep", description: "California Court Reporters Association — potential ally. Need briefing doc and meeting strategy.", column: "backlog", priority: "low", assignee: "Rosie", category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "" },
+  { id: "t38", title: "Legal aid org partnership materials", description: "Pitch SRL features + fee waiver routing to access-to-justice nonprofits.", column: "backlog", priority: "low", assignee: "Both", category: "marketing", dueDate: "", createdAt: "2026-03-15", notes: "" },
+  { id: "t39", title: "CA marketplace registrations research", description: "Business license, marketplace regulations, state registrations needed to operate.", column: "backlog", priority: "low", assignee: "Dev", category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "" },
+  { id: "t40", title: "POC: Messaging / chat UI", description: "Attorney ↔ reporter threaded conversation view. Message buttons exist but no chat screen yet.", column: "backlog", priority: "medium", assignee: "Dev", category: "product", dueDate: "", createdAt: "2026-03-18", notes: "" },
+  { id: "t41", title: "POC: Attorney dashboard polish", description: "Better case library, order tracking timeline, notification dropdown, polished analytics.", column: "backlog", priority: "medium", assignee: "Dev", category: "product", dueDate: "", createdAt: "2026-03-18", notes: "" },
+  { id: "t42", title: "POC: Case detail view", description: "Dedicated screen: all transcripts, status timeline, reporter assigned, invoices, notes for a case.", column: "backlog", priority: "medium", assignee: "Dev", category: "product", dueDate: "", createdAt: "2026-03-18", notes: "" },
+  { id: "t43", title: "Pitch deck", description: "Investor/partner presentation covering market, product, team, financials, ask.", column: "backlog", priority: "high", assignee: "Both", category: "marketing", dueDate: "", createdAt: "2026-03-18", notes: "" },
+];
+
+function TaskModal({ task, isNew, onSave, onDelete, onClose }) {
+  const [form, setForm] = React.useState({
+    title: task.title || "", description: task.description || "", column: task.column || "todo",
+    priority: task.priority || "medium", assignee: task.assignee || "", category: task.category || "product",
+    dueDate: task.dueDate || "", notes: task.notes || "",
+  });
+  const up = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!form.title.trim()) return;
+    onSave(isNew ? form : { ...task, ...form });
+  };
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal kanban-modal" onClick={e => e.stopPropagation()}>
+        <h2 style={{marginBottom: 20}}>{isNew ? "New Task" : "Edit Task"}</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="form-label">Title</label>
+            <input className="form-input" value={form.title} onChange={e => up("title", e.target.value)} placeholder="Task title..." autoFocus />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Description</label>
+            <textarea className="form-input" value={form.description} onChange={e => up("description", e.target.value)} placeholder="Brief description..." />
+          </div>
+          <div className="form-row">
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Status</label>
+              <select className="form-input" value={form.column} onChange={e => up("column", e.target.value)}>
+                {KANBAN_COLUMNS.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}
+              </select>
+            </div>
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Priority</label>
+              <select className="form-input" value={form.priority} onChange={e => up("priority", e.target.value)}>
+                <option value="critical">Critical</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Assignee</label>
+              <select className="form-input" value={form.assignee} onChange={e => up("assignee", e.target.value)}>
+                <option value="">Unassigned</option>
+                <option value="Rosie">Rosie</option>
+                <option value="Dev">Dev</option>
+                <option value="Lawyer">Lawyer</option>
+                <option value="Both">Both</option>
+              </select>
+            </div>
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Category</label>
+              <select className="form-input" value={form.category} onChange={e => up("category", e.target.value)}>
+                <option value="legal">Legal</option>
+                <option value="financial">Financial</option>
+                <option value="product">Product</option>
+                <option value="marketing">Marketing</option>
+                <option value="operations">Operations</option>
+                <option value="research">Research</option>
+              </select>
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Due Date</label>
+            <input className="form-input" type="date" value={form.dueDate} onChange={e => up("dueDate", e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Notes</label>
+            <textarea className="form-input" value={form.notes} onChange={e => up("notes", e.target.value)} placeholder="Additional notes..." />
+          </div>
+          <div className="kanban-modal-actions">
+            <div>{onDelete && <button type="button" className="btn btn-sm" style={{background:"#FEE2E2",color:"#DC2626",border:"1px solid #FECACA"}} onClick={onDelete}>Delete Task</button>}</div>
+            <div style={{display:"flex",gap:8}}>
+              <button type="button" className="btn btn-secondary btn-sm" onClick={onClose}>Cancel</button>
+              <button type="submit" className="btn btn-primary btn-sm">{isNew ? "Create Task" : "Save Changes"}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function KanbanBoard() {
+  const STORAGE_KEY = "dewey_kanban_tasks";
+  const loadTasks = () => { try { const s = localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : DEFAULT_KANBAN_TASKS; } catch(e) { return DEFAULT_KANBAN_TASKS; } };
+
+  const [tasks, setTasks] = React.useState(loadTasks);
+  const [editingTask, setEditingTask] = React.useState(null);
+  const [isCreating, setIsCreating] = React.useState(false);
+  const [createColumn, setCreateColumn] = React.useState("todo");
+  const [draggedId, setDraggedId] = React.useState(null);
+  const [dragOverCol, setDragOverCol] = React.useState(null);
+  const [search, setSearch] = React.useState("");
+  const [fCat, setFCat] = React.useState("all");
+  const [fAssign, setFAssign] = React.useState("all");
+  const [fPri, setFPri] = React.useState("all");
+
+  React.useEffect(() => { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks)); }, [tasks]);
+
+  const addTask = (data) => { setTasks(prev => [...prev, { ...data, id: "t" + Date.now(), createdAt: new Date().toISOString().split("T")[0] }]); setIsCreating(false); };
+  const updateTask = (data) => { setTasks(prev => prev.map(t => t.id === data.id ? { ...t, ...data } : t)); setEditingTask(null); };
+  const deleteTask = (id) => { setTasks(prev => prev.filter(t => t.id !== id)); setEditingTask(null); };
+  const moveTask = (id, col) => { setTasks(prev => prev.map(t => t.id === id ? { ...t, column: col } : t)); };
+
+  const handleDragStart = (e, id) => { setDraggedId(id); e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", id); requestAnimationFrame(() => { const el = document.getElementById("kb-" + id); if (el) el.classList.add("dragging"); }); };
+  const handleDragEnd = () => { if (draggedId) { const el = document.getElementById("kb-" + draggedId); if (el) el.classList.remove("dragging"); } setDraggedId(null); setDragOverCol(null); };
+  const handleDragOver = (e, colId) => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; setDragOverCol(colId); };
+  const handleDragLeave = (e) => { if (!e.currentTarget.contains(e.relatedTarget)) setDragOverCol(null); };
+  const handleDrop = (e, colId) => { e.preventDefault(); const id = e.dataTransfer.getData("text/plain"); if (id && colId) moveTask(id, colId); setDragOverCol(null); setDraggedId(null); };
+
+  const handleReset = () => { if (confirm("Reset board to default tasks? This cannot be undone.")) { setTasks(DEFAULT_KANBAN_TASKS); localStorage.removeItem(STORAGE_KEY); } };
+
+  const filtered = tasks.filter(t => {
+    if (fCat !== "all" && t.category !== fCat) return false;
+    if (fAssign !== "all" && t.assignee !== fAssign) return false;
+    if (fPri !== "all" && t.priority !== fPri) return false;
+    if (search) { const q = search.toLowerCase(); return t.title.toLowerCase().includes(q) || t.description.toLowerCase().includes(q) || (t.notes || "").toLowerCase().includes(q); }
+    return true;
+  });
+
+  return (
+    <div>
+      <AppNav variant="buyer" activeTab="" />
+      <div className="page page-enter">
+        <div className="container" style={{maxWidth: 1440}}>
+          <div className="page-header">
+            <div>
+              <h1 style={{fontSize: 28}}>Project Board</h1>
+              <p style={{color: "#64748B", marginTop: 4}}>Track Dewey Sholes tasks across all workstreams.</p>
+            </div>
+            <button className="btn btn-secondary btn-sm" onClick={handleReset} style={{gap: 6}}><Icon name="x" size={14} /> Reset Board</button>
+          </div>
+
+          <div className="kanban-stats">
+            {KANBAN_COLUMNS.map(col => (
+              <div className="kanban-stat" key={col.id}>
+                <span className="kanban-stat-num" style={{color: col.color}}>{filtered.filter(t => t.column === col.id).length}</span>
+                {col.label}
+              </div>
+            ))}
+          </div>
+
+          <div className="filter-bar" style={{marginBottom: 16}}>
+            <input className="filter-input" placeholder="Search tasks..." value={search} onChange={e => setSearch(e.target.value)} style={{minWidth: 180}} />
+            <select className="filter-select" value={fCat} onChange={e => setFCat(e.target.value)}>
+              <option value="all">All Categories</option>
+              <option value="legal">Legal</option><option value="financial">Financial</option><option value="product">Product</option>
+              <option value="marketing">Marketing</option><option value="operations">Operations</option><option value="research">Research</option>
+            </select>
+            <select className="filter-select" value={fAssign} onChange={e => setFAssign(e.target.value)}>
+              <option value="all">All Assignees</option>
+              <option value="Rosie">Rosie</option><option value="Dev">Dev</option><option value="Lawyer">Lawyer</option><option value="Both">Both</option>
+            </select>
+            <select className="filter-select" value={fPri} onChange={e => setFPri(e.target.value)}>
+              <option value="all">All Priorities</option>
+              <option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option>
+            </select>
+          </div>
+
+          <div className="kanban-board">
+            {KANBAN_COLUMNS.map(col => {
+              const colTasks = filtered.filter(t => t.column === col.id);
+              const isOver = dragOverCol === col.id && draggedId;
+              return (
+                <div className="kanban-column" key={col.id}>
+                  <div className="kanban-col-header">
+                    <span style={{display:"flex",alignItems:"center",gap:8}}>
+                      <span style={{width:8,height:8,borderRadius:"50%",background:col.color}} />
+                      {col.label}
+                    </span>
+                    <span className="kanban-col-count">{colTasks.length}</span>
+                  </div>
+                  <div className={"kanban-col-body" + (isOver ? " kanban-drop-zone" : "")}
+                    onDragOver={e => handleDragOver(e, col.id)} onDragLeave={handleDragLeave} onDrop={e => handleDrop(e, col.id)}>
+                    {colTasks.map(task => (
+                      <div key={task.id} id={"kb-" + task.id} className="kanban-card" draggable="true"
+                        onDragStart={e => handleDragStart(e, task.id)} onDragEnd={handleDragEnd}
+                        onClick={() => setEditingTask(task)}>
+                        <div className={"kanban-priority " + task.priority} />
+                        <div className="kanban-card-actions">
+                          <button className="kanban-card-btn delete" onClick={e => { e.stopPropagation(); deleteTask(task.id); }} title="Delete">
+                            <Icon name="x" size={12} />
+                          </button>
+                        </div>
+                        <div className="kanban-card-title">{task.title}</div>
+                        {task.description && <div className="kanban-card-desc">{task.description}</div>}
+                        <div className="kanban-card-meta">
+                          <span className={"kanban-badge kanban-badge-" + task.category}>{task.category}</span>
+                          {task.assignee && <span className="kanban-assignee">{task.assignee}</span>}
+                          {task.dueDate && <span className="kanban-assignee" style={{color:"#DC2626"}}>{task.dueDate}</span>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <button className="kanban-add-btn" onClick={() => { setCreateColumn(col.id); setIsCreating(true); setEditingTask(null); }}>+ Add task</button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {(editingTask || isCreating) && (
+        <TaskModal
+          key={isCreating ? "new-" + createColumn : editingTask.id}
+          task={isCreating ? { title:"", description:"", column: createColumn, priority:"medium", assignee:"", category:"product", dueDate:"", notes:"" } : editingTask}
+          isNew={isCreating}
+          onSave={isCreating ? addTask : updateTask}
+          onDelete={!isCreating ? () => deleteTask(editingTask.id) : null}
+          onClose={() => { setEditingTask(null); setIsCreating(false); }}
+        />
+      )}
+    </div>
+  );
+}
+
 // ─── Sign-In Modal ──────────────────────────────────────────────
 function SignInModal({ onClose }) {
   return (
@@ -4658,6 +5015,7 @@ function AppRouter() {
   if (route.startsWith("#/dashboard")) return <BuyerDashboard />;
   if (route.startsWith("#/attorney-signup")) return <AttorneyOnboarding />;
   if (route.startsWith("#/reporter-signup")) return <ReporterOnboarding />;
+  if (route.startsWith("#/kanban")) return <KanbanBoard />;
   if (route.startsWith("#/reporter")) return <ReporterDashboard />;
   if (route.startsWith("#/admin")) return <AdminDashboard />;
   if (route.startsWith("#/onboarding")) return <OnboardingFlow />;
