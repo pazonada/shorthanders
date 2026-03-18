@@ -427,6 +427,18 @@
   .detail-header h2 { font-size: 22px; font-weight: 800; color: #0F172A; }
   .detail-meta { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 12px; font-size: 13px; color: #64748B; }
   .detail-meta span { display: flex; align-items: center; gap: 6px; }
+  .case-detail-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .case-detail-stat { background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; padding: 16px; text-align: center; }
+  .case-detail-stat .cds-value { font-size: 22px; font-weight: 800; color: #0F172A; }
+  .case-detail-stat .cds-value.green { color: #059669; }
+  .case-detail-stat .cds-value.blue { color: #2563EB; }
+  .case-detail-stat .cds-label { font-size: 11px; font-weight: 600; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+  .case-detail-section { margin-bottom: 24px; }
+  .case-detail-section h3 { font-size: 14px; font-weight: 700; color: #0F172A; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .case-notes { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; }
+  .case-notes textarea { width: 100%; min-height: 100px; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px; font-family: inherit; font-size: 13px; color: #334155; resize: vertical; background: #F8FAFC; }
+  .case-notes textarea:focus { outline: none; border-color: #2563EB; background: #fff; }
+  @media (max-width: 640px) { .case-detail-stats { grid-template-columns: 1fr 1fr; } }
 
   /* ─── Order Row ──────────────────────────────── */
   .order-list { display: flex; flex-direction: column; gap: 12px; }
@@ -941,6 +953,12 @@
   [data-theme="dark"] .detail-header h2 { color: var(--text); }
   [data-theme="dark"] .detail-meta { color: var(--text-muted); }
   [data-theme="dark"] .detail-back { color: var(--text-muted); }
+  [data-theme="dark"] .case-detail-stat { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .case-detail-stat .cds-value { color: var(--text); }
+  [data-theme="dark"] .case-detail-stat .cds-label { color: var(--text-muted); }
+  [data-theme="dark"] .case-detail-section h3 { color: var(--text); }
+  [data-theme="dark"] .case-notes { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .case-notes textarea { background: var(--bg-muted); border-color: var(--border); color: var(--text); }
   [data-theme="dark"] .order-row { background: var(--bg-card); border-color: var(--border); }
   [data-theme="dark"] .order-info h4 { color: var(--text); }
   [data-theme="dark"] .order-info .sub { color: var(--text-dim); }
@@ -2608,6 +2626,7 @@ function BuyerDashboard() {
   const { toasts, addToast, removeToast } = useToast();
 
   const [showNudge, setShowNudge] = useState(true);
+  const [caseNotes, setCaseNotes] = useState({});
   const allOrders = MOCK_CASES.flatMap(c => c.orders);
   const activeOrders = allOrders.filter(o => o.status === "in-progress" || o.status === "pending").length;
   const pendingReview = allOrders.filter(o => o.status === "pending").length;
@@ -2742,7 +2761,13 @@ function BuyerDashboard() {
             </div>
           )}
 
-          {tab === "cases" && selectedCase && (
+          {tab === "cases" && selectedCase && (() => {
+            const cOrders = selectedCase.orders;
+            const cDone = cOrders.filter(o => o.status === "completed").length;
+            const cSpent = cOrders.reduce((s, o) => s + (o.cost || 0), 0);
+            const cPages = cOrders.reduce((s, o) => s + (o.pages || 0), 0);
+            const cNext = cOrders.filter(o => o.hearingDate && o.status !== "completed").sort((a,b) => new Date(a.hearingDate) - new Date(b.hearingDate))[0];
+            return (
             <div>
               <button className="detail-back" onClick={() => setSelectedCase(null)}>
                 <Icon name="chevronRight" size={14} color="#64748B" style={{transform: "rotate(180deg)"}} /> All Cases
@@ -2760,7 +2785,39 @@ function BuyerDashboard() {
                   <button className="btn btn-primary btn-sm" onClick={() => navigate("/order")}>New Order <Icon name="arrowRight" size={14} color="#fff" /></button>
                 </div>
               </div>
-              <h3 style={{fontSize: 16, fontWeight: 700, color: "#0F172A", marginBottom: 16}}>Order History</h3>
+
+              <div className="case-detail-stats">
+                <div className="case-detail-stat">
+                  <div className="cds-value">{cOrders.length}</div>
+                  <div className="cds-label">Total Orders</div>
+                </div>
+                <div className="case-detail-stat">
+                  <div className="cds-value green">{cDone}/{cOrders.length}</div>
+                  <div className="cds-label">Completed</div>
+                </div>
+                <div className="case-detail-stat">
+                  <div className="cds-value blue">${cSpent.toFixed(0)}</div>
+                  <div className="cds-label">Total Spent</div>
+                </div>
+                <div className="case-detail-stat">
+                  <div className="cds-value">{cPages}</div>
+                  <div className="cds-label">Pages</div>
+                </div>
+              </div>
+
+              {cNext && (
+                <div className="deadlines-widget" style={{marginBottom: 24}}>
+                  <h3><Icon name="calendar" size={14} color="#D97706" /> Next Up</h3>
+                  <div className="deadline-item">
+                    <span className="deadline-date">{new Date(cNext.hearingDate).toLocaleDateString("en-US", {month:"short", day:"numeric"})}</span>
+                    <span className="deadline-case">{cNext.type === "live" ? "Live Attendance" : "Transcription"} — {cNext.reporter || "Reporter TBD"}</span>
+                    <span className={"badge badge-" + (cNext.status === "in-progress" ? "progress" : "pending")}>{cNext.status === "in-progress" ? "In Progress" : "Pending"}</span>
+                  </div>
+                </div>
+              )}
+
+              <div className="case-detail-section">
+                <h3><Icon name="fileText" size={14} /> Order History</h3>
               {selectedCase.orders.length === 0 ? (
                 <div style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, padding: 48, textAlign: "center"}}>
                   <Icon name="fileText" size={32} color="#CBD5E1" />
@@ -2808,8 +2865,21 @@ function BuyerDashboard() {
                   ))}
                 </div>
               )}
+              </div>
+
+              <div className="case-detail-section">
+                <h3><Icon name="fileText" size={14} /> Case Notes</h3>
+                <div className="case-notes">
+                  <textarea
+                    placeholder="Add notes about this case — strategy, key dates, follow-ups..."
+                    value={caseNotes[selectedCase.id] || ""}
+                    onChange={e => setCaseNotes(prev => ({ ...prev, [selectedCase.id]: e.target.value }))}
+                  />
+                </div>
+              </div>
             </div>
-          )}
+            );
+          })()}
 
           {tab === "calendar" && (
             <div>
