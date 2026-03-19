@@ -4500,11 +4500,11 @@ function AttorneyOnboarding() {
           <div className="method-cards">
             <div className={"method-card" + (form.billingPref === "per-order" ? " selected" : "")} onClick={() => update("billingPref", "per-order")}>
               <div className="mc-icon"><Icon name="creditCard" size={18} /></div>
-              <div><div className="mc-text">Pay per order</div><div className="mc-sub">Credit card charged when order is placed</div></div>
+              <div><div className="mc-text">Pay per order</div><div className="mc-sub">Credit card charged when order is placed</div><div className="mc-sub" style={{color:"#059669", fontWeight:600, marginTop:2}}>Recommended</div></div>
             </div>
-            <div className={"method-card" + (form.billingPref === "monthly" ? " selected" : "")} onClick={() => update("billingPref", "monthly")}>
+            <div className={"method-card" + (form.billingPref === "monthly" ? " selected" : "")} onClick={() => update("billingPref", "monthly")} style={{opacity: 0.7}}>
               <div className="mc-icon"><Icon name="fileText" size={18} /></div>
-              <div><div className="mc-text">Monthly invoice</div><div className="mc-sub">Net-30 terms for firms</div></div>
+              <div><div className="mc-text">Monthly invoice</div><div className="mc-sub">Net-30 terms for qualified firms</div><div className="mc-sub" style={{fontSize:11, color:"#94A3B8", marginTop:2}}>Available for firms with 10+ monthly orders</div></div>
             </div>
           </div>
         </div>
