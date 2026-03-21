@@ -355,12 +355,16 @@
   .badge-economy { background: #D1FAE5; color: #065F46; }
 
   /* ─── Step Indicator (Order Flow) ────────────── */
-  .step-indicator-bar { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 40px; }
+  .step-indicator-bar { display: flex; align-items: flex-start; justify-content: center; gap: 0; margin-bottom: 40px; }
+  .step-dot-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .step-dot-label { font-size: 11px; font-weight: 600; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.03em; }
+  .step-dot-wrap.active .step-dot-label { color: #2563EB; }
+  .step-dot-wrap.done .step-dot-label { color: #059669; }
   .step-dot-num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; transition: all 0.2s; }
   .step-dot-num.active { background: linear-gradient(135deg, #2563EB, #4F46E5); color: #fff; box-shadow: 0 4px 12px rgba(37,99,235,0.3); }
   .step-dot-num.done { background: #059669; color: #fff; }
   .step-dot-num.upcoming { background: #E2E8F0; color: #94A3B8; }
-  .step-line-bar { width: 48px; height: 2px; background: #E2E8F0; }
+  .step-line-bar { width: 48px; height: 2px; background: #E2E8F0; margin-top: 17px; }
   .step-line-bar.done { background: #059669; }
   @media (min-width: 640px) { .step-line-bar { width: 80px; } }
 
@@ -2592,11 +2596,17 @@ function AppNav({ variant, activeTab, onTabChange }) {
   );
 }
 
-function StepIndicator({ current, total }) {
+function StepIndicator({ current, total, labels }) {
+  const stepLabels = labels || ["Type", "Details", "Pricing", "Review"];
   const items = [];
   for (let i = 1; i <= total; i++) {
     if (i > 1) items.push(<div key={"l" + i} className={"step-line-bar" + (i <= current ? " done" : "")} />);
-    items.push(<div key={i} className={"step-dot-num" + (i < current ? " done" : i === current ? " active" : " upcoming")}>{i < current ? "\u2713" : i}</div>);
+    items.push(
+      <div key={i} className={"step-dot-wrap" + (i < current ? " done" : i === current ? " active" : " upcoming")}>
+        <div className={"step-dot-num" + (i < current ? " done" : i === current ? " active" : " upcoming")}>{i < current ? "\u2713" : i}</div>
+        <div className="step-dot-label">{stepLabels[i - 1] || ""}</div>
+      </div>
+    );
   }
   return <div className="step-indicator-bar">{items}</div>;
 }
@@ -2628,16 +2638,18 @@ function OrderTimeline({ step }) {
 function OrderFlow() {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
-    type: "", court: "", dept: "", caseNumber: "", caseName: "", caseType: "family",
+    type: "", court: "", dept: "", caseNumber: "", caseName: "", caseType: "Family Law",
     hearingDate: "", hearingTime: "", duration: "60", interpreter: false, interpreterLang: "",
-    audioFile: "", turnaround: "standard", feeWaiver: false,
+    audioFile: "", turnaround: "standard", feeWaiver: false, notes: "",
   });
   const [submitted, setSubmitted] = useState(false);
   const update = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const accentClass = form.type === "live" ? "accent-blue" : form.type === "transcription" ? "accent-amber" : "";
 
   const est = calculateEstimate(parseInt(form.duration) || 60, form.turnaround, form.interpreter);
-  const getDeliveryDate = (t) => { const d = new Date(); d.setDate(d.getDate() + (t === "rush" ? 1 : t === "standard" ? 5 : 14)); return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }); };
+  const getDeliveryDate = (t) => { const d = new Date(); d.setDate(d.getDate() + (t === "rush" ? 2 : t === "standard" ? 5 : 14)); return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }); };
+  const tierLabel = (key) => ({ rush: "Rush", standard: "Expedited", economy: "Standard" }[key] || key);
+  const tierTime = (key) => ({ rush: "24-48 hours", standard: "3-5 business days", economy: "2+ weeks" }[key] || "");
 
   if (submitted) {
     return (
@@ -2759,10 +2771,9 @@ function OrderFlow() {
                   <div className="form-group">
                     <label className="form-label">Case Type</label>
                     <select className="form-input form-select" value={form.caseType} onChange={e => update("caseType", e.target.value)}>
-                      <option value="family">Family Law</option>
-                      <option value="civil">Civil</option>
-                      <option value="probate">Probate</option>
-                      <option value="criminal">Criminal</option>
+                      {["Family Law", "Civil Litigation", "Probate", "Criminal", "Personal Injury", "Real Estate", "Employment", "Immigration", "Bankruptcy", "Other"].map(t => (
+                        <option key={t} value={t}>{t}</option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -2828,6 +2839,11 @@ function OrderFlow() {
                     </select>
                   </div>
                 )}
+
+                <div className="form-group">
+                  <label className="form-label">Special Instructions <span style={{fontWeight: 400, color: "#94A3B8"}}>(optional)</span></label>
+                  <textarea className="form-input" style={{minHeight: 80, resize: "vertical"}} placeholder="e.g. Multiple witnesses expected, realtime feed needed, specific formatting requirements..." value={form.notes} onChange={e => update("notes", e.target.value)} />
+                </div>
 
                 <div style={{display: "flex", gap: 12, marginTop: 8}}>
                   <button className="btn btn-secondary btn-sm" onClick={() => setStep(1)}>Back</button>
@@ -2901,7 +2917,7 @@ function OrderFlow() {
               <div className={"review-banner " + (form.type === "live" ? "blue" : "amber")}>
                 <Icon name={form.type === "live" ? "mapPin" : "mic"} size={18} />
                 {form.type === "live" ? "Live Attendance" : "Post-Hearing Transcription"}
-                <span className={"badge badge-" + form.turnaround} style={{marginLeft: "auto"}}>{form.turnaround.charAt(0).toUpperCase() + form.turnaround.slice(1)}</span>
+                <span className={"badge badge-" + form.turnaround} style={{marginLeft: "auto"}}>{tierLabel(form.turnaround)} · {tierTime(form.turnaround)}</span>
               </div>
               <div className="review-section-card">
                 <h3><Icon name="scale" size={14} /> Case Details</h3>
@@ -2910,6 +2926,8 @@ function OrderFlow() {
                   <div className="review-field"><label>Department</label><div className="val">{form.dept || "Not specified"}</div></div>
                   <div className="review-field"><label>Case Number</label><div className="val">{form.caseNumber || "Not specified"}</div></div>
                   <div className="review-field"><label>Case Name</label><div className="val">{form.caseName || "Not specified"}</div></div>
+                  <div className="review-field"><label>Case Type</label><div className="val">{form.caseType}</div></div>
+                  {form.notes && <div className="review-field" style={{gridColumn: "1 / -1"}}><label>Special Instructions</label><div className="val">{form.notes}</div></div>}
                 </div>
               </div>
               <div className="review-section-card">
@@ -2925,6 +2943,7 @@ function OrderFlow() {
               <div className="review-section-card">
                 <h3><Icon name="dollarSign" size={14} /> Pricing</h3>
                 <div className="price-line"><span>Estimated pages</span><strong>{est.low} – {est.high}</strong></div>
+                <div className="price-line"><span>Turnaround</span><strong>{tierLabel(form.turnaround)} ({tierTime(form.turnaround)})</strong></div>
                 <div className="price-line"><span>Delivery by</span><strong>{getDeliveryDate(form.turnaround)}</strong></div>
                 <div style={{background: "var(--bg-muted, #F8FAFC)", borderRadius: 12, padding: 20, marginTop: 12}}>
                   <div style={{display: "flex", justifyContent: "space-between", alignItems: "baseline"}}>
