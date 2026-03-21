@@ -3673,7 +3673,7 @@ function OnboardingFlow() {
         </a>
         <h1>{!role ? "Get Started" : role === "attorney" ? "Attorney Setup" : "Reporter Setup"}</h1>
         <p>{!role ? "Choose your role to create an account." : "Step " + step + " of 4"}</p>
-        {role && <StepIndicator current={step} total={4} />}
+        {role && <StepIndicator current={step} total={4} labels={role === "attorney" ? ["Firm", "Practice", "Account", "Review"] : ["License", "Courts", "Account", "Review"]} />}
 
         {!role && (
           <div style={{display: "flex", flexDirection: "column", gap: 12, marginTop: 24}}>
@@ -4380,8 +4380,8 @@ function ReporterOnboarding() {
             <div className="ps-row"><span className="ps-label">Courts</span><span className="ps-value">{courtLabels}</span></div>
           </div>
           <div className="promo-callout">
-            <strong>Your first 10 jobs are fee-free!</strong>
-            <span>Code PIONEER2026 has been applied to your account</span>
+            <strong>Your first year's listing fee is waived!</strong>
+            <span>Code PIONEER2026 — $99 value applied to your account</span>
           </div>
           <button className="btn btn-primary" style={{width: "100%", justifyContent: "center", fontSize: 16}} onClick={() => navigate("#/reporter")}>Go to Dashboard <Icon name="arrowRight" size={16} /></button>
         </div>
@@ -4403,7 +4403,7 @@ function ReporterOnboarding() {
       <div style={{marginBottom: 32, textAlign: "center"}}>
         <a href="#/" style={{display: "inline-flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
       </div>
-      <StepIndicator current={step} total={4} />
+      <StepIndicator current={step} total={4} labels={["Credentials", "Preferences", "Payment", "Account"]} />
       <div style={{height: 28}} />
       <div className="reporter-step-header">
         <h2>{stepTitles[step][0]}</h2>
@@ -4465,7 +4465,7 @@ function ReporterOnboarding() {
         <div className="form-group">
           <label className="form-label">Case Types</label>
           <div className="checkbox-group">
-            {["Family Law", "Civil", "Probate", "Criminal", "Other"].map(t => (
+            {["Family Law", "Civil Litigation", "Probate", "Criminal", "Personal Injury", "Real Estate", "Employment", "Immigration", "Bankruptcy", "Other"].map(t => (
               <div key={t} className={"checkbox-item" + (form.caseTypes.includes(t) ? " checked" : "")} onClick={() => toggleArr("caseTypes", t)}>{t}</div>
             ))}
           </div>
@@ -4481,7 +4481,7 @@ function ReporterOnboarding() {
         <div className="form-group">
           <label className="form-label">Turnaround Capabilities</label>
           <div className="checkbox-group">
-            {[["rush", "Rush (24 hours)"], ["standard", "Standard (3-5 days)"], ["economy", "Economy (2+ weeks)"]].map(([k, l]) => (
+            {[["rush", "Rush (24-48 hours)"], ["standard", "Expedited (3-5 business days)"], ["economy", "Standard (2+ weeks)"]].map(([k, l]) => (
               <div key={k} className={"checkbox-item" + (form.turnarounds.includes(k) ? " checked" : "")} onClick={() => toggleArr("turnarounds", k)}>{l}</div>
             ))}
           </div>
@@ -4651,7 +4651,7 @@ function AttorneyOnboarding() {
       <div style={{marginBottom: 32, textAlign: "center"}}>
         <a href="#/" style={{display: "inline-flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
       </div>
-      <StepIndicator current={step} total={5} />
+      <StepIndicator current={step} total={5} labels={["You", "Practice", "Courts", "Billing", "Password"]} />
       <div style={{height: 28}} />
       <div className="reporter-step-header" style={{textAlign: "left"}}>
         <h2 style={{fontSize: 24, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 6}}>{stepTitles[step][0]}</h2>
