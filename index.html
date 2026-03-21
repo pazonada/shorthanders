@@ -834,7 +834,7 @@
 
   /* ─── Settings Page ─────────────────────────────── */
   .settings-section { margin-bottom: 32px; }
-  .settings-section h3 { font-size: 16px; font-weight: 700; color: #0F172A; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #E2E8F0; }
+  .settings-section h3 { font-size: 16px; font-weight: 700; color: #0F172A; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; gap: 8px; }
   .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #F1F5F9; }
   .toggle-row:last-child { border-bottom: none; }
   .toggle-row .toggle-label { font-size: 14px; color: #334155; }
@@ -1566,6 +1566,10 @@ const Icon = ({ name, size = 20, color = "currentColor", strokeWidth = 2 }) => {
     dollarSign: <><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></>,
     trendingUp: <><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></>,
     menu: <><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></>,
+    user: <><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></>,
+    monitor: <><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></>,
+    check: <><polyline points="20 6 9 17 4 12"/></>,
+    search: <><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></>,
   };
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
@@ -3278,7 +3282,7 @@ function BuyerDashboard() {
                           <div className="sub">
                             {o.reporter ? (
                               <a href="#" onClick={e => { e.preventDefault(); setProfileReporter(o.reporter); }} style={{color: "#2563EB", textDecoration: "none", fontWeight: 500}}>{o.reporter}</a>
-                            ) : "Awaiting reporter assignment"} | <span className={"badge badge-" + o.turnaround} style={{fontSize: 10}}>{o.turnaround}</span>
+                            ) : "Awaiting reporter assignment"} | <span className={"badge badge-" + o.turnaround} style={{fontSize: 10}}>{o.turnaround === "rush" ? "Rush" : o.turnaround === "standard" ? "Expedited" : "Standard"}</span>
                           </div>
                         </div>
                         <div style={{display: "flex", alignItems: "center", gap: 8}}>
@@ -3609,9 +3613,9 @@ function ReporterDashboard() {
                 </select>
                 <select className="filter-select" value={turnFilter} onChange={e => setTurnFilter(e.target.value)}>
                   <option value="all">All Turnaround</option>
-                  <option value="rush">Rush</option>
-                  <option value="standard">Standard</option>
-                  <option value="economy">Economy</option>
+                  <option value="rush">Rush (24-48h)</option>
+                  <option value="standard">Expedited (3-5d)</option>
+                  <option value="economy">Standard (2+ wk)</option>
                 </select>
                 <select className="filter-select" value={typeFilter} onChange={e => setTypeFilter(e.target.value)}>
                   <option value="all">All Types</option>
@@ -3625,7 +3629,7 @@ function ReporterDashboard() {
                     <div className="job-card-top">
                       <div className="job-card-badges">
                         <span className={"badge badge-" + (j.type === "live" ? "live" : "transcription")}>{j.type === "live" ? "Live Attendance" : "Transcription"}</span>
-                        <span className={"badge badge-" + j.turnaround}>{j.turnaround}</span>
+                        <span className={"badge badge-" + j.turnaround}>{j.turnaround === "rush" ? "Rush" : j.turnaround === "standard" ? "Expedited" : "Standard"}</span>
                         <span className="badge badge-match"><Icon name="star" size={10} /> {getMatchPercent(j)}% match</span>
                         {j.interpreter && <span className="badge" style={{background: "#F3E8FF", color: "#6B21A8"}}>Interpreter</span>}
                       </div>
@@ -4311,11 +4315,11 @@ function SettingsPage() {
           <div className="page-header">
             <div>
               <h1>Settings</h1>
-              <p>Manage your account preferences.</p>
+              <p>Manage your account, security, and preferences.</p>
             </div>
           </div>
-          <div style={{display: "flex", gap: 4, marginBottom: 24}}>
-            {[["profile", "Profile"], ["notifications", "Notifications"], ["billing", "Billing"]].map(([key, label]) => (
+          <div style={{display: "flex", gap: 4, marginBottom: 24, flexWrap: "wrap"}}>
+            {[["profile", "Profile"], ["notifications", "Notifications"], ["security", "Security"], ["billing", "Billing"]].map(([key, label]) => (
               <button key={key} className={"app-nav-link" + (tab === key ? " active" : "")} onClick={() => setTab(key)}>{label}</button>
             ))}
           </div>
@@ -4323,28 +4327,39 @@ function SettingsPage() {
           {tab === "profile" && (
             <div className="detail-section">
               <div className="settings-section">
-                <h3>Personal Information</h3>
+                <h3><Icon name="user" size={14} /> Personal Information</h3>
                 <div className="form-row" style={{marginBottom: 16}}>
                   <div className="form-group"><label className="form-label">Full Name</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.name} /></div>
                   <div className="form-group"><label className="form-label">Email</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.email} /></div>
                 </div>
                 <div className="form-row">
                   <div className="form-group"><label className="form-label">Phone</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.phone} /></div>
-                  <div className="form-group"><label className="form-label">Bar Number</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.barNumber} /></div>
+                  <div className="form-group"><label className="form-label">Bar Number</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.barNumber} readOnly style={{background: "var(--bg-muted, #F8FAFC)", cursor: "not-allowed"}} /></div>
                 </div>
               </div>
               <div className="settings-section">
-                <h3>Firm</h3>
-                <div className="form-group"><label className="form-label">Firm Name</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.firm} /></div>
+                <h3><Icon name="scale" size={14} /> Firm Details</h3>
+                <div className="form-row">
+                  <div className="form-group"><label className="form-label">Firm Name</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.firm} /></div>
+                  <div className="form-group"><label className="form-label">Firm Address</label><input className="form-input" defaultValue={MOCK_SETTINGS.billing.address} /></div>
+                </div>
               </div>
-              <button className="btn btn-primary btn-sm" onClick={() => addToast("Saved", "Profile updated", "success")}>Save Changes</button>
+              <div className="settings-section">
+                <h3><Icon name="fileText" size={14} /> Practice Areas</h3>
+                <div className="checkbox-group">
+                  {["Family Law", "Civil Litigation", "Probate", "Criminal", "Personal Injury", "Real Estate", "Employment", "Immigration", "Bankruptcy", "Other"].map(a => (
+                    <div key={a} className={"checkbox-item" + (["Family Law", "Probate"].includes(a) ? " checked" : "")}>{a}</div>
+                  ))}
+                </div>
+              </div>
+              <button className="btn btn-primary btn-sm" onClick={() => addToast("Saved", "Profile updated successfully", "success")}>Save Changes</button>
             </div>
           )}
 
           {tab === "notifications" && (
             <div className="detail-section">
               <div className="settings-section">
-                <h3>Notification Preferences</h3>
+                <h3><Icon name="bell" size={14} /> Notification Preferences</h3>
                 <div style={{display: "grid", gridTemplateColumns: "1fr auto auto auto", gap: 0, fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", padding: "0 0 8px"}}>
                   <span></span><span style={{textAlign: "center", width: 60}}>Email</span><span style={{textAlign: "center", width: 60}}>SMS</span><span style={{textAlign: "center", width: 60}}>Push</span>
                 </div>
@@ -4367,36 +4382,103 @@ function SettingsPage() {
             </div>
           )}
 
+          {tab === "security" && (
+            <div className="detail-section">
+              <div className="settings-section">
+                <h3><Icon name="shield" size={14} /> Change Password</h3>
+                <div className="form-group"><label className="form-label">Current Password</label><input className="form-input" type="password" placeholder="Enter current password" /></div>
+                <div className="form-row">
+                  <div className="form-group"><label className="form-label">New Password</label><input className="form-input" type="password" placeholder="Enter new password" /></div>
+                  <div className="form-group"><label className="form-label">Confirm New Password</label><input className="form-input" type="password" placeholder="Confirm new password" /></div>
+                </div>
+                <p className="form-helper">At least 8 characters with one number and one special character.</p>
+                <button className="btn btn-primary btn-sm" style={{marginTop: 8}} onClick={() => addToast("Updated", "Password changed successfully", "success")}>Update Password</button>
+              </div>
+              <div className="settings-section">
+                <h3><Icon name="shield" size={14} /> Two-Factor Authentication</h3>
+                <div className="toggle-row">
+                  <div style={{flex: 1}}>
+                    <div className="toggle-label">Enable 2FA</div>
+                    <div className="toggle-sub">Add an extra layer of security with authenticator app or SMS verification</div>
+                  </div>
+                  <label className="toggle-switch">
+                    <input type="checkbox" />
+                    <span className="slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div className="settings-section">
+                <h3><Icon name="clock" size={14} /> Active Sessions</h3>
+                <div style={{display: "flex", alignItems: "center", gap: 12, padding: "12px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)"}}>
+                  <Icon name="monitor" size={16} color="#059669" />
+                  <div style={{flex: 1}}>
+                    <div style={{fontSize: 14, fontWeight: 600, color: "var(--text, #0F172A)"}}>Chrome on macOS</div>
+                    <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>Los Angeles, CA · Active now</div>
+                  </div>
+                  <span className="badge badge-completed" style={{fontSize: 10}}>Current</span>
+                </div>
+                <div style={{display: "flex", alignItems: "center", gap: 12, padding: "12px 0"}}>
+                  <Icon name="monitor" size={16} color="#94A3B8" />
+                  <div style={{flex: 1}}>
+                    <div style={{fontSize: 14, fontWeight: 600, color: "var(--text, #0F172A)"}}>Safari on iPhone</div>
+                    <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>Los Angeles, CA · 2 hours ago</div>
+                  </div>
+                  <button className="btn btn-secondary btn-sm" style={{padding: "4px 10px", fontSize: 11}}>Revoke</button>
+                </div>
+              </div>
+              <div className="settings-section" style={{borderTop: "2px solid #FEE2E2", paddingTop: 24, marginTop: 8}}>
+                <h3 style={{color: "#DC2626"}}><Icon name="x" size={14} /> Danger Zone</h3>
+                <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 12}}>Permanently delete your account and all associated data. This action cannot be undone.</p>
+                <button className="btn btn-sm" style={{background: "#FEE2E2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => addToast("Contact Support", "Email support@deweysholes.com to delete your account", "warning")}>Delete Account</button>
+              </div>
+            </div>
+          )}
+
           {tab === "billing" && (
             <div className="detail-section">
               <div className="settings-section">
-                <h3>Payment Methods</h3>
-                {MOCK_SETTINGS.billing.cards.map((card, i) => (
-                  <div className="payment-card" key={i}>
-                    <div className="card-brand">{card.brand}</div>
-                    <div>
-                      <div className="card-num">&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; {card.last4}</div>
-                      <div className="card-exp">Expires {card.expiry}</div>
+                <h3><Icon name="creditCard" size={14} /> Payment Methods</h3>
+                <div className="billing-cards">
+                  {MOCK_SETTINGS.billing.cards.map((card, i) => (
+                    <div className="billing-card-item" key={i}>
+                      <div className={"bci-brand bci-" + card.brand.toLowerCase()}>{card.brand === "Visa" ? "V" : card.brand === "Amex" ? "A" : "M"}</div>
+                      <div className="bci-info">
+                        <div className="bci-number">{card.brand} •••• {card.last4}</div>
+                        <div className="bci-expiry">Expires {card.expiry}</div>
+                      </div>
+                      {card.isDefault && <span className="badge badge-completed" style={{fontSize: 10}}>Default</span>}
                     </div>
-                    {card.isDefault && <span className="card-default">Default</span>}
-                  </div>
-                ))}
-                <button className="btn btn-secondary btn-sm" style={{marginTop: 8}}>+ Add Payment Method</button>
+                  ))}
+                  <button className="billing-add-card">
+                    <Icon name="creditCard" size={14} color="#2563EB" /> Add Payment Method
+                  </button>
+                </div>
               </div>
               <div className="settings-section">
-                <h3>Billing Address</h3>
+                <h3><Icon name="mapPin" size={14} /> Billing Address</h3>
                 <p style={{fontSize: 14, color: "var(--text-secondary, #475569)"}}>{MOCK_SETTINGS.billing.address}</p>
+                <button className="btn btn-secondary btn-sm" style={{marginTop: 8, fontSize: 11}}>Update Address</button>
               </div>
               <div className="settings-section">
-                <h3>Recent Invoices</h3>
-                <table className="payout-table">
-                  <thead><tr><th>Invoice</th><th>Date</th><th>Amount</th><th>Status</th></tr></thead>
-                  <tbody>
-                    {MOCK_SETTINGS.billing.invoices.map((inv, i) => (
-                      <tr key={i}><td>{inv.id}</td><td>{inv.date}</td><td>{inv.amount}</td><td><span className={"badge badge-" + (inv.status === "Paid" ? "completed" : "pending")}>{inv.status}</span></td></tr>
-                    ))}
-                  </tbody>
-                </table>
+                <h3><Icon name="fileText" size={14} /> Recent Invoices</h3>
+                <div className="billing-invoices">
+                  {MOCK_SETTINGS.billing.invoices.map((inv, i) => (
+                    <div className="billing-invoice-row" key={i}>
+                      <div className="bir-info">
+                        <div className="bir-id">{inv.id}</div>
+                        <div className="bir-date">{inv.date}</div>
+                      </div>
+                      <div className="bir-amount">{inv.amount}</div>
+                      <span className={"badge badge-" + (inv.status === "Paid" ? "completed" : "pending")}>{inv.status}</span>
+                      <button className="btn btn-secondary btn-sm" style={{padding: "4px 10px", fontSize: 11}} onClick={() => addToast("Downloaded", inv.id + " saved as PDF", "success")}>
+                        <Icon name="download" size={12} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <div style={{marginTop: 12, textAlign: "center"}}>
+                  <a href="#" onClick={e => { e.preventDefault(); navigate("/dashboard"); }} style={{fontSize: 13, color: "#2563EB", textDecoration: "none", fontWeight: 500}}>View full billing dashboard →</a>
+                </div>
               </div>
             </div>
           )}
