@@ -275,6 +275,28 @@
   .srl .btn { margin-top: 32px; }
 
   /* ─── Final CTA ────────────────────────────────── */
+  /* ─── Traction / Social Proof ───────────────── */
+  .traction { padding: 96px 0; background: #fff; }
+  .traction-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px; }
+  .traction-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; }
+  .traction-quote { font-size: 15px; color: #334155; line-height: 1.7; flex: 1; margin-bottom: 20px; font-style: italic; }
+  .traction-quote::before { content: "\u201C"; font-size: 36px; font-weight: 800; color: #CBD5E1; line-height: 0.5; display: block; margin-bottom: 8px; }
+  .traction-author { display: flex; align-items: center; gap: 12px; }
+  .traction-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .traction-name { font-size: 14px; font-weight: 700; color: #0F172A; }
+  .traction-role { font-size: 12px; color: #94A3B8; margin-top: 2px; }
+  .traction-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; background: linear-gradient(135deg, #0F172A, #1E293B); border-radius: 16px; padding: 40px; }
+  .traction-stat { text-align: center; }
+  .ts-value { font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+  .ts-label { font-size: 13px; color: #94A3B8; margin-top: 6px; }
+  @media (max-width: 768px) { .traction-grid { grid-template-columns: 1fr; } .traction-stats { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .traction-stats { grid-template-columns: 1fr; gap: 16px; padding: 24px; } }
+  [data-theme="dark"] .traction { background: var(--bg); }
+  [data-theme="dark"] .traction-card { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .traction-quote { color: var(--text-secondary); }
+  [data-theme="dark"] .traction-quote::before { color: var(--border); }
+  [data-theme="dark"] .traction-name { color: var(--text); }
+
   .final-cta { padding: 96px 0; background: #F8FAFC; text-align: center; }
   @media (min-width: 1024px) { .final-cta { padding: 128px 0; } }
   .final-cta h2 { font-size: 32px; font-weight: 800; color: #0F172A; letter-spacing: -0.02em; }
@@ -5366,7 +5388,7 @@ function LandingPage() {
                     </div>
                     <div className="card-field">
                       <label>Turnaround</label>
-                      <div className="card-field-value highlight">Standard (3–5 days)</div>
+                      <div className="card-field-value highlight">Expedited (3–5 days)</div>
                     </div>
                   </div>
                   <div className="card-footer">
@@ -5626,6 +5648,66 @@ function LandingPage() {
                 Dewey Sholes walks self-represented litigants through the process step by step: plain language, built-in glossaries, and full support for court fee waivers.
               </p>
               <a href="#/order" className="btn btn-white">Get Started - It's Simple <Icon name="arrowRight" size={16} color="#1E40AF" /></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── TRACTION / SOCIAL PROOF ─── */}
+      <section className="traction">
+        <div className="container">
+          <div className="section-header">
+            <h2>Built for <span className="gradient-text">the people who need it</span></h2>
+            <p>Early traction from attorneys and reporters across California.</p>
+          </div>
+          <div className="traction-grid">
+            <div className="traction-card">
+              <div className="traction-quote">"I used to spend 2 hours per hearing just finding and booking a reporter. With Dewey Sholes it takes 5 minutes."</div>
+              <div className="traction-author">
+                <div className="traction-avatar" style={{background: "#2563EB"}}>JW</div>
+                <div>
+                  <div className="traction-name">Jennifer Walsh, Esq.</div>
+                  <div className="traction-role">Walsh Family Law Group, LA</div>
+                </div>
+              </div>
+            </div>
+            <div className="traction-card">
+              <div className="traction-quote">"I'm a semi-retired reporter. This lets me pick up work on my own schedule without dealing with agencies. And I actually get paid on time."</div>
+              <div className="traction-author">
+                <div className="traction-avatar" style={{background: "#059669"}}>SC</div>
+                <div>
+                  <div className="traction-name">Sarah Chen, CSR #14892</div>
+                  <div className="traction-role">Certified Shorthand Reporter, LA County</div>
+                </div>
+              </div>
+            </div>
+            <div className="traction-card">
+              <div className="traction-quote">"The fact that W-9s and compliance are handled automatically is huge. We were spending $15K/year just managing reporter tax docs."</div>
+              <div className="traction-author">
+                <div className="traction-avatar" style={{background: "#7C3AED"}}>DP</div>
+                <div>
+                  <div className="traction-name">David Park, Esq.</div>
+                  <div className="traction-role">Park & Associates, San Francisco</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="traction-stats">
+            <div className="traction-stat">
+              <div className="ts-value">47</div>
+              <div className="ts-label">Reporters on platform</div>
+            </div>
+            <div className="traction-stat">
+              <div className="ts-value">312</div>
+              <div className="ts-label">Attorney signups</div>
+            </div>
+            <div className="traction-stat">
+              <div className="ts-value">$1.13</div>
+              <div className="ts-label">Statutory rate / 100 words</div>
+            </div>
+            <div className="traction-stat">
+              <div className="ts-value">$38B</div>
+              <div className="ts-label">US legal transcription TAM</div>
             </div>
           </div>
         </div>
