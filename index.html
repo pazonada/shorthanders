@@ -1325,6 +1325,39 @@
   .job-card-detail .jcd-label { color: var(--text-muted, #94A3B8); }
   .job-card-detail .jcd-value { color: var(--text, #0F172A); font-weight: 500; }
   .job-card-detail .jcd-match { font-size: 12px; color: #059669; margin-top: 8px; font-style: italic; }
+  /* ─── Billing Page ─────────────────────────── */
+  .billing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+  .billing-section { background: var(--bg-card, #fff); border: 1px solid var(--border, #E2E8F0); border-radius: 14px; padding: 24px; }
+  .billing-section h3 { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 20px; color: var(--text, #0F172A); }
+  .billing-cards { display: flex; flex-direction: column; gap: 12px; }
+  .billing-card-item { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: var(--bg-muted, #F8FAFC); border-radius: 10px; border: 1px solid var(--border-light, #F1F5F9); }
+  .bci-brand { width: 40px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; }
+  .bci-visa { background: linear-gradient(135deg, #1A1F71, #2563EB); }
+  .bci-amex { background: linear-gradient(135deg, #006FCF, #00A1DE); }
+  .bci-mastercard { background: linear-gradient(135deg, #EB001B, #F79E1B); }
+  .bci-info { flex: 1; }
+  .bci-number { font-size: 14px; font-weight: 600; color: var(--text, #0F172A); }
+  .bci-expiry { font-size: 12px; color: var(--text-muted, #94A3B8); margin-top: 2px; }
+  .billing-add-card { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; border: 2px dashed var(--border, #E2E8F0); border-radius: 10px; background: transparent; color: #2563EB; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+  .billing-add-card:hover { border-color: #2563EB; background: #EFF6FF; }
+  .billing-address { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-light, #F1F5F9); }
+  .billing-address h4 { font-size: 12px; font-weight: 700; color: var(--text-muted, #94A3B8); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .billing-address p { font-size: 14px; color: var(--text, #334155); }
+  .billing-invoices { display: flex; flex-direction: column; gap: 0; }
+  .billing-invoice-row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border-light, #F1F5F9); }
+  .billing-invoice-row:last-child { border-bottom: none; }
+  .bir-info { flex: 1; }
+  .bir-id { font-size: 13px; font-weight: 600; color: var(--text, #0F172A); font-family: 'Courier New', monospace; }
+  .bir-date { font-size: 12px; color: var(--text-muted, #94A3B8); margin-top: 2px; }
+  .bir-amount { font-size: 15px; font-weight: 700; color: var(--text, #0F172A); min-width: 80px; text-align: right; }
+  .billing-info-callout { display: flex; align-items: flex-start; gap: 14px; background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 12px; padding: 20px 24px; }
+  .billing-info-callout strong { font-size: 14px; color: #1E40AF; display: block; margin-bottom: 4px; }
+  .billing-info-callout p { font-size: 13px; color: #475569; line-height: 1.6; margin: 0; }
+  @media (max-width: 768px) { .billing-grid { grid-template-columns: 1fr; } }
+  [data-theme="dark"] .billing-info-callout { background: rgba(37,99,235,0.1); border-color: rgba(37,99,235,0.3); }
+  [data-theme="dark"] .billing-info-callout strong { color: #93C5FD; }
+  [data-theme="dark"] .billing-add-card:hover { background: rgba(37,99,235,0.1); }
+
   .empty-state { text-align: center; padding: 60px 20px; }
   .empty-state .empty-icon { margin-bottom: 16px; }
   .empty-state h3 { font-size: 18px; font-weight: 700; color: var(--text, #0F172A); margin-bottom: 8px; }
@@ -2547,7 +2580,7 @@ function AppNav({ variant, activeTab, onTabChange }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const tabMap = {
     reporter: [["jobs", "Available Jobs"], ["active", "My Jobs"], ["calendar", "Calendar"], ["earnings", "Earnings"]],
-    buyer: [["cases", "My Cases"], ["messages", "Messages"], ["calendar", "Calendar"], ["analytics", "Analytics"], ["team", "Team"]],
+    buyer: [["cases", "My Cases"], ["messages", "Messages"], ["billing", "Billing"], ["calendar", "Calendar"], ["analytics", "Analytics"], ["team", "Team"]],
     admin: [["overview", "Overview"], ["verifications", "Verifications"], ["compliance", "Compliance"]],
   };
   const tabs = tabMap[variant] || tabMap.buyer;
@@ -3239,6 +3272,94 @@ function BuyerDashboard() {
                     value={caseNotes[selectedCase.id] || ""}
                     onChange={e => setCaseNotes(prev => ({ ...prev, [selectedCase.id]: e.target.value }))}
                   />
+                </div>
+              </div>
+            </div>
+            );
+          })()}
+
+          {tab === "billing" && (() => {
+            const billing = MOCK_SETTINGS.billing;
+            const totalPaid = billing.invoices.filter(i => i.status === "Paid").reduce((s, i) => s + parseFloat(i.amount.replace(/[$,]/g, "")), 0);
+            const totalPending = billing.invoices.filter(i => i.status === "Pending").reduce((s, i) => s + parseFloat(i.amount.replace(/[$,]/g, "")), 0);
+            return (
+            <div>
+              <div className="page-header">
+                <div>
+                  <h1>Billing & Invoices</h1>
+                  <p>Payment methods, invoice history, and spending overview.</p>
+                </div>
+              </div>
+
+              <div className="quick-stats-row" style={{marginBottom: 24}}>
+                <div className="quick-stat">
+                  <Icon name="dollarSign" size={18} color="#059669" />
+                  <div><div className="quick-stat-value">${totalPaid.toFixed(0)}</div><div className="quick-stat-label">total paid</div></div>
+                </div>
+                <div className="quick-stat">
+                  <Icon name="clock" size={18} color="#D97706" />
+                  <div><div className="quick-stat-value">${totalPending.toFixed(0)}</div><div className="quick-stat-label">pending</div></div>
+                </div>
+                <div className="quick-stat">
+                  <Icon name="fileText" size={18} color="#2563EB" />
+                  <div><div className="quick-stat-value">{billing.invoices.length}</div><div className="quick-stat-label">invoices</div></div>
+                </div>
+                <div className="quick-stat">
+                  <Icon name="creditCard" size={18} color="#7C3AED" />
+                  <div><div className="quick-stat-value">{billing.cards.length}</div><div className="quick-stat-label">payment methods</div></div>
+                </div>
+              </div>
+
+              <div className="billing-grid">
+                <div className="billing-section">
+                  <h3><Icon name="creditCard" size={14} /> Payment Methods</h3>
+                  <div className="billing-cards">
+                    {billing.cards.map((card, i) => (
+                      <div className="billing-card-item" key={i}>
+                        <div className={"bci-brand bci-" + card.brand.toLowerCase()}>{card.brand === "Visa" ? "V" : card.brand === "Amex" ? "A" : "M"}</div>
+                        <div className="bci-info">
+                          <div className="bci-number">{card.brand} •••• {card.last4}</div>
+                          <div className="bci-expiry">Expires {card.expiry}</div>
+                        </div>
+                        {card.isDefault && <span className="badge badge-completed" style={{fontSize: 10}}>Default</span>}
+                      </div>
+                    ))}
+                    <button className="billing-add-card">
+                      <Icon name="creditCard" size={14} color="#2563EB" /> Add Payment Method
+                    </button>
+                  </div>
+                  <div className="billing-address">
+                    <h4>Billing Address</h4>
+                    <p>{billing.address}</p>
+                    <button className="btn btn-secondary btn-sm" style={{marginTop: 8, fontSize: 11}}>Update Address</button>
+                  </div>
+                </div>
+
+                <div className="billing-section">
+                  <h3><Icon name="fileText" size={14} /> Invoice History</h3>
+                  <div className="billing-invoices">
+                    {billing.invoices.map((inv, i) => (
+                      <div className="billing-invoice-row" key={i}>
+                        <div className="bir-info">
+                          <div className="bir-id">{inv.id}</div>
+                          <div className="bir-date">{inv.date}</div>
+                        </div>
+                        <div className="bir-amount">{inv.amount}</div>
+                        <span className={"badge badge-" + (inv.status === "Paid" ? "completed" : "pending")}>{inv.status}</span>
+                        <button className="btn btn-secondary btn-sm" style={{padding: "4px 10px", fontSize: 11}} onClick={() => addToast("Downloaded", inv.id + " saved as PDF", "success")}>
+                          <Icon name="download" size={12} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="billing-info-callout">
+                <Icon name="shield" size={16} color="#2563EB" />
+                <div>
+                  <strong>Transparent pricing</strong>
+                  <p>All orders billed at California statutory rates plus a flat {(PRICING.platformFee * 100).toFixed(0)}% platform fee. No hidden charges. Final cost based on certified page count.</p>
                 </div>
               </div>
             </div>
