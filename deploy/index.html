@@ -956,6 +956,28 @@
     .analytics-grid { grid-template-columns: 1fr; }
     .nav-inner { height: 60px; }
     .app-nav-avatar { display: none; }
+    .turnaround-card-enhanced { text-align: left; }
+    .value-prop-grid { grid-template-columns: 1fr; }
+    .method-cards { grid-template-columns: 1fr !important; }
+    .step-dot-label { font-size: 9px; }
+    .step-line-bar { width: 24px !important; }
+    .step-dot-num { width: 30px; height: 30px; font-size: 12px; }
+    .billing-invoice-row { flex-wrap: wrap; gap: 8px; }
+    .bir-amount { min-width: unset; }
+    .page-header h1 { font-size: 22px; }
+    .page-header { gap: 8px; }
+    .review-banner { font-size: 13px; flex-wrap: wrap; }
+    .confirm-box { padding: 32px 20px; }
+    .reporter-welcome h1 { font-size: 28px !important; }
+    .invoice-page { padding: 20px; }
+    .invoice-header { flex-direction: column; gap: 16px; }
+    .invoice-meta { grid-template-columns: 1fr; }
+  }
+
+  .type-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) {
+    .type-card-grid { grid-template-columns: 1fr; }
+    .turnaround-comparison { grid-template-columns: 1fr; }
   }
 
   /* ─── Dark Mode Overrides ───────────────────────── */
@@ -2743,7 +2765,7 @@ function OrderFlow() {
                 <h2 style={{fontSize: 24}}>What type of transcript do you need?</h2>
                 <p style={{color: "var(--text-secondary, #64748B)"}}>Choose the option that fits your situation.</p>
               </div>
-              <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16}}>
+              <div className="type-card-grid">
                 <div className={"type-card-enhanced" + (form.type === "live" ? " selected" : "")} onClick={() => update("type", "live")}>
                   <div className="tce-icon" style={{background: "#EFF6FF"}}><Icon name="mapPin" size={28} color="#2563EB" /></div>
                   <h3>Live Attendance</h3>
