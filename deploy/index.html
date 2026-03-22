@@ -1506,6 +1506,17 @@
   .kanban-badge-marketing { background: #FEF3C7; color: #92400E; }
   .kanban-badge-operations { background: #FCE7F3; color: #9D174D; }
   .kanban-badge-research { background: #EDE9FE; color: #5B21B6; }
+  .kanban-tag { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .kanban-tag-p0 { background: #FEE2E2; color: #991B1B; }
+  .kanban-tag-p1 { background: #FEF3C7; color: #92400E; }
+  .kanban-tag-p2 { background: #E2E8F0; color: #475569; }
+  .kanban-tag-decision { background: #EDE9FE; color: #5B21B6; }
+  .kanban-tag-legal { background: #DBEAFE; color: #1E40AF; }
+  [data-theme="dark"] .kanban-tag-p0 { background: rgba(220,38,38,0.2); color: #FCA5A5; }
+  [data-theme="dark"] .kanban-tag-p1 { background: rgba(245,158,11,0.2); color: #FCD34D; }
+  [data-theme="dark"] .kanban-tag-p2 { background: rgba(100,116,139,0.2); color: #94A3B8; }
+  [data-theme="dark"] .kanban-tag-decision { background: rgba(139,92,246,0.2); color: #C4B5FD; }
+  [data-theme="dark"] .kanban-tag-legal { background: rgba(59,130,246,0.2); color: #93C5FD; }
   .kanban-assignee { font-size: 10px; font-weight: 600; color: #475569; background: #F1F5F9; padding: 2px 8px; border-radius: 100px; }
   .kanban-assignee-picker { display: flex; gap: 6px; flex-wrap: wrap; }
   .kanban-assignee-toggle { padding: 4px 12px; border-radius: 100px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1.5px solid #E2E8F0; background: white; color: #64748B; transition: all 0.15s; user-select: none; }
@@ -5307,31 +5318,33 @@ const DEFAULT_KANBAN_TASKS = [
   { id: "t21", title: "POC: Reporter dashboard polish", description: "Quick stats, profile nudge, match badges, expandable cards, deadlines widget, earnings chart, empty states.", column: "done", priority: "medium", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-03-17", notes: "" },
   { id: "t22", title: "POC: Order flow polish", description: "Color-coded paths (blue/amber), feature checklists, file upload, interpreter lang, turnaround comparison.", column: "done", priority: "medium", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-03-17", notes: "" },
 
-  // ── Waiting (5) ──
-  { id: "t23", title: "Volume assumptions from Rosie", description: "How many transcripts do her attorney contacts order per month? Critical for Year 1 revenue model.", column: "waiting", priority: "critical", assignee: ["Rosie"], category: "financial", dueDate: "", createdAt: "2026-03-15", notes: "Blocks the platform fee financial model." },
-  { id: "t24", title: "Anchor firm names/contacts for beta", description: "Identify 3-5 firms for pilot launch. Ideally family law/civil lit, 5-50 attorneys, in pilot counties.", column: "waiting", priority: "critical", assignee: ["Rosie"], category: "marketing", dueDate: "", createdAt: "2026-03-15", notes: "" },
-  { id: "t25", title: "Pilot county priorities", description: "Which staff-reporter county (Rosie's relationships) + which ER county? Drives reporter recruitment geography.", column: "waiting", priority: "high", assignee: ["Rosie"], category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "LA is assumed for ER. Need the staff-reporter county." },
-  { id: "t26", title: "Warm-contact reporter network", description: "Confirm 10-15 reporters from Rosie's 22-year network who would join. First supply-side cohort.", column: "waiting", priority: "high", assignee: ["Rosie"], category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "Target: 10-15 covering LA before first firm launches." },
-  { id: "t27", title: "Questions for Rosie (pending response)", description: "Consolidated question list covering volume data, contacts, county priorities, and reporter universe.", column: "waiting", priority: "high", assignee: ["Rosie"], category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "Sent 3/15. Still waiting." },
+  // ── Waiting ──
+  { id: "t23", title: "Volume assumptions from Rosie", description: "A few transcripts/month/lawyer confirmed. Need to firm up exact numbers for Year 1 revenue model.", column: "waiting", priority: "critical", assignee: ["Rosie"], category: "financial", dueDate: "", createdAt: "2026-03-15", notes: "Blocks the platform fee financial model.", tags: ["P0", "decision"] },
+  { id: "t24", title: "Anchor firm names/contacts for beta", description: "Identify 3-5 firms for pilot launch. Ideally family law/civil lit, 5-50 attorneys, in SF Bay Area.", column: "waiting", priority: "critical", assignee: ["Rosie"], category: "marketing", dueDate: "", createdAt: "2026-03-15", notes: "", tags: ["P0", "decision"] },
+  { id: "t25", title: "Pilot county priorities", description: "SF Bay Area confirmed. Need to narrow: which specific courts? Rosie's action group connections?", column: "waiting", priority: "high", assignee: ["Rosie"], category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "SF Bay Area confirmed. 618 active CSRs in the area.", tags: ["P1", "decision"] },
+  { id: "t26", title: "Warm-contact reporter network", description: "Confirm 10-15 reporters from Rosie's network + CSR shortage action group who would join.", column: "waiting", priority: "high", assignee: ["Rosie"], category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "Target: 10-15 covering Bay Area before first firm launches.", tags: ["P0"] },
 
-  // ── To Do (7) ──
-  { id: "t28", title: "AB 5 memo: Lawyer review & sign-off", description: "Research is complete. Needs employment attorney to review and provide formal sign-off.", column: "todo", priority: "critical", assignee: ["TBD"], category: "legal", dueDate: "2026-04-15", createdAt: "2026-03-15", notes: "" },
-  { id: "t29", title: "Platform liability memo: Lawyer sign-off", description: "Transcript challenge risk analysis memo complete. Lawyer must sign off before launch.", column: "todo", priority: "critical", assignee: ["TBD"], category: "legal", dueDate: "2026-04-15", createdAt: "2026-03-15", notes: "" },
-  { id: "t30", title: "Legal entity decision (LLC vs C-Corp)", description: "Tradeoffs memo done. Founders + lawyer need to make the call. C-Corp if raising capital.", column: "todo", priority: "high", assignee: ["Aud","Rosie"], category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "" },
-  { id: "t31", title: "Verify AB 3136 enactment", description: "Research confirms bill exists but needs definitive confirmation it was enacted (not rolled into another bill).", column: "todo", priority: "medium", assignee: ["Aud"], category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "" },
-  { id: "t32", title: "Platform fee financial model", description: "Statutory rates fixed. Model fee %, reporter payout, volume scenarios. Skeleton ready, needs Rosie's data.", column: "todo", priority: "high", assignee: ["Aud"], category: "financial", dueDate: "", createdAt: "2026-03-15", notes: "Blocked until task t23 (volume assumptions) is resolved." },
-  { id: "t33", title: "CRB database pull", description: "Extract full active CSR licensee list from Court Reporters Board public database. Starting universe for outreach.", column: "todo", priority: "medium", assignee: ["Aud"], category: "research", dueDate: "", createdAt: "2026-03-15", notes: "" },
-  { id: "t34", title: "SOC 2 Type I readiness assessment", description: "Pre-beta security baseline. Encryption, auth, access controls, incident response plan.", column: "todo", priority: "medium", assignee: ["Aud"], category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "Full Type II within 12 months." },
+  // ── To Do ──
+  { id: "t28", title: "AB 5 memo: Lawyer review & sign-off", description: "Research complete. Rosie can review as lawyer-cofounder. May still want employment specialist to confirm.", column: "todo", priority: "critical", assignee: ["Rosie"], category: "legal", dueDate: "2026-04-15", createdAt: "2026-03-15", notes: "", tags: ["P0", "legal", "decision"] },
+  { id: "t29", title: "Platform liability memo: Lawyer sign-off", description: "Transcript challenge risk analysis memo complete. Rosie to review; may need platform liability specialist.", column: "todo", priority: "critical", assignee: ["Rosie"], category: "legal", dueDate: "2026-04-15", createdAt: "2026-03-15", notes: "", tags: ["P0", "legal", "decision"] },
+  { id: "t30", title: "Legal entity decision (LLC vs C-Corp)", description: "Tradeoffs memo done. C-Corp if raising capital. Founders need to decide.", column: "todo", priority: "high", assignee: ["Aud","Rosie"], category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "", tags: ["P1", "legal", "decision"] },
+  { id: "t31", title: "Verify AB 3136 enactment", description: "Research confirms bill exists but needs definitive confirmation it was enacted (not rolled into another bill).", column: "todo", priority: "medium", assignee: ["Aud"], category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "", tags: ["P1", "legal"] },
+  { id: "t32", title: "Platform fee financial model", description: "12% fee locked. Model reporter payout, volume scenarios. Needs Rosie's firm volume data.", column: "todo", priority: "high", assignee: ["Aud"], category: "financial", dueDate: "", createdAt: "2026-03-15", notes: "Blocked until volume assumptions are firmed up.", tags: ["P1"] },
+  { id: "t33", title: "CRB database pull", description: "DONE: 4,733 active CA CSRs extracted. 618 Bay Area CSRs. CSVs saved. Next: pre-load as unclaimed profiles.", column: "done", priority: "medium", assignee: ["Aud"], category: "research", dueDate: "", createdAt: "2026-03-15", notes: "Completed 3/22.", tags: [] },
+  { id: "t34", title: "SOC 2 Type I readiness assessment", description: "Pre-beta security baseline. Encryption, auth, access controls, incident response plan.", column: "todo", priority: "medium", assignee: ["Aud"], category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "Full Type II within 12 months.", tags: ["P2"] },
+  { id: "t53", title: "Prototype review with Rosie", description: "Page-by-page walkthrough of entire prototype. Document all changes before starting real build.", column: "todo", priority: "critical", assignee: ["Aud","Rosie"], category: "product", dueDate: "", createdAt: "2026-03-22", notes: "Must happen before real build starts.", tags: ["P0"] },
+  { id: "t54", title: "Real build: scaffold Next.js + Supabase", description: "Initialize production app. Auth, database schema, basic routing. 2-3 week build estimated.", column: "todo", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-03-22", notes: "Blocked on prototype review.", tags: ["P1"] },
+  { id: "t55", title: "Reporter invite flow", description: "End of reporter onboarding: 'Know a reporter who should be here?' Invite by email or CSR#.", column: "todo", priority: "medium", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-03-22", notes: "", tags: ["P1"] },
 
   // ── Backlog ──
-  { id: "t36", title: "Dispute resolution research", description: "Court rules for transcript correction in CA.", column: "backlog", priority: "low", assignee: ["Aud"], category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "" },
-  { id: "t37", title: "CCRA relationship prep", description: "California Court Reporters Association — potential ally. Need briefing doc and meeting strategy.", column: "backlog", priority: "low", assignee: ["Rosie"], category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "" },
-  { id: "t38", title: "Legal aid org partnership materials", description: "Pitch SRL features + fee waiver routing to access-to-justice nonprofits.", column: "backlog", priority: "low", assignee: ["Aud","Rosie"], category: "marketing", dueDate: "", createdAt: "2026-03-15", notes: "" },
-  { id: "t39", title: "CA marketplace registrations research", description: "Business license, marketplace regulations, state registrations needed to operate in California.", column: "backlog", priority: "low", assignee: ["Aud"], category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "" },
+  { id: "t36", title: "Dispute resolution research", description: "Court rules for transcript correction in CA.", column: "backlog", priority: "low", assignee: ["Aud"], category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "", tags: ["P2", "legal"] },
+  { id: "t37", title: "CCRA relationship prep", description: "California Court Reporters Association — potential ally. Need briefing doc and meeting strategy.", column: "backlog", priority: "low", assignee: ["Rosie"], category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "", tags: ["P2"] },
+  { id: "t38", title: "Legal aid org partnership materials", description: "Pitch SRL features + fee waiver routing to access-to-justice nonprofits.", column: "backlog", priority: "low", assignee: ["Aud","Rosie"], category: "marketing", dueDate: "", createdAt: "2026-03-15", notes: "", tags: ["P2"] },
+  { id: "t39", title: "CA marketplace registrations research", description: "Business license, marketplace regulations, state registrations needed to operate in California.", column: "backlog", priority: "low", assignee: ["Aud"], category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "", tags: ["P2", "legal"] },
   { id: "t40", title: "POC: Messaging / chat UI", description: "Full messaging page with search, online indicators, date separators, read receipts, order info panel, file attach button, mobile responsive.", column: "done", priority: "medium", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-03-18", notes: "Completed 3/20. Split-pane inbox, conversation search, mobile drawer." },
   { id: "t41", title: "POC: Attorney dashboard polish", description: "Deadline badges on case cards, expanded type filters, quick stats row, deadlines widget, firm profile nudge, progress bars, empty states.", column: "done", priority: "medium", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-03-18", notes: "Completed 3/20." },
   { id: "t42", title: "POC: Case detail view", description: "Dedicated screen: all transcripts, status timeline, reporter assigned, invoices, notes for a case.", column: "done", priority: "medium", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-03-18", notes: "Completed previously. Full detail view with order history, case notes, reporter profiles." },
-  { id: "t43", title: "Pitch deck", description: "Investor/partner presentation covering market, product, team, financials, ask.", column: "backlog", priority: "high", assignee: ["Aud","Rosie"], category: "marketing", dueDate: "", createdAt: "2026-03-18", notes: "" },
+  { id: "t43", title: "Pitch deck", description: "Investor/partner presentation covering market, product, team, financials, ask.", column: "backlog", priority: "high", assignee: ["Aud","Rosie"], category: "marketing", dueDate: "", createdAt: "2026-03-18", notes: "", tags: ["P1"] },
 
   // ── Done (3/20 session) ──
   { id: "t44", title: "Update pricing to flat 12%", description: "Changed platform fee from 15% to 12% across all pricing references, invoices, and calculators.", column: "done", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-03-20", notes: "Flat 12% — no escalation plan." },
@@ -5349,7 +5362,7 @@ function TaskModal({ task, isNew, onSave, onDelete, onClose }) {
   const [form, setForm] = React.useState({
     title: task.title || "", description: task.description || "", column: task.column || "todo",
     priority: task.priority || "medium", assignee: Array.isArray(task.assignee) ? task.assignee : task.assignee ? [task.assignee] : [], category: task.category || "product",
-    dueDate: task.dueDate || "", notes: task.notes || "",
+    dueDate: task.dueDate || "", notes: task.notes || "", tags: task.tags || [],
   });
   const up = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const handleSubmit = (e) => {
@@ -5409,9 +5422,20 @@ function TaskModal({ task, isNew, onSave, onDelete, onClose }) {
               </select>
             </div>
           </div>
-          <div className="form-group">
-            <label className="form-label">Due date</label>
-            <input className="form-input" type="date" value={form.dueDate} onChange={e => up("dueDate", e.target.value)} />
+          <div className="form-row">
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Due date</label>
+              <input className="form-input" type="date" value={form.dueDate} onChange={e => up("dueDate", e.target.value)} />
+            </div>
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Tags</label>
+              <div className="kanban-assignee-picker">
+                {["P0","P1","P2","decision","legal"].map(tag => (
+                  <button key={tag} type="button" className={"kanban-assignee-toggle" + (form.tags.includes(tag) ? " active" : "")}
+                    onClick={() => up("tags", form.tags.includes(tag) ? form.tags.filter(t => t !== tag) : [...form.tags, tag])}>{tag}</button>
+                ))}
+              </div>
+            </div>
           </div>
           <div className="form-group">
             <label className="form-label">Notes</label>
@@ -5567,6 +5591,7 @@ function KanbanBoard() {
                         {task.description && <div className="kanban-card-desc">{task.description}</div>}
                         <div className="kanban-card-meta">
                           <span className={"kanban-badge kanban-badge-" + task.category}>{task.category}</span>
+                          {(task.tags || []).map(tag => <span key={tag} className={"kanban-tag kanban-tag-" + tag.toLowerCase().replace(/\s+/g, "")}>{tag}</span>)}
                           {(Array.isArray(task.assignee) ? task.assignee : task.assignee ? [task.assignee] : []).map(a => <span key={a} className="kanban-assignee">{a}</span>)}
                           {task.dueDate && <span className="kanban-assignee" style={{color:"#DC2626"}}>{task.dueDate}</span>}
                         </div>
