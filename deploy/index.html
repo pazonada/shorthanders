@@ -136,7 +136,7 @@
   @media (min-width: 1024px) { .stat-value { font-size: 48px; } }
   .stat-label { margin-top: 8px; font-size: 13px; color: #94A3B8; max-width: 280px; margin-left: auto; margin-right: auto; line-height: 1.5; }
 
-  /* ─── How It Works ─────────────────────────────── */
+  /* ─── How it works ─────────────────────────────── */
   .how { padding: 96px 0; background: #fff; }
   @media (min-width: 1024px) { .how { padding: 128px 0; } }
   .section-header { text-align: center; margin-bottom: 64px; }
@@ -181,7 +181,7 @@
   .usecase-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #475569; }
   .usecase-list li svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; }
 
-  /* ─── For Attorneys ────────────────────────────── */
+  /* ─── For attorneys ────────────────────────────── */
   .attorneys { padding: 96px 0; background: #fff; }
   @media (min-width: 1024px) { .attorneys { padding: 128px 0; } }
   .attorneys-grid { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; }
@@ -200,7 +200,7 @@
   .feature-card h3 { font-size: 14px; font-weight: 700; color: #0F172A; margin-bottom: 6px; }
   .feature-card p { font-size: 12px; color: #64748B; line-height: 1.6; }
 
-  /* ─── For Reporters ────────────────────────────── */
+  /* ─── For reporters ────────────────────────────── */
   .reporters { padding: 96px 0; background: #0F172A; position: relative; overflow: hidden; }
   @media (min-width: 1024px) { .reporters { padding: 128px 0; } }
   .reporters-bg1 { position: absolute; top: 0; right: 0; width: 600px; height: 600px; background: radial-gradient(ellipse, rgba(37,99,235,0.06) 0%, transparent 70%); }
@@ -530,7 +530,7 @@
   .timeline-line { width: 24px; height: 2px; background: #E2E8F0; flex-shrink: 0; }
   .timeline-step.done + .timeline-line { background: #059669; }
 
-  /* ─── Team Members ───────────────────────────── */
+  /* ─── Team members ───────────────────────────── */
   .team-list { display: flex; flex-direction: column; gap: 12px; }
   .team-row { display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; padding: 14px 16px; }
   .team-row .team-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
@@ -1797,12 +1797,12 @@ const PRICING = {
 
 // ─── Notifications Mock Data ─────────────────────────────────────
 const MOCK_NOTIFICATIONS = [
-  { id: "n1", type: "status", title: "Reporter Assigned", message: "Sarah Chen, CSR #14892 has been assigned to Martinez v. Pacific Holdings.", time: "10 min ago", read: false, route: "#/dashboard", icon: "users", color: "#2563EB", bg: "#EFF6FF" },
-  { id: "n2", type: "message", title: "New Message", message: "Sarah Chen sent a message about the Martinez hearing transcript.", time: "25 min ago", read: false, route: "#/dashboard", icon: "messageCircle", color: "#059669", bg: "#D1FAE5" },
-  { id: "n3", type: "delivery", title: "Transcript Delivered", message: "In re Estate of Williams transcript is ready for download.", time: "1 hour ago", read: false, route: "#/dashboard", icon: "fileText", color: "#7C3AED", bg: "#F3E8FF" },
-  { id: "n4", type: "status", title: "Order Confirmed", message: "Your rush order for Chen v. Westbrook Properties has been confirmed.", time: "2 hours ago", read: true, route: "#/dashboard", icon: "checkCircle", color: "#059669", bg: "#D1FAE5" },
-  { id: "n5", type: "job", title: "New Job Available", message: "Family Law hearing at LA Superior Court - Van Nuys, Dept. 7 on Apr 2.", time: "45 min ago", read: false, route: "#/reporter", icon: "zap", color: "#D97706", bg: "#FEF3C7" },
-  { id: "n6", type: "status", title: "Certification Complete", message: "Martinez v. Pacific Holdings transcript has been certified.", time: "3 hours ago", read: true, route: "#/dashboard", icon: "shield", color: "#2563EB", bg: "#EFF6FF" },
+  { id: "n1", type: "status", title: "Reporter assigned", message: "Sarah Chen, CSR #14892 has been assigned to Martinez v. Pacific Holdings.", time: "10 min ago", read: false, route: "#/dashboard", icon: "users", color: "#2563EB", bg: "#EFF6FF" },
+  { id: "n2", type: "message", title: "New message", message: "Sarah Chen sent a message about the Martinez hearing transcript.", time: "25 min ago", read: false, route: "#/dashboard", icon: "messageCircle", color: "#059669", bg: "#D1FAE5" },
+  { id: "n3", type: "delivery", title: "Transcript delivered", message: "In re Estate of Williams transcript is ready for download.", time: "1 hour ago", read: false, route: "#/dashboard", icon: "fileText", color: "#7C3AED", bg: "#F3E8FF" },
+  { id: "n4", type: "status", title: "Order confirmed", message: "Your rush order for Chen v. Westbrook Properties has been confirmed.", time: "2 hours ago", read: true, route: "#/dashboard", icon: "checkCircle", color: "#059669", bg: "#D1FAE5" },
+  { id: "n5", type: "job", title: "New job available", message: "Family Law hearing at LA Superior Court - Van Nuys, Dept. 7 on Apr 2.", time: "45 min ago", read: false, route: "#/reporter", icon: "zap", color: "#D97706", bg: "#FEF3C7" },
+  { id: "n6", type: "status", title: "Certification complete", message: "Martinez v. Pacific Holdings transcript has been certified.", time: "3 hours ago", read: true, route: "#/dashboard", icon: "shield", color: "#2563EB", bg: "#EFF6FF" },
 ];
 
 // ─── Messages Mock Data ─────────────────────────────────────────
@@ -2001,10 +2001,10 @@ const MOCK_ORDER_DETAIL = {
     court: "LA Superior Court - Stanley Mosk, Dept. 41", caseType: "Family Law",
     status: "in-progress",
     timeline: [
-      { step: "Order Placed", date: "2026-03-01", done: true },
-      { step: "Reporter Assigned", date: "2026-03-02", done: true },
-      { step: "In Progress", date: "2026-03-10", done: true, active: true },
-      { step: "Under Review", date: null, done: false },
+      { step: "Order placed", date: "2026-03-01", done: true },
+      { step: "Reporter assigned", date: "2026-03-02", done: true },
+      { step: "In progress", date: "2026-03-10", done: true, active: true },
+      { step: "Under review", date: null, done: false },
       { step: "Delivered", date: null, done: false },
     ],
     reporter: { name: "Sarah Chen", csrNumber: "CSR #14892", initials: "SC", rating: 4.9 },
@@ -2313,7 +2313,7 @@ function MessagingPage() {
                     <div className="msg-item-meta">
                       <span className="msg-item-time">{c.time}</span>
                       {c.unread > 0 && <span className="msg-item-unread">{c.unread}</span>}
-                      <span className={"msg-item-status-dot msg-item-status-" + c.orderStatus} title={c.orderStatus === "completed" ? "Delivered" : c.orderStatus === "in-progress" ? "In Progress" : "Pending"} />
+                      <span className={"msg-item-status-dot msg-item-status-" + c.orderStatus} title={c.orderStatus === "completed" ? "Delivered" : c.orderStatus === "in-progress" ? "In progress" : "Pending"} />
                     </div>
                   </div>
                 ))}
@@ -2347,7 +2347,7 @@ function MessagingPage() {
                     <div className="msg-order-info">
                       <div className="msg-order-info-row"><span className="msg-oi-label">Case</span><span className="msg-oi-value">{convo.case}</span></div>
                       <div className="msg-order-info-row"><span className="msg-oi-label">Case #</span><span className="msg-oi-value" style={{fontFamily: "'Courier New', monospace"}}>{convo.caseNumber}</span></div>
-                      <div className="msg-order-info-row"><span className="msg-oi-label">Status</span><span className={"badge badge-" + (convo.orderStatus === "completed" ? "completed" : convo.orderStatus === "in-progress" ? "progress" : "pending")}>{convo.orderStatus === "completed" ? "Delivered" : convo.orderStatus === "in-progress" ? "In Progress" : "Pending"}</span></div>
+                      <div className="msg-order-info-row"><span className="msg-oi-label">Status</span><span className={"badge badge-" + (convo.orderStatus === "completed" ? "completed" : convo.orderStatus === "in-progress" ? "progress" : "pending")}>{convo.orderStatus === "completed" ? "Delivered" : convo.orderStatus === "in-progress" ? "In progress" : "Pending"}</span></div>
                     </div>
                   )}
                   <div className="msg-main-body">
@@ -2386,7 +2386,7 @@ function MessagingPage() {
               ) : (
                 <div className="msg-empty">
                   <Icon name="messageCircle" size={40} color="#CBD5E1" />
-                  <h3>Your Messages</h3>
+                  <h3>Your messages</h3>
                   <p>Select a conversation to start messaging your court reporters.</p>
                 </div>
               )}
@@ -2558,10 +2558,10 @@ function ReporterProfileModal({ reporterName, onClose }) {
           <div className="profile-section">
             <h3>Performance</h3>
             <div className="profile-stat-grid">
-              <div className="profile-stat"><div className="val">{reporter.stats.jobsCompleted}</div><div className="lbl">Jobs Done</div></div>
-              <div className="profile-stat"><div className="val">{reporter.stats.onTimeRate}%</div><div className="lbl">On Time</div></div>
-              <div className="profile-stat"><div className="val">{reporter.stats.avgTurnaround}</div><div className="lbl">Avg Turn.</div></div>
-              <div className="profile-stat"><div className="val">{reporter.stats.memberSince}</div><div className="lbl">Member Since</div></div>
+              <div className="profile-stat"><div className="val">{reporter.stats.jobsCompleted}</div><div className="lbl">Jobs done</div></div>
+              <div className="profile-stat"><div className="val">{reporter.stats.onTimeRate}%</div><div className="lbl">On time</div></div>
+              <div className="profile-stat"><div className="val">{reporter.stats.avgTurnaround}</div><div className="lbl">Avg turn.</div></div>
+              <div className="profile-stat"><div className="val">{reporter.stats.memberSince}</div><div className="lbl">Member since</div></div>
             </div>
           </div>
           <div className="profile-section">
@@ -2571,13 +2571,13 @@ function ReporterProfileModal({ reporterName, onClose }) {
             </div>
           </div>
           <div className="profile-section">
-            <h3>Courts Covered</h3>
+            <h3>Courts covered</h3>
             <ul className="profile-courts">
               {reporter.courts.map(c => <li key={c}><Icon name="mapPin" size={13} color="#94A3B8" /> {c}</li>)}
             </ul>
           </div>
           <div className="profile-section">
-            <h3>Availability This Week</h3>
+            <h3>Availability this week</h3>
             <div className="avail-grid">
               <div></div>
               {days.map(d => <div key={d} className="avail-day">{d}</div>)}
@@ -2677,7 +2677,7 @@ function CalendarView({ events }) {
           <h4>{new Date(selected + "T12:00:00").toLocaleDateString("en-US", {weekday: "long", month: "long", day: "numeric", year: "numeric"})}</h4>
           {selectedEvents.map((e, i) => (
             <div key={i} className="calendar-detail-item">
-              <span className={"badge badge-" + (e.type === "hearing" ? "live" : e.type === "due" ? "pending" : "completed")}>{e.type === "hearing" ? "Hearing" : e.type === "due" ? "Due Date" : "Delivered"}</span>
+              <span className={"badge badge-" + (e.type === "hearing" ? "live" : e.type === "due" ? "pending" : "completed")}>{e.type === "hearing" ? "Hearing" : e.type === "due" ? "Due date" : "Delivered"}</span>
               <span>{e.label}</span>
             </div>
           ))}
@@ -2691,8 +2691,8 @@ function CalendarView({ events }) {
 function AppNav({ variant, activeTab, onTabChange }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const tabMap = {
-    reporter: [["jobs", "Available Jobs"], ["active", "My Jobs"], ["calendar", "Calendar"], ["earnings", "Earnings"]],
-    buyer: [["cases", "My Cases"], ["messages", "Messages"], ["billing", "Billing"], ["calendar", "Calendar"], ["analytics", "Analytics"], ["team", "Team"]],
+    reporter: [["jobs", "Available jobs"], ["active", "My jobs"], ["calendar", "Calendar"], ["earnings", "Earnings"]],
+    buyer: [["cases", "My cases"], ["messages", "Messages"], ["billing", "Billing"], ["calendar", "Calendar"], ["analytics", "Analytics"], ["team", "Team"]],
     admin: [["overview", "Overview"], ["verifications", "Verifications"], ["compliance", "Compliance"]],
   };
   const tabs = tabMap[variant] || tabMap.buyer;
@@ -2758,12 +2758,12 @@ function StepIndicator({ current, total, labels }) {
 
 function StatusBadge({ status }) {
   const map = { pending: "pending", assigned: "assigned", "in-progress": "progress", completed: "completed" };
-  const labels = { pending: "Pending", assigned: "Assigned", "in-progress": "In Progress", completed: "Completed" };
+  const labels = { pending: "Pending", assigned: "Assigned", "in-progress": "In progress", completed: "Completed" };
   return <span className={"badge badge-" + (map[status] || "pending")}>{labels[status] || status}</span>;
 }
 
 function OrderTimeline({ step }) {
-  const steps = ["Submitted", "Reporter Assigned", "In Progress", "Certification", "Delivered"];
+  const steps = ["Submitted", "Reporter assigned", "In progress", "Certification", "Delivered"];
   return (
     <div className="timeline">
       {steps.map((s, i) => {
@@ -2806,7 +2806,7 @@ function OrderFlow() {
         <div className="page page-enter"><div className="container" style={{maxWidth: 640, margin: "0 auto"}}>
           <div className="confirm-box">
             <div className="confirm-check" style={{animation: "successPop 0.5s ease"}}><Icon name="checkCircle" size={48} color="#059669" /></div>
-            <h2 style={{fontSize: 28, marginBottom: 8}}>Order Submitted!</h2>
+            <h2 style={{fontSize: 28, marginBottom: 8}}>Order submitted!</h2>
             <p className="order-num">Order number: <strong>DS-2026-0042</strong></p>
             <p style={{fontSize: 15, color: "var(--text-secondary, #64748B)", marginBottom: 32, lineHeight: 1.7}}>
               {form.type === "live"
@@ -2826,8 +2826,8 @@ function OrderFlow() {
               </>)}
             </div>
             <div style={{display: "flex", gap: 12, justifyContent: "center"}}>
-              <button className="btn btn-primary btn-sm" onClick={() => navigate("/dashboard")}>View Dashboard <Icon name="arrowRight" size={14} color="#fff" /></button>
-              <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Back to Home</button>
+              <button className="btn btn-primary btn-sm" onClick={() => navigate("/dashboard")}>View dashboard <Icon name="arrowRight" size={14} color="#fff" /></button>
+              <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Back to home</button>
             </div>
           </div>
         </div></div>
@@ -2844,7 +2844,7 @@ function OrderFlow() {
       <div className="page page-enter">
         <div className={"order-flow-wrap " + accentClass}>
           <div className="page-header" style={{justifyContent: "center", textAlign: "center", display: "block"}}>
-            <h1>New Transcript Order</h1>
+            <h1>New transcript order</h1>
           </div>
           <StepIndicator current={step} total={4} />
 
@@ -2858,7 +2858,7 @@ function OrderFlow() {
               <div className="type-card-grid">
                 <div className={"type-card-enhanced" + (form.type === "live" ? " selected" : "")} onClick={() => update("type", "live")}>
                   <div className="tce-icon" style={{background: "#EFF6FF"}}><Icon name="mapPin" size={28} color="#2563EB" /></div>
-                  <h3>Live Attendance</h3>
+                  <h3>Live attendance</h3>
                   <p className="tce-desc">For upcoming hearings where you need a reporter present</p>
                   <ul className="tce-features">
                     <li><Icon name="checkCircle" size={14} color="#2563EB" /> Reporter attends in person or remotely</li>
@@ -2869,7 +2869,7 @@ function OrderFlow() {
                 </div>
                 <div className={"type-card-enhanced amber" + (form.type === "transcription" ? " selected" : "")} onClick={() => update("type", "transcription")}>
                   <div className="tce-icon" style={{background: "#FFFBEB"}}><Icon name="mic" size={28} color="#D97706" /></div>
-                  <h3>Post-Hearing Transcription</h3>
+                  <h3>Post-hearing transcription</h3>
                   <p className="tce-desc">Got audio from a hearing? We'll match you with a reporter</p>
                   <ul className="tce-features">
                     <li><Icon name="checkCircle" size={14} color="#D97706" /> Upload MP3, WAV, or court-format audio</li>
@@ -2910,11 +2910,11 @@ function OrderFlow() {
                 </div>
                 <div className="form-row">
                   <div className="form-group">
-                    <label className="form-label">Case Number</label>
+                    <label className="form-label">Case number</label>
                     <input className="form-input" placeholder="e.g. 24STFL09821" value={form.caseNumber} onChange={e => update("caseNumber", e.target.value)} />
                   </div>
                   <div className="form-group">
-                    <label className="form-label">Case Type</label>
+                    <label className="form-label">Case type</label>
                     <select className="form-input form-select" value={form.caseType} onChange={e => update("caseType", e.target.value)}>
                       {["Family Law", "Civil Litigation", "Probate", "Criminal", "Personal Injury", "Real Estate", "Employment", "Immigration", "Bankruptcy", "Other"].map(t => (
                         <option key={t} value={t}>{t}</option>
@@ -2923,24 +2923,24 @@ function OrderFlow() {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Case Name / Caption</label>
+                  <label className="form-label">Case name / caption</label>
                   <input className="form-input" placeholder="e.g. Martinez v. Pacific Holdings" value={form.caseName} onChange={e => update("caseName", e.target.value)} />
                 </div>
 
                 {form.type === "live" ? (
                   <div className="form-row">
                     <div className="form-group">
-                      <label className="form-label">Hearing Date</label>
+                      <label className="form-label">Hearing date</label>
                       <input className="form-input" type="date" value={form.hearingDate} onChange={e => update("hearingDate", e.target.value)} />
                     </div>
                     <div className="form-group">
-                      <label className="form-label">Hearing Time</label>
+                      <label className="form-label">Hearing time</label>
                       <input className="form-input" type="time" value={form.hearingTime} onChange={e => update("hearingTime", e.target.value)} />
                     </div>
                   </div>
                 ) : (
                   <div className="form-group">
-                    <label className="form-label">Audio File</label>
+                    <label className="form-label">Audio file</label>
                     <div className={"form-file-enhanced" + (form.audioFile ? " uploaded" : "")} onClick={() => !form.audioFile && update("audioFile", "hearing_recording_2026-03-15.mp3")}>
                       {form.audioFile ? (
                         <div className="file-uploaded-state">
@@ -2959,7 +2959,7 @@ function OrderFlow() {
 
                 <div className="form-row">
                   <div className="form-group">
-                    <label className="form-label">{form.type === "live" ? "Expected Duration" : "Audio Duration"}</label>
+                    <label className="form-label">{form.type === "live" ? "Expected duration" : "Audio duration"}</label>
                     <select className="form-input form-select" value={form.duration} onChange={e => update("duration", e.target.value)}>
                       <option value="30">30 minutes</option>
                       <option value="60">1 hour</option>
@@ -2977,7 +2977,7 @@ function OrderFlow() {
                 </div>
                 {form.interpreter && (
                   <div className="form-group">
-                    <label className="form-label">Interpreter Language</label>
+                    <label className="form-label">Interpreter language</label>
                     <select className="form-input form-select" value={form.interpreterLang} onChange={e => update("interpreterLang", e.target.value)}>
                       <option value="">Select language...</option>
                       {["Spanish", "Mandarin", "Japanese", "Korean", "Vietnamese", "Other"].map(l => <option key={l} value={l}>{l}</option>)}
@@ -3026,13 +3026,13 @@ function OrderFlow() {
                 })}
               </div>
               <div className="price-box">
-                <h3>Price Estimate</h3>
+                <h3>Price estimate</h3>
                 <div className="price-line"><span>Estimated pages</span><strong>{est.low} – {est.high} pages</strong></div>
                 <div className="price-line"><span>Statutory rate (per page)</span><strong>${PRICING.ratePerPage.toFixed(2)}</strong></div>
                 <div className="price-line"><span>Turnaround adjustment</span><strong>{est.mult === 1 ? "None" : est.mult > 1 ? "+" + ((est.mult - 1) * 100).toFixed(0) + "%" : "-" + ((1 - est.mult) * 100).toFixed(0) + "%"}</strong></div>
                 <div className="price-line"><span>Platform fee ({(PRICING.platformFee * 100).toFixed(0)}% — attorney only)</span><strong>${((est.lowCost + est.highCost) / 2 * PRICING.platformFee).toFixed(2)}</strong></div>
                 <div className="price-total">
-                  <span>Estimated Total</span>
+                  <span>Estimated total</span>
                   <span>${(est.lowCost * (1 + PRICING.platformFee)).toFixed(0)} – ${(est.highCost * (1 + PRICING.platformFee)).toFixed(0)}</span>
                 </div>
                 <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
@@ -3047,7 +3047,7 @@ function OrderFlow() {
               </div>
               <div style={{display: "flex", gap: 12, marginTop: 24}}>
                 <button className="btn btn-secondary btn-sm" onClick={() => setStep(2)}>Back</button>
-                <button className="btn btn-primary btn-sm" onClick={() => setStep(4)}>Review Order <Icon name="arrowRight" size={14} color="#fff" /></button>
+                <button className="btn btn-primary btn-sm" onClick={() => setStep(4)}>Review order <Icon name="arrowRight" size={14} color="#fff" /></button>
               </div>
             </div>
           )}
@@ -3061,26 +3061,26 @@ function OrderFlow() {
               </div>
               <div className={"review-banner " + (form.type === "live" ? "blue" : "amber")}>
                 <Icon name={form.type === "live" ? "mapPin" : "mic"} size={18} />
-                {form.type === "live" ? "Live Attendance" : "Post-Hearing Transcription"}
+                {form.type === "live" ? "Live attendance" : "Post-hearing transcription"}
                 <span className={"badge badge-" + form.turnaround} style={{marginLeft: "auto"}}>{tierLabel(form.turnaround)} · {tierTime(form.turnaround)}</span>
               </div>
               <div className="review-section-card">
-                <h3><Icon name="scale" size={14} /> Case Details</h3>
+                <h3><Icon name="scale" size={14} /> Case details</h3>
                 <div className="review-grid">
                   <div className="review-field"><label>Court</label><div className="val">{form.court || "Not specified"}</div></div>
                   <div className="review-field"><label>Department</label><div className="val">{form.dept || "Not specified"}</div></div>
-                  <div className="review-field"><label>Case Number</label><div className="val">{form.caseNumber || "Not specified"}</div></div>
-                  <div className="review-field"><label>Case Name</label><div className="val">{form.caseName || "Not specified"}</div></div>
-                  <div className="review-field"><label>Case Type</label><div className="val">{form.caseType}</div></div>
-                  {form.notes && <div className="review-field" style={{gridColumn: "1 / -1"}}><label>Special Instructions</label><div className="val">{form.notes}</div></div>}
+                  <div className="review-field"><label>Case number</label><div className="val">{form.caseNumber || "Not specified"}</div></div>
+                  <div className="review-field"><label>Case name</label><div className="val">{form.caseName || "Not specified"}</div></div>
+                  <div className="review-field"><label>Case type</label><div className="val">{form.caseType}</div></div>
+                  {form.notes && <div className="review-field" style={{gridColumn: "1 / -1"}}><label>Special instructions</label><div className="val">{form.notes}</div></div>}
                 </div>
               </div>
               <div className="review-section-card">
-                <h3><Icon name={form.type === "live" ? "calendar" : "mic"} size={14} /> {form.type === "live" ? "Hearing Schedule" : "Audio File"}</h3>
+                <h3><Icon name={form.type === "live" ? "calendar" : "mic"} size={14} /> {form.type === "live" ? "Hearing schedule" : "Audio file"}</h3>
                 <div className="review-grid">
                   {form.type === "live" && <div className="review-field"><label>Date</label><div className="val">{form.hearingDate || "Not specified"}</div></div>}
                   {form.type === "live" && <div className="review-field"><label>Time</label><div className="val">{form.hearingTime || "Not specified"}</div></div>}
-                  {form.type === "transcription" && <div className="review-field"><label>Audio File</label><div className="val">{form.audioFile || "Not uploaded"}</div></div>}
+                  {form.type === "transcription" && <div className="review-field"><label>Audio file</label><div className="val">{form.audioFile || "Not uploaded"}</div></div>}
                   <div className="review-field"><label>Duration</label><div className="val">{form.duration} minutes</div></div>
                   <div className="review-field"><label>Interpreter</label><div className="val">{form.interpreter ? `Yes (${form.interpreterLang || "language TBD"})` : "No"}</div></div>
                 </div>
@@ -3092,7 +3092,7 @@ function OrderFlow() {
                 <div className="price-line"><span>Delivery by</span><strong>{getDeliveryDate(form.turnaround)}</strong></div>
                 <div style={{background: "var(--bg-muted, #F8FAFC)", borderRadius: 12, padding: 20, marginTop: 12}}>
                   <div style={{display: "flex", justifyContent: "space-between", alignItems: "baseline"}}>
-                    <span style={{fontSize: 14, color: "var(--text-secondary, #64748B)"}}>Estimated Total</span>
+                    <span style={{fontSize: 14, color: "var(--text-secondary, #64748B)"}}>Estimated total</span>
                     <span style={{fontSize: 28, fontWeight: 800, color: "var(--text, #0F172A)"}}>${(est.lowCost * (1 + PRICING.platformFee)).toFixed(0)} <span style={{fontSize: 14, fontWeight: 400, color: "var(--text-muted, #94A3B8)"}}>– ${(est.highCost * (1 + PRICING.platformFee)).toFixed(0)}</span></span>
                   </div>
                   {form.feeWaiver && <p style={{fontSize: 12, color: "#2563EB", marginTop: 8}}>Fee waiver indicated. TRF reimbursement paperwork will be generated upon delivery.</p>}
@@ -3100,7 +3100,7 @@ function OrderFlow() {
               </div>
               <div style={{display: "flex", gap: 12, marginTop: 24}}>
                 <button className="btn btn-secondary btn-sm" onClick={() => setStep(3)}>Back</button>
-                <button className="btn btn-primary" onClick={() => setSubmitted(true)}>Submit Order <Icon name="arrowRight" size={16} color="#fff" /></button>
+                <button className="btn btn-primary" onClick={() => setSubmitted(true)}>Submit order <Icon name="arrowRight" size={16} color="#fff" /></button>
               </div>
             </div>
           )}
@@ -3175,25 +3175,25 @@ function BuyerDashboard() {
               {showNudge && (
                 <div className="profile-nudge">
                   <div className="nudge-content" style={{flex:1}}>
-                    <h3>Complete Your Firm Profile</h3>
+                    <h3>Complete your firm profile</h3>
                     <p style={{fontSize:13, color:"#3B82F6", marginTop:4}}>Add billing details and team preferences to streamline ordering.</p>
                     <div className="nudge-progress" style={{marginTop:10}}>
                       <div className="nudge-bar"><div className="nudge-fill" style={{width:"40%"}} /></div>
                       <span style={{fontSize:12, color:"#64748B", whiteSpace:"nowrap"}}>2 of 5 steps</span>
                     </div>
                   </div>
-                  <button className="btn btn-primary btn-sm" onClick={() => setShowNudge(false)}>Complete Profile</button>
+                  <button className="btn btn-primary btn-sm" onClick={() => setShowNudge(false)}>Complete profile</button>
                 </div>
               )}
 
               <div className="deadlines-widget">
-                <h3><Icon name="calendar" size={14} color="#D97706" /> Upcoming Deadlines</h3>
+                <h3><Icon name="calendar" size={14} color="#D97706" /> Upcoming deadlines</h3>
                 {upcomingDeadlines.map((d, i) => (
                   <div className="deadline-item" key={i}>
                     <span className="deadline-date">{new Date(d.date).toLocaleDateString("en-US", {month:"short", day:"numeric"})}</span>
                     <span className="deadline-case">{d.label} — {d.type}</span>
                     <span className={"badge badge-" + (d.status === "completed" ? "completed" : d.status === "in-progress" ? "progress" : "pending")}>
-                      {d.status === "completed" ? "Delivered" : d.status === "in-progress" ? "In Progress" : "Pending"}
+                      {d.status === "completed" ? "Delivered" : d.status === "in-progress" ? "In progress" : "Pending"}
                     </span>
                   </div>
                 ))}
@@ -3201,21 +3201,21 @@ function BuyerDashboard() {
 
               <div className="page-header">
                 <div>
-                  <h1>Your Cases</h1>
+                  <h1>Your cases</h1>
                   <p>Manage transcript orders across your active matters.</p>
                 </div>
-                <button className="btn btn-primary btn-sm" onClick={() => navigate("/order")}>New Order <Icon name="arrowRight" size={14} color="#fff" /></button>
+                <button className="btn btn-primary btn-sm" onClick={() => navigate("/order")}>New order <Icon name="arrowRight" size={14} color="#fff" /></button>
               </div>
               <div className="filter-bar">
                 <input className="filter-input" placeholder="Search cases..." value={search} onChange={e => setSearch(e.target.value)} />
                 <select className="filter-select" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
-                  <option value="all">All Statuses</option>
+                  <option value="all">All statuses</option>
                   <option value="active">Active</option>
                   <option value="completed">Completed</option>
                   <option value="pending">Pending</option>
                 </select>
                 <select className="filter-select" value={typeFilter} onChange={e => setTypeFilter(e.target.value)}>
-                  <option value="all">All Types</option>
+                  <option value="all">All types</option>
                   {["Family Law", "Civil", "Probate", "Criminal", "Personal Injury", "Real Estate", "Employment", "Immigration", "Bankruptcy"].map(t => (
                     <option key={t} value={t}>{t}</option>
                   ))}
@@ -3279,7 +3279,7 @@ function BuyerDashboard() {
             return (
             <div>
               <button className="detail-back" onClick={() => setSelectedCase(null)}>
-                <Icon name="chevronRight" size={14} color="#64748B" style={{transform: "rotate(180deg)"}} /> All Cases
+                <Icon name="chevronRight" size={14} color="#64748B" style={{transform: "rotate(180deg)"}} /> All cases
               </button>
               <div className="detail-header">
                 <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12}}>
@@ -3291,14 +3291,14 @@ function BuyerDashboard() {
                       <span><Icon name="scale" size={14} /> {selectedCase.caseType}</span>
                     </div>
                   </div>
-                  <button className="btn btn-primary btn-sm" onClick={() => navigate("/order")}>New Order <Icon name="arrowRight" size={14} color="#fff" /></button>
+                  <button className="btn btn-primary btn-sm" onClick={() => navigate("/order")}>New order <Icon name="arrowRight" size={14} color="#fff" /></button>
                 </div>
               </div>
 
               <div className="case-detail-stats">
                 <div className="case-detail-stat">
                   <div className="cds-value">{cOrders.length}</div>
-                  <div className="cds-label">Total Orders</div>
+                  <div className="cds-label">Total orders</div>
                 </div>
                 <div className="case-detail-stat">
                   <div className="cds-value green">{cDone}/{cOrders.length}</div>
@@ -3306,7 +3306,7 @@ function BuyerDashboard() {
                 </div>
                 <div className="case-detail-stat">
                   <div className="cds-value blue">${cSpent.toFixed(0)}</div>
-                  <div className="cds-label">Total Spent</div>
+                  <div className="cds-label">Total spent</div>
                 </div>
                 <div className="case-detail-stat">
                   <div className="cds-value">{cPages}</div>
@@ -3316,22 +3316,22 @@ function BuyerDashboard() {
 
               {cNext && (
                 <div className="deadlines-widget" style={{marginBottom: 24}}>
-                  <h3><Icon name="calendar" size={14} color="#D97706" /> Next Up</h3>
+                  <h3><Icon name="calendar" size={14} color="#D97706" /> Next up</h3>
                   <div className="deadline-item">
                     <span className="deadline-date">{new Date(cNext.hearingDate).toLocaleDateString("en-US", {month:"short", day:"numeric"})}</span>
-                    <span className="deadline-case">{cNext.type === "live" ? "Live Attendance" : "Transcription"} — {cNext.reporter || "Reporter TBD"}</span>
-                    <span className={"badge badge-" + (cNext.status === "in-progress" ? "progress" : "pending")}>{cNext.status === "in-progress" ? "In Progress" : "Pending"}</span>
+                    <span className="deadline-case">{cNext.type === "live" ? "Live attendance" : "Transcription"} — {cNext.reporter || "Reporter TBD"}</span>
+                    <span className={"badge badge-" + (cNext.status === "in-progress" ? "progress" : "pending")}>{cNext.status === "in-progress" ? "In progress" : "Pending"}</span>
                   </div>
                 </div>
               )}
 
               <div className="case-detail-section">
-                <h3><Icon name="fileText" size={14} /> Order History</h3>
+                <h3><Icon name="fileText" size={14} /> Order history</h3>
               {selectedCase.orders.length === 0 ? (
                 <div style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, padding: 48, textAlign: "center"}}>
                   <Icon name="fileText" size={32} color="#CBD5E1" />
                   <p style={{color: "#94A3B8", marginTop: 12}}>No orders yet for this case.</p>
-                  <button className="btn btn-primary btn-sm" style={{marginTop: 16}} onClick={() => navigate("/order")}>Place First Order</button>
+                  <button className="btn btn-primary btn-sm" style={{marginTop: 16}} onClick={() => navigate("/order")}>Place first order</button>
                 </div>
               ) : (
                 <div className="order-list">
@@ -3342,7 +3342,7 @@ function BuyerDashboard() {
                           <Icon name={o.type === "live" ? "mapPin" : "mic"} size={18} color={o.type === "live" ? "#2563EB" : "#D97706"} />
                         </div>
                         <div className="order-info">
-                          <h4><a href={"#/order/" + o.id} style={{color: "inherit", textDecoration: "none"}} onMouseOver={e => e.target.style.color="#2563EB"} onMouseOut={e => e.target.style.color="inherit"}>{o.type === "live" ? "Live Attendance" : "Transcription"} - {o.hearingDate}</a></h4>
+                          <h4><a href={"#/order/" + o.id} style={{color: "inherit", textDecoration: "none"}} onMouseOver={e => e.target.style.color="#2563EB"} onMouseOut={e => e.target.style.color="inherit"}>{o.type === "live" ? "Live attendance" : "Transcription"} - {o.hearingDate}</a></h4>
                           <div className="sub">
                             {o.reporter ? (
                               <a href="#" onClick={e => { e.preventDefault(); setProfileReporter(o.reporter); }} style={{color: "#2563EB", textDecoration: "none", fontWeight: 500}}>{o.reporter}</a>
@@ -3358,7 +3358,7 @@ function BuyerDashboard() {
                           )}
                           {o.status === "completed" && (
                             <button className="btn btn-secondary btn-sm" style={{padding: "6px 12px", fontSize: 12}} onClick={() => setShowTranscript(true)}>
-                              <Icon name="eye" size={13} /> View Transcript
+                              <Icon name="eye" size={13} /> View transcript
                             </button>
                           )}
                         </div>
@@ -3377,7 +3377,7 @@ function BuyerDashboard() {
               </div>
 
               <div className="case-detail-section">
-                <h3><Icon name="fileText" size={14} /> Case Notes</h3>
+                <h3><Icon name="fileText" size={14} /> Case notes</h3>
                 <div className="case-notes">
                   <textarea
                     placeholder="Add notes about this case — strategy, key dates, follow-ups..."
@@ -3398,7 +3398,7 @@ function BuyerDashboard() {
             <div>
               <div className="page-header">
                 <div>
-                  <h1>Billing & Invoices</h1>
+                  <h1>Billing & invoices</h1>
                   <p>Payment methods, invoice history, and spending overview.</p>
                 </div>
               </div>
@@ -3424,7 +3424,7 @@ function BuyerDashboard() {
 
               <div className="billing-grid">
                 <div className="billing-section">
-                  <h3><Icon name="creditCard" size={14} /> Payment Methods</h3>
+                  <h3><Icon name="creditCard" size={14} /> Payment methods</h3>
                   <div className="billing-cards">
                     {billing.cards.map((card, i) => (
                       <div className="billing-card-item" key={i}>
@@ -3437,18 +3437,18 @@ function BuyerDashboard() {
                       </div>
                     ))}
                     <button className="billing-add-card">
-                      <Icon name="creditCard" size={14} color="#2563EB" /> Add Payment Method
+                      <Icon name="creditCard" size={14} color="#2563EB" /> Add payment method
                     </button>
                   </div>
                   <div className="billing-address">
-                    <h4>Billing Address</h4>
+                    <h4>Billing address</h4>
                     <p>{billing.address}</p>
-                    <button className="btn btn-secondary btn-sm" style={{marginTop: 8, fontSize: 11}}>Update Address</button>
+                    <button className="btn btn-secondary btn-sm" style={{marginTop: 8, fontSize: 11}}>Update address</button>
                   </div>
                 </div>
 
                 <div className="billing-section">
-                  <h3><Icon name="fileText" size={14} /> Invoice History</h3>
+                  <h3><Icon name="fileText" size={14} /> Invoice history</h3>
                   <div className="billing-invoices">
                     {billing.invoices.map((inv, i) => (
                       <div className="billing-invoice-row" key={i}>
@@ -3500,10 +3500,10 @@ function BuyerDashboard() {
                 </div>
                 <div className="analytics-grid">
                   {[
-                    { label: "Total Spent", value: MOCK_ANALYTICS.metrics.totalSpent },
-                    { label: "Avg per Order", value: MOCK_ANALYTICS.metrics.avgPerOrder },
-                    { label: "Avg Turnaround", value: MOCK_ANALYTICS.metrics.avgTurnaround },
-                    { label: "Orders This Month", value: MOCK_ANALYTICS.metrics.ordersThisMonth, trend: MOCK_ANALYTICS.metrics.trend },
+                    { label: "Total spent", value: MOCK_ANALYTICS.metrics.totalSpent },
+                    { label: "Avg per order", value: MOCK_ANALYTICS.metrics.avgPerOrder },
+                    { label: "Avg turnaround", value: MOCK_ANALYTICS.metrics.avgTurnaround },
+                    { label: "Orders this month", value: MOCK_ANALYTICS.metrics.ordersThisMonth, trend: MOCK_ANALYTICS.metrics.trend },
                   ].map((m, i) => (
                     <div className="analytics-card" key={i}>
                       <div className="a-label">{m.label}</div>
@@ -3513,7 +3513,7 @@ function BuyerDashboard() {
                   ))}
                 </div>
                 <div className="bar-chart">
-                  <h3>Monthly Spending</h3>
+                  <h3>Monthly spending</h3>
                   {MOCK_ANALYTICS.monthlySpend.map(m => (
                     <div className="bar-row" key={m.month}>
                       <div className="bar-label">{m.month}</div>
@@ -3522,7 +3522,7 @@ function BuyerDashboard() {
                   ))}
                 </div>
                 <div className="bar-chart" style={{marginTop: 20}}>
-                  <h3>Spending by Case Type</h3>
+                  <h3>Spending by case type</h3>
                   {MOCK_ANALYTICS.byType.map(t => (
                     <div className="bar-row" key={t.type}>
                       <div className="bar-label" style={{width: 80}}>{t.type}</div>
@@ -3538,10 +3538,10 @@ function BuyerDashboard() {
             <div>
               <div className="page-header">
                 <div>
-                  <h1>Team Members</h1>
+                  <h1>Team members</h1>
                   <p>Walsh Family Law Group - firm account</p>
                 </div>
-                <button className="btn btn-secondary btn-sm">Invite Member</button>
+                <button className="btn btn-secondary btn-sm">Invite member</button>
               </div>
               <div className="team-list">
                 {TEAM.map((m, i) => (
@@ -3615,7 +3615,7 @@ function ReporterDashboard() {
   const handleAccept = (j) => {
     setAccepted(a => ({...a, [j.id]: true}));
     setTab("active");
-    addToast("Job Accepted", j.court + ", " + j.dept + " - $" + j.earnings.toFixed(2), "success");
+    addToast("Job accepted", j.court + ", " + j.dept + " - $" + j.earnings.toFixed(2), "success");
   };
 
   const maxEarning = Math.max(...MOCK_REPORTER_EARNINGS.map(e => e.amount));
@@ -3648,14 +3648,14 @@ function ReporterDashboard() {
           {!profileComplete && (
             <div className="profile-nudge">
               <div className="nudge-content">
-                <h3>Complete Your Profile</h3>
+                <h3>Complete your profile</h3>
                 <p>Add your availability and payment info to start receiving more jobs.</p>
                 <div className="nudge-progress">
                   <div className="nudge-bar"><div className="nudge-fill" style={{width: "60%"}} /></div>
                   <span>3 of 5 steps complete</span>
                 </div>
               </div>
-              <button className="btn btn-primary btn-sm" onClick={() => setProfileComplete(true)}>Complete Profile</button>
+              <button className="btn btn-primary btn-sm" onClick={() => setProfileComplete(true)}>Complete profile</button>
             </div>
           )}
 
@@ -3663,27 +3663,27 @@ function ReporterDashboard() {
             <div>
               <div className="page-header">
                 <div>
-                  <h1>Available Jobs</h1>
+                  <h1>Available jobs</h1>
                   <p>Jobs matching your jurisdiction and preferences.</p>
                 </div>
               </div>
               <div className="filter-bar">
                 <select className="filter-select" value={countyFilter} onChange={e => setCountyFilter(e.target.value)}>
-                  <option value="all">All Counties</option>
+                  <option value="all">All counties</option>
                   <option value="Los Angeles">Los Angeles</option>
                   <option value="San Francisco">San Francisco</option>
                   <option value="San Diego">San Diego</option>
                   <option value="Orange">Orange</option>
                 </select>
                 <select className="filter-select" value={turnFilter} onChange={e => setTurnFilter(e.target.value)}>
-                  <option value="all">All Turnaround</option>
+                  <option value="all">All turnaround</option>
                   <option value="rush">Rush (24-48h)</option>
                   <option value="standard">Expedited (3-5d)</option>
                   <option value="economy">Standard (2+ wk)</option>
                 </select>
                 <select className="filter-select" value={typeFilter} onChange={e => setTypeFilter(e.target.value)}>
-                  <option value="all">All Types</option>
-                  <option value="live">Live Attendance</option>
+                  <option value="all">All types</option>
+                  <option value="live">Live attendance</option>
                   <option value="transcription">Transcription</option>
                 </select>
               </div>
@@ -3692,7 +3692,7 @@ function ReporterDashboard() {
                   <div className="job-card" key={j.id} style={{cursor: "pointer"}} onClick={(e) => { if (!e.target.closest('.btn-accept') && !e.target.closest('.btn-decline')) setExpandedJob(expandedJob === j.id ? null : j.id); }}>
                     <div className="job-card-top">
                       <div className="job-card-badges">
-                        <span className={"badge badge-" + (j.type === "live" ? "live" : "transcription")}>{j.type === "live" ? "Live Attendance" : "Transcription"}</span>
+                        <span className={"badge badge-" + (j.type === "live" ? "live" : "transcription")}>{j.type === "live" ? "Live attendance" : "Transcription"}</span>
                         <span className={"badge badge-" + j.turnaround}>{j.turnaround === "rush" ? "Rush" : j.turnaround === "standard" ? "Expedited" : "Standard"}</span>
                         <span className="badge badge-match"><Icon name="star" size={10} /> {getMatchPercent(j)}% match</span>
                         {j.interpreter && <span className="badge" style={{background: "#F3E8FF", color: "#6B21A8"}}>Interpreter</span>}
@@ -3707,7 +3707,7 @@ function ReporterDashboard() {
                     </div>
                     {expandedJob === j.id && (
                       <div className="job-card-detail">
-                        <div className="jcd-row"><span className="jcd-label">Case Name</span><span className="jcd-value">{j.caseType === "Family Law" ? "In re Marriage of Johnson" : j.caseType === "Civil" ? "Davis v. Metro Transit" : "Estate of Williams"}</span></div>
+                        <div className="jcd-row"><span className="jcd-label">Case name</span><span className="jcd-value">{j.caseType === "Family Law" ? "In re Marriage of Johnson" : j.caseType === "Civil" ? "Davis v. Metro Transit" : "Estate of Williams"}</span></div>
                         <div className="jcd-row"><span className="jcd-label">Duration</span><span className="jcd-value">{j.duration || 60} min ({j.estimatedPages} est. pages)</span></div>
                         <div className="jcd-row"><span className="jcd-label">Rate</span><span className="jcd-value">${PRICING.ratePerPage.toFixed(2)}/page × {j.turnaround === "rush" ? "1.5x" : j.turnaround === "economy" ? "0.85x" : "1.0x"}</span></div>
                         <p className="jcd-match">This job matches your {j.county} County jurisdiction and {j.caseType} preference.</p>
@@ -3717,7 +3717,7 @@ function ReporterDashboard() {
                       <div className="earnings">${j.earnings.toFixed(2)} <span>estimated</span></div>
                       <div className="job-card-actions">
                         <button className="btn-decline" onClick={() => setDeclined(d => ({...d, [j.id]: true}))}>Decline</button>
-                        <button className="btn-accept" onClick={() => handleAccept(j)}>Accept Job</button>
+                        <button className="btn-accept" onClick={() => handleAccept(j)}>Accept job</button>
                       </div>
                     </div>
                   </div>
@@ -3738,17 +3738,17 @@ function ReporterDashboard() {
             <div>
               <div className="page-header">
                 <div>
-                  <h1>My Active Jobs</h1>
+                  <h1>My active jobs</h1>
                   <p>Jobs you've accepted and are currently working on.</p>
                 </div>
               </div>
               <div className="deadlines-widget">
-                <h3><Icon name="clock" size={14} color="#D97706" /> Upcoming Deadlines</h3>
+                <h3><Icon name="clock" size={14} color="#D97706" /> Upcoming deadlines</h3>
                 {MOCK_ACTIVE_JOBS.sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate)).map(j => (
                   <div className="deadline-item" key={j.id}>
                     <span className="deadline-date">{new Date(j.dueDate).toLocaleDateString("en-US", {month: "short", day: "numeric"})}</span>
                     <span className="deadline-case">{j.caseType} — {j.court.split(" - ")[0]}</span>
-                    <span className={"badge badge-" + (j.status === "review" ? "pending" : "progress")}>{j.status === "review" ? "In Review" : "Transcribing"}</span>
+                    <span className={"badge badge-" + (j.status === "review" ? "pending" : "progress")}>{j.status === "review" ? "In review" : "Transcribing"}</span>
                   </div>
                 ))}
               </div>
@@ -3758,7 +3758,7 @@ function ReporterDashboard() {
                     <div className="job-card-top">
                       <div className="job-card-badges">
                         <span className={"badge badge-" + (j.type === "live" ? "live" : "transcription")}>{j.type === "live" ? "Live" : "Transcription"}</span>
-                        <span className="badge badge-progress">{j.status === "transcribing" ? "Transcribing" : "In Review"}</span>
+                        <span className="badge badge-progress">{j.status === "transcribing" ? "Transcribing" : "In review"}</span>
                       </div>
                       <span style={{fontSize: 13, fontWeight: 600, color: j.status === "review" ? "#D97706" : "#2563EB"}}>
                         Due {j.dueDate}
@@ -3777,7 +3777,7 @@ function ReporterDashboard() {
                           {MOCK_UNREAD[j.id] > 0 && <span className="unread-dot">{MOCK_UNREAD[j.id]}</span>}
                         </button>
                         <button className="btn btn-primary btn-sm">
-                          {j.status === "transcribing" ? "Upload Transcript" : "Submit for Certification"}
+                          {j.status === "transcribing" ? "Upload transcript" : "Submit for certification"}
                         </button>
                       </div>
                     </div>
@@ -3809,7 +3809,7 @@ function ReporterDashboard() {
               </div>
               <div className="stat-cards">
                 <div className="stat-card">
-                  <div className="stat-card-label">This Month</div>
+                  <div className="stat-card-label">This month</div>
                   <div className="stat-card-value green">$572.52</div>
                 </div>
                 <div className="stat-card">
@@ -3817,12 +3817,12 @@ function ReporterDashboard() {
                   <div className="stat-card-value">$355.99</div>
                 </div>
                 <div className="stat-card">
-                  <div className="stat-card-label">Jobs Completed</div>
+                  <div className="stat-card-label">Jobs completed</div>
                   <div className="stat-card-value">12</div>
                 </div>
               </div>
               <div className="analytics-card" style={{marginBottom: 24}}>
-                <h3 style={{fontSize: 16, fontWeight: 700, marginBottom: 16, color: "var(--text, #0F172A)"}}>Monthly Earnings</h3>
+                <h3 style={{fontSize: 16, fontWeight: 700, marginBottom: 16, color: "var(--text, #0F172A)"}}>Monthly earnings</h3>
                 <div className="bar-chart">
                   {MOCK_REPORTER_EARNINGS.map((e, i) => (
                     <div className="bar-row" key={i}>
@@ -3835,7 +3835,7 @@ function ReporterDashboard() {
                   ))}
                 </div>
               </div>
-              <h3 style={{fontSize: 16, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 16}}>Recent Payouts</h3>
+              <h3 style={{fontSize: 16, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 16}}>Recent payouts</h3>
               <table className="payout-table">
                 <thead><tr><th>Case</th><th>Date</th><th>Pages</th><th>Amount</th><th>Status</th></tr></thead>
                 <tbody>
@@ -3904,7 +3904,7 @@ function OnboardingFlow() {
         <a href="#/" style={{display: "inline-flex", alignItems: "center", gap: 4, color: "#64748B", fontSize: 13, textDecoration: "none", marginBottom: 24}}>
           <Icon name="chevronRight" size={14} color="#64748B" style={{transform: "rotate(180deg)"}} /> Back to home
         </a>
-        <h1>{!role ? "Get Started" : role === "attorney" ? "Attorney Setup" : "Reporter Setup"}</h1>
+        <h1>{!role ? "Get started" : role === "attorney" ? "Attorney setup" : "Reporter setup"}</h1>
         <p>{!role ? "Choose your role to create an account." : "Step " + step + " of 4"}</p>
         {role && <StepIndicator current={step} total={4} labels={role === "attorney" ? ["Firm", "Practice", "Account", "Review"] : ["License", "Courts", "Account", "Review"]} />}
 
@@ -3912,12 +3912,12 @@ function OnboardingFlow() {
           <div style={{display: "flex", flexDirection: "column", gap: 12, marginTop: 24}}>
             <div className="type-card" onClick={() => { setRole("attorney"); setStep(1); }} style={{cursor: "pointer"}}>
               <Icon name="scale" size={28} color="#2563EB" />
-              <h3 style={{marginTop: 12}}>Attorney / Law Firm</h3>
+              <h3 style={{marginTop: 12}}>Attorney / law firm</h3>
               <p style={{fontSize: 13, color: "#64748B"}}>Order transcripts for your cases and manage your firm's account.</p>
             </div>
             <div className="type-card" onClick={() => { setRole("reporter"); setStep(1); }} style={{cursor: "pointer"}}>
               <Icon name="mic" size={28} color="#059669" />
-              <h3 style={{marginTop: 12}}>Court Reporter</h3>
+              <h3 style={{marginTop: 12}}>Court reporter</h3>
               <p style={{fontSize: 13, color: "#64748B"}}>Accept transcript jobs and grow your reporting business.</p>
             </div>
           </div>
@@ -3925,7 +3925,7 @@ function OnboardingFlow() {
 
         {role === "attorney" && step === 1 && (
           <div style={{marginTop: 24}}>
-            <label className="form-label">Firm Name</label>
+            <label className="form-label">Firm name</label>
             <input className="form-input" value={form.firmName} onChange={e => update("firmName", e.target.value)} placeholder="Walsh Family Law Group" />
             <label className="form-label" style={{marginTop: 16}}>Address</label>
             <input className="form-input" value={form.address} onChange={e => update("address", e.target.value)} placeholder="123 Main St, Los Angeles, CA 90012" />
@@ -3938,13 +3938,13 @@ function OnboardingFlow() {
 
         {role === "attorney" && step === 2 && (
           <div style={{marginTop: 24}}>
-            <label className="form-label">Bar Number</label>
+            <label className="form-label">Bar number</label>
             <input className="form-input" value={form.barNumber} onChange={e => update("barNumber", e.target.value)} placeholder="123456" />
             <label className="form-label" style={{marginTop: 16}}>State</label>
             <select className="form-select" value={form.barState} onChange={e => update("barState", e.target.value)}>
               <option value="CA">California</option>
             </select>
-            <label className="form-label" style={{marginTop: 16}}>Practice Areas</label>
+            <label className="form-label" style={{marginTop: 16}}>Practice areas</label>
             <div className="checkbox-group">
               {["Family Law", "Civil Litigation", "Probate", "Criminal", "Personal Injury", "Real Estate", "Employment", "Immigration", "Bankruptcy", "Other"].map(a => (
                 <label key={a} className={"checkbox-item" + (form.practiceAreas.includes(a) ? " checked" : "")}>
@@ -3980,7 +3980,7 @@ function OnboardingFlow() {
 
         {role === "reporter" && step === 2 && (
           <div style={{marginTop: 24}}>
-            <label className="form-label">Courts You Serve</label>
+            <label className="form-label">Courts you serve</label>
             <div className="checkbox-group" style={{gridTemplateColumns: "1fr"}}>
               {COURTS.map(c => (
                 <label key={c.id} className={"checkbox-item" + (form.courts.includes(c.id) ? " checked" : "")}>
@@ -3993,7 +3993,7 @@ function OnboardingFlow() {
 
         {role && (step === 3 || (role === "attorney" && step === 3)) && (
           <div style={{marginTop: 24}}>
-            <label className="form-label">Full Name</label>
+            <label className="form-label">Full name</label>
             <input className="form-input" value={form.name} onChange={e => update("name", e.target.value)} placeholder="Jennifer Walsh" />
             <label className="form-label" style={{marginTop: 16}}>Email</label>
             <input className="form-input" type="email" value={form.email} onChange={e => update("email", e.target.value)} placeholder="jennifer@walshlaw.com" />
@@ -4004,12 +4004,12 @@ function OnboardingFlow() {
 
         {role && step === 4 && (
           <div style={{marginTop: 24, background: "#F8FAFC", borderRadius: 12, padding: 24}}>
-            <h3 style={{fontSize: 16, fontWeight: 700, marginBottom: 16}}>Review Your Information</h3>
+            <h3 style={{fontSize: 16, fontWeight: 700, marginBottom: 16}}>Review your information</h3>
             {role === "attorney" ? (
               <div style={{display: "grid", gap: 8, fontSize: 13, color: "#475569"}}>
                 <div><strong>Firm:</strong> {form.firmName || "Not provided"}</div>
                 <div><strong>Bar Number:</strong> {form.barNumber || "Not provided"}</div>
-                <div><strong>Practice Areas:</strong> {form.practiceAreas.join(", ") || "None selected"}</div>
+                <div><strong>Practice areas:</strong> {form.practiceAreas.join(", ") || "None selected"}</div>
                 <div><strong>Name:</strong> {form.name || "Not provided"}</div>
                 <div><strong>Email:</strong> {form.email || "Not provided"}</div>
               </div>
@@ -4032,7 +4032,7 @@ function OnboardingFlow() {
               <Icon name="chevronRight" size={14} color="#475569" style={{transform: "rotate(180deg)"}} /> Back
             </button>
             <button className="btn btn-primary btn-sm" onClick={() => setStep(s => s + 1)}>
-              {step === 4 ? "Create Account" : "Continue"} <Icon name="arrowRight" size={14} color="#fff" />
+              {step === 4 ? "Create account" : "Continue"} <Icon name="arrowRight" size={14} color="#fff" />
             </button>
           </div>
         )}
@@ -4053,7 +4053,7 @@ function AdminDashboard() {
 
   const updateStatus = (id, status) => {
     setVerifications(vs => vs.map(v => v.id === id ? {...v, status} : v));
-    addToast(status === "approved" ? "Reporter Approved" : "Reporter Flagged",
+    addToast(status === "approved" ? "Reporter approved" : "Reporter flagged",
       verifications.find(v => v.id === id)?.name + " has been " + status + ".",
       status === "approved" ? "success" : "warning");
   };
@@ -4067,33 +4067,33 @@ function AdminDashboard() {
             <div>
               <div className="page-header">
                 <div>
-                  <h1>Platform Overview</h1>
+                  <h1>Platform overview</h1>
                   <p>Key metrics and performance indicators.</p>
                 </div>
               </div>
               <div className="metric-grid">
                 <div className="metric-card">
-                  <div className="metric-label">Total Orders</div>
+                  <div className="metric-label">Total orders</div>
                   <div className="metric-value">{MOCK_PLATFORM_METRICS.totalOrders.toLocaleString()}</div>
                   <div className="metric-trend up">+18% vs last month</div>
                 </div>
                 <div className="metric-card">
-                  <div className="metric-label">Active Reporters</div>
+                  <div className="metric-label">Active reporters</div>
                   <div className="metric-value">{MOCK_PLATFORM_METRICS.activeReporters}</div>
                   <div className="metric-trend up">+5 this month</div>
                 </div>
                 <div className="metric-card">
-                  <div className="metric-label">Active Attorneys</div>
+                  <div className="metric-label">Active attorneys</div>
                   <div className="metric-value">{MOCK_PLATFORM_METRICS.activeAttorneys}</div>
                   <div className="metric-trend up">+12 this month</div>
                 </div>
                 <div className="metric-card">
-                  <div className="metric-label">Avg Turnaround</div>
+                  <div className="metric-label">Avg turnaround</div>
                   <div className="metric-value">{MOCK_PLATFORM_METRICS.avgTurnaround}</div>
                   <div className="metric-trend up">-0.3 days vs last month</div>
                 </div>
                 <div className="metric-card">
-                  <div className="metric-label">Monthly Revenue</div>
+                  <div className="metric-label">Monthly revenue</div>
                   <div className="metric-value">{MOCK_PLATFORM_METRICS.revenue}</div>
                   <div className="metric-trend up">+22% vs last month</div>
                 </div>
@@ -4104,7 +4104,7 @@ function AdminDashboard() {
                 </div>
               </div>
               <div className="bar-chart">
-                <h3>Orders by Month</h3>
+                <h3>Orders by month</h3>
                 {MOCK_PLATFORM_METRICS.monthlyOrders.map(m => (
                   <div className="bar-row" key={m.month}>
                     <span className="bar-label">{m.month}</span>
@@ -4121,13 +4121,13 @@ function AdminDashboard() {
             <div>
               <div className="page-header">
                 <div>
-                  <h1>CSR Verifications</h1>
+                  <h1>CSR verifications</h1>
                   <p>Review and approve court reporter license applications.</p>
                 </div>
               </div>
               <div className="filter-bar" style={{marginBottom: 16}}>
                 <select className="filter-select" value={verifyFilter} onChange={e => setVerifyFilter(e.target.value)}>
-                  <option value="all">All Statuses</option>
+                  <option value="all">All statuses</option>
                   <option value="pending">Pending</option>
                   <option value="approved">Approved</option>
                   <option value="flagged">Flagged</option>
@@ -4176,12 +4176,12 @@ function AdminDashboard() {
               </div>
               <div className="compliance-list">
                 {[
-                  { title: "CSR License Verification", desc: "All active reporters have valid California CSR licenses on file.", status: "pass", icon: "shield" },
-                  { title: "Statutory Rate Compliance", desc: "Transcript pricing follows CA Gov. Code 69950 statutory rates ($3.67/page).", status: "pass", icon: "fileText" },
-                  { title: "Transcript Certification", desc: "All delivered transcripts include CSR certification page.", status: "pass", icon: "checkCircle" },
-                  { title: "Record Retention", desc: "Transcripts and order records retained for minimum 10 years per CA requirements.", status: "pass", icon: "clock" },
-                  { title: "CCPA Data Privacy", desc: "User data handling compliant with California Consumer Privacy Act.", status: "pass", icon: "shield" },
-                  { title: "Pending License Renewals", desc: "1 reporter (Karen Liu, CSR #16002) has an expired license requiring renewal.", status: "warn", icon: "clock" },
+                  { title: "CSR license verification", desc: "All active reporters have valid California CSR licenses on file.", status: "pass", icon: "shield" },
+                  { title: "Statutory rate compliance", desc: "Transcript pricing follows CA Gov. Code 69950 statutory rates ($3.67/page).", status: "pass", icon: "fileText" },
+                  { title: "Transcript certification", desc: "All delivered transcripts include CSR certification page.", status: "pass", icon: "checkCircle" },
+                  { title: "Record retention", desc: "Transcripts and order records retained for minimum 10 years per CA requirements.", status: "pass", icon: "clock" },
+                  { title: "CCPA data privacy", desc: "User data handling compliant with California Consumer Privacy Act.", status: "pass", icon: "shield" },
+                  { title: "Pending license renewals", desc: "1 reporter (Karen Liu, CSR #16002) has an expired license requiring renewal.", status: "warn", icon: "clock" },
                 ].map((item, i) => (
                   <div className="compliance-item" key={i}>
                     <div className={"compliance-icon " + item.status}>
@@ -4191,7 +4191,7 @@ function AdminDashboard() {
                       <h4>{item.title}</h4>
                       <p>{item.desc}</p>
                     </div>
-                    <span className={"compliance-status " + item.status}>{item.status === "pass" ? "Compliant" : "Action Needed"}</span>
+                    <span className={"compliance-status " + item.status}>{item.status === "pass" ? "Compliant" : "Action needed"}</span>
                   </div>
                 ))}
               </div>
@@ -4216,7 +4216,7 @@ function OrderDetailPage({ orderId }) {
       <div className="page page-enter">
         <div className="container">
           <button className="detail-back" onClick={() => navigate("/dashboard")}>
-            <Icon name="chevronRight" size={14} color="#64748B" style={{transform: "rotate(180deg)"}} /> Back to Dashboard
+            <Icon name="chevronRight" size={14} color="#64748B" style={{transform: "rotate(180deg)"}} /> Back to dashboard
           </button>
           <div className="detail-header">
             <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12}}>
@@ -4233,7 +4233,7 @@ function OrderDetailPage({ orderId }) {
           </div>
 
           <div className="detail-timeline">
-            <h3>Order Timeline</h3>
+            <h3>Order timeline</h3>
             <div className="timeline">
               {detail.timeline.map((t, i) => (
                 <React.Fragment key={i}>
@@ -4249,7 +4249,7 @@ function OrderDetailPage({ orderId }) {
 
           <div className="detail-grid">
             <div className="detail-section">
-              <h3>Assigned Reporter</h3>
+              <h3>Assigned reporter</h3>
               <div style={{display: "flex", alignItems: "center", gap: 12, marginBottom: 16}}>
                 <span className="app-nav-avatar" style={{width: 40, height: 40, fontSize: 14}}>{detail.reporter.initials}</span>
                 <div>
@@ -4258,7 +4258,7 @@ function OrderDetailPage({ orderId }) {
                 </div>
               </div>
               <button className="btn btn-secondary btn-sm" onClick={() => setShowChat(true)} style={{width: "100%", justifyContent: "center"}}>
-                <Icon name="messageCircle" size={14} /> Message Reporter
+                <Icon name="messageCircle" size={14} /> Message reporter
               </button>
             </div>
 
@@ -4278,7 +4278,7 @@ function OrderDetailPage({ orderId }) {
           </div>
 
           <div className="detail-section" style={{marginTop: 20}}>
-            <h3>Invoice Summary</h3>
+            <h3>Invoice summary</h3>
             <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16}}>
               <span style={{fontSize: 13, color: "var(--text-muted, #64748B)"}}>{detail.invoice.number} &middot; {detail.invoice.date}</span>
               <span className="badge badge-pending">{detail.invoice.status}</span>
@@ -4289,7 +4289,7 @@ function OrderDetailPage({ orderId }) {
             <div className="price-line"><span>Platform fee</span><strong>{detail.invoice.platformFee}</strong></div>
             <div className="price-total"><span>Total</span><span>{detail.invoice.total}</span></div>
             <div style={{marginTop: 16, display: "flex", gap: 8}}>
-              <button className="btn btn-primary btn-sm" onClick={() => setShowInvoice(true)}><Icon name="eye" size={14} color="#fff" /> View Full Invoice</button>
+              <button className="btn btn-primary btn-sm" onClick={() => setShowInvoice(true)}><Icon name="eye" size={14} color="#fff" /> View full invoice</button>
               <button className="btn btn-secondary btn-sm" onClick={() => addToast("Downloaded", "Invoice PDF saved", "success")}><Icon name="download" size={14} /> Download</button>
             </div>
           </div>
@@ -4330,16 +4330,16 @@ function InvoiceView({ invoice, onClose }) {
           </div>
           <div className="invoice-meta">
             <div>
-              <strong>Bill To</strong>
+              <strong>Bill to</strong>
               <div>{invoice.billTo.name}</div>
               <div>{invoice.billTo.firm}</div>
               <div>{invoice.billTo.address}</div>
             </div>
             <div>
-              <strong>Invoice Date</strong>
+              <strong>Invoice date</strong>
               <div>{invoice.date}</div>
               <div style={{marginTop: 12}}><strong>Status</strong></div>
-              <div>{invoice.status === "pending" ? "Payment Pending" : "Paid"}</div>
+              <div>{invoice.status === "pending" ? "Payment pending" : "Paid"}</div>
             </div>
           </div>
           <table className="invoice-table">
@@ -4391,39 +4391,39 @@ function SettingsPage() {
           {tab === "profile" && (
             <div className="detail-section">
               <div className="settings-section">
-                <h3><Icon name="user" size={14} /> Personal Information</h3>
+                <h3><Icon name="user" size={14} /> Personal information</h3>
                 <div className="form-row" style={{marginBottom: 16}}>
-                  <div className="form-group"><label className="form-label">Full Name</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.name} /></div>
+                  <div className="form-group"><label className="form-label">Full name</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.name} /></div>
                   <div className="form-group"><label className="form-label">Email</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.email} /></div>
                 </div>
                 <div className="form-row">
                   <div className="form-group"><label className="form-label">Phone</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.phone} /></div>
-                  <div className="form-group"><label className="form-label">Bar Number</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.barNumber} readOnly style={{background: "var(--bg-muted, #F8FAFC)", cursor: "not-allowed"}} /></div>
+                  <div className="form-group"><label className="form-label">Bar number</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.barNumber} readOnly style={{background: "var(--bg-muted, #F8FAFC)", cursor: "not-allowed"}} /></div>
                 </div>
               </div>
               <div className="settings-section">
-                <h3><Icon name="scale" size={14} /> Firm Details</h3>
+                <h3><Icon name="scale" size={14} /> Firm details</h3>
                 <div className="form-row">
-                  <div className="form-group"><label className="form-label">Firm Name</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.firm} /></div>
-                  <div className="form-group"><label className="form-label">Firm Address</label><input className="form-input" defaultValue={MOCK_SETTINGS.billing.address} /></div>
+                  <div className="form-group"><label className="form-label">Firm name</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.firm} /></div>
+                  <div className="form-group"><label className="form-label">Firm address</label><input className="form-input" defaultValue={MOCK_SETTINGS.billing.address} /></div>
                 </div>
               </div>
               <div className="settings-section">
-                <h3><Icon name="fileText" size={14} /> Practice Areas</h3>
+                <h3><Icon name="fileText" size={14} /> Practice areas</h3>
                 <div className="checkbox-group">
                   {["Family Law", "Civil Litigation", "Probate", "Criminal", "Personal Injury", "Real Estate", "Employment", "Immigration", "Bankruptcy", "Other"].map(a => (
                     <div key={a} className={"checkbox-item" + (["Family Law", "Probate"].includes(a) ? " checked" : "")}>{a}</div>
                   ))}
                 </div>
               </div>
-              <button className="btn btn-primary btn-sm" onClick={() => addToast("Saved", "Profile updated successfully", "success")}>Save Changes</button>
+              <button className="btn btn-primary btn-sm" onClick={() => addToast("Saved", "Profile updated successfully", "success")}>Save changes</button>
             </div>
           )}
 
           {tab === "notifications" && (
             <div className="detail-section">
               <div className="settings-section">
-                <h3><Icon name="bell" size={14} /> Notification Preferences</h3>
+                <h3><Icon name="bell" size={14} /> Notification preferences</h3>
                 <div style={{display: "grid", gridTemplateColumns: "1fr auto auto auto", gap: 0, fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", padding: "0 0 8px"}}>
                   <span></span><span style={{textAlign: "center", width: 60}}>Email</span><span style={{textAlign: "center", width: 60}}>SMS</span><span style={{textAlign: "center", width: 60}}>Push</span>
                 </div>
@@ -4442,24 +4442,24 @@ function SettingsPage() {
                   </div>
                 ))}
               </div>
-              <button className="btn btn-primary btn-sm" onClick={() => addToast("Saved", "Notification preferences updated", "success")}>Save Preferences</button>
+              <button className="btn btn-primary btn-sm" onClick={() => addToast("Saved", "Notification preferences updated", "success")}>Save preferences</button>
             </div>
           )}
 
           {tab === "security" && (
             <div className="detail-section">
               <div className="settings-section">
-                <h3><Icon name="shield" size={14} /> Change Password</h3>
-                <div className="form-group"><label className="form-label">Current Password</label><input className="form-input" type="password" placeholder="Enter current password" /></div>
+                <h3><Icon name="shield" size={14} /> Change password</h3>
+                <div className="form-group"><label className="form-label">Current password</label><input className="form-input" type="password" placeholder="Enter current password" /></div>
                 <div className="form-row">
-                  <div className="form-group"><label className="form-label">New Password</label><input className="form-input" type="password" placeholder="Enter new password" /></div>
-                  <div className="form-group"><label className="form-label">Confirm New Password</label><input className="form-input" type="password" placeholder="Confirm new password" /></div>
+                  <div className="form-group"><label className="form-label">New password</label><input className="form-input" type="password" placeholder="Enter new password" /></div>
+                  <div className="form-group"><label className="form-label">Confirm new password</label><input className="form-input" type="password" placeholder="Confirm new password" /></div>
                 </div>
                 <p className="form-helper">At least 8 characters with one number and one special character.</p>
-                <button className="btn btn-primary btn-sm" style={{marginTop: 8}} onClick={() => addToast("Updated", "Password changed successfully", "success")}>Update Password</button>
+                <button className="btn btn-primary btn-sm" style={{marginTop: 8}} onClick={() => addToast("Updated", "Password changed successfully", "success")}>Update password</button>
               </div>
               <div className="settings-section">
-                <h3><Icon name="shield" size={14} /> Two-Factor Authentication</h3>
+                <h3><Icon name="shield" size={14} /> Two-factor authentication</h3>
                 <div className="toggle-row">
                   <div style={{flex: 1}}>
                     <div className="toggle-label">Enable 2FA</div>
@@ -4472,7 +4472,7 @@ function SettingsPage() {
                 </div>
               </div>
               <div className="settings-section">
-                <h3><Icon name="clock" size={14} /> Active Sessions</h3>
+                <h3><Icon name="clock" size={14} /> Active sessions</h3>
                 <div style={{display: "flex", alignItems: "center", gap: 12, padding: "12px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)"}}>
                   <Icon name="monitor" size={16} color="#059669" />
                   <div style={{flex: 1}}>
@@ -4491,9 +4491,9 @@ function SettingsPage() {
                 </div>
               </div>
               <div className="settings-section" style={{borderTop: "2px solid #FEE2E2", paddingTop: 24, marginTop: 8}}>
-                <h3 style={{color: "#DC2626"}}><Icon name="x" size={14} /> Danger Zone</h3>
+                <h3 style={{color: "#DC2626"}}><Icon name="x" size={14} /> Danger zone</h3>
                 <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 12}}>Permanently delete your account and all associated data. This action cannot be undone.</p>
-                <button className="btn btn-sm" style={{background: "#FEE2E2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => addToast("Contact Support", "Email support@deweysholes.com to delete your account", "warning")}>Delete Account</button>
+                <button className="btn btn-sm" style={{background: "#FEE2E2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => addToast("Contact support", "Email support@deweysholes.com to delete your account", "warning")}>Delete account</button>
               </div>
             </div>
           )}
@@ -4501,7 +4501,7 @@ function SettingsPage() {
           {tab === "billing" && (
             <div className="detail-section">
               <div className="settings-section">
-                <h3><Icon name="creditCard" size={14} /> Payment Methods</h3>
+                <h3><Icon name="creditCard" size={14} /> Payment methods</h3>
                 <div className="billing-cards">
                   {MOCK_SETTINGS.billing.cards.map((card, i) => (
                     <div className="billing-card-item" key={i}>
@@ -4514,17 +4514,17 @@ function SettingsPage() {
                     </div>
                   ))}
                   <button className="billing-add-card">
-                    <Icon name="creditCard" size={14} color="#2563EB" /> Add Payment Method
+                    <Icon name="creditCard" size={14} color="#2563EB" /> Add payment method
                   </button>
                 </div>
               </div>
               <div className="settings-section">
-                <h3><Icon name="mapPin" size={14} /> Billing Address</h3>
+                <h3><Icon name="mapPin" size={14} /> Billing address</h3>
                 <p style={{fontSize: 14, color: "var(--text-secondary, #475569)"}}>{MOCK_SETTINGS.billing.address}</p>
-                <button className="btn btn-secondary btn-sm" style={{marginTop: 8, fontSize: 11}}>Update Address</button>
+                <button className="btn btn-secondary btn-sm" style={{marginTop: 8, fontSize: 11}}>Update address</button>
               </div>
               <div className="settings-section">
-                <h3><Icon name="fileText" size={14} /> Recent Invoices</h3>
+                <h3><Icon name="fileText" size={14} /> Recent invoices</h3>
                 <div className="billing-invoices">
                   {MOCK_SETTINGS.billing.invoices.map((inv, i) => (
                     <div className="billing-invoice-row" key={i}>
@@ -4567,17 +4567,17 @@ function PricingCalculator() {
 
   return (
     <div className="calc-card">
-      <h3>Estimate Your Cost</h3>
+      <h3>Estimate your cost</h3>
       <div className="calc-row">
         <div className="form-group">
-          <label className="form-label">Hearing Type</label>
+          <label className="form-label">Hearing type</label>
           <select className="form-input form-select" value={hearingType} onChange={e => setHearingType(e.target.value)}>
-            <option value="live">Live Attendance</option>
-            <option value="audio">Audio Transcription</option>
+            <option value="live">Live attendance</option>
+            <option value="audio">Audio transcription</option>
           </select>
         </div>
         <div className="form-group">
-          <label className="form-label">Estimated Pages</label>
+          <label className="form-label">Estimated pages</label>
           <input className="form-input" type="number" min="5" max="500" value={pages} onChange={e => setPages(parseInt(e.target.value) || 0)} />
         </div>
       </div>
@@ -4604,7 +4604,7 @@ function PricingCalculator() {
           {turnaroundFee < 0 && <span>Discount: -${Math.abs(turnaroundFee).toFixed(2)}</span>}
           <span>Platform fee (12%): +${platformFee.toFixed(2)}</span>
         </div>
-        <a href="#/order" className="btn btn-primary btn-sm" style={{marginTop: 16}}>Order Now <Icon name="arrowRight" size={14} color="#fff" /></a>
+        <a href="#/order" className="btn btn-primary btn-sm" style={{marginTop: 16}}>Order now <Icon name="arrowRight" size={14} color="#fff" /></a>
       </div>
     </div>
   );
@@ -4651,7 +4651,7 @@ function ReporterOnboarding() {
             <p>We handle booking, communication, and payment processing. You just show up and report.</p>
           </div>
         </div>
-        <button className="btn btn-primary" style={{fontSize: 17, padding: "16px 48px"}} onClick={() => setScreen(1)}>Get Started <Icon name="arrowRight" size={18} /></button>
+        <button className="btn btn-primary" style={{fontSize: 17, padding: "16px 48px"}} onClick={() => setScreen(1)}>Get started <Icon name="arrowRight" size={18} /></button>
         <p className="welcome-social-proof" style={{marginTop: 20}}>
           <a href="#/reporter" style={{color: "var(--brand, #2563EB)", textDecoration: "none"}}>Already have an account? Sign in</a>
         </p>
@@ -4675,14 +4675,14 @@ function ReporterOnboarding() {
           <div className={"method-card" + (form.accountType === "individual" ? " selected" : "")} onClick={() => update("accountType", "individual")} style={{padding: 24}}>
             <div className="mc-icon"><Icon name="user" size={24} /></div>
             <div>
-              <div className="mc-text">Individual Reporter</div>
+              <div className="mc-text">Individual reporter</div>
               <div className="mc-sub">${PRICING.listingFeeIndividual}/year — solo CSR with your own listing</div>
             </div>
           </div>
           <div className={"method-card" + (form.accountType === "firm" ? " selected" : "")} onClick={() => update("accountType", "firm")} style={{padding: 24}}>
             <div className="mc-icon"><Icon name="users" size={24} /></div>
             <div>
-              <div className="mc-text">Small Firm</div>
+              <div className="mc-text">Small firm</div>
               <div className="mc-sub">${PRICING.firmPerReporter}/reporter/year — {PRICING.firmMinReporters}–{PRICING.firmMaxReporters} reporters, one account</div>
             </div>
           </div>
@@ -4691,11 +4691,11 @@ function ReporterOnboarding() {
         {form.accountType === "firm" && (
           <div style={{maxWidth: 520, margin: "24px auto 0", display: "flex", flexDirection: "column", gap: 16}}>
             <div className="form-group" style={{marginBottom: 0}}>
-              <label className="form-label">Firm Name</label>
+              <label className="form-label">Firm name</label>
               <input className="form-input" placeholder="e.g. Bay Area Court Reporters" value={form.firmName} onChange={e => update("firmName", e.target.value)} />
             </div>
             <div className="form-group" style={{marginBottom: 0}}>
-              <label className="form-label">Number of Reporters</label>
+              <label className="form-label">Number of reporters</label>
               <div style={{display: "flex", alignItems: "center", gap: 12}}>
                 <input type="range" min={PRICING.firmMinReporters} max={PRICING.firmMaxReporters} value={form.firmReporterCount} onChange={e => update("firmReporterCount", parseInt(e.target.value))} style={{flex: 1}} />
                 <span style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)", minWidth: 28, textAlign: "center"}}>{form.firmReporterCount}</span>
@@ -4735,7 +4735,7 @@ function ReporterOnboarding() {
           <div className="verification-card">
             <div className="vc-header">
               <strong>CSR #{form.csrNumber || "—"}</strong>
-              <span className="badge badge-pending" style={{fontSize: 11}}>Verification Pending</span>
+              <span className="badge badge-pending" style={{fontSize: 11}}>Verification pending</span>
             </div>
             <p>We're checking your license with the CA Court Reporters Board. You'll get an email confirmation within 24 hours.</p>
           </div>
@@ -4746,12 +4746,12 @@ function ReporterOnboarding() {
             <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Accept a job, do your thing, get paid within 2 business days</div></div>
           </div>
           <div className="profile-summary">
-            <h3>Your Profile</h3>
+            <h3>Your profile</h3>
             <div className="ps-row"><span className="ps-label">Name</span><span className="ps-value">{form.name || "—"}</span></div>
-            <div className="ps-row"><span className="ps-label">Account Type</span><span className="ps-value">{form.accountType === "firm" ? "Firm — " + form.firmName : "Individual Reporter"}</span></div>
+            <div className="ps-row"><span className="ps-label">Account type</span><span className="ps-value">{form.accountType === "firm" ? "Firm — " + form.firmName : "Individual reporter"}</span></div>
             <div className="ps-row"><span className="ps-label">CSR Number</span><span className="ps-value">{form.csrNumber || "—"}</span></div>
             <div className="ps-row"><span className="ps-label">Method</span><span className="ps-value">{form.method || "—"}</span></div>
-            <div className="ps-row"><span className="ps-label">Job Types</span><span className="ps-value">{jobTypeLabels}</span></div>
+            <div className="ps-row"><span className="ps-label">Job types</span><span className="ps-value">{jobTypeLabels}</span></div>
             <div className="ps-row"><span className="ps-label">Courts</span><span className="ps-value">{courtLabels}</span></div>
             {form.accountType === "firm" && <div className="ps-row"><span className="ps-label">Reporters</span><span className="ps-value">{form.firmReporterCount} reporters (${form.firmReporterCount * PRICING.firmPerReporter}/year)</span></div>}
           </div>
@@ -4759,7 +4759,7 @@ function ReporterOnboarding() {
             <strong>Your first year's listing fee is waived!</strong>
             <span>Code PIONEER2026 — {form.accountType === "firm" ? "$" + (form.firmReporterCount * PRICING.firmPerReporter) + " value" : "$99 value"} applied to your account</span>
           </div>
-          <button className="btn btn-primary" style={{width: "100%", justifyContent: "center", fontSize: 16}} onClick={() => navigate("#/reporter")}>Go to Dashboard <Icon name="arrowRight" size={16} /></button>
+          <button className="btn btn-primary" style={{width: "100%", justifyContent: "center", fontSize: 16}} onClick={() => navigate("#/reporter")}>Go to dashboard <Icon name="arrowRight" size={16} /></button>
         </div>
       </div>
     );
@@ -4768,10 +4768,10 @@ function ReporterOnboarding() {
   const step = screen - 1; // screens 2-5 map to steps 1-4
   const stepTitles = [
     null,
-    ["Your Credentials", "Tell us about your certification and qualifications."],
-    ["Your Preferences", "What kind of work are you looking for?"],
-    ["Payment & Notifications", "How you'll get paid and stay informed."],
-    ["Create Your Account", "Almost there — just the basics."]
+    ["Your credentials", "Tell us about your certification and qualifications."],
+    ["Your preferences", "What kind of work are you looking for?"],
+    ["Payment & notifications", "How you'll get paid and stay informed."],
+    ["Create your account", "Almost there — just the basics."]
   ];
 
   return (
@@ -4788,20 +4788,20 @@ function ReporterOnboarding() {
 
       {step === 1 && (<>
         <div className="form-group">
-          <label className="form-label">CSR License Number</label>
+          <label className="form-label">CSR license number</label>
           <input className="form-input" placeholder="e.g. 14892" value={form.csrNumber} onChange={e => update("csrNumber", e.target.value)} style={{fontSize: 18, padding: "14px 16px", letterSpacing: 1}} />
           <p className="form-helper">We'll verify this with the CA Court Reporters Board.</p>
         </div>
         <div className="form-group">
-          <label className="form-label">Reporting Method</label>
+          <label className="form-label">Reporting method</label>
           <div className="method-cards">
             <div className={"method-card" + (form.method === "Steno Machine" ? " selected" : "")} onClick={() => update("method", "Steno Machine")}>
               <div className="mc-icon"><Icon name="fileText" size={20} /></div>
-              <div><div className="mc-text">Steno Machine</div><div className="mc-sub">Stenotype / CAT software</div></div>
+              <div><div className="mc-text">Steno machine</div><div className="mc-sub">Stenotype / CAT software</div></div>
             </div>
             <div className={"method-card" + (form.method === "Voice Writer" ? " selected" : "")} onClick={() => update("method", "Voice Writer")}>
               <div className="mc-icon"><Icon name="mic" size={20} /></div>
-              <div><div className="mc-text">Voice Writer</div><div className="mc-sub">Voice recognition / respeaking</div></div>
+              <div><div className="mc-text">Voice writer</div><div className="mc-sub">Voice recognition / respeaking</div></div>
             </div>
           </div>
         </div>
@@ -4825,21 +4825,21 @@ function ReporterOnboarding() {
 
       {step === 2 && (<>
         <div className="form-group">
-          <label className="form-label">Job Types</label>
+          <label className="form-label">Job types</label>
           <p className="form-helper" style={{marginTop: 0, marginBottom: 10}}>Select all that apply</p>
           <div className="method-cards">
-            <div className={"method-card" + (form.jobTypes.includes("Live Attendance") ? " selected" : "")} onClick={() => toggleArr("jobTypes", "Live Attendance")}>
+            <div className={"method-card" + (form.jobTypes.includes("Live attendance") ? " selected" : "")} onClick={() => toggleArr("jobTypes", "Live attendance")}>
               <div className="mc-icon"><Icon name="mapPin" size={20} /></div>
-              <div><div className="mc-text">Live Attendance</div><div className="mc-sub">Attend hearings in person or remotely</div></div>
+              <div><div className="mc-text">Live attendance</div><div className="mc-sub">Attend hearings in person or remotely</div></div>
             </div>
-            <div className={"method-card" + (form.jobTypes.includes("Audio Transcription") ? " selected" : "")} onClick={() => toggleArr("jobTypes", "Audio Transcription")}>
+            <div className={"method-card" + (form.jobTypes.includes("Audio transcription") ? " selected" : "")} onClick={() => toggleArr("jobTypes", "Audio transcription")}>
               <div className="mc-icon"><Icon name="mic" size={20} /></div>
-              <div><div className="mc-text">Audio Transcription</div><div className="mc-sub">Transcribe from court recordings</div></div>
+              <div><div className="mc-text">Audio transcription</div><div className="mc-sub">Transcribe from court recordings</div></div>
             </div>
           </div>
         </div>
         <div className="form-group">
-          <label className="form-label">Case Types</label>
+          <label className="form-label">Case types</label>
           <div className="checkbox-group">
             {["Family Law", "Civil Litigation", "Probate", "Criminal", "Personal Injury", "Real Estate", "Employment", "Immigration", "Bankruptcy", "Other"].map(t => (
               <div key={t} className={"checkbox-item" + (form.caseTypes.includes(t) ? " checked" : "")} onClick={() => toggleArr("caseTypes", t)}>{t}</div>
@@ -4847,7 +4847,7 @@ function ReporterOnboarding() {
           </div>
         </div>
         <div className="form-group">
-          <label className="form-label">Courts You Serve</label>
+          <label className="form-label">Courts you serve</label>
           <div className="checkbox-group">
             {COURTS.map(c => (
               <div key={c.id} className={"checkbox-item" + (form.courts.includes(c.id) ? " checked" : "")} onClick={() => toggleArr("courts", c.id)}>{c.name}</div>
@@ -4855,7 +4855,7 @@ function ReporterOnboarding() {
           </div>
         </div>
         <div className="form-group">
-          <label className="form-label">Turnaround Capabilities</label>
+          <label className="form-label">Turnaround capabilities</label>
           <div className="checkbox-group">
             {[["rush", "Rush (24-48 hours)"], ["standard", "Expedited (3-5 business days)"], ["economy", "Standard (2+ weeks)"]].map(([k, l]) => (
               <div key={k} className={"checkbox-item" + (form.turnarounds.includes(k) ? " checked" : "")} onClick={() => toggleArr("turnarounds", k)}>{l}</div>
@@ -4866,7 +4866,7 @@ function ReporterOnboarding() {
 
       {step === 3 && (<>
         <div className="form-group">
-          <label className="form-label" style={{fontSize: 13, fontWeight: 700, marginBottom: 12, display: "block"}}>How You'll Get Paid</label>
+          <label className="form-label" style={{fontSize: 13, fontWeight: 700, marginBottom: 12, display: "block"}}>How you'll get paid</label>
           <div className="stripe-card">
             <div className="stripe-icon">S</div>
             <div className="stripe-text">
@@ -4883,9 +4883,9 @@ function ReporterOnboarding() {
         </div>
         <hr className="section-divider" />
         <div className="form-group">
-          <label className="form-label" style={{fontSize: 13, fontWeight: 700, marginBottom: 12, display: "block"}}>How You'll Get Notified</label>
+          <label className="form-label" style={{fontSize: 13, fontWeight: 700, marginBottom: 12, display: "block"}}>How you'll get notified</label>
           <div className="form-group">
-            <label className="form-label">Phone Number</label>
+            <label className="form-label">Phone number</label>
             <input className="form-input" type="tel" placeholder="(555) 555-0100" value={form.phone} onChange={e => update("phone", e.target.value)} />
             <p className="form-helper">We'll text you when new jobs match your preferences.</p>
           </div>
@@ -4897,13 +4897,13 @@ function ReporterOnboarding() {
 
       {step === 4 && (<>
         <div className="form-row">
-          <div className="form-group"><label className="form-label">Full Name</label><input className="form-input" placeholder="Sarah Chen" value={form.name} onChange={e => update("name", e.target.value)} /></div>
+          <div className="form-group"><label className="form-label">Full name</label><input className="form-input" placeholder="Sarah Chen" value={form.name} onChange={e => update("name", e.target.value)} /></div>
           <div className="form-group"><label className="form-label">Email</label><input className="form-input" type="email" placeholder="sarah@example.com" value={form.email} onChange={e => update("email", e.target.value)} /></div>
         </div>
         <div className="form-group"><label className="form-label">Password</label><input className="form-input" type="password" placeholder="Create a password" value={form.password} onChange={e => update("password", e.target.value)} /><p className="form-helper">At least 8 characters with one number and one special character.</p></div>
         <div className="info-callout" style={{marginTop: 24}}>
           <div className="callout-icon"><Icon name="shield" size={16} /></div>
-          <p>By creating an account, you agree to Dewey Sholes' Terms of Service and Privacy Policy. Your data is encrypted and never shared without your consent.</p>
+          <p>By creating an account, you agree to Dewey Sholes' Terms of service and Privacy policy. Your data is encrypted and never shared without your consent.</p>
         </div>
       </>)}
 
@@ -4917,7 +4917,7 @@ function ReporterOnboarding() {
           </button>
         ) : (
           <button className="btn btn-primary" style={{background: "linear-gradient(135deg, #059669, #10B981)"}} onClick={() => setScreen(6)}>
-            Create Account <Icon name="checkCircle" size={14} />
+            Create account <Icon name="checkCircle" size={14} />
           </button>
         )}
       </div>
@@ -4962,7 +4962,7 @@ function AttorneyOnboarding() {
             <p>Every reporter is CSR-verified against state databases. Jurisdiction-matched. Credentials checked.</p>
           </div>
         </div>
-        <button className="btn btn-primary" style={{fontSize: 18, padding: "16px 40px", marginTop: 40}} onClick={() => setScreen(1)}>Create Your Account <Icon name="arrowRight" size={18} color="#fff" /></button>
+        <button className="btn btn-primary" style={{fontSize: 18, padding: "16px 40px", marginTop: 40}} onClick={() => setScreen(1)}>Create your account <Icon name="arrowRight" size={18} color="#fff" /></button>
         <div style={{marginTop: 16}}>
           <a href="#/dashboard" style={{color: "var(--brand, #2563EB)", textDecoration: "none"}}>Already have an account? Sign in</a>
         </div>
@@ -4984,7 +4984,7 @@ function AttorneyOnboarding() {
           <div className="verification-card">
             <div className="vc-header">
               <strong>CA Bar #{form.barNumber || "—"}</strong>
-              <span className="badge badge-pending" style={{fontSize: 11}}>Verification Pending</span>
+              <span className="badge badge-pending" style={{fontSize: 11}}>Verification pending</span>
             </div>
             <p>We're verifying your CA Bar membership. You'll get an email confirmation within 24 hours.</p>
           </div>
@@ -4995,18 +4995,18 @@ function AttorneyOnboarding() {
             <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Reporters are matched automatically. Track everything from your dashboard.</div></div>
           </div>
           <div className="profile-summary">
-            <h3>Your Profile</h3>
+            <h3>Your profile</h3>
             <div className="ps-row"><span className="ps-label">Name</span><span className="ps-value">{form.name || "—"}</span></div>
             <div className="ps-row"><span className="ps-label">Firm</span><span className="ps-value">{form.firmName || "—"}</span></div>
-            <div className="ps-row"><span className="ps-label">Bar Number</span><span className="ps-value">{form.barNumber || "—"}</span></div>
-            <div className="ps-row"><span className="ps-label">Practice Areas</span><span className="ps-value">{practiceLabels}</span></div>
+            <div className="ps-row"><span className="ps-label">Bar number</span><span className="ps-value">{form.barNumber || "—"}</span></div>
+            <div className="ps-row"><span className="ps-label">Practice areas</span><span className="ps-value">{practiceLabels}</span></div>
             <div className="ps-row"><span className="ps-label">Courts</span><span className="ps-value">{courtLabels}</span></div>
           </div>
           <div className="promo-callout">
             <strong>Your first order ships free of platform fees!</strong>
             <span>Code ATTORNEY2026 has been applied to your account</span>
           </div>
-          <button className="btn btn-primary" style={{width: "100%", justifyContent: "center", fontSize: 16}} onClick={() => navigate("#/dashboard")}>Go to Dashboard <Icon name="arrowRight" size={16} /></button>
+          <button className="btn btn-primary" style={{width: "100%", justifyContent: "center", fontSize: 16}} onClick={() => navigate("#/dashboard")}>Go to dashboard <Icon name="arrowRight" size={16} /></button>
         </div>
       </div>
     );
@@ -5015,11 +5015,11 @@ function AttorneyOnboarding() {
   const step = screen;
   const stepTitles = [
     null,
-    ["About You & Your Firm", "We'll use this to set up your account and match you with reporters."],
-    ["Your Practice", "Help us understand what kind of cases you handle."],
-    ["Courts & Workflow", "Where do you practice, and how do you currently order transcripts?"],
-    ["Billing & Notifications", "How you'll pay and stay informed."],
-    ["Set Your Password", "Almost there — just set your password."]
+    ["About you & your firm", "We'll use this to set up your account and match you with reporters."],
+    ["Your practice", "Help us understand what kind of cases you handle."],
+    ["Courts & workflow", "Where do you practice, and how do you currently order transcripts?"],
+    ["Billing & notifications", "How you'll pay and stay informed."],
+    ["Set your password", "Almost there — just set your password."]
   ];
 
   return (
@@ -5036,23 +5036,23 @@ function AttorneyOnboarding() {
 
       {step === 1 && (<>
         <div className="form-row">
-          <div className="form-group"><label className="form-label">Full Name</label><input className="form-input" placeholder="Jennifer Walsh" value={form.name} onChange={e => update("name", e.target.value)} /></div>
+          <div className="form-group"><label className="form-label">Full name</label><input className="form-input" placeholder="Jennifer Walsh" value={form.name} onChange={e => update("name", e.target.value)} /></div>
           <div className="form-group"><label className="form-label">Email</label><input className="form-input" type="email" placeholder="jennifer@walshlaw.com" value={form.email} onChange={e => update("email", e.target.value)} /></div>
         </div>
         <div className="form-row">
-          <div className="form-group"><label className="form-label">Firm Name</label><input className="form-input" placeholder="Walsh Family Law" value={form.firmName} onChange={e => update("firmName", e.target.value)} /></div>
+          <div className="form-group"><label className="form-label">Firm name</label><input className="form-input" placeholder="Walsh Family Law" value={form.firmName} onChange={e => update("firmName", e.target.value)} /></div>
           <div className="form-group"><label className="form-label">Phone</label><input className="form-input" type="tel" placeholder="(555) 555-0100" value={form.phone} onChange={e => update("phone", e.target.value)} /></div>
         </div>
       </>)}
 
       {step === 2 && (<>
         <div className="form-group">
-          <label className="form-label">CA State Bar Number</label>
+          <label className="form-label">CA state bar number</label>
           <input className="form-input" placeholder="e.g. 287654" value={form.barNumber} onChange={e => update("barNumber", e.target.value)} style={{fontSize: 18, padding: "14px 16px", letterSpacing: 1}} />
           <p className="form-helper">We'll verify this with the State Bar of California.</p>
         </div>
         <div className="form-group">
-          <label className="form-label">Practice Areas</label>
+          <label className="form-label">Practice areas</label>
           <div className="checkbox-group">
             {["Family Law", "Civil Litigation", "Probate", "Criminal", "Personal Injury", "Real Estate", "Employment", "Immigration", "Bankruptcy", "Other"].map(a => (
               <div key={a} className={"checkbox-item" + (form.practiceAreas.includes(a) ? " checked" : "")} onClick={() => toggleArr("practiceAreas", a)}>{a}</div>
@@ -5063,7 +5063,7 @@ function AttorneyOnboarding() {
 
       {step === 3 && (<>
         <div className="form-group">
-          <label className="form-label">Courts You Practice In</label>
+          <label className="form-label">Courts you practice in</label>
           <div className="checkbox-group">
             {COURTS.map(c => (
               <div key={c.id} className={"checkbox-item" + (form.courts.includes(c.id) ? " checked" : "")} onClick={() => toggleArr("courts", c.id)}>{c.name}</div>
@@ -5090,7 +5090,7 @@ function AttorneyOnboarding() {
 
       {step === 4 && (<>
         <div className="form-group">
-          <label className="form-label">Billing Preference</label>
+          <label className="form-label">Billing preference</label>
           <div className="method-cards">
             <div className={"method-card" + (form.billingPref === "per-order" ? " selected" : "")} onClick={() => update("billingPref", "per-order")}>
               <div className="mc-icon"><Icon name="creditCard" size={18} /></div>
@@ -5104,7 +5104,7 @@ function AttorneyOnboarding() {
         </div>
         <hr style={{border: "none", borderTop: "1px solid var(--border, #E2E8F0)", margin: "24px 0"}} />
         <div className="form-group">
-          <label className="form-label" style={{fontSize: 13, fontWeight: 700, marginBottom: 12, display: "block"}}>Notification Preferences</label>
+          <label className="form-label" style={{fontSize: 13, fontWeight: 700, marginBottom: 12, display: "block"}}>Notification preferences</label>
           <div className="toggle-row"><div><div className="toggle-label">Order status updates</div><div className="toggle-sub">Track your orders from submission to delivery</div></div><label className="toggle-switch"><input type="checkbox" checked={form.notifStatus} onChange={() => update("notifStatus", !form.notifStatus)} /><span className="slider"></span></label></div>
           <div className="toggle-row"><div><div className="toggle-label">Reporter assignment alerts</div><div className="toggle-sub">Know when a reporter accepts your job</div></div><label className="toggle-switch"><input type="checkbox" checked={form.notifAssignment} onChange={() => update("notifAssignment", !form.notifAssignment)} /><span className="slider"></span></label></div>
           <div className="toggle-row"><div><div className="toggle-label">Transcript delivery notifications</div><div className="toggle-sub">Get notified the moment your transcript is ready</div></div><label className="toggle-switch"><input type="checkbox" checked={form.notifDelivery} onChange={() => update("notifDelivery", !form.notifDelivery)} /><span className="slider"></span></label></div>
@@ -5114,10 +5114,10 @@ function AttorneyOnboarding() {
 
       {step === 5 && (<>
         <div className="form-group"><label className="form-label">Password</label><input className="form-input" type="password" placeholder="Create a password" value={form.password} onChange={e => update("password", e.target.value)} /><p className="form-helper">At least 8 characters with one number and one special character.</p></div>
-        <div className="form-group"><label className="form-label">Confirm Password</label><input className="form-input" type="password" placeholder="Confirm your password" value={form.confirmPassword} onChange={e => update("confirmPassword", e.target.value)} /></div>
+        <div className="form-group"><label className="form-label">Confirm password</label><input className="form-input" type="password" placeholder="Confirm your password" value={form.confirmPassword} onChange={e => update("confirmPassword", e.target.value)} /></div>
         <div className="info-callout" style={{marginTop: 24}}>
           <div className="callout-icon"><Icon name="shield" size={16} /></div>
-          <p>By creating an account, you agree to Dewey Sholes' Terms of Service and Privacy Policy. Your data is encrypted and never shared without your consent.</p>
+          <p>By creating an account, you agree to Dewey Sholes' Terms of service and Privacy policy. Your data is encrypted and never shared without your consent.</p>
         </div>
       </>)}
 
@@ -5131,7 +5131,7 @@ function AttorneyOnboarding() {
           </button>
         ) : (
           <button className="btn btn-primary" style={{background: "linear-gradient(135deg, #059669, #10B981)"}} onClick={() => setScreen(6)}>
-            Create Account <Icon name="checkCircle" size={14} />
+            Create account <Icon name="checkCircle" size={14} />
           </button>
         )}
       </div>
@@ -5143,7 +5143,7 @@ function AttorneyOnboarding() {
 const KANBAN_COLUMNS = [
   { id: "backlog", label: "Backlog", color: "#94A3B8" },
   { id: "todo", label: "To Do", color: "#3B82F6" },
-  { id: "in_progress", label: "In Progress", color: "#8B5CF6" },
+  { id: "in_progress", label: "In progress", color: "#8B5CF6" },
   { id: "waiting", label: "Waiting", color: "#F59E0B" },
   { id: "done", label: "Done", color: "#059669" },
 ];
@@ -5226,7 +5226,7 @@ function TaskModal({ task, isNew, onSave, onDelete, onClose }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal kanban-modal" onClick={e => e.stopPropagation()}>
-        <h2 style={{marginBottom: 20}}>{isNew ? "New Task" : "Edit Task"}</h2>
+        <h2 style={{marginBottom: 20}}>{isNew ? "New task" : "Edit task"}</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="form-label">Title</label>
@@ -5276,7 +5276,7 @@ function TaskModal({ task, isNew, onSave, onDelete, onClose }) {
             </div>
           </div>
           <div className="form-group">
-            <label className="form-label">Due Date</label>
+            <label className="form-label">Due date</label>
             <input className="form-input" type="date" value={form.dueDate} onChange={e => up("dueDate", e.target.value)} />
           </div>
           <div className="form-group">
@@ -5284,10 +5284,10 @@ function TaskModal({ task, isNew, onSave, onDelete, onClose }) {
             <textarea className="form-input" value={form.notes} onChange={e => up("notes", e.target.value)} placeholder="Additional notes..." />
           </div>
           <div className="kanban-modal-actions">
-            <div>{onDelete && <button type="button" className="btn btn-sm" style={{background:"#FEE2E2",color:"#DC2626",border:"1px solid #FECACA"}} onClick={onDelete}>Delete Task</button>}</div>
+            <div>{onDelete && <button type="button" className="btn btn-sm" style={{background:"#FEE2E2",color:"#DC2626",border:"1px solid #FECACA"}} onClick={onDelete}>Delete task</button>}</div>
             <div style={{display:"flex",gap:8}}>
               <button type="button" className="btn btn-secondary btn-sm" onClick={onClose}>Cancel</button>
-              <button type="submit" className="btn btn-primary btn-sm">{isNew ? "Create Task" : "Save Changes"}</button>
+              <button type="submit" className="btn btn-primary btn-sm">{isNew ? "Create task" : "Save changes"}</button>
             </div>
           </div>
         </form>
@@ -5368,7 +5368,7 @@ function KanbanBoard() {
         <div className="container" style={{maxWidth: 1440}}>
           <div className="page-header">
             <div>
-              <h1 style={{fontSize: 28}}>Project Board</h1>
+              <h1 style={{fontSize: 28}}>Project board</h1>
               <p style={{color: "#64748B", marginTop: 4}}>Track Dewey Sholes tasks across all workstreams.</p>
             </div>
             <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
@@ -5390,16 +5390,16 @@ function KanbanBoard() {
           <div className="filter-bar" style={{marginBottom: 16}}>
             <input className="filter-input" placeholder="Search tasks..." value={search} onChange={e => setSearch(e.target.value)} style={{minWidth: 180}} />
             <select className="filter-select" value={fCat} onChange={e => setFCat(e.target.value)}>
-              <option value="all">All Categories</option>
+              <option value="all">All categories</option>
               <option value="legal">Legal</option><option value="financial">Financial</option><option value="product">Product</option>
               <option value="marketing">Marketing</option><option value="operations">Operations</option><option value="research">Research</option>
             </select>
             <select className="filter-select" value={fAssign} onChange={e => setFAssign(e.target.value)}>
-              <option value="all">All Assignees</option>
+              <option value="all">All assignees</option>
               <option value="Aud">Aud</option><option value="Rosie">Rosie</option><option value="TBD">TBD</option>
             </select>
             <select className="filter-select" value={fPri} onChange={e => setFPri(e.target.value)}>
-              <option value="all">All Priorities</option>
+              <option value="all">All priorities</option>
               <option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option>
             </select>
           </div>
@@ -5473,13 +5473,13 @@ function SignInModal({ onClose }) {
             <div style={{width: 40, height: 40, borderRadius: 10, background: "#EFF6FF", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
               <Icon name="scale" size={20} color="#2563EB" />
             </div>
-            <div><h3>Attorney / Law Firm</h3><p>Place orders and manage cases</p></div>
+            <div><h3>Attorney / law firm</h3><p>Place orders and manage cases</p></div>
           </a>
           <a className="modal-option" href="#/reporter" onClick={onClose}>
             <div style={{width: 40, height: 40, borderRadius: 10, background: "#ECFDF5", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
               <Icon name="mic" size={20} color="#059669" />
             </div>
-            <div><h3>Court Reporter</h3><p>View and accept transcript jobs</p></div>
+            <div><h3>Court reporter</h3><p>View and accept transcript jobs</p></div>
           </a>
         </div>
         <div style={{textAlign: "center", marginTop: 16, paddingTop: 16, borderTop: "1px solid #E2E8F0"}}>
@@ -5525,15 +5525,15 @@ function LandingPage() {
               <DeweyFullLogo height={38} theme={useTheme().dark ? "dark" : "light"} />
             </a>
             <div className="nav-links">
-              <a href="#how-it-works">How It Works</a>
-              <a href="#attorneys">For Attorneys</a>
-              <a href="#reporters">For Reporters</a>
+              <a href="#how-it-works">How it works</a>
+              <a href="#attorneys">For attorneys</a>
+              <a href="#reporters">For reporters</a>
               <a href="#pricing">Pricing</a>
             </div>
             <div className="nav-actions">
               <ThemeToggle />
-              <button className="btn-signin" onClick={() => setShowSignIn(true)}>Sign In</button>
-              <a href="#/attorney-signup" className="btn-getstarted">Get Started</a>
+              <button className="btn-signin" onClick={() => setShowSignIn(true)}>Sign in</button>
+              <a href="#/attorney-signup" className="btn-getstarted">Get started</a>
             </div>
           </div>
         </div>
@@ -5550,7 +5550,7 @@ function LandingPage() {
           <div className="hero-content">
             <div className="hero-badge">
               <span className="hero-badge-dot"></span>
-              Now Serving California Courts
+              Now serving California courts
             </div>
             <h1>Court transcripts,<br /><span className="gradient-text">finally simple.</span></h1>
             <p className="hero-subtitle">
@@ -5558,11 +5558,11 @@ function LandingPage() {
             </p>
             <div className="hero-actions">
               <a href="#/order" className="btn btn-primary">
-                Order a Transcript
+                Order a transcript
                 <Icon name="arrowRight" size={16} color="#fff" />
               </a>
               <a href="#/reporter-signup" className="btn btn-secondary">
-                Join as a Reporter
+                Join as a reporter
                 <Icon name="chevronRight" size={16} color="#64748B" />
               </a>
             </div>
@@ -5585,7 +5585,7 @@ function LandingPage() {
                 </div>
                 <div className="hero-card-body">
                   <div className="card-tabs">
-                    <span className="card-tab active">Live Attendance</span>
+                    <span className="card-tab active">Live attendance</span>
                     <span className="card-tab">Transcription</span>
                   </div>
                   <div className="card-fields">
@@ -5600,11 +5600,11 @@ function LandingPage() {
                   </div>
                   <div className="card-fields card-fields-3">
                     <div className="card-field">
-                      <label>Case Number</label>
+                      <label>Case number</label>
                       <div className="card-field-value">24STFL09821</div>
                     </div>
                     <div className="card-field">
-                      <label>Hearing Date</label>
+                      <label>Hearing date</label>
                       <div className="card-field-value">{getHearingDate()}</div>
                     </div>
                     <div className="card-field">
@@ -5614,10 +5614,10 @@ function LandingPage() {
                   </div>
                   <div className="card-footer">
                     <div>
-                      <div className="card-footer-label">Estimated Cost</div>
+                      <div className="card-footer-label">Estimated cost</div>
                       <div className="card-footer-price">$142 <span>– $218</span></div>
                     </div>
-                    <a href="#/order" className="btn btn-primary btn-sm">Submit Order →</a>
+                    <a href="#/order" className="btn btn-primary btn-sm">Submit order →</a>
                   </div>
                 </div>
               </div>
@@ -5686,8 +5686,8 @@ function LandingPage() {
             <div className="usecase-card">
               <div className="accent-bar blue"></div>
               <div className="usecase-icon blue"><Icon name="mapPin" size={28} color="#2563EB" /></div>
-              <div className="usecase-label blue">Use Case A</div>
-              <h3>Live Attendance</h3>
+              <div className="usecase-label blue">Use case A</div>
+              <h3>Live attendance</h3>
               <p>Need a reporter at an upcoming hearing? We'll match you with a licensed CSR who can attend in person or remotely and deliver your transcript on the turnaround you choose.</p>
               <ul className="usecase-list">
                 {["In-person or remote attendance", "Real-time or same-day options", "Reporter confirmed before your hearing", "Supports cost-splitting across parties"].map((t, i) => (
@@ -5698,8 +5698,8 @@ function LandingPage() {
             <div className="usecase-card">
               <div className="accent-bar amber"></div>
               <div className="usecase-icon amber"><Icon name="mic" size={28} color="#D97706" /></div>
-              <div className="usecase-label amber">Use Case B</div>
-              <h3>Post-Hearing Transcription</h3>
+              <div className="usecase-label amber">Use case B</div>
+              <h3>Post-hearing transcription</h3>
               <p>Already have the court audio? Upload it and we'll match you with a certified reporter who'll transcribe, certify, and deliver, with your case docs pre-loaded for accuracy.</p>
               <ul className="usecase-list">
                 {["Upload MP3, WAV, or court-format audio", "AI-assisted workspace for faster turnaround", "Supporting docs reduce back-and-forth", "Interpreter-aware page estimates"].map((t, i) => (
@@ -5716,14 +5716,14 @@ function LandingPage() {
         <div className="container">
           <div className="attorneys-grid">
             <div>
-              <div className="attorneys-label">For Attorneys & Law Firms</div>
+              <div className="attorneys-label">For attorneys & law firms</div>
               <h2>Stop chasing reporters.<br /><span>Start tracking cases.</span></h2>
               <p style={{marginTop: 24, fontSize: 18, color: "#64748B", lineHeight: 1.7}}>
                 Your firm handles dozens of active matters. Dewey Sholes gives you a persistent case management layer, not just one-off order forms, so your entire transcript history lives in one place.
               </p>
               <div className="attorneys-actions">
-                <a href="#/attorney-signup" className="btn btn-primary btn-sm">Start Ordering <Icon name="arrowRight" size={16} color="#fff" /></a>
-                <a href="#pricing" className="btn btn-secondary btn-sm">See Pricing</a>
+                <a href="#/attorney-signup" className="btn btn-primary btn-sm">Start ordering <Icon name="arrowRight" size={16} color="#fff" /></a>
+                <a href="#pricing" className="btn btn-secondary btn-sm">See pricing</a>
               </div>
             </div>
             <div className="features-grid">
@@ -5749,7 +5749,7 @@ function LandingPage() {
         <div className="reporters-bg1"></div>
         <div className="reporters-bg2"></div>
         <div className="container" style={{position: "relative"}}>
-          <div className="reporters-label">For Court Reporters</div>
+          <div className="reporters-label">For court reporters</div>
           <div className="section-header">
             <h2>Your license. Your tools.<br /><span>Our platform handles the rest.</span></h2>
             <p>Accept jobs that match your jurisdiction and availability. Use your own CAT software or our built-in workspace. Get paid automatically.</p>
@@ -5768,7 +5768,7 @@ function LandingPage() {
             ))}
           </div>
           <div className="reporters-cta">
-            <a href="#/reporter-signup" className="btn btn-white">Apply to Join the Network <Icon name="arrowRight" size={16} color="#1E40AF" /></a>
+            <a href="#/reporter-signup" className="btn btn-white">Apply to join the network <Icon name="arrowRight" size={16} color="#1E40AF" /></a>
           </div>
         </div>
       </section>
@@ -5806,7 +5806,7 @@ function LandingPage() {
                 <p>Have a fee waiver on file?</p>
                 <div className="sub">Order through us like any other transcript. We'll generate your TRF reimbursement application automatically.</div>
               </div>
-              <button className="btn">Learn More</button>
+              <button className="btn">Learn more</button>
             </div>
           </div>
           <PricingCalculator />
@@ -5819,7 +5819,7 @@ function LandingPage() {
             </div>
             <div className="comparison-cards">
               <div className="comparison-card agency">
-                <div className="comp-label">Traditional Agency</div>
+                <div className="comp-label">Traditional agency</div>
                 <div className="comp-stat">Reporter sees 15–50%</div>
                 <div className="comp-detail">Agencies mark up the statutory rate by 50–85%. The reporter who did the work may see as little as 16 cents of every dollar you paid.</div>
               </div>
@@ -5840,7 +5840,7 @@ function LandingPage() {
             </div>
             <div className="reporter-tiers">
               <div className="reporter-tier-card">
-                <h3>Individual Reporter</h3>
+                <h3>Individual reporter</h3>
                 <div className="tier-sub">For solo CSRs building their own book of business.</div>
                 <div className="reporter-tier-price">${PRICING.listingFeeIndividual}<span> / year</span></div>
                 <ul className="reporter-tier-features">
@@ -5850,11 +5850,11 @@ function LandingPage() {
                   <li><Icon name="checkCircle" size={16} color="#059669" />CSR license auto-verification</li>
                   <li><Icon name="checkCircle" size={16} color="#059669" />Keep 100% of statutory rate — no agency cut</li>
                 </ul>
-                <a href="#/reporter-signup" className="btn btn-secondary">Get Started</a>
+                <a href="#/reporter-signup" className="btn btn-secondary">Get started</a>
               </div>
               <div className="reporter-tier-card featured">
-                <div className="reporter-tier-badge">Best for Small Firms</div>
-                <h3>Firm Account</h3>
+                <div className="reporter-tier-badge">Best for small firms</div>
+                <h3>Firm account</h3>
                 <div className="tier-sub">Centralized billing & one dashboard for your practice.</div>
                 <div className="reporter-tier-price">${PRICING.firmPerReporter}<span> / reporter / year</span><span className="tier-discount">Save 20%</span></div>
                 <ul className="reporter-tier-features">
@@ -5864,7 +5864,7 @@ function LandingPage() {
                   <li><Icon name="checkCircle" size={16} color="#059669" />Firm-wide availability dashboard</li>
                   <li><Icon name="checkCircle" size={16} color="#059669" />Add or remove reporters anytime</li>
                 </ul>
-                <a href="#/reporter-signup" className="btn btn-primary">Start Firm Signup</a>
+                <a href="#/reporter-signup" className="btn btn-primary">Start firm signup</a>
                 <div className="reporter-tier-note">Designed for independent practices, not staffing agencies</div>
               </div>
             </div>
@@ -5892,7 +5892,7 @@ function LandingPage() {
               </div>
             </div>
             <div style={{order: 1}}>
-              <div className="compliance-label">Compliance Built In</div>
+              <div className="compliance-label">Compliance built in</div>
               <h2>Every transcript is court-admissible. Period.</h2>
               <p className="compliance-text">
                 Credentials aren't just checked at signup; they're verified at every job acceptance. Jurisdiction matching, format standards, and certification requirements are enforced automatically.
@@ -5921,13 +5921,13 @@ function LandingPage() {
             <div className="srl-content">
               <div className="srl-badge">
                 <Icon name="scale" size={14} color="#fff" />
-                Access to Justice
+                Access to justice
               </div>
               <h2>Representing yourself in court?<br />You still have a right to a transcript.</h2>
               <p>
                 Dewey Sholes walks self-represented litigants through the process step by step: plain language, built-in glossaries, and full support for court fee waivers.
               </p>
-              <a href="#/order" className="btn btn-white">Get Started - It's Simple <Icon name="arrowRight" size={16} color="#1E40AF" /></a>
+              <a href="#/order" className="btn btn-white">Try it out <Icon name="arrowRight" size={16} color="#1E40AF" /></a>
             </div>
           </div>
         </div>
@@ -5999,8 +5999,8 @@ function LandingPage() {
           <h2>The transcript process is broken.<br /><span className="gradient-text">Let's fix it.</span></h2>
           <p>Join the attorneys and reporters already using Dewey Sholes to bring court transcripts into the modern era.</p>
           <div className="final-cta-actions">
-            <a href="#/order" className="btn btn-primary">Order a Transcript <Icon name="arrowRight" size={16} color="#fff" /></a>
-            <a href="#/reporter-signup" className="btn btn-secondary">Join as a Reporter <Icon name="chevronRight" size={16} color="#64748B" /></a>
+            <a href="#/order" className="btn btn-primary">Order a transcript <Icon name="arrowRight" size={16} color="#fff" /></a>
+            <a href="#/reporter-signup" className="btn btn-secondary">Join as a reporter <Icon name="chevronRight" size={16} color="#64748B" /></a>
           </div>
         </div>
       </section>
@@ -6018,18 +6018,18 @@ function LandingPage() {
             <div>
               <h4>Platform</h4>
               <ul>
-                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#how-it-works">How it works</a></li>
                 <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#attorneys">For Attorneys</a></li>
-                <li><a href="#reporters">For Reporters</a></li>
+                <li><a href="#attorneys">For attorneys</a></li>
+                <li><a href="#reporters">For reporters</a></li>
               </ul>
             </div>
             <div>
               <h4>Resources</h4>
               <ul>
-                <li><a href="#/order">SRL Guide</a></li>
-                <li><a href="#pricing">Fee Waiver Info</a></li>
-                <li><a href="#pricing">CA Statutory Rates</a></li>
+                <li><a href="#/order">SRL guide</a></li>
+                <li><a href="#pricing">Fee waiver info</a></li>
+                <li><a href="#pricing">CA statutory rates</a></li>
                 <li><a href="#/reporter">Reporter FAQ</a></li>
               </ul>
             </div>
@@ -6038,8 +6038,8 @@ function LandingPage() {
               <ul>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Privacy policy</a></li>
+                <li><a href="#">Terms of service</a></li>
               </ul>
             </div>
           </div>
