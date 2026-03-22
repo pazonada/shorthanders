@@ -241,6 +241,46 @@
   .pricing-footer .btn { color: #60A5FA; border: 1px solid rgba(96,165,250,0.3); padding: 10px 20px; font-size: 13px; background: transparent; white-space: nowrap; }
   .pricing-footer .btn:hover { background: rgba(96,165,250,0.1); }
 
+  /* ─── Pricing Comparison ──────────────────────────── */
+  .pricing-comparison { max-width: 640px; margin: 48px auto 0; }
+  .pricing-comparison-header { text-align: center; margin-bottom: 24px; }
+  .pricing-comparison-header h3 { font-size: 20px; font-weight: 800; color: #0F172A; letter-spacing: -0.01em; }
+  @media (min-width: 1024px) { .pricing-comparison-header h3 { font-size: 22px; } }
+  .pricing-comparison-header p { font-size: 14px; color: #64748B; margin-top: 4px; }
+  .comparison-cards { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 640px) { .comparison-cards { grid-template-columns: 1fr 1fr; } }
+  .comparison-card { border-radius: 14px; padding: 24px; position: relative; }
+  .comparison-card.agency { background: #FEF2F2; border: 1px solid #FECACA; }
+  .comparison-card.dewey { background: #ECFDF5; border: 1px solid #A7F3D0; }
+  .comparison-card .comp-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+  .comparison-card.agency .comp-label { color: #DC2626; }
+  .comparison-card.dewey .comp-label { color: #059669; }
+  .comparison-card .comp-stat { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 8px; }
+  @media (min-width: 1024px) { .comparison-card .comp-stat { font-size: 32px; } }
+  .comparison-card.agency .comp-stat { color: #991B1B; }
+  .comparison-card.dewey .comp-stat { color: #065F46; }
+  .comparison-card .comp-detail { font-size: 13px; line-height: 1.6; }
+  .comparison-card.agency .comp-detail { color: #B91C1C; }
+  .comparison-card.dewey .comp-detail { color: #047857; }
+  .comparison-footnote { text-align: center; margin-top: 16px; font-size: 12px; color: #94A3B8; line-height: 1.5; }
+
+  /* ─── Reporter Tier Cards ───────────────────────── */
+  .reporter-tiers { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 800px; margin: 48px auto 0; }
+  @media (min-width: 640px) { .reporter-tiers { grid-template-columns: 1fr 1fr; } }
+  .reporter-tier-card { background: linear-gradient(135deg, #F8FAFC 0%, rgba(239,246,255,0.3) 100%); border-radius: 16px; border: 1px solid #E2E8F0; padding: 32px; position: relative; display: flex; flex-direction: column; }
+  .reporter-tier-card.featured { border-color: #2563EB; box-shadow: 0 0 0 1px #2563EB; }
+  .reporter-tier-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #2563EB; color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 14px; border-radius: 20px; white-space: nowrap; }
+  .reporter-tier-card h3 { font-size: 18px; font-weight: 800; color: #0F172A; margin-bottom: 4px; }
+  .reporter-tier-card .tier-sub { font-size: 13px; color: #64748B; margin-bottom: 20px; line-height: 1.5; }
+  .reporter-tier-price { font-size: 40px; font-weight: 800; color: #0F172A; line-height: 1; }
+  .reporter-tier-price span { font-size: 15px; font-weight: 400; color: #94A3B8; }
+  .reporter-tier-price .tier-discount { display: inline-block; font-size: 12px; font-weight: 600; color: #059669; background: #D1FAE5; padding: 2px 8px; border-radius: 6px; margin-left: 8px; vertical-align: middle; }
+  .reporter-tier-features { list-style: none; padding: 0; margin: 20px 0 24px; flex: 1; }
+  .reporter-tier-features li { font-size: 14px; color: #334155; padding: 6px 0; display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+  .reporter-tier-features li svg { flex-shrink: 0; margin-top: 3px; }
+  .reporter-tier-card .btn { width: 100%; justify-content: center; }
+  .reporter-tier-note { font-size: 12px; color: #64748B; text-align: center; margin-top: 12px; font-style: italic; }
+
   /* ─── Compliance ───────────────────────────────── */
   .compliance { padding: 96px 0; background: #F8FAFC; }
   @media (min-width: 1024px) { .compliance { padding: 128px 0; } }
@@ -1060,6 +1100,26 @@
   [data-theme="dark"] .pricing-row .price { color: var(--text); }
   [data-theme="dark"] .pricing-row .price span { color: var(--text-dim); }
   [data-theme="dark"] .pricing-note { background: #1E293B; border-color: #92400E; color: #FBBF24; }
+  [data-theme="dark"] .reporter-tier-card { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .reporter-tier-card.featured { border-color: #2563EB; box-shadow: 0 0 0 1px #2563EB; }
+  [data-theme="dark"] .reporter-tier-card h3 { color: var(--text); }
+  [data-theme="dark"] .reporter-tier-card .tier-sub { color: var(--text-muted); }
+  [data-theme="dark"] .reporter-tier-price { color: var(--text); }
+  [data-theme="dark"] .reporter-tier-price span { color: var(--text-dim); }
+  [data-theme="dark"] .reporter-tier-price .tier-discount { background: rgba(5,150,105,0.15); color: #34D399; }
+  [data-theme="dark"] .reporter-tier-features li { color: var(--text-secondary); }
+  [data-theme="dark"] .reporter-tier-note { color: var(--text-muted); }
+  [data-theme="dark"] .pricing-comparison-header h3 { color: var(--text); }
+  [data-theme="dark"] .pricing-comparison-header p { color: var(--text-muted); }
+  [data-theme="dark"] .comparison-card.agency { background: rgba(220,38,38,0.08); border-color: rgba(220,38,38,0.2); }
+  [data-theme="dark"] .comparison-card.dewey { background: rgba(5,150,105,0.08); border-color: rgba(5,150,105,0.2); }
+  [data-theme="dark"] .comparison-card.agency .comp-stat { color: #FCA5A5; }
+  [data-theme="dark"] .comparison-card.agency .comp-detail { color: #FCA5A5; }
+  [data-theme="dark"] .comparison-card.agency .comp-label { color: #F87171; }
+  [data-theme="dark"] .comparison-card.dewey .comp-stat { color: #6EE7B7; }
+  [data-theme="dark"] .comparison-card.dewey .comp-detail { color: #6EE7B7; }
+  [data-theme="dark"] .comparison-card.dewey .comp-label { color: #34D399; }
+  [data-theme="dark"] .comparison-footnote { color: var(--text-dim); }
   [data-theme="dark"] .compliance { background: var(--bg-card); }
   [data-theme="dark"] .compliance h2 { color: var(--text); }
   [data-theme="dark"] .compliance-text { color: var(--text-muted); }
@@ -1729,6 +1789,10 @@ const PRICING = {
   standardMultiplier: 1.0,
   economyMultiplier: 0.85,
   pagesPerHour: 35,
+  listingFeeIndividual: 99,
+  firmPerReporter: 79,
+  firmMinReporters: 3,
+  firmMaxReporters: 10,
 };
 
 // ─── Notifications Mock Data ─────────────────────────────────────
@@ -2966,7 +3030,7 @@ function OrderFlow() {
                 <div className="price-line"><span>Estimated pages</span><strong>{est.low} – {est.high} pages</strong></div>
                 <div className="price-line"><span>Statutory rate (per page)</span><strong>${PRICING.ratePerPage.toFixed(2)}</strong></div>
                 <div className="price-line"><span>Turnaround adjustment</span><strong>{est.mult === 1 ? "None" : est.mult > 1 ? "+" + ((est.mult - 1) * 100).toFixed(0) + "%" : "-" + ((1 - est.mult) * 100).toFixed(0) + "%"}</strong></div>
-                <div className="price-line"><span>Platform fee ({(PRICING.platformFee * 100).toFixed(0)}%)</span><strong>${((est.lowCost + est.highCost) / 2 * PRICING.platformFee).toFixed(2)}</strong></div>
+                <div className="price-line"><span>Platform fee ({(PRICING.platformFee * 100).toFixed(0)}% — attorney only)</span><strong>${((est.lowCost + est.highCost) / 2 * PRICING.platformFee).toFixed(2)}</strong></div>
                 <div className="price-total">
                   <span>Estimated Total</span>
                   <span>${(est.lowCost * (1 + PRICING.platformFee)).toFixed(0)} – ${(est.highCost * (1 + PRICING.platformFee)).toFixed(0)}</span>
@@ -3407,7 +3471,7 @@ function BuyerDashboard() {
                 <Icon name="shield" size={16} color="#2563EB" />
                 <div>
                   <strong>Transparent pricing</strong>
-                  <p>All orders billed at California statutory rates plus a flat {(PRICING.platformFee * 100).toFixed(0)}% platform fee. No hidden charges. Final cost based on certified page count.</p>
+                  <p>All orders billed at California statutory rates plus a flat {(PRICING.platformFee * 100).toFixed(0)}% attorney-side platform fee. No hidden charges. Your reporter keeps the full statutory rate.</p>
                 </div>
               </div>
             </div>
@@ -4538,7 +4602,7 @@ function PricingCalculator() {
           <span>Base: ${base.toFixed(2)}</span>
           {turnaroundFee > 0 && <span>Turnaround: +${turnaroundFee.toFixed(2)}</span>}
           {turnaroundFee < 0 && <span>Discount: -${Math.abs(turnaroundFee).toFixed(2)}</span>}
-          <span>Platform: +${platformFee.toFixed(2)}</span>
+          <span>Platform fee (12%): +${platformFee.toFixed(2)}</span>
         </div>
         <a href="#/order" className="btn btn-primary btn-sm" style={{marginTop: 16}}>Order Now <Icon name="arrowRight" size={14} color="#fff" /></a>
       </div>
@@ -4548,8 +4612,9 @@ function PricingCalculator() {
 
 // ─── Reporter Onboarding ────────────────────────────────────────
 function ReporterOnboarding() {
-  const [screen, setScreen] = useState(0); // 0=welcome, 1-4=steps, 5=success
+  const [screen, setScreen] = useState(0); // 0=welcome, 1=account type, 2-5=steps, 6=success
   const [form, setForm] = useState({
+    accountType: "", firmName: "", firmReporterCount: 3,
     csrNumber: "", method: "", certs: [], languages: [],
     jobTypes: [], caseTypes: [], courts: [], turnarounds: [],
     phone: "", notifSmsJobs: true, notifEmail: true, notifSmsReminders: true,
@@ -4595,8 +4660,70 @@ function ReporterOnboarding() {
     );
   }
 
-  // Screen 5: Success
-  if (screen === 5) {
+  // Screen 1: Account Type Selection
+  if (screen === 1) {
+    return (
+      <div className="reporter-onboarding" style={{background: "var(--bg-page, #F8FAFC)"}}>
+        <div style={{marginBottom: 32, textAlign: "center"}}>
+          <a href="#/" style={{display: "inline-flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+        </div>
+        <div className="reporter-step-header">
+          <h2>How are you joining?</h2>
+          <p>Choose the option that best describes your practice.</p>
+        </div>
+        <div className="method-cards" style={{maxWidth: 520, margin: "0 auto"}}>
+          <div className={"method-card" + (form.accountType === "individual" ? " selected" : "")} onClick={() => update("accountType", "individual")} style={{padding: 24}}>
+            <div className="mc-icon"><Icon name="user" size={24} /></div>
+            <div>
+              <div className="mc-text">Individual Reporter</div>
+              <div className="mc-sub">${PRICING.listingFeeIndividual}/year — solo CSR with your own listing</div>
+            </div>
+          </div>
+          <div className={"method-card" + (form.accountType === "firm" ? " selected" : "")} onClick={() => update("accountType", "firm")} style={{padding: 24}}>
+            <div className="mc-icon"><Icon name="users" size={24} /></div>
+            <div>
+              <div className="mc-text">Small Firm</div>
+              <div className="mc-sub">${PRICING.firmPerReporter}/reporter/year — {PRICING.firmMinReporters}–{PRICING.firmMaxReporters} reporters, one account</div>
+            </div>
+          </div>
+        </div>
+
+        {form.accountType === "firm" && (
+          <div style={{maxWidth: 520, margin: "24px auto 0", display: "flex", flexDirection: "column", gap: 16}}>
+            <div className="form-group" style={{marginBottom: 0}}>
+              <label className="form-label">Firm Name</label>
+              <input className="form-input" placeholder="e.g. Bay Area Court Reporters" value={form.firmName} onChange={e => update("firmName", e.target.value)} />
+            </div>
+            <div className="form-group" style={{marginBottom: 0}}>
+              <label className="form-label">Number of Reporters</label>
+              <div style={{display: "flex", alignItems: "center", gap: 12}}>
+                <input type="range" min={PRICING.firmMinReporters} max={PRICING.firmMaxReporters} value={form.firmReporterCount} onChange={e => update("firmReporterCount", parseInt(e.target.value))} style={{flex: 1}} />
+                <span style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)", minWidth: 28, textAlign: "center"}}>{form.firmReporterCount}</span>
+              </div>
+              <p className="form-helper" style={{marginTop: 8}}>
+                Estimated annual cost: <strong>${form.firmReporterCount * PRICING.firmPerReporter}/year</strong> ({form.firmReporterCount} reporters × ${PRICING.firmPerReporter})
+              </p>
+            </div>
+            <div style={{background: "var(--bg-muted, #F1F5F9)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12, padding: 14, fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.6}}>
+              <strong>Note:</strong> Firm accounts include centralized billing and a single dashboard to manage all reporters. Designed for independent practices, not staffing agencies.
+            </div>
+          </div>
+        )}
+
+        <div style={{maxWidth: 520, margin: "32px auto 0", display: "flex", gap: 12}}>
+          <button className="btn btn-secondary" style={{flex: 1, justifyContent: "center"}} onClick={() => setScreen(0)}>
+            <Icon name="arrowLeft" size={16} /> Back
+          </button>
+          <button className="btn btn-primary" style={{flex: 2, justifyContent: "center"}} disabled={!form.accountType || (form.accountType === "firm" && !form.firmName.trim())} onClick={() => setScreen(2)}>
+            Continue <Icon name="arrowRight" size={16} />
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Screen 6: Success
+  if (screen === 6) {
     const jobTypeLabels = form.jobTypes.length ? form.jobTypes.join(", ") : "Not specified";
     const courtLabels = form.courts.length ? form.courts.map(id => { const c = COURTS.find(x => x.id === id); return c ? c.name : id; }).slice(0, 3).join(", ") + (form.courts.length > 3 ? ` +${form.courts.length - 3} more` : "") : "Not specified";
     return (
@@ -4621,14 +4748,16 @@ function ReporterOnboarding() {
           <div className="profile-summary">
             <h3>Your Profile</h3>
             <div className="ps-row"><span className="ps-label">Name</span><span className="ps-value">{form.name || "—"}</span></div>
+            <div className="ps-row"><span className="ps-label">Account Type</span><span className="ps-value">{form.accountType === "firm" ? "Firm — " + form.firmName : "Individual Reporter"}</span></div>
             <div className="ps-row"><span className="ps-label">CSR Number</span><span className="ps-value">{form.csrNumber || "—"}</span></div>
             <div className="ps-row"><span className="ps-label">Method</span><span className="ps-value">{form.method || "—"}</span></div>
             <div className="ps-row"><span className="ps-label">Job Types</span><span className="ps-value">{jobTypeLabels}</span></div>
             <div className="ps-row"><span className="ps-label">Courts</span><span className="ps-value">{courtLabels}</span></div>
+            {form.accountType === "firm" && <div className="ps-row"><span className="ps-label">Reporters</span><span className="ps-value">{form.firmReporterCount} reporters (${form.firmReporterCount * PRICING.firmPerReporter}/year)</span></div>}
           </div>
           <div className="promo-callout">
             <strong>Your first year's listing fee is waived!</strong>
-            <span>Code PIONEER2026 — $99 value applied to your account</span>
+            <span>Code PIONEER2026 — {form.accountType === "firm" ? "$" + (form.firmReporterCount * PRICING.firmPerReporter) + " value" : "$99 value"} applied to your account</span>
           </div>
           <button className="btn btn-primary" style={{width: "100%", justifyContent: "center", fontSize: 16}} onClick={() => navigate("#/reporter")}>Go to Dashboard <Icon name="arrowRight" size={16} /></button>
         </div>
@@ -4636,7 +4765,7 @@ function ReporterOnboarding() {
     );
   }
 
-  const step = screen; // 1-4
+  const step = screen - 1; // screens 2-5 map to steps 1-4
   const stepTitles = [
     null,
     ["Your Credentials", "Tell us about your certification and qualifications."],
@@ -4750,7 +4879,7 @@ function ReporterOnboarding() {
         </div>
         <div className="info-callout">
           <div className="callout-icon"><Icon name="shield" size={16} /></div>
-          <p>Dewey Sholes charges a $99/year listing fee. No per-job fees — you keep the full statutory rate for every transcript. Payment within 2 business days of delivery.</p>
+          <p>Dewey Sholes charges a {form.accountType === "firm" ? "$" + PRICING.firmPerReporter + "/reporter/year" : "$" + PRICING.listingFeeIndividual + "/year"} listing fee. No per-job deductions, no agency cut — you keep 100% of the statutory rate for every transcript. Traditional agencies take 50–85%; we take zero from your earnings. Payment within 2 business days of delivery.</p>
         </div>
         <hr className="section-divider" />
         <div className="form-group">
@@ -4779,7 +4908,7 @@ function ReporterOnboarding() {
       </>)}
 
       <div className="onboarding-nav">
-        <button className="btn btn-secondary" onClick={() => setScreen(screen === 1 ? 0 : screen - 1)}>
+        <button className="btn btn-secondary" onClick={() => setScreen(screen === 2 ? 1 : screen - 1)}>
           <Icon name="chevronRight" size={14} style={{transform: "rotate(180deg)"}} /> Back
         </button>
         {step < 4 ? (
@@ -4787,7 +4916,7 @@ function ReporterOnboarding() {
             Continue <Icon name="arrowRight" size={14} />
           </button>
         ) : (
-          <button className="btn btn-primary" style={{background: "linear-gradient(135deg, #059669, #10B981)"}} onClick={() => setScreen(5)}>
+          <button className="btn btn-primary" style={{background: "linear-gradient(135deg, #059669, #10B981)"}} onClick={() => setScreen(6)}>
             Create Account <Icon name="checkCircle" size={14} />
           </button>
         )}
@@ -4820,7 +4949,7 @@ function AttorneyOnboarding() {
           <div className="value-prop-card">
             <div className="vp-icon green"><Icon name="dollarSign" size={24} color="#059669" /></div>
             <h3>Transparent pricing</h3>
-            <p>California statutory rates. See your price before you order. No negotiation, no surprises.</p>
+            <p>California statutory rates plus a flat 12% platform fee. Your reporter keeps the full rate — no agency markup.</p>
           </div>
           <div className="value-prop-card">
             <div className="vp-icon blue"><Icon name="fileText" size={24} color="#2563EB" /></div>
@@ -5629,7 +5758,7 @@ function LandingPage() {
             {[
               { icon: "zap", title: "Jobs that find you", desc: "Get notified of live attendance and transcription jobs matching your jurisdiction, case type, and geographic preferences.", bg: "linear-gradient(135deg, #2563EB, #06B6D4)" },
               { icon: "shield", title: "Your credentials, verified", desc: "License verification is automated. Your CSR number is confirmed at onboarding and re-checked continuously. Tax information (W-9) is collected at your first payout — no paperwork upfront.", bg: "linear-gradient(135deg, #059669, #14B8A6)" },
-              { icon: "clock", title: "Transparent earnings", desc: "See your expected payout before accepting. Statutory rates, clear platform fees, automatic payment on delivery.", bg: "linear-gradient(135deg, #F59E0B, #F97316)" },
+              { icon: "clock", title: "Keep 100% of your rate", desc: "You keep the full statutory rate on every job — no agency cut, no per-job fees. See your exact payout before accepting. Payment within 2 business days of delivery.", bg: "linear-gradient(135deg, #F59E0B, #F97316)" },
             ].map((c, i) => (
               <div className="reporter-card" key={i}>
                 <div className="reporter-card-icon" style={{background: c.bg}}><Icon name={c.icon} size={20} color="#fff" /></div>
@@ -5666,7 +5795,7 @@ function LandingPage() {
                 <div className="price">~$0.85 <span>/ page</span></div>
               </div>
               <div style={{marginTop: 16, background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: 12, padding: 16, fontSize: 13, color: "#1E40AF", lineHeight: 1.7}}>
-                <strong>Note:</strong> Prices shown are statutory transcript rates set by CA Gov. Code § 69950. A 12% platform service fee is added at checkout. Total price shown at order entry.
+                <strong>Note:</strong> Prices shown are statutory transcript rates set by CA Gov. Code § 69950. Attorneys pay a flat 12% platform fee at checkout — reporters keep the full statutory rate. Total price shown at order entry.
               </div>
               <div className="pricing-note">
                 <strong>Why "approximately"?</strong> California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count, not the estimate.
@@ -5681,6 +5810,65 @@ function LandingPage() {
             </div>
           </div>
           <PricingCalculator />
+
+          {/* Competitive Comparison */}
+          <div className="pricing-comparison">
+            <div className="pricing-comparison-header">
+              <h3>Where does your money go?</h3>
+              <p>Most agencies keep the majority of what you pay. We don't.</p>
+            </div>
+            <div className="comparison-cards">
+              <div className="comparison-card agency">
+                <div className="comp-label">Traditional Agency</div>
+                <div className="comp-stat">Reporter sees 15–50%</div>
+                <div className="comp-detail">Agencies mark up the statutory rate by 50–85%. The reporter who did the work may see as little as 16 cents of every dollar you paid.</div>
+              </div>
+              <div className="comparison-card dewey">
+                <div className="comp-label">Dewey Sholes</div>
+                <div className="comp-stat">Reporter keeps 100%</div>
+                <div className="comp-detail">You pay the statutory rate plus a flat 12% platform fee. The reporter receives the full statutory rate — no middleman cut, no markup.</div>
+              </div>
+            </div>
+            <div className="comparison-footnote">The 12% platform fee is paid by the attorney. Reporters pay a flat annual listing fee only — no per-job deductions.</div>
+          </div>
+
+          {/* Reporter Listing Tiers */}
+          <div style={{marginTop: 64}}>
+            <div className="section-header">
+              <h2>Reporter <span className="gradient-text">listing plans</span></h2>
+              <p>No agency taking 50–85% of your earnings. List your practice, accept jobs directly, and keep 100% of the statutory rate on every transcript.</p>
+            </div>
+            <div className="reporter-tiers">
+              <div className="reporter-tier-card">
+                <h3>Individual Reporter</h3>
+                <div className="tier-sub">For solo CSRs building their own book of business.</div>
+                <div className="reporter-tier-price">${PRICING.listingFeeIndividual}<span> / year</span></div>
+                <ul className="reporter-tier-features">
+                  <li><Icon name="checkCircle" size={16} color="#059669" />Full profile on the marketplace</li>
+                  <li><Icon name="checkCircle" size={16} color="#059669" />SMS & email job alerts</li>
+                  <li><Icon name="checkCircle" size={16} color="#059669" />2-business-day direct deposit</li>
+                  <li><Icon name="checkCircle" size={16} color="#059669" />CSR license auto-verification</li>
+                  <li><Icon name="checkCircle" size={16} color="#059669" />Keep 100% of statutory rate — no agency cut</li>
+                </ul>
+                <a href="#/reporter-signup" className="btn btn-secondary">Get Started</a>
+              </div>
+              <div className="reporter-tier-card featured">
+                <div className="reporter-tier-badge">Best for Small Firms</div>
+                <h3>Firm Account</h3>
+                <div className="tier-sub">Centralized billing & one dashboard for your practice.</div>
+                <div className="reporter-tier-price">${PRICING.firmPerReporter}<span> / reporter / year</span><span className="tier-discount">Save 20%</span></div>
+                <ul className="reporter-tier-features">
+                  <li><Icon name="checkCircle" size={16} color="#059669" />Everything in Individual, plus:</li>
+                  <li><Icon name="checkCircle" size={16} color="#059669" />{PRICING.firmMinReporters}–{PRICING.firmMaxReporters} reporters under one account</li>
+                  <li><Icon name="checkCircle" size={16} color="#059669" />Single invoice, centralized billing</li>
+                  <li><Icon name="checkCircle" size={16} color="#059669" />Firm-wide availability dashboard</li>
+                  <li><Icon name="checkCircle" size={16} color="#059669" />Add or remove reporters anytime</li>
+                </ul>
+                <a href="#/reporter-signup" className="btn btn-primary">Start Firm Signup</a>
+                <div className="reporter-tier-note">Designed for independent practices, not staffing agencies</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
