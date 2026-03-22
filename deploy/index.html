@@ -2786,7 +2786,7 @@ function OrderFlow() {
   const [form, setForm] = useState({
     type: "", court: "", dept: "", caseNumber: "", caseName: "", caseType: "Family Law",
     hearingDate: "", hearingTime: "", duration: "60", interpreter: false, interpreterLang: "",
-    audioFile: "", turnaround: "standard", feeWaiver: false, notes: "",
+    audioFile: "", reporterPref: "", selectedReporter: null, turnaround: "standard", feeWaiver: false, notes: "",
   });
   const [submitted, setSubmitted] = useState(false);
   const update = (k, v) => setForm(f => ({ ...f, [k]: v }));
@@ -2847,7 +2847,7 @@ function OrderFlow() {
           <div className="page-header" style={{justifyContent: "center", textAlign: "center", display: "block"}}>
             <h1>New transcript order</h1>
           </div>
-          <StepIndicator current={step} total={4} />
+          <StepIndicator current={step} total={5} />
 
           {/* Step 1: Type */}
           {step === 1 && (
@@ -2999,8 +2999,74 @@ function OrderFlow() {
             </div>
           )}
 
-          {/* Step 3: Turnaround & Pricing */}
+          {/* Step 3: Reporter preference */}
           {step === 3 && (
+            <div>
+              <div className="section-header" style={{marginBottom: 32}}>
+                <h2 style={{fontSize: 24}}>Reporter preference</h2>
+                <p style={{color: "var(--text-secondary, #64748B)"}}>Choose how you'd like to be matched with a court reporter.</p>
+              </div>
+              <div style={{display: "flex", flexDirection: "column", gap: 12}}>
+                {[
+                  { val: "auto", icon: "zap", label: "Match me with the best available", desc: "Platform assigns the highest-rated, available reporter for your jurisdiction and case type.", badge: "Fastest" },
+                  { val: "favorite", icon: "star", label: "Choose from my favorites", desc: "Select from reporters you've worked with before. They get an exclusive window to accept.", badge: "Preferred" },
+                  { val: "top", icon: "award", label: "Choose from top rated", desc: "Browse the highest-rated reporters available for this job, including ones you haven't worked with yet.", badge: null },
+                ].map(opt => (
+                  <div key={opt.val} style={{display: "flex", alignItems: "flex-start", gap: 16, padding: 20, background: form.reporterPref === opt.val ? "var(--bg-card, #EFF6FF)" : "var(--bg-card, #fff)", border: form.reporterPref === opt.val ? "2px solid #3B82F6" : "1px solid var(--border, #E2E8F0)", borderRadius: 12, cursor: "pointer", transition: "all 0.15s"}} onClick={() => { update("reporterPref", opt.val); update("selectedReporter", null); }}>
+                    <div style={{width: 44, height: 44, borderRadius: 12, background: form.reporterPref === opt.val ? "#2563EB" : "var(--bg-muted, #F1F5F9)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
+                      <Icon name={opt.icon} size={20} color={form.reporterPref === opt.val ? "#fff" : "#64748B"} />
+                    </div>
+                    <div style={{flex: 1}}>
+                      <div style={{display: "flex", alignItems: "center", gap: 8}}>
+                        <span style={{fontWeight: 600, fontSize: 15, color: "var(--text, #0F172A)"}}>{opt.label}</span>
+                        {opt.badge && <span style={{fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 100, background: opt.val === "auto" ? "#DBEAFE" : "#FEF3C7", color: opt.val === "auto" ? "#1D4ED8" : "#92400E", textTransform: "uppercase", letterSpacing: "0.03em"}}>{opt.badge}</span>}
+                      </div>
+                      <div style={{fontSize: 13, color: "var(--text-secondary, #64748B)", marginTop: 4, lineHeight: 1.5}}>{opt.desc}</div>
+                    </div>
+                    <div style={{flexShrink: 0, marginTop: 4}}>
+                      <div style={{width: 20, height: 20, borderRadius: "50%", border: form.reporterPref === opt.val ? "6px solid #2563EB" : "2px solid #CBD5E1", background: "#fff"}} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {(form.reporterPref === "favorite" || form.reporterPref === "top") && (
+                <div style={{marginTop: 24}}>
+                  <label className="form-label" style={{marginBottom: 12}}>{form.reporterPref === "favorite" ? "Your favorite reporters" : "Top-rated reporters for this job"}</label>
+                  <div style={{display: "flex", flexDirection: "column", gap: 8}}>
+                    {MOCK_REPORTERS.map(r => {
+                      const isSelected = form.selectedReporter === r.id;
+                      return (
+                        <div key={r.id} style={{display: "flex", alignItems: "center", gap: 12, padding: 16, background: isSelected ? "var(--bg-card, #EFF6FF)" : "var(--bg-card, #fff)", border: isSelected ? "2px solid #3B82F6" : "1px solid var(--border, #E2E8F0)", borderRadius: 12, cursor: "pointer", transition: "all 0.15s"}} onClick={() => update("selectedReporter", r.id)}>
+                          <div style={{width: 44, height: 44, borderRadius: "50%", background: isSelected ? "#2563EB" : "#E2E8F0", display: "flex", alignItems: "center", justifyContent: "center", color: isSelected ? "#fff" : "#64748B", fontWeight: 700, fontSize: 14, flexShrink: 0}}>{r.initials}</div>
+                          <div style={{flex: 1, minWidth: 0}}>
+                            <div style={{fontWeight: 600, fontSize: 14, color: "var(--text, #0F172A)"}}>{r.name}</div>
+                            <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)"}}>CSR #{r.csrNumber} · {r.rating} <span style={{color: "#F59E0B"}}>{'*'.repeat(Math.round(r.rating))}</span> · {r.reviewCount} reviews</div>
+                            <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginTop: 2}}>{r.stats.onTimeRate}% on time · {r.counties.join(", ")}</div>
+                          </div>
+                          <div style={{flexShrink: 0, textAlign: "right"}}>
+                            {form.reporterPref === "favorite" && <div style={{fontSize: 10, fontWeight: 600, color: "#D97706", marginBottom: 4}}>Favorited</div>}
+                            <div style={{display: "flex", alignItems: "center", gap: 4}}>
+                              <span style={{fontSize: 12, color: r.availability[0][0] ? "#059669" : "#DC2626", fontWeight: 600}}>{r.availability[0][0] ? "Available" : "Busy"}</span>
+                              <div style={{width: 8, height: 8, borderRadius: "50%", background: r.availability[0][0] ? "#059669" : "#DC2626"}} />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              <div style={{display: "flex", gap: 12, marginTop: 24}}>
+                <button className="btn btn-secondary btn-sm" onClick={() => setStep(2)}>Back</button>
+                <button className="btn btn-primary btn-sm" onClick={() => setStep(4)} disabled={!form.reporterPref}>Continue <Icon name="arrowRight" size={14} color="#fff" /></button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 4: Turnaround & Pricing */}
+          {step === 4 && (
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
                 <h2 style={{fontSize: 24}}>Turnaround &amp; pricing</h2>
@@ -3047,14 +3113,14 @@ function OrderFlow() {
                 </label>
               </div>
               <div style={{display: "flex", gap: 12, marginTop: 24}}>
-                <button className="btn btn-secondary btn-sm" onClick={() => setStep(2)}>Back</button>
-                <button className="btn btn-primary btn-sm" onClick={() => setStep(4)}>Review order <Icon name="arrowRight" size={14} color="#fff" /></button>
+                <button className="btn btn-secondary btn-sm" onClick={() => setStep(3)}>Back</button>
+                <button className="btn btn-primary btn-sm" onClick={() => setStep(5)}>Review order <Icon name="arrowRight" size={14} color="#fff" /></button>
               </div>
             </div>
           )}
 
-          {/* Step 4: Review */}
-          {step === 4 && (
+          {/* Step 5: Review */}
+          {step === 5 && (
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
                 <h2 style={{fontSize: 24}}>Review your order</h2>
@@ -3099,8 +3165,13 @@ function OrderFlow() {
                   {form.feeWaiver && <p style={{fontSize: 12, color: "#2563EB", marginTop: 8}}>Fee waiver indicated. TRF reimbursement paperwork will be generated upon delivery.</p>}
                 </div>
               </div>
+              <div className="review-section-card">
+                <h3><Icon name="users" size={14} /> Reporter preference</h3>
+                <div className="price-line"><span>Matching</span><strong>{form.reporterPref === "auto" ? "Best available" : form.reporterPref === "favorite" ? "From favorites" : "Top rated"}</strong></div>
+                {form.selectedReporter && <div className="price-line"><span>Selected</span><strong>{(MOCK_REPORTERS.find(r => r.id === form.selectedReporter) || {}).name || "—"}</strong></div>}
+              </div>
               <div style={{display: "flex", gap: 12, marginTop: 24}}>
-                <button className="btn btn-secondary btn-sm" onClick={() => setStep(3)}>Back</button>
+                <button className="btn btn-secondary btn-sm" onClick={() => setStep(4)}>Back</button>
                 <button className="btn btn-primary" onClick={() => setSubmitted(true)}>Submit order <Icon name="arrowRight" size={16} color="#fff" /></button>
               </div>
             </div>
@@ -4946,10 +5017,12 @@ function ReporterOnboarding() {
 // ─── Attorney Onboarding ────────────────────────────────────────
 function AttorneyOnboarding() {
   const [screen, setScreen] = useState(0);
+  const [reporterSearch, setReporterSearch] = useState("");
   const [form, setForm] = useState({
     name: "", email: "", firmName: "", phone: "",
     barNumber: "", practiceAreas: [],
     courts: [], currentMethod: "",
+    favoriteReporters: [],
     billingPref: "", notifStatus: true, notifAssignment: true, notifDelivery: true, notifMarketing: false,
     password: "", confirmPassword: "",
   });
@@ -4989,8 +5062,8 @@ function AttorneyOnboarding() {
     );
   }
 
-  // Screen 6: Success
-  if (screen === 6) {
+  // Screen 7: Success
+  if (screen === 7) {
     const courtLabels = form.courts.length ? form.courts.map(id => { const c = COURTS.find(x => x.id === id); return c ? c.name : id; }).slice(0, 3).join(", ") + (form.courts.length > 3 ? ` +${form.courts.length - 3} more` : "") : "Not specified";
     const practiceLabels = form.practiceAreas.length ? form.practiceAreas.join(", ") : "Not specified";
     return (
@@ -5019,6 +5092,7 @@ function AttorneyOnboarding() {
             <div className="ps-row"><span className="ps-label">Bar number</span><span className="ps-value">{form.barNumber || "—"}</span></div>
             <div className="ps-row"><span className="ps-label">Practice areas</span><span className="ps-value">{practiceLabels}</span></div>
             <div className="ps-row"><span className="ps-label">Courts</span><span className="ps-value">{courtLabels}</span></div>
+            <div className="ps-row"><span className="ps-label">Favorite reporters</span><span className="ps-value">{form.favoriteReporters.length > 0 ? form.favoriteReporters.map(id => { const r = MOCK_REPORTERS.find(x => x.id === id); return r ? r.name : id; }).join(", ") : "None yet"}</span></div>
           </div>
           <div className="promo-callout">
             <strong>Your first order ships free of platform fees!</strong>
@@ -5036,6 +5110,7 @@ function AttorneyOnboarding() {
     ["About you & your firm", "We'll use this to set up your account and match you with reporters."],
     ["Your practice", "Help us understand what kind of cases you handle."],
     ["Courts & workflow", "Where do you practice, and how do you currently order transcripts?"],
+    ["Reporters you work with", "Already have reporters you trust? Add them as favorites so they appear first when you place orders."],
     ["Billing & notifications", "How you'll pay and stay informed."],
     ["Set your password", "Almost there — just set your password."]
   ];
@@ -5045,7 +5120,7 @@ function AttorneyOnboarding() {
       <div style={{marginBottom: 32, textAlign: "center"}}>
         <a href="#/" style={{display: "inline-flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
       </div>
-      <StepIndicator current={step} total={5} labels={["You", "Practice", "Courts", "Billing", "Password"]} />
+      <StepIndicator current={step} total={6} labels={["You", "Practice", "Courts", "Reporters", "Billing", "Password"]} />
       <div style={{height: 28}} />
       <div className="reporter-step-header" style={{textAlign: "left"}}>
         <h2 style={{fontSize: 24, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 6}}>{stepTitles[step][0]}</h2>
@@ -5108,6 +5183,47 @@ function AttorneyOnboarding() {
 
       {step === 4 && (<>
         <div className="form-group">
+          <label className="form-label">Search by name or CSR license number</label>
+          <input className="form-input" placeholder="e.g. Sarah Chen or CSR #14892" value={reporterSearch} onChange={e => setReporterSearch(e.target.value)} />
+        </div>
+        <div style={{display: "flex", flexDirection: "column", gap: 8, marginTop: 8}}>
+          {MOCK_REPORTERS.filter(r => {
+            if (!reporterSearch) return true;
+            const q = reporterSearch.toLowerCase();
+            return r.name.toLowerCase().includes(q) || r.csrNumber.includes(q);
+          }).map(r => {
+            const isFav = form.favoriteReporters.includes(r.id);
+            return (
+              <div key={r.id} style={{display: "flex", alignItems: "center", gap: 12, padding: 16, background: isFav ? "var(--bg-card, #EFF6FF)" : "var(--bg-card, #fff)", border: isFav ? "2px solid #3B82F6" : "1px solid var(--border, #E2E8F0)", borderRadius: 12, cursor: "pointer", transition: "all 0.15s"}} onClick={() => toggleArr("favoriteReporters", r.id)}>
+                <div style={{width: 44, height: 44, borderRadius: "50%", background: isFav ? "#2563EB" : "#E2E8F0", display: "flex", alignItems: "center", justifyContent: "center", color: isFav ? "#fff" : "#64748B", fontWeight: 700, fontSize: 14, flexShrink: 0}}>{r.initials}</div>
+                <div style={{flex: 1, minWidth: 0}}>
+                  <div style={{fontWeight: 600, fontSize: 14, color: "var(--text, #0F172A)"}}>{r.name}</div>
+                  <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)"}}>CSR #{r.csrNumber} · {r.certifications.join(", ")} · {r.counties.join(", ")}</div>
+                  <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginTop: 2}}>{r.stats.jobsCompleted} jobs · {r.rating} rating · {r.stats.onTimeRate}% on time</div>
+                </div>
+                <div style={{flexShrink: 0}}>
+                  {isFav ? (
+                    <div style={{display: "flex", alignItems: "center", gap: 4, color: "#2563EB", fontSize: 12, fontWeight: 600}}><Icon name="checkCircle" size={16} color="#2563EB" /> Favorited</div>
+                  ) : (
+                    <div style={{display: "flex", alignItems: "center", gap: 4, color: "#94A3B8", fontSize: 12, fontWeight: 500}}><Icon name="star" size={16} color="#94A3B8" /> Add</div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        {form.favoriteReporters.length > 0 && (
+          <div style={{marginTop: 16, padding: 12, background: "var(--bg-muted, #F0FDF4)", border: "1px solid #BBF7D0", borderRadius: 8, fontSize: 13, color: "#065F46"}}>
+            <Icon name="checkCircle" size={14} color="#059669" /> {form.favoriteReporters.length} reporter{form.favoriteReporters.length > 1 ? "s" : ""} added as favorites. They'll get priority when you place orders.
+          </div>
+        )}
+        <div style={{marginTop: 16, padding: 12, background: "var(--bg-muted, #F8FAFC)", borderRadius: 8, fontSize: 13, color: "var(--text-secondary, #64748B)", lineHeight: 1.6}}>
+          Don't see your reporter? No problem — they may not be on the platform yet. We'll let you know when they join, and you can always add favorites later from your dashboard.
+        </div>
+      </>)}
+
+      {step === 5 && (<>
+        <div className="form-group">
           <label className="form-label">Billing preference</label>
           <div className="method-cards">
             <div className={"method-card" + (form.billingPref === "per-order" ? " selected" : "")} onClick={() => update("billingPref", "per-order")}>
@@ -5130,7 +5246,7 @@ function AttorneyOnboarding() {
         </div>
       </>)}
 
-      {step === 5 && (<>
+      {step === 6 && (<>
         <div className="form-group"><label className="form-label">Password</label><input className="form-input" type="password" placeholder="Create a password" value={form.password} onChange={e => update("password", e.target.value)} /><p className="form-helper">At least 8 characters with one number and one special character.</p></div>
         <div className="form-group"><label className="form-label">Confirm password</label><input className="form-input" type="password" placeholder="Confirm your password" value={form.confirmPassword} onChange={e => update("confirmPassword", e.target.value)} /></div>
         <div className="info-callout" style={{marginTop: 24}}>
@@ -5143,12 +5259,12 @@ function AttorneyOnboarding() {
         <button className="btn btn-secondary" onClick={() => setScreen(screen === 1 ? 0 : screen - 1)}>
           <Icon name="chevronRight" size={14} style={{transform: "rotate(180deg)"}} /> Back
         </button>
-        {step < 5 ? (
+        {step < 6 ? (
           <button className="btn btn-primary" onClick={() => setScreen(screen + 1)}>
-            Continue <Icon name="arrowRight" size={14} />
+            {step === 4 && form.favoriteReporters.length === 0 ? "Skip for now" : "Continue"} <Icon name="arrowRight" size={14} />
           </button>
         ) : (
-          <button className="btn btn-primary" style={{background: "linear-gradient(135deg, #059669, #10B981)"}} onClick={() => setScreen(6)}>
+          <button className="btn btn-primary" style={{background: "linear-gradient(135deg, #059669, #10B981)"}} onClick={() => setScreen(7)}>
             Create account <Icon name="checkCircle" size={14} />
           </button>
         )}
