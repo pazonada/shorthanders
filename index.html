@@ -1758,7 +1758,8 @@ const MOCK_JOBS = [
 
 const MOCK_ACTIVE_JOBS = [
   { id: "aj-1", court: "LA Superior Court - Stanley Mosk", dept: "Dept. 56", caseType: "Family Law", type: "live", hearingDate: "2026-03-28", dueDate: "2026-04-02", pages: 45, earnings: 165.15, status: "transcribing" },
-  { id: "aj-2", court: "SF Superior Court", dept: "Dept. 301", caseType: "Civil", type: "transcription", hearingDate: "2026-03-10", dueDate: "2026-03-17", pages: 52, earnings: 190.84, status: "review" },
+  { id: "aj-2", court: "SF Superior Court", dept: "Dept. 301", caseType: "Civil", type: "transcription", hearingDate: "2026-03-10", dueDate: "2026-03-17", pages: 52, earnings: 190.84, status: "delivered", deliveredFile: "Davis_v_Metro_Transit_Final.pdf", deliveredAt: "2026-03-15T14:32:00" },
+  { id: "aj-3", court: "Contra Costa Superior Court", dept: "Dept. 12", caseType: "Probate", type: "transcription", hearingDate: "2026-03-05", dueDate: "2026-03-22", pages: 38, earnings: 139.46, status: "review" },
 ];
 
 const MOCK_PAYOUTS = [
@@ -3748,7 +3749,7 @@ function ReporterDashboard() {
                   <div className="deadline-item" key={j.id}>
                     <span className="deadline-date">{new Date(j.dueDate).toLocaleDateString("en-US", {month: "short", day: "numeric"})}</span>
                     <span className="deadline-case">{j.caseType} — {j.court.split(" - ")[0]}</span>
-                    <span className={"badge badge-" + (j.status === "review" ? "pending" : "progress")}>{j.status === "review" ? "In review" : "Transcribing"}</span>
+                    <span className={"badge badge-" + (j.status === "delivered" ? "success" : j.status === "review" ? "pending" : "progress")}>{j.status === "delivered" ? "Delivered" : j.status === "review" ? "In review" : "Transcribing"}</span>
                   </div>
                 ))}
               </div>
@@ -3758,10 +3759,10 @@ function ReporterDashboard() {
                     <div className="job-card-top">
                       <div className="job-card-badges">
                         <span className={"badge badge-" + (j.type === "live" ? "live" : "transcription")}>{j.type === "live" ? "Live" : "Transcription"}</span>
-                        <span className="badge badge-progress">{j.status === "transcribing" ? "Transcribing" : "In review"}</span>
+                        <span className={"badge badge-" + (j.status === "delivered" ? "success" : j.status === "transcribing" ? "progress" : "pending")}>{j.status === "delivered" ? "Delivered" : j.status === "transcribing" ? "Transcribing" : "In review"}</span>
                       </div>
-                      <span style={{fontSize: 13, fontWeight: 600, color: j.status === "review" ? "#D97706" : "#2563EB"}}>
-                        Due {j.dueDate}
+                      <span style={{fontSize: 13, fontWeight: 600, color: j.status === "delivered" ? "#059669" : j.status === "review" ? "#D97706" : "#2563EB"}}>
+                        {j.status === "delivered" ? "Pending attorney review" : "Due " + j.dueDate}
                       </span>
                     </div>
                     <h3>{j.court}, {j.dept}</h3>
@@ -3769,6 +3770,17 @@ function ReporterDashboard() {
                       <span><Icon name="scale" size={13} color="#94A3B8" /> {j.caseType}</span>
                       <span><Icon name="fileText" size={13} color="#94A3B8" /> {j.pages} pages</span>
                     </div>
+                    {j.status === "delivered" && (
+                      <div style={{background: "var(--bg-card, #F0FDF4)", border: "1px solid var(--border, #BBF7D0)", borderRadius: 8, padding: 12, margin: "8px 0", fontSize: 13}}>
+                        <div style={{display: "flex", alignItems: "center", gap: 8, marginBottom: 6}}>
+                          <Icon name="checkCircle" size={14} color="#059669" />
+                          <strong style={{color: "var(--text, #065F46)"}}>{j.deliveredFile}</strong>
+                        </div>
+                        <div style={{color: "var(--text-muted, #6B7280)", fontSize: 12}}>
+                          Uploaded {new Date(j.deliveredAt).toLocaleDateString("en-US", {month: "short", day: "numeric"})} at {new Date(j.deliveredAt).toLocaleTimeString("en-US", {hour: "numeric", minute: "2-digit"})} — attorney has 2 business days to review before auto-release.
+                        </div>
+                      </div>
+                    )}
                     <div className="job-card-bottom">
                       <div className="earnings">${j.earnings.toFixed(2)}</div>
                       <div style={{display: "flex", gap: 8}}>
@@ -3776,9 +3788,15 @@ function ReporterDashboard() {
                           <Icon name="messageCircle" size={13} /> Message
                           {MOCK_UNREAD[j.id] > 0 && <span className="unread-dot">{MOCK_UNREAD[j.id]}</span>}
                         </button>
-                        <button className="btn btn-primary btn-sm">
-                          {j.status === "transcribing" ? "Upload transcript" : "Submit for certification"}
-                        </button>
+                        {j.status === "delivered" ? (
+                          <button className="btn btn-sm" style={{padding: "6px 12px", fontSize: 12, background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => alert("Transcript withdrawn. You can now upload a corrected version.")}>
+                            <Icon name="x" size={13} /> Withdraw & re-upload
+                          </button>
+                        ) : (
+                          <button className="btn btn-primary btn-sm">
+                            {j.status === "transcribing" ? "Upload transcript" : "Submit for certification"}
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
