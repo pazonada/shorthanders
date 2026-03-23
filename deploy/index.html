@@ -1610,6 +1610,8 @@ const Icon = ({ name, size = 20, color = "currentColor", strokeWidth = 2 }) => {
     clock: <><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></>,
     shield: <><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></>,
     chevronRight: <><polyline points="9 18 15 12 9 6"/></>,
+    chevronDown: <><polyline points="6 9 12 15 18 9"/></>,
+    chevronUp: <><polyline points="18 15 12 9 6 15"/></>,
     users: <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>,
     zap: <><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></>,
     arrowRight: <><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></>,
@@ -1810,12 +1812,12 @@ const PRICING = {
 
 // ─── Notifications Mock Data ─────────────────────────────────────
 const MOCK_NOTIFICATIONS = [
-  { id: "n1", type: "status", title: "Reporter assigned", message: "Sarah Chen, CSR #14892 has been assigned to Martinez v. Pacific Holdings.", time: "10 min ago", read: false, route: "#/dashboard", icon: "users", color: "#2563EB", bg: "#EFF6FF" },
-  { id: "n2", type: "message", title: "New message", message: "Sarah Chen sent a message about the Martinez hearing transcript.", time: "25 min ago", read: false, route: "#/dashboard", icon: "messageCircle", color: "#059669", bg: "#D1FAE5" },
-  { id: "n3", type: "delivery", title: "Transcript delivered", message: "In re Estate of Williams transcript is ready for download.", time: "1 hour ago", read: false, route: "#/dashboard", icon: "fileText", color: "#7C3AED", bg: "#F3E8FF" },
-  { id: "n4", type: "status", title: "Order confirmed", message: "Your rush order for Chen v. Westbrook Properties has been confirmed.", time: "2 hours ago", read: true, route: "#/dashboard", icon: "checkCircle", color: "#059669", bg: "#D1FAE5" },
-  { id: "n5", type: "job", title: "New job available", message: "Family Law hearing at LA Superior Court - Van Nuys, Dept. 7 on Apr 2.", time: "45 min ago", read: false, route: "#/reporter", icon: "zap", color: "#D97706", bg: "#FEF3C7" },
-  { id: "n6", type: "status", title: "Certification complete", message: "Martinez v. Pacific Holdings transcript has been certified.", time: "3 hours ago", read: true, route: "#/dashboard", icon: "shield", color: "#2563EB", bg: "#EFF6FF" },
+  { id: "n1", type: "job", title: "Job accepted", message: "Reporter Sarah Chen accepted your job.", time: "2 hours ago", read: false, route: "#/dashboard", icon: "checkCircle", color: "#059669", bg: "#D1FAE5" },
+  { id: "n2", type: "delivery", title: "Transcript delivered", message: "Transcript delivered for Walsh v. Henderson.", time: "5 hours ago", read: false, route: "#/dashboard", icon: "fileText", color: "#7C3AED", bg: "#F3E8FF" },
+  { id: "n3", type: "status", title: "Order in progress", message: "Your order #DS-2026-0042 is in progress.", time: "1 day ago", read: false, route: "#/dashboard", icon: "zap", color: "#D97706", bg: "#FEF3C7" },
+  { id: "n4", type: "status", title: "New reporter match", message: "New reporter match in San Francisco.", time: "2 days ago", read: false, route: "#/reporters", icon: "users", color: "#2563EB", bg: "#EFF6FF" },
+  { id: "n5", type: "status", title: "Invoice ready", message: "Invoice #INV-0089 is ready for review.", time: "3 days ago", read: false, route: "#/dashboard", icon: "fileText", color: "#2563EB", bg: "#EFF6FF" },
+  { id: "n6", type: "job", title: "New job available", message: "Family Law hearing at LA Superior Court - Van Nuys, Dept. 7 on Apr 2.", time: "45 min ago", read: false, route: "#/reporter", icon: "zap", color: "#D97706", bg: "#FEF3C7" },
 ];
 
 // ─── Messages Mock Data ─────────────────────────────────────────
@@ -6448,10 +6450,11 @@ function LandingPage() {
             <div>
               <h4>Company</h4>
               <ul>
-                <li><a href="#">About</a></li>
+                <li><a href="#/about">About</a></li>
                 <li><a href="#/contact">Contact</a></li>
-                <li><a href="#">Privacy policy</a></li>
-                <li><a href="#">Terms of service</a></li>
+                <li><a href="#/faq">FAQ</a></li>
+                <li><a href="#/privacy">Privacy policy</a></li>
+                <li><a href="#/terms">Terms of service</a></li>
               </ul>
             </div>
           </div>
@@ -6802,6 +6805,223 @@ function ContactPage() {
   );
 }
 
+// ─── FAQ Page ───────────────────────────────────────────────────
+function FaqPage() {
+  const [openId, setOpenId] = useState(null);
+  const toggle = (id) => setOpenId(prev => prev === id ? null : id);
+
+  const sections = [
+    { title: "For attorneys", items: [
+      { id: "a1", q: "How do I place a transcript order?", a: "Click \"Get started\" from the homepage, choose live attendance or post-hearing transcription, enter your case details, select a turnaround tier, and submit. We'll match you with a qualified reporter, usually within hours." },
+      { id: "a2", q: "How does billing work?", a: "We charge a flat 12% buyer-side transaction fee on each order. Payment is processed securely through Stripe when the transcript is delivered. You'll receive an itemized invoice for your records." },
+      { id: "a3", q: "What if I'm unhappy with a transcript?", a: "You have 5 business days after delivery to request corrections. If there's a substantive dispute about accuracy, our support team will review and mediate. We stand behind the quality of every certified transcript on our platform." },
+      { id: "a4", q: "Can I choose a specific reporter?", a: "Yes. When placing an order you can browse available reporters filtered by jurisdiction, specialty, language, and rating. You can also save favorites for future orders." },
+      { id: "a5", q: "What turnaround options are available?", a: "We offer three tiers: Rush (24\u201348 hours), Expedited (3\u20135 business days), and Standard (2+ weeks). Pricing adjusts based on the turnaround you select." },
+    ]},
+    { title: "For reporters", items: [
+      { id: "r1", q: "How do I get started as a reporter on Dewey Sholes?", a: "Sign up through our reporter onboarding flow. You'll need to provide your CSR license number, jurisdiction coverage, specialties, and availability. We verify your credentials with the California DCA before activating your profile." },
+      { id: "r2", q: "How and when do I get paid?", a: "Payment is released automatically once you deliver and certify a transcript. Funds are deposited to your linked bank account via Stripe, typically within 2\u20133 business days after delivery." },
+      { id: "r3", q: "How does job matching work?", a: "You'll receive notifications for jobs that match your jurisdiction, case type preferences, and availability. You can accept or decline each job. Accepted jobs appear in your dashboard with all case materials." },
+      { id: "r4", q: "What are the listing fees?", a: "Individual reporter listing is $99 per year. We also offer a firm tier at $79 per year per reporter for groups of 3\u201310 reporters." },
+    ]},
+    { title: "General", items: [
+      { id: "g1", q: "Is my data secure?", a: "Yes. All data is encrypted in transit and at rest. We use Stripe for payment processing and are working toward SOC 2 compliance. We never share your personal information with third parties except as needed to process transactions." },
+      { id: "g2", q: "What fees does Dewey Sholes charge?", a: "We charge a 12% buyer-side transaction fee on each order. Reporters pay an annual listing fee of $99 (individual) or $79/reporter (firm tier for 3\u201310 reporters). There are no hidden fees." },
+      { id: "g3", q: "How do I contact support?", a: "Visit our contact page at any time. We respond to all inquiries within 1 business day. You can also reach us by email at support@deweysholes.com." },
+      { id: "g4", q: "Which jurisdictions do you serve?", a: "We're currently serving the San Francisco Bay Area as our pilot region, including San Francisco, Alameda, Contra Costa, San Mateo, and Santa Clara counties. We plan to expand statewide across California soon." },
+    ]},
+  ];
+
+  return (
+    <div>
+      <AppNav variant="buyer" activeTab="" onTabChange={() => navigate("/dashboard")} />
+      <div className="page page-enter">
+        <div className="container" style={{maxWidth: 800}}>
+          <div className="page-header" style={{textAlign: "center", display: "block"}}>
+            <h1>Frequently asked questions</h1>
+            <p style={{color: "var(--text-secondary)", marginTop: 8}}>Find answers to common questions about using Dewey Sholes.</p>
+          </div>
+          {sections.map(section => (
+            <div key={section.title} style={{marginBottom: 40}}>
+              <h2 style={{fontSize: 20, fontWeight: 700, marginBottom: 16}}>{section.title}</h2>
+              <div className="card" style={{overflow: "hidden"}}>
+                {section.items.map((item, i) => (
+                  <div key={item.id} style={{borderBottom: i < section.items.length - 1 ? "1px solid var(--border)" : "none"}}>
+                    <button onClick={() => toggle(item.id)} style={{
+                      width: "100%", padding: "16px 20px", background: "none", border: "none", cursor: "pointer",
+                      display: "flex", justifyContent: "space-between", alignItems: "center", textAlign: "left",
+                      fontSize: 15, fontWeight: 600, color: "var(--text)", fontFamily: "inherit"
+                    }}>
+                      {item.q}
+                      <Icon name={openId === item.id ? "chevronUp" : "chevronDown"} size={16} />
+                    </button>
+                    {openId === item.id && (
+                      <div style={{padding: "0 20px 16px", fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.7}}>
+                        {item.a}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+          <div className="card" style={{padding: 32, textAlign: "center", marginTop: 32}}>
+            <h3 style={{fontSize: 18, marginBottom: 8}}>Still have questions?</h3>
+            <p style={{color: "var(--text-secondary)", marginBottom: 16, fontSize: 14}}>Our support team is happy to help.</p>
+            <a href="#/contact" className="btn btn-primary btn-sm">Contact support</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── About Page ─────────────────────────────────────────────────
+function AboutPage() {
+  return (
+    <div>
+      <AppNav variant="buyer" activeTab="" onTabChange={() => navigate("/dashboard")} />
+      <div className="page page-enter">
+        <div className="container" style={{maxWidth: 800}}>
+          {/* Hero */}
+          <div style={{textAlign: "center", padding: "40px 0 48px"}}>
+            <h1 style={{fontSize: 40, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.15, marginBottom: 16}}>
+              Connecting attorneys with court reporters
+            </h1>
+            <p style={{fontSize: 18, color: "var(--text-secondary)", maxWidth: 600, margin: "0 auto", lineHeight: 1.7}}>
+              Dewey Sholes is a modern marketplace that makes ordering certified court transcripts simple, transparent, and reliable.
+            </p>
+          </div>
+
+          {/* The problem */}
+          <div className="card" style={{padding: 32, marginBottom: 24}}>
+            <h2 style={{fontSize: 22, fontWeight: 700, marginBottom: 12}}>The problem</h2>
+            <p style={{color: "var(--text-secondary)", lineHeight: 1.7, fontSize: 15}}>
+              California is facing a critical shortage of certified shorthand reporters. More than one million court proceedings each year go without official transcripts, leaving attorneys scrambling to find available reporters and self-represented litigants without access to the record. The traditional process of finding, booking, and paying court reporters is fragmented, opaque, and frustrating for everyone involved.
+            </p>
+          </div>
+
+          {/* The solution */}
+          <div className="card" style={{padding: 32, marginBottom: 24}}>
+            <h2 style={{fontSize: 22, fontWeight: 700, marginBottom: 12}}>The solution</h2>
+            <p style={{color: "var(--text-secondary)", lineHeight: 1.7, fontSize: 15}}>
+              Dewey Sholes is a marketplace that matches attorneys and self-represented litigants with verified, licensed court reporters. We handle everything from reporter matching and scheduling to payment processing and transcript delivery. Our platform brings transparency to pricing, accountability to deadlines, and simplicity to a process that has resisted modernization for decades.
+            </p>
+          </div>
+
+          {/* Founders */}
+          <div style={{marginTop: 40, marginBottom: 48}}>
+            <h2 style={{fontSize: 22, fontWeight: 700, marginBottom: 24, textAlign: "center"}}>Our founders</h2>
+            <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24}}>
+              <div className="card" style={{padding: 32, textAlign: "center"}}>
+                <div style={{
+                  width: 72, height: 72, borderRadius: "50%", background: "linear-gradient(135deg, #2563EB, #4F46E5)",
+                  color: "#fff", fontSize: 24, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center",
+                  margin: "0 auto 16px"
+                }}>AD</div>
+                <h3 style={{fontSize: 18, fontWeight: 700, marginBottom: 4}}>Aud</h3>
+                <p style={{fontSize: 13, color: "var(--brand)", fontWeight: 600, marginBottom: 12}}>Technical co-founder</p>
+                <p style={{fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.6}}>
+                  Building the technology platform that powers Dewey Sholes, from marketplace infrastructure to reporter matching and workflow automation.
+                </p>
+              </div>
+              <div className="card" style={{padding: 32, textAlign: "center"}}>
+                <div style={{
+                  width: 72, height: 72, borderRadius: "50%", background: "linear-gradient(135deg, #059669, #0D9488)",
+                  color: "#fff", fontSize: 24, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center",
+                  margin: "0 auto 16px"
+                }}>RB</div>
+                <h3 style={{fontSize: 18, fontWeight: 700, marginBottom: 4}}>Rosie</h3>
+                <p style={{fontSize: 13, color: "#059669", fontWeight: 600, marginBottom: 12}}>Domain expert &amp; co-founder</p>
+                <p style={{fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.6}}>
+                  A lawyer with 22 years of experience in court reporting, bringing deep domain expertise and industry relationships to every aspect of the platform.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Terms of Service Page ──────────────────────────────────────
+function TermsPage() {
+  const sections = [
+    { title: "1. Acceptance of terms", content: "By accessing or using the Dewey Sholes platform, you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use the platform. We reserve the right to update these terms at any time, and your continued use of the platform constitutes acceptance of any changes." },
+    { title: "2. Platform description", content: "Dewey Sholes is a product of Flimsy Hinges, LLC. The platform operates as a marketplace connecting attorneys and self-represented litigants with certified shorthand reporters for live hearing attendance and post-hearing audio transcription services. Dewey Sholes facilitates the transaction but does not itself provide court reporting services." },
+    { title: "3. User accounts", content: "You must create an account to use certain features of the platform. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You agree to provide accurate, current, and complete information during registration and to update such information as necessary." },
+    { title: "4. Independent contractor relationship", content: "Court reporters on the Dewey Sholes platform are independent contractors, not employees of Dewey Sholes or Flimsy Hinges, LLC. Reporters set their own schedules, use their own equipment, and maintain their own professional licenses. Dewey Sholes does not control the manner or method by which reporters perform their services." },
+    { title: "5. Payment terms", content: "Dewey Sholes charges a flat 12% buyer-side transaction fee on each order. Court reporters pay an annual listing fee of $99 for individual profiles or $79 per reporter for firm-tier accounts (3\u201310 reporters). All payments are processed securely through Stripe. Fees are non-refundable except as required by applicable law or as described in our refund policy." },
+    { title: "6. Content and intellectual property", content: "All content on the Dewey Sholes platform, including text, graphics, logos, and software, is the property of Flimsy Hinges, LLC or its licensors and is protected by copyright and other intellectual property laws. Transcripts produced by reporters through the platform are the work product of the certifying reporter and are delivered to the ordering party under the terms of each transaction." },
+    { title: "7. Limitation of liability", content: "To the maximum extent permitted by law, Dewey Sholes and Flimsy Hinges, LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use of the platform. Our total liability for any claim arising from your use of the platform shall not exceed the fees you paid to Dewey Sholes in the twelve months preceding the claim." },
+    { title: "8. Governing law", content: "These Terms of Service shall be governed by and construed in accordance with the laws of the State of California, without regard to its conflict of laws principles. Any disputes arising under these terms shall be resolved in the state or federal courts located in San Francisco County, California." },
+  ];
+
+  return (
+    <div>
+      <AppNav variant="buyer" activeTab="" onTabChange={() => navigate("/dashboard")} />
+      <div className="page page-enter">
+        <div className="container" style={{maxWidth: 800}}>
+          <div className="page-header" style={{textAlign: "center", display: "block"}}>
+            <h1>Terms of service</h1>
+            <p style={{color: "var(--text-secondary)", marginTop: 8}}>Last updated: March 2026</p>
+          </div>
+          <div className="card" style={{padding: "8px 32px 32px", marginBottom: 24}}>
+            <div style={{background: "var(--brand-light)", border: "1px solid var(--brand-border)", borderRadius: 8, padding: "12px 16px", margin: "24px 0", fontSize: 13, color: "var(--brand)", fontWeight: 600}}>
+              [DRAFT \u2014 Subject to legal review]
+            </div>
+            {sections.map((s, i) => (
+              <div key={i} style={{marginBottom: i < sections.length - 1 ? 32 : 0}}>
+                <h2 style={{fontSize: 18, fontWeight: 700, marginBottom: 8}}>{s.title}</h2>
+                <p style={{color: "var(--text-secondary)", lineHeight: 1.7, fontSize: 14}}>{s.content}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Privacy Policy Page ────────────────────────────────────────
+function PrivacyPage() {
+  const sections = [
+    { title: "1. Information we collect", content: "We collect information you provide directly, including your name, email address, phone number, bar number or CSR license number, and payment information. We also collect usage data such as pages visited, features used, and device information to improve our platform." },
+    { title: "2. How we use information", content: "We use your information to operate and improve the Dewey Sholes platform, process transactions, match attorneys with reporters, communicate with you about orders and account activity, and comply with legal obligations. We do not sell your personal information." },
+    { title: "3. Information sharing", content: "We share your information only as necessary to provide our services. This includes sharing with Stripe for payment processing, sharing attorney contact information with matched reporters (and vice versa) for active orders, and sharing with service providers who help us operate the platform. We may also disclose information when required by law." },
+    { title: "4. Data security", content: "We implement industry-standard security measures to protect your information. All data is encrypted in transit using TLS and at rest using AES-256 encryption. We are working toward SOC 2 Type II compliance and conduct regular security assessments. Despite these measures, no method of transmission or storage is 100% secure." },
+    { title: "5. California privacy rights (CCPA)", content: "If you are a California resident, you have the right to know what personal information we collect, request deletion of your personal information, opt out of the sale of your personal information (we do not sell personal information), and not be discriminated against for exercising your privacy rights. To exercise these rights, contact us at privacy@deweysholes.com." },
+    { title: "6. Data retention", content: "We retain your personal information for as long as your account is active or as needed to provide you services. We retain transaction records and certified transcripts for a minimum of 7 years as required by applicable legal and regulatory requirements. You may request deletion of your account and personal data at any time, subject to our legal retention obligations." },
+    { title: "7. Contact", content: "If you have questions about this Privacy Policy or our data practices, please contact us at privacy@deweysholes.com or visit our contact page. Flimsy Hinges, LLC, San Francisco, California." },
+  ];
+
+  return (
+    <div>
+      <AppNav variant="buyer" activeTab="" onTabChange={() => navigate("/dashboard")} />
+      <div className="page page-enter">
+        <div className="container" style={{maxWidth: 800}}>
+          <div className="page-header" style={{textAlign: "center", display: "block"}}>
+            <h1>Privacy policy</h1>
+            <p style={{color: "var(--text-secondary)", marginTop: 8}}>Last updated: March 2026</p>
+          </div>
+          <div className="card" style={{padding: "8px 32px 32px", marginBottom: 24}}>
+            <div style={{background: "var(--brand-light)", border: "1px solid var(--brand-border)", borderRadius: 8, padding: "12px 16px", margin: "24px 0", fontSize: 13, color: "var(--brand)", fontWeight: 600}}>
+              [DRAFT \u2014 Subject to legal review]
+            </div>
+            {sections.map((s, i) => (
+              <div key={i} style={{marginBottom: i < sections.length - 1 ? 32 : 0}}>
+                <h2 style={{fontSize: 18, fontWeight: 700, marginBottom: 8}}>{s.title}</h2>
+                <p style={{color: "var(--text-secondary)", lineHeight: 1.7, fontSize: 14}}>{s.content}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Router App ─────────────────────────────────────────────────
 function AppRouter() {
   const route = useRoute();
@@ -6821,6 +7041,10 @@ function AppRouter() {
   if (route.startsWith("#/onboarding")) return <OnboardingFlow />;
   if (route.startsWith("#/settings")) return <SettingsPage />;
   if (route.startsWith("#/contact")) return <ContactPage />;
+  if (route.startsWith("#/faq")) return <FaqPage />;
+  if (route.startsWith("#/about")) return <AboutPage />;
+  if (route.startsWith("#/terms")) return <TermsPage />;
+  if (route.startsWith("#/privacy")) return <PrivacyPage />;
   return <LandingPage />;
 }
 
