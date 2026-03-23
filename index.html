@@ -6432,19 +6432,19 @@ function LandingPage() {
             <div>
               <h4>Platform</h4>
               <ul>
-                <li><a href="#how-it-works">How it works</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#attorneys">For attorneys</a></li>
-                <li><a href="#reporters">For reporters</a></li>
+                <li><a href="#/attorney-signup">For attorneys</a></li>
+                <li><a href="#/reporter-signup">For reporters</a></li>
+                <li><a href="#/reporters">Find a reporter</a></li>
+                <li><a href="#/order">Place an order</a></li>
               </ul>
             </div>
             <div>
               <h4>Resources</h4>
               <ul>
-                <li><a href="#/order">SRL guide</a></li>
-                <li><a href="#pricing">Fee waiver info</a></li>
-                <li><a href="#pricing">CA statutory rates</a></li>
-                <li><a href="#/reporter">Reporter FAQ</a></li>
+                <li><a href="#/faq">FAQ</a></li>
+                <li><a href="#/about">About</a></li>
+                <li><a href="#/contact">Contact us</a></li>
+                <li><a href="#/terms">Legal</a></li>
               </ul>
             </div>
             <div>
@@ -6910,12 +6910,33 @@ function AboutPage() {
           </div>
 
           {/* Founders */}
-          <div style={{marginTop: 40, marginBottom: 48}}>
-            <h2 style={{fontSize: 22, fontWeight: 700, marginBottom: 16, textAlign: "center"}}>Our founders</h2>
-            <div className="card" style={{padding: 32, maxWidth: 680, margin: "0 auto", textAlign: "center"}}>
-              <p style={{fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.8}}>
-                Dewey Sholes is a women-owned business, conceived by an experienced California lawyer with over two decades in the court reporting industry and a New York technology consultant who builds digital platforms for a living. They've been great friends since they met at Smith College — and when they saw how broken the process of finding a court reporter had become, they knew they could fix it together.
-              </p>
+          <div style={{marginTop: 48, marginBottom: 48}}>
+            <h2 style={{fontSize: 22, fontWeight: 700, marginBottom: 24, textAlign: "center"}}>Our founders</h2>
+            <div style={{
+              maxWidth: 720, margin: "0 auto", borderRadius: 16, overflow: "hidden",
+              background: "linear-gradient(135deg, #1E3A5F 0%, #2563EB 50%, #4F46E5 100%)",
+              padding: 3
+            }}>
+              <div style={{
+                background: "var(--bg-primary)", borderRadius: 14, padding: "40px 36px",
+                position: "relative", overflow: "hidden"
+              }}>
+                <div style={{
+                  position: "absolute", top: -40, right: -40, width: 160, height: 160,
+                  borderRadius: "50%", background: "linear-gradient(135deg, rgba(37,99,235,0.06), rgba(79,70,229,0.06))"
+                }} />
+                <div style={{
+                  position: "absolute", bottom: -30, left: -30, width: 120, height: 120,
+                  borderRadius: "50%", background: "linear-gradient(135deg, rgba(5,150,105,0.06), rgba(13,148,136,0.06))"
+                }} />
+                <div style={{display: "flex", gap: 12, justifyContent: "center", marginBottom: 20}}>
+                  <span style={{fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#2563EB", background: "#EFF6FF", padding: "4px 14px", borderRadius: 100}}>Women-owned</span>
+                  <span style={{fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#059669", background: "#ECFDF5", padding: "4px 14px", borderRadius: 100}}>Smith College</span>
+                </div>
+                <p style={{fontSize: 16, color: "var(--text-secondary)", lineHeight: 1.9, textAlign: "center", position: "relative", zIndex: 1, margin: 0}}>
+                  Dewey Sholes is a women-owned business, conceived by an experienced California lawyer with over two decades in family court, and a New York technologist who's led platform design and AI strategy for business leaders across industries. The two have been great friends since they met at Smith College at the turn of the century. When they saw how broken the process of finding a court reporter had become, they knew they could fix it together.
+                </p>
+              </div>
             </div>
           </div>
         </div>
