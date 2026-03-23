@@ -1843,12 +1843,14 @@ const MOCK_UNREAD = { "ord-1": 1, "ord-2": 0, "aj-1": 1 };
 const MOCK_REPORTERS = [
   {
     id: "rep-1", name: "Sarah Chen", csrNumber: "14892", initials: "SC",
-    rating: 4.9, reviewCount: 47,
+    rating: 4.9, reviewCount: 47, city: "San Francisco",
     certifications: ["CSR", "RMR", "CRR"],
+    specialties: ["Civil Litigation", "Family Law", "Probate"],
     languages: ["English", "Mandarin"],
-    courts: ["LA Superior Court - Stanley Mosk", "LA Superior Court - Spring Street", "LA Superior Court - Van Nuys"],
-    counties: ["Los Angeles"],
+    courts: ["SF Superior Court - Civic Center", "SF Superior Court - Hall of Justice", "Alameda County Superior Court"],
+    counties: ["San Francisco", "Alameda"],
     stats: { jobsCompleted: 234, onTimeRate: 99, avgTurnaround: "3.2 days", memberSince: "2019" },
+    bio: "15+ years of court reporting experience in the Bay Area. Specializing in complex civil litigation and family law proceedings. RMR and CRR certified with real-time capability.",
     availability: [
       [1,1,0],[1,1,1],[1,0,0],[1,1,1],[1,1,0],[0,0,0],[0,0,0]
     ],
@@ -1860,12 +1862,14 @@ const MOCK_REPORTERS = [
   },
   {
     id: "rep-2", name: "Michael Torres", csrNumber: "11247", initials: "MT",
-    rating: 4.7, reviewCount: 31,
+    rating: 4.7, reviewCount: 31, city: "Oakland",
     certifications: ["CSR"],
+    specialties: ["Criminal", "Civil Litigation", "Personal Injury"],
     languages: ["English", "Spanish"],
-    courts: ["LA Superior Court - Stanley Mosk", "SF Superior Court", "San Diego Superior Court"],
-    counties: ["Los Angeles", "San Francisco", "San Diego"],
+    courts: ["Alameda County Superior Court", "Contra Costa Superior Court", "SF Superior Court - Civic Center"],
+    counties: ["Alameda", "Contra Costa", "San Francisco"],
     stats: { jobsCompleted: 156, onTimeRate: 97, avgTurnaround: "4.1 days", memberSince: "2021" },
+    bio: "Bilingual English/Spanish court reporter serving the East Bay and San Francisco. Experienced in criminal proceedings and personal injury depositions.",
     availability: [
       [1,1,1],[0,1,1],[1,1,0],[1,1,1],[1,0,0],[0,0,0],[0,0,0]
     ],
@@ -1876,18 +1880,74 @@ const MOCK_REPORTERS = [
   },
   {
     id: "rep-3", name: "Lisa Nakamura", csrNumber: "13561", initials: "LN",
-    rating: 4.8, reviewCount: 52,
+    rating: 4.8, reviewCount: 52, city: "San Mateo",
     certifications: ["CSR", "RMR"],
+    specialties: ["Family Law", "Probate", "Employment"],
     languages: ["English", "Japanese"],
-    courts: ["LA Superior Court - Stanley Mosk", "LA Superior Court - Spring Street", "Orange County Superior Court"],
-    counties: ["Los Angeles", "Orange"],
+    courts: ["San Mateo County Superior Court", "SF Superior Court - Civic Center", "Santa Clara Superior Court"],
+    counties: ["San Mateo", "San Francisco", "Santa Clara"],
     stats: { jobsCompleted: 289, onTimeRate: 98, avgTurnaround: "3.5 days", memberSince: "2018" },
+    bio: "Meticulous and detail-oriented reporter with 18 years of experience. Known for accuracy in complex family law and probate matters across the Peninsula.",
     availability: [
       [1,0,0],[1,1,0],[1,1,1],[0,0,0],[1,1,1],[1,0,0],[0,0,0]
     ],
     reviews: [
       { attorney: "James Henderson, Esq.", date: "Feb 2026", rating: 5, text: "Lisa is one of the best reporters I've worked with. Meticulous attention to detail." },
       { attorney: "Patricia Gomez, Esq.", date: "Jan 2026", rating: 5, text: "Always professional, always on time. Highly recommend." },
+    ],
+  },
+  {
+    id: "rep-4", name: "Angela Ruiz", csrNumber: "12084", initials: "AR",
+    rating: 4.6, reviewCount: 23, city: "San Jose",
+    certifications: ["CSR"],
+    specialties: ["Civil Litigation", "Real Estate", "Bankruptcy"],
+    languages: ["English", "Spanish"],
+    courts: ["Santa Clara Superior Court", "San Mateo County Superior Court"],
+    counties: ["Santa Clara", "San Mateo"],
+    stats: { jobsCompleted: 98, onTimeRate: 96, avgTurnaround: "4.5 days", memberSince: "2022" },
+    bio: "South Bay reporter specializing in real estate disputes and civil litigation. Bilingual English/Spanish with strong technical vocabulary.",
+    availability: [
+      [1,1,0],[1,0,0],[1,1,1],[1,1,0],[1,1,1],[0,0,0],[0,0,0]
+    ],
+    reviews: [
+      { attorney: "Karen Liu, Esq.", date: "Mar 2026", rating: 5, text: "Angela handled a very technical real estate case flawlessly. Clear formatting and fast delivery." },
+      { attorney: "Thomas Reed, Esq.", date: "Feb 2026", rating: 4, text: "Solid work. Would book again for South Bay depositions." },
+    ],
+  },
+  {
+    id: "rep-5", name: "David Okonkwo", csrNumber: "15230", initials: "DO",
+    rating: 4.9, reviewCount: 38, city: "Walnut Creek",
+    certifications: ["CSR", "RMR", "CRR"],
+    specialties: ["Criminal", "Civil Litigation", "Immigration"],
+    languages: ["English"],
+    courts: ["Contra Costa Superior Court", "Alameda County Superior Court", "Solano County Superior Court"],
+    counties: ["Contra Costa", "Alameda", "Solano"],
+    stats: { jobsCompleted: 201, onTimeRate: 100, avgTurnaround: "2.8 days", memberSince: "2020" },
+    bio: "Real-time certified reporter with a perfect on-time delivery record. Covers Contra Costa, Alameda, and Solano counties. Known for fast turnaround on complex criminal matters.",
+    availability: [
+      [1,1,1],[1,1,1],[1,1,0],[1,0,0],[1,1,1],[0,0,0],[0,0,0]
+    ],
+    reviews: [
+      { attorney: "Michelle Grant, Esq.", date: "Mar 2026", rating: 5, text: "David is the fastest, most accurate reporter I've ever worked with. 100% on-time, always." },
+      { attorney: "Steven Park, Esq.", date: "Feb 2026", rating: 5, text: "Incredible real-time feed. Makes complex criminal proceedings easy to follow." },
+    ],
+  },
+  {
+    id: "rep-6", name: "Patricia Doyle", csrNumber: "10893", initials: "PD",
+    rating: 4.5, reviewCount: 19, city: "Santa Rosa",
+    certifications: ["CSR"],
+    specialties: ["Family Law", "Personal Injury", "Civil Litigation"],
+    languages: ["English"],
+    courts: ["Sonoma County Superior Court", "Marin County Superior Court", "Napa County Superior Court"],
+    counties: ["Sonoma", "Marin", "Napa"],
+    stats: { jobsCompleted: 127, onTimeRate: 95, avgTurnaround: "4.8 days", memberSince: "2017" },
+    bio: "Serving the North Bay for over 20 years. Covers Sonoma, Marin, and Napa counties. Deep experience in family law and personal injury depositions.",
+    availability: [
+      [1,1,0],[1,1,0],[0,0,0],[1,1,1],[1,1,0],[1,0,0],[0,0,0]
+    ],
+    reviews: [
+      { attorney: "Richard Novak, Esq.", date: "Jan 2026", rating: 5, text: "Pat knows every courtroom in Sonoma County. Incredibly reliable and professional." },
+      { attorney: "Diana Reyes, Esq.", date: "Dec 2025", rating: 4, text: "Consistently good work. Especially strong in family law proceedings." },
     ],
   },
 ];
@@ -2705,7 +2765,7 @@ function AppNav({ variant, activeTab, onTabChange }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const tabMap = {
     reporter: [["jobs", "Available jobs"], ["active", "My jobs"], ["calendar", "Calendar"], ["earnings", "Earnings"]],
-    buyer: [["cases", "My cases"], ["messages", "Messages"], ["billing", "Billing"], ["calendar", "Calendar"], ["analytics", "Analytics"], ["team", "Team"]],
+    buyer: [["cases", "My cases"], ["reporters", "Find reporters"], ["messages", "Messages"], ["billing", "Billing"], ["calendar", "Calendar"], ["analytics", "Analytics"], ["team", "Team"]],
     admin: [["overview", "Overview"], ["verifications", "Verifications"], ["csr-database", "CSR database"], ["compliance", "Compliance"]],
   };
   const tabs = tabMap[variant] || tabMap.buyer;
@@ -2723,7 +2783,7 @@ function AppNav({ variant, activeTab, onTabChange }) {
             <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
             <div className="app-nav-links">
               {tabs.map(([key, label]) => (
-                <button key={key} className={"app-nav-link" + (activeTab === key ? " active" : "")} onClick={() => key === "messages" ? navigate("/messages") : onTabChange(key)}>{label}</button>
+                <button key={key} className={"app-nav-link" + (activeTab === key ? " active" : "")} onClick={() => key === "messages" ? navigate("/messages") : key === "reporters" ? navigate("/reporters") : onTabChange(key)}>{label}</button>
               ))}
             </div>
           </div>
@@ -6408,6 +6468,275 @@ function LandingPage() {
 }
 
 // ─── Contact Page ───────────────────────────────────────────────
+// ─── Reporter Directory ──────────────────────────────────────────
+function ReporterDirectory() {
+  const [search, setSearch] = useState("");
+  const [county, setCounty] = useState("all");
+  const [specialty, setSpecialty] = useState("all");
+  const [sortBy, setSortBy] = useState("rating");
+  const [favorites, setFavorites] = useState(["rep-1", "rep-3"]);
+  const [showFavOnly, setShowFavOnly] = useState(false);
+  const { toasts, addToast, removeToast } = useToasts();
+
+  const allCounties = [...new Set(MOCK_REPORTERS.flatMap(r => r.counties))].sort();
+  const allSpecialties = [...new Set(MOCK_REPORTERS.flatMap(r => r.specialties))].sort();
+
+  const toggleFav = (id) => {
+    setFavorites(f => f.includes(id) ? f.filter(x => x !== id) : [...f, id]);
+    const r = MOCK_REPORTERS.find(r => r.id === id);
+    if (r) addToast(favorites.includes(id) ? "Removed from favorites" : "Added to favorites", r.name, favorites.includes(id) ? "info" : "success");
+  };
+
+  let filtered = MOCK_REPORTERS.filter(r => {
+    if (search && !r.name.toLowerCase().includes(search.toLowerCase()) && !r.csrNumber.includes(search)) return false;
+    if (county !== "all" && !r.counties.includes(county)) return false;
+    if (specialty !== "all" && !r.specialties.includes(specialty)) return false;
+    if (showFavOnly && !favorites.includes(r.id)) return false;
+    return true;
+  });
+
+  if (sortBy === "rating") filtered.sort((a, b) => b.rating - a.rating);
+  else if (sortBy === "jobs") filtered.sort((a, b) => b.stats.jobsCompleted - a.stats.jobsCompleted);
+  else if (sortBy === "turnaround") filtered.sort((a, b) => parseFloat(a.stats.avgTurnaround) - parseFloat(b.stats.avgTurnaround));
+
+  const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  return (
+    <div className="page page-enter">
+      <div className="container" style={{maxWidth: 1100, padding: "32px 20px"}}>
+        <div className="page-header" style={{marginBottom: 24}}>
+          <div>
+            <h1 style={{fontSize: 24, fontWeight: 700}}>Find a reporter</h1>
+            <p style={{color: "#64748B", marginTop: 4}}>Browse verified court reporters in the Bay Area</p>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className="card" style={{padding: 16, marginBottom: 24}}>
+          <div style={{display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center"}}>
+            <div style={{flex: "1 1 200px", position: "relative"}}>
+              <Icon name="search" size={16} style={{position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#94A3B8"}} />
+              <input className="form-input" placeholder="Search by name or CSR #" value={search} onChange={e => setSearch(e.target.value)} style={{paddingLeft: 36}} />
+            </div>
+            <select className="form-input form-select" value={county} onChange={e => setCounty(e.target.value)} style={{flex: "0 1 180px"}}>
+              <option value="all">All counties</option>
+              {allCounties.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+            <select className="form-input form-select" value={specialty} onChange={e => setSpecialty(e.target.value)} style={{flex: "0 1 180px"}}>
+              <option value="all">All specialties</option>
+              {allSpecialties.map(s => <option key={s} value={s}>{s}</option>)}
+            </select>
+            <select className="form-input form-select" value={sortBy} onChange={e => setSortBy(e.target.value)} style={{flex: "0 1 160px"}}>
+              <option value="rating">Highest rated</option>
+              <option value="jobs">Most experienced</option>
+              <option value="turnaround">Fastest turnaround</option>
+            </select>
+            <button className={"btn btn-sm" + (showFavOnly ? "" : "")} onClick={() => setShowFavOnly(f => !f)} style={{background: showFavOnly ? "#FEF3C7" : "#F1F5F9", color: showFavOnly ? "#92400E" : "#64748B", border: "1px solid " + (showFavOnly ? "#FDE68A" : "#E2E8F0"), whiteSpace: "nowrap"}}>
+              <Icon name="star" size={14} /> {showFavOnly ? "Showing favorites" : "Favorites only"}
+            </button>
+          </div>
+        </div>
+
+        <p style={{fontSize: 13, color: "#94A3B8", marginBottom: 16}}>{filtered.length} reporter{filtered.length !== 1 ? "s" : ""} found</p>
+
+        {/* Reporter cards */}
+        <div style={{display: "flex", flexDirection: "column", gap: 16}}>
+          {filtered.map(r => (
+            <div className="card" key={r.id} style={{padding: 0, overflow: "hidden", cursor: "pointer"}} onClick={() => navigate("/reporters/" + r.id)}>
+              <div style={{display: "flex", gap: 20, padding: 24, flexWrap: "wrap"}}>
+                {/* Avatar + core info */}
+                <div style={{display: "flex", gap: 16, flex: "1 1 300px", minWidth: 0}}>
+                  <div style={{width: 56, height: 56, borderRadius: "50%", background: "linear-gradient(135deg, #2563EB, #4F46E5)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18, flexShrink: 0}}>{r.initials}</div>
+                  <div style={{minWidth: 0}}>
+                    <div style={{display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap"}}>
+                      <span style={{fontSize: 16, fontWeight: 700, color: "var(--text-primary)"}}>{r.name}</span>
+                      <span style={{fontSize: 12, color: "#64748B"}}>CSR #{r.csrNumber}</span>
+                      {favorites.includes(r.id) && <span style={{fontSize: 11, fontWeight: 600, background: "#FEF3C7", color: "#92400E", padding: "2px 8px", borderRadius: 100}}>Favorite</span>}
+                    </div>
+                    <div style={{fontSize: 13, color: "#64748B", marginTop: 2}}><Icon name="mapPin" size={12} /> {r.city} · {r.counties.join(", ")}</div>
+                    <div style={{display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap"}}>
+                      {r.certifications.map(c => <span key={c} style={{fontSize: 10, fontWeight: 700, background: "#DBEAFE", color: "#1E40AF", padding: "2px 8px", borderRadius: 100}}>{c}</span>)}
+                      {r.languages.filter(l => l !== "English").map(l => <span key={l} style={{fontSize: 10, fontWeight: 600, background: "#D1FAE5", color: "#065F46", padding: "2px 8px", borderRadius: 100}}>{l}</span>)}
+                    </div>
+                    <div style={{display: "flex", gap: 4, marginTop: 8, flexWrap: "wrap"}}>
+                      {r.specialties.map(s => <span key={s} style={{fontSize: 10, color: "#64748B", background: "#F1F5F9", padding: "2px 8px", borderRadius: 100}}>{s}</span>)}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Stats */}
+                <div style={{display: "flex", gap: 24, alignItems: "center", flex: "0 0 auto", flexWrap: "wrap"}}>
+                  <div style={{textAlign: "center"}}>
+                    <div style={{fontSize: 20, fontWeight: 800, color: "#F59E0B", display: "flex", alignItems: "center", gap: 4, justifyContent: "center"}}>
+                      <Icon name="star" size={16} /> {r.rating}
+                    </div>
+                    <div style={{fontSize: 11, color: "#94A3B8"}}>{r.reviewCount} reviews</div>
+                  </div>
+                  <div style={{textAlign: "center"}}>
+                    <div style={{fontSize: 20, fontWeight: 800, color: "var(--text-primary)"}}>{r.stats.jobsCompleted}</div>
+                    <div style={{fontSize: 11, color: "#94A3B8"}}>jobs</div>
+                  </div>
+                  <div style={{textAlign: "center"}}>
+                    <div style={{fontSize: 20, fontWeight: 800, color: "#059669"}}>{r.stats.onTimeRate}%</div>
+                    <div style={{fontSize: 11, color: "#94A3B8"}}>on time</div>
+                  </div>
+                  <div style={{textAlign: "center"}}>
+                    <div style={{fontSize: 20, fontWeight: 800, color: "#2563EB"}}>{r.stats.avgTurnaround}</div>
+                    <div style={{fontSize: 11, color: "#94A3B8"}}>avg turnaround</div>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div style={{display: "flex", flexDirection: "column", gap: 8, justifyContent: "center", flex: "0 0 auto"}}>
+                  <button className="btn btn-primary btn-sm" onClick={e => { e.stopPropagation(); navigate("/order"); }} style={{whiteSpace: "nowrap"}}>Book now</button>
+                  <button className="btn btn-sm" onClick={e => { e.stopPropagation(); toggleFav(r.id); }} style={{whiteSpace: "nowrap", background: favorites.includes(r.id) ? "#FEF3C7" : undefined, color: favorites.includes(r.id) ? "#92400E" : undefined}}>
+                    <Icon name="star" size={14} /> {favorites.includes(r.id) ? "Favorited" : "Favorite"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+          {filtered.length === 0 && (
+            <div className="card" style={{padding: 48, textAlign: "center"}}>
+              <Icon name="search" size={32} color="#CBD5E1" />
+              <p style={{color: "#94A3B8", marginTop: 12}}>No reporters match your filters</p>
+              <button className="btn btn-sm" onClick={() => { setSearch(""); setCounty("all"); setSpecialty("all"); setShowFavOnly(false); }} style={{marginTop: 8}}>Clear filters</button>
+            </div>
+          )}
+        </div>
+      </div>
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
+    </div>
+  );
+}
+
+// ─── Reporter Profile Page ──────────────────────────────────────
+function ReporterProfile({ reporterId }) {
+  const reporter = MOCK_REPORTERS.find(r => r.id === reporterId) || MOCK_REPORTERS[0];
+  const [favorites, setFavorites] = useState(["rep-1", "rep-3"]);
+  const [showAllReviews, setShowAllReviews] = useState(false);
+  const { toasts, addToast, removeToast } = useToasts();
+  const isFav = favorites.includes(reporter.id);
+
+  const toggleFav = () => {
+    setFavorites(f => f.includes(reporter.id) ? f.filter(x => x !== reporter.id) : [...f, reporter.id]);
+    addToast(isFav ? "Removed from favorites" : "Added to favorites", reporter.name, isFav ? "info" : "success");
+  };
+
+  const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const slotLabels = ["AM", "PM", "Eve"];
+
+  return (
+    <div className="page page-enter">
+      <div className="container" style={{maxWidth: 900, padding: "32px 20px"}}>
+        {/* Back link */}
+        <button className="btn btn-sm" onClick={() => navigate("/reporters")} style={{marginBottom: 20}}>
+          <Icon name="arrowLeft" size={14} /> Back to directory
+        </button>
+
+        {/* Header card */}
+        <div className="card" style={{padding: 28, marginBottom: 20}}>
+          <div style={{display: "flex", gap: 20, flexWrap: "wrap"}}>
+            <div style={{width: 72, height: 72, borderRadius: "50%", background: "linear-gradient(135deg, #2563EB, #4F46E5)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 24, flexShrink: 0}}>{reporter.initials}</div>
+            <div style={{flex: 1, minWidth: 200}}>
+              <div style={{display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap"}}>
+                <h1 style={{fontSize: 22, fontWeight: 700, margin: 0}}>{reporter.name}</h1>
+                <span style={{fontSize: 13, color: "#64748B"}}>CSR #{reporter.csrNumber}</span>
+                {isFav && <span style={{fontSize: 11, fontWeight: 600, background: "#FEF3C7", color: "#92400E", padding: "2px 8px", borderRadius: 100}}>Favorite</span>}
+              </div>
+              <div style={{fontSize: 14, color: "#64748B", marginTop: 4}}><Icon name="mapPin" size={13} /> {reporter.city} · {reporter.counties.join(", ")}</div>
+              <div style={{display: "flex", gap: 6, marginTop: 10, flexWrap: "wrap"}}>
+                {reporter.certifications.map(c => <span key={c} style={{fontSize: 11, fontWeight: 700, background: "#DBEAFE", color: "#1E40AF", padding: "3px 10px", borderRadius: 100}}>{c}</span>)}
+                {reporter.languages.filter(l => l !== "English").map(l => <span key={l} style={{fontSize: 11, fontWeight: 600, background: "#D1FAE5", color: "#065F46", padding: "3px 10px", borderRadius: 100}}>{l}</span>)}
+                {reporter.specialties.map(s => <span key={s} style={{fontSize: 11, color: "#64748B", background: "#F1F5F9", padding: "3px 10px", borderRadius: 100}}>{s}</span>)}
+              </div>
+            </div>
+            <div style={{display: "flex", gap: 8, alignItems: "flex-start"}}>
+              <button className="btn btn-primary btn-sm" onClick={() => navigate("/order")}>Book this reporter</button>
+              <button className="btn btn-sm" onClick={toggleFav} style={{background: isFav ? "#FEF3C7" : undefined, color: isFav ? "#92400E" : undefined}}>
+                <Icon name="star" size={14} /> {isFav ? "Favorited" : "Favorite"}
+              </button>
+            </div>
+          </div>
+          {reporter.bio && <p style={{fontSize: 14, color: "#64748B", marginTop: 16, lineHeight: 1.6, borderTop: "1px solid var(--border-color)", paddingTop: 16}}>{reporter.bio}</p>}
+        </div>
+
+        {/* Stats row */}
+        <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 20}}>
+          {[
+            { label: "Rating", value: reporter.rating, icon: "star", color: "#F59E0B", sub: reporter.reviewCount + " reviews" },
+            { label: "Jobs completed", value: reporter.stats.jobsCompleted, icon: "fileText", color: "#2563EB", sub: "since " + reporter.stats.memberSince },
+            { label: "On-time rate", value: reporter.stats.onTimeRate + "%", icon: "clock", color: "#059669", sub: "delivery record" },
+            { label: "Avg turnaround", value: reporter.stats.avgTurnaround, icon: "zap", color: "#7C3AED", sub: "per transcript" },
+          ].map((s, i) => (
+            <div className="card" key={i} style={{padding: 16, textAlign: "center"}}>
+              <Icon name={s.icon} size={16} color={s.color} />
+              <div style={{fontSize: 24, fontWeight: 800, color: s.color, marginTop: 4}}>{s.value}</div>
+              <div style={{fontSize: 11, color: "#94A3B8", marginTop: 2}}>{s.sub}</div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20}}>
+          {/* Availability */}
+          <div className="card" style={{padding: 20}}>
+            <h3 style={{fontSize: 14, fontWeight: 700, marginBottom: 12}}>Weekly availability</h3>
+            <div style={{display: "grid", gridTemplateColumns: "auto repeat(3, 1fr)", gap: 4, fontSize: 11}}>
+              <div></div>
+              {slotLabels.map(s => <div key={s} style={{textAlign: "center", color: "#94A3B8", fontWeight: 600}}>{s}</div>)}
+              {dayLabels.map((day, di) => (
+                <React.Fragment key={day}>
+                  <div style={{fontWeight: 600, color: "#64748B", paddingRight: 8}}>{day}</div>
+                  {reporter.availability[di].map((avail, si) => (
+                    <div key={si} style={{width: "100%", height: 24, borderRadius: 4, background: avail ? "#D1FAE5" : "#FEE2E2", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: avail ? "#065F46" : "#DC2626"}}>
+                      {avail ? "✓" : "—"}
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+
+          {/* Courts */}
+          <div className="card" style={{padding: 20}}>
+            <h3 style={{fontSize: 14, fontWeight: 700, marginBottom: 12}}>Courts covered</h3>
+            <div style={{display: "flex", flexDirection: "column", gap: 8}}>
+              {reporter.courts.map(c => (
+                <div key={c} style={{display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--text-primary)"}}>
+                  <Icon name="mapPin" size={12} color="#94A3B8" /> {c}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Reviews */}
+        <div className="card" style={{padding: 20, marginTop: 20}}>
+          <h3 style={{fontSize: 14, fontWeight: 700, marginBottom: 16}}>Reviews ({reporter.reviewCount})</h3>
+          <div style={{display: "flex", flexDirection: "column", gap: 16}}>
+            {(showAllReviews ? reporter.reviews : reporter.reviews.slice(0, 3)).map((rev, i) => (
+              <div key={i} style={{borderBottom: i < reporter.reviews.length - 1 ? "1px solid var(--border-color)" : "none", paddingBottom: 16}}>
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6}}>
+                  <span style={{fontWeight: 600, fontSize: 13, color: "var(--text-primary)"}}>{rev.attorney}</span>
+                  <span style={{fontSize: 12, color: "#94A3B8"}}>{rev.date}</span>
+                </div>
+                <div style={{display: "flex", gap: 2, marginBottom: 6}}>
+                  {[1,2,3,4,5].map(n => <Icon key={n} name="star" size={12} color={n <= rev.rating ? "#F59E0B" : "#E2E8F0"} />)}
+                </div>
+                <p style={{fontSize: 13, color: "#64748B", lineHeight: 1.5, margin: 0}}>{rev.text}</p>
+              </div>
+            ))}
+          </div>
+          {reporter.reviews.length > 3 && !showAllReviews && (
+            <button className="btn btn-sm" onClick={() => setShowAllReviews(true)} style={{marginTop: 12}}>Show all reviews</button>
+          )}
+        </div>
+      </div>
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
+    </div>
+  );
+}
+
 function ContactPage() {
   const { toasts, addToast, removeToast } = useToast();
   const [category, setCategory] = useState("issue");
@@ -6484,6 +6813,9 @@ function AppRouter() {
   if (route.startsWith("#/attorney-signup")) return <AttorneyOnboarding />;
   if (route.startsWith("#/reporter-signup")) return <ReporterOnboarding />;
   if (route.startsWith("#/kanban")) return <KanbanBoard />;
+  const rp = route.match(/^#\/reporters\/(.+)$/);
+  if (rp) return <ReporterProfile reporterId={rp[1]} />;
+  if (route === "#/reporters" || route === "#/reporters/") return <ReporterDirectory />;
   if (route.startsWith("#/reporter")) return <ReporterDashboard />;
   if (route.startsWith("#/admin")) return <AdminDashboard />;
   if (route.startsWith("#/onboarding")) return <OnboardingFlow />;
