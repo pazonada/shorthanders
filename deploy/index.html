@@ -5273,6 +5273,8 @@ function ReporterOnboarding() {
     ...prev,
     [k]: prev[k].includes(v) ? prev[k].filter(x => x !== v) : [...prev[k], v]
   }));
+  const [inviteSearch, setInviteSearch] = useState("");
+  const [invitedCsrs, setInvitedCsrs] = useState([]);
 
   // Screen 0: Welcome / Pitch
   if (screen === 0) {
@@ -5372,8 +5374,6 @@ function ReporterOnboarding() {
 
   // Screen 7: Invite colleagues
   if (screen === 7) {
-    const [inviteSearch, setInviteSearch] = useState("");
-    const [invitedCsrs, setInvitedCsrs] = useState([]);
     const csrProfiles = (typeof CSR_PROFILES !== "undefined" ? CSR_PROFILES : []);
     const inviteResults = inviteSearch.length >= 2 ? csrProfiles.filter(p => {
       const q = inviteSearch.toLowerCase();
@@ -5554,7 +5554,7 @@ function ReporterOnboarding() {
           {form.courtEmployed === "yes" && (
             <div style={{marginTop: 12}}>
               <label className="form-label">Which court?</label>
-              <select className="form-select" value={form.courtEmployedWhere} onChange={e => update("courtEmployedWhere", e.target.value)}>
+              <select className="form-input form-select" value={form.courtEmployedWhere} onChange={e => update("courtEmployedWhere", e.target.value)}>
                 <option value="">Select court</option>
                 {COURTS.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
@@ -5628,7 +5628,7 @@ function ReporterOnboarding() {
               </div>
               <div className="form-row">
                 <div className="form-group" style={{marginBottom: 8}}><label className="form-label">Court</label>
-                  <select className="form-select" value={c.court} onChange={e => updateCase(i, "court", e.target.value)}>
+                  <select className="form-input form-select" value={c.court} onChange={e => updateCase(i, "court", e.target.value)}>
                     <option value="">Select court</option>
                     {(typeof COURTS !== "undefined" ? COURTS : []).map(ct => <option key={ct.id} value={ct.id}>{ct.name}</option>)}
                   </select>
