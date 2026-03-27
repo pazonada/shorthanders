@@ -2861,6 +2861,7 @@ function OrderFlow() {
     type: "", court: "", dept: "", caseNumber: "", caseName: "", caseType: "Family Law",
     hearingDate: "", hearingTime: "", duration: "60", interpreter: false, interpreterLang: "",
     audioFile: "", reporterPref: "", selectedReporter: null, turnaround: "standard", feeWaiver: false, notes: "",
+    deadline: "", deadlineType: "default",
   });
   const [submitted, setSubmitted] = useState(false);
   const update = (k, v) => setForm(f => ({ ...f, [k]: v }));
@@ -3063,6 +3064,35 @@ function OrderFlow() {
                 <div className="form-group">
                   <label className="form-label">Special Instructions <span style={{fontWeight: 400, color: "#94A3B8"}}>(optional)</span></label>
                   <textarea className="form-input" style={{minHeight: 80, resize: "vertical"}} placeholder="e.g. Multiple witnesses expected, realtime feed needed, specific formatting requirements..." value={form.notes} onChange={e => update("notes", e.target.value)} />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Delivery deadline</label>
+                  <div className="method-cards">
+                    <div className={"method-card" + (form.deadlineType === "default" ? " selected" : "")} onClick={() => { update("deadlineType", "default"); update("deadline", ""); }}>
+                      <div className="mc-icon"><Icon name="clock" size={18} /></div>
+                      <div>
+                        <div className="mc-text">Default (45 days)</div>
+                        <div className="mc-sub">No rush — the standard delivery window</div>
+                      </div>
+                    </div>
+                    <div className={"method-card" + (form.deadlineType === "specific" ? " selected" : "")} onClick={() => update("deadlineType", "specific")}>
+                      <div className="mc-icon"><Icon name="calendar" size={18} /></div>
+                      <div>
+                        <div className="mc-text">Specific date</div>
+                        <div className="mc-sub">Set a deadline for this transcript</div>
+                      </div>
+                    </div>
+                  </div>
+                  {form.deadlineType === "specific" && (
+                    <div style={{marginTop: 8}}>
+                      <input className="form-input" type="date" value={form.deadline} onChange={e => update("deadline", e.target.value)} />
+                    </div>
+                  )}
+                  <div className="info-callout" style={{marginTop: 12}}>
+                    <div className="callout-icon"><Icon name="info" size={16} /></div>
+                    <p>Reporters have a 24-hour grace period after the stated deadline. Consider setting your deadline one day before your true need-by date.</p>
+                  </div>
                 </div>
 
                 <div style={{display: "flex", gap: 12, marginTop: 8}}>
