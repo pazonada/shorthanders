@@ -814,6 +814,43 @@
   .calendar-detail-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #E2E8F0; font-size: 13px; color: #475569; }
   .calendar-detail-item:last-child { border-bottom: none; }
 
+  /* ─── Unified Calendar Job List ────────────────── */
+  .cal-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .cal-section { margin-bottom: 28px; }
+  .cal-section-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #E2E8F0; }
+  .cal-section-header h3 { font-size: 15px; font-weight: 700; color: #0F172A; margin: 0; }
+  .cal-section-count { font-size: 12px; font-weight: 600; color: #64748B; background: #F1F5F9; border-radius: 10px; padding: 2px 8px; }
+  .cal-job-card { display: flex; gap: 14px; padding: 14px 16px; background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; margin-bottom: 8px; border-left: 4px solid #E2E8F0; transition: box-shadow 0.15s; }
+  .cal-job-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .cal-job-card.source-ds { border-left-color: #3B82F6; }
+  .cal-job-card.source-external { border-left-color: #94A3B8; }
+  .cal-job-card.source-onboarding { border-left-color: #A78BFA; }
+  .cal-job-date { min-width: 72px; text-align: center; flex-shrink: 0; }
+  .cal-job-date .cal-month { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748B; letter-spacing: 0.5px; }
+  .cal-job-date .cal-day { font-size: 22px; font-weight: 800; color: #0F172A; line-height: 1.1; }
+  .cal-job-date .cal-year { font-size: 11px; color: #94A3B8; }
+  .cal-job-info { flex: 1; min-width: 0; }
+  .cal-job-title { font-size: 14px; font-weight: 600; color: #0F172A; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .cal-job-meta { font-size: 12px; color: #64748B; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
+  .cal-job-meta span { display: flex; align-items: center; gap: 4px; }
+  .cal-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+  .cal-badge-ds { background: #DBEAFE; color: #1E40AF; }
+  .cal-badge-external { background: #F1F5F9; color: #475569; }
+  .cal-badge-onboarding { background: #EDE9FE; color: #6D28D9; }
+  .cal-badge-status { background: #D1FAE5; color: #065F46; }
+  .cal-badge-pending { background: #FEF3C7; color: #92400E; }
+  .cal-badge-progress { background: #DBEAFE; color: #1E40AF; }
+  .cal-empty { text-align: center; padding: 32px; color: #94A3B8; font-size: 14px; }
+
+  /* Add-job modal form */
+  .add-job-form .form-row { display: flex; gap: 12px; margin-bottom: 14px; }
+  .add-job-form .form-row > * { flex: 1; }
+  .add-job-form .form-group { margin-bottom: 14px; }
+  .add-job-form .form-label { display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 5px; }
+  .add-job-form .form-input, .add-job-form select, .add-job-form textarea { width: 100%; padding: 9px 12px; border: 1px solid #E2E8F0; border-radius: 8px; font-size: 13px; color: #0F172A; background: #fff; font-family: inherit; }
+  .add-job-form textarea { resize: vertical; min-height: 60px; }
+  .add-job-form .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
   /* ─── Onboarding ──────────────────────────────── */
   .onboarding-page { max-width: 560px; margin: 0 auto; padding: 48px 24px 64px; }
   .onboarding-page h1 { font-size: 28px; font-weight: 800; color: #0F172A; text-align: center; margin-bottom: 8px; }
@@ -1177,6 +1214,16 @@
   [data-theme="dark"] .calendar-detail { background: var(--bg-muted); }
   [data-theme="dark"] .calendar-detail h4 { color: var(--text); }
   [data-theme="dark"] .calendar-detail-item { color: var(--text-secondary); border-bottom-color: var(--border); }
+  [data-theme="dark"] .cal-section-header { border-bottom-color: var(--border); }
+  [data-theme="dark"] .cal-section-header h3 { color: var(--text); }
+  [data-theme="dark"] .cal-section-count { background: var(--bg-hover); color: var(--text-secondary); }
+  [data-theme="dark"] .cal-job-card { background: var(--bg-card); border-color: var(--border); }
+  [data-theme="dark"] .cal-job-date .cal-day { color: var(--text); }
+  [data-theme="dark"] .cal-job-date .cal-month { color: var(--text-secondary); }
+  [data-theme="dark"] .cal-job-title { color: var(--text); }
+  [data-theme="dark"] .cal-job-meta { color: var(--text-muted); }
+  [data-theme="dark"] .add-job-form .form-label { color: var(--text-secondary); }
+  [data-theme="dark"] .add-job-form .form-input, [data-theme="dark"] .add-job-form select, [data-theme="dark"] .add-job-form textarea { background: var(--bg-input); border-color: var(--border); color: var(--text); }
   [data-theme="dark"] .job-card { background: var(--bg-card); border-color: var(--border); }
   [data-theme="dark"] .job-card h3 { color: var(--text); }
   [data-theme="dark"] .job-card .job-detail { color: var(--text-muted); }
@@ -1644,6 +1691,7 @@ const Icon = ({ name, size = 20, color = "currentColor", strokeWidth = 2 }) => {
     monitor: <><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></>,
     check: <><polyline points="20 6 9 17 4 12"/></>,
     search: <><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></>,
+    plus: <><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></>,
   };
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
@@ -3822,6 +3870,51 @@ function ReporterDashboard() {
     ...MOCK_ACTIVE_JOBS.map(j => ({ date: j.hearingDate, label: j.caseType + " hearing", color: "blue", type: "hearing" })),
   ];
 
+  // Unified calendar: DS jobs
+  const dsJobs = [
+    ...MOCK_ACTIVE_JOBS.map(j => ({ source: "ds", caseName: j.caseType === "Family Law" ? "Martinez v. Pacific Holdings" : j.caseType === "Civil" ? "Davis v. Metro Transit" : "In re Estate of Williams", caseNumber: j.caseType === "Family Law" ? "24STFL09821" : j.caseType === "Civil" ? "25STCV01482" : "24STPB08334", court: j.court, date: j.hearingDate, status: j.status, attorney: "Jennifer Walsh, Esq." })),
+    ...MOCK_JOBS.filter(j => !Object.keys(declined).includes(j.id)).slice(0, 2).map(j => ({ source: "ds", caseName: j.caseType === "Family Law" ? "In re Marriage of Johnson" : "Davis v. Metro Transit", caseNumber: j.caseType === "Family Law" ? "23STFL04521" : "25STCV03810", court: j.court, date: j.hearingDate, status: "pending", attorney: "David Park, Esq." })),
+  ];
+
+  // External jobs (manually added mock data)
+  const [externalJobs, setExternalJobs] = useState([
+    { id: "ext-1", source: "external", sourceType: "Court appointment", caseName: "People v. Ramirez", caseNumber: "25CR-0481", court: "LA Superior Court - Stanley Mosk", date: "2026-04-04", time: "9:00 AM", duration: "Full day", notes: "" },
+    { id: "ext-2", source: "external", sourceType: "Direct client hire", caseName: "Cho v. Bay Area Med Group", caseNumber: "25STCV-1190", court: "SF Superior Court", date: "2026-03-20", time: "1:30 PM", duration: "Half day", notes: "Deposition, attorney will provide exhibits" },
+    { id: "ext-3", source: "external", sourceType: "Agency booking", caseName: "Nguyen v. CalTrans", caseNumber: "25STCV-2034", court: "LA Superior Court - Van Nuys", date: "2026-04-11", time: "", duration: "Full day", notes: "" },
+    { id: "ext-4", source: "external", sourceType: "Court appointment", caseName: "In re Marriage of Okafor", caseNumber: "24STFL-7821", court: "LA Superior Court - Spring Street", date: "2026-03-12", time: "10:00 AM", duration: "Half day", notes: "" },
+  ]);
+
+  // Onboarding case history (past cases entered during sign-up)
+  const onboardingCases = [
+    { source: "onboarding", caseName: "Thompson v. Unified School District", caseNumber: "23STCV-09102", court: "LA Superior Court - Stanley Mosk", date: "2025-11-15" },
+    { source: "onboarding", caseName: "Park v. Golden Gate Insurance", caseNumber: "23SFCV-04210", court: "SF Superior Court", date: "2025-09-22" },
+    { source: "onboarding", caseName: "In re Marriage of Delgado", caseNumber: "24STFL-01198", court: "LA Superior Court - Van Nuys", date: "2025-12-03" },
+  ];
+
+  // Combine and sort all jobs
+  const allCalJobs = [
+    ...dsJobs,
+    ...externalJobs.map(j => ({ ...j })),
+    ...onboardingCases,
+  ];
+  const todayDate = new Date().toISOString().split("T")[0];
+  const upcomingJobs = allCalJobs.filter(j => j.date >= todayDate).sort((a, b) => a.date.localeCompare(b.date));
+  const pastJobs = allCalJobs.filter(j => j.date < todayDate).sort((a, b) => b.date.localeCompare(a.date));
+
+  // Add-job modal state
+  const [showAddJob, setShowAddJob] = useState(false);
+  const [newJob, setNewJob] = useState({ sourceType: "", caseName: "", caseNumber: "", court: "", date: "", time: "", duration: "Half day", notes: "" });
+  const handleSaveJob = () => {
+    if (!newJob.caseName || !newJob.date) return;
+    setExternalJobs(prev => [...prev, { ...newJob, id: "ext-" + Date.now(), source: "external" }]);
+    setNewJob({ sourceType: "", caseName: "", caseNumber: "", court: "", date: "", time: "", duration: "Half day", notes: "" });
+    setShowAddJob(false);
+    addToast("Job added", newJob.caseName + " added to your calendar.", "success");
+  };
+
+  const fmtDate = (d) => new Date(d + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  const fmtDateParts = (d) => { const dt = new Date(d + "T12:00:00"); return { month: dt.toLocaleDateString("en-US", {month: "short"}), day: dt.getDate(), year: dt.getFullYear() }; };
+
   const handleAccept = (j) => {
     setAccepted(a => ({...a, [j.id]: true}));
     setTab("active");
@@ -4085,10 +4178,104 @@ function ReporterDashboard() {
               <div className="page-header">
                 <div>
                   <h1>Calendar</h1>
-                  <p>Upcoming hearings and transcript deadlines.</p>
+                  <p>All your jobs in one place — Dewey Sholes, court appointments, and agency bookings.</p>
                 </div>
               </div>
-              <CalendarView events={calendarEvents} />
+              <div className="cal-toolbar">
+                <div style={{display: "flex", gap: 8, flexWrap: "wrap"}}>
+                  <span className="cal-badge cal-badge-ds" style={{fontSize: 12, padding: "4px 10px"}}>Dewey Sholes</span>
+                  <span className="cal-badge cal-badge-external" style={{fontSize: 12, padding: "4px 10px"}}>External</span>
+                  <span className="cal-badge cal-badge-onboarding" style={{fontSize: 12, padding: "4px 10px"}}>Past case</span>
+                </div>
+                <button className="btn btn-primary btn-sm" onClick={() => setShowAddJob(true)}>
+                  <Icon name="plus" size={14} color="#fff" /> Add job
+                </button>
+              </div>
+
+              {/* Upcoming section */}
+              <div className="cal-section">
+                <div className="cal-section-header">
+                  <h3>Upcoming</h3>
+                  <span className="cal-section-count">{upcomingJobs.length}</span>
+                </div>
+                {upcomingJobs.length === 0 && <div className="cal-empty">No upcoming jobs.</div>}
+                {upcomingJobs.map((j, i) => {
+                  const dp = fmtDateParts(j.date);
+                  return (
+                    <div key={"up-" + i} className={"cal-job-card " + (j.source === "ds" ? "source-ds" : j.source === "external" ? "source-external" : "source-onboarding")}>
+                      <div className="cal-job-date">
+                        <div className="cal-month">{dp.month}</div>
+                        <div className="cal-day">{dp.day}</div>
+                        <div className="cal-year">{dp.year}</div>
+                      </div>
+                      <div className="cal-job-info">
+                        <div className="cal-job-title">
+                          {j.caseName}
+                          {j.source === "ds" && <span className="cal-badge cal-badge-ds">Dewey Sholes</span>}
+                          {j.source === "external" && <span className="cal-badge cal-badge-external">{j.sourceType || "External"}</span>}
+                          {j.source === "onboarding" && <span className="cal-badge cal-badge-onboarding">Past case</span>}
+                        </div>
+                        <div className="cal-job-meta">
+                          {j.caseNumber && <span><Icon name="fileText" size={12} color="#94A3B8" />{j.caseNumber}</span>}
+                          <span><Icon name="mapPin" size={12} color="#94A3B8" />{j.court}</span>
+                          {j.source === "ds" && j.status && (
+                            <span className={"cal-badge " + (j.status === "pending" ? "cal-badge-pending" : j.status === "delivered" ? "cal-badge-status" : "cal-badge-progress")}>
+                              {j.status === "pending" ? "Pending" : j.status === "delivered" ? "Delivered" : j.status === "transcribing" ? "Transcribing" : j.status === "review" ? "In review" : j.status}
+                            </span>
+                          )}
+                          {j.source === "ds" && j.attorney && <span><Icon name="user" size={12} color="#94A3B8" />{j.attorney}</span>}
+                          {j.source === "external" && j.duration && <span><Icon name="clock" size={12} color="#94A3B8" />{j.duration}</span>}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Past section */}
+              <div className="cal-section">
+                <div className="cal-section-header">
+                  <h3>Past</h3>
+                  <span className="cal-section-count">{pastJobs.length}</span>
+                </div>
+                {pastJobs.length === 0 && <div className="cal-empty">No past jobs.</div>}
+                {pastJobs.map((j, i) => {
+                  const dp = fmtDateParts(j.date);
+                  return (
+                    <div key={"past-" + i} className={"cal-job-card " + (j.source === "ds" ? "source-ds" : j.source === "external" ? "source-external" : "source-onboarding")} style={{opacity: 0.75}}>
+                      <div className="cal-job-date">
+                        <div className="cal-month">{dp.month}</div>
+                        <div className="cal-day">{dp.day}</div>
+                        <div className="cal-year">{dp.year}</div>
+                      </div>
+                      <div className="cal-job-info">
+                        <div className="cal-job-title">
+                          {j.caseName}
+                          {j.source === "ds" && <span className="cal-badge cal-badge-ds">Dewey Sholes</span>}
+                          {j.source === "external" && <span className="cal-badge cal-badge-external">{j.sourceType || "External"}</span>}
+                          {j.source === "onboarding" && <span className="cal-badge cal-badge-onboarding">Past case</span>}
+                        </div>
+                        <div className="cal-job-meta">
+                          {j.caseNumber && <span><Icon name="fileText" size={12} color="#94A3B8" />{j.caseNumber}</span>}
+                          <span><Icon name="mapPin" size={12} color="#94A3B8" />{j.court}</span>
+                          {j.source === "ds" && j.status && (
+                            <span className={"cal-badge " + (j.status === "pending" ? "cal-badge-pending" : j.status === "delivered" ? "cal-badge-status" : "cal-badge-progress")}>
+                              {j.status === "pending" ? "Pending" : j.status === "delivered" ? "Delivered" : j.status === "transcribing" ? "Transcribing" : j.status === "review" ? "In review" : j.status}
+                            </span>
+                          )}
+                          {j.source === "ds" && j.attorney && <span><Icon name="user" size={12} color="#94A3B8" />{j.attorney}</span>}
+                          {j.source === "external" && j.duration && <span><Icon name="clock" size={12} color="#94A3B8" />{j.duration}</span>}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Mini calendar still available below */}
+              <div style={{marginTop: 8}}>
+                <CalendarView events={calendarEvents} />
+              </div>
             </div>
           )}
 
@@ -4190,6 +4377,72 @@ function ReporterDashboard() {
               <button className="btn btn-sm" style={{background: "#DC2626", color: "#fff", border: "none", padding: "8px 16px", borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: "pointer", opacity: (!releaseReason || !releaseWhen) ? 0.5 : 1}} disabled={!releaseReason || !releaseWhen} onClick={() => { addToast("Job released", releaseJob.court + " has been released and will be reassigned.", "success"); setReleaseJob(null); }}>
                 Release this job
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showAddJob && (
+        <div className="modal-overlay" onClick={() => setShowAddJob(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 520, padding: 28}}>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20}}>
+              <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>Add external job</h3>
+              <button onClick={() => setShowAddJob(false)} style={{background: "none", border: "none", cursor: "pointer", padding: 4}}><Icon name="x" size={18} color="#64748B" /></button>
+            </div>
+            <p style={{fontSize: 13, color: "var(--text-muted, #64748B)", margin: "0 0 18px"}}>Track jobs not booked through Dewey Sholes — court appointments, direct hires, and agency bookings.</p>
+            <div className="add-job-form">
+              <div className="form-group">
+                <label className="form-label">Job source</label>
+                <select value={newJob.sourceType} onChange={e => setNewJob(p => ({...p, sourceType: e.target.value}))}>
+                  <option value="">Select source...</option>
+                  <option value="Court appointment">Court appointment</option>
+                  <option value="Direct client hire">Direct client hire</option>
+                  <option value="Agency booking">Agency booking</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div className="form-row">
+                <div>
+                  <label className="form-label">Case name *</label>
+                  <input className="form-input" placeholder="e.g. Smith v. Jones" value={newJob.caseName} onChange={e => setNewJob(p => ({...p, caseName: e.target.value}))} />
+                </div>
+                <div>
+                  <label className="form-label">Case number</label>
+                  <input className="form-input" placeholder="e.g. 25STCV-1234" value={newJob.caseNumber} onChange={e => setNewJob(p => ({...p, caseNumber: e.target.value}))} />
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Court</label>
+                <select value={newJob.court} onChange={e => setNewJob(p => ({...p, court: e.target.value}))}>
+                  <option value="">Select court...</option>
+                  {COURTS.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                </select>
+              </div>
+              <div className="form-row">
+                <div>
+                  <label className="form-label">Date *</label>
+                  <input className="form-input" type="date" value={newJob.date} onChange={e => setNewJob(p => ({...p, date: e.target.value}))} />
+                </div>
+                <div>
+                  <label className="form-label">Time (optional)</label>
+                  <input className="form-input" type="time" value={newJob.time} onChange={e => setNewJob(p => ({...p, time: e.target.value}))} />
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Duration estimate</label>
+                <select value={newJob.duration} onChange={e => setNewJob(p => ({...p, duration: e.target.value}))}>
+                  <option value="Half day">Half day</option>
+                  <option value="Full day">Full day</option>
+                  <option value="Multi-day">Multi-day</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Notes (optional)</label>
+                <textarea placeholder="Any additional details..." value={newJob.notes} onChange={e => setNewJob(p => ({...p, notes: e.target.value}))} />
+              </div>
+              <div className="modal-actions">
+                <button className="btn btn-secondary btn-sm" onClick={() => setShowAddJob(false)}>Cancel</button>
+                <button className="btn btn-primary btn-sm" style={{opacity: (!newJob.caseName || !newJob.date) ? 0.5 : 1}} disabled={!newJob.caseName || !newJob.date} onClick={handleSaveJob}>Save job</button>
+              </div>
             </div>
           </div>
         </div>
