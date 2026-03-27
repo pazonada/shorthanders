@@ -1845,7 +1845,7 @@ const MOCK_UNREAD = { "ord-1": 1, "ord-2": 0, "aj-1": 1 };
 const MOCK_REPORTERS = [
   {
     id: "rep-1", name: "Sarah Chen", csrNumber: "14892", initials: "SC",
-    rating: 4.9, reviewCount: 47, city: "San Francisco",
+    rating: 4.9, reviewCount: 47, city: "San Francisco", courtAppointed: true,
     certifications: ["CSR", "RMR", "CRR"],
     specialties: ["Civil Litigation", "Family Law", "Probate"],
     languages: ["English", "Mandarin"],
@@ -2772,7 +2772,7 @@ function AppNav({ variant, activeTab, onTabChange }) {
   };
   const tabs = tabMap[variant] || tabMap.buyer;
   const userMap = {
-    reporter: { initials: "SC", name: "Sarah Chen, CSR #14892" },
+    reporter: { initials: "SC", name: "Sarah Chen, CSR #14892", courtAppointed: true },
     buyer: { initials: "JW", name: "Jennifer Walsh, Esq." },
     admin: { initials: "AD", name: "Admin" },
   };
@@ -2795,6 +2795,7 @@ function AppNav({ variant, activeTab, onTabChange }) {
             <NotificationBell variant={variant} />
             <span className="app-nav-avatar">{user.initials}</span>
             <span>{user.name}</span>
+            {user.courtAppointed && <span style={{fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 4, background: "#DBEAFE", color: "#1E40AF", textTransform: "uppercase", marginLeft: 8}}>Court-appointed</span>}
             <button className="mobile-menu-btn" onClick={() => setMobileOpen(true)}><Icon name="menu" size={20} /></button>
           </div>
         </div>
@@ -3794,6 +3795,9 @@ function ReporterDashboard() {
   const [countyFilter, setCountyFilter] = useState("all");
   const [turnFilter, setTurnFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
+  const [releaseJob, setReleaseJob] = useState(null);
+  const [releaseReason, setReleaseReason] = useState("");
+  const [releaseWhen, setReleaseWhen] = useState("");
   const { toasts, addToast, removeToast } = useToast();
 
   const filteredJobs = MOCK_JOBS.filter(j => {
@@ -3848,6 +3852,21 @@ function ReporterDashboard() {
               <span className="quick-stat-value">$572</span>
               <span className="quick-stat-label">earned this month</span>
             </div>
+          </div>
+
+          {/* Rating Display */}
+          <div className="stat-card" style={{marginBottom: 20, padding: 20}}>
+            <div style={{display: "flex", alignItems: "center", gap: 10, marginBottom: 12}}>
+              <span style={{fontSize: 22, fontWeight: 700, color: "var(--text, #0F172A)"}}>4.7</span>
+              <Icon name="star" size={18} color="#F59E0B" />
+              <span style={{fontSize: 14, color: "var(--text-muted, #64748B)"}}>Overall rating</span>
+            </div>
+            <div style={{display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10}}>
+              <span style={{fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 12, background: "var(--bg-card, #F1F5F9)", color: "var(--text, #334155)"}}>Communication 4.8</span>
+              <span style={{fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 12, background: "var(--bg-card, #F1F5F9)", color: "var(--text, #334155)"}}>Timeliness 4.6</span>
+              <span style={{fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 12, background: "var(--bg-card, #F1F5F9)", color: "var(--text, #334155)"}}>Quality 4.7</span>
+            </div>
+            <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", margin: 0}}>Based on 23 completed jobs. Updated monthly.</p>
           </div>
 
           {/* Profile Nudge */}
@@ -3998,9 +4017,14 @@ function ReporterDashboard() {
                             <Icon name="x" size={13} /> Withdraw & re-upload
                           </button>
                         ) : (
-                          <button className="btn btn-primary btn-sm">
-                            {j.status === "transcribing" ? "Upload transcript" : "Submit for certification"}
-                          </button>
+                          <>
+                            <button className="btn btn-sm" style={{padding: "6px 12px", fontSize: 12, background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => { setReleaseJob(j); setReleaseReason(""); setReleaseWhen(""); }}>
+                              Release job
+                            </button>
+                            <button className="btn btn-primary btn-sm">
+                              {j.status === "transcribing" ? "Upload transcript" : "Submit for certification"}
+                            </button>
+                          </>
                         )}
                       </div>
                     </div>
@@ -4088,6 +4112,42 @@ function ReporterDashboard() {
         />
       )}
       {showProfile && <ReporterProfileModal reporterName="Sarah Chen" onClose={() => setShowProfile(false)} />}
+      {releaseJob && (
+        <div className="modal-overlay" onClick={() => setReleaseJob(null)}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 480, padding: 28}}>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20}}>
+              <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>Release job</h3>
+              <button onClick={() => setReleaseJob(null)} style={{background: "none", border: "none", cursor: "pointer", padding: 4}}><Icon name="x" size={18} color="#64748B" /></button>
+            </div>
+            <p style={{fontSize: 14, color: "var(--text-muted, #64748B)", margin: "0 0 16px"}}>{releaseJob.court}, {releaseJob.dept} — {releaseJob.caseType}</p>
+            <label style={{display: "block", fontSize: 13, fontWeight: 600, color: "var(--text, #334155)", marginBottom: 6}}>Reason for release</label>
+            <select className="filter-select" style={{width: "100%", marginBottom: 16}} value={releaseReason} onChange={e => setReleaseReason(e.target.value)}>
+              <option value="">Select a reason…</option>
+              <option value="court_appointment">Court appointment</option>
+              <option value="illness">Illness</option>
+              <option value="scheduling_conflict">Scheduling conflict</option>
+              <option value="personal_emergency">Personal emergency</option>
+              <option value="other">Other</option>
+            </select>
+            <label style={{display: "block", fontSize: 13, fontWeight: 600, color: "var(--text, #334155)", marginBottom: 6}}>When did you know?</label>
+            <select className="filter-select" style={{width: "100%", marginBottom: 16}} value={releaseWhen} onChange={e => setReleaseWhen(e.target.value)}>
+              <option value="">Select…</option>
+              <option value="just_now">Just now</option>
+              <option value="within_24h">Within 24 hours</option>
+              <option value="more_than_24h">More than 24 hours ago</option>
+            </select>
+            <div style={{background: "#FEF3C7", border: "1px solid #FDE68A", borderRadius: 8, padding: 12, fontSize: 13, color: "#92400E", marginBottom: 20, lineHeight: 1.5}}>
+              <strong>Note:</strong> This job will be reassigned to another reporter. Releases don't affect your rating, but frequent releases are reviewed by our team.
+            </div>
+            <div style={{display: "flex", gap: 10, justifyContent: "flex-end"}}>
+              <button className="btn btn-secondary btn-sm" onClick={() => setReleaseJob(null)}>Cancel</button>
+              <button className="btn btn-sm" style={{background: "#DC2626", color: "#fff", border: "none", padding: "8px 16px", borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: "pointer", opacity: (!releaseReason || !releaseWhen) ? 0.5 : 1}} disabled={!releaseReason || !releaseWhen} onClick={() => { addToast("Job released", releaseJob.court + " has been released and will be reassigned.", "success"); setReleaseJob(null); }}>
+                Release this job
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <ToastContainer toasts={toasts} onRemove={removeToast} />
     </div>
   );
