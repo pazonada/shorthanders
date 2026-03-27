@@ -5226,29 +5226,50 @@ function PricingCalculator() {
   const [pages, setPages] = useState(35);
   const [turnaround, setTurnaround] = useState("standard");
   const [hearingType, setHearingType] = useState("live");
+  const [duration, setDuration] = useState("half");
 
+  const isLive = hearingType === "live";
+  const attendanceFee = !isLive ? 0 : duration === "trial" ? PRICING.attendanceTrialDay : duration === "full" ? PRICING.attendanceFullDay : PRICING.attendanceHalfDay;
   const mult = PRICING[turnaround + "Multiplier"] || 1;
-  const base = pages * PRICING.ratePerPage;
-  const turnaroundFee = base * (mult - 1);
-  const platformFee = base * PRICING.platformFee;
-  const total = (base + turnaroundFee + platformFee);
+  const transcriptBase = pages * PRICING.ratePerPage;
+  const turnaroundFee = transcriptBase * (mult - 1);
+  const subtotal = attendanceFee + transcriptBase + turnaroundFee;
+  const platformFee = subtotal * PRICING.platformFee;
+  const total = subtotal + platformFee;
 
   return (
     <div className="calc-card">
       <h3>Estimate your cost</h3>
       <div className="calc-row">
         <div className="form-group">
-          <label className="form-label">Hearing type</label>
+          <label className="form-label">Service type</label>
           <select className="form-input form-select" value={hearingType} onChange={e => setHearingType(e.target.value)}>
             <option value="live">Live attendance</option>
             <option value="audio">Audio transcription</option>
           </select>
         </div>
+        {isLive ? (
+          <div className="form-group">
+            <label className="form-label">Duration</label>
+            <select className="form-input form-select" value={duration} onChange={e => setDuration(e.target.value)}>
+              <option value="half">Half day (${PRICING.attendanceHalfDay})</option>
+              <option value="full">Full day (${PRICING.attendanceFullDay})</option>
+              <option value="trial">Trial day (${PRICING.attendanceTrialDay})</option>
+            </select>
+          </div>
+        ) : (
+          <div className="form-group">
+            <label className="form-label">Estimated pages</label>
+            <input className="form-input" type="number" min="5" max="500" value={pages} onChange={e => setPages(parseInt(e.target.value) || 0)} />
+          </div>
+        )}
+      </div>
+      {isLive && (
         <div className="form-group">
-          <label className="form-label">Estimated pages</label>
+          <label className="form-label">Estimated transcript pages</label>
           <input className="form-input" type="number" min="5" max="500" value={pages} onChange={e => setPages(parseInt(e.target.value) || 0)} />
         </div>
-      </div>
+      )}
       <div className="form-group">
         <label className="form-label">Turnaround</label>
         <div style={{display: "flex", gap: 8}}>
@@ -5267,11 +5288,17 @@ function PricingCalculator() {
       <div className="calc-result">
         <div className="calc-total">${total.toFixed(2)} <span>estimated</span></div>
         <div className="calc-breakdown">
-          <span>Base: ${base.toFixed(2)}</span>
+          {isLive && <span>Attendance: ${attendanceFee.toLocaleString()}</span>}
+          <span>Transcript ({pages} pg): ${transcriptBase.toFixed(2)}</span>
           {turnaroundFee > 0 && <span>Turnaround: +${turnaroundFee.toFixed(2)}</span>}
           {turnaroundFee < 0 && <span>Discount: -${Math.abs(turnaroundFee).toFixed(2)}</span>}
           <span>Platform fee (12%): +${platformFee.toFixed(2)}</span>
         </div>
+        {isLive && (
+          <div style={{fontSize: 11, color: "var(--text-muted, #64748B)", marginTop: 8}}>
+            Attendance fees are 33% below agency rates. Reporter keeps 100%.
+          </div>
+        )}
         <a href="#/order" className="btn btn-primary btn-sm" style={{marginTop: 16}}>Order now <Icon name="arrowRight" size={14} color="#fff" /></a>
       </div>
     </div>
@@ -6690,7 +6717,7 @@ function LandingPage() {
           {/* Pilot Pricing Banner */}
           <div style={{maxWidth: 640, margin: "0 auto 32px", background: "linear-gradient(135deg, #1E40AF 0%, #4338CA 100%)", borderRadius: 16, padding: 32, color: "#fff", position: "relative", overflow: "hidden"}}>
             <div style={{position: "absolute", top: 12, right: 16, background: "rgba(255,255,255,0.2)", borderRadius: 6, padding: "4px 12px", fontSize: 11, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase"}}>Pilot</div>
-            <h3 style={{fontSize: 22, fontWeight: 800, marginBottom: 8, color: "#fff", letterSpacing: "-0.01em"}}>Early access pilot — Limited spots available</h3>
+            <h3 style={{fontSize: 22, fontWeight: 800, marginBottom: 8, color: "#fff", letterSpacing: "-0.01em"}}>Join our early access pilot and save</h3>
             <p style={{fontSize: 15, lineHeight: 1.7, color: "rgba(255,255,255,0.9)", marginBottom: 16}}>
               <strong>Law firms:</strong> 8% platform fee for your first year (normally 12%).<br />
               <strong>CSRs:</strong> listing fee waived during pilot.
