@@ -1858,6 +1858,7 @@ const PRICING = {
   firmMaxReporters: 10,
   attendanceHalfDay: 255,
   attendanceFullDay: 509,
+  attendanceTrialDay: 2200,
 };
 
 // ─── Notifications Mock Data ─────────────────────────────────────
@@ -2994,7 +2995,7 @@ function OrderFlow() {
                     <li><Icon name="checkCircle" size={14} color="#2563EB" /> Certified transcript delivered on schedule</li>
                   </ul>
                   <div style={{marginTop: 12, padding: "8px 12px", background: "var(--bg-page, #F8FAFC)", borderRadius: 8, fontSize: 12, color: "var(--text-secondary, #64748B)"}}>
-                    <strong style={{color: "var(--text, #0F172A)"}}>Attendance fee:</strong> ${PRICING.attendanceHalfDay}/half day · ${PRICING.attendanceFullDay}/full day
+                    <strong style={{color: "var(--text, #0F172A)"}}>Attendance fees:</strong> ${PRICING.attendanceHalfDay}/half day · ${PRICING.attendanceFullDay}/full day · ${PRICING.attendanceTrialDay}/trial day
                     <div style={{marginTop: 2}}>33% below agency rates — reporter keeps 100%</div>
                   </div>
                 </div>
@@ -3097,7 +3098,14 @@ function OrderFlow() {
                       <option value="90">1.5 hours</option>
                       <option value="120">2 hours</option>
                       <option value="180">3+ hours</option>
+                      {form.type === "live" && <option value="trial">Multi-day trial</option>}
                     </select>
+                    {form.duration === "trial" && (
+                      <div style={{marginTop: 8}}>
+                        <label className="form-label">Estimated trial days</label>
+                        <input type="number" className="form-input" min="2" max="30" value={form.trialDays || 3} onChange={e => update("trialDays", parseInt(e.target.value) || 3)} />
+                      </div>
+                    )}
                   </div>
                   <div className="form-group" style={{display: "flex", alignItems: "flex-end", paddingBottom: 20}}>
                     <label className="form-checkbox">
@@ -3253,18 +3261,24 @@ function OrderFlow() {
               </div>
               <div className="price-box">
                 <h3>Price estimate</h3>
-                {form.type === "live" && <div className="price-line"><span>Attendance fee ({form.duration === "full" ? "full day" : "half day"})</span><strong>${form.duration === "full" ? PRICING.attendanceFullDay : PRICING.attendanceHalfDay}</strong></div>}
-                <div className="price-line"><span>Estimated pages</span><strong>{est.low} – {est.high} pages</strong></div>
-                <div className="price-line"><span>Statutory rate (per page)</span><strong>${PRICING.ratePerPage.toFixed(2)}</strong></div>
-                <div className="price-line"><span>Turnaround adjustment</span><strong>{est.mult === 1 ? "None" : est.mult > 1 ? "+" + ((est.mult - 1) * 100).toFixed(0) + "%" : "-" + ((1 - est.mult) * 100).toFixed(0) + "%"}</strong></div>
-                <div className="price-line"><span>Platform fee ({(PRICING.platformFee * 100).toFixed(0)}% — attorney only)</span><strong>${(((est.lowCost + est.highCost) / 2 + (form.type === "live" ? (form.duration === "full" ? PRICING.attendanceFullDay : PRICING.attendanceHalfDay) : 0)) * PRICING.platformFee).toFixed(2)}</strong></div>
-                <div className="price-total">
-                  <span>Estimated total</span>
-                  <span>${((form.type === "live" ? (form.duration === "full" ? PRICING.attendanceFullDay : PRICING.attendanceHalfDay) : 0) + est.lowCost * (1 + PRICING.platformFee)).toFixed(0)} – ${((form.type === "live" ? (form.duration === "full" ? PRICING.attendanceFullDay : PRICING.attendanceHalfDay) : 0) + est.highCost * (1 + PRICING.platformFee)).toFixed(0)}</span>
-                </div>
-                <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
-                  {form.type === "live" ? "Attendance fee is standardized at 33% below agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Statutory rate: $1.13 per 100 words (CA Gov. Code 69950).
-                </p>
+                {(() => {
+                  const attendanceFee = form.type !== "live" ? 0 : form.duration === "trial" ? PRICING.attendanceTrialDay * (form.trialDays || 3) : parseInt(form.duration) > 180 || form.duration === "180" ? PRICING.attendanceFullDay : PRICING.attendanceHalfDay;
+                  const attendanceLabel = form.duration === "trial" ? `Trial (${form.trialDays || 3} days × $${PRICING.attendanceTrialDay})` : parseInt(form.duration) > 180 || form.duration === "180" ? "Full day" : "Half day";
+                  return <>
+                    {form.type === "live" && <div className="price-line"><span>Attendance fee ({attendanceLabel})</span><strong>${attendanceFee.toLocaleString()}</strong></div>}
+                    <div className="price-line"><span>Estimated pages</span><strong>{est.low} – {est.high} pages</strong></div>
+                    <div className="price-line"><span>Statutory rate (per page)</span><strong>${PRICING.ratePerPage.toFixed(2)}</strong></div>
+                    <div className="price-line"><span>Turnaround adjustment</span><strong>{est.mult === 1 ? "None" : est.mult > 1 ? "+" + ((est.mult - 1) * 100).toFixed(0) + "%" : "-" + ((1 - est.mult) * 100).toFixed(0) + "%"}</strong></div>
+                    <div className="price-line"><span>Platform fee ({(PRICING.platformFee * 100).toFixed(0)}% — attorney only)</span><strong>${(((est.lowCost + est.highCost) / 2 + attendanceFee) * PRICING.platformFee).toFixed(2)}</strong></div>
+                    <div className="price-total">
+                      <span>Estimated total</span>
+                      <span>${(attendanceFee + est.lowCost * (1 + PRICING.platformFee)).toLocaleString()} – ${(attendanceFee + est.highCost * (1 + PRICING.platformFee)).toLocaleString()}</span>
+                    </div>
+                    <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
+                      {form.type === "live" ? "Attendance fees standardized at 33% below agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Statutory rate: $1.13 per 100 words (CA Gov. Code 69950).
+                    </p>
+                  </>;
+                })()}
               </div>
               <div style={{marginTop: 16}}>
                 <label className="form-checkbox">
@@ -6583,7 +6597,7 @@ function LandingPage() {
                 ))}
               </ul>
               <div style={{marginTop: 16, padding: "10px 14px", background: "#EFF6FF", borderRadius: 8, fontSize: 13, color: "#1E40AF"}}>
-                <strong>${PRICING.attendanceHalfDay}/half day · ${PRICING.attendanceFullDay}/full day</strong>
+                <strong>${PRICING.attendanceHalfDay}/half day · ${PRICING.attendanceFullDay}/full day · ${PRICING.attendanceTrialDay}/trial day</strong>
                 <div style={{fontSize: 11, color: "#3B82F6", marginTop: 2}}>33% below agency rates + statutory transcript rate</div>
               </div>
             </div>
