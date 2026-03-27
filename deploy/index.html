@@ -5009,7 +5009,7 @@ function ReporterOnboarding() {
   const [screen, setScreen] = useState(0); // 0=welcome, 1=account type, 2-6=steps, 7=invite, 8=success
   const [form, setForm] = useState({
     accountType: "", firmName: "", firmReporterCount: 3,
-    csrNumber: "", method: "", certs: [], languages: [],
+    csrNumber: "", method: "", certs: [], languages: [], courtEmployed: "", courtEmployedWhere: "",
     jobTypes: [], caseTypes: [], courts: [], turnarounds: [],
     recentCases: [{caseName: "", caseNumber: "", court: "", date: "", role: "Live attendance"}],
     phone: "", notifSmsJobs: true, notifEmail: true, notifSmsReminders: true,
@@ -5283,6 +5283,34 @@ function ReporterOnboarding() {
               <div key={l} className={"checkbox-item" + (form.languages.includes(l) ? " checked" : "")} onClick={() => toggleArr("languages", l)}>{l}</div>
             ))}
           </div>
+        </div>
+        <hr style={{border: "none", borderTop: "1px solid var(--border, #E2E8F0)", margin: "24px 0"}} />
+        <div className="form-group">
+          <label className="form-label">Do you currently work as a court-employed reporter?</label>
+          <p className="form-helper" style={{marginTop: 0, marginBottom: 10}}>Court-employed reporters are hired directly by the court and may be called away for court obligations. This helps attorneys understand your availability.</p>
+          <div className="method-cards">
+            <div className={"method-card" + (form.courtEmployed === "no" ? " selected" : "")} onClick={() => { update("courtEmployed", "no"); update("courtEmployedWhere", ""); }}>
+              <div className="mc-icon"><Icon name="user" size={20} /></div>
+              <div><div className="mc-text">No — freelance only</div><div className="mc-sub">I work independently</div></div>
+            </div>
+            <div className={"method-card" + (form.courtEmployed === "yes" ? " selected" : "")} onClick={() => update("courtEmployed", "yes")}>
+              <div className="mc-icon"><Icon name="scale" size={20} /></div>
+              <div><div className="mc-text">Yes — court-employed</div><div className="mc-sub">I also work directly for the court</div></div>
+            </div>
+          </div>
+          {form.courtEmployed === "yes" && (
+            <div style={{marginTop: 12}}>
+              <label className="form-label">Which court?</label>
+              <select className="form-select" value={form.courtEmployedWhere} onChange={e => update("courtEmployedWhere", e.target.value)}>
+                <option value="">Select court</option>
+                {COURTS.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
+              <div className="info-callout" style={{marginTop: 12}}>
+                <div className="callout-icon"><Icon name="shield" size={16} /></div>
+                <p>Your profile will show a "Court-appointed" badge so attorneys know you may occasionally need to release a job due to court obligations. This won't affect your rating.</p>
+              </div>
+            </div>
+          )}
         </div>
       </>)}
 
