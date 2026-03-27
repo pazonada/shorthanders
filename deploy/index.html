@@ -3884,6 +3884,33 @@ function ReporterDashboard() {
             </div>
           )}
 
+          {/* Refer a Colleague Card */}
+          <div className="stat-card" style={{marginBottom: 20, padding: 20, border: "1px solid var(--border, #E2E8F0)", borderRadius: 12}}>
+            <div style={{display: "flex", alignItems: "center", gap: 8, marginBottom: 12}}>
+              <Icon name="users" size={18} color="#7C3AED" />
+              <h3 style={{fontSize: 16, fontWeight: 700, margin: 0, color: "var(--text, #0F172A)"}}>Invite reporters you know</h3>
+            </div>
+            <div style={{display: "flex", flexDirection: "column", gap: 8, marginBottom: 16}}>
+              <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 12px", background: "var(--bg-card, #F8FAFC)", borderRadius: 8, fontSize: 13}}>
+                <span style={{color: "var(--text, #334155)"}}>1 signup</span>
+                <span style={{fontWeight: 700, color: "#059669"}}>$10 Starbucks gift card</span>
+              </div>
+              <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 12px", background: "var(--bg-card, #F8FAFC)", borderRadius: 8, fontSize: 13}}>
+                <span style={{color: "var(--text, #334155)"}}>5 signups</span>
+                <span style={{fontWeight: 700, color: "#059669"}}>$25 Amazon gift card</span>
+              </div>
+              <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 12px", background: "var(--bg-card, #F8FAFC)", borderRadius: 8, fontSize: 13}}>
+                <span style={{color: "var(--text, #334155)"}}>10+ signups</span>
+                <span style={{fontWeight: 700, color: "#059669"}}>$50 Amazon gift card</span>
+              </div>
+            </div>
+            <div style={{display: "flex", alignItems: "center", gap: 8, marginBottom: 12}}>
+              <input type="text" readOnly value="https://deweysholes.com/invite/CSR-7291" style={{flex: 1, padding: "8px 12px", fontSize: 13, borderRadius: 8, border: "1px solid var(--border, #E2E8F0)", background: "var(--bg-card, #F8FAFC)", color: "var(--text-muted, #64748B)"}} />
+              <button className="btn btn-primary btn-sm" style={{whiteSpace: "nowrap", padding: "8px 14px", fontSize: 13}} onClick={() => { navigator.clipboard.writeText("https://deweysholes.com/invite/CSR-7291"); alert("Invite link copied!"); }}>Copy invite link</button>
+            </div>
+            <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", margin: 0}}>0 referrals so far</p>
+          </div>
+
           {tab === "jobs" && (
             <div>
               <div className="page-header">
@@ -3994,6 +4021,25 @@ function ReporterDashboard() {
                       <span><Icon name="scale" size={13} color="#94A3B8" /> {j.caseType}</span>
                       <span><Icon name="fileText" size={13} color="#94A3B8" /> {j.pages} pages</span>
                     </div>
+                    {j.status === "transcribing" && j.id === "aj-1" && (
+                      <div style={{background: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)", border: "1px solid #FDE68A", borderRadius: 8, padding: 12, margin: "8px 0", fontSize: 13}}>
+                        <div style={{display: "flex", alignItems: "center", gap: 8, marginBottom: 8}}>
+                          <Icon name="clock" size={14} color="#D97706" />
+                          <strong style={{color: "#92400E"}}>Mid-job check-in</strong>
+                        </div>
+                        <p style={{color: "#78350F", margin: "0 0 10px", lineHeight: 1.5}}>
+                          How's this job going? Is it on track for delivery by {j.dueDate}?
+                        </p>
+                        <div style={{display: "flex", gap: 8}}>
+                          <button className="btn btn-sm" style={{padding: "6px 14px", fontSize: 12, background: "#059669", color: "#fff", border: "none", borderRadius: 6, fontWeight: 600, cursor: "pointer"}} onClick={(e) => { e.stopPropagation(); e.target.closest('[style*="FFFBEB"]').style.display = "none"; alert("Great! Marked as on track."); }}>
+                            <Icon name="checkCircle" size={12} /> On track
+                          </button>
+                          <button className="btn btn-sm" style={{padding: "6px 14px", fontSize: 12, background: "#D97706", color: "#fff", border: "none", borderRadius: 6, fontWeight: 600, cursor: "pointer"}} onClick={(e) => { e.stopPropagation(); e.target.closest('[style*="FFFBEB"]').style.display = "none"; alert("Thanks for letting us know. We'll notify the attorney and adjust the timeline."); }}>
+                            <Icon name="clock" size={12} /> Need more time
+                          </button>
+                        </div>
+                      </div>
+                    )}
                     {j.status === "delivered" && (
                       <div style={{background: "var(--bg-card, #F0FDF4)", border: "1px solid var(--border, #BBF7D0)", borderRadius: 8, padding: 12, margin: "8px 0", fontSize: 13}}>
                         <div style={{display: "flex", alignItems: "center", gap: 8, marginBottom: 6}}>
@@ -6334,6 +6380,20 @@ function LandingPage() {
             <h2>Pricing set by <span className="gradient-text">California statute</span></h2>
             <p>No hidden fees, no negotiation games. Transcript rates are set by law. We just make them easy to understand.</p>
           </div>
+
+          {/* Pilot Pricing Banner */}
+          <div style={{maxWidth: 640, margin: "0 auto 32px", background: "linear-gradient(135deg, #1E40AF 0%, #4338CA 100%)", borderRadius: 16, padding: 32, color: "#fff", position: "relative", overflow: "hidden"}}>
+            <div style={{position: "absolute", top: 12, right: 16, background: "rgba(255,255,255,0.2)", borderRadius: 6, padding: "4px 12px", fontSize: 11, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase"}}>Pilot</div>
+            <h3 style={{fontSize: 22, fontWeight: 800, marginBottom: 8, color: "#fff", letterSpacing: "-0.01em"}}>Early access pilot — Limited spots available</h3>
+            <p style={{fontSize: 15, lineHeight: 1.7, color: "rgba(255,255,255,0.9)", marginBottom: 16}}>
+              <strong>Law firms:</strong> 8% platform fee for your first year (normally 12%).<br />
+              <strong>CSRs:</strong> listing fee waived during pilot.
+            </p>
+            <p style={{fontSize: 13, lineHeight: 1.6, color: "rgba(255,255,255,0.7)", margin: 0, borderTop: "1px solid rgba(255,255,255,0.15)", paddingTop: 12}}>
+              Pilot firms understand the first 3 months is beta and agree to provide periodic feedback.
+            </p>
+          </div>
+
           <div className="pricing-card">
             <div className="pricing-body">
               <div className="pricing-row">
