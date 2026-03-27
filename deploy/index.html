@@ -3450,7 +3450,10 @@ function BuyerDashboard() {
                   <h1>Your cases</h1>
                   <p>Manage transcript orders across your active matters.</p>
                 </div>
-                <button className="btn btn-primary btn-sm" onClick={() => navigate("/order")}>New order <Icon name="arrowRight" size={14} color="#fff" /></button>
+                <div style={{display: "flex", gap: 8}}>
+                  <button className="btn btn-secondary btn-sm" onClick={() => navigate("/request-copy")}><Icon name="fileText" size={14} /> Request a copy</button>
+                  <button className="btn btn-primary btn-sm" onClick={() => navigate("/order")}>New order <Icon name="arrowRight" size={14} color="#fff" /></button>
+                </div>
               </div>
               <div className="filter-bar">
                 <input className="filter-input" placeholder="Search cases..." value={search} onChange={e => setSearch(e.target.value)} />
@@ -6608,8 +6611,8 @@ function LandingPage() {
       <section className="usecases">
         <div className="container">
           <div className="section-header">
-            <h2>Two ways to get your record</h2>
-            <p>Whether the hearing is upcoming or already happened, we've got you covered.</p>
+            <h2>Three ways to get your record</h2>
+            <p>Whether the hearing is upcoming, already happened, or someone else already ordered the transcript.</p>
           </div>
           <div className="usecases-grid">
             <div className="usecase-card">
@@ -6640,6 +6643,15 @@ function LandingPage() {
                 ))}
               </ul>
             </div>
+          </div>
+
+          <div style={{marginTop: 32, background: "#fff", border: "1px solid #E2E8F0", borderRadius: 16, padding: "32px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 24}}>
+            <div style={{flex: 1, minWidth: 260}}>
+              <div style={{fontSize: 11, fontWeight: 700, color: "#059669", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8}}>Use case C</div>
+              <h3 style={{fontSize: 20, fontWeight: 700, color: "#0F172A", marginBottom: 8}}>Request a transcript copy</h3>
+              <p style={{fontSize: 15, color: "#64748B", lineHeight: 1.7, margin: 0}}>Opposing counsel already ordered the transcript? Search by case number and request your copy at the statutory copy rate plus a flat 12% platform fee. Delivered within 2 business days.</p>
+            </div>
+            <a href="#/request-copy" className="btn btn-primary btn-sm" style={{whiteSpace: "nowrap"}}>Request a copy <Icon name="arrowRight" size={14} color="#fff" /></a>
           </div>
         </div>
       </section>
@@ -7539,11 +7551,236 @@ function PrivacyPage() {
   );
 }
 
+// ─── Request Copy Page ──────────────────────────────────────────
+const COPY_TRANSCRIPTS = [
+  { id: "ct1", caseName: "Walsh v. Henderson", caseNumber: "2024-FL-001234", court: "SF Superior Court", pages: 142, reporter: "Maria Santos", date: "2024-09-15", type: "Family Law" },
+  { id: "ct2", caseName: "Chen v. Pacific Insurance", caseNumber: "2025-CI-005678", court: "Alameda Superior Court", pages: 89, reporter: "David Kim", date: "2025-01-22", type: "Civil" },
+  { id: "ct3", caseName: "State v. Rodriguez", caseNumber: "2024-CR-009012", court: "Contra Costa Superior Court", pages: 234, reporter: "Jennifer Walsh", date: "2024-11-03", type: "Criminal" },
+  { id: "ct4", caseName: "Thompson v. Bay Area Medical", caseNumber: "2025-PI-003456", court: "SF Superior Court", pages: 67, reporter: "Sarah Chen", date: "2025-02-10", type: "Personal Injury" },
+];
+const COPY_RATE_PER_PAGE = 0.20;
+
+function RequestCopyPage() {
+  const [step, setStep] = useState(1);
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [selected, setSelected] = useState(null);
+  const [searched, setSearched] = useState(false);
+
+  const doSearch = () => {
+    const q = query.trim().toLowerCase();
+    if (!q) { setResults([]); setSearched(false); return; }
+    const matches = COPY_TRANSCRIPTS.filter(t =>
+      t.caseName.toLowerCase().includes(q) || t.caseNumber.toLowerCase().includes(q)
+    );
+    setResults(matches);
+    setSearched(true);
+  };
+
+  const handleKeyDown = (e) => { if (e.key === "Enter") doSearch(); };
+
+  const copyFee = selected ? (selected.pages * COPY_RATE_PER_PAGE) : 0;
+  const platformFee = copyFee * PRICING.platformFee;
+  const total = copyFee + platformFee;
+
+  return (
+    <div>
+      <AppNav variant="buyer" activeTab="" onTabChange={() => {}} />
+      <div className="page page-enter">
+        <div className="container" style={{maxWidth: 720}}>
+          <StepIndicator current={step} total={4} labels={["Search", "Details", "Pricing", "Confirmation"]} />
+
+          {step === 1 && (
+            <div>
+              <div className="page-header" style={{marginTop: 32}}>
+                <div>
+                  <h1>Request a transcript copy</h1>
+                  <p>Search for an existing transcript by case number or case name.</p>
+                </div>
+              </div>
+              <div style={{display: "flex", gap: 8, marginBottom: 24}}>
+                <input
+                  className="form-input"
+                  placeholder="e.g. Walsh v. Henderson or 2024-FL-001234"
+                  value={query}
+                  onChange={e => setQuery(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  style={{flex: 1}}
+                />
+                <button className="btn btn-primary btn-sm" onClick={doSearch}>
+                  <Icon name="search" size={16} color="#fff" /> Search
+                </button>
+              </div>
+
+              {searched && results.length === 0 && (
+                <div style={{textAlign: "center", padding: 48, color: "var(--text-muted, #94A3B8)"}}>
+                  <Icon name="search" size={32} color="var(--text-dim, #CBD5E1)" />
+                  <p style={{marginTop: 12, fontSize: 15}}>No transcripts found for "{query}". Try a different case number or name.</p>
+                </div>
+              )}
+
+              {results.length > 0 && (
+                <div style={{display: "flex", flexDirection: "column", gap: 12}}>
+                  {results.map(t => (
+                    <div
+                      key={t.id}
+                      onClick={() => { setSelected(t); setStep(2); }}
+                      style={{
+                        background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12,
+                        padding: "20px 24px", cursor: "pointer", transition: "all 0.2s",
+                      }}
+                      onMouseOver={e => { e.currentTarget.style.borderColor = "#2563EB"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(37,99,235,0.1)"; }}
+                      onMouseOut={e => { e.currentTarget.style.borderColor = "var(--border, #E2E8F0)"; e.currentTarget.style.boxShadow = "none"; }}
+                    >
+                      <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 8}}>
+                        <div>
+                          <div style={{fontWeight: 700, fontSize: 16, color: "var(--text, #0F172A)"}}>{t.caseName}</div>
+                          <div style={{fontSize: 13, color: "var(--text-muted, #64748B)", marginTop: 4}}>{t.caseNumber} &middot; {t.court}</div>
+                        </div>
+                        <div style={{textAlign: "right"}}>
+                          <div style={{fontSize: 13, color: "var(--text-muted, #64748B)"}}>{t.pages} pages</div>
+                          <div style={{fontSize: 12, color: "var(--text-dim, #94A3B8)", marginTop: 2}}>{new Date(t.date).toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"})}</div>
+                        </div>
+                      </div>
+                      <div style={{display: "flex", alignItems: "center", gap: 8, marginTop: 8, fontSize: 13, color: "var(--text-secondary, #475569)"}}>
+                        <Icon name="user" size={14} color="var(--text-dim, #94A3B8)" />
+                        Reporter: {t.reporter}
+                        <span style={{marginLeft: "auto", color: "#2563EB", fontWeight: 600, fontSize: 13}}>Select &rarr;</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {step === 2 && selected && (
+            <div>
+              <div className="page-header" style={{marginTop: 32}}>
+                <div>
+                  <h1>Transcript details</h1>
+                  <p>Review the transcript details before requesting your copy.</p>
+                </div>
+              </div>
+              <div style={{background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, padding: 32}}>
+                <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24}}>
+                  <div>
+                    <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4}}>Case name</div>
+                    <div style={{fontSize: 16, fontWeight: 600, color: "var(--text, #0F172A)"}}>{selected.caseName}</div>
+                  </div>
+                  <div>
+                    <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4}}>Case number</div>
+                    <div style={{fontSize: 16, fontWeight: 600, color: "var(--text, #0F172A)"}}>{selected.caseNumber}</div>
+                  </div>
+                  <div>
+                    <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4}}>Court</div>
+                    <div style={{fontSize: 15, color: "var(--text-secondary, #475569)"}}>{selected.court}</div>
+                  </div>
+                  <div>
+                    <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4}}>Hearing date</div>
+                    <div style={{fontSize: 15, color: "var(--text-secondary, #475569)"}}>{new Date(selected.date).toLocaleDateString("en-US", {month: "long", day: "numeric", year: "numeric"})}</div>
+                  </div>
+                  <div>
+                    <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4}}>Page count</div>
+                    <div style={{fontSize: 15, color: "var(--text-secondary, #475569)"}}>{selected.pages} pages</div>
+                  </div>
+                  <div>
+                    <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4}}>Original reporter</div>
+                    <div style={{fontSize: 15, color: "var(--text-secondary, #475569)"}}>{selected.reporter}</div>
+                  </div>
+                </div>
+              </div>
+              <div style={{display: "flex", gap: 12, marginTop: 24}}>
+                <button className="btn btn-secondary btn-sm" onClick={() => setStep(1)}>&larr; Back to search</button>
+                <button className="btn btn-primary btn-sm" onClick={() => setStep(3)}>Continue to pricing <Icon name="arrowRight" size={14} color="#fff" /></button>
+              </div>
+            </div>
+          )}
+
+          {step === 3 && selected && (
+            <div>
+              <div className="page-header" style={{marginTop: 32}}>
+                <div>
+                  <h1>Copy pricing</h1>
+                  <p>Pricing is based on statutory copy rates in California.</p>
+                </div>
+              </div>
+              <div style={{background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, overflow: "hidden"}}>
+                <div style={{padding: 32}}>
+                  <div style={{fontSize: 14, fontWeight: 600, color: "var(--text, #0F172A)", marginBottom: 4}}>{selected.caseName}</div>
+                  <div style={{fontSize: 13, color: "var(--text-muted, #64748B)", marginBottom: 24}}>{selected.caseNumber} &middot; {selected.pages} pages</div>
+
+                  <div style={{display: "flex", justifyContent: "space-between", padding: "16px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)"}}>
+                    <div>
+                      <div style={{fontSize: 15, fontWeight: 600, color: "var(--text, #0F172A)"}}>Copy fee</div>
+                      <div style={{fontSize: 13, color: "var(--text-muted, #64748B)", marginTop: 2}}>{selected.pages} pages x ${COPY_RATE_PER_PAGE.toFixed(2)}/page</div>
+                    </div>
+                    <div style={{fontSize: 15, fontWeight: 600, color: "var(--text, #0F172A)"}}>${copyFee.toFixed(2)}</div>
+                  </div>
+                  <div style={{display: "flex", justifyContent: "space-between", padding: "16px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)"}}>
+                    <div>
+                      <div style={{fontSize: 15, fontWeight: 600, color: "var(--text, #0F172A)"}}>Platform fee</div>
+                      <div style={{fontSize: 13, color: "var(--text-muted, #64748B)", marginTop: 2}}>{(PRICING.platformFee * 100).toFixed(0)}% of copy fee</div>
+                    </div>
+                    <div style={{fontSize: 15, fontWeight: 600, color: "var(--text, #0F172A)"}}>${platformFee.toFixed(2)}</div>
+                  </div>
+                  <div style={{display: "flex", justifyContent: "space-between", padding: "20px 0 0"}}>
+                    <div style={{fontSize: 18, fontWeight: 800, color: "var(--text, #0F172A)"}}>Total</div>
+                    <div style={{fontSize: 24, fontWeight: 800, color: "#059669"}}>${total.toFixed(2)}</div>
+                  </div>
+                </div>
+                <div style={{background: "var(--bg-muted, #F8FAFC)", padding: "16px 32px", fontSize: 13, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
+                  Copy rate is the California statutory rate for transcript copies. The reporter receives the full copy fee.
+                </div>
+              </div>
+              <div style={{display: "flex", gap: 12, marginTop: 24}}>
+                <button className="btn btn-secondary btn-sm" onClick={() => setStep(2)}>&larr; Back</button>
+                <button className="btn btn-primary btn-sm" onClick={() => setStep(4)}>Request copy <Icon name="arrowRight" size={14} color="#fff" /></button>
+              </div>
+            </div>
+          )}
+
+          {step === 4 && selected && (
+            <div style={{textAlign: "center", padding: "48px 0"}}>
+              <div style={{width: 64, height: 64, borderRadius: "50%", background: "#D1FAE5", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 24}}>
+                <Icon name="checkCircle" size={32} color="#059669" />
+              </div>
+              <h1 style={{fontSize: 28, fontWeight: 800, color: "var(--text, #0F172A)", letterSpacing: "-0.02em"}}>Copy request submitted</h1>
+              <p style={{fontSize: 16, color: "var(--text-muted, #64748B)", marginTop: 12, maxWidth: 480, marginLeft: "auto", marginRight: "auto", lineHeight: 1.7}}>
+                Your copy request for <strong>{selected.caseName}</strong> has been submitted. The reporter will be notified and your copy will be delivered within 2 business days.
+              </p>
+              <div style={{background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12, padding: 20, maxWidth: 400, margin: "32px auto", textAlign: "left"}}>
+                <div style={{display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8}}>
+                  <span style={{color: "var(--text-muted, #64748B)"}}>Case</span>
+                  <span style={{fontWeight: 600, color: "var(--text, #0F172A)"}}>{selected.caseName}</span>
+                </div>
+                <div style={{display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8}}>
+                  <span style={{color: "var(--text-muted, #64748B)"}}>Pages</span>
+                  <span style={{fontWeight: 600, color: "var(--text, #0F172A)"}}>{selected.pages}</span>
+                </div>
+                <div style={{display: "flex", justifyContent: "space-between", fontSize: 14}}>
+                  <span style={{color: "var(--text-muted, #64748B)"}}>Total</span>
+                  <span style={{fontWeight: 700, color: "#059669"}}>${total.toFixed(2)}</span>
+                </div>
+              </div>
+              <div style={{display: "flex", gap: 12, justifyContent: "center", marginTop: 24}}>
+                <a href="#/dashboard" className="btn btn-primary btn-sm">Back to dashboard <Icon name="arrowRight" size={14} color="#fff" /></a>
+                <button className="btn btn-secondary btn-sm" onClick={() => { setStep(1); setSelected(null); setQuery(""); setResults([]); setSearched(false); }}>Request another copy</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Router App ─────────────────────────────────────────────────
 function AppRouter() {
   const route = useRoute();
   const m = route.match(/^#\/order\/(.+)$/);
   if (m) return <OrderDetailPage orderId={m[1]} />;
+  if (route.startsWith("#/request-copy")) return <RequestCopyPage />;
   if (route.startsWith("#/order")) return <OrderFlow />;
   if (route.startsWith("#/messages")) return <MessagingPage />;
   if (route.startsWith("#/dashboard")) return <BuyerDashboard />;
