@@ -4870,11 +4870,12 @@ function PricingCalculator() {
 
 // ─── Reporter Onboarding ────────────────────────────────────────
 function ReporterOnboarding() {
-  const [screen, setScreen] = useState(0); // 0=welcome, 1=account type, 2-5=steps, 6=invite, 7=success
+  const [screen, setScreen] = useState(0); // 0=welcome, 1=account type, 2-6=steps, 7=invite, 8=success
   const [form, setForm] = useState({
     accountType: "", firmName: "", firmReporterCount: 3,
     csrNumber: "", method: "", certs: [], languages: [],
     jobTypes: [], caseTypes: [], courts: [], turnarounds: [],
+    recentCases: [{caseName: "", caseNumber: "", court: "", date: "", role: "Live attendance"}],
     phone: "", notifSmsJobs: true, notifEmail: true, notifSmsReminders: true,
     name: "", email: "", password: ""
   });
@@ -4980,8 +4981,8 @@ function ReporterOnboarding() {
     );
   }
 
-  // Screen 6: Invite colleagues
-  if (screen === 6) {
+  // Screen 7: Invite colleagues
+  if (screen === 7) {
     const [inviteSearch, setInviteSearch] = useState("");
     const [invitedCsrs, setInvitedCsrs] = useState([]);
     const csrProfiles = (typeof CSR_PROFILES !== "undefined" ? CSR_PROFILES : []);
@@ -5035,10 +5036,10 @@ function ReporterOnboarding() {
             </div>
           )}
           <div style={{display: "flex", gap: 12, marginTop: 24}}>
-            <button className="btn btn-secondary" style={{flex: 1, justifyContent: "center"}} onClick={() => setScreen(7)}>
+            <button className="btn btn-secondary" style={{flex: 1, justifyContent: "center"}} onClick={() => setScreen(8)}>
               Skip for now
             </button>
-            <button className="btn btn-primary" style={{flex: 1, justifyContent: "center", background: invitedCsrs.length > 0 ? "linear-gradient(135deg, #059669, #10B981)" : undefined}} onClick={() => setScreen(7)}>
+            <button className="btn btn-primary" style={{flex: 1, justifyContent: "center", background: invitedCsrs.length > 0 ? "linear-gradient(135deg, #059669, #10B981)" : undefined}} onClick={() => setScreen(8)}>
               {invitedCsrs.length > 0 ? `Send ${invitedCsrs.length} invite${invitedCsrs.length > 1 ? "s" : ""} & continue` : "Continue"} <Icon name="arrowRight" size={14} />
             </button>
           </div>
@@ -5047,8 +5048,8 @@ function ReporterOnboarding() {
     );
   }
 
-  // Screen 7: Success
-  if (screen === 7) {
+  // Screen 8: Success
+  if (screen === 8) {
     const jobTypeLabels = form.jobTypes.length ? form.jobTypes.join(", ") : "Not specified";
     const courtLabels = form.courts.length ? form.courts.map(id => { const c = COURTS.find(x => x.id === id); return c ? c.name : id; }).slice(0, 3).join(", ") + (form.courts.length > 3 ? ` +${form.courts.length - 3} more` : "") : "Not specified";
     return (
@@ -5090,11 +5091,12 @@ function ReporterOnboarding() {
     );
   }
 
-  const step = screen - 1; // screens 2-5 map to steps 1-4
+  const step = screen - 1; // screens 2-6 map to steps 1-5
   const stepTitles = [
     null,
     ["Your credentials", "Tell us about your certification and qualifications."],
     ["Your preferences", "What kind of work are you looking for?"],
+    ["Case history", "Help attorneys find you by adding recent cases you've reported on."],
     ["Payment & notifications", "How you'll get paid and stay informed."],
     ["Create your account", "Almost there — just the basics."]
   ];
@@ -5104,7 +5106,7 @@ function ReporterOnboarding() {
       <div style={{marginBottom: 32, textAlign: "center"}}>
         <a href="#/" style={{display: "inline-flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
       </div>
-      <StepIndicator current={step} total={4} labels={["Credentials", "Preferences", "Payment", "Account"]} />
+      <StepIndicator current={step} total={5} labels={["Credentials", "Preferences", "Cases", "Payment", "Account"]} />
       <div style={{height: 28}} />
       <div className="reporter-step-header">
         <h2>{stepTitles[step][0]}</h2>
@@ -5189,7 +5191,55 @@ function ReporterOnboarding() {
         </div>
       </>)}
 
-      {step === 3 && (<>
+      {step === 3 && (() => {
+        const addCase = () => setForm(prev => ({...prev, recentCases: [...prev.recentCases, {caseName: "", caseNumber: "", court: "", date: "", role: "Live attendance"}]}));
+        const updateCase = (i, field, val) => setForm(prev => ({...prev, recentCases: prev.recentCases.map((c, j) => j === i ? {...c, [field]: val} : c)}));
+        const removeCase = (i) => setForm(prev => ({...prev, recentCases: prev.recentCases.filter((_, j) => j !== i)}));
+        return (<>
+          <div style={{marginBottom: 16, padding: 14, background: "var(--bg-muted, #EFF6FF)", border: "1px solid #BFDBFE", borderRadius: 10, fontSize: 13, color: "#1E40AF", lineHeight: 1.6}}>
+            <strong>Why this matters:</strong> Attorneys often need to find the reporter who attended a specific hearing — sometimes years later. Adding your recent cases helps them find you and builds your professional profile.
+          </div>
+          {form.recentCases.map((c, i) => (
+            <div key={i} style={{padding: 16, background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10, marginBottom: 12, position: "relative"}}>
+              <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12}}>
+                <span style={{fontSize: 12, fontWeight: 700, color: "var(--text-secondary, #64748B)", textTransform: "uppercase", letterSpacing: "0.05em"}}>Case {i + 1}</span>
+                {form.recentCases.length > 1 && <button style={{background: "none", border: "none", color: "#DC2626", cursor: "pointer", fontSize: 12, fontWeight: 600}} onClick={() => removeCase(i)}>Remove</button>}
+              </div>
+              <div className="form-row">
+                <div className="form-group" style={{marginBottom: 8}}><label className="form-label">Case name</label><input className="form-input" placeholder="e.g. Walsh v. Henderson" value={c.caseName} onChange={e => updateCase(i, "caseName", e.target.value)} /></div>
+                <div className="form-group" style={{marginBottom: 8}}><label className="form-label">Case number</label><input className="form-input" placeholder="e.g. 2024-FL-001234" value={c.caseNumber} onChange={e => updateCase(i, "caseNumber", e.target.value)} /></div>
+              </div>
+              <div className="form-row">
+                <div className="form-group" style={{marginBottom: 8}}><label className="form-label">Court</label>
+                  <select className="form-select" value={c.court} onChange={e => updateCase(i, "court", e.target.value)}>
+                    <option value="">Select court</option>
+                    {(typeof COURTS !== "undefined" ? COURTS : []).map(ct => <option key={ct.id} value={ct.id}>{ct.name}</option>)}
+                  </select>
+                </div>
+                <div className="form-group" style={{marginBottom: 8}}><label className="form-label">Date attended</label><input className="form-input" type="date" value={c.date} onChange={e => updateCase(i, "date", e.target.value)} /></div>
+              </div>
+              <div className="form-group" style={{marginBottom: 0}}>
+                <label className="form-label">Your role</label>
+                <div style={{display: "flex", gap: 8}}>
+                  {["Live attendance", "Audio transcription"].map(r => (
+                    <div key={r} className={"checkbox-item" + (c.role === r ? " checked" : "")} onClick={() => updateCase(i, "role", r)} style={{flex: 1, justifyContent: "center"}}>{r}</div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+          {form.recentCases.length < 10 && (
+            <button style={{width: "100%", padding: 12, border: "1px dashed #CBD5E1", borderRadius: 8, background: "transparent", color: "#64748B", fontSize: 13, cursor: "pointer", transition: "all 0.15s"}} onClick={addCase} onMouseOver={e => {e.target.style.borderColor="#93C5FD"; e.target.style.color="#2563EB"}} onMouseOut={e => {e.target.style.borderColor="#CBD5E1"; e.target.style.color="#64748B"}}>
+              + Add another case
+            </button>
+          )}
+          <div style={{marginTop: 16, padding: 12, background: "var(--bg-muted, #F8FAFC)", borderRadius: 8, fontSize: 12, color: "var(--text-secondary, #64748B)", lineHeight: 1.5}}>
+            You can always add more cases from your dashboard calendar after signing up. These cases will also appear in your public profile.
+          </div>
+        </>);
+      })()}
+
+      {step === 4 && (<>
         <div className="form-group">
           <label className="form-label" style={{fontSize: 13, fontWeight: 700, marginBottom: 12, display: "block"}}>How you'll get paid</label>
           <div className="stripe-card">
@@ -5220,7 +5270,7 @@ function ReporterOnboarding() {
         </div>
       </>)}
 
-      {step === 4 && (<>
+      {step === 5 && (<>
         <div className="form-row">
           <div className="form-group"><label className="form-label">Full name</label><input className="form-input" placeholder="Sarah Chen" value={form.name} onChange={e => update("name", e.target.value)} /></div>
           <div className="form-group"><label className="form-label">Email</label><input className="form-input" type="email" placeholder="sarah@example.com" value={form.email} onChange={e => update("email", e.target.value)} /></div>
@@ -5236,12 +5286,12 @@ function ReporterOnboarding() {
         <button className="btn btn-secondary" onClick={() => setScreen(screen === 2 ? 1 : screen - 1)}>
           <Icon name="chevronRight" size={14} style={{transform: "rotate(180deg)"}} /> Back
         </button>
-        {step < 4 ? (
+        {step < 5 ? (
           <button className="btn btn-primary" onClick={() => setScreen(screen + 1)}>
             Continue <Icon name="arrowRight" size={14} />
           </button>
         ) : (
-          <button className="btn btn-primary" style={{background: "linear-gradient(135deg, #059669, #10B981)"}} onClick={() => setScreen(6)}>
+          <button className="btn btn-primary" style={{background: "linear-gradient(135deg, #059669, #10B981)"}} onClick={() => setScreen(7)}>
             Create account <Icon name="checkCircle" size={14} />
           </button>
         )}
@@ -5476,7 +5526,7 @@ function AttorneyOnboarding() {
                 ))}
               </div>
               <div style={{marginTop: 12, padding: 10, background: "var(--bg-muted, #F0FDF4)", border: "1px solid #BBF7D0", borderRadius: 8, fontSize: 13, color: "#065F46"}}>
-                <Icon name="checkCircle" size={14} color="#059669" /> {favProfiles.filter(p => onPlatform(p.csrNumber)).length} already on platform. {favProfiles.filter(p => !onPlatform(p.csrNumber)).length > 0 ? "We'll invite the others and notify you when they join." : ""}
+                <Icon name="checkCircle" size={14} color="#059669" /> {favProfiles.filter(p => onPlatform(p.csrNumber)).length} already on platform. {favProfiles.filter(p => !onPlatform(p.csrNumber)).length > 0 ? "We'll send them a personal invitation: '" + (form.name || "Your firm") + " uses Dewey Sholes and wants to book you directly. Join today to get paid in full for your transcriptions.' We'll notify you when they join." : ""}
               </div>
             </div>
           )}
