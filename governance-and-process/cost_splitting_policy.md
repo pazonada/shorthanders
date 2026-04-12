@@ -28,7 +28,8 @@ Per Rosie (4/11): "Our cost-split feature should only be for people who've alrea
 5. **The job is only posted to reporters once all shares are collected**
 6. If a co-payer doesn't confirm:
    - The ordering attorney is notified
-   - They can: (a) cover the remaining share themselves, (b) cancel the order, or (c) replace the non-responsive party
+   - They can: (a) cover the remaining share themselves and proceed, (b) cancel the order entirely, or (c) replace the non-responsive party with someone else
+   - **Per Rosie (4/11): offer all three options.** Let the ordering attorney decide.
 7. The CSR sees **one job** and receives **one full payment** — they don't need to know it was split
 
 ### What co-payers see
