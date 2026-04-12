@@ -162,12 +162,42 @@ Solo litigators are a massive secondary market (~16,000-20,000) but are harder t
 
 ---
 
+## Insurance carrier channel (top-down sales)
+
+Per Rosie (4/11): ~70% of attorneys functionally work for insurance companies. Carriers pay for the defense, audit every line item, and pressure firms to keep costs down. The firm has to submit estimated budgets and negotiate back and forth about what it will cost to defend the suit. Carriers have entire systems to audit and benchmark what firms typically spend on specific tasks.
+
+### Why this matters for Dewey Sholes
+
+- **One carrier relationship could unlock dozens/hundreds of panel firms.** Carriers maintain approved vendor lists and panel firm guidelines.
+- **The platform naturally generates the cost data carriers want:** spend per matter, cost by case type, turnaround metrics, statutory rate compliance.
+- **Transparent pricing is our pitch:** statutory rates + flat 12% fee vs. opaque agency markups. Easy for carriers to verify savings.
+- **Rosie's insight:** "If our system saves money, maybe the carriers can pressure their firms to use us."
+
+### How to approach
+
+| Phase | Action | Priority |
+|-------|--------|----------|
+| Pilot | Build cost-savings data from early adopter firms. Create a one-pager a defense firm could forward to their carrier contact. | Medium |
+| Post-pilot | Target carrier litigation cost management departments directly. Show anonymized benchmark data. | High |
+| Scale | Offer carrier-specific reporting dashboards (spend by panel firm, by case type, vs. industry benchmarks). | High |
+
+### Key carriers in CA (by market share)
+
+Target the largest writers of commercial/auto/general liability in CA — these drive the most defense litigation spend. Research specific contacts in their litigation management or vendor management departments.
+
+### Risk
+
+Carrier sales cycles are long and enterprise-y. This is a Phase 2-3 play, not a pilot target. But worth planting seeds early.
+
+---
+
 ## What to ask Rosie
 
 1. Which of her contacts are at **firms** (not solo) in the target practice areas?
 2. Can she get intros through the **CSR shortage action group** to firms that reporters already work with?
 3. Does she have any connections to **CAALA** or local family law bars for broader outreach?
 4. Any firms she knows that are **actively frustrated** with current reporter sourcing?
+5. Does Rosie have any contacts at **insurance carriers** (litigation management / vendor management departments)?
 
 ---
 
