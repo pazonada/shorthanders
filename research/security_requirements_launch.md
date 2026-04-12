@@ -70,24 +70,23 @@ These are table stakes. Any litigation firm will ask about these, and the answer
 
 **What to say when asked:** "We're building to SOC 2 standards from day one. Our infrastructure uses AES-256 encryption, MFA, role-based access, and SOC 2-certified subprocessors (AWS, Stripe). We plan to complete our Type I audit within 12 months of launch and welcome your security team's review of our architecture."
 
-**Timeline:** SOC 2 Type I readiness assessment when revenue reaches ~$5K/month. Full audit when a BigLaw or carrier prospect requires it.
+**Automation tools (when ready):** Platforms like Drata (~$7,500/yr), Vanta (~$10K/yr), or Secureframe (~$8K/yr) connect to your infrastructure (Supabase, AWS, GitHub, Stripe), auto-collect compliance evidence, generate required policies, and pair you with an auditor. Total automated SOC 2 Type I cost: ~$12,500-$20K (platform + auditor), vs. $25-50K+ doing it manually with consultants. Don't pay for this yet — but when a prospect requires it, you sign up, connect your infra, and you're 80% there because we built SOC 2-ready from day one.
+
+**Timeline:** SOC 2 Type I readiness assessment when revenue reaches ~$5K/month or a BigLaw/carrier prospect requires it. Budget ~$12,500-$20K all-in with an automation platform.
 
 ### HIPAA compliance
 
 **What it is in plain language:** HIPAA is the federal law that governs how medical information is handled. If you're a "covered entity" (healthcare provider, insurer) or a "business associate" (you handle medical data on their behalf), you must follow HIPAA rules — encryption, access controls, breach notification, audit trails, and a formal compliance program.
 
-**Why it might apply to us:** Medical malpractice depositions contain protected health information (PHI) — patient names, diagnoses, treatment records. If a med mal firm uploads audio containing PHI, or a transcript includes PHI, and we store it, we could be considered a "business associate" under HIPAA.
+**Why this likely doesn't apply to Dewey Sholes:** We handle court transcripts from public hearings, not depositions. Court proceedings are public record — anyone could have walked into the courtroom and heard everything. There's no PHI to protect because the transcript is a legal document recording public proceedings, not a medical record.
 
-**Why we don't need it yet:**
-- HIPAA compliance programs cost $10,000-$50,000+ to set up properly
-- It requires a BAA (Business Associate Agreement) with every firm that sends us medical data
-- Our pilot targets are PI, family law, employment, and civil lit firms — not primarily med mal
-- We already encrypt everything and restrict access, which covers most of HIPAA's technical requirements anyway
-- The real gap is the administrative stuff: formal HIPAA policies, a designated privacy officer, breach notification procedures specific to HIPAA timelines
+The HIPAA concern only arises with **deposition transcripts** (private proceedings), specifically medical malpractice depositions where doctors testify about patient diagnoses and treatment. Since we're focused on court transcripts, HIPAA is essentially off the table.
 
-**What to say when asked:** "Our encryption and access controls meet HIPAA's technical safeguards. If your firm requires a formal BAA, let's discuss — we're working toward full HIPAA compliance for firms handling medical records."
+**If we expand into depositions later:** Even then, the stronger argument is that the **law firm** is the HIPAA-covered entity (or business associate), not the platform that transfers the file. But if med mal deposition services become a significant segment, revisit this and budget $10-50K for a formal compliance program and BAA (Business Associate Agreement) template.
 
-**Timeline:** Address if/when med mal firms become a significant user segment.
+**What to say if asked:** "We handle court transcripts from public proceedings, which are not subject to HIPAA. Our encryption and access controls meet HIPAA's technical safeguards regardless. If we expand into deposition services involving medical records, we'll implement formal HIPAA compliance including BAAs."
+
+**Timeline:** Revisit only if/when deposition services with PHI become part of the platform.
 
 ### Penetration testing
 
