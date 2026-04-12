@@ -2914,6 +2914,7 @@ function OrderFlow() {
     hearingDate: "", hearingTime: "", duration: "60", interpreter: false, interpreterLang: "",
     audioFile: "", reporterPref: "", selectedReporter: null, turnaround: "standard", feeWaiver: false, notes: "",
     deadline: "", deadlineType: "default",
+    costSplit: false, coPayers: [{ name: "", email: "", firm: "", share: "" }],
   });
   const [submitted, setSubmitted] = useState(false);
   const update = (k, v) => setForm(f => ({ ...f, [k]: v }));
@@ -3286,6 +3287,63 @@ function OrderFlow() {
                   Litigant has a fee waiver on file with the court
                 </label>
               </div>
+
+              {/* Cost splitting */}
+              <div style={{marginTop: 24, padding: 20, background: "var(--bg-muted, #F8FAFC)", borderRadius: 12, border: "1px solid var(--border, #E2E8F0)"}}>
+                <label className="form-checkbox" style={{marginBottom: form.costSplit ? 16 : 0}}>
+                  <input type="checkbox" checked={form.costSplit} onChange={e => update("costSplit", e.target.checked)} />
+                  <span style={{fontWeight: 600}}>Split cost with other parties</span>
+                </label>
+                {form.costSplit && (
+                  <div>
+                    <p style={{fontSize: 13, color: "var(--text-secondary, #64748B)", marginBottom: 16, lineHeight: 1.6}}>
+                      Add co-paying attorneys below. Each party will receive a link to confirm and pay their share before the job is submitted to reporters.
+                    </p>
+                    {form.coPayers.map((cp, i) => (
+                      <div key={i} style={{display: "grid", gridTemplateColumns: "1fr 1fr 1fr auto", gap: 8, marginBottom: 8, alignItems: "end"}}>
+                        <div>
+                          {i === 0 && <label className="form-label" style={{fontSize: 12}}>Attorney name</label>}
+                          <input className="form-input" placeholder="e.g. Jane Park" value={cp.name} onChange={e => {
+                            const updated = [...form.coPayers]; updated[i] = {...cp, name: e.target.value}; update("coPayers", updated);
+                          }} />
+                        </div>
+                        <div>
+                          {i === 0 && <label className="form-label" style={{fontSize: 12}}>Email</label>}
+                          <input className="form-input" type="email" placeholder="jane@parklaw.com" value={cp.email} onChange={e => {
+                            const updated = [...form.coPayers]; updated[i] = {...cp, email: e.target.value}; update("coPayers", updated);
+                          }} />
+                        </div>
+                        <div>
+                          {i === 0 && <label className="form-label" style={{fontSize: 12}}>Share</label>}
+                          <select className="form-input form-select" value={cp.share} onChange={e => {
+                            const updated = [...form.coPayers]; updated[i] = {...cp, share: e.target.value}; update("coPayers", updated);
+                          }}>
+                            <option value="">Select</option>
+                            <option value="equal">Equal split</option>
+                            <option value="25">25%</option>
+                            <option value="33">33%</option>
+                            <option value="50">50%</option>
+                            <option value="75">75%</option>
+                          </select>
+                        </div>
+                        <button className="btn btn-secondary btn-sm" style={{padding: "6px 10px", minWidth: 0}} onClick={() => {
+                          if (form.coPayers.length > 1) { const updated = form.coPayers.filter((_, j) => j !== i); update("coPayers", updated); }
+                        }} title="Remove">{form.coPayers.length > 1 ? "×" : ""}</button>
+                      </div>
+                    ))}
+                    {form.coPayers.length < 5 && (
+                      <button className="btn btn-secondary btn-sm" style={{marginTop: 8, fontSize: 13}} onClick={() => update("coPayers", [...form.coPayers, { name: "", email: "", firm: "", share: "" }])}>
+                        + Add another party
+                      </button>
+                    )}
+                    <div style={{marginTop: 16, padding: 12, background: "var(--bg, #fff)", borderRadius: 8, border: "1px solid var(--border, #E2E8F0)", fontSize: 13, color: "var(--text-secondary, #64748B)", lineHeight: 1.6}}>
+                      <Icon name="info" size={14} color="#3B82F6" style={{marginRight: 6, verticalAlign: "-2px"}} />
+                      <strong>How it works:</strong> Each co-payer receives an email with a secure link to confirm their share and enter payment info. The job is only posted to reporters once all parties have paid. Co-payers don't need a Dewey Sholes account.
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <div style={{display: "flex", gap: 12, marginTop: 24}}>
                 <button className="btn btn-secondary btn-sm" onClick={() => setStep(3)}>Back</button>
                 <button className="btn btn-primary btn-sm" onClick={() => setStep(5)}>Review order <Icon name="arrowRight" size={14} color="#fff" /></button>
@@ -3344,6 +3402,27 @@ function OrderFlow() {
                 <div className="price-line"><span>Matching</span><strong>{form.reporterPref === "auto" ? "Best available" : form.reporterPref === "favorite" ? "From favorites" : "Top rated"}</strong></div>
                 {form.selectedReporter && <div className="price-line"><span>Selected</span><strong>{(MOCK_REPORTERS.find(r => r.id === form.selectedReporter) || {}).name || "—"}</strong></div>}
               </div>
+              {form.costSplit && form.coPayers.some(cp => cp.name || cp.email) && (
+                <div className="review-section-card">
+                  <h3><Icon name="dollarSign" size={14} /> Cost split</h3>
+                  <div style={{fontSize: 13, color: "var(--text-secondary, #64748B)", marginBottom: 12}}>
+                    All parties must confirm and pay before the job is posted to reporters.
+                  </div>
+                  <div className="price-line" style={{borderBottom: "1px solid var(--border, #E2E8F0)", paddingBottom: 8, marginBottom: 8}}>
+                    <span><strong>You</strong> (ordering attorney)</span>
+                    <strong>{form.coPayers[0]?.share === "equal" ? `Equal share` : form.coPayers[0]?.share ? `${100 - form.coPayers.reduce((s, cp) => s + (cp.share === "equal" ? 0 : parseInt(cp.share) || 0), 0)}%` : "Remainder"}</strong>
+                  </div>
+                  {form.coPayers.filter(cp => cp.name || cp.email).map((cp, i) => (
+                    <div key={i} className="price-line">
+                      <span>{cp.name || cp.email || `Party ${i + 2}`} <span style={{fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>{cp.email && `· ${cp.email}`}</span></span>
+                      <span style={{display: "flex", alignItems: "center", gap: 8}}>
+                        <strong>{cp.share === "equal" ? "Equal share" : cp.share ? `${cp.share}%` : "TBD"}</strong>
+                        <span style={{fontSize: 11, padding: "2px 8px", borderRadius: 100, background: "#FEF3C7", color: "#92400E", fontWeight: 600}}>Pending</span>
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
               <div style={{display: "flex", gap: 12, marginTop: 24}}>
                 <button className="btn btn-secondary btn-sm" onClick={() => setStep(4)}>Back</button>
                 <button className="btn btn-primary" onClick={() => setSubmitted(true)}>Submit order <Icon name="arrowRight" size={16} color="#fff" /></button>
