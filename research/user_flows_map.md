@@ -316,6 +316,62 @@ Dark mode toggle
 ### WHAT'S MISSING for real build
 
 ```
+!! Account management (both CSR + attorney)
+   Edit profile: name, email, phone, firm, photo, bio, credentials
+   Change password (in settings — exists in prototype but not functional)
+   Update payment methods (add/remove cards, update bank info)
+   Pause account: temporarily hide from marketplace (CSR: stop receiving
+     job notifications, profile hidden from directory; attorney: no new orders)
+     → "Reactivate" button when ready to come back
+   Delete/close account:
+     → Confirmation flow: "Are you sure?" with consequences listed
+     → Check for open orders/active jobs — must resolve before closing
+     → Data export: download your data before deletion (CCPA requirement)
+     → Grace period: 30 days to reactivate before permanent deletion
+     → Per our custody policy: attorney transcript copies retained 90 days
+       post-closure, CSR notes/files are their own responsibility
+   Status: Settings page exists in prototype with profile/security tabs
+           but none of this is functional
+
+!! Support / help flows
+   Report an issue:
+     → From any screen: "Help" button or menu item
+     → Issue categories: billing problem, technical issue, report a user,
+       transcript quality concern, payment not received, other
+     → Form: category, description, optional screenshot upload,
+       order/job # reference (auto-populated if from an order context)
+     → Confirmation: ticket #, expected response time
+   Request support:
+     → Live chat (stretch goal) or email support
+     → FAQ link as first-line deflection
+   Report a user:
+     → From reporter profile or message thread
+     → Reason: unprofessional conduct, missed deadline, harassment,
+       inaccurate credentials, other
+     → Admin notified for review
+   Status: Contact page exists (#/contact) but no in-app support flow
+
+!! CSR listing fee management
+   Annual renewal reminder (30 days, 7 days, expired)
+   Payment failed → grace period → profile hidden → account suspended
+   Upgrade/downgrade: individual ↔ firm tier
+   Renewal receipt / invoice
+   Status: NOT in prototype
+
+!! Data export (CCPA compliance)
+   User requests export of all their data
+   Platform generates downloadable archive (profile, orders, transcripts,
+   messages, payment history)
+   Required under CCPA for CA residents
+   Status: NOT in prototype
+
+!! Onboarding email sequence
+   Welcome email after signup
+   "Complete your profile" reminder (if incomplete after 48 hours)
+   "Your verification is complete" confirmation
+   "Your first job is waiting" (when a matching job is posted)
+   Status: NOT in prototype
+
 !! Email notification system
    Transactional emails: order confirmation, reporter assigned,
    transcript delivered, payment received, cost-split invitation,
@@ -435,26 +491,32 @@ Static pages:
 | 9 | File security (signed URLs, RLS, encryption) | Non-negotiable for legal industry |
 | 10 | PWA + push notifications | CSRs need instant job alerts |
 | 11 | Email notifications (transactional) | Users need to know what's happening |
+| 12 | Profile editing (both roles) | Users need to update their info post-onboarding |
+| 13 | Report an issue / request support | Users need a way to get help |
 
 ### Should-have for pilot (Month 2)
 
 | # | Flow | Why |
 |---|------|-----|
-| 12 | Cost-split co-payer guest checkout | Key differentiator per Rosie |
-| 13 | Messaging (real-time) | Attorneys and CSRs need to communicate |
-| 14 | Correction request flow | Errors happen, need a process |
-| 15 | Rating/review after delivery | Trust signal for marketplace |
-| 16 | CSR profile editing | Reporters need to update their info |
-| 17 | Reporter referral tracking | Growth channel |
+| 14 | Cost-split co-payer guest checkout | Key differentiator per Rosie |
+| 15 | Messaging (real-time) | Attorneys and CSRs need to communicate |
+| 16 | Correction request flow | Errors happen, need a process |
+| 17 | Rating/review after delivery | Trust signal for marketplace |
+| 18 | Reporter referral tracking | Growth channel |
+| 19 | Pause account | CSRs going on vacation, attorneys between cases |
+| 20 | CSR listing fee renewal + billing | Annual $99 fee management, grace periods |
 
 ### Nice-to-have (Month 3+)
 
 | # | Flow | Why |
 |---|------|-----|
-| 18 | Analytics dashboard (attorney) | Value-add, not critical |
-| 19 | Team management (firm admin) | Multi-user firms |
-| 20 | Admin dispute management | Handle edge cases |
-| 21 | Request copy flow | Secondary revenue stream |
-| 22 | Re-order / repeat order | Convenience feature |
-| 23 | TRF paperwork generation | Fee waiver support |
-| 24 | Admin financial reporting | Business intelligence |
+| 21 | Analytics dashboard (attorney) | Value-add, not critical |
+| 22 | Team management (firm admin) | Multi-user firms |
+| 23 | Admin dispute management | Handle edge cases |
+| 24 | Request copy flow | Secondary revenue stream |
+| 25 | Re-order / repeat order | Convenience feature |
+| 26 | TRF paperwork generation | Fee waiver support |
+| 27 | Admin financial reporting | Business intelligence |
+| 28 | Delete/close account + data export (CCPA) | Regulatory requirement, but low volume at pilot |
+| 29 | Report a user | Trust & safety, low priority until scale |
+| 30 | Onboarding email sequence | Activation optimization |
