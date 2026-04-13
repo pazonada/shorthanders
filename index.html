@@ -3573,6 +3573,8 @@ function BuyerDashboard() {
   const [correctionOrder, setCorrectionOrder] = useState(null);
   const [correctionPage, setCorrectionPage] = useState("");
   const [correctionDesc, setCorrectionDesc] = useState("");
+  const [ratingOrder, setRatingOrder] = useState(null);
+  const [ratings, setRatings] = useState({ timeliness: 0, communication: 0, quality: 0 });
   const allOrders = MOCK_CASES.flatMap(c => c.orders);
   const activeOrders = allOrders.filter(o => o.status === "in-progress" || o.status === "pending").length;
   const pendingReview = allOrders.filter(o => o.status === "pending").length;
@@ -3885,6 +3887,20 @@ function BuyerDashboard() {
                 </div>
               </div>
 
+              {/* Pilot pricing banner */}
+              <div style={{padding: 16, background: "linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)", border: "1px solid #93C5FD", borderRadius: 12, marginBottom: 24, display: "flex", alignItems: "center", gap: 14}}>
+                <div style={{width: 40, height: 40, borderRadius: 10, background: "#2563EB", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
+                  <Icon name="zap" size={20} color="#fff" />
+                </div>
+                <div style={{flex: 1}}>
+                  <div style={{fontSize: 14, fontWeight: 700, color: "#1E40AF", marginBottom: 2}}>Pilot member since Mar 15, 2026</div>
+                  <div style={{fontSize: 13, color: "#3B82F6", lineHeight: 1.5}}>
+                    <strong>8% platform fee</strong> (standard: 12%) · Locked in through <strong>Mar 15, 2027</strong>
+                  </div>
+                </div>
+                <span style={{fontSize: 11, padding: "4px 10px", borderRadius: 100, background: "#2563EB", color: "#fff", fontWeight: 700, flexShrink: 0}}>Pilot rate</span>
+              </div>
+
               <div className="quick-stats-row" style={{marginBottom: 24}}>
                 <div className="quick-stat">
                   <Icon name="dollarSign" size={18} color="#059669" />
@@ -4076,7 +4092,7 @@ function BuyerDashboard() {
               <button className="btn btn-sm" style={{flex: 1, background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA", padding: "10px 16px", fontSize: 13, fontWeight: 600, borderRadius: 8, cursor: "pointer"}} onClick={() => { setCorrectionOrder(acceptOrder); setAcceptOrder(null); setCorrectionPage(""); setCorrectionDesc(""); }}>
                 Request correction instead
               </button>
-              <button className="btn" style={{flex: 1, background: "#059669", color: "#fff", border: "none", padding: "10px 16px", fontSize: 14, fontWeight: 700, borderRadius: 8, cursor: "pointer"}} onClick={() => { addToast("Delivery accepted", "Payment of $" + (acceptOrder.cost ? acceptOrder.cost.toFixed(2) : "—") + " will be released to the reporter within 2 business days.", "success"); setAcceptOrder(null); }}>
+              <button className="btn" style={{flex: 1, background: "#059669", color: "#fff", border: "none", padding: "10px 16px", fontSize: 14, fontWeight: 700, borderRadius: 8, cursor: "pointer"}} onClick={() => { setRatingOrder(acceptOrder); setAcceptOrder(null); setRatings({ timeliness: 0, communication: 0, quality: 0 }); }}>
                 <Icon name="checkCircle" size={14} /> Accept and release payment
               </button>
             </div>
@@ -4109,6 +4125,50 @@ function BuyerDashboard() {
               <button className="btn btn-secondary btn-sm" onClick={() => setCorrectionOrder(null)}>Cancel</button>
               <button className="btn btn-sm" style={{background: "#DC2626", color: "#fff", border: "none", padding: "8px 16px", borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: "pointer", opacity: (correctionPage && correctionDesc) ? 1 : 0.5}} disabled={!correctionPage || !correctionDesc} onClick={() => { addToast("Correction requested", "The reporter has been notified and will upload a corrected transcript.", "success"); setCorrectionOrder(null); }}>
                 Submit correction request
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {ratingOrder && (
+        <div className="modal-overlay" onClick={() => {}}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 440, padding: 28}}>
+            <div style={{textAlign: "center", marginBottom: 24}}>
+              <div style={{width: 56, height: 56, borderRadius: "50%", background: "#DCFCE7", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 12}}>
+                <Icon name="checkCircle" size={28} color="#059669" />
+              </div>
+              <h3 style={{margin: "0 0 6px", fontSize: 20, fontWeight: 700, color: "var(--text, #0F172A)"}}>Delivery accepted!</h3>
+              <p style={{margin: 0, fontSize: 13, color: "var(--text-secondary, #475569)"}}>Payment of ${ratingOrder.cost ? ratingOrder.cost.toFixed(2) : "—"} will be released within 2 business days.</p>
+            </div>
+            <div style={{padding: 16, background: "var(--bg-muted, #F8FAFC)", borderRadius: 12, marginBottom: 20}}>
+              <h4 style={{margin: "0 0 16px", fontSize: 14, fontWeight: 700, color: "var(--text, #0F172A)"}}>How was {ratingOrder.reporter ? ratingOrder.reporter.split(",")[0] : "the reporter"}?</h4>
+              {[
+                { key: "timeliness", label: "Timeliness of delivery", icon: "clock" },
+                { key: "communication", label: "Communication", icon: "messageCircle" },
+                { key: "quality", label: "Quality of work", icon: "checkCircle" },
+              ].map(cat => (
+                <div key={cat.key} style={{marginBottom: 14}}>
+                  <div style={{display: "flex", alignItems: "center", gap: 6, marginBottom: 6}}>
+                    <Icon name={cat.icon} size={13} color="var(--text-muted, #94A3B8)" />
+                    <span style={{fontSize: 13, fontWeight: 600, color: "var(--text, #0F172A)"}}>{cat.label}</span>
+                  </div>
+                  <div style={{display: "flex", gap: 4}}>
+                    {[1,2,3,4,5].map(n => (
+                      <button key={n} onClick={() => setRatings(r => ({...r, [cat.key]: n}))} style={{width: 36, height: 36, borderRadius: 8, border: ratings[cat.key] >= n ? "2px solid #F59E0B" : "1px solid var(--border, #E2E8F0)", background: ratings[cat.key] >= n ? "#FEF3C7" : "var(--bg-card, #fff)", cursor: "pointer", fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.1s"}}>
+                        {ratings[cat.key] >= n ? "★" : "☆"}
+                      </button>
+                    ))}
+                    <span style={{marginLeft: 8, fontSize: 13, color: "var(--text-muted, #94A3B8)", alignSelf: "center"}}>{ratings[cat.key] > 0 ? ratings[cat.key] + "/5" : ""}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{display: "flex", gap: 10}}>
+              <button className="btn btn-secondary btn-sm" style={{flex: 1}} onClick={() => { addToast("Delivery accepted", "Thank you! Payment is being processed.", "success"); setRatingOrder(null); }}>
+                Skip rating
+              </button>
+              <button className="btn btn-primary" style={{flex: 1, opacity: (ratings.timeliness && ratings.communication && ratings.quality) ? 1 : 0.5}} disabled={!ratings.timeliness || !ratings.communication || !ratings.quality} onClick={() => { const avg = ((ratings.timeliness + ratings.communication + ratings.quality) / 3).toFixed(1); addToast("Rating submitted", "You rated " + (ratingOrder.reporter ? ratingOrder.reporter.split(",")[0] : "the reporter") + " " + avg + "/5. Thank you!", "success"); setRatingOrder(null); }}>
+                Submit rating
               </button>
             </div>
           </div>
@@ -4631,6 +4691,21 @@ function ReporterDashboard() {
                   <p>Your earnings summary and payout history.</p>
                 </div>
               </div>
+
+              {/* Pilot pricing banner */}
+              <div style={{padding: 16, background: "linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)", border: "1px solid #86EFAC", borderRadius: 12, marginBottom: 24, display: "flex", alignItems: "center", gap: 14}}>
+                <div style={{width: 40, height: 40, borderRadius: 10, background: "#059669", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
+                  <Icon name="zap" size={20} color="#fff" />
+                </div>
+                <div style={{flex: 1}}>
+                  <div style={{fontSize: 14, fontWeight: 700, color: "#065F46", marginBottom: 2}}>Pilot member — listing fee waived</div>
+                  <div style={{fontSize: 13, color: "#059669", lineHeight: 1.5}}>
+                    Your <strong>$99/yr listing fee</strong> is waived through <strong>Mar 15, 2027</strong> · Code PIONEER2026
+                  </div>
+                </div>
+                <span style={{fontSize: 11, padding: "4px 10px", borderRadius: 100, background: "#059669", color: "#fff", fontWeight: 700, flexShrink: 0}}>Free</span>
+              </div>
+
               <div className="stat-cards">
                 <div className="stat-card">
                   <div className="stat-card-label">This month</div>
@@ -5419,6 +5494,7 @@ function SettingsPage() {
   const [showPauseConfirm, setShowPauseConfirm] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState("");
+  const [settingsRole, setSettingsRole] = useState("attorney"); // toggle for prototype demo
 
   const toggleNotif = (idx, channel) => {
     setNotifs(n => n.map((item, i) => i === idx ? {...item, [channel]: !item[channel]} : item));
@@ -5443,32 +5519,117 @@ function SettingsPage() {
 
           {tab === "profile" && (
             <div className="detail-section">
+              {/* Prototype role toggle */}
+              <div style={{display: "flex", gap: 8, marginBottom: 20}}>
+                <button className={"btn btn-sm" + (settingsRole === "attorney" ? "" : " btn-secondary")} style={settingsRole === "attorney" ? {background: "#2563EB", color: "#fff", border: "none", fontSize: 12} : {fontSize: 12}} onClick={() => setSettingsRole("attorney")}>Attorney view</button>
+                <button className={"btn btn-sm" + (settingsRole === "csr" ? "" : " btn-secondary")} style={settingsRole === "csr" ? {background: "#059669", color: "#fff", border: "none", fontSize: 12} : {fontSize: 12}} onClick={() => setSettingsRole("csr")}>CSR view</button>
+                <span style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", alignSelf: "center", marginLeft: 8}}>Prototype only — toggle to see both profile types</span>
+              </div>
+
               <div className="settings-section">
                 <h3><Icon name="user" size={14} /> Personal information</h3>
                 <div className="form-row" style={{marginBottom: 16}}>
-                  <div className="form-group"><label className="form-label">Full name</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.name} /></div>
-                  <div className="form-group"><label className="form-label">Email</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.email} /></div>
+                  <div className="form-group"><label className="form-label">Full name</label><input className="form-input" defaultValue={settingsRole === "csr" ? "Sarah Chen" : MOCK_SETTINGS.profile.name} /></div>
+                  <div className="form-group"><label className="form-label">Email</label><input className="form-input" defaultValue={settingsRole === "csr" ? "sarah.chen@gmail.com" : MOCK_SETTINGS.profile.email} /></div>
                 </div>
                 <div className="form-row">
-                  <div className="form-group"><label className="form-label">Phone</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.phone} /></div>
-                  <div className="form-group"><label className="form-label">Bar number</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.barNumber} readOnly style={{background: "var(--bg-muted, #F8FAFC)", cursor: "not-allowed"}} /></div>
+                  <div className="form-group"><label className="form-label">Phone</label><input className="form-input" defaultValue={settingsRole === "csr" ? "(213) 555-0184" : MOCK_SETTINGS.profile.phone} /></div>
+                  <div className="form-group"><label className="form-label">{settingsRole === "csr" ? "CSR license number" : "Bar number"}</label><input className="form-input" defaultValue={settingsRole === "csr" ? "CSR #14892" : MOCK_SETTINGS.profile.barNumber} readOnly style={{background: "var(--bg-muted, #F8FAFC)", cursor: "not-allowed"}} /></div>
                 </div>
               </div>
-              <div className="settings-section">
-                <h3><Icon name="scale" size={14} /> Firm details</h3>
-                <div className="form-row">
-                  <div className="form-group"><label className="form-label">Firm name</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.firm} /></div>
-                  <div className="form-group"><label className="form-label">Firm address</label><input className="form-input" defaultValue={MOCK_SETTINGS.billing.address} /></div>
-                </div>
-              </div>
-              <div className="settings-section">
-                <h3><Icon name="fileText" size={14} /> Practice areas</h3>
-                <div className="checkbox-group">
-                  {["Family Law", "Civil Litigation", "Probate", "Criminal", "Personal Injury", "Real Estate", "Employment", "Immigration", "Bankruptcy", "Other"].map(a => (
-                    <div key={a} className={"checkbox-item" + (["Family Law", "Probate"].includes(a) ? " checked" : "")}>{a}</div>
-                  ))}
-                </div>
-              </div>
+
+              {settingsRole === "attorney" ? (
+                <>
+                  <div className="settings-section">
+                    <h3><Icon name="scale" size={14} /> Firm details</h3>
+                    <div className="form-row">
+                      <div className="form-group"><label className="form-label">Firm name</label><input className="form-input" defaultValue={MOCK_SETTINGS.profile.firm} /></div>
+                      <div className="form-group"><label className="form-label">Firm address</label><input className="form-input" defaultValue={MOCK_SETTINGS.billing.address} /></div>
+                    </div>
+                  </div>
+                  <div className="settings-section">
+                    <h3><Icon name="fileText" size={14} /> Practice areas</h3>
+                    <div className="checkbox-group">
+                      {["Family Law", "Civil Litigation", "Probate", "Criminal", "Personal Injury", "Real Estate", "Employment", "Immigration", "Bankruptcy", "Other"].map(a => (
+                        <div key={a} className={"checkbox-item" + (["Family Law", "Probate"].includes(a) ? " checked" : "")}>{a}</div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="settings-section">
+                    <h3><Icon name="fileText" size={14} /> Credentials & qualifications</h3>
+                    <div className="form-row" style={{marginBottom: 16}}>
+                      <div className="form-group">
+                        <label className="form-label">Reporting method</label>
+                        <select className="form-input form-select" defaultValue="Stenography (machine)">
+                          <option>Stenography (machine)</option>
+                          <option>Voice writing</option>
+                        </select>
+                      </div>
+                      <div className="form-group">
+                        <label className="form-label">Court-employed</label>
+                        <select className="form-input form-select" defaultValue="no">
+                          <option value="no">No — freelance only</option>
+                          <option value="yes">Yes — also court-appointed</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="form-group" style={{marginBottom: 16}}>
+                      <label className="form-label">Certifications</label>
+                      <div className="checkbox-group">
+                        {["CSR (California)", "RMR", "CRR", "RPR"].map(c => (
+                          <div key={c} className={"checkbox-item" + (["CSR (California)", "RMR"].includes(c) ? " checked" : "")}>{c}</div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Languages</label>
+                      <div className="checkbox-group">
+                        {["English", "Spanish", "Mandarin", "Japanese", "Korean", "Vietnamese"].map(l => (
+                          <div key={l} className={"checkbox-item" + (l === "English" ? " checked" : "")}>{l}</div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="settings-section">
+                    <h3><Icon name="calendar" size={14} /> Job preferences</h3>
+                    <div className="form-group" style={{marginBottom: 16}}>
+                      <label className="form-label">Job types accepted</label>
+                      <div className="checkbox-group">
+                        {["Live attendance", "Audio transcription"].map(t => (
+                          <div key={t} className={"checkbox-item checked"}>{t}</div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="form-group" style={{marginBottom: 16}}>
+                      <label className="form-label">Case types</label>
+                      <div className="checkbox-group">
+                        {["Family Law", "Civil Litigation", "Probate", "Criminal", "Personal Injury", "Real Estate", "Employment", "Immigration", "Bankruptcy", "Other"].map(a => (
+                          <div key={a} className={"checkbox-item" + (["Family Law", "Civil Litigation", "Probate"].includes(a) ? " checked" : "")}>{a}</div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Turnaround capabilities</label>
+                      <div className="checkbox-group">
+                        {["Rush (1-2 business days)", "Expedited (3-5 business days)", "Standard (6+ business days)"].map(t => (
+                          <div key={t} className={"checkbox-item" + (["Expedited (3-5 business days)", "Standard (6+ business days)"].includes(t) ? " checked" : "")}>{t}</div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="settings-section">
+                    <h3><Icon name="mapPin" size={14} /> Courts served</h3>
+                    <div className="checkbox-group">
+                      {["LA Superior Court", "SF Superior Court", "Orange County Superior Court", "San Diego Superior Court", "Contra Costa Superior Court", "Alameda Superior Court"].map(c => (
+                        <div key={c} className={"checkbox-item" + (["LA Superior Court", "SF Superior Court"].includes(c) ? " checked" : "")}>{c}</div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
               <button className="btn btn-primary btn-sm" onClick={() => addToast("Saved", "Profile updated successfully", "success")}>Save changes</button>
             </div>
           )}
@@ -8425,6 +8586,154 @@ function TRFPage() {
 }
 
 // ─── Router App ─────────────────────────────────────────────────
+// ─── Cost Split Co-Payer Checkout ─────────────────────────────
+function CostSplitPayPage() {
+  const [paid, setPaid] = useState(false);
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [cvc, setCvc] = useState("");
+  const [agreed, setAgreed] = useState(false);
+
+  if (paid) {
+    return (
+      <div style={{minHeight: "100vh", background: "var(--bg-page, #F8FAFC)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24}}>
+        <div style={{maxWidth: 480, width: "100%", textAlign: "center"}}>
+          <DeweyFullLogo height={36} theme={useTheme().dark ? "dark" : "light"} />
+          <div style={{marginTop: 40}}>
+            <div style={{width: 64, height: 64, borderRadius: "50%", background: "#DCFCE7", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 16}}>
+              <Icon name="checkCircle" size={32} color="#059669" />
+            </div>
+            <h2 style={{fontSize: 24, fontWeight: 700, color: "var(--text, #0F172A)", margin: "0 0 8px"}}>Payment confirmed!</h2>
+            <p style={{fontSize: 14, color: "var(--text-secondary, #475569)", lineHeight: 1.6, marginBottom: 24}}>
+              Your share of $127.50 has been collected. Once all parties have paid, the reporter will be assigned and you'll receive a copy of the transcript upon delivery.
+            </p>
+            <div style={{padding: 16, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12, marginBottom: 24, textAlign: "left"}}>
+              <div style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 12}}><strong>What happens next:</strong></div>
+              <div style={{display: "flex", flexDirection: "column", gap: 8, fontSize: 13, color: "var(--text, #0F172A)"}}>
+                <div style={{display: "flex", gap: 8}}><span style={{fontWeight: 700, color: "#059669"}}>1</span> Waiting for other parties to confirm their shares</div>
+                <div style={{display: "flex", gap: 8}}><span style={{fontWeight: 700, color: "#94A3B8"}}>2</span> Reporter is assigned once all parties have paid</div>
+                <div style={{display: "flex", gap: 8}}><span style={{fontWeight: 700, color: "#94A3B8"}}>3</span> You'll receive your copy of the transcript via email</div>
+              </div>
+            </div>
+            <div style={{padding: 16, background: "linear-gradient(135deg, #EFF6FF, #DBEAFE)", border: "1px solid #93C5FD", borderRadius: 12, textAlign: "left"}}>
+              <div style={{fontSize: 14, fontWeight: 700, color: "#1E40AF", marginBottom: 6}}>Join Dewey Sholes</div>
+              <p style={{fontSize: 13, color: "#3B82F6", margin: "0 0 12px", lineHeight: 1.5}}>Create a free account to order transcripts, track deliveries, and manage all your cases in one place.</p>
+              <button className="btn btn-primary btn-sm" onClick={() => navigate("#/attorney-signup")}>Create account <Icon name="arrowRight" size={13} /></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{minHeight: "100vh", background: "var(--bg-page, #F8FAFC)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24}}>
+      <div style={{maxWidth: 520, width: "100%"}}>
+        <div style={{textAlign: "center", marginBottom: 32}}>
+          <DeweyFullLogo height={36} theme={useTheme().dark ? "dark" : "light"} />
+        </div>
+        <div style={{background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, padding: 28, boxShadow: "0 4px 24px rgba(0,0,0,0.06)"}}>
+          <div style={{marginBottom: 24}}>
+            <h2 style={{fontSize: 22, fontWeight: 700, color: "var(--text, #0F172A)", margin: "0 0 6px"}}>You've been invited to split a transcript cost</h2>
+            <p style={{fontSize: 14, color: "var(--text-secondary, #475569)", margin: 0}}>
+              <strong>Jennifer Walsh, Esq.</strong> has invited you to share the cost of a court transcript.
+            </p>
+          </div>
+          <div style={{padding: 16, background: "var(--bg-muted, #F8FAFC)", borderRadius: 10, marginBottom: 20}}>
+            <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, fontSize: 13}}>
+              <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Case</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>Martinez v. Pacific Holdings</div></div>
+              <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Case number</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>24STFL09821</div></div>
+              <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Court</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>LA Superior Court</div></div>
+              <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Hearing date</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>Mar 28, 2026</div></div>
+              <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Estimated pages</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>35–45 pages</div></div>
+              <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Your share</span><div style={{fontWeight: 800, color: "#059669", marginTop: 2, fontSize: 18}}>$127.50</div></div>
+            </div>
+          </div>
+          <div style={{padding: 12, background: "#EFF6FF", border: "1px solid #93C5FD", borderRadius: 8, marginBottom: 20, fontSize: 12, color: "#1E40AF", lineHeight: 1.6}}>
+            <Icon name="info" size={13} color="#3B82F6" style={{marginRight: 6, verticalAlign: "-2px"}} />
+            The reporter will only be assigned once all parties have paid their share. No account is required to pay.
+          </div>
+          <div className="form-group" style={{marginBottom: 12}}>
+            <label className="form-label">Card number</label>
+            <input className="form-input" placeholder="4242 4242 4242 4242" value={cardNumber} onChange={e => setCardNumber(e.target.value)} />
+          </div>
+          <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16}}>
+            <div className="form-group">
+              <label className="form-label">Expiration</label>
+              <input className="form-input" placeholder="MM / YY" value={expiry} onChange={e => setExpiry(e.target.value)} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">CVC</label>
+              <input className="form-input" placeholder="123" value={cvc} onChange={e => setCvc(e.target.value)} />
+            </div>
+          </div>
+          <label style={{display: "flex", gap: 8, cursor: "pointer", fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.5, marginBottom: 20}}>
+            <input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} style={{marginTop: 3, flexShrink: 0}} />
+            I agree to pay <strong>$127.50</strong> as my share of this transcript. Payment is processed securely via Stripe.
+          </label>
+          <button className="btn btn-primary" style={{width: "100%", justifyContent: "center", fontSize: 15, padding: "12px 20px", opacity: (cardNumber && expiry && cvc && agreed) ? 1 : 0.5}} disabled={!cardNumber || !expiry || !cvc || !agreed} onClick={() => setPaid(true)}>
+            Pay $127.50
+          </button>
+          <div style={{textAlign: "center", marginTop: 16, fontSize: 12, color: "var(--text-muted, #94A3B8)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6}}>
+            <Icon name="lock" size={12} color="#94A3B8" /> Secured by Stripe · AES-256 encryption
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Forgot Password Page ────────────────────────────────────
+function ForgotPasswordPage() {
+  const [email, setEmail] = useState("");
+  const [sent, setSent] = useState(false);
+
+  if (sent) {
+    return (
+      <div style={{minHeight: "100vh", background: "var(--bg-page, #F8FAFC)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24}}>
+        <div style={{maxWidth: 440, width: "100%", textAlign: "center"}}>
+          <DeweyFullLogo height={36} theme={useTheme().dark ? "dark" : "light"} />
+          <div style={{marginTop: 40}}>
+            <div style={{width: 56, height: 56, borderRadius: "50%", background: "#DBEAFE", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 16}}>
+              <Icon name="mail" size={24} color="#2563EB" />
+            </div>
+            <h2 style={{fontSize: 22, fontWeight: 700, color: "var(--text, #0F172A)", margin: "0 0 8px"}}>Check your email</h2>
+            <p style={{fontSize: 14, color: "var(--text-secondary, #475569)", lineHeight: 1.6, marginBottom: 24}}>
+              We sent a password reset link to <strong>{email}</strong>. The link expires in 1 hour.
+            </p>
+            <p style={{fontSize: 13, color: "var(--text-muted, #94A3B8)", marginBottom: 24}}>Didn't get the email? Check your spam folder or <a href="#" onClick={e => { e.preventDefault(); setSent(false); }} style={{color: "#2563EB"}}>try again</a>.</p>
+            <button className="btn btn-secondary btn-sm" onClick={() => navigate("#/")}>Back to sign in</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{minHeight: "100vh", background: "var(--bg-page, #F8FAFC)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24}}>
+      <div style={{maxWidth: 440, width: "100%"}}>
+        <div style={{textAlign: "center", marginBottom: 32}}>
+          <DeweyFullLogo height={36} theme={useTheme().dark ? "dark" : "light"} />
+        </div>
+        <div style={{background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, padding: 28, boxShadow: "0 4px 24px rgba(0,0,0,0.06)"}}>
+          <h2 style={{fontSize: 22, fontWeight: 700, color: "var(--text, #0F172A)", margin: "0 0 6px"}}>Reset your password</h2>
+          <p style={{fontSize: 14, color: "var(--text-secondary, #475569)", margin: "0 0 24px"}}>Enter the email address associated with your account and we'll send you a reset link.</p>
+          <div className="form-group" style={{marginBottom: 20}}>
+            <label className="form-label">Email address</label>
+            <input className="form-input" type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} style={{fontSize: 15, padding: "12px 16px"}} />
+          </div>
+          <button className="btn btn-primary" style={{width: "100%", justifyContent: "center", fontSize: 15, padding: "12px 20px", opacity: email ? 1 : 0.5}} disabled={!email} onClick={() => setSent(true)}>
+            Send reset link
+          </button>
+          <div style={{textAlign: "center", marginTop: 16}}>
+            <a href="#/" style={{fontSize: 13, color: "#2563EB", textDecoration: "none"}}>Back to sign in</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AppRouter() {
   const route = useRoute();
   const m = route.match(/^#\/order\/(.+)$/);
@@ -8443,6 +8752,8 @@ function AppRouter() {
   if (route.startsWith("#/admin")) return <AdminDashboard />;
   if (route.startsWith("#/onboarding")) return <OnboardingFlow />;
   if (route.startsWith("#/settings")) return <SettingsPage />;
+  if (route.startsWith("#/split-pay")) return <CostSplitPayPage />;
+  if (route.startsWith("#/forgot-password")) return <ForgotPasswordPage />;
   if (route.startsWith("#/contact")) return <ContactPage />;
   if (route.startsWith("#/faq")) return <FaqPage />;
   if (route.startsWith("#/about")) return <AboutPage />;
