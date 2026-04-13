@@ -2912,18 +2912,47 @@ function OrderFlow() {
   const [form, setForm] = useState({
     type: "", court: "", dept: "", caseNumber: "", caseName: "", caseType: "Family Law",
     hearingDate: "", hearingTime: "", duration: "60", interpreter: false, interpreterLang: "",
-    audioFile: "", reporterPref: "", selectedReporter: null, turnaround: "standard", feeWaiver: false, notes: "",
-    deadline: "", deadlineType: "default",
+    audioFile: "", reporterPref: "", selectedReporter: null, feeWaiver: false, notes: "",
+    needByType: "", needByDate: "",
     costSplit: false, coPayers: [{ name: "", email: "", firm: "", share: "" }],
   });
   const [submitted, setSubmitted] = useState(false);
   const update = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const accentClass = form.type === "live" ? "accent-blue" : form.type === "transcription" ? "accent-amber" : "";
 
-  const est = calculateEstimate(parseInt(form.duration) || 60, form.turnaround, form.interpreter);
-  const getDeliveryDate = (t) => { const d = new Date(); d.setDate(d.getDate() + (t === "rush" ? 2 : t === "standard" ? 5 : 14)); return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }); };
+  // Date-driven turnaround calculation
+  const getBusinessDaysUntil = (dateStr) => {
+    if (!dateStr) return null;
+    const target = new Date(dateStr + "T00:00:00");
+    const now = new Date();
+    let count = 0;
+    const d = new Date(now);
+    while (d < target) {
+      d.setDate(d.getDate() + 1);
+      const day = d.getDay();
+      if (day !== 0 && day !== 6) count++;
+    }
+    return count;
+  };
+  const getTierFromDate = (dateStr) => {
+    if (!dateStr) return "economy";
+    const bDays = getBusinessDaysUntil(dateStr);
+    if (bDays <= 2) return "rush";
+    if (bDays <= 5) return "standard";
+    return "economy";
+  };
+  const effectiveTurnaround = form.needByDate ? getTierFromDate(form.needByDate) : "economy";
+  const est = calculateEstimate(parseInt(form.duration) || 60, effectiveTurnaround, form.interpreter);
   const tierLabel = (key) => ({ rush: "Rush", standard: "Expedited", economy: "Standard" }[key] || key);
-  const tierTime = (key) => ({ rush: "24-48 hours", standard: "3-5 business days", economy: "2+ weeks" }[key] || "");
+  const tierTime = (key) => {
+    if (key === "rush") return "1-2 business days";
+    if (key === "standard") return "3-5 business days";
+    return "6+ business days";
+  };
+  const tierColor = (key) => ({ rush: "#DC2626", standard: "#2563EB", economy: "#059669" }[key] || "#64748B");
+  const getDefault45Date = () => { const d = new Date(); d.setDate(d.getDate() + 45); return d.toISOString().split("T")[0]; };
+  const getMinDate = () => { const d = new Date(); d.setDate(d.getDate() + 1); return d.toISOString().split("T")[0]; };
+  const csrDeadline = form.needByDate ? (() => { const d = new Date(form.needByDate + "T00:00:00"); d.setDate(d.getDate() - 1); return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }); })() : null;
 
   if (submitted) {
     return (
@@ -3130,34 +3159,7 @@ function OrderFlow() {
                   <textarea className="form-input" style={{minHeight: 80, resize: "vertical"}} placeholder="e.g. Multiple witnesses expected, realtime feed needed, specific formatting requirements..." value={form.notes} onChange={e => update("notes", e.target.value)} />
                 </div>
 
-                <div className="form-group">
-                  <label className="form-label">Delivery deadline</label>
-                  <div className="method-cards">
-                    <div className={"method-card" + (form.deadlineType === "default" ? " selected" : "")} onClick={() => { update("deadlineType", "default"); update("deadline", ""); }}>
-                      <div className="mc-icon"><Icon name="clock" size={18} /></div>
-                      <div>
-                        <div className="mc-text">Default (45 days)</div>
-                        <div className="mc-sub">No rush — the standard delivery window</div>
-                      </div>
-                    </div>
-                    <div className={"method-card" + (form.deadlineType === "specific" ? " selected" : "")} onClick={() => update("deadlineType", "specific")}>
-                      <div className="mc-icon"><Icon name="calendar" size={18} /></div>
-                      <div>
-                        <div className="mc-text">Specific date</div>
-                        <div className="mc-sub">Set a deadline for this transcript</div>
-                      </div>
-                    </div>
-                  </div>
-                  {form.deadlineType === "specific" && (
-                    <div style={{marginTop: 8}}>
-                      <input className="form-input" type="date" value={form.deadline} onChange={e => update("deadline", e.target.value)} />
-                    </div>
-                  )}
-                  <div className="info-callout" style={{marginTop: 12}}>
-                    <div className="callout-icon"><Icon name="info" size={16} /></div>
-                    <p>Reporters have a 24-hour grace period after the stated deadline. Consider setting your deadline one day before your true need-by date.</p>
-                  </div>
-                </div>
+                {/* Deadline moved to Step 4 — now date-driven with auto tier calculation */}
 
                 <div style={{display: "flex", gap: 12, marginTop: 8}}>
                   <button className="btn btn-secondary btn-sm" onClick={() => setStep(1)}>Back</button>
@@ -3237,29 +3239,88 @@ function OrderFlow() {
           {step === 4 && (
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
-                <h2 style={{fontSize: 24}}>Turnaround &amp; pricing</h2>
-                <p style={{color: "var(--text-secondary, #64748B)"}}>Select your delivery speed. Pricing is based on CA statutory rates.</p>
+                <h2 style={{fontSize: 24}}>When do you need this?</h2>
+                <p style={{color: "var(--text-secondary, #64748B)"}}>Your deadline determines the turnaround tier and pricing. All pricing is based on CA statutory rates.</p>
               </div>
-              <div className="turnaround-comparison">
-                {[
-                  { key: "rush", label: "Rush", time: "24-48 hours", icon: "zap", note: "1.5x rate (emergency)", color: "#DC2626" },
-                  { key: "standard", label: "Expedited", time: "3-5 business days", icon: "clock", note: "Statutory rate", color: "#2563EB" },
-                  { key: "economy", label: "Standard", time: "2+ weeks", icon: "dollarSign", note: "15% savings", color: "#059669" },
-                ].map(t => {
-                  const estT = calculateEstimate(parseInt(form.duration) || 60, t.key, form.interpreter);
-                  return (
-                    <div key={t.key} className={"turnaround-card-enhanced " + t.key + (form.turnaround === t.key ? " selected" : "")} onClick={() => update("turnaround", t.key)}>
-                      {form.turnaround === t.key && <div className="tc-check"><Icon name="checkCircle" size={14} color="#fff" /></div>}
-                      <Icon name={t.icon} size={22} color={t.color} />
-                      <h4>{t.label}</h4>
-                      <div className="tc-time">{t.time}</div>
-                      <div className="tc-price">${(estT.lowCost * (1 + PRICING.platformFee)).toFixed(0)} – ${(estT.highCost * (1 + PRICING.platformFee)).toFixed(0)}</div>
-                      <div className="tc-delivery">Est. delivery: {getDeliveryDate(t.key)}</div>
-                      <div className="tc-note">{t.note}</div>
+
+              {/* Deadline selection */}
+              <div className="form-group" style={{marginBottom: 24}}>
+                <div className="method-cards">
+                  <div className={"method-card" + (form.needByType === "specific" ? " selected" : "")} onClick={() => update("needByType", "specific")}>
+                    <div className="mc-icon"><Icon name="calendar" size={18} /></div>
+                    <div>
+                      <div className="mc-text">I need it by a specific date</div>
+                      <div className="mc-sub">Set your deadline and see the price</div>
                     </div>
-                  );
-                })}
+                  </div>
+                  <div className={"method-card" + (form.needByType === "standard" ? " selected" : "")} onClick={() => { update("needByType", "standard"); update("needByDate", getDefault45Date()); }}>
+                    <div className="mc-icon"><Icon name="clock" size={18} /></div>
+                    <div>
+                      <div className="mc-text">No rush (up to 45 days)</div>
+                      <div className="mc-sub">Lowest price — 15% below statutory rate</div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              {form.needByType === "specific" && (
+                <div className="form-group" style={{marginBottom: 24}}>
+                  <label className="form-label">Need-by date</label>
+                  <input className="form-input" type="date" min={getMinDate()} value={form.needByDate} onChange={e => update("needByDate", e.target.value)} style={{fontSize: 16, padding: "12px 16px"}} />
+                  {form.needByDate && (() => {
+                    const bDays = getBusinessDaysUntil(form.needByDate);
+                    const tier = getTierFromDate(form.needByDate);
+                    return (
+                      <div style={{marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center"}}>
+                        <span className={"badge badge-" + tier} style={{fontSize: 13, padding: "4px 12px", background: tierColor(tier) + "15", color: tierColor(tier), fontWeight: 700, border: "1px solid " + tierColor(tier) + "30"}}>
+                          {tierLabel(tier)} — {tierTime(tier)}
+                        </span>
+                        <span style={{fontSize: 13, color: "var(--text-secondary, #64748B)"}}>
+                          {bDays} business day{bDays !== 1 ? "s" : ""} from today
+                        </span>
+                      </div>
+                    );
+                  })()}
+                  <div className="info-callout" style={{marginTop: 12}}>
+                    <div className="callout-icon"><Icon name="info" size={16} /></div>
+                    <p>Reporters see a deadline of <strong>{csrDeadline || "—"}</strong> (1 day before your need-by date) to allow for a 24-hour grace period. Consider setting your date one day before your true need-by date.</p>
+                  </div>
+                </div>
+              )}
+
+              {form.needByType === "standard" && (
+                <div style={{marginBottom: 24, padding: 16, background: "var(--bg-muted, #F8FAFC)", borderRadius: 12, border: "1px solid var(--border, #E2E8F0)"}}>
+                  <div style={{display: "flex", alignItems: "center", gap: 8, marginBottom: 8}}>
+                    <span className="badge badge-economy" style={{fontSize: 13, padding: "4px 12px", background: "#05962915", color: "#059669", fontWeight: 700, border: "1px solid #05962930"}}>Standard — lowest price</span>
+                  </div>
+                  <p style={{fontSize: 13, color: "var(--text-secondary, #64748B)", margin: 0, lineHeight: 1.6}}>
+                    Deadline: <strong>{new Date(getDefault45Date()).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</strong>. Reporter must deliver within 45 calendar days. You'll receive check-in updates along the way.
+                  </p>
+                </div>
+              )}
+
+              {/* Pricing reference cards */}
+              {form.needByType && (
+                <div style={{display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 24}}>
+                  {[
+                    { key: "rush", label: "Rush", time: "1-2 business days", note: "1.5x rate", color: "#DC2626" },
+                    { key: "standard", label: "Expedited", time: "3-5 business days", note: "Statutory rate", color: "#2563EB" },
+                    { key: "economy", label: "Standard", time: "6+ business days", note: "15% savings", color: "#059669" },
+                  ].map(t => {
+                    const isActive = effectiveTurnaround === t.key;
+                    const estT = calculateEstimate(parseInt(form.duration) || 60, t.key, form.interpreter);
+                    return (
+                      <div key={t.key} style={{padding: 14, borderRadius: 10, border: isActive ? "2px solid " + t.color : "1px solid var(--border, #E2E8F0)", background: isActive ? t.color + "08" : "var(--bg-card, #fff)", opacity: isActive ? 1 : 0.55, transition: "all 0.2s"}}>
+                        <div style={{fontSize: 12, fontWeight: 700, color: t.color, marginBottom: 4}}>{t.label}</div>
+                        <div style={{fontSize: 11, color: "var(--text-secondary, #64748B)", marginBottom: 6}}>{t.time}</div>
+                        <div style={{fontSize: 16, fontWeight: 800, color: "var(--text, #0F172A)"}}>${(estT.lowCost * (1 + PRICING.platformFee)).toFixed(0)} – ${(estT.highCost * (1 + PRICING.platformFee)).toFixed(0)}</div>
+                        <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", marginTop: 2}}>{t.note}</div>
+                        {isActive && <div style={{fontSize: 10, fontWeight: 700, color: t.color, marginTop: 6, textTransform: "uppercase", letterSpacing: "0.05em"}}>Your rate</div>}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
               <div className="price-box">
                 <h3>Price estimate</h3>
                 {(() => {
@@ -3269,7 +3330,7 @@ function OrderFlow() {
                     {form.type === "live" && <div className="price-line"><span>Attendance fee ({attendanceLabel})</span><strong>${attendanceFee.toLocaleString()}</strong></div>}
                     <div className="price-line"><span>Estimated pages</span><strong>{est.low} – {est.high} pages</strong></div>
                     <div className="price-line"><span>Statutory rate (per page)</span><strong>${PRICING.ratePerPage.toFixed(2)}</strong></div>
-                    <div className="price-line"><span>Turnaround adjustment</span><strong>{est.mult === 1 ? "None" : est.mult > 1 ? "+" + ((est.mult - 1) * 100).toFixed(0) + "%" : "-" + ((1 - est.mult) * 100).toFixed(0) + "%"}</strong></div>
+                    <div className="price-line"><span>Turnaround ({tierLabel(effectiveTurnaround)})</span><strong>{est.mult === 1 ? "No adjustment" : est.mult > 1 ? "+" + ((est.mult - 1) * 100).toFixed(0) + "%" : "-" + ((1 - est.mult) * 100).toFixed(0) + "%"}</strong></div>
                     <div className="price-line"><span>Platform fee ({(PRICING.platformFee * 100).toFixed(0)}% — attorney only)</span><strong>${(((est.lowCost + est.highCost) / 2 + attendanceFee) * PRICING.platformFee).toFixed(2)}</strong></div>
                     <div className="price-total">
                       <span>Estimated total</span>
@@ -3346,7 +3407,7 @@ function OrderFlow() {
 
               <div style={{display: "flex", gap: 12, marginTop: 24}}>
                 <button className="btn btn-secondary btn-sm" onClick={() => setStep(3)}>Back</button>
-                <button className="btn btn-primary btn-sm" onClick={() => setStep(5)}>Review order <Icon name="arrowRight" size={14} color="#fff" /></button>
+                <button className="btn btn-primary btn-sm" onClick={() => setStep(5)} disabled={!form.needByType}>Review order <Icon name="arrowRight" size={14} color="#fff" /></button>
               </div>
             </div>
           )}
@@ -3361,7 +3422,7 @@ function OrderFlow() {
               <div className={"review-banner " + (form.type === "live" ? "blue" : "amber")}>
                 <Icon name={form.type === "live" ? "mapPin" : "mic"} size={18} />
                 {form.type === "live" ? "Live attendance" : "Post-hearing transcription"}
-                <span className={"badge badge-" + form.turnaround} style={{marginLeft: "auto"}}>{tierLabel(form.turnaround)} · {tierTime(form.turnaround)}</span>
+                <span className={"badge badge-" + effectiveTurnaround} style={{marginLeft: "auto"}}>{tierLabel(effectiveTurnaround)} · {tierTime(effectiveTurnaround)}</span>
               </div>
               <div className="review-section-card">
                 <h3><Icon name="scale" size={14} /> Case details</h3>
@@ -3387,8 +3448,9 @@ function OrderFlow() {
               <div className="review-section-card">
                 <h3><Icon name="dollarSign" size={14} /> Pricing</h3>
                 <div className="price-line"><span>Estimated pages</span><strong>{est.low} – {est.high}</strong></div>
-                <div className="price-line"><span>Turnaround</span><strong>{tierLabel(form.turnaround)} ({tierTime(form.turnaround)})</strong></div>
-                <div className="price-line"><span>Delivery by</span><strong>{getDeliveryDate(form.turnaround)}</strong></div>
+                <div className="price-line"><span>Turnaround</span><strong>{tierLabel(effectiveTurnaround)} ({tierTime(effectiveTurnaround)})</strong></div>
+                <div className="price-line"><span>Your need-by date</span><strong>{form.needByDate ? new Date(form.needByDate + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Up to 45 days"}</strong></div>
+                <div className="price-line"><span>Reporter deadline</span><strong>{csrDeadline || new Date(getDefault45Date()).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</strong></div>
                 <div style={{background: "var(--bg-muted, #F8FAFC)", borderRadius: 12, padding: 20, marginTop: 12}}>
                   <div style={{display: "flex", justifyContent: "space-between", alignItems: "baseline"}}>
                     <span style={{fontSize: 14, color: "var(--text-secondary, #64748B)"}}>Estimated total</span>
