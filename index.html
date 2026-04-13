@@ -3511,6 +3511,10 @@ function BuyerDashboard() {
 
   const [showNudge, setShowNudge] = useState(true);
   const [caseNotes, setCaseNotes] = useState({});
+  const [acceptOrder, setAcceptOrder] = useState(null);
+  const [correctionOrder, setCorrectionOrder] = useState(null);
+  const [correctionPage, setCorrectionPage] = useState("");
+  const [correctionDesc, setCorrectionDesc] = useState("");
   const allOrders = MOCK_CASES.flatMap(c => c.orders);
   const activeOrders = allOrders.filter(o => o.status === "in-progress" || o.status === "pending").length;
   const pendingReview = allOrders.filter(o => o.status === "pending").length;
@@ -3781,10 +3785,10 @@ function BuyerDashboard() {
                             <button className="btn btn-primary btn-sm" onClick={() => setShowTranscript(true)}>
                               <Icon name="eye" size={13} /> Review transcript
                             </button>
-                            <button className="btn btn-sm" style={{background: "#059669", color: "#fff", border: "none"}} onClick={() => alert("Transcript accepted! Payment will be released to the reporter within 2 business days.")}>
+                            <button className="btn btn-sm" style={{background: "#059669", color: "#fff", border: "none"}} onClick={() => setAcceptOrder(o)}>
                               <Icon name="checkCircle" size={13} /> Accept delivery
                             </button>
-                            <button className="btn btn-sm" style={{background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => alert("Correction request sent to reporter. They will be notified and can upload a revised transcript.")}>
+                            <button className="btn btn-sm" style={{background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => { setCorrectionOrder(o); setCorrectionPage(""); setCorrectionDesc(""); }}>
                               <Icon name="x" size={13} /> Request correction
                             </button>
                           </div>
@@ -3991,6 +3995,67 @@ function BuyerDashboard() {
       )}
       {showTranscript && <TranscriptViewer onClose={() => setShowTranscript(false)} />}
       {profileReporter && <ReporterProfileModal reporterName={profileReporter} onClose={() => setProfileReporter(null)} />}
+      {acceptOrder && (
+        <div className="modal-overlay" onClick={() => setAcceptOrder(null)}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 480, padding: 28}}>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20}}>
+              <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>Accept transcript delivery</h3>
+              <button onClick={() => setAcceptOrder(null)} style={{background: "none", border: "none", fontSize: 22, color: "var(--text-muted, #94A3B8)", cursor: "pointer"}}>×</button>
+            </div>
+            <div style={{padding: 16, background: "var(--bg-muted, #F0FDF4)", border: "1px solid #BBF7D0", borderRadius: 10, marginBottom: 20}}>
+              <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, fontSize: 13}}>
+                <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Case</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>{selectedCase ? selectedCase.name : "—"}</div></div>
+                <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Pages</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>{acceptOrder.pages || "—"}</div></div>
+                <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Reporter</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>{acceptOrder.reporter || "—"}</div></div>
+                <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Delivered</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>{acceptOrder.deliveredAt ? new Date(acceptOrder.deliveredAt).toLocaleDateString("en-US", {month: "short", day: "numeric"}) : "—"}</div></div>
+              </div>
+            </div>
+            <div style={{padding: 12, background: "var(--bg-muted, #F8FAFC)", borderRadius: 8, marginBottom: 20, fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.6}}>
+              <Icon name="info" size={14} color="#3B82F6" style={{marginRight: 6, verticalAlign: "-2px"}} />
+              By accepting, you confirm the transcript is satisfactory. Payment of <strong>${acceptOrder.cost ? acceptOrder.cost.toFixed(2) : "—"}</strong> will be released to the reporter within 2 business days.
+            </div>
+            <div style={{display: "flex", gap: 10}}>
+              <button className="btn btn-sm" style={{flex: 1, background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA", padding: "10px 16px", fontSize: 13, fontWeight: 600, borderRadius: 8, cursor: "pointer"}} onClick={() => { setCorrectionOrder(acceptOrder); setAcceptOrder(null); setCorrectionPage(""); setCorrectionDesc(""); }}>
+                Request correction instead
+              </button>
+              <button className="btn" style={{flex: 1, background: "#059669", color: "#fff", border: "none", padding: "10px 16px", fontSize: 14, fontWeight: 700, borderRadius: 8, cursor: "pointer"}} onClick={() => { addToast("Delivery accepted", "Payment of $" + (acceptOrder.cost ? acceptOrder.cost.toFixed(2) : "—") + " will be released to the reporter within 2 business days.", "success"); setAcceptOrder(null); }}>
+                <Icon name="checkCircle" size={14} /> Accept and release payment
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {correctionOrder && (
+        <div className="modal-overlay" onClick={() => setCorrectionOrder(null)}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 480, padding: 28}}>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20}}>
+              <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>Request correction</h3>
+              <button onClick={() => setCorrectionOrder(null)} style={{background: "none", border: "none", fontSize: 22, color: "var(--text-muted, #94A3B8)", cursor: "pointer"}}>×</button>
+            </div>
+            <div style={{padding: 12, background: "var(--bg-muted, #F8FAFC)", borderRadius: 8, marginBottom: 16, fontSize: 13, color: "var(--text-secondary, #475569)"}}>
+              <strong>{selectedCase ? selectedCase.name : "—"}</strong> · Reporter: {correctionOrder.reporter || "—"}
+            </div>
+            <div className="form-group" style={{marginBottom: 16}}>
+              <label className="form-label">Page or section reference</label>
+              <input className="form-input" placeholder="e.g. Pages 12-14, Line 8" value={correctionPage} onChange={e => setCorrectionPage(e.target.value)} />
+            </div>
+            <div className="form-group" style={{marginBottom: 20}}>
+              <label className="form-label">Description of issue</label>
+              <textarea className="form-input" rows={4} placeholder="Describe what needs to be corrected and why..." value={correctionDesc} onChange={e => setCorrectionDesc(e.target.value)} style={{resize: "vertical"}} />
+            </div>
+            <div style={{padding: 12, background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: 8, marginBottom: 20, fontSize: 12, color: "#78350F", lineHeight: 1.6}}>
+              <Icon name="info" size={13} color="#D97706" style={{marginRight: 6, verticalAlign: "-2px"}} />
+              The reporter will be notified and can upload a corrected transcript. No additional cost for corrections. Payment is held until the corrected version is accepted.
+            </div>
+            <div style={{display: "flex", gap: 10, justifyContent: "flex-end"}}>
+              <button className="btn btn-secondary btn-sm" onClick={() => setCorrectionOrder(null)}>Cancel</button>
+              <button className="btn btn-sm" style={{background: "#DC2626", color: "#fff", border: "none", padding: "8px 16px", borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: "pointer", opacity: (correctionPage && correctionDesc) ? 1 : 0.5}} disabled={!correctionPage || !correctionDesc} onClick={() => { addToast("Correction requested", "The reporter has been notified and will upload a corrected transcript.", "success"); setCorrectionOrder(null); }}>
+                Submit correction request
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <ToastContainer toasts={toasts} onRemove={removeToast} />
     </div>
   );
@@ -4012,6 +4077,14 @@ function ReporterDashboard() {
   const [releaseJob, setReleaseJob] = useState(null);
   const [releaseReason, setReleaseReason] = useState("");
   const [releaseWhen, setReleaseWhen] = useState("");
+  const [checkinDismissed, setCheckinDismissed] = useState({});
+  const [showExtensionForm, setShowExtensionForm] = useState(null);
+  const [extensionDate, setExtensionDate] = useState("");
+  const [extensionReason, setExtensionReason] = useState("");
+  const [uploadJob, setUploadJob] = useState(null);
+  const [uploadFile, setUploadFile] = useState("");
+  const [uploadPages, setUploadPages] = useState("");
+  const [uploadCertified, setUploadCertified] = useState(false);
   const { toasts, addToast, removeToast } = useToast();
 
   const filteredJobs = MOCK_JOBS.filter(j => {
@@ -4212,7 +4285,7 @@ function ReporterDashboard() {
                   <option value="all">All turnaround</option>
                   <option value="rush">Rush (24-48h)</option>
                   <option value="standard">Expedited (3-5d)</option>
-                  <option value="economy">Standard (2+ wk)</option>
+                  <option value="economy">Standard (6+ biz days)</option>
                 </select>
                 <select className="filter-select" value={typeFilter} onChange={e => setTypeFilter(e.target.value)}>
                   <option value="all">All types</option>
@@ -4302,7 +4375,7 @@ function ReporterDashboard() {
                       <span><Icon name="scale" size={13} color="#94A3B8" /> {j.caseType}</span>
                       <span><Icon name="fileText" size={13} color="#94A3B8" /> {j.pages} pages</span>
                     </div>
-                    {j.status === "transcribing" && j.id === "aj-1" && (
+                    {j.status === "transcribing" && j.id === "aj-1" && !checkinDismissed[j.id] && (
                       <div style={{background: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)", border: "1px solid #FDE68A", borderRadius: 8, padding: 12, margin: "8px 0", fontSize: 13}}>
                         <div style={{display: "flex", alignItems: "center", gap: 8, marginBottom: 8}}>
                           <Icon name="clock" size={14} color="#D97706" />
@@ -4311,14 +4384,38 @@ function ReporterDashboard() {
                         <p style={{color: "#78350F", margin: "0 0 10px", lineHeight: 1.5}}>
                           How's this job going? Is it on track for delivery by {j.dueDate}?
                         </p>
-                        <div style={{display: "flex", gap: 8}}>
-                          <button className="btn btn-sm" style={{padding: "6px 14px", fontSize: 12, background: "#059669", color: "#fff", border: "none", borderRadius: 6, fontWeight: 600, cursor: "pointer"}} onClick={(e) => { e.stopPropagation(); e.target.closest('[style*="FFFBEB"]').style.display = "none"; alert("Great! Marked as on track."); }}>
-                            <Icon name="checkCircle" size={12} /> On track
-                          </button>
-                          <button className="btn btn-sm" style={{padding: "6px 14px", fontSize: 12, background: "#D97706", color: "#fff", border: "none", borderRadius: 6, fontWeight: 600, cursor: "pointer"}} onClick={(e) => { e.stopPropagation(); e.target.closest('[style*="FFFBEB"]').style.display = "none"; alert("Thanks for letting us know. We'll notify the attorney and adjust the timeline."); }}>
-                            <Icon name="clock" size={12} /> Need more time
-                          </button>
-                        </div>
+                        {showExtensionForm === j.id ? (
+                          <div style={{background: "#fff", border: "1px solid #FDE68A", borderRadius: 8, padding: 14, marginTop: 8}}>
+                            <div className="form-group" style={{marginBottom: 12}}>
+                              <label className="form-label" style={{fontSize: 12, color: "#78350F"}}>When can you deliver?</label>
+                              <input type="date" className="form-input" value={extensionDate} onChange={e => setExtensionDate(e.target.value)} style={{fontSize: 13}} />
+                            </div>
+                            <div className="form-group" style={{marginBottom: 12}}>
+                              <label className="form-label" style={{fontSize: 12, color: "#78350F"}}>Reason (optional)</label>
+                              <textarea className="form-input" rows={2} placeholder="e.g. Complex testimony, additional witnesses..." value={extensionReason} onChange={e => setExtensionReason(e.target.value)} style={{fontSize: 13, resize: "vertical"}} />
+                            </div>
+                            <div style={{display: "flex", gap: 8}}>
+                              <button className="btn btn-sm" style={{padding: "6px 14px", fontSize: 12, background: "#D97706", color: "#fff", border: "none", borderRadius: 6, fontWeight: 600}} onClick={e => { e.stopPropagation(); addToast("Extension requested", "Extension request sent to the attorney. You'll be notified when they respond.", "success"); setShowExtensionForm(null); setCheckinDismissed(p => ({...p, [j.id]: true})); setExtensionDate(""); setExtensionReason(""); }}>
+                                Request extension
+                              </button>
+                              <button className="btn btn-sm" style={{padding: "6px 14px", fontSize: 12, background: "transparent", color: "#78350F", border: "1px solid #FDE68A", borderRadius: 6}} onClick={e => { e.stopPropagation(); setShowExtensionForm(null); }}>
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div style={{display: "flex", gap: 8, flexWrap: "wrap"}}>
+                            <button className="btn btn-sm" style={{padding: "6px 14px", fontSize: 12, background: "#059669", color: "#fff", border: "none", borderRadius: 6, fontWeight: 600, cursor: "pointer"}} onClick={e => { e.stopPropagation(); setCheckinDismissed(p => ({...p, [j.id]: true})); addToast("On track", "Marked as on track. Next check-in in 5 days.", "success"); }}>
+                              <Icon name="checkCircle" size={12} /> On track
+                            </button>
+                            <button className="btn btn-sm" style={{padding: "6px 14px", fontSize: 12, background: "#D97706", color: "#fff", border: "none", borderRadius: 6, fontWeight: 600, cursor: "pointer"}} onClick={e => { e.stopPropagation(); setShowExtensionForm(j.id); }}>
+                              <Icon name="clock" size={12} /> Need more time
+                            </button>
+                            <button className="btn btn-sm" style={{padding: "6px 14px", fontSize: 12, background: "transparent", color: "#DC2626", border: "1px solid #FECACA", borderRadius: 6, fontWeight: 600, cursor: "pointer"}} onClick={e => { e.stopPropagation(); setReleaseJob(j); setReleaseReason(""); setReleaseWhen(""); }}>
+                              Release this job
+                            </button>
+                          </div>
+                        )}
                       </div>
                     )}
                     {j.status === "delivered" && (
@@ -4348,7 +4445,7 @@ function ReporterDashboard() {
                             <button className="btn btn-sm" style={{padding: "6px 12px", fontSize: 12, background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => { setReleaseJob(j); setReleaseReason(""); setReleaseWhen(""); }}>
                               Release job
                             </button>
-                            <button className="btn btn-primary btn-sm">
+                            <button className="btn btn-primary btn-sm" onClick={e => { e.stopPropagation(); setUploadJob(j); setUploadFile(""); setUploadPages(""); setUploadCertified(false); }}>
                               {j.status === "transcribing" ? "Upload transcript" : "Submit for certification"}
                             </button>
                           </>
@@ -4564,6 +4661,63 @@ function ReporterDashboard() {
               <button className="btn btn-secondary btn-sm" onClick={() => setReleaseJob(null)}>Cancel</button>
               <button className="btn btn-sm" style={{background: "#DC2626", color: "#fff", border: "none", padding: "8px 16px", borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: "pointer", opacity: (!releaseReason || !releaseWhen) ? 0.5 : 1}} disabled={!releaseReason || !releaseWhen} onClick={() => { addToast("Job released", releaseJob.court + " has been released and will be reassigned.", "success"); setReleaseJob(null); }}>
                 Release this job
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {uploadJob && (
+        <div className="modal-overlay" onClick={() => setUploadJob(null)}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 540, padding: 28}}>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20}}>
+              <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>Upload & certify transcript</h3>
+              <button onClick={() => setUploadJob(null)} style={{background: "none", border: "none", fontSize: 22, color: "var(--text-muted, #94A3B8)", cursor: "pointer"}}>×</button>
+            </div>
+            <div style={{padding: 12, background: "var(--bg-muted, #F1F5F9)", borderRadius: 8, marginBottom: 20, fontSize: 13, color: "var(--text-secondary, #475569)"}}>
+              <strong>{uploadJob.court}</strong> — {uploadJob.caseType} · Due {uploadJob.dueDate}
+            </div>
+            <div className="form-group" style={{marginBottom: 16}}>
+              <label className="form-label">Transcript file</label>
+              {!uploadFile ? (
+                <div className="form-file-enhanced" onClick={() => setUploadFile("Transcript_" + uploadJob.caseType.replace(/\s/g, "_") + "_Final.pdf")} style={{cursor: "pointer", textAlign: "center", padding: 24}}>
+                  <Icon name="fileText" size={24} color="#94A3B8" />
+                  <p style={{margin: "8px 0 4px", fontWeight: 600, color: "var(--text, #0F172A)", fontSize: 14}}>Click to upload transcript</p>
+                  <p style={{margin: 0, fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>PDF, DOC, or TXT — max 50MB</p>
+                </div>
+              ) : (
+                <div style={{display: "flex", alignItems: "center", gap: 10, padding: 12, background: "var(--bg-muted, #F0FDF4)", border: "1px solid #BBF7D0", borderRadius: 8}}>
+                  <Icon name="checkCircle" size={16} color="#059669" />
+                  <span style={{flex: 1, fontSize: 13, fontWeight: 600, color: "var(--text, #0F172A)"}}>{uploadFile}</span>
+                  <button onClick={() => setUploadFile("")} style={{background: "none", border: "none", color: "#DC2626", cursor: "pointer", fontSize: 16}}>×</button>
+                </div>
+              )}
+            </div>
+            <div className="form-group" style={{marginBottom: 16}}>
+              <label className="form-label">Certified page count</label>
+              <input type="number" className="form-input" min="1" placeholder="e.g. 45" value={uploadPages} onChange={e => setUploadPages(e.target.value)} />
+            </div>
+            <div style={{padding: 16, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10, marginBottom: 16}}>
+              <label style={{display: "flex", gap: 10, cursor: "pointer", alignItems: "flex-start"}}>
+                <input type="checkbox" checked={uploadCertified} onChange={e => setUploadCertified(e.target.checked)} style={{marginTop: 3, flexShrink: 0}} />
+                <span style={{fontSize: 13, lineHeight: 1.6, color: "var(--text, #0F172A)"}}>
+                  <strong>I certify under penalty of perjury</strong> that the foregoing transcript is a true, accurate, and complete record of the proceedings, and that I am a duly qualified and acting Certified Shorthand Reporter in the State of California.
+                </span>
+              </label>
+            </div>
+            <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20}}>
+              <div>
+                <label className="form-label" style={{fontSize: 12}}>CSR license number</label>
+                <input className="form-input" value="CSR #14892" disabled style={{background: "var(--bg-muted, #F1F5F9)", color: "var(--text-muted, #94A3B8)", fontSize: 13}} />
+              </div>
+              <div>
+                <label className="form-label" style={{fontSize: 12}}>Certification date</label>
+                <input className="form-input" value={new Date().toLocaleDateString("en-US", {month: "long", day: "numeric", year: "numeric"})} disabled style={{background: "var(--bg-muted, #F1F5F9)", color: "var(--text-muted, #94A3B8)", fontSize: 13}} />
+              </div>
+            </div>
+            <div style={{display: "flex", gap: 10, justifyContent: "flex-end"}}>
+              <button className="btn btn-secondary btn-sm" onClick={() => setUploadJob(null)}>Cancel</button>
+              <button className="btn btn-primary" style={{opacity: (uploadFile && uploadPages && uploadCertified) ? 1 : 0.5, padding: "10px 20px", fontSize: 14}} disabled={!uploadFile || !uploadPages || !uploadCertified} onClick={() => { addToast("Transcript delivered", uploadPages + " pages certified and delivered to the attorney. Payment will be released within 2 business days of acceptance.", "success"); setUploadJob(null); }}>
+                <Icon name="checkCircle" size={14} /> Certify and deliver
               </button>
             </div>
           </div>
@@ -5440,7 +5594,7 @@ function PricingCalculator() {
       <div className="form-group">
         <label className="form-label">Turnaround</label>
         <div style={{display: "flex", gap: 8}}>
-          {[["rush", "Rush (24-48h)", "1.5x"], ["standard", "Expedited (3-5d)", "1.0x"], ["economy", "Standard (2+ wk)", "0.8x"]].map(([key, label, mult]) => (
+          {[["rush", "Rush (1-2 biz days)", "1.5x"], ["standard", "Expedited (3-5 biz days)", "1.0x"], ["economy", "Standard (6+ biz days)", "0.85x"]].map(([key, label, mult]) => (
             <button key={key}
               className={"turnaround-card" + (turnaround === key ? " selected" : "")}
               onClick={() => setTurnaround(key)}
@@ -5859,7 +6013,7 @@ function ReporterOnboarding() {
         <div className="form-group">
           <label className="form-label">Turnaround capabilities</label>
           <div className="checkbox-group">
-            {[["rush", "Rush (24-48 hours)"], ["standard", "Expedited (3-5 business days)"], ["economy", "Standard (2+ weeks)"]].map(([k, l]) => (
+            {[["rush", "Rush (1-2 business days)"], ["standard", "Expedited (3-5 business days)"], ["economy", "Standard (6+ business days)"]].map(([k, l]) => (
               <div key={k} className={"checkbox-item" + (form.turnarounds.includes(k) ? " checked" : "")} onClick={() => toggleArr("turnarounds", k)}>{l}</div>
             ))}
           </div>
@@ -7575,7 +7729,7 @@ function FaqPage() {
       { id: "a2", q: "How does billing work?", a: "We charge a flat 12% buyer-side transaction fee on each order. Payment is processed securely through Stripe when the transcript is delivered. You'll receive an itemized invoice for your records." },
       { id: "a3", q: "What if I'm unhappy with a transcript?", a: "You have 5 business days after delivery to request corrections. If there's a substantive dispute about accuracy, our support team will review and mediate. We stand behind the quality of every certified transcript on our platform." },
       { id: "a4", q: "Can I choose a specific reporter?", a: "Yes. When placing an order you can browse available reporters filtered by jurisdiction, specialty, language, and rating. You can also save favorites for future orders." },
-      { id: "a5", q: "What turnaround options are available?", a: "We offer three tiers: Rush (24\u201348 hours), Expedited (3\u20135 business days), and Standard (2+ weeks). Pricing adjusts based on the turnaround you select." },
+      { id: "a5", q: "What turnaround options are available?", a: "We offer three tiers based on your deadline: Rush (1\u20132 business days, 1.5x rate), Expedited (3\u20135 business days, statutory rate), and Standard (6+ business days, 15% savings). You set your need-by date and the system calculates your tier and price automatically. If you don't have a specific deadline, transcripts are due within 45 calendar days." },
     ]},
     { title: "For reporters", items: [
       { id: "r1", q: "How do I get started as a reporter on Dewey Sholes?", a: "Sign up through our reporter onboarding flow. You'll need to provide your CSR license number, jurisdiction coverage, specialties, and availability. We verify your credentials with the California DCA before activating your profile." },
