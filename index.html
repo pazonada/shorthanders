@@ -2231,6 +2231,64 @@ function ToastContainer({ toasts, onRemove }) {
   );
 }
 
+// ─── Report an Issue Button ────────────────────────────────────
+function ReportIssueButton({ addToast }) {
+  const [open, setOpen] = useState(false);
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [orderRef, setOrderRef] = useState("");
+
+  if (!open) {
+    return (
+      <button onClick={() => setOpen(true)} style={{position: "fixed", bottom: 24, right: 24, zIndex: 90, width: 48, height: 48, borderRadius: "50%", background: "var(--text, #0F172A)", color: "var(--bg, #fff)", border: "none", cursor: "pointer", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, fontWeight: 700, transition: "transform 0.15s"}} title="Report an issue">
+        ?
+      </button>
+    );
+  }
+
+  return (
+    <div className="modal-overlay" onClick={() => setOpen(false)} style={{zIndex: 95}}>
+      <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 440, padding: 28, position: "fixed", bottom: 80, right: 24, top: "auto", left: "auto", transform: "none", margin: 0}}>
+        <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20}}>
+          <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>Report an issue</h3>
+          <button onClick={() => setOpen(false)} style={{background: "none", border: "none", fontSize: 22, color: "var(--text-muted, #94A3B8)", cursor: "pointer"}}>×</button>
+        </div>
+        <div className="form-group" style={{marginBottom: 14}}>
+          <label className="form-label">Category</label>
+          <select className="form-input form-select" value={category} onChange={e => setCategory(e.target.value)}>
+            <option value="">Select a category...</option>
+            <option value="billing">Billing problem</option>
+            <option value="technical">Technical issue</option>
+            <option value="user">Report a user</option>
+            <option value="quality">Transcript quality concern</option>
+            <option value="payment">Payment not received</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div className="form-group" style={{marginBottom: 14}}>
+          <label className="form-label">Description</label>
+          <textarea className="form-input" rows={4} placeholder="Describe the issue you're experiencing..." value={description} onChange={e => setDescription(e.target.value)} style={{resize: "vertical"}} />
+        </div>
+        <div className="form-group" style={{marginBottom: 20}}>
+          <label className="form-label">Related order <span style={{fontWeight: 400, color: "#94A3B8"}}>(optional)</span></label>
+          <select className="form-input form-select" value={orderRef} onChange={e => setOrderRef(e.target.value)}>
+            <option value="">None</option>
+            <option value="DS-2026-0042">DS-2026-0042 — Martinez v. Pacific Holdings</option>
+            <option value="DS-2026-0039">DS-2026-0039 — Davis v. Metro Transit</option>
+            <option value="DS-2026-0035">DS-2026-0035 — In re Estate of Williams</option>
+          </select>
+        </div>
+        <div style={{display: "flex", gap: 10, justifyContent: "flex-end"}}>
+          <button className="btn btn-secondary btn-sm" onClick={() => setOpen(false)}>Cancel</button>
+          <button className="btn btn-primary btn-sm" style={{opacity: (category && description) ? 1 : 0.5}} disabled={!category || !description} onClick={() => { addToast("Support ticket created", "We'll respond within 1 business day. Check your email for updates.", "success"); setOpen(false); setCategory(""); setDescription(""); setOrderRef(""); }}>
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Notification Bell ──────────────────────────────────────────
 function NotificationBell({ variant }) {
   const [open, setOpen] = useState(false);
@@ -4056,6 +4114,7 @@ function BuyerDashboard() {
           </div>
         </div>
       )}
+      <ReportIssueButton addToast={addToast} />
       <ToastContainer toasts={toasts} onRemove={removeToast} />
     </div>
   );
@@ -4789,6 +4848,7 @@ function ReporterDashboard() {
           </div>
         </div>
       )}
+      <ReportIssueButton addToast={addToast} />
       <ToastContainer toasts={toasts} onRemove={removeToast} />
     </div>
   );
@@ -5355,6 +5415,10 @@ function SettingsPage() {
   const [tab, setTab] = useState("profile");
   const [notifs, setNotifs] = useState(MOCK_SETTINGS.notifications.map(n => ({...n})));
   const { toasts, addToast, removeToast } = useToast();
+  const [accountPaused, setAccountPaused] = useState(false);
+  const [showPauseConfirm, setShowPauseConfirm] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteConfirmText, setDeleteConfirmText] = useState("");
 
   const toggleNotif = (idx, channel) => {
     setNotifs(n => n.map((item, i) => i === idx ? {...item, [channel]: !item[channel]} : item));
@@ -5479,10 +5543,39 @@ function SettingsPage() {
                   <button className="btn btn-secondary btn-sm" style={{padding: "4px 10px", fontSize: 11}}>Revoke</button>
                 </div>
               </div>
+              {/* Account status */}
+              <div className="settings-section" style={{borderTop: "1px solid var(--border, #E2E8F0)", paddingTop: 24, marginTop: 8}}>
+                <h3><Icon name="users" size={14} /> Account status</h3>
+                {accountPaused ? (
+                  <div style={{padding: 16, background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: 10, marginBottom: 12}}>
+                    <div style={{display: "flex", alignItems: "center", gap: 8, marginBottom: 8}}>
+                      <Icon name="clock" size={16} color="#D97706" />
+                      <strong style={{color: "#92400E", fontSize: 14}}>Your account is paused</strong>
+                    </div>
+                    <p style={{fontSize: 13, color: "#78350F", margin: "0 0 12px", lineHeight: 1.6}}>
+                      Your profile is hidden from the marketplace. You won't receive new job notifications or appear in search results. Your existing data and completed jobs are preserved.
+                    </p>
+                    <button className="btn btn-sm" style={{background: "#059669", color: "#fff", border: "none", padding: "8px 16px", borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: "pointer"}} onClick={() => { setAccountPaused(false); addToast("Account reactivated", "Your account is now active and visible on the marketplace.", "success"); }}>
+                      <Icon name="checkCircle" size={13} /> Reactivate account
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 12, lineHeight: 1.6}}>
+                      Temporarily pause your account if you're going on vacation or taking a break. Your profile will be hidden from the marketplace, but your data and history are preserved. You can reactivate anytime.
+                    </p>
+                    <button className="btn btn-sm" style={{background: "#FFFBEB", color: "#92400E", border: "1px solid #FDE68A", padding: "8px 16px", borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: "pointer"}} onClick={() => setShowPauseConfirm(true)}>
+                      <Icon name="clock" size={13} /> Pause account
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Danger zone */}
               <div className="settings-section" style={{borderTop: "2px solid #FEE2E2", paddingTop: 24, marginTop: 8}}>
                 <h3 style={{color: "#DC2626"}}><Icon name="x" size={14} /> Danger zone</h3>
-                <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 12}}>Permanently delete your account and all associated data. This action cannot be undone.</p>
-                <button className="btn btn-sm" style={{background: "#FEE2E2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => addToast("Contact support", "Email support@deweysholes.com to delete your account", "warning")}>Delete account</button>
+                <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 12}}>Permanently delete your account and all associated data.</p>
+                <button className="btn btn-sm" style={{background: "#FEE2E2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => { setShowDeleteModal(true); setDeleteConfirmText(""); }}>Delete account</button>
               </div>
             </div>
           )}
@@ -5537,6 +5630,67 @@ function SettingsPage() {
           )}
         </div>
       </div>
+      {showPauseConfirm && (
+        <div className="modal-overlay" onClick={() => setShowPauseConfirm(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 440, padding: 28}}>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20}}>
+              <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>Pause your account</h3>
+              <button onClick={() => setShowPauseConfirm(false)} style={{background: "none", border: "none", fontSize: 22, color: "var(--text-muted, #94A3B8)", cursor: "pointer"}}>×</button>
+            </div>
+            <div style={{fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.7, marginBottom: 20}}>
+              <p style={{margin: "0 0 12px"}}><strong>When your account is paused:</strong></p>
+              <div style={{display: "flex", flexDirection: "column", gap: 6}}>
+                <div style={{display: "flex", gap: 8}}><Icon name="x" size={13} color="#DC2626" style={{flexShrink: 0, marginTop: 2}} /> <span>Your profile is hidden from the marketplace</span></div>
+                <div style={{display: "flex", gap: 8}}><Icon name="x" size={13} color="#DC2626" style={{flexShrink: 0, marginTop: 2}} /> <span>You won't receive new job notifications</span></div>
+                <div style={{display: "flex", gap: 8}}><Icon name="checkCircle" size={13} color="#059669" style={{flexShrink: 0, marginTop: 2}} /> <span>Your data, history, and ratings are preserved</span></div>
+                <div style={{display: "flex", gap: 8}}><Icon name="checkCircle" size={13} color="#059669" style={{flexShrink: 0, marginTop: 2}} /> <span>You can reactivate at any time</span></div>
+              </div>
+            </div>
+            <div style={{display: "flex", gap: 10, justifyContent: "flex-end"}}>
+              <button className="btn btn-secondary btn-sm" onClick={() => setShowPauseConfirm(false)}>Cancel</button>
+              <button className="btn btn-sm" style={{background: "#D97706", color: "#fff", border: "none", padding: "8px 16px", borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: "pointer"}} onClick={() => { setAccountPaused(true); setShowPauseConfirm(false); addToast("Account paused", "Your account is now paused. You can reactivate anytime from Settings.", "warning"); }}>
+                Pause my account
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showDeleteModal && (
+        <div className="modal-overlay" onClick={() => setShowDeleteModal(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 480, padding: 28}}>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20}}>
+              <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "#DC2626"}}>Delete your account</h3>
+              <button onClick={() => setShowDeleteModal(false)} style={{background: "none", border: "none", fontSize: 22, color: "var(--text-muted, #94A3B8)", cursor: "pointer"}}>×</button>
+            </div>
+            <div style={{padding: 14, background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: 10, marginBottom: 16, fontSize: 13, color: "#7F1D1D", lineHeight: 1.6}}>
+              <strong>This action is irreversible.</strong> Deleting your account will permanently remove your profile, order history, transcripts, and all associated data after a 30-day grace period.
+            </div>
+            <div style={{padding: 12, background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: 8, marginBottom: 16, fontSize: 13, color: "#78350F", lineHeight: 1.5}}>
+              <Icon name="clock" size={13} color="#D97706" style={{marginRight: 6, verticalAlign: "-2px"}} />
+              You have <strong>3 active jobs</strong> that must be completed or released before your account can be deleted.
+            </div>
+            <div style={{marginBottom: 16}}>
+              <button className="btn btn-secondary btn-sm" style={{fontSize: 13}} onClick={() => addToast("Export started", "Your data export is being prepared. You'll receive a download link via email.", "success")}>
+                <Icon name="fileText" size={13} /> Download your data
+              </button>
+            </div>
+            <div className="form-group" style={{marginBottom: 20}}>
+              <label className="form-label" style={{fontSize: 13}}>Type <strong>DELETE</strong> to confirm</label>
+              <input className="form-input" placeholder="DELETE" value={deleteConfirmText} onChange={e => setDeleteConfirmText(e.target.value)} style={{fontFamily: "monospace", letterSpacing: 2}} />
+            </div>
+            <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginBottom: 16, lineHeight: 1.5}}>
+              Your account will be deactivated immediately and permanently deleted after 30 days. During the grace period, you can contact support to reactivate.
+            </div>
+            <div style={{display: "flex", gap: 10, justifyContent: "flex-end"}}>
+              <button className="btn btn-secondary btn-sm" onClick={() => setShowDeleteModal(false)}>Cancel</button>
+              <button className="btn btn-sm" style={{background: "#DC2626", color: "#fff", border: "none", padding: "8px 16px", borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: "pointer", opacity: deleteConfirmText === "DELETE" ? 1 : 0.4}} disabled={deleteConfirmText !== "DELETE"} onClick={() => { addToast("Account scheduled for deletion", "Your account will be permanently deleted in 30 days. Contact support to cancel.", "warning"); setShowDeleteModal(false); }}>
+                Permanently delete account
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <ReportIssueButton addToast={addToast} />
       <ToastContainer toasts={toasts} removeToast={removeToast} />
     </div>
   );
