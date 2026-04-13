@@ -358,6 +358,21 @@ Dark mode toggle
    Renewal receipt / invoice
    Status: NOT in prototype
 
+!! Pilot pricing auto-application
+   Users who sign up during the pilot period automatically get:
+     CSR: $99/yr listing fee waived for first year
+     Attorney: 8% platform fee (vs 12%) for first year
+   No promo codes — pricing_tier and pilot_expires_at set at signup
+   based on created_at falling within pilot window.
+   Fee calculation checks tier at transaction time:
+     if pricing_tier = 'pilot' AND now < pilot_expires_at → 8%
+     else → 12%
+   Dashboard shows banner: "Pilot pricing active — [rate] through [date]"
+   30-day email before pilot_expires_at: "Your pilot rate is ending"
+   After expiration: standard pricing auto-applies, no action needed
+   Status: promo codes shown in prototype onboarding success screens
+           but no real pricing tier system
+
 !! Data export (CCPA compliance)
    User requests export of all their data
    Platform generates downloadable archive (profile, orders, transcripts,
