@@ -3595,6 +3595,10 @@ function BuyerDashboard() {
   const [correctionDesc, setCorrectionDesc] = useState("");
   const [ratingOrder, setRatingOrder] = useState(null);
   const [ratings, setRatings] = useState({ timeliness: 0, communication: 0, quality: 0 });
+  const [showInviteTeam, setShowInviteTeam] = useState(false);
+  const [inviteName, setInviteName] = useState("");
+  const [inviteEmail, setInviteEmail] = useState("");
+  const [inviteRole, setInviteRole] = useState("Paralegal");
   const allOrders = MOCK_CASES.flatMap(c => c.orders);
   const activeOrders = allOrders.filter(o => o.status === "in-progress" || o.status === "pending").length;
   const pendingReview = allOrders.filter(o => o.status === "pending").length;
@@ -3844,6 +3848,16 @@ function BuyerDashboard() {
                       <div style={{padding: "0 24px 16px"}}>
                         <OrderTimeline step={o.statusStep} />
                       </div>
+                      {o.statusStep === 5 && (
+                        <div style={{margin: "0 24px 16px", display: "flex", gap: 8}}>
+                          <button className="btn btn-secondary btn-sm" style={{fontSize: 12}} onClick={() => navigate("#/order")}>
+                            <Icon name="fileText" size={12} /> Re-order for this case
+                          </button>
+                          {o.reporter && <button className="btn btn-secondary btn-sm" style={{fontSize: 12}} onClick={() => navigate("#/order")}>
+                            <Icon name="users" size={12} /> Book {o.reporter.split(",")[0]} again
+                          </button>}
+                        </div>
+                      )}
                       {o.status === "delivered" && (
                         <div style={{margin: "0 24px 16px", padding: 20, background: "var(--bg-card, #F0FDF4)", border: "1.5px solid #86EFAC", borderRadius: 12}}>
                           <div style={{display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 12}}>
@@ -4059,7 +4073,7 @@ function BuyerDashboard() {
                   <h1>Team members</h1>
                   <p>Walsh Family Law Group - firm account</p>
                 </div>
-                <button className="btn btn-secondary btn-sm">Invite member</button>
+                <button className="btn btn-secondary btn-sm" onClick={() => { setShowInviteTeam(true); setInviteName(""); setInviteEmail(""); setInviteRole("Paralegal"); }}>Invite member</button>
               </div>
               <div className="team-list">
                 {TEAM.map((m, i) => (
@@ -4145,6 +4159,45 @@ function BuyerDashboard() {
               <button className="btn btn-secondary btn-sm" onClick={() => setCorrectionOrder(null)}>Cancel</button>
               <button className="btn btn-sm" style={{background: "#DC2626", color: "#fff", border: "none", padding: "8px 16px", borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: "pointer", opacity: (correctionPage && correctionDesc) ? 1 : 0.5}} disabled={!correctionPage || !correctionDesc} onClick={() => { addToast("Correction requested", "The reporter has been notified and will upload a corrected transcript.", "success"); setCorrectionOrder(null); }}>
                 Submit correction request
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showInviteTeam && (
+        <div className="modal-overlay" onClick={() => setShowInviteTeam(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 420, padding: 28}}>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20}}>
+              <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>Invite team member</h3>
+              <button onClick={() => setShowInviteTeam(false)} style={{background: "none", border: "none", fontSize: 22, color: "var(--text-muted, #94A3B8)", cursor: "pointer"}}>×</button>
+            </div>
+            <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 20, lineHeight: 1.5}}>
+              Invite a colleague to your firm account. They'll receive an email with a link to join and can start placing orders immediately.
+            </p>
+            <div className="form-group" style={{marginBottom: 14}}>
+              <label className="form-label">Full name</label>
+              <input className="form-input" placeholder="e.g. Maria Rodriguez" value={inviteName} onChange={e => setInviteName(e.target.value)} />
+            </div>
+            <div className="form-group" style={{marginBottom: 14}}>
+              <label className="form-label">Email</label>
+              <input className="form-input" type="email" placeholder="maria@walshlaw.com" value={inviteEmail} onChange={e => setInviteEmail(e.target.value)} />
+            </div>
+            <div className="form-group" style={{marginBottom: 20}}>
+              <label className="form-label">Role</label>
+              <select className="form-input form-select" value={inviteRole} onChange={e => setInviteRole(e.target.value)}>
+                <option>Attorney</option>
+                <option>Paralegal</option>
+                <option>Legal assistant</option>
+                <option>Office manager</option>
+              </select>
+              <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginTop: 6, lineHeight: 1.5}}>
+                {inviteRole === "Attorney" ? "Can place orders, manage cases, and view billing." : "Can place orders and manage cases. Cannot modify billing or firm settings."}
+              </p>
+            </div>
+            <div style={{display: "flex", gap: 10, justifyContent: "flex-end"}}>
+              <button className="btn btn-secondary btn-sm" onClick={() => setShowInviteTeam(false)}>Cancel</button>
+              <button className="btn btn-primary btn-sm" style={{opacity: (inviteName && inviteEmail) ? 1 : 0.5}} disabled={!inviteName || !inviteEmail} onClick={() => { addToast("Invitation sent", inviteName + " will receive an email invitation to join your firm account.", "success"); setShowInviteTeam(false); }}>
+                Send invitation
               </button>
             </div>
           </div>
@@ -4338,6 +4391,9 @@ function ReporterDashboard() {
               <span style={{fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 12, background: "var(--bg-card, #F1F5F9)", color: "var(--text, #334155)"}}>Quality 4.7</span>
             </div>
             <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", margin: 0}}>Based on 23 completed jobs. Updated monthly.</p>
+            <button className="btn btn-secondary btn-sm" style={{marginTop: 12, fontSize: 12, width: "100%", justifyContent: "center"}} onClick={() => navigate("#/reporters/r1")}>
+              <Icon name="eye" size={12} /> View my public profile
+            </button>
           </div>
 
           {/* Profile Nudge */}
@@ -7225,13 +7281,13 @@ function LandingPage() {
 
   const stepsData = {
     attorney: [
-      { icon: "fileText", title: "Place your order", desc: "Select live attendance or post-hearing transcription. Enter case details, upload supporting docs, and choose your turnaround." },
+      { icon: "fileText", title: "Place your order", desc: "Select live attendance or post-hearing transcription. Enter case details, set your delivery deadline, and the price calculates automatically." },
       { icon: "zap", title: "We match a reporter", desc: "A licensed, jurisdiction-verified CSR accepts your job, usually within hours. You're notified instantly." },
       { icon: "checkCircle", title: "Certified transcript, delivered", desc: "Your court-admissible transcript arrives on schedule with the reporter's certification attached. Payment is automatic." },
     ],
     reporter: [
       { icon: "mic", title: "Get notified of matching jobs", desc: "See live attendance and transcription jobs filtered to your jurisdiction, case type preferences, and availability." },
-      { icon: "fileText", title: "Accept and produce", desc: "Commit to a turnaround, access case materials, and produce the transcript. Use your own tools or our built-in workspace." },
+      { icon: "fileText", title: "Accept and produce", desc: "Review the deadline and earnings, accept the job, and produce the transcript. The platform checks in along the way to keep delivery on track." },
       { icon: "star", title: "Certify and get paid", desc: "Sign your certification digitally. Payment releases automatically upon delivery. No invoicing, no chasing." },
     ],
   };
@@ -8146,7 +8202,7 @@ function FaqPage() {
 
   const sections = [
     { title: "For attorneys", items: [
-      { id: "a1", q: "How do I place a transcript order?", a: "Click \"Get started\" from the homepage, choose live attendance or post-hearing transcription, enter your case details, select a turnaround tier, and submit. We'll match you with a qualified reporter, usually within hours." },
+      { id: "a1", q: "How do I place a transcript order?", a: "Click \"Order a transcript\" from the homepage, choose live attendance or post-hearing transcription, enter your case details, set your delivery deadline, and submit. Your deadline determines the turnaround tier and price automatically. We'll match you with a qualified reporter, usually within hours." },
       { id: "a2", q: "How does billing work?", a: "We charge a flat 12% buyer-side transaction fee on each order. Payment is processed securely through Stripe when the transcript is delivered. You'll receive an itemized invoice for your records." },
       { id: "a3", q: "What if I'm unhappy with a transcript?", a: "You have 5 business days after delivery to request corrections. If there's a substantive dispute about accuracy, our support team will review and mediate. We stand behind the quality of every certified transcript on our platform." },
       { id: "a4", q: "Can I choose a specific reporter?", a: "Yes. When placing an order you can browse available reporters filtered by jurisdiction, specialty, language, and rating. You can also save favorites for future orders." },
