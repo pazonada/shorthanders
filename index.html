@@ -1825,10 +1825,11 @@ const MOCK_ACTIVE_JOBS = [
 ];
 
 const MOCK_PAYOUTS = [
-  { case: "In re Estate of Williams", date: "2026-03-10", pages: 28, amount: 102.76, status: "Paid" },
-  { case: "Davis v. Metro Transit", date: "2026-03-05", pages: 54, amount: 198.18, status: "Paid" },
-  { case: "Park v. Golden Gate Ins.", date: "2026-02-28", pages: 41, amount: 150.47, status: "Paid" },
-  { case: "Thompson custody hearing", date: "2026-02-20", pages: 33, amount: 121.11, status: "Paid" },
+  { case: "Martinez v. Pacific Holdings", date: "2026-03-31", pages: 45, amount: 165.15, status: "Paid", type: "Live attendance", attorney: "Jennifer Walsh", rate: "$3.67/pg", attendance: 255, tier: "Expedited" },
+  { case: "In re Estate of Williams", date: "2026-03-10", pages: 28, amount: 102.76, status: "Paid", type: "Transcription", attorney: "Sarah Kim", rate: "$3.67/pg", attendance: 0, tier: "Standard" },
+  { case: "Davis v. Metro Transit", date: "2026-03-05", pages: 54, amount: 198.18, status: "Paid", type: "Transcription", attorney: "David Park", rate: "$3.67/pg", attendance: 0, tier: "Expedited" },
+  { case: "Park v. Golden Gate Ins.", date: "2026-02-28", pages: 41, amount: 150.47, status: "Paid", type: "Live attendance", attorney: "Maria Rodriguez", rate: "$3.67/pg", attendance: 255, tier: "Standard" },
+  { case: "Thompson custody hearing", date: "2026-02-20", pages: 33, amount: 121.11, status: "Pending", type: "Transcription", attorney: "Robert Chen", rate: "$3.67/pg", attendance: 0, tier: "Rush" },
 ];
 
 const MOCK_REPORTER_EARNINGS = [
@@ -2879,7 +2880,7 @@ function AppNav({ variant, activeTab, onTabChange }) {
   const tabMap = {
     reporter: [["jobs", "Available jobs"], ["active", "My jobs"], ["calendar", "Calendar"], ["earnings", "Earnings"]],
     buyer: [["cases", "My cases"], ["reporters", "Find reporters"], ["messages", "Messages"], ["billing", "Billing"], ["calendar", "Calendar"], ["analytics", "Analytics"], ["team", "Team"]],
-    admin: [["overview", "Overview"], ["verifications", "Verifications"], ["disputes", "Disputes"], ["csr-database", "CSR database"], ["compliance", "Compliance"]],
+    admin: [["overview", "Overview"], ["verifications", "Verifications"], ["disputes", "Disputes"], ["users", "Users"], ["csr-database", "CSR database"], ["compliance", "Compliance"]],
   };
   const tabs = tabMap[variant] || tabMap.buyer;
   const userMap = {
@@ -3905,7 +3906,7 @@ function BuyerDashboard() {
                             </div>
                           </div>
                           <div style={{fontSize: 12, color: "#065F46", background: "#DCFCE7", padding: "8px 12px", borderRadius: 8, marginBottom: 16, lineHeight: 1.5}}>
-                            <Icon name="clock" size={12} color="#059669" /> Auto-release on {new Date(o.autoReleaseAt).toLocaleDateString("en-US", {month: "short", day: "numeric"})} if no action taken. Payment will be sent to the reporter.
+                            <Icon name="clock" size={12} color="#059669" /> Auto-release {(() => { const hrs = Math.max(0, Math.round((new Date(o.autoReleaseAt) - new Date()) / 3600000)); return hrs > 24 ? `in ${Math.ceil(hrs/24)} days` : hrs > 0 ? `in ${hrs} hours` : "imminent"; })()} ({new Date(o.autoReleaseAt).toLocaleDateString("en-US", {month: "short", day: "numeric", hour: "numeric", minute: "2-digit"})}) if no action taken. Payment will be sent to the reporter.
                           </div>
                           <div style={{display: "flex", gap: 8, flexWrap: "wrap"}}>
                             <button className="btn btn-primary btn-sm" onClick={() => setShowTranscript(true)}>
@@ -4886,15 +4887,17 @@ function ReporterDashboard() {
               </div>
               <h3 style={{fontSize: 16, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 16}}>Recent payouts</h3>
               <table className="payout-table">
-                <thead><tr><th>Case</th><th>Date</th><th>Pages</th><th>Amount</th><th>Status</th></tr></thead>
+                <thead><tr><th>Case</th><th>Type</th><th>Attorney</th><th>Pages</th><th>Rate</th><th>Amount</th><th>Status</th></tr></thead>
                 <tbody>
                   {MOCK_PAYOUTS.map((p, i) => (
                     <tr key={i}>
                       <td style={{fontWeight: 500}}>{p.case}</td>
-                      <td>{p.date}</td>
+                      <td><span style={{fontSize: 11, fontWeight: 600, padding: "2px 6px", borderRadius: 4, background: p.type === "Live attendance" ? "#DBEAFE" : "#FEF3C7", color: p.type === "Live attendance" ? "#1E40AF" : "#92400E"}}>{p.type === "Live attendance" ? "Live" : "Audio"}</span></td>
+                      <td style={{fontSize: 12, color: "var(--text-secondary, #475569)"}}>{p.attorney}</td>
                       <td>{p.pages}</td>
-                      <td style={{fontWeight: 600}}>${p.amount.toFixed(2)}</td>
-                      <td><span className="badge badge-completed">{p.status}</span></td>
+                      <td style={{fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>{p.rate} <span style={{fontSize: 10}}>× {p.tier === "Rush" ? "1.5x" : p.tier === "Standard" ? "0.85x" : "1.0x"}</span></td>
+                      <td style={{fontWeight: 700, color: "var(--text, #0F172A)"}}>${p.amount.toFixed(2)}</td>
+                      <td><span style={{fontSize: 11, fontWeight: 600, padding: "2px 8px", borderRadius: 100, background: p.status === "Paid" ? "#D1FAE5" : "#FEF3C7", color: p.status === "Paid" ? "#065F46" : "#92400E"}}>{p.status}</span></td>
                     </tr>
                   ))}
                 </tbody>
@@ -5375,6 +5378,83 @@ function AdminDashboard() {
             </div>
           )}
 
+          {tab === "users" && (
+            <div>
+              <div className="page-header">
+                <div>
+                  <h1>User management</h1>
+                  <p>All registered attorneys and court reporters on the platform.</p>
+                </div>
+              </div>
+              <div className="quick-stats-row" style={{marginBottom: 24}}>
+                <div className="quick-stat">
+                  <Icon name="scale" size={18} color="#2563EB" />
+                  <div><div className="quick-stat-value">312</div><div className="quick-stat-label">attorneys</div></div>
+                </div>
+                <div className="quick-stat">
+                  <Icon name="mic" size={18} color="#059669" />
+                  <div><div className="quick-stat-value">47</div><div className="quick-stat-label">reporters</div></div>
+                </div>
+                <div className="quick-stat">
+                  <Icon name="clock" size={18} color="#D97706" />
+                  <div><div className="quick-stat-value">3</div><div className="quick-stat-label">paused accounts</div></div>
+                </div>
+                <div className="quick-stat">
+                  <Icon name="zap" size={18} color="#7C3AED" />
+                  <div><div className="quick-stat-value">89%</div><div className="quick-stat-label">pilot rate users</div></div>
+                </div>
+              </div>
+              <div style={{marginBottom: 16, display: "flex", gap: 10}}>
+                <input className="form-input" placeholder="Search by name, email, or license #..." style={{flex: 1, fontSize: 13}} />
+                <select className="form-input form-select" style={{width: 140, fontSize: 13}}>
+                  <option>All roles</option>
+                  <option>Attorneys</option>
+                  <option>Reporters</option>
+                </select>
+                <select className="form-input form-select" style={{width: 140, fontSize: 13}}>
+                  <option>All statuses</option>
+                  <option>Active</option>
+                  <option>Paused</option>
+                  <option>Suspended</option>
+                </select>
+              </div>
+              <div style={{display: "flex", flexDirection: "column", gap: 8}}>
+                {[
+                  { name: "Jennifer Walsh", email: "jennifer@walshlaw.com", role: "Attorney", firm: "Walsh Family Law Group", barCsr: "CA-287451", status: "active", tier: "pilot", joined: "Mar 15, 2026", orders: 8 },
+                  { name: "David Park", email: "david@parklaw.com", role: "Attorney", firm: "Park & Associates", barCsr: "CA-301782", status: "active", tier: "pilot", joined: "Mar 22, 2026", orders: 3 },
+                  { name: "Sarah Chen", email: "sarah.chen@gmail.com", role: "Reporter", firm: "—", barCsr: "CSR #14892", status: "active", tier: "pilot", joined: "Mar 10, 2026", orders: 12 },
+                  { name: "Michael Torres", email: "mtorres@courtreporting.com", role: "Reporter", firm: "—", barCsr: "CSR #11247", status: "active", tier: "pilot", joined: "Mar 12, 2026", orders: 8 },
+                  { name: "Lisa Nakamura", email: "lisa.nak@gmail.com", role: "Reporter", firm: "—", barCsr: "CSR #13561", status: "paused", tier: "pilot", joined: "Mar 14, 2026", orders: 5 },
+                  { name: "Sarah Kim", email: "skim@kimlaw.com", role: "Attorney", firm: "Kim & Partners", barCsr: "CA-298134", status: "active", tier: "standard", joined: "Apr 2, 2026", orders: 1 },
+                  { name: "James Wilson", email: "jwilson@email.com", role: "Reporter", firm: "—", barCsr: "CSR #15023", status: "suspended", tier: "pilot", joined: "Mar 18, 2026", orders: 2 },
+                ].map((u, i) => (
+                  <div key={i} style={{padding: 16, background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10, display: "flex", alignItems: "center", gap: 14}}>
+                    <div style={{width: 40, height: 40, borderRadius: "50%", background: u.role === "Attorney" ? "#DBEAFE" : "#D1FAE5", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
+                      <Icon name={u.role === "Attorney" ? "scale" : "mic"} size={18} color={u.role === "Attorney" ? "#2563EB" : "#059669"} />
+                    </div>
+                    <div style={{flex: 1, minWidth: 0}}>
+                      <div style={{display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap"}}>
+                        <strong style={{fontSize: 14, color: "var(--text, #0F172A)"}}>{u.name}</strong>
+                        <span style={{fontSize: 11, fontWeight: 600, padding: "1px 8px", borderRadius: 100, background: u.role === "Attorney" ? "#DBEAFE" : "#D1FAE5", color: u.role === "Attorney" ? "#1E40AF" : "#065F46"}}>{u.role}</span>
+                        <span style={{fontSize: 11, fontWeight: 600, padding: "1px 8px", borderRadius: 100, background: u.status === "active" ? "#D1FAE5" : u.status === "paused" ? "#FEF3C7" : "#FEE2E2", color: u.status === "active" ? "#065F46" : u.status === "paused" ? "#92400E" : "#DC2626"}}>{u.status}</span>
+                        {u.tier === "pilot" && <span style={{fontSize: 10, fontWeight: 700, padding: "1px 6px", borderRadius: 4, background: "#DBEAFE", color: "#1E40AF"}}>PILOT</span>}
+                      </div>
+                      <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginTop: 2}}>
+                        {u.email} · {u.barCsr} {u.firm !== "—" ? " · " + u.firm : ""} · Joined {u.joined} · {u.orders} orders
+                      </div>
+                    </div>
+                    <div style={{display: "flex", gap: 6}}>
+                      <button className="btn btn-secondary btn-sm" style={{fontSize: 11, padding: "4px 10px"}}>View</button>
+                      {u.status === "active" && <button className="btn btn-sm" style={{fontSize: 11, padding: "4px 10px", background: "#FEF3C7", color: "#92400E", border: "1px solid #FDE68A"}}>Pause</button>}
+                      {u.status === "paused" && <button className="btn btn-sm" style={{fontSize: 11, padding: "4px 10px", background: "#D1FAE5", color: "#065F46", border: "1px solid #86EFAC"}}>Reactivate</button>}
+                      {u.status === "suspended" && <button className="btn btn-sm" style={{fontSize: 11, padding: "4px 10px", background: "#D1FAE5", color: "#065F46", border: "1px solid #86EFAC"}}>Unsuspend</button>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {tab === "csr-database" && (
             <div>
               <div className="page-header">
@@ -5834,6 +5914,28 @@ function SettingsPage() {
                         <div key={c} className={"checkbox-item" + (["LA Superior Court", "SF Superior Court"].includes(c) ? " checked" : "")}>{c}</div>
                       ))}
                     </div>
+                  </div>
+                  <div className="settings-section">
+                    <h3><Icon name="calendar" size={14} /> Weekly availability</h3>
+                    <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 14}}>Click to toggle your availability. Attorneys see this when viewing your profile.</p>
+                    <div style={{display: "grid", gridTemplateColumns: "60px repeat(7, 1fr)", gap: 4, fontSize: 12}}>
+                      <div />
+                      {["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d => <div key={d} style={{textAlign: "center", fontWeight: 700, color: "var(--text-muted, #94A3B8)", padding: "4px 0"}}>{d}</div>)}
+                      {["Morning","Afternoon","Evening"].map(slot => (
+                        <React.Fragment key={slot}>
+                          <div style={{fontSize: 11, color: "var(--text-secondary, #475569)", display: "flex", alignItems: "center"}}>{slot}</div>
+                          {[0,1,2,3,4,5,6].map(day => {
+                            const isAvail = (slot === "Morning" && day < 5) || (slot === "Afternoon" && day < 4);
+                            return <div key={day} style={{padding: 8, textAlign: "center", borderRadius: 6, cursor: "pointer", background: isAvail ? "#D1FAE5" : "var(--bg-muted, #F1F5F9)", border: isAvail ? "1px solid #86EFAC" : "1px solid var(--border, #E2E8F0)", color: isAvail ? "#059669" : "var(--text-muted, #94A3B8)", fontWeight: 600, fontSize: 11, transition: "all 0.1s"}}>{isAvail ? "✓" : "—"}</div>;
+                          })}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="settings-section">
+                    <h3><Icon name="fileText" size={14} /> Bio</h3>
+                    <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 10}}>A short description that appears on your public profile.</p>
+                    <textarea className="form-input" rows={3} defaultValue="Certified court reporter with 8 years of experience specializing in civil litigation and family law proceedings. Available for both live attendance and audio transcription throughout the Greater Los Angeles area." style={{resize: "vertical", fontSize: 13}} />
                   </div>
                 </>
               )}
