@@ -4261,7 +4261,7 @@ function BuyerDashboard() {
             {/* Quality — attorney rates */}
             <div style={{padding: 16, background: "var(--bg-muted, #F8FAFC)", borderRadius: 12, marginBottom: 16}}>
               <h4 style={{margin: "0 0 12px", fontSize: 14, fontWeight: 700, color: "var(--text, #0F172A)"}}>How was the quality of this transcript?</h4>
-              <div style={{display: "flex", gap: 6, marginBottom: 16}}>
+              <div style={{display: "flex", gap: 6, marginBottom: 20}}>
                 {[1,2,3,4,5].map(n => (
                   <button key={n} onClick={() => setRatingQuality(n)} style={{width: 44, height: 44, borderRadius: 10, border: ratingQuality >= n ? "2px solid #F59E0B" : "1px solid var(--border, #E2E8F0)", background: ratingQuality >= n ? "#FEF3C7" : "var(--bg-card, #fff)", cursor: "pointer", fontSize: 20, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.1s"}}>
                     {ratingQuality >= n ? "★" : "☆"}
@@ -4270,11 +4270,26 @@ function BuyerDashboard() {
                 <span style={{marginLeft: 8, fontSize: 15, fontWeight: 700, color: "var(--text, #0F172A)", alignSelf: "center"}}>{ratingQuality > 0 ? ratingQuality + "/5" : ""}</span>
               </div>
 
-              <div className="form-group" style={{margin: 0}}>
-                <label className="form-label" style={{fontSize: 13}}>Comments <span style={{fontWeight: 400, color: "#94A3B8"}}>(optional)</span></label>
-                <textarea className="form-input" rows={3} placeholder="e.g. Great handling of medical terminology. Cleaned up filler words nicely. Minor issue with party names on pg 12." value={ratingComment} onChange={e => setRatingComment(e.target.value)} style={{resize: "vertical", fontSize: 13}} />
-                <p style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", marginTop: 6, lineHeight: 1.5}}>Your comments help other attorneys choose reporters and help this reporter improve. Comments are visible on the reporter's public profile.</p>
+              <div className="form-group" style={{marginBottom: 0}}>
+                <label className="form-label" style={{fontSize: 13}}>Please consider explaining your reasoning for this rating.</label>
+                <textarea className="form-input" rows={3} placeholder="e.g. Great handling of medical terminology and acronyms. Cleaned up filler words and pauses in attorney speech nicely. Minor issue with party names on pg 12." value={ratingComment} onChange={e => setRatingComment(e.target.value)} style={{resize: "vertical", fontSize: 13}} />
+                <p style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", marginTop: 6, lineHeight: 1.5}}>Your feedback helps us keep our recommendation system updated.</p>
               </div>
+            </div>
+
+            {/* Favorite toggle */}
+            <div style={{padding: 14, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10, marginBottom: 20, display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+              <div style={{display: "flex", alignItems: "center", gap: 10}}>
+                <Icon name="star" size={16} color="#F59E0B" />
+                <div>
+                  <div style={{fontSize: 13, fontWeight: 600, color: "var(--text, #0F172A)"}}>Add {ratingOrder.reporter ? ratingOrder.reporter.split(",")[0] : "this reporter"} to your favorites?</div>
+                  <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>Favorited reporters appear first when you place future orders.</div>
+                </div>
+              </div>
+              <label className="toggle-switch">
+                <input type="checkbox" defaultChecked={false} />
+                <span className="slider"></span>
+              </label>
             </div>
 
             <div style={{display: "flex", gap: 10}}>
