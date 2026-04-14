@@ -3409,13 +3409,16 @@ function OrderFlow() {
                     <div className="price-line"><span>Estimated pages</span><strong>{est.low} – {est.high} pages</strong></div>
                     <div className="price-line"><span>Statutory rate (per page)</span><strong>${PRICING.ratePerPage.toFixed(2)}</strong></div>
                     <div className="price-line"><span>Turnaround ({tierLabel(effectiveTurnaround)})</span><strong>{est.mult === 1 ? "No adjustment" : est.mult > 1 ? "+" + ((est.mult - 1) * 100).toFixed(0) + "%" : "-" + ((1 - est.mult) * 100).toFixed(0) + "%"}</strong></div>
-                    <div className="price-line"><span>Platform fee ({(PRICING.platformFee * 100).toFixed(0)}% — attorney only)</span><strong>${(((est.lowCost + est.highCost) / 2 + attendanceFee) * PRICING.platformFee).toFixed(2)}</strong></div>
+                    <div className="price-line">
+                      <span>Platform fee <span style={{fontSize: 11, padding: "1px 6px", borderRadius: 4, background: "#DBEAFE", color: "#1E40AF", fontWeight: 700, marginLeft: 4}}>Pilot: 8%</span> <span style={{textDecoration: "line-through", color: "var(--text-muted, #94A3B8)", fontSize: 12}}>12%</span></span>
+                      <strong>${(((est.lowCost + est.highCost) / 2 + attendanceFee) * 0.08).toFixed(2)}</strong>
+                    </div>
                     <div className="price-total">
                       <span>Estimated total</span>
-                      <span>${(attendanceFee + est.lowCost * (1 + PRICING.platformFee)).toLocaleString()} – ${(attendanceFee + est.highCost * (1 + PRICING.platformFee)).toLocaleString()}</span>
+                      <span>${(attendanceFee + est.lowCost * 1.08).toLocaleString()} – ${(attendanceFee + est.highCost * 1.08).toLocaleString()}</span>
                     </div>
                     <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
-                      {form.type === "live" ? "Attendance fees standardized at 33% below agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Statutory rate: $1.13 per 100 words (CA Gov. Code 69950).
+                      {form.type === "live" ? "Attendance fees standardized at 33% below agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Statutory rate: $1.13 per 100 words (CA Gov. Code 69950). <strong style={{color: "#2563EB"}}>Pilot rate (8%) locked in for your first year.</strong>
                     </p>
                   </>;
                 })()}
@@ -3532,7 +3535,7 @@ function OrderFlow() {
                 <div style={{background: "var(--bg-muted, #F8FAFC)", borderRadius: 12, padding: 20, marginTop: 12}}>
                   <div style={{display: "flex", justifyContent: "space-between", alignItems: "baseline"}}>
                     <span style={{fontSize: 14, color: "var(--text-secondary, #64748B)"}}>Estimated total</span>
-                    <span style={{fontSize: 28, fontWeight: 800, color: "var(--text, #0F172A)"}}>${(est.lowCost * (1 + PRICING.platformFee)).toFixed(0)} <span style={{fontSize: 14, fontWeight: 400, color: "var(--text-muted, #94A3B8)"}}>– ${(est.highCost * (1 + PRICING.platformFee)).toFixed(0)}</span></span>
+                    <span style={{fontSize: 28, fontWeight: 800, color: "var(--text, #0F172A)"}}>${(est.lowCost * 1.08).toFixed(0)} <span style={{fontSize: 14, fontWeight: 400, color: "var(--text-muted, #94A3B8)"}}>– ${(est.highCost * 1.08).toFixed(0)}</span></span>
                   </div>
                   {form.feeWaiver && <p style={{fontSize: 12, color: "#2563EB", marginTop: 8}}>Fee waiver indicated. TRF reimbursement paperwork will be generated upon delivery.</p>}
                 </div>
@@ -3626,6 +3629,27 @@ function BuyerDashboard() {
       <AppNav variant="buyer" activeTab={tab} onTabChange={t => { setTab(t); setSelectedCase(null); }} />
       <div className="page page-enter">
         <div className="container">
+          {/* Pilot welcome banner */}
+          {showNudge && tab === "cases" && !selectedCase && (
+            <div style={{marginBottom: 20, padding: 18, background: "linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #E0E7FF 100%)", border: "1px solid #93C5FD", borderRadius: 14, position: "relative"}}>
+              <button onClick={() => setShowNudge(false)} style={{position: "absolute", top: 10, right: 12, background: "none", border: "none", color: "#93C5FD", cursor: "pointer", fontSize: 18}}>×</button>
+              <div style={{display: "flex", alignItems: "flex-start", gap: 14}}>
+                <div style={{width: 44, height: 44, borderRadius: 12, background: "linear-gradient(135deg, #2563EB, #4F46E5)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
+                  <Icon name="zap" size={22} color="#fff" />
+                </div>
+                <div style={{flex: 1}}>
+                  <h3 style={{margin: "0 0 4px", fontSize: 16, fontWeight: 700, color: "#1E3A8A"}}>Welcome to the Dewey Sholes pilot!</h3>
+                  <p style={{margin: "0 0 10px", fontSize: 13, color: "#3B82F6", lineHeight: 1.6}}>
+                    You're locked in at <strong>8% platform fees</strong> (standard: 12%) for your entire first year. Set your delivery deadline and the price calculates automatically. Split costs with co-counsel in a few clicks.
+                  </p>
+                  <div style={{display: "flex", gap: 8, flexWrap: "wrap"}}>
+                    <a href="#/order" className="btn btn-sm" style={{background: "#2563EB", color: "#fff", border: "none", padding: "6px 14px", borderRadius: 6, fontWeight: 600, fontSize: 12, textDecoration: "none"}}>Place your first order <Icon name="arrowRight" size={12} /></a>
+                    <a href="#/reporters" className="btn btn-sm" style={{background: "rgba(37,99,235,0.1)", color: "#2563EB", border: "1px solid #93C5FD", padding: "6px 14px", borderRadius: 6, fontWeight: 600, fontSize: 12, textDecoration: "none"}}>Browse reporters</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           {tab === "cases" && !selectedCase && (
             <div>
               <div className="quick-stats-row" style={{marginBottom: 20}}>
