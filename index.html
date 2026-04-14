@@ -2951,8 +2951,9 @@ function StatusBadge({ status }) {
   return <span className={"badge badge-" + (map[status] || "pending")}>{labels[status] || status}</span>;
 }
 
-function OrderTimeline({ step }) {
+function OrderTimeline({ step, dates }) {
   const steps = ["Submitted", "Reporter assigned", "In progress", "Certification", "Delivered"];
+  const defaultDates = ["Mar 10", "Mar 11", "Mar 14", "Mar 30", "Mar 31"];
   return (
     <div className="timeline">
       {steps.map((s, i) => {
@@ -2960,7 +2961,13 @@ function OrderTimeline({ step }) {
         return (
           <React.Fragment key={i}>
             {i > 0 && <div className={"timeline-line" + (i <= step ? " done" : "")} />}
-            <div className={"timeline-step " + cls}><div className="timeline-dot" />{s}</div>
+            <div className={"timeline-step " + cls}>
+              <div className="timeline-dot" />
+              <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                <span>{s}</span>
+                {i < step && <span style={{fontSize: 10, color: "var(--text-muted, #94A3B8)", marginTop: 1}}>{(dates && dates[i]) || defaultDates[i]}</span>}
+              </div>
+            </div>
           </React.Fragment>
         );
       })}
@@ -3553,6 +3560,7 @@ function OrderFlow() {
                   {form.type === "transcription" && <div className="review-field"><label>Audio file</label><div className="val">{form.audioFile || "Not uploaded"}</div></div>}
                   <div className="review-field"><label>Duration</label><div className="val">{form.duration} minutes</div></div>
                   <div className="review-field"><label>Interpreter</label><div className="val">{form.interpreter ? `Yes (${form.interpreterLang || "language TBD"})` : "No"}</div></div>
+                  <div className="review-field"><label>Format</label><div className="val">{{"pdf": "PDF", "pdf-word": "PDF + Word", "ascii": "ASCII", "all": "All formats"}[form.transcriptFormat] || "PDF"}{form.condensed === "yes" ? " · Condensed" : ""}</div></div>
                 </div>
               </div>
               <div className="review-section-card">
@@ -4971,6 +4979,19 @@ function ReporterDashboard() {
                 <div className="stat-card">
                   <div className="stat-card-label">Jobs completed</div>
                   <div className="stat-card-value">12</div>
+                </div>
+              </div>
+              {/* Earnings projection */}
+              <div style={{marginBottom: 24, padding: 16, background: "linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)", border: "1px solid #86EFAC", borderRadius: 12}}>
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                  <div>
+                    <div style={{fontSize: 13, fontWeight: 600, color: "#065F46", marginBottom: 2}}>At your current pace</div>
+                    <div style={{fontSize: 12, color: "#059669"}}>~3 jobs/week · avg $143/job · 100% on-time delivery</div>
+                  </div>
+                  <div style={{textAlign: "right"}}>
+                    <div style={{fontSize: 11, color: "#059669", fontWeight: 600}}>Projected annual earnings</div>
+                    <div style={{fontSize: 24, fontWeight: 800, color: "#065F46"}}>$22,300</div>
+                  </div>
                 </div>
               </div>
               <div className="analytics-card" style={{marginBottom: 24}}>
