@@ -4593,7 +4593,7 @@ function ReporterDashboard() {
                 <p style={{fontSize: 13, color: "#78350F", margin: "4px 0 10px", lineHeight: 1.5}}>
                   Federal tax law requires us to collect a W-9 before we can send your first payment. Upload it now so there's no delay when you complete your first job.
                 </p>
-                <button className="btn btn-sm" style={{padding: "6px 14px", fontSize: 12, background: "#D97706", color: "#fff", border: "none", borderRadius: 6, fontWeight: 600, cursor: "pointer"}} onClick={() => alert("W-9 upload flow — in real build, this opens a secure upload form. Your SSN is encrypted and only accessible to our finance team.")}>
+                <button className="btn btn-sm" style={{padding: "6px 14px", fontSize: 12, background: "#D97706", color: "#fff", border: "none", borderRadius: 6, fontWeight: 600, cursor: "pointer"}} onClick={() => addToast("W-9 upload", "In the real build, this opens a secure upload form. Your SSN is encrypted and only accessible to our finance team.", "success")}>
                   <Icon name="fileText" size={12} /> Upload W-9
                 </button>
               </div>
@@ -4662,7 +4662,7 @@ function ReporterDashboard() {
             </div>
             <div style={{display: "flex", alignItems: "center", gap: 8, marginBottom: 12}}>
               <input type="text" readOnly value="https://deweysholes.com/invite/CSR-7291" style={{flex: 1, padding: "8px 12px", fontSize: 13, borderRadius: 8, border: "1px solid var(--border, #E2E8F0)", background: "var(--bg-card, #F8FAFC)", color: "var(--text-muted, #64748B)"}} />
-              <button className="btn btn-primary btn-sm" style={{whiteSpace: "nowrap", padding: "8px 14px", fontSize: 13}} onClick={() => { navigator.clipboard.writeText("https://deweysholes.com/invite/CSR-7291"); alert("Invite link copied!"); }}>Copy invite link</button>
+              <button className="btn btn-primary btn-sm" style={{whiteSpace: "nowrap", padding: "8px 14px", fontSize: 13}} onClick={() => { navigator.clipboard.writeText("https://deweysholes.com/invite/CSR-7291"); addToast("Link copied", "Invite link copied to clipboard.", "success"); }}>Copy invite link</button>
             </div>
             <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", margin: 0}}>0 referrals so far</p>
           </div>
@@ -4845,7 +4845,7 @@ function ReporterDashboard() {
                           {MOCK_UNREAD[j.id] > 0 && <span className="unread-dot">{MOCK_UNREAD[j.id]}</span>}
                         </button>
                         {j.status === "delivered" ? (
-                          <button className="btn btn-sm" style={{padding: "6px 12px", fontSize: 12, background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => alert("Transcript withdrawn. You can now upload a corrected version.")}>
+                          <button className="btn btn-sm" style={{padding: "6px 12px", fontSize: 12, background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => addToast("Transcript withdrawn", "You can now upload a corrected version.", "warning")}>
                             <Icon name="x" size={13} /> Withdraw & re-upload
                           </button>
                         ) : (
@@ -5704,9 +5704,9 @@ function AdminDashboard() {
                   <div className="metric-trend">Statewide</div>
                 </div>
                 <div className="metric-card">
-                  <div className="metric-label">Bay Area CSRs</div>
-                  <div className="metric-value">618</div>
-                  <div className="metric-trend">Pilot region</div>
+                  <div className="metric-label">CA CSRs in database</div>
+                  <div className="metric-value">4,733</div>
+                  <div className="metric-trend">Statewide</div>
                 </div>
                 <div className="metric-card">
                   <div className="metric-label">On platform</div>
@@ -7333,9 +7333,9 @@ const DEFAULT_KANBAN_TASKS = [
 
   // ── Waiting ──
   { id: "t23", title: "Volume assumptions from Rosie", description: "A few transcripts/month/lawyer confirmed. Need to firm up exact numbers for Year 1 revenue model.", column: "waiting", priority: "critical", assignee: ["Rosie"], category: "financial", dueDate: "", createdAt: "2026-03-15", notes: "Blocks the platform fee financial model.", tags: ["P0", "decision"] },
-  { id: "t24", title: "Anchor firm names/contacts for beta", description: "Identify 3-5 firms for pilot launch. Ideally family law/civil lit, 5-50 attorneys, in SF Bay Area.", column: "waiting", priority: "critical", assignee: ["Rosie"], category: "marketing", dueDate: "", createdAt: "2026-03-15", notes: "", tags: ["P0", "decision"] },
-  { id: "t25", title: "Pilot county priorities", description: "SF Bay Area confirmed. Need to narrow: which specific courts? Rosie's action group connections?", column: "waiting", priority: "high", assignee: ["Rosie"], category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "SF Bay Area confirmed. 618 active CSRs in the area.", tags: ["P1", "decision"] },
-  { id: "t26", title: "Warm-contact reporter network", description: "Confirm 10-15 reporters from Rosie's network + CSR shortage action group who would join.", column: "waiting", priority: "high", assignee: ["Rosie"], category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "Target: 10-15 covering Bay Area before first firm launches.", tags: ["P0"] },
+  { id: "t24", title: "Anchor firm names/contacts for beta", description: "Identify 3-5 firms for pilot launch. Ideally family law/civil lit/PI, 5-50 attorneys, anywhere in CA. LA, Bay Area, San Diego, OC are highest density.", column: "waiting", priority: "critical", assignee: ["Rosie"], category: "marketing", dueDate: "", createdAt: "2026-03-15", notes: "Updated 4/11: going statewide, not Bay Area only.", tags: ["P0", "decision"] },
+  { id: "t25", title: "Pilot region: statewide CA", description: "Pilot is statewide — transcription jobs can be done by any CA CSR regardless of location. Live attendance is location-dependent but only 2 counties prohibit recording.", column: "done", priority: "high", assignee: ["Aud","Rosie"], category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "Decision updated 4/11: statewide, not Bay Area only. 4,733 active CSRs across CA.", tags: [] },
+  { id: "t26", title: "Warm-contact reporter network", description: "Confirm 10-15 reporters from Rosie's network + CSR shortage action group who would join.", column: "waiting", priority: "high", assignee: ["Rosie"], category: "operations", dueDate: "", createdAt: "2026-03-15", notes: "Target: 100 statewide before firm outreach begins. Rosie's warm network for first 10-15.", tags: ["P0"] },
 
   // ── To Do ──
   { id: "t28", title: "AB 5 memo: Lawyer review & sign-off", description: "Research complete. Rosie can review as lawyer-cofounder. May still want employment specialist to confirm.", column: "todo", priority: "critical", assignee: ["Rosie"], category: "legal", dueDate: "2026-04-15", createdAt: "2026-03-15", notes: "", tags: ["P0", "legal", "decision"] },
@@ -8088,14 +8088,18 @@ function LandingPage() {
               <h2>Reporter <span className="gradient-text">listing plans</span></h2>
               <p>No agency taking 50–85% of your earnings. List your practice, accept jobs directly, and keep 100% of the statutory rate on every transcript.</p>
             </div>
+            <div style={{maxWidth: 800, margin: "0 auto 24px", padding: 16, background: "linear-gradient(135deg, #F0FDF4, #DCFCE7)", border: "1px solid #86EFAC", borderRadius: 12, textAlign: "center"}}>
+              <span style={{fontSize: 15, fontWeight: 700, color: "#065F46"}}>Pilot special: listing fee waived for your first year</span>
+              <span style={{display: "block", fontSize: 13, color: "#059669", marginTop: 4}}>Sign up during the pilot and pay $0 for your first 12 months. No commitment.</span>
+            </div>
             <div className="reporter-tiers">
               <div className="reporter-tier-card">
                 <h3>Individual reporter</h3>
                 <div className="tier-sub">For solo CSRs building their own book of business.</div>
-                <div className="reporter-tier-price">${PRICING.listingFeeIndividual}<span> / year</span></div>
+                <div className="reporter-tier-price"><span style={{textDecoration: "line-through", color: "#94A3B8", fontSize: 24}}>${PRICING.listingFeeIndividual}</span> <span style={{fontSize: 40, fontWeight: 800, color: "#059669"}}>$0</span><span> / first year</span></div>
                 <ul className="reporter-tier-features">
                   <li><Icon name="checkCircle" size={16} color="#059669" />Full profile on the marketplace</li>
-                  <li><Icon name="checkCircle" size={16} color="#059669" />SMS & email job alerts</li>
+                  <li><Icon name="checkCircle" size={16} color="#059669" />Push notification job alerts</li>
                   <li><Icon name="checkCircle" size={16} color="#059669" />2-business-day direct deposit</li>
                   <li><Icon name="checkCircle" size={16} color="#059669" />CSR license auto-verification</li>
                   <li><Icon name="checkCircle" size={16} color="#059669" />Keep 100% of statutory rate — no agency cut</li>
@@ -8106,7 +8110,7 @@ function LandingPage() {
                 <div className="reporter-tier-badge">Best for small firms</div>
                 <h3>Firm account</h3>
                 <div className="tier-sub">Centralized billing & one dashboard for your practice.</div>
-                <div className="reporter-tier-price">${PRICING.firmPerReporter}<span> / reporter / year</span><span className="tier-discount">Save 20%</span></div>
+                <div className="reporter-tier-price"><span style={{textDecoration: "line-through", color: "#94A3B8", fontSize: 24}}>${PRICING.firmPerReporter}</span> <span style={{fontSize: 40, fontWeight: 800, color: "#059669"}}>$0</span><span> / reporter / first year</span></div>
                 <ul className="reporter-tier-features">
                   <li><Icon name="checkCircle" size={16} color="#059669" />Everything in Individual, plus:</li>
                   <li><Icon name="checkCircle" size={16} color="#059669" />{PRICING.firmMinReporters}–{PRICING.firmMaxReporters} reporters under one account</li>
@@ -8346,7 +8350,7 @@ function ReporterDirectory() {
         <div className="page-header" style={{marginBottom: 24}}>
           <div>
             <h1 style={{fontSize: 24, fontWeight: 700}}>Find a reporter</h1>
-            <p style={{color: "#64748B", marginTop: 4}}>Browse verified court reporters in the Bay Area</p>
+            <p style={{color: "#64748B", marginTop: 4}}>Browse verified court reporters across California</p>
           </div>
         </div>
 
