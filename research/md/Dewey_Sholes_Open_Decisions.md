@@ -185,7 +185,7 @@ This is the single biggest variable in the financial model. Only 2 counties in C
 
 These are locked. Included here so we don't re-discuss them.
 
-- Entity: Flimsy Hinges, LLC (d/b/a Dewey Sholes, not raising capital)
+- Entity: Studio Crux, LLC (d/b/a Dewey Sholes, not raising capital)
 - Platform fee: Flat 12% buyer-side (8% during pilot, locked for 1 year)
 - CSR listing fee: $99/year individual, $79/reporter/year firm tier (3-10 reporters)
 - Payment timing: 2 business days after delivery
