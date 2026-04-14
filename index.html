@@ -1911,9 +1911,10 @@ const MOCK_REPORTERS = [
       [1,1,0],[1,1,1],[1,0,0],[1,1,1],[1,1,0],[0,0,0],[0,0,0]
     ],
     reviews: [
-      { attorney: "David Park, Esq.", date: "Feb 2026", rating: 5, text: "Sarah is incredibly thorough and always delivers ahead of schedule. Her transcripts are consistently accurate." },
-      { attorney: "Lisa Yamamoto, Esq.", date: "Jan 2026", rating: 5, text: "Excellent reporter. Very professional in court and the transcript quality is outstanding." },
-      { attorney: "Robert Kim, Esq.", date: "Dec 2025", rating: 4, text: "Reliable and accurate. Would recommend for any family law proceeding." },
+      { attorney: "David Park, Esq.", date: "Feb 2026", rating: 5, timeliness: 5.0, caseType: "Civil Litigation", text: "Excellent handling of complex construction terminology. Cleaned up attorney speech perfectly — no 'ums' or false starts. Delivered 3 days early." },
+      { attorney: "Lisa Yamamoto, Esq.", date: "Jan 2026", rating: 5, timeliness: 5.0, caseType: "Family Law", text: "Very professional in court. Caught every acronym correctly (DCSS, UCCJEA, etc.). Transcript was ready to file without any edits." },
+      { attorney: "Robert Kim, Esq.", date: "Dec 2025", rating: 4, timeliness: 4.5, caseType: "Family Law", text: "Accurate and reliable. Minor formatting issue on the cover page but content was perfect. Would use again." },
+      { attorney: "Jennifer Walsh, Esq.", date: "Mar 2026", rating: 5, timeliness: 5.0, caseType: "Family Law", text: "Great handling of medical terminology in a custody evaluation deposition. Cleaned up filler words nicely." },
     ],
   },
   {
@@ -4333,6 +4334,7 @@ function ReporterDashboard() {
   const [uploadFile, setUploadFile] = useState("");
   const [uploadPages, setUploadPages] = useState("");
   const [uploadCertified, setUploadCertified] = useState(false);
+  const [confirmAcceptJob, setConfirmAcceptJob] = useState(null);
   const { toasts, addToast, removeToast } = useToast();
 
   const filteredJobs = MOCK_JOBS.filter(j => {
@@ -4403,9 +4405,14 @@ function ReporterDashboard() {
   const fmtDateParts = (d) => { const dt = new Date(d + "T12:00:00"); return { month: dt.toLocaleDateString("en-US", {month: "short"}), day: dt.getDate(), year: dt.getFullYear() }; };
 
   const handleAccept = (j) => {
-    setAccepted(a => ({...a, [j.id]: true}));
+    setConfirmAcceptJob(j);
+  };
+  const confirmAccept = () => {
+    if (!confirmAcceptJob) return;
+    setAccepted(a => ({...a, [confirmAcceptJob.id]: true}));
     setTab("active");
-    addToast("Job accepted", j.court + ", " + j.dept + " - $" + j.earnings.toFixed(2), "success");
+    addToast("Job accepted", confirmAcceptJob.court + ", " + confirmAcceptJob.dept + " — $" + confirmAcceptJob.earnings.toFixed(2) + " earnings", "success");
+    setConfirmAcceptJob(null);
   };
 
   const maxEarning = Math.max(...MOCK_REPORTER_EARNINGS.map(e => e.amount));
@@ -4975,6 +4982,36 @@ function ReporterDashboard() {
           </div>
         </div>
       )}
+      {confirmAcceptJob && (
+        <div className="modal-overlay" onClick={() => setConfirmAcceptJob(null)}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 460, padding: 28}}>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20}}>
+              <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>Accept this job?</h3>
+              <button onClick={() => setConfirmAcceptJob(null)} style={{background: "none", border: "none", fontSize: 22, color: "var(--text-muted, #94A3B8)", cursor: "pointer"}}>×</button>
+            </div>
+            <div style={{padding: 16, background: "var(--bg-muted, #F8FAFC)", borderRadius: 10, marginBottom: 16}}>
+              <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, fontSize: 13}}>
+                <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Court</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>{confirmAcceptJob.court}</div></div>
+                <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Department</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>{confirmAcceptJob.dept}</div></div>
+                <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Case type</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>{confirmAcceptJob.caseType}</div></div>
+                <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Hearing date</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>{confirmAcceptJob.hearingDate}</div></div>
+                <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Estimated pages</span><div style={{fontWeight: 600, color: "var(--text, #0F172A)", marginTop: 2}}>~{confirmAcceptJob.estimatedPages}</div></div>
+                <div><span style={{color: "var(--text-muted, #94A3B8)"}}>Your earnings</span><div style={{fontWeight: 800, color: "#059669", marginTop: 2, fontSize: 18}}>${confirmAcceptJob.earnings.toFixed(2)}</div></div>
+              </div>
+            </div>
+            <div style={{padding: 14, background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: 10, marginBottom: 16, fontSize: 13, color: "#78350F", lineHeight: 1.6}}>
+              <Icon name="info" size={14} color="#D97706" style={{marginRight: 6, verticalAlign: "-2px"}} />
+              <strong>By accepting, you commit to delivering</strong> a certified transcript by the deadline. If you can't complete the job, use the release flow as early as possible so we can reassign it.
+            </div>
+            <div style={{display: "flex", gap: 10}}>
+              <button className="btn btn-secondary btn-sm" style={{flex: 1}} onClick={() => setConfirmAcceptJob(null)}>Cancel</button>
+              <button className="btn btn-primary" style={{flex: 1}} onClick={confirmAccept}>
+                <Icon name="checkCircle" size={14} /> Accept job
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {uploadJob && (
         <div className="modal-overlay" onClick={() => setUploadJob(null)}>
           <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 540, padding: 28}}>
@@ -5348,6 +5385,57 @@ function AdminDashboard() {
                   </div>
                 ))}
               </div>
+
+              {/* Financial summary */}
+              <div style={{marginTop: 24}}>
+                <h3 style={{fontSize: 16, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 16}}>Financial summary (March 2026)</h3>
+                <div className="metric-grid">
+                  <div className="metric-card">
+                    <div className="metric-label">Gross transaction volume</div>
+                    <div className="metric-value">$48,250</div>
+                    <div className="metric-trend up">+22% vs Feb</div>
+                  </div>
+                  <div className="metric-card">
+                    <div className="metric-label">Platform fee revenue (8% pilot)</div>
+                    <div className="metric-value" style={{color: "#059669"}}>$3,860</div>
+                    <div className="metric-trend up">+22% vs Feb</div>
+                  </div>
+                  <div className="metric-card">
+                    <div className="metric-label">CSR payouts</div>
+                    <div className="metric-value">$44,390</div>
+                    <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>335 completed jobs</div>
+                  </div>
+                  <div className="metric-card">
+                    <div className="metric-label">Pending payouts</div>
+                    <div className="metric-value" style={{color: "#D97706"}}>$2,140</div>
+                    <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>12 awaiting delivery acceptance</div>
+                  </div>
+                  <div className="metric-card">
+                    <div className="metric-label">Avg. order value</div>
+                    <div className="metric-value">$144</div>
+                    <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>~39 pages avg</div>
+                  </div>
+                  <div className="metric-card">
+                    <div className="metric-label">Listing fee revenue (annual)</div>
+                    <div className="metric-value" style={{color: "#94A3B8"}}>$0</div>
+                    <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Waived during pilot</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pilot pricing status */}
+              <div style={{marginTop: 24, padding: 16, background: "linear-gradient(135deg, #EFF6FF, #DBEAFE)", border: "1px solid #93C5FD", borderRadius: 12}}>
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                  <div>
+                    <div style={{fontSize: 14, fontWeight: 700, color: "#1E40AF", marginBottom: 4}}>Pilot pricing active</div>
+                    <div style={{fontSize: 13, color: "#3B82F6"}}>89% of users on pilot rate (8%). Standard rate (12%) applies to 34 users who signed up after pilot window.</div>
+                  </div>
+                  <div style={{textAlign: "right"}}>
+                    <div style={{fontSize: 12, color: "#3B82F6"}}>Pilot revenue if at standard rate</div>
+                    <div style={{fontSize: 18, fontWeight: 800, color: "#1E40AF"}}>$5,790 <span style={{fontSize: 12, fontWeight: 400}}>vs. $3,860 actual</span></div>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
@@ -5444,11 +5532,11 @@ function AdminDashboard() {
                 {[
                   { name: "Jennifer Walsh", email: "jennifer@walshlaw.com", role: "Attorney", firm: "Walsh Family Law Group", barCsr: "CA-287451", status: "active", tier: "pilot", joined: "Mar 15, 2026", orders: 8 },
                   { name: "David Park", email: "david@parklaw.com", role: "Attorney", firm: "Park & Associates", barCsr: "CA-301782", status: "active", tier: "pilot", joined: "Mar 22, 2026", orders: 3 },
-                  { name: "Sarah Chen", email: "sarah.chen@gmail.com", role: "Reporter", firm: "—", barCsr: "CSR #14892", status: "active", tier: "pilot", joined: "Mar 10, 2026", orders: 12 },
-                  { name: "Michael Torres", email: "mtorres@courtreporting.com", role: "Reporter", firm: "—", barCsr: "CSR #11247", status: "active", tier: "pilot", joined: "Mar 12, 2026", orders: 8 },
-                  { name: "Lisa Nakamura", email: "lisa.nak@gmail.com", role: "Reporter", firm: "—", barCsr: "CSR #13561", status: "paused", tier: "pilot", joined: "Mar 14, 2026", orders: 5 },
-                  { name: "Sarah Kim", email: "skim@kimlaw.com", role: "Attorney", firm: "Kim & Partners", barCsr: "CA-298134", status: "active", tier: "standard", joined: "Apr 2, 2026", orders: 1 },
-                  { name: "James Wilson", email: "jwilson@email.com", role: "Reporter", firm: "—", barCsr: "CSR #15023", status: "suspended", tier: "pilot", joined: "Mar 18, 2026", orders: 2 },
+                  { name: "Sarah Chen", email: "sarah.chen@gmail.com", role: "Reporter", firm: "—", barCsr: "CSR #14892", status: "active", tier: "pilot", joined: "Mar 10, 2026", orders: 12, strikes: 0, rating: "4.7" },
+                  { name: "Michael Torres", email: "mtorres@courtreporting.com", role: "Reporter", firm: "—", barCsr: "CSR #11247", status: "active", tier: "pilot", joined: "Mar 12, 2026", orders: 8, strikes: 1, rating: "4.5" },
+                  { name: "Lisa Nakamura", email: "lisa.nak@gmail.com", role: "Reporter", firm: "—", barCsr: "CSR #13561", status: "paused", tier: "pilot", joined: "Mar 14, 2026", orders: 5, strikes: 0, rating: "4.8" },
+                  { name: "Sarah Kim", email: "skim@kimlaw.com", role: "Attorney", firm: "Kim & Partners", barCsr: "CA-298134", status: "active", tier: "standard", joined: "Apr 2, 2026", orders: 1, strikes: 0 },
+                  { name: "James Wilson", email: "jwilson@email.com", role: "Reporter", firm: "—", barCsr: "CSR #15023", status: "suspended", tier: "pilot", joined: "Mar 18, 2026", orders: 2, strikes: 5, rating: "3.2" },
                 ].map((u, i) => (
                   <div key={i} style={{padding: 16, background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10, display: "flex", alignItems: "center", gap: 14}}>
                     <div style={{width: 40, height: 40, borderRadius: "50%", background: u.role === "Attorney" ? "#DBEAFE" : "#D1FAE5", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
@@ -5463,6 +5551,8 @@ function AdminDashboard() {
                       </div>
                       <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginTop: 2}}>
                         {u.email} · {u.barCsr} {u.firm !== "—" ? " · " + u.firm : ""} · Joined {u.joined} · {u.orders} orders
+                        {u.rating && <span> · <Icon name="star" size={10} color="#F59E0B" /> {u.rating}</span>}
+                        {u.strikes > 0 && <span style={{marginLeft: 4, fontSize: 11, fontWeight: 700, padding: "1px 6px", borderRadius: 4, background: u.strikes >= 5 ? "#DC2626" : u.strikes >= 3 ? "#FEE2E2" : "#FEF3C7", color: u.strikes >= 5 ? "#fff" : u.strikes >= 3 ? "#DC2626" : "#92400E"}}>{u.strikes} strike{u.strikes !== 1 ? "s" : ""}</span>}
                       </div>
                     </div>
                     <div style={{display: "flex", gap: 6}}>
@@ -8326,15 +8416,28 @@ function ReporterProfile({ reporterId }) {
           <h3 style={{fontSize: 14, fontWeight: 700, marginBottom: 16}}>Reviews ({reporter.reviewCount})</h3>
           <div style={{display: "flex", flexDirection: "column", gap: 16}}>
             {(showAllReviews ? reporter.reviews : reporter.reviews.slice(0, 3)).map((rev, i) => (
-              <div key={i} style={{borderBottom: i < reporter.reviews.length - 1 ? "1px solid var(--border-color)" : "none", paddingBottom: 16}}>
-                <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6}}>
-                  <span style={{fontWeight: 600, fontSize: 13, color: "var(--text-primary)"}}>{rev.attorney}</span>
+              <div key={i} style={{borderBottom: i < reporter.reviews.length - 1 ? "1px solid var(--border-color, #E2E8F0)" : "none", paddingBottom: 16}}>
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8}}>
+                  <div>
+                    <span style={{fontWeight: 600, fontSize: 13, color: "var(--text, #0F172A)"}}>{rev.attorney}</span>
+                    {rev.caseType && <span style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", marginLeft: 8}}>{rev.caseType}</span>}
+                  </div>
                   <span style={{fontSize: 12, color: "#94A3B8"}}>{rev.date}</span>
                 </div>
-                <div style={{display: "flex", gap: 2, marginBottom: 6}}>
-                  {[1,2,3,4,5].map(n => <Icon key={n} name="star" size={12} color={n <= rev.rating ? "#F59E0B" : "#E2E8F0"} />)}
+                <div style={{display: "flex", gap: 10, marginBottom: 8, alignItems: "center"}}>
+                  <div style={{display: "flex", alignItems: "center", gap: 4}}>
+                    <span style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Quality:</span>
+                    <div style={{display: "flex", gap: 1}}>
+                      {[1,2,3,4,5].map(n => <Icon key={n} name="star" size={11} color={n <= rev.rating ? "#F59E0B" : "#E2E8F0"} />)}
+                    </div>
+                  </div>
+                  {rev.timeliness && (
+                    <span style={{fontSize: 11, padding: "1px 6px", borderRadius: 4, background: rev.timeliness >= 4.5 ? "#D1FAE5" : rev.timeliness >= 3.5 ? "#FEF3C7" : "#FEE2E2", color: rev.timeliness >= 4.5 ? "#065F46" : rev.timeliness >= 3.5 ? "#92400E" : "#DC2626", fontWeight: 600}}>
+                      Timeliness: {rev.timeliness}
+                    </span>
+                  )}
                 </div>
-                <p style={{fontSize: 13, color: "#64748B", lineHeight: 1.5, margin: 0}}>{rev.text}</p>
+                {rev.text && <p style={{fontSize: 13, color: "var(--text-secondary, #64748B)", lineHeight: 1.6, margin: 0}}>{rev.text}</p>}
               </div>
             ))}
           </div>
