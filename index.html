@@ -6491,19 +6491,22 @@ function ReporterOnboarding() {
         <div className="value-prop-grid">
           <div className="value-prop-card">
             <div className="vp-icon green"><Icon name="dollarSign" size={24} /></div>
-            <h3>Get paid in 2 business days</h3>
-            <p>No more chasing invoices. Payment hits your account within 2 business days of delivery, every time.</p>
+            <h3>Keep 100% of your rate</h3>
+            <p>No agency taking 50-85% of your earnings. You keep every dollar of the statutory rate. Payment in 2 business days, every time.</p>
           </div>
           <div className="value-prop-card">
             <div className="vp-icon blue"><Icon name="bell" size={24} /></div>
             <h3>Jobs come to you</h3>
-            <p>Get SMS alerts for new jobs matching your jurisdiction and preferences. Accept with one tap.</p>
+            <p>Get push notifications for new jobs matching your preferences. See the deadline and earnings upfront. Accept with one tap.</p>
           </div>
           <div className="value-prop-card">
-            <div className="vp-icon amber"><Icon name="zap" size={24} /></div>
-            <h3>Zero admin work</h3>
-            <p>We handle booking, communication, and payment processing. You just show up and report.</p>
+            <div className="vp-icon amber"><Icon name="star" size={24} /></div>
+            <h3>Build your reputation</h3>
+            <p>Attorneys rate your quality after every job. Great ratings mean you show up first in search results and get more work.</p>
           </div>
+        </div>
+        <div style={{marginTop: 16, padding: 12, background: "rgba(5,150,105,0.08)", border: "1px solid rgba(5,150,105,0.2)", borderRadius: 10, textAlign: "center"}}>
+          <span style={{fontSize: 14, fontWeight: 700, color: "#059669"}}>Pilot special: $99/yr listing fee waived for your first year</span>
         </div>
         <button className="btn btn-primary" style={{fontSize: 17, padding: "16px 48px"}} onClick={() => setScreen(1)}>Get started <Icon name="arrowRight" size={18} /></button>
         <p className="welcome-social-proof" style={{marginTop: 20}}>
@@ -7934,9 +7937,9 @@ function LandingPage() {
             <div className="features-grid">
               {[
                 { icon: "fileText", title: "Case library that remembers", desc: "Create a case once. Every future order auto-fills from your case record: court, parties, judge, department." },
-                { icon: "users", title: "Firm-wide visibility", desc: "Multiple attorneys and staff under one account. Role-based access. Consolidated billing itemized by case and matter number." },
-                { icon: "checkCircle", title: "Tax docs handled", desc: "Every reporter's W-9 is collected at onboarding. Year-end 1099s generated automatically. No more chasing." },
                 { icon: "dollarSign", title: "Split costs in two clicks", desc: "Multi-party case? Add co-counsel and split the transcript cost. Everyone pays upfront — the reporter gets paid in full, no chasing." },
+                { icon: "star", title: "Quality you can trust", desc: "Every reporter is rated on quality by attorneys and tracked on timeliness automatically. Read real feedback from other attorneys before you book." },
+                { icon: "clock", title: "Deadline-driven pricing", desc: "Set your need-by date and the price calculates automatically. The closer your deadline, the higher the rate — no hidden fees, no surprises." },
               ].map((f, i) => (
                 <div className="feature-card" key={i}>
                   <Icon name={f.icon} size={20} color="#2563EB" />
@@ -7961,9 +7964,9 @@ function LandingPage() {
           </div>
           <div className="reporters-grid">
             {[
-              { icon: "zap", title: "Jobs that find you", desc: "Get notified of live attendance and transcription jobs matching your jurisdiction, case type, and geographic preferences.", bg: "linear-gradient(135deg, #2563EB, #06B6D4)" },
-              { icon: "shield", title: "Your credentials, verified", desc: "License verification is automated. Your CSR number is confirmed at onboarding and re-checked continuously. Tax information (W-9) is collected at your first payout — no paperwork upfront.", bg: "linear-gradient(135deg, #059669, #14B8A6)" },
-              { icon: "clock", title: "Keep 100% of your rate", desc: "You keep the full statutory rate on every job — no agency cut, no per-job fees. See your exact payout before accepting. Payment within 2 business days of delivery.", bg: "linear-gradient(135deg, #F59E0B, #F97316)" },
+              { icon: "zap", title: "Jobs that find you", desc: "Get push notifications for jobs matching your preferences. See the deadline and your earnings upfront. Accept with one tap — decline with no penalty.", bg: "linear-gradient(135deg, #2563EB, #06B6D4)" },
+              { icon: "dollarSign", title: "Keep 100% of your rate", desc: "No agency taking 50-85% of your earnings. You keep the full statutory rate on every job. Payment within 2 business days of delivery, every time.", bg: "linear-gradient(135deg, #059669, #14B8A6)" },
+              { icon: "star", title: "Build your reputation", desc: "Attorneys rate your quality after every delivery. Great ratings mean you appear first in search and get more job offers. Your public profile shows your track record.", bg: "linear-gradient(135deg, #F59E0B, #F97316)" },
             ].map((c, i) => (
               <div className="reporter-card" key={i}>
                 <div className="reporter-card-icon" style={{background: c.bg}}><Icon name={c.icon} size={20} color="#fff" /></div>
@@ -8631,22 +8634,27 @@ function FaqPage() {
   const sections = [
     { title: "For attorneys", items: [
       { id: "a1", q: "How do I place a transcript order?", a: "Click \"Order a transcript\" from the homepage, choose live attendance or post-hearing transcription, enter your case details, set your delivery deadline, and submit. Your deadline determines the turnaround tier and price automatically. We'll match you with a qualified reporter, usually within hours." },
-      { id: "a2", q: "How does billing work?", a: "We charge a flat 12% buyer-side transaction fee on each order. Payment is processed securely through Stripe when the transcript is delivered. You'll receive an itemized invoice for your records." },
-      { id: "a3", q: "What if I'm unhappy with a transcript?", a: "You have 5 business days after delivery to request corrections. If there's a substantive dispute about accuracy, our support team will review and mediate. We stand behind the quality of every certified transcript on our platform." },
-      { id: "a4", q: "Can I choose a specific reporter?", a: "Yes. When placing an order you can browse available reporters filtered by jurisdiction, specialty, language, and rating. You can also save favorites for future orders." },
-      { id: "a5", q: "What turnaround options are available?", a: "We offer three tiers based on your deadline: Rush (1\u20132 business days, 1.5x rate), Expedited (3\u20135 business days, statutory rate), and Standard (6+ business days, 15% savings). You set your need-by date and the system calculates your tier and price automatically. If you don't have a specific deadline, transcripts are due within 45 calendar days." },
+      { id: "a2", q: "How does pricing work?", a: "Pricing is based on California statutory rates ($3.67/page) plus a platform fee. During the pilot, the platform fee is 8% (standard rate after Year 1: 12%). Your delivery deadline determines the turnaround tier: Rush (1-2 business days, 1.5x rate), Expedited (3-5 business days, statutory rate), or Standard (6+ business days, 15% savings). Set your need-by date and the price calculates automatically." },
+      { id: "a3", q: "Can I split the cost with other parties?", a: "Yes. When placing an order, toggle \"Split cost with other parties\" and add co-paying attorneys by name and email. Each party receives a secure payment link. The job is only posted to reporters once all parties have paid — no chasing, no partial payments. Co-payers don't need a Dewey Sholes account." },
+      { id: "a4", q: "What if I'm unhappy with a transcript?", a: "You can request corrections within 90 days of delivery. Specify the pages and describe the issue, and the reporter will be notified to upload a corrected version. No additional cost for corrections — the reporter's statutory rate covers delivering an accurate transcript." },
+      { id: "a5", q: "How do I know if a reporter is any good?", a: "Every reporter has a quality rating (1-5 stars, rated by attorneys) and a timeliness score (auto-calculated from their delivery history). You can also read written feedback from other attorneys on the reporter's profile. Reporters with consistently high ratings appear first in search results." },
+      { id: "a6", q: "Can I choose a specific reporter?", a: "Yes. Browse reporters by jurisdiction, specialty, language, and rating. Save favorites so they appear first when you place future orders. You can also let the platform auto-match you with the best available reporter for your case type and jurisdiction." },
+      { id: "a7", q: "What turnaround options are available?", a: "We offer three tiers based on your deadline: Rush (1\u20132 business days, 1.5x rate), Expedited (3\u20135 business days, statutory rate), and Standard (6+ business days, 15% savings). You set your need-by date and the system calculates your tier and price automatically. If you don't have a specific deadline, transcripts are due within 45 calendar days." },
     ]},
     { title: "For reporters", items: [
-      { id: "r1", q: "How do I get started as a reporter on Dewey Sholes?", a: "Sign up through our reporter onboarding flow. You'll need to provide your CSR license number, jurisdiction coverage, specialties, and availability. We verify your credentials with the California DCA before activating your profile." },
-      { id: "r2", q: "How and when do I get paid?", a: "Payment is released automatically once you deliver and certify a transcript. Funds are deposited to your linked bank account via Stripe, typically within 2\u20133 business days after delivery." },
-      { id: "r3", q: "How does job matching work?", a: "You'll receive notifications for jobs that match your jurisdiction, case type preferences, and availability. You can accept or decline each job. Accepted jobs appear in your dashboard with all case materials." },
-      { id: "r4", q: "What are the listing fees?", a: "Individual reporter listing is $99 per year. We also offer a firm tier at $79 per year per reporter for groups of 3\u201310 reporters." },
+      { id: "r1", q: "How do I get started as a reporter on Dewey Sholes?", a: "Sign up through our reporter onboarding flow. You'll need to provide your CSR license number, reporting method, certifications, and preferences. We verify your credentials with the California Court Reporters Board before activating your profile." },
+      { id: "r2", q: "How and when do I get paid?", a: "Payment is released automatically within 2 business days of delivery acceptance by the attorney. If the attorney doesn't respond within 2 business days, payment auto-releases. Funds are deposited to your linked bank account via Stripe." },
+      { id: "r3", q: "How does job matching work?", a: "You'll receive push notifications for new jobs matching your case type preferences and turnaround capabilities. Each job shows the court, deadline, estimated pages, and your potential earnings. Accept with one tap, or decline — no penalty for declining." },
+      { id: "r4", q: "What are the listing fees?", a: "Individual reporter listing is $99 per year. Firm tier is $79 per year per reporter (3-10 reporters). During the pilot, the listing fee is waived for your first year." },
+      { id: "r5", q: "How does the check-in system work?", a: "After you accept a job, the platform checks in at the midpoint of the delivery window to confirm you're on track. You can respond \"On track,\" request a deadline extension, or release the job for reassignment. Rush jobs are automatically reassigned if you report you're not on track." },
+      { id: "r6", q: "How are ratings calculated?", a: "Your profile shows two scores: Timeliness (auto-calculated from your delivery dates vs. deadlines) and Quality (rated 1-5 by attorneys after each delivery, with optional written feedback). Higher ratings mean you appear first in search results and get more job offers." },
     ]},
     { title: "General", items: [
-      { id: "g1", q: "Is my data secure?", a: "Yes. All data is encrypted in transit and at rest. We use Stripe for payment processing and are working toward SOC 2 compliance. We never share your personal information with third parties except as needed to process transactions." },
-      { id: "g2", q: "What fees does Dewey Sholes charge?", a: "We charge a 12% buyer-side transaction fee on each order. Reporters pay an annual listing fee of $99 (individual) or $79/reporter (firm tier for 3\u201310 reporters). There are no hidden fees." },
-      { id: "g3", q: "How do I contact support?", a: "Visit our contact page at any time. We respond to all inquiries within 1 business day. You can also reach us by email at support@deweysholes.com." },
-      { id: "g4", q: "Which jurisdictions do you serve?", a: "We're currently serving the San Francisco Bay Area as our pilot region, including San Francisco, Alameda, Contra Costa, San Mateo, and Santa Clara counties. We plan to expand statewide across California soon." },
+      { id: "g1", q: "Is my data secure?", a: "Yes. All data is encrypted in transit (TLS 1.3) and at rest (AES-256). Transcripts are accessible only to the ordering attorney and the assigned reporter via time-limited signed URLs. We use Stripe for payment processing and are building toward SOC 2 compliance. We never send transcripts via email — only secure download links." },
+      { id: "g2", q: "What is the pilot program?", a: "We're currently running a pilot in California. Attorneys who sign up during the pilot get an 8% platform fee (standard: 12%) locked in for their entire first year. Reporters get their $99/yr listing fee waived for the first year. The pilot helps us refine the platform before scaling statewide." },
+      { id: "g3", q: "What fees does Dewey Sholes charge?", a: "Attorneys pay a platform fee on each order (8% during pilot, 12% standard). Reporters pay an annual listing fee of $99 (individual) or $79/reporter (firm tier). Reporters keep 100% of the statutory transcript rate — we never take a cut of your earnings." },
+      { id: "g4", q: "How do I contact support?", a: "Click the ? button in the bottom-right corner of any dashboard page to report an issue or ask a question. You can also visit our contact page or email support@deweysholes.com. We respond within 1 business day." },
+      { id: "g5", q: "Which jurisdictions do you serve?", a: "We currently serve all of California. Any CSR licensed by the California Court Reporters Board can sign up. For transcription jobs, the reporter can be located anywhere in the state. For live attendance, the reporter needs to be in or near the court's county." },
     ]},
   ];
 
