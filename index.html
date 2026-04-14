@@ -3236,6 +3236,25 @@ function OrderFlow() {
                   </div>
                 )}
 
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label">Transcript format</label>
+                    <select className="form-input form-select" value={form.transcriptFormat || "pdf"} onChange={e => update("transcriptFormat", e.target.value)}>
+                      <option value="pdf">PDF (standard)</option>
+                      <option value="pdf-word">PDF + Word</option>
+                      <option value="ascii">ASCII / plain text</option>
+                      <option value="all">All formats</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Condensed format</label>
+                    <select className="form-input form-select" value={form.condensed || "no"} onChange={e => update("condensed", e.target.value)}>
+                      <option value="no">Standard (25 lines/page)</option>
+                      <option value="yes">Condensed (4 pages on 1)</option>
+                    </select>
+                  </div>
+                </div>
+
                 <div className="form-group">
                   <label className="form-label">Special instructions <span style={{fontWeight: 400, color: "#94A3B8"}}>(optional)</span></label>
                   <textarea className="form-input" style={{minHeight: 80, resize: "vertical"}} placeholder="e.g. Multiple witnesses expected, realtime feed needed, specific formatting requirements..." value={form.notes} onChange={e => update("notes", e.target.value)} />
@@ -3613,6 +3632,11 @@ function BuyerDashboard() {
   const [inviteName, setInviteName] = useState("");
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteRole, setInviteRole] = useState("Paralegal");
+  const [showNewCase, setShowNewCase] = useState(false);
+  const [newCaseName, setNewCaseName] = useState("");
+  const [newCaseNumber, setNewCaseNumber] = useState("");
+  const [newCaseCourt, setNewCaseCourt] = useState("");
+  const [newCaseType, setNewCaseType] = useState("Family Law");
   const allOrders = MOCK_CASES.flatMap(c => c.orders);
   const activeOrders = allOrders.filter(o => o.status === "in-progress" || o.status === "pending").length;
   const pendingReview = allOrders.filter(o => o.status === "pending").length;
@@ -3715,7 +3739,7 @@ function BuyerDashboard() {
                   <p>Manage transcript orders across your active matters.</p>
                 </div>
                 <div style={{display: "flex", gap: 8}}>
-                  <button className="btn btn-secondary btn-sm" onClick={() => navigate("/request-copy")}><Icon name="fileText" size={14} /> Request a copy</button>
+                  <button className="btn btn-secondary btn-sm" onClick={() => { setShowNewCase(true); setNewCaseName(""); setNewCaseNumber(""); setNewCaseCourt(""); setNewCaseType("Family Law"); }}><Icon name="fileText" size={14} /> New case</button>
                   <button className="btn btn-primary btn-sm" onClick={() => navigate("/order")}>New order <Icon name="arrowRight" size={14} color="#fff" /></button>
                 </div>
               </div>
@@ -4194,6 +4218,55 @@ function BuyerDashboard() {
               <button className="btn btn-secondary btn-sm" onClick={() => setCorrectionOrder(null)}>Cancel</button>
               <button className="btn btn-sm" style={{background: "#DC2626", color: "#fff", border: "none", padding: "8px 16px", borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: "pointer", opacity: (correctionPage && correctionDesc) ? 1 : 0.5}} disabled={!correctionPage || !correctionDesc} onClick={() => { addToast("Correction requested", "The reporter has been notified and will upload a corrected transcript.", "success"); setCorrectionOrder(null); }}>
                 Submit correction request
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showNewCase && (
+        <div className="modal-overlay" onClick={() => setShowNewCase(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 460, padding: 28}}>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20}}>
+              <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>Create a new case</h3>
+              <button onClick={() => setShowNewCase(false)} style={{background: "none", border: "none", fontSize: 22, color: "var(--text-muted, #94A3B8)", cursor: "pointer"}}>×</button>
+            </div>
+            <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 20, lineHeight: 1.5}}>
+              Add a case to your library. When you place future transcript orders for this case, details will auto-fill.
+            </p>
+            <div className="form-group" style={{marginBottom: 14}}>
+              <label className="form-label">Case name / caption</label>
+              <input className="form-input" placeholder="e.g. Martinez v. Pacific Holdings" value={newCaseName} onChange={e => setNewCaseName(e.target.value)} />
+            </div>
+            <div className="form-group" style={{marginBottom: 14}}>
+              <label className="form-label">Case number</label>
+              <input className="form-input" placeholder="e.g. 24STFL09821" value={newCaseNumber} onChange={e => setNewCaseNumber(e.target.value)} />
+            </div>
+            <div className="form-row" style={{marginBottom: 14}}>
+              <div className="form-group">
+                <label className="form-label">Court</label>
+                <select className="form-input form-select" value={newCaseCourt} onChange={e => setNewCaseCourt(e.target.value)}>
+                  <option value="">Select court...</option>
+                  <option>LA Superior Court</option>
+                  <option>SF Superior Court</option>
+                  <option>Orange County Superior Court</option>
+                  <option>San Diego Superior Court</option>
+                  <option>Contra Costa Superior Court</option>
+                  <option>Alameda Superior Court</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Case type</label>
+                <select className="form-input form-select" value={newCaseType} onChange={e => setNewCaseType(e.target.value)}>
+                  {["Family Law", "Civil Litigation", "Probate", "Criminal", "Personal Injury", "Real Estate", "Employment", "Immigration", "Bankruptcy", "Other"].map(t => (
+                    <option key={t}>{t}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div style={{display: "flex", gap: 10, justifyContent: "flex-end"}}>
+              <button className="btn btn-secondary btn-sm" onClick={() => setShowNewCase(false)}>Cancel</button>
+              <button className="btn btn-primary btn-sm" style={{opacity: (newCaseName && newCaseNumber) ? 1 : 0.5}} disabled={!newCaseName || !newCaseNumber} onClick={() => { addToast("Case created", newCaseName + " has been added to your case library.", "success"); setShowNewCase(false); }}>
+                Create case
               </button>
             </div>
           </div>
@@ -6812,15 +6885,28 @@ function ReporterOnboarding() {
       {step === 4 && (<>
         <div className="form-group">
           <label className="form-label" style={{fontSize: 13, fontWeight: 700, marginBottom: 12, display: "block"}}>How you'll get paid</label>
-          <div className="stripe-card">
-            <div className="stripe-icon">S</div>
+          <div className="stripe-card" style={{background: form.stripeConnected ? "#F0FDF4" : undefined, border: form.stripeConnected ? "1.5px solid #86EFAC" : undefined}}>
+            <div className="stripe-icon" style={{background: form.stripeConnected ? "#059669" : undefined}}>{form.stripeConnected ? "✓" : "S"}</div>
             <div className="stripe-text">
-              <strong>Connect your bank account</strong>
-              <span>Powered by Stripe. You'll receive payment within 2 business days of transcript delivery via direct deposit.</span>
+              {form.stripeConnected ? (
+                <>
+                  <strong style={{color: "#065F46"}}>Bank account connected</strong>
+                  <span>Chase checking ····4821 · Payouts will deposit within 2 business days of delivery acceptance.</span>
+                </>
+              ) : (
+                <>
+                  <strong>Connect your bank account</strong>
+                  <span>Powered by Stripe. You'll receive payment within 2 business days of transcript delivery via direct deposit.</span>
+                </>
+              )}
             </div>
-            <button className="btn btn-sm btn-secondary">Connect</button>
+            {form.stripeConnected ? (
+              <span style={{fontSize: 11, fontWeight: 600, color: "#059669", padding: "4px 10px", background: "#D1FAE5", borderRadius: 6}}>Connected</span>
+            ) : (
+              <button className="btn btn-sm btn-secondary" onClick={() => update("stripeConnected", true)}>Connect</button>
+            )}
           </div>
-          <p className="form-helper">You can complete this step later from your dashboard.</p>
+          <p className="form-helper">{form.stripeConnected ? "You can update your bank details anytime from Settings." : "You can complete this step later from your dashboard."}</p>
         </div>
         <div className="info-callout">
           <div className="callout-icon"><Icon name="shield" size={16} /></div>
