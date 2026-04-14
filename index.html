@@ -6966,7 +6966,7 @@ function AttorneyOnboarding() {
     ["About you & your firm", "We'll use this to set up your account and match you with reporters."],
     ["Your practice", "Help us understand what kind of cases you handle."],
     ["Courts & workflow", "Where do you practice, and how do you currently order transcripts?"],
-    ["Reporters you work with", "Already have reporters you trust? Add them as favorites so they appear first when you place orders."],
+    ["Reporters you like", "Select reporters you've enjoyed working with. They'll be added to your favorites and notified that you're on the platform."],
     ["Billing & notifications", "How you'll pay and stay informed."],
     ["Set your password", "Almost there — just set your password."]
   ];
@@ -7096,7 +7096,7 @@ function AttorneyOnboarding() {
                 ))}
               </div>
               <div style={{marginTop: 12, padding: 10, background: "var(--bg-muted, #F0FDF4)", border: "1px solid #BBF7D0", borderRadius: 8, fontSize: 13, color: "#065F46"}}>
-                <Icon name="checkCircle" size={14} color="#059669" /> {favProfiles.filter(p => onPlatform(p.csrNumber)).length} already on platform. {favProfiles.filter(p => !onPlatform(p.csrNumber)).length > 0 ? "We'll send them a personal invitation: '" + (form.name || "Your firm") + " uses Dewey Sholes and wants to book you directly. Join today to get paid in full for your transcriptions.' We'll notify you when they join." : ""}
+                <Icon name="checkCircle" size={14} color="#059669" /> <strong>{favProfiles.filter(p => onPlatform(p.csrNumber)).length} already on platform</strong> — they'll be notified that you joined and will appear first when you place orders. {favProfiles.filter(p => !onPlatform(p.csrNumber)).length > 0 ? favProfiles.filter(p => !onPlatform(p.csrNumber)).length + " not yet on the platform — we'll send them a personal invite: \"" + (form.name || "An attorney") + " from " + (form.firmName || "your area") + " just joined Dewey Sholes and selected you as a preferred reporter.\" We'll notify you when they join." : ""}
               </div>
             </div>
           )}
