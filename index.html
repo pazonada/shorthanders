@@ -2878,6 +2878,13 @@ function CalendarView({ events }) {
 // ─── Shared Components ──────────────────────────────────────────
 function AppNav({ variant, activeTab, onTabChange }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
+  useEffect(() => {
+    const handleClick = (e) => { if (userMenuRef.current && !userMenuRef.current.contains(e.target)) setUserMenuOpen(false); };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
   const tabMap = {
     reporter: [["jobs", "Available jobs"], ["active", "My jobs"], ["calendar", "Calendar"], ["earnings", "Earnings"]],
     buyer: [["cases", "My cases"], ["reporters", "Find reporters"], ["messages", "Messages"], ["billing", "Billing"], ["calendar", "Calendar"], ["analytics", "Analytics"], ["team", "Team"]],
@@ -2906,9 +2913,30 @@ function AppNav({ variant, activeTab, onTabChange }) {
             <ThemeToggle />
             <a href="#/settings" style={{color: "var(--text-muted, #64748B)", padding: 6, borderRadius: 8, display: "flex"}} title="Settings"><Icon name="settings" size={16} /></a>
             <NotificationBell variant={variant} />
-            <span className="app-nav-avatar">{user.initials}</span>
-            <span>{user.name}</span>
-            {user.courtAppointed && <span style={{fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 4, background: "#DBEAFE", color: "#1E40AF", textTransform: "uppercase", marginLeft: 8}}>Court-appointed</span>}
+            <div ref={userMenuRef} style={{position: "relative"}}>
+              <button onClick={() => setUserMenuOpen(!userMenuOpen)} style={{display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", padding: "4px 8px", borderRadius: 8, transition: "background 0.15s"}} onMouseEnter={e => e.currentTarget.style.background = "var(--bg-muted, #F1F5F9)"} onMouseLeave={e => e.currentTarget.style.background = "none"}>
+                <span className="app-nav-avatar">{user.initials}</span>
+                <span style={{color: "var(--text, #0F172A)"}}>{user.name}</span>
+                {user.courtAppointed && <span style={{fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 4, background: "#DBEAFE", color: "#1E40AF", textTransform: "uppercase"}}>Court-appointed</span>}
+                <Icon name="chevronRight" size={12} color="var(--text-muted, #94A3B8)" style={{transform: userMenuOpen ? "rotate(90deg)" : "rotate(90deg)", transition: "transform 0.15s"}} />
+              </button>
+              {userMenuOpen && (
+                <div style={{position: "absolute", top: "100%", right: 0, marginTop: 6, width: 220, background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12, boxShadow: "0 8px 24px rgba(0,0,0,0.12)", overflow: "hidden", zIndex: 50}}>
+                  <div style={{padding: "12px 16px", borderBottom: "1px solid var(--border, #E2E8F0)"}}>
+                    <div style={{fontSize: 14, fontWeight: 600, color: "var(--text, #0F172A)"}}>{user.name}</div>
+                    <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>{variant === "reporter" ? "Court reporter" : variant === "admin" ? "Administrator" : "Attorney"}</div>
+                  </div>
+                  <div style={{padding: "6px 0"}}>
+                    {variant === "reporter" && <a href="#/reporters/r1" onClick={() => setUserMenuOpen(false)} style={{display: "flex", alignItems: "center", gap: 10, padding: "8px 16px", fontSize: 13, color: "var(--text, #0F172A)", textDecoration: "none", cursor: "pointer"}} onMouseEnter={e => e.currentTarget.style.background = "var(--bg-muted, #F8FAFC)"} onMouseLeave={e => e.currentTarget.style.background = "none"}><Icon name="user" size={14} color="var(--text-muted, #94A3B8)" /> View public profile</a>}
+                    <a href="#/settings" onClick={() => setUserMenuOpen(false)} style={{display: "flex", alignItems: "center", gap: 10, padding: "8px 16px", fontSize: 13, color: "var(--text, #0F172A)", textDecoration: "none", cursor: "pointer"}} onMouseEnter={e => e.currentTarget.style.background = "var(--bg-muted, #F8FAFC)"} onMouseLeave={e => e.currentTarget.style.background = "none"}><Icon name="settings" size={14} color="var(--text-muted, #94A3B8)" /> Settings</a>
+                    <a href="#/faq" onClick={() => setUserMenuOpen(false)} style={{display: "flex", alignItems: "center", gap: 10, padding: "8px 16px", fontSize: 13, color: "var(--text, #0F172A)", textDecoration: "none", cursor: "pointer"}} onMouseEnter={e => e.currentTarget.style.background = "var(--bg-muted, #F8FAFC)"} onMouseLeave={e => e.currentTarget.style.background = "none"}><Icon name="info" size={14} color="var(--text-muted, #94A3B8)" /> Help & FAQ</a>
+                  </div>
+                  <div style={{borderTop: "1px solid var(--border, #E2E8F0)", padding: "6px 0"}}>
+                    <a href="#/" onClick={() => setUserMenuOpen(false)} style={{display: "flex", alignItems: "center", gap: 10, padding: "8px 16px", fontSize: 13, color: "#DC2626", textDecoration: "none", cursor: "pointer"}} onMouseEnter={e => e.currentTarget.style.background = "#FEF2F2"} onMouseLeave={e => e.currentTarget.style.background = "none"}><Icon name="x" size={14} color="#DC2626" /> Sign out</a>
+                  </div>
+                </div>
+              )}
+            </div>
             <button className="mobile-menu-btn" onClick={() => setMobileOpen(true)}><Icon name="menu" size={20} /></button>
           </div>
         </div>
