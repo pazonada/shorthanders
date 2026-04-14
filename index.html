@@ -1868,7 +1868,7 @@ const MOCK_NOTIFICATIONS = [
   { id: "n2", type: "delivery", title: "Transcript delivered", message: "45-page transcript delivered for Martinez v. Pacific Holdings. Review and accept to release payment.", time: "5 hours ago", read: false, route: "#/dashboard", icon: "fileText", color: "#7C3AED", bg: "#F3E8FF" },
   { id: "n3", type: "payment", title: "Co-payer confirmed", message: "David Park, Esq. paid their $127.50 share. Waiting for 1 more party.", time: "1 day ago", read: false, route: "#/dashboard", icon: "dollarSign", color: "#059669", bg: "#D1FAE5" },
   { id: "n4", type: "checkin", title: "Reporter check-in", message: "Sarah Chen confirmed she's on track for the Apr 2 deadline.", time: "1 day ago", read: false, route: "#/dashboard", icon: "clock", color: "#D97706", bg: "#FEF3C7" },
-  { id: "n5", type: "rating", title: "New rating received", message: "Jennifer Walsh rated you 4.8/5.0 — \"Excellent turnaround and quality.\"", time: "2 days ago", read: false, route: "#/reporter", icon: "star", color: "#F59E0B", bg: "#FEF3C7" },
+  { id: "n5", type: "rating", title: "New quality rating", message: "Jennifer Walsh rated your transcript quality 5/5 — \"Great handling of legal terminology. Very clean transcript.\"", time: "2 days ago", read: false, route: "#/reporter", icon: "star", color: "#F59E0B", bg: "#FEF3C7" },
   { id: "n6", type: "job", title: "New job available", message: "Family Law hearing at LA Superior Court — deliver by Apr 4. $128.45 earnings.", time: "45 min ago", read: false, route: "#/reporter", icon: "zap", color: "#D97706", bg: "#FEF3C7" },
   { id: "n7", type: "payment", title: "Payment received", message: "$165.15 deposited to your bank account for Martinez v. Pacific Holdings.", time: "3 days ago", read: true, route: "#/reporter", icon: "dollarSign", color: "#059669", bg: "#D1FAE5" },
   { id: "n8", type: "license", title: "License renewal reminder", message: "Your CSR license expires in 28 days. Renew with the CRB to avoid profile suspension.", time: "1 week ago", read: true, route: "#/settings", icon: "clock", color: "#DC2626", bg: "#FEE2E2" },
@@ -3606,7 +3606,8 @@ function BuyerDashboard() {
   const [correctionPage, setCorrectionPage] = useState("");
   const [correctionDesc, setCorrectionDesc] = useState("");
   const [ratingOrder, setRatingOrder] = useState(null);
-  const [ratings, setRatings] = useState({ timeliness: 0, communication: 0, quality: 0 });
+  const [ratingQuality, setRatingQuality] = useState(0);
+  const [ratingComment, setRatingComment] = useState("");
   const [showInviteTeam, setShowInviteTeam] = useState(false);
   const [inviteName, setInviteName] = useState("");
   const [inviteEmail, setInviteEmail] = useState("");
@@ -4159,7 +4160,7 @@ function BuyerDashboard() {
               <button className="btn btn-sm" style={{flex: 1, background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA", padding: "10px 16px", fontSize: 13, fontWeight: 600, borderRadius: 8, cursor: "pointer"}} onClick={() => { setCorrectionOrder(acceptOrder); setAcceptOrder(null); setCorrectionPage(""); setCorrectionDesc(""); }}>
                 Request correction instead
               </button>
-              <button className="btn" style={{flex: 1, background: "#059669", color: "#fff", border: "none", padding: "10px 16px", fontSize: 14, fontWeight: 700, borderRadius: 8, cursor: "pointer"}} onClick={() => { setRatingOrder(acceptOrder); setAcceptOrder(null); setRatings({ timeliness: 0, communication: 0, quality: 0 }); }}>
+              <button className="btn" style={{flex: 1, background: "#059669", color: "#fff", border: "none", padding: "10px 16px", fontSize: 14, fontWeight: 700, borderRadius: 8, cursor: "pointer"}} onClick={() => { setRatingOrder(acceptOrder); setAcceptOrder(null); setRatingQuality(0); setRatingComment(""); }}>
                 <Icon name="checkCircle" size={14} /> Accept and release payment
               </button>
             </div>
@@ -4238,7 +4239,7 @@ function BuyerDashboard() {
       )}
       {ratingOrder && (
         <div className="modal-overlay" onClick={() => {}}>
-          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 440, padding: 28}}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 460, padding: 28}}>
             <div style={{textAlign: "center", marginBottom: 24}}>
               <div style={{width: 56, height: 56, borderRadius: "50%", background: "#DCFCE7", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 12}}>
                 <Icon name="checkCircle" size={28} color="#059669" />
@@ -4246,34 +4247,41 @@ function BuyerDashboard() {
               <h3 style={{margin: "0 0 6px", fontSize: 20, fontWeight: 700, color: "var(--text, #0F172A)"}}>Delivery accepted!</h3>
               <p style={{margin: 0, fontSize: 13, color: "var(--text-secondary, #475569)"}}>Payment of ${ratingOrder.cost ? ratingOrder.cost.toFixed(2) : "—"} will be released within 2 business days.</p>
             </div>
-            <div style={{padding: 16, background: "var(--bg-muted, #F8FAFC)", borderRadius: 12, marginBottom: 20}}>
-              <h4 style={{margin: "0 0 16px", fontSize: 14, fontWeight: 700, color: "var(--text, #0F172A)"}}>How was {ratingOrder.reporter ? ratingOrder.reporter.split(",")[0] : "the reporter"}?</h4>
-              {[
-                { key: "timeliness", label: "Timeliness of delivery", icon: "clock" },
-                { key: "communication", label: "Communication", icon: "messageCircle" },
-                { key: "quality", label: "Quality of work", icon: "checkCircle" },
-              ].map(cat => (
-                <div key={cat.key} style={{marginBottom: 14}}>
-                  <div style={{display: "flex", alignItems: "center", gap: 6, marginBottom: 6}}>
-                    <Icon name={cat.icon} size={13} color="var(--text-muted, #94A3B8)" />
-                    <span style={{fontSize: 13, fontWeight: 600, color: "var(--text, #0F172A)"}}>{cat.label}</span>
-                  </div>
-                  <div style={{display: "flex", gap: 4}}>
-                    {[1,2,3,4,5].map(n => (
-                      <button key={n} onClick={() => setRatings(r => ({...r, [cat.key]: n}))} style={{width: 36, height: 36, borderRadius: 8, border: ratings[cat.key] >= n ? "2px solid #F59E0B" : "1px solid var(--border, #E2E8F0)", background: ratings[cat.key] >= n ? "#FEF3C7" : "var(--bg-card, #fff)", cursor: "pointer", fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.1s"}}>
-                        {ratings[cat.key] >= n ? "★" : "☆"}
-                      </button>
-                    ))}
-                    <span style={{marginLeft: 8, fontSize: 13, color: "var(--text-muted, #94A3B8)", alignSelf: "center"}}>{ratings[cat.key] > 0 ? ratings[cat.key] + "/5" : ""}</span>
-                  </div>
-                </div>
-              ))}
+
+            {/* Timeliness — auto-calculated */}
+            <div style={{padding: 12, background: "var(--bg-muted, #F0FDF4)", border: "1px solid #BBF7D0", borderRadius: 10, marginBottom: 16, display: "flex", alignItems: "center", gap: 10}}>
+              <Icon name="clock" size={16} color="#059669" />
+              <div style={{flex: 1}}>
+                <div style={{fontSize: 13, fontWeight: 600, color: "#065F46"}}>Timeliness: delivered 2 days early</div>
+                <div style={{fontSize: 12, color: "#059669"}}>Auto-calculated from delivery date vs. deadline</div>
+              </div>
+              <div style={{fontSize: 18, fontWeight: 800, color: "#059669"}}>5.0</div>
             </div>
+
+            {/* Quality — attorney rates */}
+            <div style={{padding: 16, background: "var(--bg-muted, #F8FAFC)", borderRadius: 12, marginBottom: 16}}>
+              <h4 style={{margin: "0 0 12px", fontSize: 14, fontWeight: 700, color: "var(--text, #0F172A)"}}>How was the quality of this transcript?</h4>
+              <div style={{display: "flex", gap: 6, marginBottom: 16}}>
+                {[1,2,3,4,5].map(n => (
+                  <button key={n} onClick={() => setRatingQuality(n)} style={{width: 44, height: 44, borderRadius: 10, border: ratingQuality >= n ? "2px solid #F59E0B" : "1px solid var(--border, #E2E8F0)", background: ratingQuality >= n ? "#FEF3C7" : "var(--bg-card, #fff)", cursor: "pointer", fontSize: 20, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.1s"}}>
+                    {ratingQuality >= n ? "★" : "☆"}
+                  </button>
+                ))}
+                <span style={{marginLeft: 8, fontSize: 15, fontWeight: 700, color: "var(--text, #0F172A)", alignSelf: "center"}}>{ratingQuality > 0 ? ratingQuality + "/5" : ""}</span>
+              </div>
+
+              <div className="form-group" style={{margin: 0}}>
+                <label className="form-label" style={{fontSize: 13}}>Comments <span style={{fontWeight: 400, color: "#94A3B8"}}>(optional)</span></label>
+                <textarea className="form-input" rows={3} placeholder="e.g. Great handling of medical terminology. Cleaned up filler words nicely. Minor issue with party names on pg 12." value={ratingComment} onChange={e => setRatingComment(e.target.value)} style={{resize: "vertical", fontSize: 13}} />
+                <p style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", marginTop: 6, lineHeight: 1.5}}>Your comments help other attorneys choose reporters and help this reporter improve. Comments are visible on the reporter's public profile.</p>
+              </div>
+            </div>
+
             <div style={{display: "flex", gap: 10}}>
               <button className="btn btn-secondary btn-sm" style={{flex: 1}} onClick={() => { addToast("Delivery accepted", "Thank you! Payment is being processed.", "success"); setRatingOrder(null); }}>
                 Skip rating
               </button>
-              <button className="btn btn-primary" style={{flex: 1, opacity: (ratings.timeliness && ratings.communication && ratings.quality) ? 1 : 0.5}} disabled={!ratings.timeliness || !ratings.communication || !ratings.quality} onClick={() => { const avg = ((ratings.timeliness + ratings.communication + ratings.quality) / 3).toFixed(1); addToast("Rating submitted", "You rated " + (ratingOrder.reporter ? ratingOrder.reporter.split(",")[0] : "the reporter") + " " + avg + "/5. Thank you!", "success"); setRatingOrder(null); }}>
+              <button className="btn btn-primary" style={{flex: 1, opacity: ratingQuality ? 1 : 0.5}} disabled={!ratingQuality} onClick={() => { addToast("Rating submitted", "You rated " + (ratingOrder.reporter ? ratingOrder.reporter.split(",")[0] : "the reporter") + " " + ratingQuality + "/5 on quality. Thank you!", "success"); setRatingOrder(null); }}>
                 Submit rating
               </button>
             </div>
@@ -4419,11 +4427,10 @@ function ReporterDashboard() {
               <span style={{fontSize: 14, color: "var(--text-muted, #64748B)"}}>Overall rating</span>
             </div>
             <div style={{display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10}}>
-              <span style={{fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 12, background: "var(--bg-card, #F1F5F9)", color: "var(--text, #334155)"}}>Communication 4.8</span>
-              <span style={{fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 12, background: "var(--bg-card, #F1F5F9)", color: "var(--text, #334155)"}}>Timeliness 4.6</span>
-              <span style={{fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 12, background: "var(--bg-card, #F1F5F9)", color: "var(--text, #334155)"}}>Quality 4.7</span>
+              <span style={{fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 12, background: "#D1FAE5", color: "#065F46"}}>Timeliness 4.9 <span style={{fontSize: 10, fontWeight: 400}}>(auto)</span></span>
+              <span style={{fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 12, background: "#FEF3C7", color: "#92400E"}}>Quality 4.6 <span style={{fontSize: 10, fontWeight: 400}}>(attorney-rated)</span></span>
             </div>
-            <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", margin: 0}}>Based on 23 completed jobs. Updated monthly.</p>
+            <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", margin: 0}}>Timeliness is auto-calculated from delivery vs. deadline. Quality is rated by attorneys. Based on 23 completed jobs.</p>
             <button className="btn btn-secondary btn-sm" style={{marginTop: 12, fontSize: 12, width: "100%", justifyContent: "center"}} onClick={() => navigate("#/reporters/r1")}>
               <Icon name="eye" size={12} /> View my public profile
             </button>
