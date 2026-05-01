@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 72" width="300" height="72">
+  <rect x="0" y="0" width="60" height="60" rx="13" fill="#1E293B"/>
+  <rect x="13" y="10" width="14" height="20" rx="3" fill="white"/>
+  <rect x="33" y="10" width="14" height="20" rx="3" fill="white"/>
+  <rect x="13" y="34" width="14" height="5" rx="2.5" fill="#818CF8"/>
+  <rect x="33" y="34" width="14" height="5" rx="2.5" fill="#818CF8"/>
+  <text x="76" y="27" font-family="'Courier New',Courier,monospace" font-size="18" font-weight="700" fill="white" letter-spacing="4">BRISCOE</text>
+  <text x="76" y="53" font-family="'Courier New',Courier,monospace" font-size="18" font-weight="700" fill="#818CF8" letter-spacing="4">SHOLES</text>
+</svg>

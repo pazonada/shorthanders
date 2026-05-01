@@ -58,13 +58,65 @@ The following are **never permitted**, to avoid triggering regulated CSR functio
 
 1. **No resale or redistribution.** The platform will never sell, license, or transfer a transcript to anyone other than the original ordering attorney. This aligns with Gov. Code 69954(d), which prohibits purchasers from reselling court transcripts.
 
-2. **No third-party copy fulfillment.** If a non-party wants a transcript copy, they must request it from the original CSR (per CCP 2025.570), not from the platform. The platform will not fulfill copy requests.
+2. **No platform-fulfilled copy sales.** The platform will never sell or fulfill copy requests as the seller. The CSR is always the seller for copy requests, with the platform acting only as a directory/communication facilitator and (optionally, at the CSR's choice) a payment processor for the CSR's transaction. See "Copy request facilitation" below.
 
 3. **No custody of stenographic notes.** The platform will never store, manage, or accept custody of a CSR's stenographic notes or raw audio. Notes custody is a regulated function (16 CCR 2403, Gov. Code 69955).
 
 4. **No transcript certification.** Only a licensed CSR can certify a transcript (BPC 8017). The platform will never certify, co-certify, or imply certification of any transcript.
 
 5. **No witness PII collection.** The platform will not collect personal identifying information about deposition witnesses as a service or product (prohibited by CCP 2025.340(e)).
+
+---
+
+## Copy request facilitation (permitted)
+
+While the platform does not sell or fulfill transcript copies, it does facilitate connections between non-parties and the original CSR. This is permitted because the CSR remains the seller and the regulated decision-maker.
+
+### How it works
+
+1. A party to an existing case (or their counsel) searches Dewey Sholes by case number or case name
+2. The platform returns minimal information: case name, case number, court, hearing date, and the original CSR's name and license number
+3. The requester sends a copy request to the CSR via the platform, identifying themselves and their role in the case
+4. The CSR receives the request and decides whether to fulfill it
+5. If the CSR accepts:
+   - The CSR notifies all parties (CCP 2025.570 requires a 30-day window for protective orders)
+   - After the window closes, the CSR delivers the copy through the platform's standard delivery infrastructure (same flow as an original transcript)
+   - The requester pays the statutory copy rate ($0.65/page) plus the platform fee
+   - The CSR receives the copy fee; the platform receives its fee
+6. If the CSR declines or doesn't respond, the platform takes no further action — there is no automatic fulfillment
+
+### Why this is permitted
+
+- **The CSR is the seller.** The platform is acting as a directory and communication tool, not as the source of the copy. The CSR retains full control over whether, when, and to whom they release copies.
+- **Notification obligations stay with the CSR.** The CSR is the one who must notify all parties under CCP 2025.570 — the platform doesn't bypass or replace this requirement.
+- **No platform custody of the transcript.** The CSR's own copy of the transcript is the source. The platform doesn't pull from its storage to fulfill the request.
+- **Comparable to professional directories.** This is similar to how the State Bar lawyer search or Justia's directory works — providing public professional information so parties can contact each other directly.
+
+### CSR opt-in required
+
+CSRs choose during onboarding whether to allow copy requests through their profile. The default is opt-in (most CSRs welcome the additional revenue), but they can disable it anytime in their settings. Some CSRs may prefer to handle all copy requests outside the platform.
+
+### Search results limitations
+
+To avoid edging into prohibited witness PII collection (CCP 2025.340(e)), search results display only:
+- Case name and number
+- Court and hearing date
+- CSR name and license number
+
+Search results do **not** display:
+- Witness names or testimony details
+- Party PII beyond the case caption (already public)
+- Any details about case content
+
+The requester must already know the case number to find it, which means they're presumably a party to the case.
+
+### When the original CSR is unreachable
+
+If a CSR is no longer active on Dewey Sholes (retired, deceased, or paused account), the platform displays a notice directing the requester to:
+- Contact the California Court Reporters Board for guidance
+- Contact the court clerk if the proceeding was on the record
+
+The platform does **not** step in as custodian or fulfill the request from any retained transcript.
 
 ---
 

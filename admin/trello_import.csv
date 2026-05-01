@@ -1,0 +1,184 @@
+"Card Name","Card Description","Labels","Due Date","List"
+"AB 5 / IC Classification Research","AB 3136 exempts CSRs from ABC test. Borello test applies. Memo documents analysis for lawyer review.
+
+**Priority:** High
+**Assignee:** Aud
+**Notes:** Research complete. Memo finalized.","Legal,High,Aud","","Done"
+"TRF Research Memo","$2,500/case cap, 8-10 week processing, $300K annual funding. Platform will NOT carry TRF float.
+
+**Priority:** High
+**Assignee:** Aud
+**Notes:** Founder decision: no float. Firm pays upfront, platform generates reimbursement paperwork.","Research,High,Aud","","Done"
+"Rate Regulation & Pricing Memo","Folio multiplier problem, SB 478 compliance, statutory rates ($1.13/100 words). Feeds pricing UX.
+
+**Priority:** High
+**Assignee:** Aud","Research,High,Aud","","Done"
+"State Bar / Confidentiality Memo","CA Rule 1.6 applies to attorney-client audio. Platform needs contractual safeguards, encryption, SOC 2.
+
+**Priority:** High
+**Assignee:** Aud","Legal,High,Aud","","Done"
+"CRB Briefing Doc","Prep document for Court Reporters Board: license verification, TRF coordination, information sharing.
+
+**Priority:** Medium
+**Assignee:** Aud","Operations,Medium,Aud","","Done"
+"Judicial Council Briefing Doc","Focus: fee waiver flow, ER integration, access-to-justice framing. 1M+ proceedings without transcripts.
+
+**Priority:** Medium
+**Assignee:** Aud","Operations,Medium,Aud","","Done"
+"Legal Entity Memo","LLC vs. C-Corp tradeoffs. C-Corp recommended if raising capital within 12-18 months.
+
+**Priority:** High
+**Assignee:** Aud","Legal,High,Aud","","Done"
+"Platform Liability Memo","Transcript challenge risk analysis. No quality representations, license verification, no editorial touch.
+
+**Priority:** Critical
+**Assignee:** Aud
+**Notes:** Recommends E&O insurance ($2-5K/year).","Legal,Critical,Aud","","Done"
+"Data Security Checklist","SOC 2 baseline, BigLaw vendor approval requirements, CA Rule 1.6, encryption standards, MFA.
+
+**Priority:** High
+**Assignee:** Aud","Operations,High,Aud","","Done"
+"Attorney Survey Draft","15-question survey to quantify staff time costs, pain points, platform fee tolerance. Target 15-25 responses.
+
+**Priority:** Medium
+**Assignee:** Aud
+**Notes:** Rosie to distribute.","Research,Medium,Aud","","Done"
+"CSR Discovery Interview Guide","20-question interview guide for reporter discovery calls + post-interview tracking template.
+
+**Priority:** Medium
+**Assignee:** Aud","Research,Medium,Aud","","Done"
+"Reporter Outreach Materials","Email templates (warm, cold, referral, semi-retired), FAQ, quick reference card for CSR recruitment.
+
+**Priority:** Medium
+**Assignee:** Aud","Marketing,Medium,Aud","","Done"
+"Beta Firm Recruitment One-Pager","Marketing pitch to law firms: staff time savings, cost transparency, compliance guarantees.
+
+**Priority:** High
+**Assignee:** Aud, Rosie","Marketing,High,Aud,Rosie","","Done"
+"Late Delivery Policy","Tiered consequences: grace period, routing priority demotion. Non-financial consequences over pay docking.
+
+**Priority:** Medium
+**Assignee:** Aud","Operations,Medium,Aud","","Done"
+"CRB MOU Template","Framework for API access, TRF coordination, license verification data sharing. No endorsement clause.
+
+**Priority:** Medium
+**Assignee:** Aud","Legal,Medium,Aud","","Done"
+"Stakeholder Messaging Framework","Tailored messaging for law firms, reporters, CRB, Judicial Council, CCRA, legal aid orgs, court admin.
+
+**Priority:** Medium
+**Assignee:** Aud, Rosie","Marketing,Medium,Aud,Rosie","","Done"
+"Go-to-Market Strategy","4-phase rollout: pre-launch → supply seeding → demand seeding → prove unit economics → scale CA.
+
+**Priority:** High
+**Assignee:** Aud, Rosie","Marketing,High,Aud,Rosie","","Done"
+"POC: Landing page & dashboards","Landing page, buyer dashboard, reporter dashboard, admin dashboard, order flow, dark mode, responsive.
+
+**Priority:** Critical
+**Assignee:** Aud","Product,Critical,Aud","","Done"
+"POC: Reporter onboarding flow","6-screen onboarding at #/reporter-signup. Credentials, preferences, payment, account creation.
+
+**Priority:** High
+**Assignee:** Aud","Product,High,Aud","","Done"
+"POC: Attorney onboarding flow","7-screen onboarding at #/attorney-signup. Firm details, bar number, courts, billing, success with promo.
+
+**Priority:** High
+**Assignee:** Aud","Product,High,Aud","","Done"
+"POC: Reporter dashboard polish","Quick stats, profile nudge, match badges, expandable cards, deadlines widget, earnings chart, empty states.
+
+**Priority:** Medium
+**Assignee:** Aud","Product,Medium,Aud","","Done"
+"POC: Order flow polish","Color-coded paths (blue/amber), feature checklists, file upload, interpreter lang, turnaround comparison.
+
+**Priority:** Medium
+**Assignee:** Aud","Product,Medium,Aud","","Done"
+"Volume assumptions from Rosie","How many transcripts do her attorney contacts order per month? Critical for Year 1 revenue model.
+
+**Priority:** Critical
+**Assignee:** Rosie
+**Notes:** Blocks the platform fee financial model.","Financial,Critical,Rosie","","Waiting"
+"Anchor firm names/contacts for beta","Identify 3-5 firms for pilot launch. Ideally family law/civil lit, 5-50 attorneys, in pilot counties.
+
+**Priority:** Critical
+**Assignee:** Rosie","Marketing,Critical,Rosie","","Waiting"
+"Pilot county priorities","Which staff-reporter county (Rosie's relationships) + which ER county? Drives reporter recruitment geography.
+
+**Priority:** High
+**Assignee:** Rosie
+**Notes:** LA is assumed for ER. Need the staff-reporter county.","Operations,High,Rosie","","Waiting"
+"Warm-contact reporter network","Confirm 10-15 reporters from Rosie's 22-year network who would join. First supply-side cohort.
+
+**Priority:** High
+**Assignee:** Rosie
+**Notes:** Target: 10-15 covering LA before first firm launches.","Operations,High,Rosie","","Waiting"
+"Questions for Rosie (pending response)","Consolidated question list covering volume data, contacts, county priorities, and reporter universe.
+
+**Priority:** High
+**Assignee:** Rosie
+**Notes:** Sent 3/15. Still waiting.","Operations,High,Rosie","","Waiting"
+"AB 5 memo: Lawyer review & sign-off","Research is complete. Needs employment attorney to review and provide formal sign-off.
+
+**Priority:** Critical
+**Assignee:** TBD","Legal,Critical,TBD","2026-04-15","To Do"
+"Platform liability memo: Lawyer sign-off","Transcript challenge risk analysis memo complete. Lawyer must sign off before launch.
+
+**Priority:** Critical
+**Assignee:** TBD","Legal,Critical,TBD","2026-04-15","To Do"
+"Legal entity decision (LLC vs C-Corp)","Tradeoffs memo done. Founders + lawyer need to make the call. C-Corp if raising capital.
+
+**Priority:** High
+**Assignee:** Aud, Rosie","Legal,High,Aud,Rosie","","To Do"
+"Verify AB 3136 enactment","Research confirms bill exists but needs definitive confirmation it was enacted (not rolled into another bill).
+
+**Priority:** Medium
+**Assignee:** Aud","Legal,Medium,Aud","","To Do"
+"Platform fee financial model","Statutory rates fixed. Model fee %, reporter payout, volume scenarios. Skeleton ready, needs Rosie's data.
+
+**Priority:** High
+**Assignee:** Aud
+**Notes:** Blocked until volume assumptions from Rosie are resolved.","Financial,High,Aud","","To Do"
+"CRB database pull","Extract full active CSR licensee list from Court Reporters Board public database. Starting universe for outreach.
+
+**Priority:** Medium
+**Assignee:** Aud","Research,Medium,Aud","","To Do"
+"SOC 2 Type I readiness assessment","Pre-beta security baseline. Encryption, auth, access controls, incident response plan.
+
+**Priority:** Medium
+**Assignee:** Aud
+**Notes:** Full Type II within 12 months.","Operations,Medium,Aud","","To Do"
+"Jurisdiction matrix (NY, TX, IL, FL)","ER rules, CSR requirements, licensing boards, rate structures for Tier 1 expansion states.
+
+**Priority:** Low
+**Assignee:** Aud
+**Notes:** Post-launch.","Research,Low,Aud","","Backlog"
+"Dispute resolution research","Court rules for transcript correction in CA + expansion states.
+
+**Priority:** Low
+**Assignee:** Aud","Legal,Low,Aud","","Backlog"
+"CCRA relationship prep","California Court Reporters Association — potential ally. Need briefing doc and meeting strategy.
+
+**Priority:** Low
+**Assignee:** Rosie","Operations,Low,Rosie","","Backlog"
+"Legal aid org partnership materials","Pitch SRL features + fee waiver routing to access-to-justice nonprofits.
+
+**Priority:** Low
+**Assignee:** Aud, Rosie","Marketing,Low,Aud,Rosie","","Backlog"
+"CA marketplace registrations research","Business license, marketplace regulations, state registrations needed to operate.
+
+**Priority:** Low
+**Assignee:** Aud","Legal,Low,Aud","","Backlog"
+"POC: Messaging / chat UI","Attorney ↔ reporter threaded conversation view. Message buttons exist but no chat screen yet.
+
+**Priority:** Medium
+**Assignee:** Aud","Product,Medium,Aud","","Backlog"
+"POC: Attorney dashboard polish","Better case library, order tracking timeline, notification dropdown, polished analytics.
+
+**Priority:** Medium
+**Assignee:** Aud","Product,Medium,Aud","","Backlog"
+"POC: Case detail view","Dedicated screen: all transcripts, status timeline, reporter assigned, invoices, notes for a case.
+
+**Priority:** Medium
+**Assignee:** Aud","Product,Medium,Aud","","Backlog"
+"Pitch deck","Investor/partner presentation covering market, product, team, financials, ask.
+
+**Priority:** High
+**Assignee:** Aud, Rosie","Marketing,High,Aud,Rosie","","Backlog"

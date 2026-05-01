@@ -3152,9 +3152,9 @@ function OrderFlow() {
                   <p className="tce-desc">Got audio from a hearing? We'll match you with a reporter</p>
                   <ul className="tce-features">
                     <li><Icon name="checkCircle" size={14} color="#D97706" /> Upload MP3, WAV, or court-format audio</li>
-                    <li><Icon name="checkCircle" size={14} color="#D97706" /> AI-assisted workspace for faster turnaround</li>
+                    <li><Icon name="checkCircle" size={14} color="#D97706" /> Track job progress in real time</li>
+                    <li><Icon name="checkCircle" size={14} color="#D97706" /> Message your CSR directly</li>
                     <li><Icon name="checkCircle" size={14} color="#D97706" /> Supporting docs pre-loaded for accuracy</li>
-                    <li><Icon name="checkCircle" size={14} color="#D97706" /> Interpreter-aware page estimates</li>
                   </ul>
                 </div>
               </div>
@@ -6497,7 +6497,7 @@ function ReporterOnboarding() {
     csrNumber: "", method: "", certs: [], languages: [], courtEmployed: "", courtEmployedWhere: "",
     jobTypes: [], caseTypes: [], courts: [], turnarounds: [],
     recentCases: [{caseName: "", caseNumber: "", court: "", date: "", role: "Live attendance"}],
-    phone: "", notifSmsJobs: true, notifEmail: true, notifSmsReminders: true,
+    phone: "", notifSmsJobs: true, notifEmail: true, notifSmsReminders: true, allowCopyRequests: true,
     name: "", email: "", password: ""
   });
   const update = (k, v) => setForm(prev => ({ ...prev, [k]: v }));
@@ -6975,6 +6975,25 @@ function ReporterOnboarding() {
           <div className="toggle-row"><div><div className="toggle-label">SMS alerts for new matching jobs</div><div className="toggle-sub">Get notified instantly when a job fits your preferences</div></div><label className="toggle-switch"><input type="checkbox" checked={form.notifSmsJobs} onChange={() => update("notifSmsJobs", !form.notifSmsJobs)} /><span className="slider"></span></label></div>
           <div className="toggle-row"><div><div className="toggle-label">Email for confirmations & receipts</div><div className="toggle-sub">Job acceptance, payment receipts, and delivery confirmations</div></div><label className="toggle-switch"><input type="checkbox" checked={form.notifEmail} onChange={() => update("notifEmail", !form.notifEmail)} /><span className="slider"></span></label></div>
           <div className="toggle-row"><div><div className="toggle-label">SMS reminders for due dates</div><div className="toggle-sub">Get a reminder 24 hours before a transcript is due</div></div><label className="toggle-switch"><input type="checkbox" checked={form.notifSmsReminders} onChange={() => update("notifSmsReminders", !form.notifSmsReminders)} /><span className="slider"></span></label></div>
+        </div>
+
+        <hr className="section-divider" />
+        <div className="form-group">
+          <label className="form-label" style={{fontSize: 13, fontWeight: 700, marginBottom: 8, display: "block"}}>Copy requests from other parties</label>
+          <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.6, marginBottom: 12}}>
+            Per California law (CCP &sect; 2025.570), only the original CSR can release transcript copies to other parties. If you opt in, attorneys searching for an existing case can send you a copy request directly through the platform. You decide whether to fulfill each request, and the standard 30-day notification window for all parties applies.
+          </p>
+          <div className="toggle-row">
+            <div>
+              <div className="toggle-label">Allow copy requests from other parties</div>
+              <div className="toggle-sub">Recommended — additional revenue at the statutory copy rate ($0.65/page)</div>
+            </div>
+            <label className="toggle-switch">
+              <input type="checkbox" checked={form.allowCopyRequests} onChange={() => update("allowCopyRequests", !form.allowCopyRequests)} />
+              <span className="slider"></span>
+            </label>
+          </div>
+          <p className="form-helper" style={{marginTop: 10}}>You can change this anytime from your settings.</p>
         </div>
       </>)}
 
@@ -7728,7 +7747,7 @@ function LandingPage() {
   const stepsData = {
     attorney: [
       { icon: "fileText", title: "Place your order", desc: "Select live attendance or post-hearing transcription. Enter case details, set your delivery deadline, and the price calculates automatically." },
-      { icon: "zap", title: "We match a reporter", desc: "A licensed, jurisdiction-verified CSR accepts your job, usually within hours. You're notified instantly." },
+      { icon: "zap", title: "We match a reporter", desc: "A licensed, jurisdiction-verified CSR accepts your job, usually within hours. Preference is given to CSRs you've prioritized. You're notified instantly." },
       { icon: "checkCircle", title: "Certified transcript, delivered", desc: "Your court-admissible transcript arrives on schedule with the reporter's certification attached. Payment is automatic." },
     ],
     reporter: [
@@ -7748,10 +7767,10 @@ function LandingPage() {
               <DeweyFullLogo height={38} theme={useTheme().dark ? "dark" : "light"} />
             </a>
             <div className="nav-links">
-              <a href="#how-it-works">How it works</a>
-              <a href="#attorneys">For attorneys</a>
-              <a href="#reporters">For reporters</a>
-              <a href="#pricing">Pricing</a>
+              <a href="#how-it-works" onClick={e => { e.preventDefault(); document.getElementById("how-it-works")?.scrollIntoView({behavior: "smooth", block: "start"}); }}>How it works</a>
+              <a href="#attorneys" onClick={e => { e.preventDefault(); document.getElementById("attorneys")?.scrollIntoView({behavior: "smooth", block: "start"}); }}>For attorneys</a>
+              <a href="#reporters" onClick={e => { e.preventDefault(); document.getElementById("reporters")?.scrollIntoView({behavior: "smooth", block: "start"}); }}>For reporters</a>
+              <a href="#pricing" onClick={e => { e.preventDefault(); document.getElementById("pricing")?.scrollIntoView({behavior: "smooth", block: "start"}); }}>Pricing</a>
             </div>
             <div className="nav-actions">
               <ThemeToggle />
@@ -7913,7 +7932,7 @@ function LandingPage() {
               <h3>Live attendance</h3>
               <p>Need a reporter at an upcoming hearing? We'll match you with a licensed CSR who can attend in person or remotely and deliver your transcript on the turnaround you choose.</p>
               <ul className="usecase-list">
-                {["In-person or remote attendance", "Real-time or same-day options", "Reporter confirmed before your hearing", "Cost-splitting across parties (coming soon)"].map((t, i) => (
+                {["In-person or remote attendance", "Real-time or same-day options", "Reporter confirmed before your hearing", "Cost-splitting across parties built in"].map((t, i) => (
                   <li key={i}><Icon name="checkCircle" size={16} color="#2563EB" />{t}</li>
                 ))}
               </ul>
@@ -7929,7 +7948,7 @@ function LandingPage() {
               <h3>Post-hearing transcription</h3>
               <p>Already have the court audio? Upload it and we'll match you with a certified reporter who'll transcribe, certify, and deliver, with your case docs pre-loaded for accuracy.</p>
               <ul className="usecase-list">
-                {["Upload MP3, WAV, or court-format audio", "AI-assisted workspace for faster turnaround", "Supporting docs reduce back-and-forth", "Interpreter-aware page estimates"].map((t, i) => (
+                {["Upload MP3, WAV, or court-format audio", "Track job progress in real time", "Message your CSR directly through the platform", "Supporting docs reduce back-and-forth"].map((t, i) => (
                   <li key={i}><Icon name="checkCircle" size={16} color="#D97706" />{t}</li>
                 ))}
               </ul>
@@ -7939,10 +7958,10 @@ function LandingPage() {
           <div style={{marginTop: 32, background: "#fff", border: "1px solid #E2E8F0", borderRadius: 16, padding: "32px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 24}}>
             <div style={{flex: 1, minWidth: 260}}>
               <div style={{fontSize: 11, fontWeight: 700, color: "#059669", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8}}>Use case C</div>
-              <h3 style={{fontSize: 20, fontWeight: 700, color: "#0F172A", marginBottom: 8}}>Request a transcript copy</h3>
-              <p style={{fontSize: 15, color: "#64748B", lineHeight: 1.7, margin: 0}}>Opposing counsel already ordered the transcript? Search by case number and request your copy at the statutory copy rate plus a flat 12% platform fee. Delivered within 2 business days.</p>
+              <h3 style={{fontSize: 20, fontWeight: 700, color: "#0F172A", marginBottom: 8}}>Find the reporter for an existing case</h3>
+              <p style={{fontSize: 15, color: "#64748B", lineHeight: 1.7, margin: 0}}>Need a copy of a transcript already created in your case? Search by case number to find the original CSR and request a copy directly from them. Per California law, all parties will be notified before the CSR releases the copy.</p>
             </div>
-            <a href="#/request-copy" className="btn btn-primary btn-sm" style={{whiteSpace: "nowrap"}}>Request a copy <Icon name="arrowRight" size={14} color="#fff" /></a>
+            <a href="#/request-copy" className="btn btn-primary btn-sm" style={{whiteSpace: "nowrap"}}>Find the CSR <Icon name="arrowRight" size={14} color="#fff" /></a>
           </div>
         </div>
       </section>
@@ -7959,7 +7978,7 @@ function LandingPage() {
               </p>
               <div className="attorneys-actions">
                 <a href="#/attorney-signup" className="btn btn-primary btn-sm">Start ordering <Icon name="arrowRight" size={16} color="#fff" /></a>
-                <a href="#pricing" className="btn btn-secondary btn-sm">See pricing</a>
+                <a href="#pricing" className="btn btn-secondary btn-sm" onClick={e => { e.preventDefault(); document.getElementById("pricing")?.scrollIntoView({behavior: "smooth", block: "start"}); }}>See pricing</a>
               </div>
             </div>
             <div className="features-grid">
@@ -8879,6 +8898,12 @@ function RequestCopyPage() {
   const [results, setResults] = useState([]);
   const [selected, setSelected] = useState(null);
   const [searched, setSearched] = useState(false);
+  const [requesterName, setRequesterName] = useState("");
+  const [requesterEmail, setRequesterEmail] = useState("");
+  const [requesterFirm, setRequesterFirm] = useState("");
+  const [requesterRole, setRequesterRole] = useState("");
+  const [requesterMessage, setRequesterMessage] = useState("");
+  const [acknowledged, setAcknowledged] = useState(false);
 
   const doSearch = () => {
     const q = query.trim().toLowerCase();
@@ -8892,25 +8917,27 @@ function RequestCopyPage() {
 
   const handleKeyDown = (e) => { if (e.key === "Enter") doSearch(); };
 
-  const copyFee = selected ? (selected.pages * COPY_RATE_PER_PAGE) : 0;
-  const platformFee = copyFee * PRICING.platformFee;
-  const total = copyFee + platformFee;
-
   return (
     <div>
       <AppNav variant="buyer" activeTab="" onTabChange={() => {}} />
       <div className="page page-enter">
         <div className="container" style={{maxWidth: 720}}>
-          <StepIndicator current={step} total={4} labels={["Search", "Details", "Pricing", "Confirmation"]} />
+          <StepIndicator current={step} total={3} labels={["Find the case", "Contact the reporter", "Confirmation"]} />
 
           {step === 1 && (
             <div>
               <div className="page-header" style={{marginTop: 32}}>
                 <div>
-                  <h1>Request a transcript copy</h1>
-                  <p>Search for an existing transcript by case number or case name.</p>
+                  <h1>Find the court reporter for an existing case</h1>
+                  <p>Search by case number or case name to identify the original CSR. You can then send them a request for a copy directly.</p>
                 </div>
               </div>
+
+              <div style={{padding: 14, background: "#EFF6FF", border: "1px solid #93C5FD", borderRadius: 10, marginBottom: 20, fontSize: 13, color: "#1E40AF", lineHeight: 1.6}}>
+                <Icon name="info" size={14} color="#3B82F6" style={{marginRight: 6, verticalAlign: "-2px"}} />
+                Per California law (CCP &sect; 2025.570), only the original CSR can release transcript copies — and they're required to notify all parties before doing so. Dewey Sholes facilitates the connection but doesn't sell or store transcripts.
+              </div>
+
               <div style={{display: "flex", gap: 8, marginBottom: 24}}>
                 <input
                   className="form-input"
@@ -8928,7 +8955,7 @@ function RequestCopyPage() {
               {searched && results.length === 0 && (
                 <div style={{textAlign: "center", padding: 48, color: "var(--text-muted, #94A3B8)"}}>
                   <Icon name="search" size={32} color="var(--text-dim, #CBD5E1)" />
-                  <p style={{marginTop: 12, fontSize: 15}}>No transcripts found for "{query}". Try a different case number or name.</p>
+                  <p style={{marginTop: 12, fontSize: 15}}>No matching cases found for "{query}". Try a different case number or name.</p>
                 </div>
               )}
 
@@ -8951,14 +8978,16 @@ function RequestCopyPage() {
                           <div style={{fontSize: 13, color: "var(--text-muted, #64748B)", marginTop: 4}}>{t.caseNumber} &middot; {t.court}</div>
                         </div>
                         <div style={{textAlign: "right"}}>
-                          <div style={{fontSize: 13, color: "var(--text-muted, #64748B)"}}>{t.pages} pages</div>
-                          <div style={{fontSize: 12, color: "var(--text-dim, #94A3B8)", marginTop: 2}}>{new Date(t.date).toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"})}</div>
+                          <div style={{fontSize: 12, color: "var(--text-dim, #94A3B8)"}}>{new Date(t.date).toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"})}</div>
                         </div>
                       </div>
-                      <div style={{display: "flex", alignItems: "center", gap: 8, marginTop: 8, fontSize: 13, color: "var(--text-secondary, #475569)"}}>
-                        <Icon name="user" size={14} color="var(--text-dim, #94A3B8)" />
-                        Reporter: {t.reporter}
-                        <span style={{marginLeft: "auto", color: "#2563EB", fontWeight: 600, fontSize: 13}}>Select &rarr;</span>
+                      <div style={{display: "flex", alignItems: "center", gap: 8, marginTop: 10, fontSize: 13, color: "var(--text-secondary, #475569)"}}>
+                        <div style={{width: 28, height: 28, borderRadius: "50%", background: "#DBEAFE", display: "flex", alignItems: "center", justifyContent: "center", color: "#2563EB", fontWeight: 700, fontSize: 11}}>{t.reporter.split(" ").map(w => w[0]).join("").slice(0,2)}</div>
+                        <div>
+                          <div style={{fontWeight: 600, color: "var(--text, #0F172A)"}}>{t.reporter}</div>
+                          <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Original court reporter</div>
+                        </div>
+                        <span style={{marginLeft: "auto", color: "#2563EB", fontWeight: 600, fontSize: 13}}>Contact &rarr;</span>
                       </div>
                     </div>
                   ))}
@@ -8971,114 +9000,106 @@ function RequestCopyPage() {
             <div>
               <div className="page-header" style={{marginTop: 32}}>
                 <div>
-                  <h1>Transcript details</h1>
-                  <p>Review the transcript details before requesting your copy.</p>
+                  <h1>Contact the reporter</h1>
+                  <p>Send a copy request directly to {selected.reporter}. The reporter decides whether and when to fulfill it.</p>
                 </div>
               </div>
-              <div style={{background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, padding: 32}}>
-                <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24}}>
+
+              <div style={{background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12, padding: 20, marginBottom: 20}}>
+                <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8}}>Case</div>
+                <div style={{fontWeight: 700, fontSize: 16, color: "var(--text, #0F172A)", marginBottom: 4}}>{selected.caseName}</div>
+                <div style={{fontSize: 13, color: "var(--text-secondary, #475569)"}}>{selected.caseNumber} &middot; {selected.court} &middot; {new Date(selected.date).toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"})}</div>
+                <div style={{marginTop: 12, paddingTop: 12, borderTop: "1px solid var(--border, #E2E8F0)", display: "flex", alignItems: "center", gap: 10}}>
+                  <div style={{width: 36, height: 36, borderRadius: "50%", background: "#DBEAFE", display: "flex", alignItems: "center", justifyContent: "center", color: "#2563EB", fontWeight: 700, fontSize: 13}}>{selected.reporter.split(" ").map(w => w[0]).join("").slice(0,2)}</div>
                   <div>
-                    <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4}}>Case name</div>
-                    <div style={{fontSize: 16, fontWeight: 600, color: "var(--text, #0F172A)"}}>{selected.caseName}</div>
-                  </div>
-                  <div>
-                    <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4}}>Case number</div>
-                    <div style={{fontSize: 16, fontWeight: 600, color: "var(--text, #0F172A)"}}>{selected.caseNumber}</div>
-                  </div>
-                  <div>
-                    <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4}}>Court</div>
-                    <div style={{fontSize: 15, color: "var(--text-secondary, #475569)"}}>{selected.court}</div>
-                  </div>
-                  <div>
-                    <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4}}>Hearing date</div>
-                    <div style={{fontSize: 15, color: "var(--text-secondary, #475569)"}}>{new Date(selected.date).toLocaleDateString("en-US", {month: "long", day: "numeric", year: "numeric"})}</div>
-                  </div>
-                  <div>
-                    <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4}}>Page count</div>
-                    <div style={{fontSize: 15, color: "var(--text-secondary, #475569)"}}>{selected.pages} pages</div>
-                  </div>
-                  <div>
-                    <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-dim, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4}}>Original reporter</div>
-                    <div style={{fontSize: 15, color: "var(--text-secondary, #475569)"}}>{selected.reporter}</div>
+                    <div style={{fontWeight: 600, color: "var(--text, #0F172A)", fontSize: 14}}>{selected.reporter}</div>
+                    <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>Accepts copy requests through Dewey Sholes</div>
                   </div>
                 </div>
               </div>
-              <div style={{display: "flex", gap: 12, marginTop: 24}}>
+
+              <div className="form-row" style={{marginBottom: 14}}>
+                <div className="form-group">
+                  <label className="form-label">Your name</label>
+                  <input className="form-input" placeholder="Jane Smith, Esq." value={requesterName} onChange={e => setRequesterName(e.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Email</label>
+                  <input className="form-input" type="email" placeholder="jane@firm.com" value={requesterEmail} onChange={e => setRequesterEmail(e.target.value)} />
+                </div>
+              </div>
+              <div className="form-row" style={{marginBottom: 14}}>
+                <div className="form-group">
+                  <label className="form-label">Firm</label>
+                  <input className="form-input" placeholder="Smith & Associates" value={requesterFirm} onChange={e => setRequesterFirm(e.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Your role in this case</label>
+                  <select className="form-input form-select" value={requesterRole} onChange={e => setRequesterRole(e.target.value)}>
+                    <option value="">Select role...</option>
+                    <option>Plaintiff's counsel</option>
+                    <option>Defense counsel</option>
+                    <option>Co-counsel</option>
+                    <option>Self-represented party</option>
+                    <option>Other party in the case</option>
+                  </select>
+                </div>
+              </div>
+              <div className="form-group" style={{marginBottom: 16}}>
+                <label className="form-label">Message to the reporter <span style={{fontWeight: 400, color: "#94A3B8"}}>(optional)</span></label>
+                <textarea className="form-input" rows={3} placeholder="e.g. Please send an electronic copy. Happy to pay statutory copy rate." value={requesterMessage} onChange={e => setRequesterMessage(e.target.value)} style={{resize: "vertical"}} />
+              </div>
+
+              <div style={{padding: 14, background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: 10, marginBottom: 16, fontSize: 13, color: "#78350F", lineHeight: 1.6}}>
+                <strong>What happens next:</strong>
+                <ul style={{margin: "8px 0 0 16px", padding: 0}}>
+                  <li>The reporter receives your request and decides whether to fulfill it</li>
+                  <li>If they accept, they'll notify all parties (CCP &sect; 2025.570 requires a 30-day window for protective orders)</li>
+                  <li>After that window, the reporter delivers the copy at the statutory copy rate ($0.65/page) plus our 12% platform fee</li>
+                  <li>Dewey Sholes does not store transcripts or fulfill copy requests directly — the reporter is in control</li>
+                </ul>
+              </div>
+
+              <label style={{display: "flex", gap: 10, fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.6, marginBottom: 20, cursor: "pointer"}}>
+                <input type="checkbox" checked={acknowledged} onChange={e => setAcknowledged(e.target.checked)} style={{marginTop: 3, flexShrink: 0}} />
+                I confirm I am a party to this case (or representing one) and acknowledge that delivery times and fees are set by the reporter.
+              </label>
+
+              <div style={{display: "flex", gap: 12}}>
                 <button className="btn btn-secondary btn-sm" onClick={() => setStep(1)}>&larr; Back to search</button>
-                <button className="btn btn-primary btn-sm" onClick={() => setStep(3)}>Continue to pricing <Icon name="arrowRight" size={14} color="#fff" /></button>
+                <button className="btn btn-primary btn-sm" style={{opacity: (requesterName && requesterEmail && requesterFirm && requesterRole && acknowledged) ? 1 : 0.5}} disabled={!requesterName || !requesterEmail || !requesterFirm || !requesterRole || !acknowledged} onClick={() => setStep(3)}>
+                  Send request to reporter <Icon name="arrowRight" size={14} color="#fff" />
+                </button>
               </div>
             </div>
           )}
 
           {step === 3 && selected && (
-            <div>
-              <div className="page-header" style={{marginTop: 32}}>
-                <div>
-                  <h1>Copy pricing</h1>
-                  <p>Pricing is based on statutory copy rates in California.</p>
-                </div>
-              </div>
-              <div style={{background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, overflow: "hidden"}}>
-                <div style={{padding: 32}}>
-                  <div style={{fontSize: 14, fontWeight: 600, color: "var(--text, #0F172A)", marginBottom: 4}}>{selected.caseName}</div>
-                  <div style={{fontSize: 13, color: "var(--text-muted, #64748B)", marginBottom: 24}}>{selected.caseNumber} &middot; {selected.pages} pages</div>
-
-                  <div style={{display: "flex", justifyContent: "space-between", padding: "16px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)"}}>
-                    <div>
-                      <div style={{fontSize: 15, fontWeight: 600, color: "var(--text, #0F172A)"}}>Copy fee</div>
-                      <div style={{fontSize: 13, color: "var(--text-muted, #64748B)", marginTop: 2}}>{selected.pages} pages x ${COPY_RATE_PER_PAGE.toFixed(2)}/page</div>
-                    </div>
-                    <div style={{fontSize: 15, fontWeight: 600, color: "var(--text, #0F172A)"}}>${copyFee.toFixed(2)}</div>
-                  </div>
-                  <div style={{display: "flex", justifyContent: "space-between", padding: "16px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)"}}>
-                    <div>
-                      <div style={{fontSize: 15, fontWeight: 600, color: "var(--text, #0F172A)"}}>Platform fee</div>
-                      <div style={{fontSize: 13, color: "var(--text-muted, #64748B)", marginTop: 2}}>{(PRICING.platformFee * 100).toFixed(0)}% of copy fee</div>
-                    </div>
-                    <div style={{fontSize: 15, fontWeight: 600, color: "var(--text, #0F172A)"}}>${platformFee.toFixed(2)}</div>
-                  </div>
-                  <div style={{display: "flex", justifyContent: "space-between", padding: "20px 0 0"}}>
-                    <div style={{fontSize: 18, fontWeight: 800, color: "var(--text, #0F172A)"}}>Total</div>
-                    <div style={{fontSize: 24, fontWeight: 800, color: "#059669"}}>${total.toFixed(2)}</div>
-                  </div>
-                </div>
-                <div style={{background: "var(--bg-muted, #F8FAFC)", padding: "16px 32px", fontSize: 13, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
-                  Copy rate is the California statutory rate for transcript copies. The reporter receives the full copy fee.
-                </div>
-              </div>
-              <div style={{display: "flex", gap: 12, marginTop: 24}}>
-                <button className="btn btn-secondary btn-sm" onClick={() => setStep(2)}>&larr; Back</button>
-                <button className="btn btn-primary btn-sm" onClick={() => setStep(4)}>Request copy <Icon name="arrowRight" size={14} color="#fff" /></button>
-              </div>
-            </div>
-          )}
-
-          {step === 4 && selected && (
             <div style={{textAlign: "center", padding: "48px 0"}}>
               <div style={{width: 64, height: 64, borderRadius: "50%", background: "#D1FAE5", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 24}}>
                 <Icon name="checkCircle" size={32} color="#059669" />
               </div>
-              <h1 style={{fontSize: 28, fontWeight: 800, color: "var(--text, #0F172A)", letterSpacing: "-0.02em"}}>Copy request submitted</h1>
-              <p style={{fontSize: 16, color: "var(--text-muted, #64748B)", marginTop: 12, maxWidth: 480, marginLeft: "auto", marginRight: "auto", lineHeight: 1.7}}>
-                Your copy request for <strong>{selected.caseName}</strong> has been submitted. The reporter will be notified and your copy will be delivered within 2 business days.
+              <h1 style={{fontSize: 28, fontWeight: 800, color: "var(--text, #0F172A)", letterSpacing: "-0.02em"}}>Request sent</h1>
+              <p style={{fontSize: 16, color: "var(--text-muted, #64748B)", marginTop: 12, maxWidth: 520, marginLeft: "auto", marginRight: "auto", lineHeight: 1.7}}>
+                Your copy request has been sent to <strong>{selected.reporter}</strong>. They'll review it and notify all parties before releasing a copy. You'll receive an email when they respond.
               </p>
-              <div style={{background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12, padding: 20, maxWidth: 400, margin: "32px auto", textAlign: "left"}}>
+              <div style={{background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12, padding: 20, maxWidth: 440, margin: "32px auto", textAlign: "left"}}>
                 <div style={{display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8}}>
                   <span style={{color: "var(--text-muted, #64748B)"}}>Case</span>
                   <span style={{fontWeight: 600, color: "var(--text, #0F172A)"}}>{selected.caseName}</span>
                 </div>
                 <div style={{display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8}}>
-                  <span style={{color: "var(--text-muted, #64748B)"}}>Pages</span>
-                  <span style={{fontWeight: 600, color: "var(--text, #0F172A)"}}>{selected.pages}</span>
+                  <span style={{color: "var(--text-muted, #64748B)"}}>Reporter</span>
+                  <span style={{fontWeight: 600, color: "var(--text, #0F172A)"}}>{selected.reporter}</span>
                 </div>
                 <div style={{display: "flex", justifyContent: "space-between", fontSize: 14}}>
-                  <span style={{color: "var(--text-muted, #64748B)"}}>Total</span>
-                  <span style={{fontWeight: 700, color: "#059669"}}>${total.toFixed(2)}</span>
+                  <span style={{color: "var(--text-muted, #64748B)"}}>Status</span>
+                  <span style={{fontWeight: 600, color: "#D97706"}}>Awaiting reporter response</span>
                 </div>
               </div>
               <div style={{display: "flex", gap: 12, justifyContent: "center", marginTop: 24}}>
                 <a href="#/dashboard" className="btn btn-primary btn-sm">Back to dashboard <Icon name="arrowRight" size={14} color="#fff" /></a>
-                <button className="btn btn-secondary btn-sm" onClick={() => { setStep(1); setSelected(null); setQuery(""); setResults([]); setSearched(false); }}>Request another copy</button>
+                <button className="btn btn-secondary btn-sm" onClick={() => { setStep(1); setSelected(null); setQuery(""); setResults([]); setSearched(false); setRequesterName(""); setRequesterEmail(""); setRequesterFirm(""); setRequesterRole(""); setRequesterMessage(""); setAcknowledged(false); }}>Find another case</button>
               </div>
             </div>
           )}
