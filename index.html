@@ -6620,7 +6620,7 @@ function ReporterOnboarding() {
               </p>
             </div>
             <div style={{background: "var(--bg-muted, #F1F5F9)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12, padding: 14, fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.6}}>
-              <strong>Note:</strong> Firm accounts include centralized billing and a single dashboard to manage all reporters. Designed for independent practices, not staffing agencies.
+              <strong>Note:</strong> CSR firm accounts include centralized billing and a single dashboard to manage all reporters. Designed for independent court reporting practices, not staffing agencies.
             </div>
           </div>
         )}
@@ -7798,8 +7798,8 @@ function LandingPage() {
             </a>
             <div className="nav-links">
               <a href="#how-it-works" onClick={e => { e.preventDefault(); document.getElementById("how-it-works")?.scrollIntoView({behavior: "smooth", block: "start"}); }}>How it works</a>
-              <a href="#attorneys" onClick={e => { e.preventDefault(); document.getElementById("attorneys")?.scrollIntoView({behavior: "smooth", block: "start"}); }}>For attorneys</a>
-              <a href="#reporters" onClick={e => { e.preventDefault(); document.getElementById("reporters")?.scrollIntoView({behavior: "smooth", block: "start"}); }}>For reporters</a>
+              <a href="#/for-attorneys">For attorneys</a>
+              <a href="#/for-reporters">For reporters</a>
               <a href="#pricing" onClick={e => { e.preventDefault(); document.getElementById("pricing")?.scrollIntoView({behavior: "smooth", block: "start"}); }}>Pricing</a>
             </div>
             <div className="nav-actions">
@@ -7997,63 +7997,35 @@ function LandingPage() {
       </section>
 
       {/* ─── FOR ATTORNEYS ─── */}
-      <section id="attorneys" className="attorneys">
+      {/* ─── AUDIENCE TEASER: For attorneys + For reporters ─── */}
+      <section id="attorneys" className="attorneys" style={{padding: "64px 0"}}>
         <div className="container">
-          <div className="attorneys-grid">
-            <div>
-              <div className="attorneys-label">For attorneys & law firms</div>
-              <h2>Stop chasing reporters.<br /><span>Start tracking cases.</span></h2>
-              <p style={{marginTop: 24, fontSize: 18, color: "#64748B", lineHeight: 1.7}}>
-                Your firm handles dozens of active matters. Dewey Sholes gives you a persistent case management layer, not just one-off order forms, so your entire transcript history lives in one place.
+          <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24, maxWidth: 1100, margin: "0 auto"}}>
+            {/* For attorneys */}
+            <div style={{padding: 36, background: "linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)", border: "1px solid #93C5FD", borderRadius: 20}}>
+              <div style={{fontSize: 11, fontWeight: 700, color: "#1D4ED8", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 12}}>For attorneys &amp; law firms</div>
+              <h2 style={{fontSize: 28, fontWeight: 800, color: "#0F172A", letterSpacing: "-0.01em", lineHeight: 1.2, marginBottom: 12}}>Stop chasing reporters. Start tracking cases.</h2>
+              <p style={{fontSize: 15, color: "#475569", lineHeight: 1.7, marginBottom: 20}}>
+                A persistent case management layer with the reporter marketplace built in. Split costs across parties, set your deadline and let pricing calculate automatically, and book the same trusted CSRs every time.
               </p>
-              <div className="attorneys-actions">
-                <a href="#/attorney-signup" className="btn btn-primary btn-sm">Start ordering <Icon name="arrowRight" size={16} color="#fff" /></a>
-                <a href="#pricing" className="btn btn-secondary btn-sm" onClick={e => { e.preventDefault(); document.getElementById("pricing")?.scrollIntoView({behavior: "smooth", block: "start"}); }}>See pricing</a>
+              <div style={{display: "flex", gap: 10, flexWrap: "wrap"}}>
+                <a href="#/for-attorneys" className="btn btn-primary btn-sm">Learn more for attorneys <Icon name="arrowRight" size={14} color="#fff" /></a>
+                <a href="#/attorney-signup" className="btn btn-secondary btn-sm">Get started</a>
               </div>
             </div>
-            <div className="features-grid">
-              {[
-                { icon: "fileText", title: "Case library that remembers", desc: "Create a case once. Every future order auto-fills from your case record: court, parties, judge, department." },
-                { icon: "dollarSign", title: "Split costs in two clicks", desc: "Multi-party case? Add co-counsel and split the transcript cost. Everyone pays upfront — the reporter gets paid in full, no chasing." },
-                { icon: "star", title: "Quality you can trust", desc: "Every reporter is rated on quality by attorneys and tracked on timeliness automatically. Read real feedback from other attorneys before you book." },
-                { icon: "clock", title: "Deadline-driven pricing", desc: "Set your need-by date and the price calculates automatically. The closer your deadline, the higher the rate — no hidden fees, no surprises." },
-              ].map((f, i) => (
-                <div className="feature-card" key={i}>
-                  <Icon name={f.icon} size={20} color="#2563EB" />
-                  <h3>{f.title}</h3>
-                  <p>{f.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ─── FOR REPORTERS ─── */}
-      <section id="reporters" className="reporters">
-        <div className="reporters-bg1"></div>
-        <div className="reporters-bg2"></div>
-        <div className="container" style={{position: "relative"}}>
-          <div className="reporters-label">For court reporters</div>
-          <div className="section-header">
-            <h2>Your license. Your tools.<br /><span>Our platform handles the rest.</span></h2>
-            <p>Accept jobs that match your jurisdiction and availability. Use your own CAT software or our built-in workspace. Get paid automatically.</p>
-          </div>
-          <div className="reporters-grid">
-            {[
-              { icon: "zap", title: "Jobs that find you", desc: "Get push notifications for jobs matching your preferences. See the deadline and your earnings upfront. Accept with one tap — decline with no penalty.", bg: "linear-gradient(135deg, #2563EB, #06B6D4)" },
-              { icon: "dollarSign", title: "Keep 100% of your rate", desc: "No agency taking 50-85% of your earnings. You keep the full statutory rate on every job. Payment within 2 business days of delivery, every time.", bg: "linear-gradient(135deg, #059669, #14B8A6)" },
-              { icon: "star", title: "Build your reputation", desc: "Attorneys rate your quality after every delivery and can mark you as a preferred vendor — giving you first right of refusal on their future jobs. Great ratings mean you appear first in search and get more offers.", bg: "linear-gradient(135deg, #F59E0B, #F97316)" },
-            ].map((c, i) => (
-              <div className="reporter-card" key={i}>
-                <div className="reporter-card-icon" style={{background: c.bg}}><Icon name={c.icon} size={20} color="#fff" /></div>
-                <h3>{c.title}</h3>
-                <p>{c.desc}</p>
+            {/* For reporters */}
+            <div id="reporters" style={{padding: 36, background: "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)", borderRadius: 20, color: "#fff"}}>
+              <div style={{fontSize: 11, fontWeight: 700, color: "#34D399", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 12}}>For court reporters</div>
+              <h2 style={{fontSize: 28, fontWeight: 800, color: "#fff", letterSpacing: "-0.01em", lineHeight: 1.2, marginBottom: 12}}>Your license. Your tools. We handle the rest.</h2>
+              <p style={{fontSize: 15, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: 20}}>
+                Accept jobs that match your preferences. Keep 100% of your statutory rate — no agency cut. Get paid in two business days. Build your reputation through ratings and preferred-vendor status.
+              </p>
+              <div style={{display: "flex", gap: 10, flexWrap: "wrap"}}>
+                <a href="#/for-reporters" className="btn" style={{background: "#fff", color: "#0F172A", padding: "8px 16px", fontSize: 14, fontWeight: 600, borderRadius: 8, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6}}>Learn more for CSRs <Icon name="arrowRight" size={14} color="#0F172A" /></a>
+                <a href="#/reporter-signup" className="btn" style={{background: "transparent", color: "#fff", border: "1px solid rgba(255,255,255,0.3)", padding: "8px 16px", fontSize: 14, fontWeight: 600, borderRadius: 8, textDecoration: "none"}}>Apply to join</a>
               </div>
-            ))}
-          </div>
-          <div className="reporters-cta">
-            <a href="#/reporter-signup" className="btn btn-white">Apply to join the network <Icon name="arrowRight" size={16} color="#1E40AF" /></a>
+            </div>
           </div>
         </div>
       </section>
@@ -8156,19 +8128,19 @@ function LandingPage() {
                 <a href="#/reporter-signup" className="btn btn-secondary">Get started</a>
               </div>
               <div className="reporter-tier-card featured">
-                <div className="reporter-tier-badge">Best for small firms</div>
-                <h3>Firm account</h3>
-                <div className="tier-sub">Centralized billing & one dashboard for your practice.</div>
+                <div className="reporter-tier-badge">Best for small CSR firms</div>
+                <h3>CSR firm account</h3>
+                <div className="tier-sub">For court reporting practices with multiple CSRs. Centralized billing and one dashboard for the whole firm.</div>
                 <div className="reporter-tier-price"><span style={{textDecoration: "line-through", color: "#94A3B8", fontSize: 24}}>${PRICING.firmPerReporter}</span> <span style={{fontSize: 40, fontWeight: 800, color: "#059669"}}>$0</span><span> / reporter / first year</span></div>
                 <ul className="reporter-tier-features">
                   <li><Icon name="checkCircle" size={16} color="#059669" />Everything in Individual, plus:</li>
-                  <li><Icon name="checkCircle" size={16} color="#059669" />{PRICING.firmMinReporters}–{PRICING.firmMaxReporters} reporters under one account</li>
+                  <li><Icon name="checkCircle" size={16} color="#059669" />{PRICING.firmMinReporters}–{PRICING.firmMaxReporters} CSRs under one account</li>
                   <li><Icon name="checkCircle" size={16} color="#059669" />Single invoice, centralized billing</li>
                   <li><Icon name="checkCircle" size={16} color="#059669" />Firm-wide availability dashboard</li>
-                  <li><Icon name="checkCircle" size={16} color="#059669" />Add or remove reporters anytime</li>
+                  <li><Icon name="checkCircle" size={16} color="#059669" />Add or remove CSRs anytime</li>
                 </ul>
-                <a href="#/reporter-signup" className="btn btn-primary">Start firm signup</a>
-                <div className="reporter-tier-note">Designed for independent practices, not staffing agencies</div>
+                <a href="#/reporter-signup" className="btn btn-primary">Start CSR firm signup</a>
+                <div className="reporter-tier-note">Designed for independent court reporting practices, not staffing agencies</div>
               </div>
             </div>
           </div>
@@ -8261,8 +8233,8 @@ function LandingPage() {
             <div>
               <h4>Platform</h4>
               <ul>
-                <li><a href="#/attorney-signup">For attorneys</a></li>
-                <li><a href="#/reporter-signup">For reporters</a></li>
+                <li><a href="#/for-attorneys">For attorneys</a></li>
+                <li><a href="#/for-reporters">For reporters</a></li>
                 <li><a href="#/reporters">Find a reporter</a></li>
                 <li><a href="#/order">Place an order</a></li>
               </ul>
@@ -9355,6 +9327,173 @@ function ForgotPasswordPage() {
   );
 }
 
+// ─── For Attorneys page ─────────────────────────────────
+function ForAttorneysPage() {
+  const features = [
+    { icon: "fileText", title: "Case library that remembers", desc: "Create a case once. Every future order auto-fills from your case record: court, parties, judge, department. No more re-typing the same details every hearing." },
+    { icon: "dollarSign", title: "Split costs in two clicks", desc: "Multi-party case? Add co-counsel and split the transcript cost. Each party pays their share through a secure link. The reporter is only assigned once everyone's paid — no chasing payments after the fact." },
+    { icon: "star", title: "Quality you can trust", desc: "Every reporter is rated on quality by other attorneys and tracked on timeliness automatically. Read real feedback before you book. Mark CSRs as preferred vendors so they appear first when you order." },
+    { icon: "clock", title: "Deadline-driven pricing", desc: "Set your need-by date and the price calculates automatically — no negotiation, no hidden fees. The closer your deadline, the higher the rate. Want to save money? Order earlier." },
+    { icon: "users", title: "Firm-wide visibility", desc: "Multiple attorneys and staff under one account. Role-based access for paralegals, legal assistants, and partners. Consolidated billing itemized by case and matter number." },
+    { icon: "shield", title: "TRF reimbursement built in", desc: "When your client has a fee waiver, we auto-generate the Transcript Reimbursement Fund paperwork. Submit to the court — reimbursement typically arrives in 8-10 weeks, up to $2,500 per case." },
+  ];
+  const steps = [
+    { num: "01", icon: "fileText", title: "Place your order", desc: "Select live attendance or post-hearing transcription. Enter case details, set your delivery deadline, and the price calculates automatically." },
+    { num: "02", icon: "zap", title: "We match a reporter", desc: "A licensed, jurisdiction-verified CSR accepts your job, usually within hours. Preference is given to CSRs you've prioritized. You're notified instantly." },
+    { num: "03", icon: "checkCircle", title: "Certified transcript, delivered", desc: "Your court-admissible transcript arrives on schedule with the reporter's certification attached. Review, accept, and payment is automatic." },
+  ];
+  return (
+    <div>
+      <nav className="app-nav">
+        <div className="container">
+          <div className="app-nav-inner">
+            <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+            <div style={{display: "flex", alignItems: "center", gap: 16}}>
+              <ThemeToggle />
+              <a href="#/" style={{fontSize: 13, color: "var(--text-muted, #64748B)", textDecoration: "none"}}>Back to home</a>
+              <a href="#/attorney-signup" className="btn btn-primary btn-sm">Get started</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div className="page page-enter" style={{paddingTop: 48, paddingBottom: 80}}>
+        <div className="container" style={{maxWidth: 980}}>
+          <div style={{textAlign: "center", marginBottom: 48}}>
+            <div style={{display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px", background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: 100, fontSize: 11, fontWeight: 700, color: "#1D4ED8", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 24}}>For attorneys & law firms</div>
+            <h1 style={{fontSize: 48, fontWeight: 800, color: "var(--text, #0F172A)", letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: 16}}>Stop chasing reporters.<br /><span className="gradient-text">Start tracking cases.</span></h1>
+            <p style={{fontSize: 18, color: "var(--text-secondary, #475569)", lineHeight: 1.7, maxWidth: 680, margin: "0 auto"}}>Your firm handles dozens of active matters. Dewey Sholes gives you a persistent case management layer — not just a one-off order form — so your entire transcript history lives in one place.</p>
+            <div style={{display: "flex", gap: 12, justifyContent: "center", marginTop: 32, flexWrap: "wrap"}}>
+              <a href="#/attorney-signup" className="btn btn-primary">Start ordering <Icon name="arrowRight" size={16} color="#fff" /></a>
+              <a href="#/order" className="btn btn-secondary">Place a one-time order</a>
+            </div>
+          </div>
+
+          <div style={{padding: 32, background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 20, marginBottom: 48}}>
+            <h2 style={{fontSize: 24, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 24, textAlign: "center"}}>How it works for attorneys</h2>
+            <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20}}>
+              {steps.map((s, i) => (
+                <div key={i} style={{padding: 20, background: "var(--bg-muted, #F8FAFC)", borderRadius: 14}}>
+                  <div style={{display: "flex", alignItems: "center", gap: 12, marginBottom: 12}}>
+                    <div style={{width: 40, height: 40, borderRadius: 10, background: "linear-gradient(135deg, #2563EB, #4F46E5)", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                      <Icon name={s.icon} size={18} color="#fff" />
+                    </div>
+                    <span style={{fontSize: 13, fontWeight: 700, color: "var(--text-muted, #94A3B8)", letterSpacing: "0.05em"}}>{s.num}</span>
+                  </div>
+                  <h3 style={{fontSize: 16, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 8}}>{s.title}</h3>
+                  <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.6, margin: 0}}>{s.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <h2 style={{fontSize: 28, fontWeight: 800, color: "var(--text, #0F172A)", textAlign: "center", marginBottom: 8}}>Built for the way your firm actually works</h2>
+          <p style={{fontSize: 16, color: "var(--text-secondary, #475569)", textAlign: "center", maxWidth: 600, margin: "0 auto 40px"}}>Most platforms are glorified order forms. Dewey Sholes is a case management layer with the marketplace built in.</p>
+          <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, marginBottom: 48}}>
+            {features.map((f, i) => (
+              <div key={i} style={{padding: 24, background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 14}}>
+                <div style={{width: 40, height: 40, borderRadius: 10, background: "#EFF6FF", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14}}>
+                  <Icon name={f.icon} size={20} color="#2563EB" />
+                </div>
+                <h3 style={{fontSize: 16, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 8}}>{f.title}</h3>
+                <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.7, margin: 0}}>{f.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div style={{padding: 32, background: "linear-gradient(135deg, #1E40AF, #4338CA)", borderRadius: 20, textAlign: "center", color: "#fff"}}>
+            <h2 style={{fontSize: 24, fontWeight: 800, color: "#fff", marginBottom: 8}}>Pilot pricing for early firms</h2>
+            <p style={{fontSize: 15, color: "rgba(255,255,255,0.85)", lineHeight: 1.6, marginBottom: 20, maxWidth: 540, margin: "0 auto 20px"}}>Sign up during our 6-month pilot and lock in an 8% platform fee for your first year (normally 12%). Personal onboarding support included.</p>
+            <a href="#/attorney-signup" className="btn btn-white" style={{display: "inline-flex"}}>Get started <Icon name="arrowRight" size={16} color="#1E40AF" /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── For Reporters page ─────────────────────────────────
+function ForReportersPage() {
+  const benefits = [
+    { icon: "zap", title: "Jobs that find you", desc: "Get push notifications for jobs matching your preferences. See the deadline and your earnings upfront. Accept with one tap — decline with no penalty.", bg: "linear-gradient(135deg, #2563EB, #06B6D4)" },
+    { icon: "dollarSign", title: "Keep 100% of your rate", desc: "No agency taking 50-85% of your earnings. You keep the full statutory rate on every job. Payment within 2 business days of delivery, every time.", bg: "linear-gradient(135deg, #059669, #14B8A6)" },
+    { icon: "star", title: "Build your reputation", desc: "Attorneys rate your quality after every delivery and can mark you as a preferred vendor — giving you first right of refusal on their future jobs. Great ratings mean you appear first in search and get more offers.", bg: "linear-gradient(135deg, #F59E0B, #F97316)" },
+    { icon: "clock", title: "Real-time check-ins", desc: "The platform pings you mid-job to keep delivery on track. If you need more time, request an extension. If you can't finish, release the job — early releases don't count against you.", bg: "linear-gradient(135deg, #7C3AED, #A855F7)" },
+    { icon: "shield", title: "Credentials handled", desc: "Your CSR license is auto-verified at signup and re-checked quarterly. W-9 collected at first payout — no paperwork upfront. We file your 1099 at year-end.", bg: "linear-gradient(135deg, #DC2626, #F97316)" },
+    { icon: "users", title: "No exclusivity, ever", desc: "Use Dewey Sholes for some jobs and other channels for others. We don't dictate how much you work, when, or for whom. You're an independent professional and we treat you like one.", bg: "linear-gradient(135deg, #2563EB, #7C3AED)" },
+  ];
+  const steps = [
+    { num: "01", icon: "mic", title: "Get notified of matching jobs", desc: "See live attendance and transcription jobs filtered to your jurisdiction, case type preferences, and availability. Push notifications hit your phone the moment a job is posted." },
+    { num: "02", icon: "fileText", title: "Accept and produce", desc: "Review the deadline and earnings, accept the job, and produce the transcript. The platform checks in along the way to keep delivery on track." },
+    { num: "03", icon: "star", title: "Certify and get paid", desc: "Sign your certification digitally. Payment releases automatically upon delivery acceptance. No invoicing, no chasing." },
+  ];
+  return (
+    <div>
+      <nav className="app-nav">
+        <div className="container">
+          <div className="app-nav-inner">
+            <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+            <div style={{display: "flex", alignItems: "center", gap: 16}}>
+              <ThemeToggle />
+              <a href="#/" style={{fontSize: 13, color: "var(--text-muted, #64748B)", textDecoration: "none"}}>Back to home</a>
+              <a href="#/reporter-signup" className="btn btn-primary btn-sm">Apply to join</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div className="page page-enter" style={{paddingTop: 48, paddingBottom: 80}}>
+        <div className="container" style={{maxWidth: 980}}>
+          <div style={{textAlign: "center", marginBottom: 48}}>
+            <div style={{display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px", background: "#ECFDF5", border: "1px solid #BBF7D0", borderRadius: 100, fontSize: 11, fontWeight: 700, color: "#065F46", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 24}}>For court reporters</div>
+            <h1 style={{fontSize: 48, fontWeight: 800, color: "var(--text, #0F172A)", letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: 16}}>Your license. Your tools.<br /><span className="gradient-text">We handle the rest.</span></h1>
+            <p style={{fontSize: 18, color: "var(--text-secondary, #475569)", lineHeight: 1.7, maxWidth: 680, margin: "0 auto"}}>Accept jobs that match your jurisdiction and availability. Use your own CAT software. Get paid in two business days, every time. No agency cut.</p>
+            <div style={{display: "flex", gap: 12, justifyContent: "center", marginTop: 32, flexWrap: "wrap"}}>
+              <a href="#/reporter-signup" className="btn btn-primary">Apply to join the network <Icon name="arrowRight" size={16} color="#fff" /></a>
+            </div>
+          </div>
+
+          <div style={{padding: 32, background: "linear-gradient(135deg, #0F172A, #1E293B)", borderRadius: 20, marginBottom: 48, color: "#fff"}}>
+            <h2 style={{fontSize: 24, fontWeight: 700, color: "#fff", marginBottom: 24, textAlign: "center"}}>How it works for reporters</h2>
+            <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20}}>
+              {steps.map((s, i) => (
+                <div key={i} style={{padding: 20, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14}}>
+                  <div style={{display: "flex", alignItems: "center", gap: 12, marginBottom: 12}}>
+                    <div style={{width: 40, height: 40, borderRadius: 10, background: "linear-gradient(135deg, #059669, #14B8A6)", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                      <Icon name={s.icon} size={18} color="#fff" />
+                    </div>
+                    <span style={{fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.5)", letterSpacing: "0.05em"}}>{s.num}</span>
+                  </div>
+                  <h3 style={{fontSize: 16, fontWeight: 700, color: "#fff", marginBottom: 8}}>{s.title}</h3>
+                  <p style={{fontSize: 13, color: "rgba(255,255,255,0.7)", lineHeight: 1.6, margin: 0}}>{s.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <h2 style={{fontSize: 28, fontWeight: 800, color: "var(--text, #0F172A)", textAlign: "center", marginBottom: 8}}>Why reporters are leaving agencies for Dewey Sholes</h2>
+          <p style={{fontSize: 16, color: "var(--text-secondary, #475569)", textAlign: "center", maxWidth: 600, margin: "0 auto 40px"}}>You're a licensed professional, not a contractor in someone else's pipeline. Build your own book of business on your own terms.</p>
+          <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, marginBottom: 48}}>
+            {benefits.map((b, i) => (
+              <div key={i} style={{padding: 24, background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 14}}>
+                <div style={{width: 40, height: 40, borderRadius: 10, background: b.bg, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14}}>
+                  <Icon name={b.icon} size={20} color="#fff" />
+                </div>
+                <h3 style={{fontSize: 16, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 8}}>{b.title}</h3>
+                <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.7, margin: 0}}>{b.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div style={{padding: 32, background: "linear-gradient(135deg, #065F46, #059669)", borderRadius: 20, textAlign: "center", color: "#fff"}}>
+            <h2 style={{fontSize: 24, fontWeight: 800, color: "#fff", marginBottom: 8}}>Pilot special: $99 listing fee waived</h2>
+            <p style={{fontSize: 15, color: "rgba(255,255,255,0.85)", lineHeight: 1.6, marginBottom: 20, maxWidth: 540, margin: "0 auto 20px"}}>Sign up during our 6-month pilot and pay $0 for your first year. Build your client base while we build the platform. No commitment.</p>
+            <a href="#/reporter-signup" className="btn btn-white" style={{display: "inline-flex"}}>Apply to join <Icon name="arrowRight" size={16} color="#065F46" /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AppRouter() {
   const route = useRoute();
   const m = route.match(/^#\/order\/(.+)$/);
@@ -9375,6 +9514,8 @@ function AppRouter() {
   if (route.startsWith("#/settings")) return <SettingsPage />;
   if (route.startsWith("#/split-pay")) return <CostSplitPayPage />;
   if (route.startsWith("#/forgot-password")) return <ForgotPasswordPage />;
+  if (route.startsWith("#/for-attorneys")) return <ForAttorneysPage />;
+  if (route.startsWith("#/for-reporters")) return <ForReportersPage />;
   if (route.startsWith("#/contact")) return <ContactPage />;
   if (route.startsWith("#/faq")) return <FaqPage />;
   if (route.startsWith("#/about")) return <AboutPage />;
