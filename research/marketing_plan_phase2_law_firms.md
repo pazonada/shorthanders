@@ -20,7 +20,7 @@
 - **Platform fee: 8%** (vs standard 12%) for firms that sign up during pilot
 - 8% rate extends through the **first full year**
 - After Year 1: standard 12% rate applies
-- Firms understand the first 3 months is beta
+- Pilot users get personal onboarding support and direct access to the team during the 6-month pilot window
 
 ## Target firm profile
 

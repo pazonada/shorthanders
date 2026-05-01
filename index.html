@@ -7368,7 +7368,7 @@ const DEFAULT_KANBAN_TASKS = [
   { id: "t54", title: "Real build: scaffold Next.js + Supabase", description: "Initialize production app. Auth, database schema, basic routing, PWA setup (manifest.json, service worker, next-pwa). Includes file security architecture: RLS policies, signed URL downloads, audit logging, encrypted storage. 2-3 week build estimated.", column: "todo", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-03-22", notes: "Blocked on prototype review. PWA gives CSRs push notifications for new jobs, messages, and payments without needing an app store listing.", tags: ["P1"] },
   { id: "t55", title: "Reporter invite flow", description: "End of reporter onboarding: 'Know a reporter who should be here?' Invite by email or CSR#.", column: "todo", priority: "medium", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-03-22", notes: "", tags: ["P1"] },
   { id: "t61", title: "PWA install prompt + push notification setup", description: "Add mobile install banner ('Get job notifications instantly — add to home screen') shown on mobile only. Final step of CSR onboarding: install prompt with iOS/Android instructions. Set up Firebase Cloud Messaging for push notifications (new jobs, messages, payments). iOS requires PWA added to home screen for push (Safari 16.4+).", column: "todo", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-04-11", notes: "PWA over native wrapper — free, no app store review, same codebase. Apple dev license available if native wrapper needed later via Capacitor.", tags: ["P1"] },
-  { id: "t62", title: "Pilot pricing auto-application system", description: "Users who sign up during the pilot period automatically get discounted pricing — no promo codes needed. CSRs: $99/yr listing fee waived for first year. Attorneys: 8% platform fee (vs 12%) for first year. Set pricing_tier and pilot_expires_at on the user record at signup based on created_at. Fee calculation checks tier at transaction time. Dashboard shows 'Pilot pricing active' banner with expiration date. 30-day email before pilot_expires_at warns of rate change. After expiration, standard pricing auto-applies.", column: "todo", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-04-11", notes: "Pilot expected to run 3-6 months (likely 6: CSR onboarding first, then law firms). Pilot window defined in platform config, not hardcoded.", tags: ["P1"] },
+  { id: "t62", title: "Pilot pricing auto-application system", description: "Users who sign up during the pilot period automatically get discounted pricing — no promo codes needed. CSRs: $99/yr listing fee waived for first year. Attorneys: 8% platform fee (vs 12%) for first year. Set pricing_tier and pilot_expires_at on the user record at signup based on created_at. Fee calculation checks tier at transaction time. Dashboard shows 'Pilot pricing active' banner with expiration date. 30-day email before pilot_expires_at warns of rate change. After expiration, standard pricing auto-applies.", column: "todo", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-04-11", notes: "Pilot window: 6 months (extendable via platform config). Months 1-2 for CSR onboarding to 100+, months 3-5 for firm onboarding, month 6 for refinement.", tags: ["P1"] },
 
   // ── Backlog ──
   { id: "t36", title: "Dispute resolution research", description: "Court rules for transcript correction in CA.", column: "backlog", priority: "low", assignee: ["Aud"], category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "", tags: ["P2", "legal"] },
@@ -8013,7 +8013,7 @@ function LandingPage() {
             {[
               { icon: "zap", title: "Jobs that find you", desc: "Get push notifications for jobs matching your preferences. See the deadline and your earnings upfront. Accept with one tap — decline with no penalty.", bg: "linear-gradient(135deg, #2563EB, #06B6D4)" },
               { icon: "dollarSign", title: "Keep 100% of your rate", desc: "No agency taking 50-85% of your earnings. You keep the full statutory rate on every job. Payment within 2 business days of delivery, every time.", bg: "linear-gradient(135deg, #059669, #14B8A6)" },
-              { icon: "star", title: "Build your reputation", desc: "Attorneys rate your quality after every delivery. Great ratings mean you appear first in search and get more job offers. Your public profile shows your track record.", bg: "linear-gradient(135deg, #F59E0B, #F97316)" },
+              { icon: "star", title: "Build your reputation", desc: "Attorneys rate your quality after every delivery and can mark you as a preferred vendor — giving you first right of refusal on their future jobs. Great ratings mean you appear first in search and get more offers.", bg: "linear-gradient(135deg, #F59E0B, #F97316)" },
             ].map((c, i) => (
               <div className="reporter-card" key={i}>
                 <div className="reporter-card-icon" style={{background: c.bg}}><Icon name={c.icon} size={20} color="#fff" /></div>
@@ -8039,13 +8039,13 @@ function LandingPage() {
           {/* Pilot Pricing Banner */}
           <div style={{maxWidth: 640, margin: "0 auto 32px", background: "linear-gradient(135deg, #1E40AF 0%, #4338CA 100%)", borderRadius: 16, padding: 32, color: "#fff", position: "relative", overflow: "hidden"}}>
             <div style={{position: "absolute", top: 12, right: 16, background: "rgba(255,255,255,0.2)", borderRadius: 6, padding: "4px 12px", fontSize: 11, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase"}}>Pilot</div>
-            <h3 style={{fontSize: 22, fontWeight: 800, marginBottom: 8, color: "#fff", letterSpacing: "-0.01em"}}>Join our early access pilot and save</h3>
+            <h3 style={{fontSize: 22, fontWeight: 800, marginBottom: 8, color: "#fff", letterSpacing: "-0.01em"}}>Join our 6-month pilot and save</h3>
             <p style={{fontSize: 15, lineHeight: 1.7, color: "rgba(255,255,255,0.9)", marginBottom: 16}}>
               <strong>Law firms:</strong> 8% platform fee for your first year (normally 12%).<br />
-              <strong>CSRs:</strong> listing fee waived during pilot.
+              <strong>CSRs:</strong> $99 listing fee waived for your first year.
             </p>
             <p style={{fontSize: 13, lineHeight: 1.6, color: "rgba(255,255,255,0.7)", margin: 0, borderTop: "1px solid rgba(255,255,255,0.15)", paddingTop: 12}}>
-              Pilot firms understand the first 3 months is beta and agree to provide periodic feedback.
+              Pilot users get personal onboarding support and direct access to the team. We're actively refining the platform based on your feedback.
             </p>
           </div>
 
@@ -8066,8 +8066,8 @@ function LandingPage() {
               <div style={{marginTop: 16, background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: 12, padding: 16, fontSize: 13, color: "#1E40AF", lineHeight: 1.7}}>
                 <strong>Note:</strong> Prices shown are statutory transcript rates set by CA Gov. Code § 69950. Attorneys pay a flat 12% platform fee at checkout — reporters keep the full statutory rate. Total price shown at order entry.
               </div>
-              <div className="pricing-note">
-                <strong>Why "approximately"?</strong> California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count, not the estimate.
+              <div style={{marginTop: 16, padding: "0 4px", fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.7}}>
+                <strong style={{fontWeight: 700, color: "var(--text-secondary, #475569)"}}>Why "approximately"?</strong> California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count, not the estimate.
               </div>
             </div>
             <div className="pricing-footer">

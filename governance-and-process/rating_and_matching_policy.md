@@ -86,7 +86,7 @@ Within a courthouse's service area, sort by:
 
 ---
 
-## Pilot phase algorithm (first 90 days)
+## Pilot phase algorithm (during 6-month pilot window)
 
 **Keep it simple. No ratings in the matching algorithm during pilot.**
 

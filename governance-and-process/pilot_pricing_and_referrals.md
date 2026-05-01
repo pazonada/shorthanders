@@ -1,24 +1,33 @@
 # Pilot pricing & referral incentives
 
-**Owner:** Aud & Rosie
-**Last updated:** 2026-03-26
-**Status:** Draft — confirmed in Rosie call 3/26
+**Owner:** Aud
+**Last updated:** 2026-05-01
+**Status:** Confirmed — pilot length extended to 6 months
 
 ---
 
-## Pilot phase pricing (first 90 days)
+## Pilot phase length: 6 months
+
+The pilot signup window runs for 6 months from launch. This gives time for:
+- Months 1-2: CSR onboarding (target: 100+ signups before firm outreach)
+- Months 3-5: Firm onboarding and live transactions
+- Month 6: Refinement based on feedback, prep for carrier channel
+
+The pilot window is configured at the platform level, not hardcoded — it can be extended or ended early as needed without affecting users who already signed up at the pilot rate.
+
+## Pilot pricing
 
 ### For CSRs
-- **Listing fee waived** during pilot
+- **$99 listing fee waived for first year** (or $79/reporter/year for firms)
 - CSRs understand they are signing up to test the product while it's in beta
 - Expected to respond to periodic surveys for product feedback
-- After pilot: $99/year individual, $79/reporter/year firm tier
+- After first year: standard listing fees apply
 
 ### For law firms
-- **Platform fee reduced to 8%** (vs standard 12%) for firms that sign up during pilot
-- The 8% rate extends through the **first full year** (not just the 90-day pilot)
-- Firms understand the first 3 months is beta
-- After Year 1: standard 12% rate applies
+- **Platform fee reduced to 8%** (vs standard 12%) for firms that sign up during the pilot window
+- The 8% rate extends through the **first full year** of their account (not just the pilot window)
+- Firms get personal onboarding support and direct access to the team
+- After Year 1: standard 12% rate applies automatically
 
 ### Post-pilot pricing (standard)
 - Law firms: 12% buyer-side transaction fee
