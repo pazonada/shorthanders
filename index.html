@@ -6402,21 +6402,34 @@ function SettingsPage() {
 
 // ─── Pricing Calculator ─────────────────────────────────────────
 function PricingCalculator() {
-  const [pages, setPages] = useState(35);
+  const [audioMinutes, setAudioMinutes] = useState(60); // default 1 hour
+  const [pages, setPages] = useState(Math.round(60 / 60 * PRICING.pagesPerHour));
+  const [pagesEdited, setPagesEdited] = useState(false);
   const [turnaround, setTurnaround] = useState("standard");
   const [hearingType, setHearingType] = useState("live");
   const [duration, setDuration] = useState("half");
 
   const isLive = hearingType === "live";
+  // Auto-calculate pages from audio duration unless user manually edited
+  const autoPages = Math.round((audioMinutes / 60) * PRICING.pagesPerHour);
+  const effectivePages = pagesEdited ? pages : autoPages;
   const attendanceFee = !isLive ? 0 : duration === "trial" ? PRICING.attendanceTrialDay : duration === "full" ? PRICING.attendanceFullDay : PRICING.attendanceHalfDay;
   const mult = PRICING[turnaround + "Multiplier"] || 1;
-  const transcriptBase = pages * PRICING.ratePerPage;
+  const transcriptBase = effectivePages * PRICING.ratePerPage;
   const turnaroundFee = transcriptBase * (mult - 1);
   const subtotal = attendanceFee + transcriptBase + turnaroundFee;
   const pilotRate = 0.08;
   const platformFee = subtotal * pilotRate;
   const total = subtotal + platformFee;
   const standardTotal = subtotal + (subtotal * PRICING.platformFee);
+
+  const formatDuration = (min) => {
+    const h = Math.floor(min / 60);
+    const m = min % 60;
+    if (h === 0) return `${m} min`;
+    if (m === 0) return `${h} hr`;
+    return `${h} hr ${m} min`;
+  };
 
   return (
     <div className="calc-card">
@@ -6431,26 +6444,43 @@ function PricingCalculator() {
         </div>
         {isLive ? (
           <div className="form-group">
-            <label className="form-label">Duration</label>
+            <label className="form-label">Hearing length</label>
             <select className="form-input form-select" value={duration} onChange={e => setDuration(e.target.value)}>
-              <option value="half">Half day (${PRICING.attendanceHalfDay})</option>
-              <option value="full">Full day (${PRICING.attendanceFullDay})</option>
-              <option value="trial">Trial day (${PRICING.attendanceTrialDay})</option>
+              <option value="half">Half day (up to 4 hrs) — ${PRICING.attendanceHalfDay}</option>
+              <option value="full">Full day (4+ hrs) — ${PRICING.attendanceFullDay}</option>
+              <option value="trial">Trial day — ${PRICING.attendanceTrialDay}</option>
             </select>
           </div>
         ) : (
           <div className="form-group">
-            <label className="form-label">Estimated pages</label>
-            <input className="form-input" type="number" min="5" max="500" value={pages} onChange={e => setPages(parseInt(e.target.value) || 0)} />
+            <label className="form-label">Audio length</label>
+            <select className="form-input form-select" value={audioMinutes} onChange={e => { setAudioMinutes(parseInt(e.target.value)); setPagesEdited(false); }}>
+              <option value="30">30 minutes</option>
+              <option value="60">1 hour</option>
+              <option value="90">1 hr 30 min</option>
+              <option value="120">2 hours</option>
+              <option value="180">3 hours</option>
+              <option value="240">4 hours</option>
+              <option value="360">6 hours</option>
+              <option value="480">8 hours</option>
+            </select>
           </div>
         )}
       </div>
-      {isLive && (
-        <div className="form-group">
-          <label className="form-label">Estimated transcript pages</label>
-          <input className="form-input" type="number" min="5" max="500" value={pages} onChange={e => setPages(parseInt(e.target.value) || 0)} />
-        </div>
-      )}
+      <div className="form-group">
+        <label className="form-label">Estimated transcript pages <span style={{fontWeight: 400, color: "#94A3B8", fontSize: 12}}>(adjust if you have a better estimate)</span></label>
+        <input className="form-input" type="number" min="5" max="2000" value={effectivePages} onChange={e => { setPages(parseInt(e.target.value) || 0); setPagesEdited(true); }} />
+        {!isLive && !pagesEdited && (
+          <p style={{fontSize: 12, color: "var(--text-muted, #64748B)", marginTop: 6, lineHeight: 1.5}}>
+            Auto-calculated from {formatDuration(audioMinutes)} of audio at ~{PRICING.pagesPerHour} pages/hour. CSRs typically produce 30–40 pages per hour of audio depending on speaking rate.
+          </p>
+        )}
+        {isLive && (
+          <p style={{fontSize: 12, color: "var(--text-muted, #64748B)", marginTop: 6, lineHeight: 1.5}}>
+            For live attendance, page count depends on hearing length. We'll refine the estimate at order entry.
+          </p>
+        )}
+      </div>
       <div className="form-group">
         <label className="form-label">Turnaround</label>
         <div style={{display: "flex", gap: 8}}>
@@ -6473,7 +6503,7 @@ function PricingCalculator() {
         </div>
         <div className="calc-breakdown">
           {isLive && <span>Attendance: ${attendanceFee.toLocaleString()}</span>}
-          <span>Transcript ({pages} pg): ${transcriptBase.toFixed(2)}</span>
+          <span>Transcript ({effectivePages} pg): ${transcriptBase.toFixed(2)}</span>
           {turnaroundFee > 0 && <span>Turnaround: +${turnaroundFee.toFixed(2)}</span>}
           {turnaroundFee < 0 && <span>Discount: -${Math.abs(turnaroundFee).toFixed(2)}</span>}
           <span>Platform fee: <span style={{textDecoration: "line-through", color: "#94A3B8"}}>12%</span> <strong style={{color: "#2563EB"}}>8% pilot</strong> = +${platformFee.toFixed(2)}</span>
