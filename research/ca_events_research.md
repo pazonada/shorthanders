@@ -8,6 +8,33 @@ A consistent pattern across CA paralegal associations: monthly luncheon MCLEs ($
 
 ---
 
+## Chronological action list
+
+Sorted by date (earliest first). Priority is my recommendation based on cost-to-impact ratio and audience fit, not just geography.
+
+| Date | Event | Priority | Who attends | Notes |
+|---|---|---|---|---|
+| Jun 2026 (TBD) | CAPA June Educational Conference | **High** if NorCal / **Medium** if SoCal | Rosie + ambassador (NorCal); ambassador only (SoCal) | Confirm host city ASAP — this is the most urgent follow-up. Statewide reach, 150-300 paralegals. Exhibitor table $750-$1,500 historically. |
+| Jun-Dec 2026 (recurring monthly) | SFPA monthly MCLE luncheons | **High** | Rosie (1-2 sessions) + ambassador (2-3 sessions) | Bay Area's most concentrated regular touchpoint. $25-50/seat for non-members. Ask SFPA about lunch sponsorship ($300-800 historic). Email info@sfpa.com for 2026 calendar. |
+| Jun-Dec 2026 (recurring monthly) | East Bay Paralegal Association meetings | **High** | Rosie (1 sponsored dinner Q3) | Sponsor one dinner — Rosie attends. Concentrated Oakland/East Bay audience. |
+| Jun-Dec 2026 (recurring) | Marin MCLPA dinner meetings | **High** | Rosie self-attends (1-2) | Lowest-hanging fruit in Rosie's geography. Tiny budget ($80-150 to attend). |
+| Jun-Dec 2026 (recurring) | PASCCO South Bay meetings | **Medium** | Ambassador | Combine with SCCoLPA for one trip down the peninsula. |
+| Jun-Dec 2026 (recurring) | SCCoLPA monthly meetings | **Medium** | Ambassador | Combine with PASCCO. |
+| Jun-Dec 2026 (recurring) | SDPA monthly events (San Diego) | **Low** | Skip for Phase 2 unless SoCal expansion accelerates | Audience is right but geography is low priority for our Bay Area-led pilot. |
+| Jun-Dec 2026 (recurring) | OCPA Family Law Section meeting | **Low** | Ambassador only (1 visit, fit-test) | Cheap test of OC market without big commitment. |
+| Sep 16, 2026 (deadline) | OCPA 38th Annual Conference registration deadline | **Medium** | n/a — decision point | Decide by mid-Sept whether to send ambassador or do unattended swag drop. |
+| Sep 23, 2026 | BHBA Family Law Section Installation & Awards Dinner (Beverly Hills) | **Low** for Phase 2 | Skip unless LA expansion accelerates | Confirmed date but expensive single touch in non-priority market. |
+| Sep-Oct 2026 (TBD) | OCPA 38th Annual Conference | **Medium** | Ambassador with one-pagers, OR unattended swag drop | Cheaper as unattended if OCPA allows it. Email info via ocparalegal.org. |
+| Oct 2026 (TBD) | LAPA 49th Annual October Conference | **Medium** | Ambassador (walk hall, no table) | One day pass + travel ~$250-500. Combine with OCPA if dates align. |
+| Oct 22-24, 2026 | CLA Annual Meeting (San Diego) | **Skip** | n/a | Too expensive ($5K+ booth) and audience is mostly attorneys, not paralegals. Documented for future reference. |
+| Nov 2026 (TBD) | CAPA November Educational Conference | **High** if NorCal / **Medium** if SoCal | Rosie + ambassador (NorCal); ambassador only (SoCal) | Alternate to June conference; pick whichever is in NorCal. |
+| **Dec 2026 (TBD)** | **BASF Paralegal Holiday Party (San Francisco)** ⭐ | **Highest** | **Rosie** (sponsor + attend) | **Top recommendation overall.** Single highest-ROI Bay Area event of the year. Sponsor at $500-$1,000 if available. Email cle@sfbar.org to confirm date and tiers. |
+| Fall 2026 | UC Berkeley / Stanford / USF / UC Hastings career fairs | **Medium** | Aud or ambassador | Recruitment-focused — primary purpose is finding the next law student ambassadors, not selling to firms. |
+
+**The one decision driving everything else:** confirm CAPA's 2026 host city for both June and November conferences. If either is in NorCal, that becomes a top-3 event. Email CAPA office (Fresno) ASAP.
+
+---
+
 ## Bay Area events (HIGH priority)
 
 ### SFPA monthly MCLE luncheons - Recurring (June - December 2026)
