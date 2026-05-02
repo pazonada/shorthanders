@@ -33,89 +33,133 @@ This program rewards the legal assistant personally for jobs they book through D
 
 ---
 
-## Reward tiers
+## Points-based reward economy
 
-Rewards are tied to completed and accepted orders (not just submitted). One legal assistant account = one reward track. **Simple 2-tier structure to control costs in the bootstrapped pilot phase.**
+Legal assistants earn **10 points per completed order** through Dewey Sholes. They redeem points for rewards from a catalog. Points accumulate continuously — they don't expire during the pilot — and users choose what to redeem for and when.
 
-| Tier | Jobs booked | Reward | Est. cost to us | Typical time to reach |
-|---|---|---|---|---|
-| 1 | 3 | $25 Amazon gift card (digital) | $25 | 1-4 weeks for active users |
-| 2 | 10 | Branded Stanley-style insulated tumbler (mailed) | $30-40 incl. shipping | 1-5 months depending on firm volume |
+**Why points instead of fixed tiers:** different people want different things. Some legal assistants will cash out a Starbucks card every month for the dopamine hit; others will save up for the Stanley. The flexibility is a feature, not a bug — it lets people self-select what motivates them.
 
-After Tier 2, we'll evaluate based on real data whether to add additional tiers. For the pilot, two milestones is enough to drive behavior without bleeding cash.
+### Earning points
 
-### How counting works
+- **10 points per completed order**
+  - Order must be delivered + accepted (or auto-released)
+  - Refunded orders revoke the points
+  - Minimum order value $50 (prevents gaming with tiny orders)
+- Co-payer splits earn the ordering legal assistant 10 points for the one job they created
+
+### Redemption catalog
+
+| Reward | Cost in points | Our cost (incl. shipping) | Equivalent orders to earn |
+|---|---|---|---|
+| $10 Starbucks gift card (digital, instant) | 30 points | $10 | 3 orders |
+| Branded canvas tote bag (mailed) | 40 points | $12 | 4 orders |
+| Real branded Stanley tumbler (mailed) | 250 points | $60 | 25 orders |
+
+**Points stay on their account until redeemed.** A legal assistant who books 25 orders could redeem 8 Starbucks cards over time, or 6 totes, or save it all for a Stanley.
+
+### Why these specific rewards
+
+- **Starbucks card**: Per Rosie, "small dollar amounts but they definitely remember who got it for them." Creates the personal moment Rosie described — and the digital format means instant gratification.
+- **Canvas tote**: Travels with the legal assistant — courthouse, office, home. Each use is a brand impression in public. Mid-cost reward for sustained engagement.
+- **Real Stanley with our logo**: The premium "you're a power user" gift. Real Stanley brand has cachet legal assistants will recognize. Worth saving up for.
+
+### Dashboard view
+
+The legal assistant's dashboard shows:
+
+```
+🎯 Your Dewey Sholes points
+You have 40 points (4 orders earned)
+
+What you can redeem now:
+✅ $10 Starbucks gift card (30 pts) — Redeem
+✅ Branded canvas tote bag (40 pts) — Redeem
+🔒 Real branded Stanley tumbler (210 pts to go)
+```
+
+Clean, no surprises, no expiration anxiety.
+
+### How point earning works
 
 - **Per individual legal assistant account**, not per firm
-- Counter is **cumulative across the pilot** — no annual reset (since the program ends with the pilot window)
-- Job counts only when:
-  - The order is completed (transcript delivered + accepted, OR auto-released)
-  - It's not refunded
-  - The order has a minimum value (set at $50 to prevent gaming with tiny orders)
-- Co-payer splits count as **1 job** for the ordering legal assistant (the one who created the order on the platform)
-- Rewards earned during the pilot remain valid even after the program ends — we honor what people earned
+- Points are **cumulative across the pilot** — no expiration during pilot window
+- Points earned only when an order is completed (delivered + accepted OR auto-released)
+- Refunded orders revoke the points
+- Co-payer splits earn the ordering legal assistant 10 points for the one job they created
+- Unredeemed points at end of pilot: users get a 30-day grace period to redeem; after that, points expire (announced in advance via email)
+- Already-redeemed rewards are honored regardless of pilot status
 
-### Tier display on dashboard
+### Tone
 
-The legal assistant's dashboard always shows their progress to the next tier:
-
-```
-🎯 Reward progress
-[####------] 3/7 jobs to your branded Stanley tumbler
-Last reward earned: $25 Amazon gift card (sent to email)
-```
-
-Tone: low-key gamification. Not pushy. The reward should feel like a thank-you, not a quota.
+Low-key gamification. Not pushy. The reward should feel like a thank-you, not a quota. Dashboard messaging celebrates earned points without ever pressuring the user to book more. Notifications when something becomes redeemable, but no "you're falling behind!" nags.
 
 ---
 
 ## Cost model
 
-Assuming an average order generates ~$24 platform fee (8% pilot rate × $300 avg order):
+Assuming an average order generates ~$24 platform fee (8% pilot rate × $300 avg order). Each order earns 10 points. Each redemption costs us a fixed amount.
 
-| Tier | Jobs | Platform revenue | Reward cost | % of revenue |
-|---|---|---|---|---|
-| 1 | 3 | $72 | $25 | 35% |
-| 2 | 10 | $240 | $30-40 | 13-17% |
+**Per-redemption math:**
 
-**Tier 1 has the highest acquisition cost** (35% of platform fees), but we're paying for the habit-formation moment. By Tier 2, we're at a sustainable 13-17% retention cost.
+| Reward | Cost to us | Points to redeem | Orders behind it | Platform revenue per redemption | Cost % |
+|---|---|---|---|---|---|
+| Starbucks card | $10 | 30 pts | 3 orders | $72 | 14% |
+| Tote bag | $12 | 40 pts | 4 orders | $96 | 13% |
+| Real Stanley | $60 | 250 pts | 25 orders | $600 | 10% |
 
-**Total max cost per assistant for the entire pilot**: ~$65 (gift card + tumbler + shipping). Since the program is pilot-only, this is the lifetime cost — not annual.
+**The Stanley is actually our cheapest reward in % terms** — because it requires 25 orders behind it. Self-balancing.
 
-**Worst-case:** Every active legal assistant hits Tier 2 within the 6-month pilot. If we get 50 active legal assistants by month 6, that's ~$3,250 in rewards total. Painful but survivable.
+**Pilot-wide modeling** (reflecting realistic redemption mix — most users will redeem multiple Starbucks cards over the pilot rather than save for the Stanley):
 
-**Best-case:** They become evangelists, tell other legal assistants in their network, and each referral has high LTV. The program pays for itself many times over.
+| Scenario | Active legal assistants | Avg orders/assistant | Total platform revenue | Est. redemption mix | Est. reward cost | Reward % of revenue |
+|---|---|---|---|---|---|---|
+| Conservative (15 firms × 1 assistant) | 15 | 5 | $1,800 | 8 Starbucks + 3 totes | $116 | 6% |
+| Moderate (20 firms × 2 assistants) | 40 | 8 | $7,680 | 25 Starbucks + 8 totes + 1 Stanley | $406 | 5% |
+| Aggressive (25 firms × 3 assistants) | 75 | 12 | $21,600 | 60 Starbucks + 20 totes + 3 Stanleys | $1,020 | 5% |
 
-**If cash runs low mid-pilot:** We can pause new participation at any time without affecting users who already earned a tier. The program also auto-ends with the pilot window.
+**At realistic scale, the reward program runs ~5-6% of platform revenue.** Way healthier than the fixed-tier model. Industry benchmarks for marketplace acquisition costs are 10-25%, so this is well within sustainable range.
+
+**Why points are cheaper than fixed tiers:** with fixed tiers, anyone who hits the threshold gets the reward whether or not they want it. With points, users only redeem rewards they actually want, and many will redeem the cheap ones repeatedly while never reaching the expensive ones.
+
+**Worst-case:** Every active legal assistant maxes out and saves for Stanleys. If 75 people each redeem 1 Stanley, that's $4,500 — but they'd also have driven 75 × 25 × $24 = $45,000 in platform revenue. 10% reward ratio. We'd take that all day.
+
+**Best-case:** Most legal assistants redeem mid-tier rewards regularly, becoming repeat engagers. Total cost stays under 8% of revenue. Program is essentially free relative to the value.
+
+**If cash runs low mid-pilot:** We can pause new point earning at any time without affecting users who already earned points. We always honor existing balances. The program also auto-ends with the pilot window (with 30-day grace period for unredeemed points).
 
 ---
 
 ## What the email/notification looks like
 
-### When they hit Tier 1 (3 jobs)
+### First time they hit 30 points (eligible for first redemption)
 
-> **Subject:** You earned a $25 Amazon gift card
+> **Subject:** You can redeem your first Dewey Sholes reward
 >
 > Hi [name],
 >
-> You've booked 3 transcripts through Dewey Sholes — thank you for being one of our early users.
+> You've earned 30 points by booking 3 transcripts through Dewey Sholes — thank you for being one of our early users.
 >
-> As a small thank-you, here's a $25 Amazon gift card: **[CLAIM CODE]**
+> You can redeem 30 points for a $10 Starbucks gift card right now, or save up:
+> - **30 points** → $10 Starbucks gift card
+> - **40 points** → Branded canvas tote bag
+> - **250 points** → Real Stanley tumbler with our logo
 >
-> Keep going. At 10 jobs you'll earn a branded Dewey Sholes insulated tumbler shipped right to your office. (Rewards are part of our pilot program — only available to legal assistants who sign up during the first 6 months.)
+> [Redeem from your dashboard]
+>
+> Points stay on your account until you redeem them. (Rewards are part of our pilot program — only available to legal assistants who sign up during the first 6 months.)
 >
 > — Aud
 > Founder, Dewey Sholes
 
-### When they hit Tier 2 (10 jobs)
+### When they redeem the Stanley (250 points)
 
-> **Subject:** Your Dewey Sholes tumbler is on its way
+> **Subject:** Your Dewey Sholes Stanley is on its way
 >
 > Hi [name],
 >
-> 10 transcripts! You're officially a Dewey Sholes power user.
+> 25 transcripts! You're officially a Dewey Sholes power user. Your real Stanley tumbler is on its way.
 >
-> Reply to this email with the address you'd like your branded insulated tumbler shipped to. (Use your office address if that works — we'll address it to you.)
+> Reply to this email with the address you'd like it shipped to. (Use your office address if that works — we'll address it to you.)
 >
 > Want to bring more colleagues on? Forward this email. We're working on a referral bonus for legal assistants who refer their network.
 >
@@ -127,30 +171,30 @@ Assuming an average order generates ~$24 platform fee (8% pilot rate × $300 avg
 
 Built into the system:
 
-1. **Order completion required** — pending or cancelled orders don't count
-2. **Minimum order value** — $50 floor prevents gaming with $5 orders
-3. **One reward per tier, period** — can't unlock Tier 1 multiple times (program is pilot-only, no annual reset)
-4. **Refunds reverse the count** — if an order is refunded, the job doesn't count
-5. **Anti-fraud review at Tier 4+** — human review before issuing $100+ rewards (look for anomalous patterns)
-6. **Single-account enforcement** — one Dewey Sholes account per legal assistant (verified via email + firm)
+1. **Order completion required** — pending or cancelled orders don't earn points
+2. **Minimum order value** — $50 floor prevents gaming with tiny orders
+3. **Refunds revoke points** — if an order is refunded, the points it earned are removed (even if already redeemed; we don't claw back delivered rewards but we do log the deficit)
+4. **Anti-fraud review on Stanley redemptions** — human review before shipping the $60 reward (look for anomalous patterns like 25 orders all from the same firm in 2 days)
+5. **Single-account enforcement** — one Dewey Sholes account per legal assistant (verified via email + firm)
+6. **No transferable points** — points belong to the individual account that earned them; can't be gifted, sold, or pooled
 
 ---
 
 ## Build effort
 
-This is a clear engineering task. Roughly:
-
 | Component | Effort |
 |---|---|
-| Database: `incentive_progress` table per user | 0.5 day |
-| Logic: increment counter on order completion | 0.5 day |
-| Logic: check tier thresholds and trigger reward | 0.5 day |
-| Email templates for each tier | 1 day |
-| Dashboard widget showing progress | 0.5 day |
-| Tremendous/Tango Card API integration for gift cards | 1 day |
-| Admin tool for shipping physical rewards | 0.5 day |
-| Anti-fraud / refund handling | 0.5 day |
-| **Total** | **~5 days** |
+| Database: `points_balance` and `points_transactions` tables per user | 0.5 day |
+| Logic: award 10 points on order completion | 0.5 day |
+| Logic: revoke points on refund (with cap on negative balance handling) | 0.5 day |
+| Redemption catalog page with item costs and current balance | 1 day |
+| Redemption flow: confirm → deduct points → trigger fulfillment | 1 day |
+| Email templates (first redemption eligible, redemption confirmation, low-points reminder near pilot end) | 1 day |
+| Dashboard widget showing point balance and "what you can redeem now" | 0.5 day |
+| Tremendous/Tango Card API integration for digital gift cards | 1 day |
+| Admin tool for shipping physical rewards (orders queue) | 0.5 day |
+| Anti-fraud review flag for Stanley redemptions | 0.25 day |
+| **Total** | **~6 days** |
 
 **When to build:** During Phase 2 (firm onboarding). Not needed for Month 1 MVP since we won't have firms placing orders yet.
 
