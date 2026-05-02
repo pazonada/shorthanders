@@ -18,15 +18,14 @@ This program rewards the legal assistant personally for jobs they book through D
 
 ## Reward tiers
 
-Rewards are tied to completed and accepted orders (not just submitted). One legal assistant account = one reward track.
+Rewards are tied to completed and accepted orders (not just submitted). One legal assistant account = one reward track. **Simple 2-tier structure to control costs in the bootstrapped pilot phase.**
 
-| Tier | Jobs booked | Reward | Est. cost to us | Notes |
+| Tier | Jobs booked | Reward | Est. cost to us | Typical time to reach |
 |---|---|---|---|---|
-| 1 | 3 | $25 Amazon gift card (digital) | $25 | Quick early win — builds the habit |
-| 2 | 7 | Branded Stanley-style insulated tumbler (mailed) | $30-40 incl. shipping | Tangible, daily-use item |
-| 3 | 15 | Premium swag bundle: tumbler + branded tote + branded notepad | $60-80 incl. shipping | Reward sustained engagement |
-| 4 | 30 | $100 Amazon gift card (digital) | $100 | High-value reward for power users |
-| 5 | 50+ | Personal thank-you call from Aud + annual VIP gift | $50-100 | Recognition + retention |
+| 1 | 3 | $25 Amazon gift card (digital) | $25 | 1-4 weeks for active users |
+| 2 | 10 | Branded Stanley-style insulated tumbler (mailed) | $30-40 incl. shipping | 1-5 months depending on firm volume |
+
+After Tier 2, we'll evaluate based on real data whether to add additional tiers. For the pilot, two milestones is enough to drive behavior without bleeding cash.
 
 ### How counting works
 
@@ -59,16 +58,17 @@ Assuming an average order generates ~$24 platform fee (8% pilot rate × $300 avg
 | Tier | Jobs | Platform revenue | Reward cost | % of revenue |
 |---|---|---|---|---|
 | 1 | 3 | $72 | $25 | 35% |
-| 2 | 7 | $168 | $30-40 | 18-24% |
-| 3 | 15 | $360 | $60-80 | 17-22% |
-| 4 | 30 | $720 | $100 | 14% |
-| 5 | 50 | $1,200+ | $50-100 | 4-8% |
+| 2 | 10 | $240 | $30-40 | 13-17% |
 
-**The math gets better as they engage more.** Tier 1 has the highest acquisition cost (35%) because we're still proving the value. By Tier 4, we're spending 14% of revenue on retention. That's a healthy ratio for a marketplace.
+**Tier 1 has the highest acquisition cost** (35% of platform fees), but we're paying for the habit-formation moment. By Tier 2, we're at a sustainable 13-17% retention cost.
 
-**Worst-case scenario:** A legal assistant hits Tier 5 in a year (50 orders × $25 fee = $1,250 revenue, $215-265 in rewards). We'd take that all day.
+**Total max cost per assistant per year**: ~$65 (gift card + tumbler + shipping).
 
-**Best-case scenario:** They become an evangelist. They tell other legal assistants. Each new legal assistant who joins has high LTV. The program pays for itself many times over.
+**Worst-case:** Every active legal assistant hits Tier 2 within 90 days. If we get 50 active legal assistants in the first 6 months, that's ~$3,250 in rewards over the year. Painful but survivable.
+
+**Best-case:** They become evangelists, tell other legal assistants in their network, and each referral has high LTV. The program pays for itself many times over.
+
+**If cash runs low:** We can pause the program at any time without affecting users who already earned a tier. New signups simply wouldn't be eligible until we reactivate it.
 
 ---
 
@@ -76,7 +76,7 @@ Assuming an average order generates ~$24 platform fee (8% pilot rate × $300 avg
 
 ### When they hit Tier 1 (3 jobs)
 
-> **Subject:** You earned a $25 Amazon gift card 🎉
+> **Subject:** You earned a $25 Amazon gift card
 >
 > Hi [name],
 >
@@ -84,26 +84,24 @@ Assuming an average order generates ~$24 platform fee (8% pilot rate × $300 avg
 >
 > As a small thank-you, here's a $25 Amazon gift card: **[CLAIM CODE]**
 >
-> Keep going! At 7 jobs you'll earn a branded Dewey Sholes Stanley-style tumbler shipped right to your office.
+> Keep going. At 10 jobs you'll earn a branded Dewey Sholes insulated tumbler shipped right to your office.
 >
 > — Aud
 > Founder, Dewey Sholes
 
-### When they hit Tier 2 (7 jobs)
+### When they hit Tier 2 (10 jobs)
 
 > **Subject:** Your Dewey Sholes tumbler is on its way
 >
 > Hi [name],
 >
-> 7 transcripts! You're officially a Dewey Sholes power user.
+> 10 transcripts! You're officially a Dewey Sholes power user.
 >
 > Reply to this email with the address you'd like your branded insulated tumbler shipped to. (Use your office address if that works — we'll address it to you.)
 >
 > Want to bring more colleagues on? Forward this email. We're working on a referral bonus for legal assistants who refer their network.
 >
 > — Aud
-
-(Higher tiers follow similar pattern with appropriate scaling.)
 
 ---
 
@@ -165,10 +163,10 @@ The program needs to be visible enough to motivate behavior:
 ## Pilot phase considerations
 
 During the 6-month pilot:
-- **Lower the Tier 1 threshold to 2 jobs** so early adopters get a quick win (instead of 3)
 - **Hand-write the note** that goes with physical rewards (Aud, not a template)
 - **Personal outreach when someone hits a tier** — Aud should email them personally to thank them
-- **Use this as a learning loop** — ask high-tier users what's working and what's not
+- **Use this as a learning loop** — ask Tier 2 users what's working and what's not. Their feedback shapes future rewards.
+- **Pause without warning if cash gets tight.** Existing earners keep their rewards; new participation is paused.
 
 ---
 
