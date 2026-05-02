@@ -8114,7 +8114,8 @@ function LandingPage() {
               <span style={{display: "block", fontSize: 13, color: "#059669", marginTop: 4}}>Sign up during the pilot and pay $0 for your first 12 months. No commitment.</span>
             </div>
             <div className="reporter-tiers">
-              <div className="reporter-tier-card">
+              <div className="reporter-tier-card featured">
+                <div className="reporter-tier-badge">Most popular</div>
                 <h3>Individual reporter</h3>
                 <div className="tier-sub">For solo CSRs building their own book of business.</div>
                 <div className="reporter-tier-price"><span style={{textDecoration: "line-through", color: "#94A3B8", fontSize: 24}}>${PRICING.listingFeeIndividual}</span> <span style={{fontSize: 40, fontWeight: 800, color: "#059669"}}>$0</span><span> / first year</span></div>
@@ -8125,7 +8126,6 @@ function LandingPage() {
                   <li><Icon name="checkCircle" size={16} color="#059669" />CSR license auto-verification</li>
                   <li><Icon name="checkCircle" size={16} color="#059669" />Keep 100% of statutory rate — no agency cut</li>
                 </ul>
-                <a href="#/reporter-signup" className="btn btn-primary">Get started</a>
               </div>
               <div className="reporter-tier-card">
                 <h3>CSR firm account</h3>
@@ -8138,9 +8138,11 @@ function LandingPage() {
                   <li><Icon name="checkCircle" size={16} color="#059669" />Firm-wide availability dashboard</li>
                   <li><Icon name="checkCircle" size={16} color="#059669" />Add or remove CSRs anytime</li>
                 </ul>
-                <a href="#/reporter-signup" className="btn btn-primary">Get started</a>
                 <div className="reporter-tier-note">Designed for independent court reporting practices, not staffing agencies</div>
               </div>
+            </div>
+            <div style={{display: "flex", justifyContent: "center", marginTop: 32}}>
+              <a href="#/reporter-signup" className="btn btn-primary" style={{padding: "14px 40px", fontSize: 16}}>Get started <Icon name="arrowRight" size={16} color="#fff" /></a>
             </div>
           </div>
         </div>
