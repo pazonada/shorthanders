@@ -2,7 +2,24 @@
 
 **Owner:** Aud
 **Last updated:** 2026-05-02
-**Status:** Draft — for prototype + real build
+**Status:** Draft — pilot-only program
+
+---
+
+## Program window: 6-month pilot only
+
+**This program runs only during the 6-month pilot signup window.** It is not a permanent feature.
+
+- New signups during the pilot window are eligible to earn rewards
+- After the pilot window ends, no new participants can enter the program
+- Legal assistants who already qualified for a tier during the pilot keep their reward (we honor what they earned)
+- We can extend the program post-pilot if it's working and cash allows, but the default is sunset
+
+**Why pilot-only:**
+- We're bootstrapped — the rewards budget is genuinely finite
+- The point is to drive early adoption among the first wave of users; we don't need to incentivize forever
+- Once the platform has real traction, network effects and product quality should drive retention without rewards
+- It also creates a "first mover" benefit that encourages early signups during the pilot
 
 ---
 
@@ -30,12 +47,13 @@ After Tier 2, we'll evaluate based on real data whether to add additional tiers.
 ### How counting works
 
 - **Per individual legal assistant account**, not per firm
-- Counter resets **annually** (so each year they have new milestones)
+- Counter is **cumulative across the pilot** — no annual reset (since the program ends with the pilot window)
 - Job counts only when:
   - The order is completed (transcript delivered + accepted, OR auto-released)
   - It's not refunded
   - The order has a minimum value (set at $50 to prevent gaming with tiny orders)
 - Co-payer splits count as **1 job** for the ordering legal assistant (the one who created the order on the platform)
+- Rewards earned during the pilot remain valid even after the program ends — we honor what people earned
 
 ### Tier display on dashboard
 
@@ -62,13 +80,13 @@ Assuming an average order generates ~$24 platform fee (8% pilot rate × $300 avg
 
 **Tier 1 has the highest acquisition cost** (35% of platform fees), but we're paying for the habit-formation moment. By Tier 2, we're at a sustainable 13-17% retention cost.
 
-**Total max cost per assistant per year**: ~$65 (gift card + tumbler + shipping).
+**Total max cost per assistant for the entire pilot**: ~$65 (gift card + tumbler + shipping). Since the program is pilot-only, this is the lifetime cost — not annual.
 
-**Worst-case:** Every active legal assistant hits Tier 2 within 90 days. If we get 50 active legal assistants in the first 6 months, that's ~$3,250 in rewards over the year. Painful but survivable.
+**Worst-case:** Every active legal assistant hits Tier 2 within the 6-month pilot. If we get 50 active legal assistants by month 6, that's ~$3,250 in rewards total. Painful but survivable.
 
 **Best-case:** They become evangelists, tell other legal assistants in their network, and each referral has high LTV. The program pays for itself many times over.
 
-**If cash runs low:** We can pause the program at any time without affecting users who already earned a tier. New signups simply wouldn't be eligible until we reactivate it.
+**If cash runs low mid-pilot:** We can pause new participation at any time without affecting users who already earned a tier. The program also auto-ends with the pilot window.
 
 ---
 
@@ -84,7 +102,7 @@ Assuming an average order generates ~$24 platform fee (8% pilot rate × $300 avg
 >
 > As a small thank-you, here's a $25 Amazon gift card: **[CLAIM CODE]**
 >
-> Keep going. At 10 jobs you'll earn a branded Dewey Sholes insulated tumbler shipped right to your office.
+> Keep going. At 10 jobs you'll earn a branded Dewey Sholes insulated tumbler shipped right to your office. (Rewards are part of our pilot program — only available to legal assistants who sign up during the first 6 months.)
 >
 > — Aud
 > Founder, Dewey Sholes
@@ -111,7 +129,7 @@ Built into the system:
 
 1. **Order completion required** — pending or cancelled orders don't count
 2. **Minimum order value** — $50 floor prevents gaming with $5 orders
-3. **One reward per tier per year** — can't unlock Tier 1 multiple times
+3. **One reward per tier, period** — can't unlock Tier 1 multiple times (program is pilot-only, no annual reset)
 4. **Refunds reverse the count** — if an order is refunded, the job doesn't count
 5. **Anti-fraud review at Tier 4+** — human review before issuing $100+ rewards (look for anomalous patterns)
 6. **Single-account enforcement** — one Dewey Sholes account per legal assistant (verified via email + firm)
