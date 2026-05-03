@@ -52,10 +52,10 @@ Legal assistants earn **10 points per completed order** through Dewey Sholes. Th
 | Reward | Cost in points | Our cost (incl. shipping) | Equivalent orders to earn |
 |---|---|---|---|
 | $10 Starbucks gift card (digital, instant) | 30 points | $10 | 3 orders |
-| Branded canvas tote bag (mailed) | 40 points | $12 | 4 orders |
-| Real branded Stanley tumbler (mailed) | 250 points | $60 | 25 orders |
+| Branded canvas tote bag (mailed) | 60 points | $12 | 6 orders |
+| Real branded Stanley tumbler (mailed) | 100 points | $60 | 10 orders |
 
-**Points stay on their account until redeemed.** A legal assistant who books 25 orders could redeem 8 Starbucks cards over time, or 6 totes, or save it all for a Stanley.
+**Points stay on their account until redeemed.** A legal assistant who books 10 orders could redeem 3 Starbucks cards (90 pts) and have points left over, or save it all for a Stanley. Their choice.
 
 ### Why these specific rewards
 
@@ -73,8 +73,8 @@ You have 40 points (4 orders earned)
 
 What you can redeem now:
 ✅ $10 Starbucks gift card (30 pts) — Redeem
-✅ Branded canvas tote bag (40 pts) — Redeem
-🔒 Real branded Stanley tumbler (210 pts to go)
+🔒 Branded canvas tote bag (20 more points to go)
+🔒 Real branded Stanley tumbler (60 more points to go)
 ```
 
 Clean, no surprises, no expiration anxiety.
@@ -104,26 +104,26 @@ Assuming an average order generates ~$24 platform fee (8% pilot rate × $300 avg
 | Reward | Cost to us | Points to redeem | Orders behind it | Platform revenue per redemption | Cost % |
 |---|---|---|---|---|---|
 | Starbucks card | $10 | 30 pts | 3 orders | $72 | 14% |
-| Tote bag | $12 | 40 pts | 4 orders | $96 | 13% |
-| Real Stanley | $60 | 250 pts | 25 orders | $600 | 10% |
+| Tote bag | $12 | 60 pts | 6 orders | $144 | 8% |
+| Real Stanley | $60 | 100 pts | 10 orders | $240 | 25% |
 
-**The Stanley is actually our cheapest reward in % terms** — because it requires 25 orders behind it. Self-balancing.
+The Stanley costs us 25% of revenue per redemption — higher than the other tiers. **But this is actually fine when we reframe rewards as marketing spend.** Every Stanley redemption represents a legal assistant who's booked 10 transcripts through our platform. They are now firmly in the habit of using us. Spending $60 to keep a customer who's generated $240+ in platform revenue (and will likely keep ordering after the program ends) is excellent acquisition math.
 
-**Pilot-wide modeling** (reflecting realistic redemption mix — most users will redeem multiple Starbucks cards over the pilot rather than save for the Stanley):
+**Pilot-wide modeling:**
+
+With the Stanley achievable in 10 orders, we expect more people to save for it (since it's the most desirable item and the path is clear). Modeling assumes ~60% of active legal assistants ultimately redeem a Stanley.
 
 | Scenario | Active legal assistants | Avg orders/assistant | Total platform revenue | Est. redemption mix | Est. reward cost | Reward % of revenue |
 |---|---|---|---|---|---|---|
-| Conservative (15 firms × 1 assistant) | 15 | 5 | $1,800 | 8 Starbucks + 3 totes | $116 | 6% |
-| Moderate (20 firms × 2 assistants) | 40 | 8 | $7,680 | 25 Starbucks + 8 totes + 1 Stanley | $406 | 5% |
-| Aggressive (25 firms × 3 assistants) | 75 | 12 | $21,600 | 60 Starbucks + 20 totes + 3 Stanleys | $1,020 | 5% |
+| Conservative (15 firms × 1 assistant) | 15 | 8 | $2,880 | 5 Starbucks + 3 totes + 6 Stanleys | $446 | 15% |
+| Moderate (20 firms × 2 assistants) | 40 | 12 | $11,520 | 15 Starbucks + 10 totes + 24 Stanleys | $1,710 | 15% |
+| Aggressive (25 firms × 3 assistants) | 75 | 15 | $27,000 | 30 Starbucks + 25 totes + 50 Stanleys | $3,600 | 13% |
 
-**At realistic scale, the reward program runs ~5-6% of platform revenue.** Way healthier than the fixed-tier model. Industry benchmarks for marketplace acquisition costs are 10-25%, so this is well within sustainable range.
+**At realistic scale, the program runs ~13-15% of platform revenue.** Industry benchmark for marketplace acquisition is 10-25%, so we're still solidly within healthy range.
 
-**Why points are cheaper than fixed tiers:** with fixed tiers, anyone who hits the threshold gets the reward whether or not they want it. With points, users only redeem rewards they actually want, and many will redeem the cheap ones repeatedly while never reaching the expensive ones.
+**Reframing the Stanley as marketing success:**
 
-**Worst-case:** Every active legal assistant maxes out and saves for Stanleys. If 75 people each redeem 1 Stanley, that's $4,500 — but they'd also have driven 75 × 25 × $24 = $45,000 in platform revenue. 10% reward ratio. We'd take that all day.
-
-**Best-case:** Most legal assistants redeem mid-tier rewards regularly, becoming repeat engagers. Total cost stays under 8% of revenue. Program is essentially free relative to the value.
+If 100 legal assistants each redeem a Stanley during the pilot, that's $6,000 in rewards — and it means we have 100 firms actively transacting on the platform. That's 1,000+ orders driving $24,000+ in platform revenue, representing real product/market fit. We'd take that all day. The Stanley is essentially a $60 customer acquisition cost for a high-LTV firm.
 
 **If cash runs low mid-pilot:** We can pause new point earning at any time without affecting users who already earned points. We always honor existing balances. The program also auto-ends with the pilot window (with 30-day grace period for unredeemed points).
 
@@ -141,8 +141,8 @@ Assuming an average order generates ~$24 platform fee (8% pilot rate × $300 avg
 >
 > You can redeem 30 points for a $10 Starbucks gift card right now, or save up:
 > - **30 points** → $10 Starbucks gift card
-> - **40 points** → Branded canvas tote bag
-> - **250 points** → Real Stanley tumbler with our logo
+> - **60 points** → Branded canvas tote bag
+> - **100 points** → Real Stanley tumbler with our logo
 >
 > [Redeem from your dashboard]
 >
@@ -151,13 +151,13 @@ Assuming an average order generates ~$24 platform fee (8% pilot rate × $300 avg
 > — Aud
 > Founder, Dewey Sholes
 
-### When they redeem the Stanley (250 points)
+### When they redeem the Stanley (100 points)
 
 > **Subject:** Your Dewey Sholes Stanley is on its way
 >
 > Hi [name],
 >
-> 25 transcripts! You're officially a Dewey Sholes power user. Your real Stanley tumbler is on its way.
+> 10 transcripts! You're officially a Dewey Sholes power user. Your real Stanley tumbler is on its way.
 >
 > Reply to this email with the address you'd like it shipped to. (Use your office address if that works — we'll address it to you.)
 >
