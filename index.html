@@ -287,17 +287,17 @@
   @media (min-width: 1440px) { .compliance-gavel { right: -80px; width: 920px; height: 920px; } }
   .compliance-grid { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; position: relative; z-index: 1; }
   @media (min-width: 1024px) { .compliance-grid { grid-template-columns: 1fr 1fr; } }
-  .compliance-label { font-size: 11px; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+  .compliance-label { font-size: 11px; font-weight: 700; color: #4361EE; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
   .compliance h2 { font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -0.02em; line-height: 1.2; }
   @media (min-width: 1024px) { .compliance h2 { font-size: 40px; } }
   .compliance-text { margin-top: 24px; font-size: 18px; color: #CBD5E1; line-height: 1.7; }
   .compliance-features { margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
   .compliance-features div { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #CBD5E1; }
-  .compliance-features svg { width: 16px; height: 16px; color: #059669; flex-shrink: 0; margin-top: 3px; }
+  .compliance-features svg { width: 16px; height: 16px; color: #4361EE; flex-shrink: 0; margin-top: 3px; }
   .compliance-card { background: #fff; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08); padding: 32px; display: flex; flex-direction: column; gap: 20px; }
   .compliance-item { display: flex; align-items: flex-start; gap: 16px; }
-  .compliance-check { width: 32px; height: 32px; border-radius: 50%; background: #ECFDF5; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .compliance-check svg { width: 16px; height: 16px; color: #059669; }
+  .compliance-check { width: 32px; height: 32px; border-radius: 50%; background: #EEF2FF; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .compliance-check svg { width: 16px; height: 16px; color: #4361EE; }
   .compliance-item strong { display: block; font-size: 14px; font-weight: 600; color: #0F172A; }
   .compliance-item .sub { font-size: 12px; color: #64748B; margin-top: 2px; }
 
@@ -8250,7 +8250,7 @@ function LandingPage() {
                   { label: "Certification statement attached", sub: "Meets CA Rules of Court Rule 8.144" },
                 ].map((item, i) => (
                   <div className="compliance-item" key={i}>
-                    <div className="compliance-check"><Icon name="checkCircle" size={16} color="#059669" /></div>
+                    <div className="compliance-check"><Icon name="checkCircle" size={16} color="#4361EE" /></div>
                     <div><strong>{item.label}</strong><div className="sub">{item.sub}</div></div>
                   </div>
                 ))}
@@ -8269,7 +8269,7 @@ function LandingPage() {
                   "Compliance rules updated on CA's statutory schedule (Jan 1 / Jul 1)",
                   "W-9 collected at onboarding; no year-end tax document chasing",
                 ].map((t, i) => (
-                  <div key={i}><Icon name="shield" size={16} color="#059669" /><span>{t}</span></div>
+                  <div key={i}><Icon name="shield" size={16} color="#4361EE" /><span>{t}</span></div>
                 ))}
               </div>
             </div>
