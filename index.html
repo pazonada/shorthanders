@@ -88,6 +88,14 @@
   .hero-bg-gradient1 { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 900px; height: 700px; background: radial-gradient(ellipse, rgba(219,234,254,0.6) 0%, rgba(224,231,255,0.3) 40%, transparent 70%); }
   .hero-bg-gradient2 { position: absolute; top: 80px; right: -100px; width: 500px; height: 500px; background: radial-gradient(ellipse, rgba(254,243,199,0.4) 0%, transparent 70%); }
   .hero-bg-dots { position: absolute; inset: 0; background-image: radial-gradient(circle at 1px 1px, rgba(148,163,184,0.07) 1px, transparent 0); background-size: 32px 32px; }
+
+  /* ─── Ink-blot rails (page-edge decoration) ──────── */
+  .ink-rail { position: absolute; top: 80px; bottom: 0; width: 80px; pointer-events: none; z-index: 0; color: #0F172A; opacity: 0.6; display: none; }
+  .ink-rail-left { left: 12px; }
+  .ink-rail-right { right: 12px; transform: scaleX(-1); }
+  @media (min-width: 1280px) { .ink-rail { display: block; } }
+  @media (min-width: 1600px) { .ink-rail-left { left: 32px; } .ink-rail-right { right: 32px; } }
+  [data-theme="dark"] .ink-rail { color: #818CF8; opacity: 0.4; }
   .hero-content { max-width: 720px; margin: 0 auto; text-align: center; }
   .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: #EFF6FF; border: 1px solid #BFDBFE; color: #1D4ED8; font-size: 11px; font-weight: 700; padding: 6px 16px; border-radius: 100px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 32px; }
   .hero-badge-dot { width: 6px; height: 6px; background: #3B82F6; border-radius: 50%; animation: pulse 2s infinite; }
@@ -1707,6 +1715,46 @@ const QuillFlourish = ({ size = 22, color }) => {
       <line x1="16" y1="8" x2="2" y2="22"/>
       <line x1="17.5" y1="15" x2="9" y2="15"/>
     </svg>
+  );
+};
+
+// InkBlotRail: a column of irregular ink-spill drops down the page edge,
+// with small spatter satellites. Hidden on narrow viewports so it never
+// crowds content. Pure decoration; no interactivity.
+const InkBlotRail = ({ side = "left" }) => {
+  // top is a % of the rail's height; xOffset shifts horizontally within the rail.
+  const blots = [
+    { top: "1%",  xOffset: 8,   size: 56, rot: 14,  op: 0.55, variant: 0, sats: [[42, 22, 1.6], [52, 6, 1]] },
+    { top: "8%",  xOffset: -10, size: 36, rot: -22, op: 0.45, variant: 2, sats: [[-6, 26, 1.3]] },
+    { top: "15%", xOffset: 16,  size: 70, rot: 32,  op: 0.6,  variant: 1, sats: [[58, 30, 1.8], [68, 38, 1.2], [-10, -2, 1]] },
+    { top: "23%", xOffset: -14, size: 28, rot: -8,  op: 0.4,  variant: 0, sats: [[34, -6, 1.2]] },
+    { top: "31%", xOffset: 12,  size: 50, rot: 48,  op: 0.5,  variant: 2, sats: [[-8, 22, 1.4], [44, 30, 1]] },
+    { top: "40%", xOffset: -8,  size: 60, rot: -34, op: 0.55, variant: 1, sats: [[52, 14, 1.6], [62, 22, 1]] },
+    { top: "49%", xOffset: 18,  size: 32, rot: 18,  op: 0.42, variant: 0, sats: [[-12, 26, 1.4]] },
+    { top: "57%", xOffset: -12, size: 54, rot: -12, op: 0.5,  variant: 2, sats: [[46, -4, 1.5], [56, 4, 1.1]] },
+    { top: "66%", xOffset: 10,  size: 42, rot: 26,  op: 0.48, variant: 1, sats: [[-10, 24, 1.3], [-18, 16, 1]] },
+    { top: "75%", xOffset: -6,  size: 62, rot: -42, op: 0.55, variant: 0, sats: [[50, 22, 1.6], [60, 30, 1.2]] },
+    { top: "84%", xOffset: 14,  size: 38, rot: 8,   op: 0.45, variant: 2, sats: [[-12, 18, 1.3]] },
+    { top: "92%", xOffset: -10, size: 48, rot: -28, op: 0.5,  variant: 1, sats: [[44, 24, 1.5], [54, 32, 1]] },
+  ];
+  const paths = [
+    "M 18,4 C 30,2 40,10 40,22 C 40,34 30,40 18,38 C 8,36 2,28 4,18 C 6,10 12,5 18,4 Z",
+    "M 16,6 C 28,3 38,11 38,22 C 38,34 28,40 16,38 C 6,36 0,26 4,16 C 7,9 12,7 16,6 Z",
+    "M 22,3 C 34,5 42,16 38,28 C 34,40 22,42 12,36 C 4,30 0,18 6,10 C 12,4 16,2 22,3 Z",
+  ];
+  return (
+    <div className={"ink-rail ink-rail-" + side} aria-hidden="true">
+      {blots.map((b, i) => (
+        <svg key={i} width={b.size + 30} height={b.size + 20} viewBox={"-15 -10 " + (b.size + 30) + " " + (b.size + 20)} fill="currentColor" style={{position: "absolute", top: b.top, left: "50%", transform: "translateX(calc(-50% + " + b.xOffset + "px))", opacity: b.op}}>
+          <g transform={"rotate(" + b.rot + " " + (b.size / 2) + " " + (b.size / 2) + ") scale(" + (b.size / 42) + ")"}>
+            <path d={paths[b.variant]} />
+            {b.sats.map((s, j) => (
+              <circle key={j} cx={s[0]} cy={s[1]} r={s[2] || 1.6} />
+            ))}
+          </g>
+        </svg>
+      ))}
+    </div>
   );
 };
 
@@ -7980,7 +8028,9 @@ function LandingPage() {
   };
 
   return (
-    <div>
+    <div style={{position: "relative", overflow: "hidden"}}>
+      <InkBlotRail side="left" />
+      <InkBlotRail side="right" />
       {/* ─── NAV ─── */}
       <nav className={"nav" + (scrolled ? " scrolled" : "")}>
         <div className="container">
