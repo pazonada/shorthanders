@@ -5746,9 +5746,9 @@ function AdminDashboard() {
                   <span className="compliance-status pass">Monitoring</span>
                 </div>
                 <div className="compliance-item">
-                  <div className="compliance-icon pass"><Icon name="users" size={16} color="#059669" /></div>
-                  <div className="compliance-info"><h4>Firm accounts</h4><p>3 active firm accounts covering 14 reporters at $79/reporter/year.</p></div>
-                  <span className="compliance-status pass">Active</span>
+                  <div className="compliance-icon pass"><Icon name="users" size={16} color="#94A3B8" /></div>
+                  <div className="compliance-info"><h4>CSR firm accounts</h4><p>Deferred to v2. Currently tracking firm-account interest expressed at signup (12 indicated interest so far).</p></div>
+                  <span className="compliance-status" style={{background: "#F1F5F9", color: "#475569"}}>Deferred</span>
                 </div>
               </div>
             </div>
@@ -6523,7 +6523,7 @@ function PricingCalculator() {
 function ReporterOnboarding() {
   const [screen, setScreen] = useState(0); // 0=welcome, 1=account type, 2-6=steps, 7=invite, 8=success
   const [form, setForm] = useState({
-    accountType: "", firmName: "", firmReporterCount: 3,
+    accountType: "individual", firmInterest: false, firmName: "",
     csrNumber: "", method: "", certs: [], languages: [], courtEmployed: "", courtEmployedWhere: "",
     jobTypes: [], caseTypes: [], courts: [], turnarounds: [],
     recentCases: [{caseName: "", caseNumber: "", court: "", date: "", role: "Live attendance"}],
@@ -6583,53 +6583,50 @@ function ReporterOnboarding() {
           <a href="#/" style={{display: "inline-flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
         </div>
         <div className="reporter-step-header">
-          <h2>How are you joining?</h2>
-          <p>Choose the option that best describes your practice.</p>
-        </div>
-        <div className="method-cards" style={{maxWidth: 520, margin: "0 auto"}}>
-          <div className={"method-card" + (form.accountType === "individual" ? " selected" : "")} onClick={() => update("accountType", "individual")} style={{padding: 24}}>
-            <div className="mc-icon"><Icon name="user" size={24} /></div>
-            <div>
-              <div className="mc-text">Individual reporter</div>
-              <div className="mc-sub">${PRICING.listingFeeIndividual}/year — solo CSR with your own listing</div>
-            </div>
-          </div>
-          <div className={"method-card" + (form.accountType === "firm" ? " selected" : "")} onClick={() => update("accountType", "firm")} style={{padding: 24}}>
-            <div className="mc-icon"><Icon name="users" size={24} /></div>
-            <div>
-              <div className="mc-text">Small firm</div>
-              <div className="mc-sub">${PRICING.firmPerReporter}/reporter/year — {PRICING.firmMinReporters}–{PRICING.firmMaxReporters} reporters, one account</div>
-            </div>
-          </div>
+          <h2>Welcome aboard</h2>
+          <p>Dewey Sholes is currently a solo-CSR platform. You'll get your own listing on the marketplace and keep 100% of the statutory rate on every job.</p>
         </div>
 
-        {form.accountType === "firm" && (
-          <div style={{maxWidth: 520, margin: "24px auto 0", display: "flex", flexDirection: "column", gap: 16}}>
-            <div className="form-group" style={{marginBottom: 0}}>
-              <label className="form-label">Firm name</label>
-              <input className="form-input" placeholder="e.g. Bay Area Court Reporters" value={form.firmName} onChange={e => update("firmName", e.target.value)} />
+        <div style={{maxWidth: 520, margin: "0 auto", padding: 20, background: "var(--bg-card, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 14}}>
+          <div style={{display: "flex", alignItems: "center", gap: 12, marginBottom: 16}}>
+            <div style={{width: 44, height: 44, borderRadius: 12, background: "#DBEAFE", display: "flex", alignItems: "center", justifyContent: "center"}}>
+              <Icon name="user" size={22} color="#2563EB" />
             </div>
-            <div className="form-group" style={{marginBottom: 0}}>
-              <label className="form-label">Number of reporters</label>
-              <div style={{display: "flex", alignItems: "center", gap: 12}}>
-                <input type="range" min={PRICING.firmMinReporters} max={PRICING.firmMaxReporters} value={form.firmReporterCount} onChange={e => update("firmReporterCount", parseInt(e.target.value))} style={{flex: 1}} />
-                <span style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)", minWidth: 28, textAlign: "center"}}>{form.firmReporterCount}</span>
-              </div>
-              <p className="form-helper" style={{marginTop: 8}}>
-                Estimated annual cost: <strong>${form.firmReporterCount * PRICING.firmPerReporter}/year</strong> ({form.firmReporterCount} reporters × ${PRICING.firmPerReporter})
-              </p>
-            </div>
-            <div style={{background: "var(--bg-muted, #F1F5F9)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12, padding: 14, fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.6}}>
-              <strong>Note:</strong> CSR firm accounts include centralized billing and a single dashboard to manage all reporters. Designed for independent court reporting practices, not staffing agencies.
+            <div>
+              <div style={{fontSize: 15, fontWeight: 700, color: "var(--text, #0F172A)"}}>Individual CSR account</div>
+              <div style={{fontSize: 13, color: "var(--text-secondary, #475569)"}}>${PRICING.listingFeeIndividual}/year listing fee — <strong style={{color: "#059669"}}>waived during pilot</strong></div>
             </div>
           </div>
-        )}
+          <ul style={{margin: 0, paddingLeft: 20, fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.8}}>
+            <li>Full profile on the marketplace</li>
+            <li>Push notification job alerts</li>
+            <li>2-business-day direct deposit</li>
+            <li>Keep 100% of the statutory rate on every job</li>
+          </ul>
+        </div>
+
+        {/* CSR firm interest checkbox */}
+        <div style={{maxWidth: 520, margin: "20px auto 0", padding: 16, background: "var(--bg-muted, #F1F5F9)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12}}>
+          <label style={{display: "flex", gap: 12, cursor: "pointer", alignItems: "flex-start"}}>
+            <input type="checkbox" checked={form.firmInterest} onChange={e => update("firmInterest", e.target.checked)} style={{marginTop: 3, flexShrink: 0}} />
+            <div>
+              <div style={{fontSize: 14, fontWeight: 600, color: "var(--text, #0F172A)", marginBottom: 4}}>I'm part of a CSR firm with 2+ reporters</div>
+              <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)", lineHeight: 1.6}}>Firm accounts (centralized billing, firm-wide dashboard, multiple reporters under one account) are coming in a future release. Check this box to be notified when they're available. For now, you can sign up individually and use Dewey Sholes solo.</div>
+            </div>
+          </label>
+          {form.firmInterest && (
+            <div style={{marginTop: 12, paddingTop: 12, borderTop: "1px solid var(--border, #E2E8F0)"}}>
+              <label className="form-label" style={{fontSize: 12}}>Firm name <span style={{fontWeight: 400, color: "#94A3B8"}}>(so we can reach out when ready)</span></label>
+              <input className="form-input" placeholder="e.g. Bay Area Court Reporters" value={form.firmName} onChange={e => update("firmName", e.target.value)} style={{fontSize: 13}} />
+            </div>
+          )}
+        </div>
 
         <div style={{maxWidth: 520, margin: "32px auto 0", display: "flex", gap: 12}}>
           <button className="btn btn-secondary" style={{flex: 1, justifyContent: "center"}} onClick={() => setScreen(0)}>
             <Icon name="arrowLeft" size={16} /> Back
           </button>
-          <button className="btn btn-primary" style={{flex: 2, justifyContent: "center"}} disabled={!form.accountType || (form.accountType === "firm" && !form.firmName.trim())} onClick={() => setScreen(2)}>
+          <button className="btn btn-primary" style={{flex: 2, justifyContent: "center"}} onClick={() => setScreen(2)}>
             Continue <Icon name="arrowRight" size={16} />
           </button>
         </div>
@@ -6728,16 +6725,15 @@ function ReporterOnboarding() {
           <div className="profile-summary">
             <h3>Your profile</h3>
             <div className="ps-row"><span className="ps-label">Name</span><span className="ps-value">{form.name || "—"}</span></div>
-            <div className="ps-row"><span className="ps-label">Account type</span><span className="ps-value">{form.accountType === "firm" ? "Firm — " + form.firmName : "Individual reporter"}</span></div>
+            <div className="ps-row"><span className="ps-label">Account type</span><span className="ps-value">Individual CSR{form.firmInterest && form.firmName ? ` (interested in firm account: ${form.firmName})` : form.firmInterest ? " (firm account interest noted)" : ""}</span></div>
             <div className="ps-row"><span className="ps-label">CSR Number</span><span className="ps-value">{form.csrNumber || "—"}</span></div>
             <div className="ps-row"><span className="ps-label">Method</span><span className="ps-value">{form.method || "—"}</span></div>
             <div className="ps-row"><span className="ps-label">Job types</span><span className="ps-value">{jobTypeLabels}</span></div>
             <div className="ps-row"><span className="ps-label">Courts</span><span className="ps-value">{courtLabels}</span></div>
-            {form.accountType === "firm" && <div className="ps-row"><span className="ps-label">Reporters</span><span className="ps-value">{form.firmReporterCount} reporters (${form.firmReporterCount * PRICING.firmPerReporter}/year)</span></div>}
           </div>
           <div className="promo-callout">
             <strong>Your first year's listing fee is waived!</strong>
-            <span>Code PIONEER2026 — {form.accountType === "firm" ? "$" + (form.firmReporterCount * PRICING.firmPerReporter) + " value" : "$99 value"} applied to your account</span>
+            <span>Code PIONEER2026 — $99 value applied to your account</span>
           </div>
 
           {/* PWA install prompt */}
@@ -6992,7 +6988,7 @@ function ReporterOnboarding() {
         </div>
         <div className="info-callout">
           <div className="callout-icon"><Icon name="shield" size={16} /></div>
-          <p>Dewey Sholes charges a {form.accountType === "firm" ? "$" + PRICING.firmPerReporter + "/reporter/year" : "$" + PRICING.listingFeeIndividual + "/year"} listing fee. No per-job deductions, no agency cut — you keep 100% of the statutory rate for every transcript. Traditional agencies take 50–85%; we take zero from your earnings. Payment within 2 business days of delivery.</p>
+          <p>Dewey Sholes charges a ${PRICING.listingFeeIndividual}/year listing fee (waived during the pilot). No per-job deductions, no agency cut — you keep 100% of the statutory rate for every transcript. Traditional agencies take 50–85%; we take zero from your earnings. Payment within 2 business days of delivery.</p>
         </div>
         <hr className="section-divider" />
         <div className="form-group">
@@ -8128,18 +8124,19 @@ function LandingPage() {
                   <li><Icon name="checkCircle" size={16} color="#059669" />Keep 100% of statutory rate — no agency cut</li>
                 </ul>
               </div>
-              <div className="reporter-tier-card">
+              <div className="reporter-tier-card" style={{opacity: 0.7, position: "relative"}}>
+                <div style={{position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)", background: "#475569", color: "#fff", fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: 0.5, padding: "4px 14px", borderRadius: 20, whiteSpace: "nowrap"}}>Coming soon</div>
                 <h3>CSR firm account</h3>
-                <div className="tier-sub">For court reporting practices with multiple CSRs. Centralized billing and one dashboard for the whole firm.</div>
-                <div className="reporter-tier-price"><span style={{textDecoration: "line-through", color: "#94A3B8", fontSize: 24}}>${PRICING.firmPerReporter}</span> <span style={{fontSize: 40, fontWeight: 800, color: "#059669"}}>$0</span><span> / reporter / first year</span></div>
-                <ul className="reporter-tier-features">
-                  <li><Icon name="checkCircle" size={16} color="#059669" />Everything in Individual, plus:</li>
-                  <li><Icon name="checkCircle" size={16} color="#059669" />{PRICING.firmMinReporters}–{PRICING.firmMaxReporters} CSRs under one account</li>
-                  <li><Icon name="checkCircle" size={16} color="#059669" />Single invoice, centralized billing</li>
-                  <li><Icon name="checkCircle" size={16} color="#059669" />Firm-wide availability dashboard</li>
-                  <li><Icon name="checkCircle" size={16} color="#059669" />Add or remove CSRs anytime</li>
+                <div className="tier-sub">For court reporting practices with multiple CSRs. Centralized billing and one dashboard for the whole firm. Tell us you're interested at signup and we'll notify you when this launches.</div>
+                <div className="reporter-tier-price" style={{color: "var(--text-muted, #94A3B8)"}}><span style={{fontSize: 24}}>${PRICING.firmPerReporter}</span><span style={{fontSize: 15, fontWeight: 400}}> / reporter / year (planned)</span></div>
+                <ul className="reporter-tier-features" style={{opacity: 0.85}}>
+                  <li><Icon name="checkCircle" size={16} color="#94A3B8" />Everything in Individual, plus:</li>
+                  <li><Icon name="checkCircle" size={16} color="#94A3B8" />{PRICING.firmMinReporters}–{PRICING.firmMaxReporters} CSRs under one account</li>
+                  <li><Icon name="checkCircle" size={16} color="#94A3B8" />Single invoice, centralized billing</li>
+                  <li><Icon name="checkCircle" size={16} color="#94A3B8" />Firm-wide availability dashboard</li>
+                  <li><Icon name="checkCircle" size={16} color="#94A3B8" />Add or remove CSRs anytime</li>
                 </ul>
-                <div className="reporter-tier-note">Designed for independent court reporting practices, not staffing agencies</div>
+                <div className="reporter-tier-note">Designed for independent court reporting practices, not staffing agencies. Members of CSR firms can sign up individually for now.</div>
               </div>
             </div>
             <div style={{display: "flex", justifyContent: "center", marginTop: 32}}>
@@ -8640,14 +8637,14 @@ function FaqPage() {
       { id: "r1", q: "How do I get started as a reporter on Dewey Sholes?", a: "Sign up through our reporter onboarding flow. You'll need to provide your CSR license number, reporting method, certifications, and preferences. We verify your credentials with the California Court Reporters Board before activating your profile." },
       { id: "r2", q: "How and when do I get paid?", a: "Payment is released automatically within 2 business days of delivery acceptance by the attorney. If the attorney doesn't respond within 2 business days, payment auto-releases. Funds are deposited to your linked bank account via Stripe." },
       { id: "r3", q: "How does job matching work?", a: "You'll receive push notifications for new jobs matching your case type preferences and turnaround capabilities. Each job shows the court, deadline, estimated pages, and your potential earnings. Accept with one tap, or decline — no penalty for declining." },
-      { id: "r4", q: "What are the listing fees?", a: "Individual reporter listing is $99 per year. Firm tier is $79 per year per reporter (3-10 reporters). During the pilot, the listing fee is waived for your first year." },
+      { id: "r4", q: "What are the listing fees?", a: "Individual reporter listing is $99 per year, waived during the 6-month pilot for your entire first year. CSR firm accounts (3-10 reporters under one account with centralized billing) are deferred to a future release — you can express interest at signup and we'll notify you when they're available." },
       { id: "r5", q: "How does the check-in system work?", a: "After you accept a job, the platform checks in at the midpoint of the delivery window to confirm you're on track. You can respond \"On track,\" request a deadline extension, or release the job for reassignment. Rush jobs are automatically reassigned if you report you're not on track." },
       { id: "r6", q: "How are ratings calculated?", a: "Your profile shows two scores: Timeliness (auto-calculated from your delivery dates vs. deadlines) and Quality (rated 1-5 by attorneys after each delivery, with optional written feedback). Higher ratings mean you appear first in search results and get more job offers." },
     ]},
     { title: "General", items: [
       { id: "g1", q: "Is my data secure?", a: "Yes. All data is encrypted in transit (TLS 1.3) and at rest (AES-256). Transcripts are accessible only to the ordering attorney and the assigned reporter via time-limited signed URLs. We use Stripe for payment processing and are building toward SOC 2 compliance. We never send transcripts via email — only secure download links." },
       { id: "g2", q: "What is the pilot program?", a: "We're currently running a pilot in California. Attorneys who sign up during the pilot get an 8% platform fee (standard: 12%) locked in for their entire first year. Reporters get their $99/yr listing fee waived for the first year. The pilot helps us refine the platform before scaling statewide." },
-      { id: "g3", q: "What fees does Dewey Sholes charge?", a: "Attorneys pay a platform fee on each order (8% during pilot, 12% standard). Reporters pay an annual listing fee of $99 (individual) or $79/reporter (firm tier). Reporters keep 100% of the statutory transcript rate — we never take a cut of your earnings." },
+      { id: "g3", q: "What fees does Dewey Sholes charge?", a: "Attorneys pay a platform fee on each order (8% during pilot, 12% standard). Reporters pay an annual $99 listing fee (waived during the pilot). Reporters keep 100% of the statutory transcript rate — we never take a cut of your earnings. CSR firm accounts (multiple reporters under one account) are coming in a future release." },
       { id: "g4", q: "How do I contact support?", a: "Click the ? button in the bottom-right corner of any dashboard page to report an issue or ask a question. You can also visit our contact page or email support@deweysholes.com. We respond within 1 business day." },
       { id: "g5", q: "Which jurisdictions do you serve?", a: "We currently serve all of California. Any CSR licensed by the California Court Reporters Board can sign up. For transcription jobs, the reporter can be located anywhere in the state. For live attendance, the reporter needs to be in or near the court's county." },
     ]},
