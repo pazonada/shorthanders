@@ -160,8 +160,10 @@
   .step p { font-size: 15px; color: #64748B; line-height: 1.7; }
 
   /* ─── Use Cases ────────────────────────────────── */
-  .usecases { padding: 96px 0; background: #F8FAFC; }
+  .usecases { padding: 96px 0; background: linear-gradient(135deg, #0B1120 0%, #0F172A 50%, #1E1B4B 100%); position: relative; overflow: hidden; }
   @media (min-width: 1024px) { .usecases { padding: 128px 0; } }
+  .usecases .section-header h2 { color: #fff; }
+  .usecases .section-header p { color: #CBD5E1; }
   .usecases-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
   @media (min-width: 1024px) { .usecases-grid { grid-template-columns: 1fr 1fr; } }
   .usecase-card { position: relative; background: #fff; border-radius: 16px; border: 1px solid #E2E8F0; padding: 40px; transition: all 0.3s; overflow: hidden; }
