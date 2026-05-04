@@ -1801,6 +1801,7 @@ const MOCK_CASES = [
     orders: [
       { id: "ord-4", type: "transcription", hearingDate: "2026-01-22", turnaround: "standard", status: "completed", reporter: "Lisa Nakamura, CSR #13561", pages: 38, cost: 139.46, created: "2026-01-30", delivery: "2026-02-05", statusStep: 5 },
       { id: "ord-5", type: "live", hearingDate: "2026-03-05", turnaround: "standard", status: "completed", reporter: "Sarah Chen, CSR #14892", pages: 28, cost: 102.76, created: "2026-02-25", delivery: "2026-03-10", statusStep: 5 },
+      { id: "ord-6", type: "live", hearingDate: "2026-04-12", turnaround: "standard", status: "delivered", reporter: "Michael Torres, CSR #11247", pages: 0, cost: 255, created: "2026-04-05", delivery: "2026-04-13", statusStep: 4, jobType: "cna-no", cnaNotes: "Witness Patterson failed to appear at scheduled 9:00 AM start. Counsel for both sides were present. Waited until 9:45 AM. No testimony taken; no transcript produced.", deliveredAt: "2026-04-12T09:48:00", autoReleaseAt: "2026-04-14T09:48:00" },
     ],
   },
   {
@@ -3673,6 +3674,7 @@ function BuyerDashboard() {
   const [newCaseNumber, setNewCaseNumber] = useState("");
   const [newCaseCourt, setNewCaseCourt] = useState("");
   const [newCaseType, setNewCaseType] = useState("Family Law");
+  const [cancelOrder, setCancelOrder] = useState(null);
   const allOrders = MOCK_CASES.flatMap(c => c.orders);
   const activeOrders = allOrders.filter(o => o.status === "in-progress" || o.status === "pending").length;
   const pendingReview = allOrders.filter(o => o.status === "pending").length;
@@ -3953,36 +3955,65 @@ function BuyerDashboard() {
                           </button>}
                         </div>
                       )}
-                      {o.status === "delivered" && (
-                        <div style={{margin: "0 24px 16px", padding: 20, background: "var(--bg-card, #F0FDF4)", border: "1.5px solid #86EFAC", borderRadius: 12}}>
+                      {(o.status === "pending" || o.status === "in-progress") && (
+                        <div style={{margin: "0 24px 16px", display: "flex", gap: 8}}>
+                          <button className="btn btn-sm" style={{fontSize: 12, background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => setCancelOrder(o)}>
+                            <Icon name="x" size={12} /> Cancel order
+                          </button>
+                        </div>
+                      )}
+                      {o.status === "delivered" && (() => {
+                        const isCna = o.jobType === "cna-no" || o.jobType === "cna-with";
+                        const cnaNoTranscript = o.jobType === "cna-no";
+                        const cardBg = isCna ? "#FFFBEB" : "var(--bg-card, #F0FDF4)";
+                        const cardBorder = isCna ? "1.5px solid #FDE68A" : "1.5px solid #86EFAC";
+                        const iconBg = isCna ? "#D97706" : "#059669";
+                        const iconName = cnaNoTranscript ? "x" : "fileText";
+                        const titleColor = isCna ? "#92400E" : "var(--text, #065F46)";
+                        return (
+                        <div style={{margin: "0 24px 16px", padding: 20, background: cardBg, border: cardBorder, borderRadius: 12}}>
                           <div style={{display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 12}}>
-                            <div style={{width: 40, height: 40, borderRadius: 10, background: "#059669", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
-                              <Icon name="fileText" size={20} color="#fff" />
+                            <div style={{width: 40, height: 40, borderRadius: 10, background: iconBg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
+                              <Icon name={iconName} size={20} color="#fff" />
                             </div>
                             <div style={{flex: 1}}>
-                              <div style={{fontWeight: 600, fontSize: 14, color: "var(--text, #065F46)"}}>Transcript delivered</div>
-                              <div style={{fontSize: 13, color: "var(--text-secondary, #6B7280)", marginTop: 2}}>{o.deliveredFile}</div>
-                              <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginTop: 2}}>
-                                Uploaded {new Date(o.deliveredAt).toLocaleDateString("en-US", {month: "short", day: "numeric"})} at {new Date(o.deliveredAt).toLocaleTimeString("en-US", {hour: "numeric", minute: "2-digit"})} by {o.reporter}
+                              <div style={{display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 2}}>
+                                <span style={{fontWeight: 600, fontSize: 14, color: titleColor}}>{cnaNoTranscript ? "Certified Non-Appearance recorded" : isCna ? "CNA record delivered" : "Transcript delivered"}</span>
+                                {isCna && <span style={{fontSize: 10, fontWeight: 800, padding: "3px 8px", borderRadius: 4, background: "#D97706", color: "#fff", textTransform: "uppercase", letterSpacing: "0.05em"}}>CNA</span>}
+                              </div>
+                              {!cnaNoTranscript && o.deliveredFile && <div style={{fontSize: 13, color: "var(--text-secondary, #6B7280)"}}>{o.deliveredFile}</div>}
+                              {cnaNoTranscript && o.cnaNotes && <div style={{fontSize: 13, color: "var(--text-secondary, #6B7280)", lineHeight: 1.5, marginTop: 4}}>{o.cnaNotes}</div>}
+                              <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginTop: 4}}>
+                                {cnaNoTranscript ? "Recorded" : "Uploaded"} {new Date(o.deliveredAt).toLocaleDateString("en-US", {month: "short", day: "numeric"})} at {new Date(o.deliveredAt).toLocaleTimeString("en-US", {hour: "numeric", minute: "2-digit"})} by {o.reporter}
                               </div>
                             </div>
                           </div>
+                          {isCna && (
+                            <div style={{fontSize: 12, color: "#78350F", background: "#FEF3C7", padding: "8px 12px", borderRadius: 8, marginBottom: 12, lineHeight: 1.5}}>
+                              <Icon name="info" size={12} color="#D97706" /> {cnaNoTranscript ? "Witness or essential party didn't appear. Full attendance fee applies; no per-page charges." : "Witness or essential party didn't appear. Brief CNA record produced. Attendance fee + page rate apply."}
+                            </div>
+                          )}
                           <div style={{fontSize: 12, color: "#065F46", background: "#DCFCE7", padding: "8px 12px", borderRadius: 8, marginBottom: 16, lineHeight: 1.5}}>
                             <Icon name="clock" size={12} color="#059669" /> Auto-release {(() => { const hrs = Math.max(0, Math.round((new Date(o.autoReleaseAt) - new Date()) / 3600000)); return hrs > 24 ? `in ${Math.ceil(hrs/24)} days` : hrs > 0 ? `in ${hrs} hours` : "imminent"; })()} ({new Date(o.autoReleaseAt).toLocaleDateString("en-US", {month: "short", day: "numeric", hour: "numeric", minute: "2-digit"})}) if no action taken. Payment will be sent to the reporter.
                           </div>
                           <div style={{display: "flex", gap: 8, flexWrap: "wrap"}}>
-                            <button className="btn btn-primary btn-sm" onClick={() => setShowTranscript(true)}>
-                              <Icon name="eye" size={13} /> Review transcript
-                            </button>
+                            {!cnaNoTranscript && (
+                              <button className="btn btn-primary btn-sm" onClick={() => setShowTranscript(true)}>
+                                <Icon name="eye" size={13} /> Review {isCna ? "CNA record" : "transcript"}
+                              </button>
+                            )}
                             <button className="btn btn-sm" style={{background: "#059669", color: "#fff", border: "none"}} onClick={() => setAcceptOrder(o)}>
                               <Icon name="checkCircle" size={13} /> Accept delivery
                             </button>
-                            <button className="btn btn-sm" style={{background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => { setCorrectionOrder(o); setCorrectionPage(""); setCorrectionDesc(""); }}>
-                              <Icon name="x" size={13} /> Request correction
-                            </button>
+                            {!isCna && (
+                              <button className="btn btn-sm" style={{background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => { setCorrectionOrder(o); setCorrectionPage(""); setCorrectionDesc(""); }}>
+                                <Icon name="x" size={13} /> Request correction
+                              </button>
+                            )}
                           </div>
                         </div>
-                      )}
+                        );
+                      })()}
                     </div>
                   ))}
                 </div>
@@ -4259,6 +4290,79 @@ function BuyerDashboard() {
           </div>
         </div>
       )}
+      {cancelOrder && (() => {
+        // Calculate hours until scheduled job
+        const scheduledTime = new Date(cancelOrder.hearingDate + "T09:00:00");
+        const hoursUntil = (scheduledTime - new Date()) / 3600000;
+        let feeTier, feeAmount, feeLabel, refundAmount;
+        const orderCost = cancelOrder.cost || 255;
+        const halfDayFee = 255;
+        if (hoursUntil > 24) {
+          feeTier = "none";
+          feeAmount = 0;
+          feeLabel = "No cancellation fee";
+          refundAmount = orderCost;
+        } else if (hoursUntil > 0) {
+          feeTier = "halfday";
+          feeAmount = halfDayFee;
+          feeLabel = "Half-day attendance fee";
+          refundAmount = Math.max(0, orderCost - halfDayFee);
+        } else {
+          feeTier = "fullday";
+          feeAmount = orderCost;
+          feeLabel = "Full attendance fee (job is in progress)";
+          refundAmount = 0;
+        }
+        return (
+        <div className="modal-overlay" onClick={() => setCancelOrder(null)}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 480, padding: 28}}>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16}}>
+              <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>Cancel this order?</h3>
+              <button onClick={() => setCancelOrder(null)} style={{background: "none", border: "none", fontSize: 22, color: "var(--text-muted, #94A3B8)", cursor: "pointer"}}>×</button>
+            </div>
+            <div style={{padding: 14, background: "var(--bg-muted, #F8FAFC)", borderRadius: 10, marginBottom: 16, fontSize: 13, color: "var(--text-secondary, #475569)"}}>
+              <div><strong style={{color: "var(--text, #0F172A)"}}>{selectedCase ? selectedCase.name : "—"}</strong></div>
+              <div>Scheduled: {new Date(cancelOrder.hearingDate).toLocaleDateString("en-US", {month: "long", day: "numeric", year: "numeric"})} at 9:00 AM</div>
+              {cancelOrder.reporter && <div>Reporter: {cancelOrder.reporter}</div>}
+            </div>
+            <div style={{padding: 16, background: feeTier === "none" ? "#F0FDF4" : feeTier === "halfday" ? "#FFFBEB" : "#FEF2F2", border: feeTier === "none" ? "1px solid #86EFAC" : feeTier === "halfday" ? "1px solid #FDE68A" : "1px solid #FECACA", borderRadius: 10, marginBottom: 16}}>
+              <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 8}}>
+                <div>
+                  <div style={{fontSize: 14, fontWeight: 700, color: feeTier === "none" ? "#065F46" : feeTier === "halfday" ? "#92400E" : "#7F1D1D"}}>
+                    {hoursUntil > 0 ? `${Math.round(hoursUntil)} hours until scheduled job` : "Job has already started or is past scheduled time"}
+                  </div>
+                  <div style={{fontSize: 12, color: feeTier === "none" ? "#059669" : feeTier === "halfday" ? "#D97706" : "#DC2626", marginTop: 2}}>
+                    {feeLabel}
+                  </div>
+                </div>
+                <div style={{textAlign: "right", flexShrink: 0}}>
+                  <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em"}}>Cancellation fee</div>
+                  <div style={{fontSize: 20, fontWeight: 800, color: feeTier === "none" ? "#059669" : feeTier === "halfday" ? "#D97706" : "#DC2626"}}>${feeAmount.toFixed(2)}</div>
+                </div>
+              </div>
+              <div style={{paddingTop: 10, borderTop: feeTier === "none" ? "1px solid #BBF7D0" : feeTier === "halfday" ? "1px solid #FDE68A" : "1px solid #FECACA", fontSize: 12, color: feeTier === "none" ? "#065F46" : feeTier === "halfday" ? "#78350F" : "#991B1B", lineHeight: 1.6}}>
+                {feeTier === "none" && "More than 24 hours until the scheduled job — no cancellation fee. Full refund."}
+                {feeTier === "halfday" && "Less than 24 hours until the scheduled job — the reporter has already blocked their day. Half-day attendance fee applies."}
+                {feeTier === "fullday" && "The reporter has already shown up or is en route. Full attendance fee applies."}
+              </div>
+            </div>
+            <div style={{padding: 12, background: "var(--bg-muted, #F8FAFC)", borderRadius: 8, marginBottom: 20, fontSize: 13, color: "var(--text-secondary, #475569)", display: "flex", justifyContent: "space-between"}}>
+              <span>You'll be refunded:</span>
+              <strong style={{color: "var(--text, #0F172A)"}}>${refundAmount.toFixed(2)}</strong>
+            </div>
+            <div style={{display: "flex", gap: 10, justifyContent: "flex-end"}}>
+              <button className="btn btn-secondary btn-sm" onClick={() => setCancelOrder(null)}>Keep order</button>
+              <button className="btn btn-sm" style={{background: "#DC2626", color: "#fff", border: "none", padding: "8px 16px", borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: "pointer"}} onClick={() => {
+                addToast("Order cancelled", `Refund of $${refundAmount.toFixed(2)} will appear on your card within 5-10 business days.`, "warning");
+                setCancelOrder(null);
+              }}>
+                Cancel order
+              </button>
+            </div>
+          </div>
+        </div>
+        );
+      })()}
       {showNewCase && (
         <div className="modal-overlay" onClick={() => setShowNewCase(false)}>
           <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 460, padding: 28}}>
@@ -4443,6 +4547,8 @@ function ReporterDashboard() {
   const [uploadFile, setUploadFile] = useState("");
   const [uploadPages, setUploadPages] = useState("");
   const [uploadCertified, setUploadCertified] = useState(false);
+  const [uploadJobType, setUploadJobType] = useState("standard");
+  const [uploadCnaNotes, setUploadCnaNotes] = useState("");
   const [confirmAcceptJob, setConfirmAcceptJob] = useState(null);
   const { toasts, addToast, removeToast } = useToast();
 
@@ -4853,7 +4959,7 @@ function ReporterDashboard() {
                             <button className="btn btn-sm" style={{padding: "6px 12px", fontSize: 12, background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA"}} onClick={() => { setReleaseJob(j); setReleaseReason(""); setReleaseWhen(""); }}>
                               Release job
                             </button>
-                            <button className="btn btn-primary btn-sm" onClick={e => { e.stopPropagation(); setUploadJob(j); setUploadFile(""); setUploadPages(""); setUploadCertified(false); }}>
+                            <button className="btn btn-primary btn-sm" onClick={e => { e.stopPropagation(); setUploadJob(j); setUploadFile(""); setUploadPages(""); setUploadCertified(false); setUploadJobType("standard"); setUploadCnaNotes(""); }}>
                               {j.status === "transcribing" ? "Upload transcript" : "Submit for certification"}
                             </button>
                           </>
@@ -5144,34 +5250,77 @@ function ReporterDashboard() {
             <div style={{padding: 12, background: "var(--bg-muted, #F1F5F9)", borderRadius: 8, marginBottom: 20, fontSize: 13, color: "var(--text-secondary, #475569)"}}>
               <strong>{uploadJob.court}</strong> — {uploadJob.caseType} · Due {uploadJob.dueDate}
             </div>
+
+            {/* Job type selector */}
             <div className="form-group" style={{marginBottom: 16}}>
-              <label className="form-label">Transcript file</label>
-              {!uploadFile ? (
-                <div className="form-file-enhanced" onClick={() => setUploadFile("Transcript_" + uploadJob.caseType.replace(/\s/g, "_") + "_Final.pdf")} style={{cursor: "pointer", textAlign: "center", padding: 24}}>
-                  <Icon name="fileText" size={24} color="#94A3B8" />
-                  <p style={{margin: "8px 0 4px", fontWeight: 600, color: "var(--text, #0F172A)", fontSize: 14}}>Click to upload transcript</p>
-                  <p style={{margin: 0, fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>PDF, DOC, or TXT — max 50MB</p>
-                </div>
-              ) : (
-                <div style={{display: "flex", alignItems: "center", gap: 10, padding: 12, background: "var(--bg-muted, #F0FDF4)", border: "1px solid #BBF7D0", borderRadius: 8}}>
-                  <Icon name="checkCircle" size={16} color="#059669" />
-                  <span style={{flex: 1, fontSize: 13, fontWeight: 600, color: "var(--text, #0F172A)"}}>{uploadFile}</span>
-                  <button onClick={() => setUploadFile("")} style={{background: "none", border: "none", color: "#DC2626", cursor: "pointer", fontSize: 16}}>×</button>
-                </div>
-              )}
+              <label className="form-label">Job type</label>
+              <div style={{display: "flex", flexDirection: "column", gap: 8}}>
+                {[
+                  { v: "standard", t: "Standard transcript", d: "Proceedings happened normally; uploading the certified transcript." },
+                  { v: "cna-with", t: "Certified Non-Appearance with transcript", d: "Witness didn't appear. Brief CNA record (1-3 pages) was produced." },
+                  { v: "cna-no", t: "Certified Non-Appearance — no transcript", d: "Witness didn't appear. No transcript was produced. Attendance fee only." },
+                ].map(opt => (
+                  <label key={opt.v} style={{display: "flex", gap: 10, padding: 12, border: uploadJobType === opt.v ? "2px solid #2563EB" : "1px solid var(--border, #E2E8F0)", borderRadius: 10, cursor: "pointer", background: uploadJobType === opt.v ? "var(--bg-card, #EFF6FF)" : "var(--bg-card, #fff)", alignItems: "flex-start"}}>
+                    <input type="radio" name="jobType" checked={uploadJobType === opt.v} onChange={() => setUploadJobType(opt.v)} style={{marginTop: 3, flexShrink: 0}} />
+                    <div>
+                      <div style={{fontSize: 13, fontWeight: 600, color: "var(--text, #0F172A)"}}>{opt.t}</div>
+                      <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)", marginTop: 2, lineHeight: 1.5}}>{opt.d}</div>
+                    </div>
+                  </label>
+                ))}
+              </div>
             </div>
-            <div className="form-group" style={{marginBottom: 16}}>
-              <label className="form-label">Certified page count</label>
-              <input type="number" className="form-input" min="1" placeholder="e.g. 45" value={uploadPages} onChange={e => setUploadPages(e.target.value)} />
-            </div>
+
+            {/* File upload — hidden for CNA-no-transcript */}
+            {uploadJobType !== "cna-no" && (
+              <div className="form-group" style={{marginBottom: 16}}>
+                <label className="form-label">{uploadJobType === "cna-with" ? "CNA transcript file" : "Transcript file"}</label>
+                {!uploadFile ? (
+                  <div className="form-file-enhanced" onClick={() => setUploadFile((uploadJobType === "cna-with" ? "CNA_" : "Transcript_") + uploadJob.caseType.replace(/\s/g, "_") + "_Final.pdf")} style={{cursor: "pointer", textAlign: "center", padding: 24}}>
+                    <Icon name="fileText" size={24} color="#94A3B8" />
+                    <p style={{margin: "8px 0 4px", fontWeight: 600, color: "var(--text, #0F172A)", fontSize: 14}}>Click to upload {uploadJobType === "cna-with" ? "CNA record" : "transcript"}</p>
+                    <p style={{margin: 0, fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>PDF, DOC, or TXT — max 50MB</p>
+                  </div>
+                ) : (
+                  <div style={{display: "flex", alignItems: "center", gap: 10, padding: 12, background: "var(--bg-muted, #F0FDF4)", border: "1px solid #BBF7D0", borderRadius: 8}}>
+                    <Icon name="checkCircle" size={16} color="#059669" />
+                    <span style={{flex: 1, fontSize: 13, fontWeight: 600, color: "var(--text, #0F172A)"}}>{uploadFile}</span>
+                    <button onClick={() => setUploadFile("")} style={{background: "none", border: "none", color: "#DC2626", cursor: "pointer", fontSize: 16}}>×</button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Page count — hidden for CNA-no-transcript */}
+            {uploadJobType !== "cna-no" && (
+              <div className="form-group" style={{marginBottom: 16}}>
+                <label className="form-label">Certified page count</label>
+                <input type="number" className="form-input" min="1" placeholder={uploadJobType === "cna-with" ? "e.g. 2" : "e.g. 45"} value={uploadPages} onChange={e => setUploadPages(e.target.value)} />
+              </div>
+            )}
+
+            {/* CNA notes — only for CNA-no-transcript */}
+            {uploadJobType === "cna-no" && (
+              <div className="form-group" style={{marginBottom: 16}}>
+                <label className="form-label">Notes about the non-appearance</label>
+                <textarea className="form-input" rows={3} placeholder="e.g. Witness Smith failed to appear at scheduled 10:00 AM start. Counsel for both parties were present. Waited until 10:45 AM. No testimony taken; no transcript produced." value={uploadCnaNotes} onChange={e => setUploadCnaNotes(e.target.value)} style={{resize: "vertical", fontSize: 13}} />
+                <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginTop: 6, lineHeight: 1.5}}>These notes are included in the order record and visible to the attorney. Full attendance fee applies; no per-page charges.</p>
+              </div>
+            )}
+
             <div style={{padding: 16, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10, marginBottom: 16}}>
               <label style={{display: "flex", gap: 10, cursor: "pointer", alignItems: "flex-start"}}>
                 <input type="checkbox" checked={uploadCertified} onChange={e => setUploadCertified(e.target.checked)} style={{marginTop: 3, flexShrink: 0}} />
                 <span style={{fontSize: 13, lineHeight: 1.6, color: "var(--text, #0F172A)"}}>
-                  <strong>I certify under penalty of perjury</strong> that the foregoing transcript is a true, accurate, and complete record of the proceedings, and that I am a duly qualified and acting Certified Shorthand Reporter in the State of California.
+                  {uploadJobType === "cna-no" ? (
+                    <><strong>I certify under penalty of perjury</strong> that I appeared at the scheduled proceedings as described above, that the witness or essential party failed to appear, and that I am a duly qualified and acting Certified Shorthand Reporter in the State of California.</>
+                  ) : (
+                    <><strong>I certify under penalty of perjury</strong> that the foregoing {uploadJobType === "cna-with" ? "non-appearance record" : "transcript"} is a true, accurate, and complete record of the proceedings, and that I am a duly qualified and acting Certified Shorthand Reporter in the State of California.</>
+                  )}
                 </span>
               </label>
             </div>
+
             <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20}}>
               <div>
                 <label className="form-label" style={{fontSize: 12}}>CSR license number</label>
@@ -5182,10 +5331,19 @@ function ReporterDashboard() {
                 <input className="form-input" value={new Date().toLocaleDateString("en-US", {month: "long", day: "numeric", year: "numeric"})} disabled style={{background: "var(--bg-muted, #F1F5F9)", color: "var(--text-muted, #94A3B8)", fontSize: 13}} />
               </div>
             </div>
+
             <div style={{display: "flex", gap: 10, justifyContent: "flex-end"}}>
               <button className="btn btn-secondary btn-sm" onClick={() => setUploadJob(null)}>Cancel</button>
-              <button className="btn btn-primary" style={{opacity: (uploadFile && uploadPages && uploadCertified) ? 1 : 0.5, padding: "10px 20px", fontSize: 14}} disabled={!uploadFile || !uploadPages || !uploadCertified} onClick={() => { addToast("Transcript delivered", uploadPages + " pages certified and delivered to the attorney. Payment will be released within 2 business days of acceptance.", "success"); setUploadJob(null); }}>
-                <Icon name="checkCircle" size={14} /> Certify and deliver
+              <button className="btn btn-primary" style={{opacity: (uploadJobType === "cna-no" ? (uploadCnaNotes && uploadCertified) : (uploadFile && uploadPages && uploadCertified)) ? 1 : 0.5, padding: "10px 20px", fontSize: 14}} disabled={uploadJobType === "cna-no" ? (!uploadCnaNotes || !uploadCertified) : (!uploadFile || !uploadPages || !uploadCertified)} onClick={() => {
+                const msg = uploadJobType === "cna-no"
+                  ? "Certified Non-Appearance recorded. Attendance fee will be released within 2 business days of attorney acceptance."
+                  : uploadJobType === "cna-with"
+                  ? uploadPages + "-page CNA record certified and delivered. Attendance fee + page rate will be released within 2 business days of acceptance."
+                  : uploadPages + " pages certified and delivered to the attorney. Payment will be released within 2 business days of acceptance.";
+                addToast(uploadJobType === "cna-no" ? "Non-appearance recorded" : uploadJobType === "cna-with" ? "CNA delivered" : "Transcript delivered", msg, "success");
+                setUploadJob(null);
+              }}>
+                <Icon name="checkCircle" size={14} /> {uploadJobType === "cna-no" ? "Certify non-appearance" : uploadJobType === "cna-with" ? "Certify and deliver CNA" : "Certify and deliver"}
               </button>
             </div>
           </div>
@@ -7394,6 +7552,7 @@ const DEFAULT_KANBAN_TASKS = [
   { id: "t54", title: "Real build: scaffold Next.js + Supabase", description: "Initialize production app. Auth, database schema, basic routing, PWA setup (manifest.json, service worker, next-pwa). Includes file security architecture: RLS policies, signed URL downloads, audit logging, encrypted storage. 2-3 week build estimated.", column: "todo", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-03-22", notes: "Blocked on prototype review. PWA gives CSRs push notifications for new jobs, messages, and payments without needing an app store listing.", tags: ["P1"] },
   { id: "t55", title: "Reporter invite flow", description: "End of reporter onboarding: 'Know a reporter who should be here?' Invite by email or CSR#.", column: "todo", priority: "medium", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-03-22", notes: "", tags: ["P1"] },
   { id: "t61", title: "PWA install prompt + push notification setup", description: "Add mobile install banner ('Get job notifications instantly — add to home screen') shown on mobile only. Final step of CSR onboarding: install prompt with iOS/Android instructions. Set up Firebase Cloud Messaging for push notifications (new jobs, messages, payments). iOS requires PWA added to home screen for push (Safari 16.4+).", column: "todo", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-04-11", notes: "PWA over native wrapper — free, no app store review, same codebase. Apple dev license available if native wrapper needed later via Capacitor.", tags: ["P1"] },
+  { id: "t64", title: "Cancellation + Certified Non-Appearance (CNA) flows", description: "Two related real-world scenarios. CANCELLATION: attorney can cancel order from case detail; time-based fee calculation: >24hrs out = no fee, <24hrs (CSR not en route) = half-day fee, day-of (en route or arrived) = full attendance fee. Refund processed via Stripe. CNA: CSR upload modal includes job type radio (standard / CNA-with-transcript / CNA-no-transcript). CNA jobs show CNA badge on attorney's case detail and CSR's active jobs view. Invoice formatting differs (no per-page charges for CNA-no-transcript). Force majeure exceptions admin-reviewed case-by-case. ~4.5 days build effort.", column: "backlog", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-05-02", notes: "Full spec at governance-and-process/cancellation_and_cna_policy.md. Industry-standard handling — CSRs paid for their time even when witness no-shows or attorney cancels late.", tags: ["P1"] },
   { id: "t63", title: "Legal assistant incentive program (pilot only)", description: "Points-based reward economy for legal assistants who book jobs during the 6-month pilot. Earn 10 points per completed order. Redeem from a catalog: $10 Starbucks card (30 pts / 3 orders), branded canvas tote (60 pts / 6 orders), real branded Stanley tumbler (100 pts / 10 orders). Users choose what to redeem and when. Per-individual not per-firm. Anti-gaming protections (min order $50, refund-revokes-points, single-account enforcement, fraud review on Stanley redemptions). Tremendous/Tango Card API for digital gift cards. ~6 days of build effort. Realistic reward cost: 13-15% of platform revenue (Stanley reframed as a $60 customer acquisition cost for high-LTV firms).", column: "backlog", priority: "high", assignee: ["Aud"], category: "marketing", dueDate: "", createdAt: "2026-05-02", notes: "Build during Phase 2 (firm onboarding). Full spec at research/legal_assistant_incentive_program.md. PILOT-ONLY — drives early adoption. Points expire 30 days after pilot ends (with email warning). Pausable mid-pilot if cash runs low; existing balances always honored.", tags: ["P1", "marketing"] },
   { id: "t62", title: "Pilot pricing auto-application system", description: "Users who sign up during the pilot period automatically get discounted pricing — no promo codes needed. CSRs: $99/yr listing fee waived for first year. Attorneys: 8% platform fee (vs 12%) for first year. Set pricing_tier and pilot_expires_at on the user record at signup based on created_at. Fee calculation checks tier at transaction time. Dashboard shows 'Pilot pricing active' banner with expiration date. 30-day email before pilot_expires_at warns of rate change. After expiration, standard pricing auto-applies.", column: "todo", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-04-11", notes: "Pilot window: 6 months (extendable via platform config). Months 1-2 for CSR onboarding to 100+, months 3-5 for firm onboarding, month 6 for refinement.", tags: ["P1"] },
 
