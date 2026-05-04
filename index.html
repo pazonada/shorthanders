@@ -282,12 +282,12 @@
   /* ─── Compliance ───────────────────────────────── */
   .compliance { padding: 96px 0; background: linear-gradient(135deg, #0B1120 0%, #0F172A 50%, #1E1B4B 100%); position: relative; overflow: hidden; color: #E2E8F0; }
   @media (min-width: 1024px) { .compliance { padding: 128px 0; } }
-  .compliance-gavel { position: absolute; pointer-events: none; user-select: none; right: -160px; top: 50%; transform: translateY(-50%); width: 800px; height: 800px; background-image: url('graphics/gavel-ditigal-Conny-Schneider.jpg'); background-size: cover; background-position: center; mix-blend-mode: screen; filter: hue-rotate(15deg) saturate(1.25) brightness(1.05); opacity: 0.85; mask-image: radial-gradient(circle at 55% 50%, #000 30%, rgba(0,0,0,0.4) 60%, transparent 80%); -webkit-mask-image: radial-gradient(circle at 55% 50%, #000 30%, rgba(0,0,0,0.4) 60%, transparent 80%); display: none; }
+  .compliance-gavel { position: absolute; pointer-events: none; user-select: none; right: -160px; top: 50%; transform: translateY(-50%); width: 800px; height: 800px; background-image: url('graphics/gavel-ditigal-Conny-Schneider.jpg'); background-size: cover; background-position: center; mix-blend-mode: screen; filter: hue-rotate(35deg) saturate(1.4) brightness(1.05); opacity: 0.85; mask-image: radial-gradient(circle at 55% 50%, #000 30%, rgba(0,0,0,0.4) 60%, transparent 80%); -webkit-mask-image: radial-gradient(circle at 55% 50%, #000 30%, rgba(0,0,0,0.4) 60%, transparent 80%); display: none; }
   @media (min-width: 1024px) { .compliance-gavel { display: block; } }
   @media (min-width: 1440px) { .compliance-gavel { right: -80px; width: 920px; height: 920px; } }
   .compliance-grid { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; position: relative; z-index: 1; }
   @media (min-width: 1024px) { .compliance-grid { grid-template-columns: 1fr 1fr; } }
-  .compliance-label { font-size: 11px; font-weight: 700; color: #34D399; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+  .compliance-label { font-size: 11px; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
   .compliance h2 { font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -0.02em; line-height: 1.2; }
   @media (min-width: 1024px) { .compliance h2 { font-size: 40px; } }
   .compliance-text { margin-top: 24px; font-size: 18px; color: #CBD5E1; line-height: 1.7; }
@@ -1696,45 +1696,6 @@ const Icon = ({ name, size = 20, color = "currentColor", strokeWidth = 2 }) => {
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
       {icons[name]}
     </svg>
-  );
-};
-
-// ─── Steno-themed decorative flourishes ────────────────────────
-// Quill: simple feather pen icon with a small ink dot at the nib.
-const QuillFlourish = ({ size = 22, color }) => {
-  const c = color || "#94A3B8";
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke={c} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M20 4C12 4 6 10 4 18l3-2c2-6 6-9 13-9z" fill={c} fillOpacity="0.18"/>
-      <line x1="16" y1="8" x2="2" y2="22"/>
-      <line x1="17.5" y1="15" x2="9" y2="15"/>
-    </svg>
-  );
-};
-
-// StenoDivider: a soft wavy dotted line evocative of shorthand notation,
-// with an optional centered quill flourish. Use between sections.
-const StenoDivider = ({ color, withQuill = true }) => {
-  const c = color || "var(--border, #CBD5E1)";
-  const dotColor = "var(--text-muted, #94A3B8)";
-  return (
-    <div role="presentation" style={{display: "flex", justifyContent: "center", alignItems: "center", padding: "8px 0", gap: 14}}>
-      <svg width="140" height="20" viewBox="0 0 140 20" fill="none" aria-hidden="true">
-        <path d="M 4 10 Q 22 2 40 10 T 76 10 T 112 10 T 136 10" stroke={c} strokeWidth="1.2" fill="none" strokeLinecap="round"/>
-        <circle cx="22" cy="3" r="1.6" fill={dotColor}/>
-        <circle cx="58" cy="17" r="1.6" fill={dotColor}/>
-        <circle cx="94" cy="3" r="1.6" fill={dotColor}/>
-        <circle cx="124" cy="17" r="1.6" fill={dotColor}/>
-      </svg>
-      {withQuill && <QuillFlourish color={dotColor} size={22} />}
-      <svg width="140" height="20" viewBox="0 0 140 20" fill="none" aria-hidden="true">
-        <path d="M 4 10 Q 22 18 40 10 T 76 10 T 112 10 T 136 10" stroke={c} strokeWidth="1.2" fill="none" strokeLinecap="round"/>
-        <circle cx="22" cy="17" r="1.6" fill={dotColor}/>
-        <circle cx="58" cy="3" r="1.6" fill={dotColor}/>
-        <circle cx="94" cy="17" r="1.6" fill={dotColor}/>
-        <circle cx="124" cy="3" r="1.6" fill={dotColor}/>
-      </svg>
-    </div>
   );
 };
 
@@ -8152,8 +8113,7 @@ function LandingPage() {
       {/* ─── USE CASES ─── */}
       <section className="usecases">
         <div className="container">
-          <StenoDivider />
-          <div className="section-header" style={{marginTop: 24}}>
+          <div className="section-header">
             <h2>Three ways to get your record</h2>
             <p>Dewey Sholes supports you whether the public hearing is upcoming, has already happened, or someone else already ordered the transcript. Depositions and private proceedings are not supported at this time.</p>
           </div>
@@ -8280,8 +8240,7 @@ function LandingPage() {
       <section className="compliance">
         <div className="compliance-gavel" aria-hidden="true"></div>
         <div className="container">
-          <StenoDivider />
-          <div className="compliance-grid" style={{marginTop: 32}}>
+          <div className="compliance-grid">
             <div style={{order: 2}}>
               <div className="compliance-card">
                 {[
