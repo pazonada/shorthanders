@@ -14,7 +14,7 @@
 - Post-hearing audio transcription of court audio (where the court permits recording and the audio is available)
 - Certified Non-Appearances at court hearings (when a party or witness fails to appear at a scheduled court hearing)
 
-**We do NOT serve:**
+**We are NOT currently serving (deferred to future releases):**
 
 - **Depositions** — private proceedings, often involve PHI, sealed materials, party-specific confidentiality stipulations
 - **Arbitration hearings** — private, confidentiality-bound
@@ -22,6 +22,8 @@
 - **EUOs (examinations under oath)** — insurance claim proceedings, private and confidential
 - **Private agreements / contracts being read into a record** — outside court context
 - **Sealed proceedings** — even if technically "court," sealed records have unique handling that we're not equipped for
+
+External messaging uses "not at this time" rather than "never" — Rosie wants to leave the door open to expand into depositions (and possibly other private proceeding types) once we have the infrastructure, compliance program, and budget to support them properly.
 
 ---
 
