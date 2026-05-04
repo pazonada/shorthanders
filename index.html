@@ -139,8 +139,19 @@
   .stat-label { margin-top: 8px; font-size: 13px; color: #94A3B8; max-width: 280px; margin-left: auto; margin-right: auto; line-height: 1.5; }
 
   /* ─── How it works ─────────────────────────────── */
-  .how { padding: 96px 0; background: #fff; }
+  .how { padding: 96px 0; background: linear-gradient(135deg, #0B1120 0%, #0F172A 50%, #1E1B4B 100%); position: relative; overflow: hidden; color: #E2E8F0; }
   @media (min-width: 1024px) { .how { padding: 128px 0; } }
+  .how-gavel { position: absolute; pointer-events: none; user-select: none; right: -120px; top: 50%; transform: translateY(-50%); width: 820px; height: 820px; background-image: url('graphics/gavel-ditigal-Conny-Schneider.jpg'); background-size: cover; background-position: center; mix-blend-mode: screen; filter: hue-rotate(22deg) saturate(0.85) brightness(1.4); opacity: 0.55; mask-image: radial-gradient(circle at 50% 50%, #000 30%, rgba(0,0,0,0.35) 60%, transparent 80%); -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 30%, rgba(0,0,0,0.35) 60%, transparent 80%); display: none; }
+  @media (min-width: 1024px) { .how-gavel { display: block; } }
+  @media (min-width: 1440px) { .how-gavel { right: -40px; width: 920px; height: 920px; } }
+  .how > .container { position: relative; z-index: 1; }
+  .how .section-header h2 { color: #fff; }
+  .how .section-header p { color: #CBD5E1; }
+  .how .tab-toggle-inner { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); }
+  .how .tab-btn { color: #94A3B8; }
+  .how .tab-btn.active { background: rgba(255,255,255,0.95); color: #0F172A; }
+  .how .step h3 { color: #fff; }
+  .how .step p { color: #CBD5E1; }
   .section-header { text-align: center; margin-bottom: 64px; }
   .section-header h2 { font-size: 32px; font-weight: 800; color: #0F172A; letter-spacing: -0.02em; }
   @media (min-width: 1024px) { .section-header h2 { font-size: 48px; } }
@@ -280,19 +291,16 @@
   .reporter-tier-note { font-size: 12px; color: #64748B; text-align: center; margin-top: 12px; font-style: italic; }
 
   /* ─── Compliance ───────────────────────────────── */
-  .compliance { padding: 96px 0; background: linear-gradient(135deg, #0B1120 0%, #0F172A 50%, #1E1B4B 100%); position: relative; overflow: hidden; color: #E2E8F0; }
+  .compliance { padding: 96px 0; background: #F8FAFC; }
   @media (min-width: 1024px) { .compliance { padding: 128px 0; } }
-  .compliance-gavel { position: absolute; pointer-events: none; user-select: none; right: -160px; top: 50%; transform: translateY(-50%); width: 800px; height: 800px; background-image: url('graphics/gavel-ditigal-Conny-Schneider.jpg'); background-size: cover; background-position: center; mix-blend-mode: screen; filter: hue-rotate(22deg) saturate(0.85) brightness(1.4); opacity: 0.85; mask-image: radial-gradient(circle at 55% 50%, #000 30%, rgba(0,0,0,0.4) 60%, transparent 80%); -webkit-mask-image: radial-gradient(circle at 55% 50%, #000 30%, rgba(0,0,0,0.4) 60%, transparent 80%); display: none; }
-  @media (min-width: 1024px) { .compliance-gavel { display: block; } }
-  @media (min-width: 1440px) { .compliance-gavel { right: -80px; width: 920px; height: 920px; } }
-  .compliance-grid { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; position: relative; z-index: 1; }
+  .compliance-grid { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; }
   @media (min-width: 1024px) { .compliance-grid { grid-template-columns: 1fr 1fr; } }
   .compliance-label { font-size: 11px; font-weight: 700; color: #4361EE; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
-  .compliance h2 { font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -0.02em; line-height: 1.2; }
+  .compliance h2 { font-size: 32px; font-weight: 800; color: #0F172A; letter-spacing: -0.02em; line-height: 1.2; }
   @media (min-width: 1024px) { .compliance h2 { font-size: 40px; } }
-  .compliance-text { margin-top: 24px; font-size: 18px; color: #CBD5E1; line-height: 1.7; }
+  .compliance-text { margin-top: 24px; font-size: 18px; color: #64748B; line-height: 1.7; }
   .compliance-features { margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
-  .compliance-features div { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #CBD5E1; }
+  .compliance-features div { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #475569; }
   .compliance-features svg { width: 16px; height: 16px; color: #4361EE; flex-shrink: 0; margin-top: 3px; }
   .compliance-card { background: #fff; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08); padding: 32px; display: flex; flex-direction: column; gap: 20px; }
   .compliance-item { display: flex; align-items: flex-start; gap: 16px; }
@@ -1159,7 +1167,7 @@
   [data-theme="dark"] .comparison-card.dewey .comp-detail { color: #6EE7B7; }
   [data-theme="dark"] .comparison-card.dewey .comp-label { color: #34D399; }
   [data-theme="dark"] .comparison-footnote { color: var(--text-dim); }
-  [data-theme="dark"] .compliance-gavel { opacity: 0.95; }
+  [data-theme="dark"] .how-gavel { opacity: 0.7; }
   [data-theme="dark"] .compliance-features div { color: var(--text-secondary); }
   [data-theme="dark"] .compliance-card { background: var(--bg-muted); border-color: var(--border); }
   [data-theme="dark"] .compliance-item strong { color: var(--text); }
@@ -8055,6 +8063,7 @@ function LandingPage() {
 
       {/* ─── HOW IT WORKS ─── */}
       <section id="how-it-works" className="how">
+        <div className="how-gavel" aria-hidden="true"></div>
         <div className="container">
           <div className="section-header">
             <h2>How <span className="gradient-text">Dewey Sholes</span> works</h2>
@@ -8069,13 +8078,13 @@ function LandingPage() {
           <div style={{maxWidth: 720, margin: "0 auto 32px", textAlign: "center"}}>
             {tab === "attorney" ? (
               <>
-                <h3 style={{fontSize: 26, fontWeight: 800, color: "var(--text, #0F172A)", letterSpacing: "-0.01em", lineHeight: 1.25, marginBottom: 10}}>Stop chasing reporters. Start tracking cases.</h3>
-                <p style={{fontSize: 15, color: "var(--text-secondary, #475569)", lineHeight: 1.7, margin: 0}}>We offer a persistent case management layer with the reporter marketplace built in. Split costs across parties, set your deadline and let pricing calculate automatically, and book the same trusted CSRs every time.</p>
+                <h3 style={{fontSize: 26, fontWeight: 800, color: "#fff", letterSpacing: "-0.01em", lineHeight: 1.25, marginBottom: 10}}>Stop chasing reporters. Start tracking cases.</h3>
+                <p style={{fontSize: 15, color: "#CBD5E1", lineHeight: 1.7, margin: 0}}>We offer a persistent case management layer with the reporter marketplace built in. Split costs across parties, set your deadline and let pricing calculate automatically, and book the same trusted CSRs every time.</p>
               </>
             ) : (
               <>
-                <h3 style={{fontSize: 26, fontWeight: 800, color: "var(--text, #0F172A)", letterSpacing: "-0.01em", lineHeight: 1.25, marginBottom: 10}}>Your license. Your tools. We handle the rest.</h3>
-                <p style={{fontSize: 15, color: "var(--text-secondary, #475569)", lineHeight: 1.7, margin: 0}}>Accept jobs that match your preferences. Keep 100% of your statutory rate with no agency cut. Get paid in two business days. Build your reputation through ratings and preferred-vendor status.</p>
+                <h3 style={{fontSize: 26, fontWeight: 800, color: "#fff", letterSpacing: "-0.01em", lineHeight: 1.25, marginBottom: 10}}>Your license. Your tools. We handle the rest.</h3>
+                <p style={{fontSize: 15, color: "#CBD5E1", lineHeight: 1.7, margin: 0}}>Accept jobs that match your preferences. Keep 100% of your statutory rate with no agency cut. Get paid in two business days. Build your reputation through ratings and preferred-vendor status.</p>
               </>
             )}
           </div>
@@ -8238,7 +8247,6 @@ function LandingPage() {
 
       {/* ─── COMPLIANCE ─── */}
       <section className="compliance">
-        <div className="compliance-gavel" aria-hidden="true"></div>
         <div className="container">
           <div className="compliance-grid">
             <div style={{order: 2}}>
