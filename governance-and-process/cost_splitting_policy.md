@@ -9,7 +9,7 @@
 
 ## Background
 
-In multi-party litigation (e.g., Smith v. Acme + 5 co-defendants), multiple attorneys often need the same deposition transcript. Defendants share a common interest but are also adversarial toward each other. Witness lists overlap heavily — if one defendant has 10 witnesses, at least 7 will be on another defendant's list too. Today, attorneys negotiate cost splits informally over email/phone, and the CSR sends out partial invoices to each party manually. It's slow and the CSR often ends up chasing payments.
+In multi-party court hearings, multiple attorneys often need the same court hearing transcript. Examples: a contested family law motion where both spouses' counsel want the record; a multi-party civil case where each defendant's counsel needs the hearing transcript for their own filings; a probate dispute where multiple beneficiaries' attorneys are entitled to the record. Today, attorneys negotiate cost splits informally over email/phone, and the CSR sends out partial invoices to each party manually. It's slow and the CSR often ends up chasing payments.
 
 ## Platform design: group checkout model
 

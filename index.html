@@ -7982,7 +7982,7 @@ function LandingPage() {
             </div>
             <h1>Court transcripts,<br /><span className="gradient-text">finally simple.</span></h1>
             <p className="hero-subtitle">
-              Dewey Sholes matches attorneys with certified court reporters for live hearings and audio transcription. Transparent pricing, verified credentials, and delivery you can count on.
+              Dewey Sholes matches attorneys with certified court reporters for <strong>public court hearings</strong> — live attendance or post-hearing audio transcription. Transparent statutory pricing, verified credentials, and delivery you can count on.
             </p>
             <div className="hero-actions">
               <a href="#/order" className="btn btn-primary">
@@ -8148,6 +8148,16 @@ function LandingPage() {
               <p style={{fontSize: 15, color: "#64748B", lineHeight: 1.7, margin: 0}}>Need a copy of a transcript already created in your case? Search by case number to find the original CSR and request a copy directly from them. Per California law, all parties will be notified before the CSR releases the copy.</p>
             </div>
             <a href="#/request-copy" className="btn btn-primary btn-sm" style={{whiteSpace: "nowrap"}}>Find the CSR <Icon name="arrowRight" size={14} color="#fff" /></a>
+          </div>
+
+          {/* Scope clarification — not for depositions */}
+          <div style={{marginTop: 32, padding: 20, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12, maxWidth: 760, marginLeft: "auto", marginRight: "auto"}}>
+            <div style={{display: "flex", alignItems: "flex-start", gap: 12}}>
+              <Icon name="info" size={18} color="#64748B" style={{flexShrink: 0, marginTop: 2}} />
+              <div style={{fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.7}}>
+                <strong style={{color: "var(--text, #0F172A)"}}>Public court proceedings only.</strong> Dewey Sholes is built for transcripts of public court hearings — not depositions or other private proceedings. We deliberately don't handle deposition work to avoid the security and confidentiality complications that come with private testimony (PHI, sealed materials, party-specific confidentiality stipulations). For deposition transcripts, work with a deposition agency.
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -8804,8 +8814,9 @@ function FaqPage() {
       { id: "g1", q: "Is my data secure?", a: "Yes. All data is encrypted in transit (TLS 1.3) and at rest (AES-256). Transcripts are accessible only to the ordering attorney and the assigned reporter via time-limited signed URLs. We use Stripe for payment processing and are building toward SOC 2 compliance. We never send transcripts via email — only secure download links." },
       { id: "g2", q: "What is the pilot program?", a: "We're currently running a pilot in California. Attorneys who sign up during the pilot get an 8% platform fee (standard: 12%) locked in for their entire first year. Reporters get their $99/yr listing fee waived for the first year. The pilot helps us refine the platform before scaling statewide." },
       { id: "g3", q: "What fees does Dewey Sholes charge?", a: "Attorneys pay a platform fee on each order (8% during pilot, 12% standard). Reporters pay an annual $99 listing fee (waived during the pilot). Reporters keep 100% of the statutory transcript rate — we never take a cut of your earnings. CSR firm accounts (multiple reporters under one account) are coming in a future release." },
-      { id: "g4", q: "How do I contact support?", a: "Click the ? button in the bottom-right corner of any dashboard page to report an issue or ask a question. You can also visit our contact page or email support@deweysholes.com. We respond within 1 business day." },
-      { id: "g5", q: "Which jurisdictions do you serve?", a: "We currently serve all of California. Any CSR licensed by the California Court Reporters Board can sign up. For transcription jobs, the reporter can be located anywhere in the state. For live attendance, the reporter needs to be in or near the court's county." },
+      { id: "g4", q: "Do you handle depositions?", a: "No. Dewey Sholes is built for public court proceedings only — live courtroom hearings or audio transcription of court audio. We don't handle depositions because they're private proceedings that often involve protected health information, sealed materials, and party-specific confidentiality stipulations. For deposition transcripts, work with a deposition agency." },
+      { id: "g5", q: "How do I contact support?", a: "Click the ? button in the bottom-right corner of any dashboard page to report an issue or ask a question. You can also visit our contact page or email support@deweysholes.com. We respond within 1 business day." },
+      { id: "g6", q: "Which jurisdictions do you serve?", a: "We currently serve all of California. Any CSR licensed by the California Court Reporters Board can sign up. For transcription jobs, the reporter can be located anywhere in the state. For live attendance, the reporter needs to be in or near the court's county." },
     ]},
   ];
 

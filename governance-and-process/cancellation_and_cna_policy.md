@@ -19,9 +19,9 @@ Both involve the same core question: *who pays the CSR for what*? Industry stand
 
 ## Core principle
 
-**The attorney who booked the CSR is responsible for paying the CSR for any time the CSR has committed to the job.** A CSR who blocks their calendar, drives to a location, or shows up to a deposition has already invested real time even if no testimony is taken. They should be paid for that time.
+**The attorney who booked the CSR is responsible for paying the CSR for any time the CSR has committed to the job.** A CSR who blocks their calendar, drives to a courthouse, or shows up to a hearing has already invested real time even if proceedings don't happen as scheduled. They should be paid for that time.
 
-This aligns with how traditional CSR agencies have always operated — and how courts treat the noticing party's obligations under CCP § 2025.420 (responsibility for deposition costs).
+This aligns with how traditional CSR agencies have always operated, and matches how attorneys generally handle vendor scheduling obligations.
 
 ---
 
@@ -110,9 +110,9 @@ This is consistent with industry standard. Charging less for CNAs would penalize
 
 **Not a CNA.** This is a regular job that ran shorter than expected. Standard pricing applies based on what was actually transcribed.
 
-### Case settles on the spot before deposition begins
+### Case settles or motion is withdrawn before the hearing proceeds
 
-Treated like a CNA with brief transcript. CSR documents the settlement on the record (pages stating "the case was resolved without proceeding" with appearances noted). Full attendance fee + brief page count.
+Treated like a CNA with brief transcript. CSR documents the disposition on the record (pages stating the case status with appearances noted). Full attendance fee + brief page count.
 
 ### Multiple witnesses, one no-shows but others appear
 
@@ -167,8 +167,8 @@ After the pilot, we'll formalize the dispute resolution process based on what we
 - `late_delivery_and_deplatforming_policy.md` — what happens if the CSR is the one who fails to appear
 - `payment_failure_policy.md` — what happens if cancellation refund fails
 - `transcript_correction_policy.md` — separate scenario; not applicable to CNAs
-- CCP § 2025.420 — attorney's responsibility for deposition costs (legal basis)
-- CCP § 2020.230 — witness fees (separate consideration)
+- `scope_public_court_proceedings_only.md` — platform scope (court hearings only)
+- General contract principles — attorney's obligation to pay vendor for committed time
 
 ---
 
