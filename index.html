@@ -6696,6 +6696,8 @@ function ReporterOnboarding() {
   }));
   const [inviteSearch, setInviteSearch] = useState("");
   const [invitedCsrs, setInvitedCsrs] = useState([]);
+  const [firmInvites, setFirmInvites] = useState([{firm: "", contact: "", email: ""}]);
+  const [showColleagueInvite, setShowColleagueInvite] = useState(false);
 
   // Screen 0: Welcome / Pitch
   if (screen === 0) {
@@ -6793,7 +6795,7 @@ function ReporterOnboarding() {
     );
   }
 
-  // Screen 7: Invite colleagues
+  // Screen 7: Invite firms (primary) + invite colleagues (secondary)
   if (screen === 7) {
     const csrProfiles = (typeof CSR_PROFILES !== "undefined" ? CSR_PROFILES : []);
     const inviteResults = inviteSearch.length >= 2 ? csrProfiles.filter(p => {
@@ -6801,58 +6803,134 @@ function ReporterOnboarding() {
       return (p.name.toLowerCase().includes(q) || p.csrNumber.includes(inviteSearch)) && p.csrNumber !== form.csrNumber;
     }).slice(0, 10) : [];
     const getInitials = (name) => name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+    const filledFirmInvites = firmInvites.filter(r => r.firm && r.email);
+    const totalInvites = filledFirmInvites.length + invitedCsrs.length;
+    const updateFirmInvite = (i, k, v) => setFirmInvites(prev => prev.map((row, idx) => idx === i ? {...row, [k]: v} : row));
+    const removeFirmInvite = (i) => setFirmInvites(prev => prev.length === 1 ? [{firm: "", contact: "", email: ""}] : prev.filter((_, idx) => idx !== i));
+    const addFirmInvite = () => setFirmInvites(prev => [...prev, {firm: "", contact: "", email: ""}]);
+
     return (
       <div className="reporter-onboarding" style={{background: "var(--bg-page, #F8FAFC)"}}>
         <div style={{marginBottom: 32, textAlign: "center"}}>
           <a href="#/" style={{display: "inline-flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
         </div>
-        <div style={{maxWidth: 520, margin: "0 auto", padding: "0 20px"}}>
-          <div style={{textAlign: "center", marginBottom: 32}}>
-            <div style={{width: 56, height: 56, borderRadius: "50%", background: "linear-gradient(135deg, #2563EB, #06B6D4)", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 16}}>
-              <Icon name="users" size={24} color="#fff" />
+        <div style={{maxWidth: 560, margin: "0 auto", padding: "0 20px"}}>
+
+          {/* Header */}
+          <div style={{textAlign: "center", marginBottom: 28}}>
+            <div style={{width: 56, height: 56, borderRadius: "50%", background: "linear-gradient(135deg, #4361EE, #4F46E5)", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 16}}>
+              <Icon name="scale" size={24} color="#fff" />
             </div>
-            <h2 style={{fontSize: 24, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 8}}>Know a reporter who should be here?</h2>
-            <p style={{fontSize: 14, color: "var(--text-secondary, #64748B)", lineHeight: 1.6}}>Invite colleagues and they'll get their first year free. You'll both benefit from a stronger network.</p>
+            <h2 style={{fontSize: 24, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 8}}>Bring your usual firms with you</h2>
+            <p style={{fontSize: 14, color: "var(--text-secondary, #64748B)", lineHeight: 1.6, maxWidth: 480, margin: "0 auto"}}>
+              Invite the law firms you already work with. They get pilot pricing, you get auto-favorite status with their account, plus rewards when they place orders.
+            </p>
           </div>
-          <div className="form-group">
-            <label className="form-label">Search by name or CSR number</label>
-            <input className="form-input" placeholder="e.g. Maria Rodriguez or 12345" value={inviteSearch} onChange={e => setInviteSearch(e.target.value)} />
+
+          {/* Reward summary */}
+          <div style={{padding: 16, background: "linear-gradient(135deg, #EEF2FF, #E0E7FF)", border: "1px solid #C7D2FE", borderRadius: 12, marginBottom: 24}}>
+            <div style={{fontSize: 11, fontWeight: 700, color: "#4338CA", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10}}>What you earn</div>
+            <div style={{display: "flex", flexDirection: "column", gap: 8, fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.5}}>
+              <div style={{display: "flex", gap: 10, alignItems: "flex-start"}}>
+                <Icon name="star" size={14} color="#4361EE" style={{marginTop: 2, flexShrink: 0}} />
+                <span><strong style={{color: "var(--text, #0F172A)"}}>Auto-favorite status</strong> on their account the moment they sign up — you're at the top of their reporter list.</span>
+              </div>
+              <div style={{display: "flex", gap: 10, alignItems: "flex-start"}}>
+                <Icon name="award" size={14} color="#4361EE" style={{marginTop: 2, flexShrink: 0}} />
+                <span><strong style={{color: "var(--text, #0F172A)"}}>$25 Starbucks gift card</strong> when they complete their first job through Dewey Sholes.</span>
+              </div>
+              <div style={{display: "flex", gap: 10, alignItems: "flex-start"}}>
+                <Icon name="dollarSign" size={14} color="#4361EE" style={{marginTop: 2, flexShrink: 0}} />
+                <span><strong style={{color: "var(--text, #0F172A)"}}>$50 cash bonus</strong> when they complete 3+ jobs in 90 days.</span>
+              </div>
+            </div>
           </div>
-          {inviteSearch.length >= 2 && (
-            <div style={{display: "flex", flexDirection: "column", gap: 6, maxHeight: 300, overflowY: "auto"}}>
-              {inviteResults.length === 0 && <div style={{padding: 16, textAlign: "center", fontSize: 13, color: "var(--text-muted, #94A3B8)"}}>No results for "{inviteSearch}"</div>}
-              {inviteResults.map(p => {
-                const invited = invitedCsrs.includes(p.csrNumber);
-                return (
-                  <div key={p.csrNumber} style={{display: "flex", alignItems: "center", gap: 12, padding: 12, background: invited ? "var(--bg-card, #F0FDF4)" : "var(--bg-card, #fff)", border: invited ? "1.5px solid #86EFAC" : "1px solid var(--border, #E2E8F0)", borderRadius: 10, cursor: "pointer", transition: "all 0.15s"}} onClick={() => setInvitedCsrs(prev => invited ? prev.filter(c => c !== p.csrNumber) : [...prev, p.csrNumber])}>
-                    <div style={{width: 36, height: 36, borderRadius: "50%", background: invited ? "#059669" : "#E2E8F0", display: "flex", alignItems: "center", justifyContent: "center", color: invited ? "#fff" : "#64748B", fontWeight: 700, fontSize: 12, flexShrink: 0}}>{getInitials(p.name)}</div>
-                    <div style={{flex: 1}}>
-                      <div style={{fontWeight: 600, fontSize: 13, color: "var(--text, #0F172A)"}}>{p.name}</div>
-                      <div style={{fontSize: 11, color: "var(--text-secondary, #64748B)"}}>CSR #{p.csrNumber} · {p.city}</div>
-                    </div>
-                    {invited ? (
-                      <span style={{fontSize: 11, fontWeight: 600, color: "#059669"}}><Icon name="checkCircle" size={14} color="#059669" /> Invited</span>
-                    ) : (
-                      <span style={{fontSize: 11, fontWeight: 500, color: "#94A3B8"}}>Invite</span>
-                    )}
+
+          {/* Firm invite rows */}
+          <div style={{display: "flex", flexDirection: "column", gap: 12}}>
+            {firmInvites.map((row, i) => (
+              <div key={i} style={{padding: 14, background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10}}>
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10}}>
+                  <span style={{fontSize: 11, fontWeight: 700, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em"}}>Firm {i + 1}</span>
+                  {firmInvites.length > 1 && (
+                    <button onClick={() => removeFirmInvite(i)} style={{background: "transparent", border: "none", padding: 4, cursor: "pointer", color: "var(--text-muted, #94A3B8)", display: "flex"}} title="Remove">
+                      <Icon name="x" size={14} />
+                    </button>
+                  )}
+                </div>
+                <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8}}>
+                  <input className="form-input" placeholder="Firm name" value={row.firm} onChange={e => updateFirmInvite(i, "firm", e.target.value)} style={{fontSize: 13}} />
+                  <input className="form-input" placeholder="Contact name (optional)" value={row.contact} onChange={e => updateFirmInvite(i, "contact", e.target.value)} style={{fontSize: 13}} />
+                </div>
+                <input className="form-input" type="email" placeholder="Contact email" value={row.email} onChange={e => updateFirmInvite(i, "email", e.target.value)} style={{fontSize: 13}} />
+              </div>
+            ))}
+            <button onClick={addFirmInvite} style={{padding: "10px 14px", background: "transparent", border: "1px dashed var(--border, #CBD5E1)", borderRadius: 10, color: "var(--text-secondary, #64748B)", fontSize: 13, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6}}>
+              <Icon name="plus" size={14} /> Add another firm
+            </button>
+          </div>
+
+          {/* Personalized message preview */}
+          {filledFirmInvites.length > 0 && (
+            <div style={{marginTop: 16, padding: 14, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10}}>
+              <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 8}}>What we'll send them</div>
+              <div style={{fontSize: 12, color: "var(--text-secondary, #475569)", lineHeight: 1.6, fontStyle: "italic"}}>
+                "{form.name || "Your CSR"} just joined Dewey Sholes — a transparent court-reporter platform with statutory pricing and pilot-rate fees. They'd like to keep working with you here. Sign up and your first transcript order's platform fee is waived."
+              </div>
+            </div>
+          )}
+
+          {/* Secondary: colleague invite (collapsed) */}
+          <div style={{marginTop: 24, padding: 16, background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10}}>
+            <button onClick={() => setShowColleagueInvite(s => !s)} style={{width: "100%", background: "transparent", border: "none", padding: 0, cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", color: "var(--text, #0F172A)"}}>
+              <div style={{display: "flex", alignItems: "center", gap: 10}}>
+                <Icon name="users" size={16} color="#64748B" />
+                <span style={{fontSize: 14, fontWeight: 600}}>Also invite reporter colleagues{invitedCsrs.length > 0 ? ` (${invitedCsrs.length} selected)` : ""}</span>
+              </div>
+              <Icon name={showColleagueInvite ? "chevronUp" : "chevronDown"} size={16} color="#94A3B8" />
+            </button>
+            {showColleagueInvite && (
+              <div style={{marginTop: 14}}>
+                <p style={{fontSize: 12, color: "var(--text-secondary, #64748B)", lineHeight: 1.5, marginBottom: 12}}>
+                  Stronger network = better fill rates for everyone. They get their first year free.
+                </p>
+                <input className="form-input" placeholder="Search by name or CSR number" value={inviteSearch} onChange={e => setInviteSearch(e.target.value)} style={{fontSize: 13, marginBottom: 8}} />
+                {inviteSearch.length >= 2 && (
+                  <div style={{display: "flex", flexDirection: "column", gap: 6, maxHeight: 240, overflowY: "auto"}}>
+                    {inviteResults.length === 0 && <div style={{padding: 12, textAlign: "center", fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>No results for "{inviteSearch}"</div>}
+                    {inviteResults.map(p => {
+                      const invited = invitedCsrs.includes(p.csrNumber);
+                      return (
+                        <div key={p.csrNumber} style={{display: "flex", alignItems: "center", gap: 10, padding: 10, background: invited ? "var(--bg-card, #F0FDF4)" : "var(--bg-card, #fff)", border: invited ? "1.5px solid #86EFAC" : "1px solid var(--border, #E2E8F0)", borderRadius: 8, cursor: "pointer"}} onClick={() => setInvitedCsrs(prev => invited ? prev.filter(c => c !== p.csrNumber) : [...prev, p.csrNumber])}>
+                          <div style={{width: 30, height: 30, borderRadius: "50%", background: invited ? "#059669" : "#E2E8F0", display: "flex", alignItems: "center", justifyContent: "center", color: invited ? "#fff" : "#64748B", fontWeight: 700, fontSize: 11, flexShrink: 0}}>{getInitials(p.name)}</div>
+                          <div style={{flex: 1, minWidth: 0}}>
+                            <div style={{fontWeight: 600, fontSize: 12, color: "var(--text, #0F172A)"}}>{p.name}</div>
+                            <div style={{fontSize: 10, color: "var(--text-secondary, #64748B)"}}>CSR #{p.csrNumber} · {p.city}</div>
+                          </div>
+                          {invited ? (
+                            <span style={{fontSize: 10, fontWeight: 600, color: "#059669"}}><Icon name="checkCircle" size={12} color="#059669" /> Invited</span>
+                          ) : (
+                            <span style={{fontSize: 10, fontWeight: 500, color: "#94A3B8"}}>Invite</span>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
-                );
-              })}
-            </div>
-          )}
-          {invitedCsrs.length > 0 && (
-            <div style={{marginTop: 16, padding: 12, background: "var(--bg-muted, #F0FDF4)", border: "1px solid #BBF7D0", borderRadius: 8, fontSize: 13, color: "#065F46"}}>
-              <Icon name="checkCircle" size={14} color="#059669" /> {invitedCsrs.length} invite{invitedCsrs.length > 1 ? "s" : ""} ready to send. They'll get a personal invitation with your name and a free first year.
-            </div>
-          )}
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Action buttons */}
           <div style={{display: "flex", gap: 12, marginTop: 24}}>
             <button className="btn btn-secondary" style={{flex: 1, justifyContent: "center"}} onClick={() => setScreen(8)}>
               Skip for now
             </button>
-            <button className="btn btn-primary" style={{flex: 1, justifyContent: "center", background: invitedCsrs.length > 0 ? "linear-gradient(135deg, #059669, #10B981)" : undefined}} onClick={() => setScreen(8)}>
-              {invitedCsrs.length > 0 ? `Send ${invitedCsrs.length} invite${invitedCsrs.length > 1 ? "s" : ""} & continue` : "Continue"} <Icon name="arrowRight" size={14} />
+            <button className="btn btn-primary" style={{flex: 1, justifyContent: "center", background: totalInvites > 0 ? "linear-gradient(135deg, #4361EE, #4F46E5)" : undefined}} onClick={() => setScreen(8)}>
+              {totalInvites > 0 ? `Send ${totalInvites} invite${totalInvites > 1 ? "s" : ""} & continue` : "Continue"} <Icon name="arrowRight" size={14} />
             </button>
           </div>
+
         </div>
       </div>
     );
