@@ -228,6 +228,10 @@
   @media (min-width: 1024px) { .pricing { padding: 128px 0; } }
   .pricing::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(circle at 1px 1px, rgba(67,97,238,0.08) 1px, transparent 0); background-size: 24px 24px; pointer-events: none; opacity: 0.7; mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent); }
   .pricing > * { position: relative; z-index: 1; }
+  .pricing-cards-row { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 24px; align-items: start; }
+  @media (min-width: 1024px) { .pricing-cards-row { grid-template-columns: 1fr 1fr; gap: 32px; } }
+  .pricing-cards-row .pricing-card,
+  .pricing-cards-row .calc-card { max-width: none; margin: 0; }
   .pricing-card { max-width: 880px; margin: 0 auto; background: linear-gradient(135deg, #F8FAFC 0%, rgba(239,246,255,0.3) 100%); border-radius: 16px; border: 1px solid #E2E8F0; overflow: hidden; }
   .pricing-body { padding: 32px; }
   @media (min-width: 1024px) { .pricing-body { padding: 40px; } }
@@ -8179,6 +8183,7 @@ function LandingPage() {
             </p>
           </div>
 
+          <div className="pricing-cards-row">
           <div className="pricing-card">
             <div className="pricing-body">
               <div className="pricing-row">
@@ -8209,6 +8214,7 @@ function LandingPage() {
             </div>
           </div>
           <PricingCalculator />
+          </div>
 
           {/* Competitive Comparison */}
           <div className="pricing-comparison">
