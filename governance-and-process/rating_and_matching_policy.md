@@ -8,6 +8,7 @@
 
 ## Changelog
 
+- **v2.3 (2026-05-05):** Added quick-reference cascade table and per-tier example timelines (Rush 24h, Expedited 5-day, Standard 7-day) at the top of the matching algorithm section.
 - **v2.2 (2026-05-05):** Three SLA tiers (Rush / Expedited / Standard) explicitly mapped to per-tier response windows; flagged calculator-vs-legal-doc Standard-deadline discrepancy as `[NEEDS RECONCILE]`. Phase 4 auto-cancel moved from "deadline reached" to "12h before deadline" so the attorney has runway to rebook.
 - **v2.1 (2026-05-05):** Rosie answers: specialty matching is a **soft preference** in ranking (not a hard filter); late-stage escalation is **all-call to everyone in the eligible pool** (not batches of 10). Phase 3 split into two sub-phases: **3a (48h–72h):** batches of 10 with 3h windows; **3b (72h+):** all-call to every eligible CSR. Phase 4 ops notification now sits at the same 72h trigger as 3b. Updated ranking logic and removed resolved items from open-questions list.
 - **v2 (2026-05-05):** Replaced sequential favorites + weighted-lottery model with a parallel-favorites + cascading batch-of-3 model. Removed the 3.5-rating entry floor for the general pool. Added explicit invite lifecycle, cold-start fairness slot, live-job geographic pre-filter, and ops/lawyer escalation tiers.
@@ -67,6 +68,52 @@ A **composite score** (weighted average of all three) is calculated for matching
 - **Cold-start fairness is built in.** New CSRs and lower-rated CSRs get rotated into batches even when top-rated CSRs are available, so they can build a track record and we don't ossify a leaderboard.
 - **Geography matters for live, not for audio.** Live transcription is filtered to the courthouse's service radius before anything else; audio transcription has no geographic constraint.
 - **Invites stay live until the job is claimed.** Earlier-batch CSRs who didn't respond aren't timed out when the pool widens — they can still accept until someone takes the job. When a CSR claims it, every still-live invitee is notified.
+
+### Quick reference: the cascade at a glance
+
+| Phase | Trigger | Who gets invited | Pool size per fan-out | CSR response window | Advances when… |
+|---|---|---|---|---|---|
+| **1: Favorites** | Order placed | All firm favorites in parallel *(live: in-radius favorites only)* | Everyone at once | Rush **2h** / Exp **12h** / Std **24h** | A favorite accepts (done), all decline (advance early), or window expires |
+| **2: General pool batches** | Phase 1 ends, no acceptance | Top of ranked list + 1 fairness slot *(live: in-radius only)* | **3 at a time** | Rush **2h** / Exp **12h** / Std **24h** | Someone accepts, all 3 decline (advance early), or window expires → next batch of 3 |
+| **3a: Acceleration** | 48h from placement, no acceptance | Same mix, scaled up — 7 ranked + 3 fairness | **10 at a time** | **3h** (all tiers) | Someone accepts, all 10 decline, or window expires → next batch of 10 |
+| **3b: All-call** | 72h from placement, no acceptance | Every eligible CSR in active pool *(live: all in-radius CSRs)* | Everyone at once | No per-CSR window — invite stays live | Someone accepts, or auto-cancel fires |
+| **4: Auto-cancel** | 12h before order deadline, no acceptance | — | — | — | Order cancels, full refund, all live invites close, attorney notified |
+
+### Example timelines
+
+```
+Rush job, 24h deadline:
+
+  Hour  0 ─ Order placed                   Phase 1 starts (favorites, 2h window)
+  Hour  2 ─ No favorite → Phase 2 (batches of 3, 2h each)
+  Hour  4 ─ Batch 2 of 3
+  Hour  6 ─ Batch 3 of 3
+  …
+  Hour 12 ─ AUTO-CANCEL (12h before deadline)
+            Phase 3a/3b never fired.
+```
+
+```
+Expedited job, 5-day (120h) deadline:
+
+  Hour   0 ─ Order placed                  Phase 1 (favorites, 12h)
+  Hour  12 ─ Phase 2 starts (batches of 3, 12h each)
+  Hour  48 ─ Phase 3a (batches of 10, 3h each)
+  Hour  72 ─ Phase 3b: ALL-CALL + ops notified
+  Hour 108 ─ AUTO-CANCEL (12h before deadline)
+```
+
+```
+Standard job, 7-day (168h) deadline:
+
+  Hour   0 ─ Order placed                  Phase 1 (favorites, 24h)
+  Hour  24 ─ Phase 2 starts (batches of 3, 24h each)
+  Hour  48 ─ Phase 3a (batches of 10, 3h each)
+  Hour  72 ─ Phase 3b: ALL-CALL + ops notified
+  Hour 156 ─ AUTO-CANCEL (12h before deadline)
+```
+
+**Edge case:** a 3-day Expedited job (72h deadline) auto-cancels at hour 60 — Phase 3b never fires because 12h-pre-deadline arrives before the 72h Phase 3b trigger.
 
 ### SLA tiers
 
