@@ -8,7 +8,8 @@
 
 ## Changelog
 
-- **v2 (2026-05-05):** Replaced sequential favorites + weighted-lottery model with a parallel-favorites + cascading batch-of-3 (then batch-of-10) model. Removed the 3.5-rating entry floor for the general pool. Added explicit invite lifecycle, cold-start fairness slot, live-job geographic pre-filter, and ops/lawyer escalation tiers.
+- **v2.1 (2026-05-05):** Rosie answers: specialty matching is a **soft preference** in ranking (not a hard filter); late-stage escalation is **all-call to everyone in the eligible pool** (not batches of 10). Updated Phase 3 and ranking logic; removed Q4 from open questions list.
+- **v2 (2026-05-05):** Replaced sequential favorites + weighted-lottery model with a parallel-favorites + cascading batch-of-3 model. Removed the 3.5-rating entry floor for the general pool. Added explicit invite lifecycle, cold-start fairness slot, live-job geographic pre-filter, and ops/lawyer escalation tiers.
 - **v1 (2026-03-26):** Initial policy confirmed in Rosie call.
 
 ---
@@ -117,13 +118,15 @@ After the favorites round expires (or is skipped):
 The candidate pool for a batch is **all active CSRs** (no minimum-rating gate). The selection mixes ranking with deliberate fairness:
 
 - **2 slots — top of ranked list** by:
-  1. Composite rating (recency-weighted)
-  2. Lowest current workload (active accepted jobs / pages due / upcoming live dates)
-  3. (Live only) shorter travel time to courthouse as tiebreaker
+  1. **Case-type / specialty fit** (soft preference) — CSRs whose declared specialties or completed-job history overlap with the order's case type rank ahead of CSRs without that experience. Specialty fit is a tiebreak/boost, not a hard filter — a non-specialist still ranks fine if they're high-rated and lightly loaded.
+  2. Composite rating (recency-weighted)
+  3. Lowest current workload (active accepted jobs / pages due / upcoming live dates)
+  4. (Live only) shorter travel time to courthouse as tiebreaker
 - **1 slot — fairness rotation** from one of:
   - New CSRs (fewer than 10 rated jobs — the existing "benefit of the doubt" provisional pool)
   - Mid-rated CSRs (composite below the platform median) who haven't been invited recently
   - Reserved so that **every batch contains at least one CSR who isn't already top-of-list**
+  - Fairness slot does **not** apply specialty filter — the goal is to give cold-start CSRs exposure regardless of case type.
 
 `[NEEDS ROSIE]` — confirm the 2-of-3 / 1-of-3 split, or whether this should rotate based on supply (e.g., if there are no eligible new/mid CSRs, all 3 slots go to ranked list).
 
@@ -136,25 +139,26 @@ The candidate pool for a batch is **all active CSRs** (no minimum-rating gate). 
 
 ---
 
-### Phase 3: Acceleration after 48 hours
+### Phase 3: All-call after 48 hours
 
-If 48 hours pass from order placement with no acceptance:
+If 48 hours pass from order placement with no acceptance, the cascade gives up on batching and **opens the invite to every eligible CSR in the active pool, in parallel**.
 
-- Batch size steps up from **3 → 10** at a time.
-- Window per batch tightens to **3 hours**.
-- Same selection mix (top-of-ranked + fairness rotation, just scaled up — e.g., 7 ranked + 3 fairness — `[NEEDS ROSIE]` to confirm split at 10-batch size).
-- Same invite-stays-live behavior.
+- **Audio jobs:** "every eligible CSR" = the entire active general pool (no geographic filter).
+- **Live jobs:** "every eligible CSR" = every active CSR whose service radius covers the courthouse. (Out-of-radius CSRs are still excluded — geography never relaxes for live work.)
+- First-accept wins; everyone else gets the "claimed" notification.
+- All previously-invited CSRs (Phase 1 favorites, every Phase 2 batch) keep their live invites — they're now alongside the all-call pool, not replaced by it.
+- **Rationale (Rosie, 2026-05-05):** at this point the work is hard to fill and we should stop trying to be clever about who sees the invite — just open it up.
 
 ---
 
 ### Phase 4: Escalation at 72 hours / near deadline
 
-`[NEEDS ROSIE]` — full escalation matrix below is Aud's draft, awaiting confirmation.
+`[NEEDS ROSIE]` — escalation matrix below is Aud's draft, partially confirmed.
 
 | Trigger | Order type | Action |
 |---|---|---|
-| 72 hours from placement, no acceptance | Standard / Expedited | Notify Dewey Sholes ops; ops manually outreach / problem-solve |
-| Approaching deadline (< 12h before deadline) with no acceptance | Rush / Expedited | Accelerate further (`[NEEDS ROSIE]` — bigger batch? all-call? define) **and** notify the attorney that we may not find a match in time and they should consider extending the deadline |
+| 72 hours from placement, no acceptance | Standard / Expedited | Notify Dewey Sholes ops; ops manually outreach / problem-solve. (All-call from Phase 3 stays open.) |
+| Approaching deadline (< 12h before deadline) with no acceptance | Rush / Expedited | Notify the attorney that we may not find a match in time and they should consider extending the deadline. (All-call already in effect — there isn't a bigger pool to invite.) |
 | Deadline reached, no acceptance | Any | Order auto-cancels; full refund; notify attorney with rebooking guidance |
 
 ---
@@ -245,9 +249,13 @@ If CSRs sign up but don't get jobs for a while:
 
 Tagged `[NEEDS ROSIE]` inline above. Consolidated:
 
-1. **Fairness slot split** — confirm 2-of-3 ranked + 1-of-3 fairness in standard batches, and the analogous split (e.g., 7+3?) when batch scales to 10.
+1. **Fairness slot split** — confirm 2-of-3 ranked + 1-of-3 fairness in standard batches.
 2. **Service radius definition for live jobs** — county / driving distance / CSR-defined service area? (Aud leans toward CSR-defined.)
-3. **Phase 4 escalation specifics** — at what point do we ping ops vs. the attorney? What's the "ping a lot more people" mechanism for near-deadline rush jobs?
-4. **Specialty / case-type filtering** — should the general pool be filtered by case-type fit (e.g., a CSR who's only worked civil isn't pinged for family-law), or is geography + availability sufficient? (Carried over from v1 conversation.)
-5. **Ignored invites and CSR metrics** — do they count toward overload? toward a fairness-rotation cooldown so chronically unresponsive CSRs aren't repeatedly invited?
-6. **Drop the 3.5 rating floor entirely?** v1 said "above 3.5 enters the pool." v2 currently drops the floor in favor of the fairness slot. Confirm.
+3. **Phase 4 ops timing** — Phase 3 all-call is confirmed (Rosie 2026-05-05). Still need to confirm the ops-notification trigger (currently 72h for std/ext) and the < 12h lawyer-notification trigger for rush.
+4. **Ignored invites and CSR metrics** — do they count toward overload? toward a fairness-rotation cooldown so chronically unresponsive CSRs aren't repeatedly invited?
+5. **Drop the 3.5 rating floor entirely?** v1 said "above 3.5 enters the pool." v2 currently drops the floor in favor of the fairness slot. Confirm.
+
+### Resolved (2026-05-05)
+
+- ~~**Specialty / case-type filtering**~~ → Soft preference / ranking boost, not a hard filter. CSRs with relevant case-type experience rank ahead of those without; non-specialists still eligible.
+- ~~**"Ping a lot more people" for near-deadline / can't-find-a-match"**~~ → All-call to every eligible CSR in the active pool (audio = entire pool; live = everyone in service radius). Replaces the prior "batches of 10" intermediate step.
