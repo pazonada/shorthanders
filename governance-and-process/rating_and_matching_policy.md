@@ -8,7 +8,7 @@
 
 ## Changelog
 
-- **v2.1 (2026-05-05):** Rosie answers: specialty matching is a **soft preference** in ranking (not a hard filter); late-stage escalation is **all-call to everyone in the eligible pool** (not batches of 10). Updated Phase 3 and ranking logic; removed Q4 from open questions list.
+- **v2.1 (2026-05-05):** Rosie answers: specialty matching is a **soft preference** in ranking (not a hard filter); late-stage escalation is **all-call to everyone in the eligible pool** (not batches of 10). Phase 3 split into two sub-phases: **3a (48h–72h):** batches of 10 with 3h windows; **3b (72h+):** all-call to every eligible CSR. Phase 4 ops notification now sits at the same 72h trigger as 3b. Updated ranking logic and removed resolved items from open-questions list.
 - **v2 (2026-05-05):** Replaced sequential favorites + weighted-lottery model with a parallel-favorites + cascading batch-of-3 model. Removed the 3.5-rating entry floor for the general pool. Added explicit invite lifecycle, cold-start fairness slot, live-job geographic pre-filter, and ops/lawyer escalation tiers.
 - **v1 (2026-03-26):** Initial policy confirmed in Rosie call.
 
@@ -139,26 +139,35 @@ The candidate pool for a batch is **all active CSRs** (no minimum-rating gate). 
 
 ---
 
-### Phase 3: All-call after 48 hours
+### Phase 3a: Acceleration after 48 hours (batches of 10)
 
-If 48 hours pass from order placement with no acceptance, the cascade gives up on batching and **opens the invite to every eligible CSR in the active pool, in parallel**.
+If 48 hours pass from order placement with no acceptance:
+
+- Batch size steps up from **3 → 10** at a time.
+- Response window per batch tightens to **3 hours**.
+- Same selection mix applies, scaled up: **7 ranked + 3 fairness** (`[NEEDS ROSIE]` to confirm split at batch-of-10 size).
+- Same invite-stays-live behavior — earlier-batch invitees can still accept.
+
+### Phase 3b: All-call after 72 hours
+
+If 72 hours pass from order placement with still no acceptance, the cascade gives up on batching and **opens the invite to every eligible CSR in the active pool, in parallel**.
 
 - **Audio jobs:** "every eligible CSR" = the entire active general pool (no geographic filter).
 - **Live jobs:** "every eligible CSR" = every active CSR whose service radius covers the courthouse. (Out-of-radius CSRs are still excluded — geography never relaxes for live work.)
 - First-accept wins; everyone else gets the "claimed" notification.
-- All previously-invited CSRs (Phase 1 favorites, every Phase 2 batch) keep their live invites — they're now alongside the all-call pool, not replaced by it.
+- All previously-invited CSRs (Phase 1 favorites, every Phase 2 batch, every Phase 3a batch) keep their live invites — they're now alongside the all-call pool, not replaced by it.
 - **Rationale (Rosie, 2026-05-05):** at this point the work is hard to fill and we should stop trying to be clever about who sees the invite — just open it up.
 
 ---
 
-### Phase 4: Escalation at 72 hours / near deadline
+### Phase 4: Human escalation
 
 `[NEEDS ROSIE]` — escalation matrix below is Aud's draft, partially confirmed.
 
 | Trigger | Order type | Action |
 |---|---|---|
-| 72 hours from placement, no acceptance | Standard / Expedited | Notify Dewey Sholes ops; ops manually outreach / problem-solve. (All-call from Phase 3 stays open.) |
-| Approaching deadline (< 12h before deadline) with no acceptance | Rush / Expedited | Notify the attorney that we may not find a match in time and they should consider extending the deadline. (All-call already in effect — there isn't a bigger pool to invite.) |
+| 72 hours from placement, no acceptance | Standard / Expedited | Phase 3b all-call begins **and** Dewey Sholes ops is notified to manually outreach / problem-solve. |
+| Approaching deadline (< 12h before deadline) with no acceptance | Rush / Expedited | Notify the attorney that we may not find a match in time and they should consider extending the deadline. (Phase 3b all-call already in effect — there isn't a bigger pool to invite.) |
 | Deadline reached, no acceptance | Any | Order auto-cancels; full refund; notify attorney with rebooking guidance |
 
 ---
@@ -249,7 +258,7 @@ If CSRs sign up but don't get jobs for a while:
 
 Tagged `[NEEDS ROSIE]` inline above. Consolidated:
 
-1. **Fairness slot split** — confirm 2-of-3 ranked + 1-of-3 fairness in standard batches.
+1. **Fairness slot split** — confirm 2-of-3 ranked + 1-of-3 fairness in standard (Phase 2) batches and the analog 7-of-10 ranked + 3-of-10 fairness for Phase 3a batches.
 2. **Service radius definition for live jobs** — county / driving distance / CSR-defined service area? (Aud leans toward CSR-defined.)
 3. **Phase 4 ops timing** — Phase 3 all-call is confirmed (Rosie 2026-05-05). Still need to confirm the ops-notification trigger (currently 72h for std/ext) and the < 12h lawyer-notification trigger for rush.
 4. **Ignored invites and CSR metrics** — do they count toward overload? toward a fairness-rotation cooldown so chronically unresponsive CSRs aren't repeatedly invited?
@@ -258,4 +267,4 @@ Tagged `[NEEDS ROSIE]` inline above. Consolidated:
 ### Resolved (2026-05-05)
 
 - ~~**Specialty / case-type filtering**~~ → Soft preference / ranking boost, not a hard filter. CSRs with relevant case-type experience rank ahead of those without; non-specialists still eligible.
-- ~~**"Ping a lot more people" for near-deadline / can't-find-a-match"**~~ → All-call to every eligible CSR in the active pool (audio = entire pool; live = everyone in service radius). Replaces the prior "batches of 10" intermediate step.
+- ~~**"Ping a lot more people" for near-deadline / can't-find-a-match"**~~ → Two-stage escalation: **48h–72h** = batches of 10 with 3h windows; **72h+** = all-call to every eligible CSR (audio = entire pool; live = everyone in service radius).
