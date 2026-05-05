@@ -82,17 +82,17 @@ Three tiers, surfaced in the homepage cost estimator:
 
 The matching cascade respects all three tiers — see "Per-tier response windows" below. The label "rush" elsewhere in this doc means specifically the Rush tier (1-2 biz days), not just "any short deadline."
 
-### Per-tier response windows
+### Per-tier CSR response windows
 
-The Phase 1 (favorites) and Phase 2 (general-pool batch of 3) response windows differ by tier so we don't burn a 24h favorites window on a Rush job that's due tomorrow:
+These windows define **how long an invited CSR has to accept a job** before the cascade moves on. They apply identically to Phase 1 (favorites round) and Phase 2 (general-pool batches of 3). Tiered so we don't burn a 24h favorites window on a Rush job that's due tomorrow.
 
-| Tier | Phase 1 + Phase 2 window per batch |
+| Tier | CSR response window (Phase 1 & Phase 2) |
 |---|---|
 | Rush (1-2 biz days) | **2 hours** |
 | Expedited (3-5 biz days) | **12 hours** `[NEEDS ROSIE]` — proposed; v1 grouped Expedited with Standard at 24h |
 | Standard (6+ biz days) | **24 hours** |
 
-Phase 3a (batches of 10) keeps the 3h response window across all tiers.
+Phase 3a (batches of 10, after 48h) uses a **fixed 3h response window** across all tiers — it's not tier-dependent. Phase 3b (after 72h) is an all-call with no per-CSR window; it stays open until someone accepts or until the 12h-pre-deadline auto-cancel fires.
 
 ---
 
