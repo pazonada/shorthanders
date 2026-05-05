@@ -8,6 +8,7 @@
 
 ## Changelog
 
+- **v2.2 (2026-05-05):** Three SLA tiers (Rush / Expedited / Standard) explicitly mapped to per-tier response windows; flagged calculator-vs-legal-doc Standard-deadline discrepancy as `[NEEDS RECONCILE]`. Phase 4 auto-cancel moved from "deadline reached" to "12h before deadline" so the attorney has runway to rebook.
 - **v2.1 (2026-05-05):** Rosie answers: specialty matching is a **soft preference** in ranking (not a hard filter); late-stage escalation is **all-call to everyone in the eligible pool** (not batches of 10). Phase 3 split into two sub-phases: **3a (48h–72h):** batches of 10 with 3h windows; **3b (72h+):** all-call to every eligible CSR. Phase 4 ops notification now sits at the same 72h trigger as 3b. Updated ranking logic and removed resolved items from open-questions list.
 - **v2 (2026-05-05):** Replaced sequential favorites + weighted-lottery model with a parallel-favorites + cascading batch-of-3 model. Removed the 3.5-rating entry floor for the general pool. Added explicit invite lifecycle, cold-start fairness slot, live-job geographic pre-filter, and ops/lawyer escalation tiers.
 - **v1 (2026-03-26):** Initial policy confirmed in Rosie call.
@@ -166,15 +167,18 @@ If 72 hours pass from order placement with still no acceptance, the cascade give
 
 ---
 
-### Phase 4: Human escalation
+### Phase 4: Human escalation & auto-cancel
 
-`[NEEDS ROSIE]` — escalation matrix below is Aud's draft, partially confirmed.
+`[NEEDS ROSIE]` — thresholds below are Aud's draft, partially confirmed.
 
 | Trigger | Order type | Action |
 |---|---|---|
 | 72 hours from placement, no acceptance | Standard / Expedited | Phase 3b all-call begins **and** Dewey Sholes ops is notified to manually outreach / problem-solve. |
-| Approaching deadline (< 12h before deadline) with no acceptance | Rush / Expedited | Notify the attorney that we may not find a match in time and they should consider extending the deadline. (Phase 3b all-call already in effect — there isn't a bigger pool to invite.) |
-| Deadline reached, no acceptance | Any | Order auto-cancels; full refund; notify attorney with rebooking guidance |
+| **12 hours before deadline, no acceptance** | **Any** | **Auto-cancel + full refund.** Notify the attorney that no CSR accepted, the refund has been issued, and they can either re-place the order with an extended deadline (which restarts the cascade) or work with another provider. All live invites are closed at this moment. |
+
+Auto-cancelling at the 12h-before-deadline mark — instead of waiting for the deadline itself — gives the attorney runway to rebook. We don't leave them hanging until the moment of failure.
+
+For a Rush job (1-2 biz days), the 12h-before-deadline mark may fall before Phase 3a's 48h trigger, in which case the cascade auto-cancels straight from Phase 2 without ever reaching Phase 3.
 
 ---
 
@@ -266,7 +270,7 @@ Tagged `[NEEDS ROSIE]` inline above. Consolidated:
 
 1. **Fairness slot split** — confirm 2-of-3 ranked + 1-of-3 fairness in standard (Phase 2) batches and the analog 7-of-10 ranked + 3-of-10 fairness for Phase 3a batches.
 2. **Service radius definition for live jobs** — county / driving distance / CSR-defined service area? (Aud leans toward CSR-defined.)
-3. **Phase 4 ops timing** — Phase 3 all-call is confirmed (Rosie 2026-05-05). Still need to confirm the ops-notification trigger (currently 72h for std/ext) and the < 12h lawyer-notification trigger for rush.
+3. **Phase 4 thresholds** — Phase 3 all-call is confirmed (Rosie 2026-05-05). Auto-cancel at 12h-before-deadline confirmed by Aud (2026-05-05). Still need Rosie's sign-off on: (a) ops-notification at 72h for std/ext, (b) the per-tier response windows in the table above (Rush 2h / Expedited 12h proposed / Standard 24h).
 4. **Ignored invites and CSR metrics** — do they count toward overload? toward a fairness-rotation cooldown so chronically unresponsive CSRs aren't repeatedly invited?
 5. **Drop the 3.5 rating floor entirely?** v1 said "above 3.5 enters the pool." v2 currently drops the floor in favor of the fairness slot. Confirm.
 
