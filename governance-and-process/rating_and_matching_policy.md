@@ -67,15 +67,31 @@ A **composite score** (weighted average of all three) is calculated for matching
 - **Geography matters for live, not for audio.** Live transcription is filtered to the courthouse's service radius before anything else; audio transcription has no geographic constraint.
 - **Invites stay live until the job is claimed.** Earlier-batch CSRs who didn't respond aren't timed out when the pool widens — they can still accept until someone takes the job. When a CSR claims it, every still-live invitee is notified.
 
-### SLA tiers (reference — codified in `legal_signoffs_tracker.md`)
+### SLA tiers
 
-| Tier | Deadline |
+Three tiers, surfaced in the homepage cost estimator:
+
+| Tier | Deadline | Price multiplier |
+|---|---|---|
+| **Rush** | 1-2 biz days | 1.5× |
+| **Expedited** | 3-5 biz days | 1.0× |
+| **Standard** | 6+ biz days | 0.85× |
+
+`[NEEDS RECONCILE]` — `legal_signoffs_tracker.md` v1 lists Standard as "2+ weeks." The user-facing calculator says "6+ biz days." Treating the calculator (user-facing) as authoritative here; flag for the legal-doc owner to align.
+
+The matching cascade respects all three tiers — see "Per-tier response windows" below. The label "rush" elsewhere in this doc means specifically the Rush tier (1-2 biz days), not just "any short deadline."
+
+### Per-tier response windows
+
+The Phase 1 (favorites) and Phase 2 (general-pool batch of 3) response windows differ by tier so we don't burn a 24h favorites window on a Rush job that's due tomorrow:
+
+| Tier | Phase 1 + Phase 2 window per batch |
 |---|---|
-| Rush | 24-48h |
-| Expedited | 3-5d |
-| Standard | 2+ weeks |
+| Rush (1-2 biz days) | **2 hours** |
+| Expedited (3-5 biz days) | **12 hours** `[NEEDS ROSIE]` — proposed; v1 grouped Expedited with Standard at 24h |
+| Standard (6+ biz days) | **24 hours** |
 
-For matching purposes, **"rush" = any order with a deadline < 48h**.
+Phase 3a (batches of 10) keeps the 3h response window across all tiers.
 
 ---
 
@@ -85,12 +101,7 @@ For matching purposes, **"rush" = any order with a deadline < 48h**.
 - The first favorite to accept wins. Everyone else gets a "this job has been claimed" notification.
 - **Live jobs:** the favorites pool is **pre-filtered to favorites within the courthouse's service radius**. Out-of-region favorites are skipped for this phase. (Definition of "service radius" — see `[NEEDS ROSIE]` Q4 below.)
 - **Audio jobs:** all favorites get the invite; no geographic filter.
-
-**Window:**
-| Order type | Phase 1 window |
-|---|---|
-| Standard / Expedited | 24 hours |
-| Rush (< 48h deadline) | 2 hours |
+- **Window:** see "Per-tier response windows" table above.
 
 If no favorite accepts (or the firm has no favorites, or no favorites are eligible for a live job), the cascade moves to Phase 2 immediately when the window closes — or earlier if every eligible favorite has explicitly declined.
 
@@ -106,12 +117,7 @@ After the favorites round expires (or is skipped):
 - **Invite lifecycle:** invites do not auto-expire when the next batch goes out. A CSR invited in batch 1 can still accept after batch 2 ships, up until the job is claimed by someone else.
 - **Live jobs:** the general pool is restricted to CSRs whose service radius covers the courthouse. (Same definition as Phase 1.)
 - **Audio jobs:** no geographic filter; the entire active general pool is in scope.
-
-**Window per batch:**
-| Order type | Phase 2 window |
-|---|---|
-| Standard / Expedited | 24 hours |
-| Rush (< 48h deadline) | 2 hours |
+- **Window per batch:** see "Per-tier response windows" table above.
 
 #### How a batch of 3 is selected
 
