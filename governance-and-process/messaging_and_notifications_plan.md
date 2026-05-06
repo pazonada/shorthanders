@@ -4,51 +4,85 @@
 
 **Desktop is where the work happens. Phone is for comms only.** Legal users (firms, legal assistants, attorneys, CSRs) do their actual work — placing orders, reviewing transcripts, managing schedules — on a computer. The phone is a notification surface for time-sensitive prompts ("a job needs your response", "your CSR canceled") and short replies. No native app is planned, ever, because there's no on-phone workflow to wrap.
 
-This shapes every decision below: notifications must work on a stock phone with no install step.
-
 ## Decision
 
-The platform uses **two notification channels**: SMS (via Twilio) and email (via SendGrid or Postmark).
+The platform uses **PWA + Web Push** as the primary phone-side notification channel for CSRs, and **email** as the universal fallback. No SMS / Twilio.
 
 In-platform communication uses an **inbox model**: a messages table with threads between firms and CSRs, plus order-level system messages ("your CSR confirmed", "transcript ready"). Real-time chat (typing indicators, presence, read receipts) is not in scope.
 
-## Why SMS + email, not Web Push
+## Why PWA + Web Push, not SMS
 
-- **No install step.** SMS and email work for everyone with a phone or address. Web Push requires the user to install the site as a PWA on their home screen first, which most users won't do — and there's no on-phone workflow that would motivate the install.
-- **Time-critical use case favors SMS.** Tier response windows in the matching policy (v2.2) mean a CSR needs to be reached fast. SMS is the most reliable, lowest-friction way to do that.
-- **Fewer integrations to maintain.** Twilio + SendGrid is two SaaS contracts. Web Push would mean a service worker, web push subscription storage, and a separate sender — maintained for a minority of users who installed the PWA, with SMS still required as the primary channel for everyone else.
-- **Cost isn't the constraint.** ~$0.008/SMS × cascade volume = double-digit dollars per month at hundreds of jobs/month. Even at 10× scale, this is a small line item.
+- **One-tap accept flow.** Push notification → PWA opens to the job card → tap Accept → state updates. SMS would force a multi-step path (tap link → mobile web → magic-link auth → land on job card → accept), which costs us seconds and taps that matter inside tier response windows.
+- **CSRs will be pinged often.** Early on we expect more jobs than CSRs, so an active CSR may get pinged multiple times per week. The smoother the per-ping experience, the more income they capture and the more they trust the platform.
+- **Free per-message.** No $/SMS, no A2P 10DLC paperwork, no STOP/HELP compliance, no carrier deliverability variance.
+- **Phone number becomes optional.** Lowers signup friction.
+- **Push can carry richer payloads.** Title, body, and an action URL to the exact job — better than 160-char SMS that has to summarize then link out.
+
+## How we make install rates high
+
+Install is the gating step — if a CSR doesn't add the site to their home screen, push doesn't reach them. The platform will pitch and re-pitch install in multiple places:
+
+- **CSR onboarding** — a dedicated step explaining the value ("get instant alerts the second a job comes in; one tap to accept") with platform-specific install instructions for iOS Safari and Android Chrome.
+- **CSR sidebar / quick-actions area** — persistent "Enable push notifications" card for users who haven't installed yet, dismissible but reappearing periodically.
+- **Post-job-miss nudge** — if a CSR misses a job they would likely have wanted, surface "you'd have heard about this instantly with push notifications. Install the app?" on next login.
+- **Onboarding email follow-up** — for CSRs who skipped the install step at signup, a follow-up email a day later walking them through it.
+- **Inside notification settings** — install pitch is the top item if they haven't installed.
+
+The pitch leans on the economic motivation: missing alerts = missing income.
+
+## Email as the always-on fallback
+
+Email is the universal channel. Every CSR has a verified email at signup; not every CSR will install the PWA right away. Dispatch logic:
+
+- **CSR has an active push subscription** → send push (and log it). For critical events (new job offered, tier deadline approaching), also send email if no read/click on push within a short window — belt-and-suspenders.
+- **CSR has no push subscription** → send email only. Subject lines are written to be glanceable on a phone lock screen ("New job offered – respond by 3:45 PM").
+- **All recipients (firms included) get email** for: confirmations, cancellations, transcript ready, receipts, weekly digests, marketing.
+
+## Handling the "push silently stopped working" failure mode
+
+Push subscriptions can break invisibly: the user removes the PWA from their home screen, iOS revokes the subscription, the browser is uninstalled, etc. The CSR keeps using the platform from desktop and assumes alerts are working — but isn't getting them.
+
+The dispatcher MUST:
+
+- **Detect push delivery failures** — when the push provider returns a permanent failure (HTTP 410, expired subscription), mark the subscription dead in the database.
+- **Fall back to email immediately** for that send.
+- **Surface a re-install nudge** the next time the user visits the site from any device: "We noticed your phone alerts stopped working. Reinstall to start getting them again."
+- **Don't silently swallow the breakage.** A CSR who thinks they're getting push but isn't is the worst case — they assume there are no jobs and disengage.
+
+A weekly background job should also send a silent test push to all subscriptions and clean up any that fail.
 
 ## Channels and defaults
 
-User preferences live in Settings → Notifications. Phone number is collected at signup and verified via OTP before SMS is enabled. Email is verified at signup.
+User preferences live in Settings → Notifications. Email is verified at signup. Push subscription is created when the user grants permission after installing the PWA.
 
-| Event | Default channel | User can change to |
+| Event | Default channel(s) | User can change to |
 |---|---|---|
-| New job offered (CSR) | SMS | Email, both, or off (off shows a warning that they may miss tier windows) |
-| Tier deadline approaching | SMS | Email + SMS only — cannot disable |
-| Job confirmed / canceled (firm) | Email | SMS, both |
-| New in-platform message | Email | SMS, both, off |
+| New job offered (CSR) | Push (if installed) + email backup | Email only, or off (off shows a warning that they may miss tier windows) |
+| Tier deadline approaching | Push + email — both required | Both required, cannot disable |
+| Job confirmed / canceled (firm) | Email | Push if installed, both, off |
+| New in-platform message | Push (if installed), else email | Email only, off |
 | Transcript ready, payment receipts | Email | Email only |
 | Marketing / digests | Email | Off |
 
-## Compliance
+## iOS-specific notes
 
-- **A2P 10DLC registration** is required for US business SMS. Register the brand and an "Account Notifications" campaign through Twilio. Approval takes ~1–2 weeks plus ~$15/month overhead. Must be done before launch.
-- **STOP / HELP** keywords are handled by Twilio automatically. The first SMS to a new user must include opt-out language.
-- **TCPA** — transactional SMS only goes to users who have provided a phone number and opted in. Default opt-in at signup is acceptable if disclosed in the Terms. Marketing SMS requires separate explicit consent.
+- Web Push works on iOS 16.4+ (March 2023) and only after the user installs the PWA to the home screen and opens it from the home screen icon. Push will not work if they're just visiting the site in Safari.
+- Push delivery on iOS is less reliable than on Android in practice. Treat email backup for critical events as load-bearing, not optional.
+- iOS does not show notifications from a PWA on the lock screen as prominently as native apps. The install pitch should set expectations honestly.
+- If a user removes the PWA from their home screen, the push subscription dies silently. See failure-mode handling above.
 
 ## Components to integrate
 
-- **Twilio Programmable Messaging** — SMS send/receive, A2P 10DLC.
-- **SendGrid** (or Postmark) — transactional email and templates.
+- **PWA wrapper** — `manifest.json` (app name, icon, theme colors, fullscreen display mode), service worker (push event handling, offline shell), install prompt UX with platform-specific instructions.
+- **Web Push** — VAPID keys, push subscription storage (`push_subscriptions` table keyed by user_id, tracking endpoint and expiry), `web-push` library (or equivalent) on the backend for sending.
+- **Transactional email** — SendGrid or Postmark, with templates for every event type.
 - **In-app inbox** — `messages`, `threads`, `participants` tables; per-user unread counters; system-message support.
-- **Notification dispatcher** — one backend service that takes an event (`new_job_offered`, `tier_deadline_approaching`, etc.), looks up each recipient's preferences, and fans out to the right channel(s). It is important that this lives in one place; channel-specific dispatch scattered across the app gets brittle quickly.
+- **Notification dispatcher** — one backend service that takes an event (`new_job_offered`, `tier_deadline_approaching`, etc.), looks up each recipient's preferences and active push subscriptions, fans out to the right channels, and handles delivery failures (especially expired push subscriptions). Channel-specific dispatch scattered across the app gets brittle quickly; keep it in one place.
 
 ## Out of scope
 
-- **Native app.** Not planned. See operating assumption — there's no on-phone workflow to wrap.
-- **PWA install + Web Push.** Not a roadmap step toward "more native-feeling." Could be added later as optional polish for power-user CSRs who want lock-screen alerts without SMS, but only if it earns its keep against the maintenance cost of a service worker and push subscription store. SMS remains the primary channel either way.
-- **Real-time chat** (typing indicators, presence, read receipts). Inbox + SMS/email is the model.
+- **SMS / Twilio.** Multi-step accept flow rules it out as the primary channel, and we don't need it as a fallback because email serves that role.
+- **Native app.** No on-phone workflow to wrap.
+- **Real-time chat** (typing indicators, presence, read receipts). Inbox + push/email is the model.
 - **Voice or phone calls.**
 - **WhatsApp or other messaging platforms.**
