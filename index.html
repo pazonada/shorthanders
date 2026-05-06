@@ -7925,34 +7925,42 @@ function KanbanBoard() {
 }
 
 // ─── Capital Tracker ────────────────────────────────────────────
-const EXPENSE_CATEGORIES = [
-  { id: "domain",    label: "Domain & DNS",          color: "#0EA5E9" },
-  { id: "hosting",   label: "Hosting & Infra",       color: "#8B5CF6" },
-  { id: "email",     label: "Email & Notifications", color: "#10B981" },
-  { id: "payments",  label: "Payments",              color: "#F59E0B" },
-  { id: "legal",     label: "Legal & Professional",  color: "#DC2626" },
-  { id: "marketing", label: "Marketing",             color: "#EC4899" },
-  { id: "tools",     label: "Tools & Software",      color: "#6366F1" },
-  { id: "other",     label: "Other",                 color: "#64748B" },
-];
-
-const INITIAL_EXPENSES = [
-  { id: "e1", date: "", vendor: "Domain registrar", item: "dewey-sholes domain",     category: "domain",   amount: 11, attribution: 100, recurring: "annual",   notes: "Edit: fill in actual purchase date." },
-  { id: "e2", date: "", vendor: "Vercel",           item: "Hosting plan",              category: "hosting",  amount: 0,  attribution: 50,  recurring: "monthly",  notes: "Edit: actual monthly cost. Shared with one other site — adjust attribution %." },
-  { id: "e3", date: "", vendor: "Supabase",         item: "Database & storage",        category: "hosting",  amount: 0,  attribution: 50,  recurring: "monthly",  notes: "Edit: actual cost. Shared — adjust attribution." },
-  { id: "e4", date: "", vendor: "Resend",           item: "Transactional email",       category: "email",    amount: 0,  attribution: 50,  recurring: "monthly",  notes: "Edit: actual cost. Shared — adjust attribution." },
-  { id: "e5", date: "", vendor: "Stripe",           item: "Payments processing",       category: "payments", amount: 0,  attribution: 100, recurring: "one-time", notes: "Stripe is free at rest; per-transaction fees logged here as they occur." },
+const CONTRIBUTION_CATEGORIES = [
+  { id: "tech_build",        label: "Tech build",         color: "#6366F1" },
+  { id: "design",            label: "Design",             color: "#EC4899" },
+  { id: "marketing",         label: "Marketing/outreach", color: "#10B981" },
+  { id: "user_testing",      label: "User testing",       color: "#F59E0B" },
+  { id: "business_planning", label: "Business planning",  color: "#8B5CF6" },
+  { id: "legal",             label: "Legal",              color: "#DC2626" },
+  { id: "operations",        label: "Operations",         color: "#0EA5E9" },
+  { id: "other",              label: "Other",             color: "#64748B" },
 ];
 
 const SWEAT_PEOPLE = ["Aud", "Rosie"];
+
+const INITIAL_EXPENSES = [
+  { id: "e1", date: "",           paidBy: "Aud", vendor: "Domain registrar", item: "dewey-sholes domain", category: "tech_build", amount: 11, attribution: 100, recurring: "annual",  notes: "Edit: fill in actual purchase date." },
+  { id: "e2", date: "2026-03-06", paidBy: "Aud", vendor: "Vercel",           item: "Hosting plan",        category: "tech_build", amount: 0,  attribution: 50,  recurring: "monthly", notes: "Edit: fill in actual monthly cost. Shared with another product — adjust attribution %." },
+  { id: "e3", date: "2026-04-06", paidBy: "Aud", vendor: "Supabase",         item: "Database & storage",  category: "tech_build", amount: 0,  attribution: 50,  recurring: "monthly", notes: "Edit: fill in actual monthly cost. Shared with another product — adjust attribution %." },
+  { id: "e4", date: "",           paidBy: "Aud", vendor: "Resend",           item: "Transactional email", category: "tech_build", amount: 0,  attribution: 50,  recurring: "monthly", notes: "Edit: fill in actual cost and start date. Shared with another product." },
+  { id: "e5", date: "",           paidBy: "Aud", vendor: "Stripe",           item: "Payments processing", category: "tech_build", amount: 0,  attribution: 0,   recurring: "monthly", notes: "Currently 0% attribution — Aud pays for Stripe via another product. Becomes a real Dewey Sholes cost once transactions start (per-transaction fees, plus any Stripe Atlas/Connect costs). Adjust attribution + amount when DS goes live." },
+];
+
 const INITIAL_SWEAT = [];
+
+// Migrate older saved entries (the previous schema used cost-type categories and no paidBy field)
+const OLD_TO_NEW_CAT = { domain: "tech_build", hosting: "tech_build", email: "tech_build", payments: "tech_build", tools: "tech_build", product: "tech_build", financial: "operations", research: "other" };
+const isContribCat = (c) => CONTRIBUTION_CATEGORIES.some(x => x.id === c);
+const migrateExpense = (e) => ({ ...e, paidBy: e.paidBy || "Aud", category: isContribCat(e.category) ? e.category : (OLD_TO_NEW_CAT[e.category] || "other") });
+const migrateSweat   = (s) => ({ ...s, category: isContribCat(s.category) ? s.category : (OLD_TO_NEW_CAT[s.category] || "other") });
 
 function ExpenseModal({ entry, isNew, onSave, onDelete, onClose }) {
   const [form, setForm] = useState({
     date:        entry.date || "",
+    paidBy:      entry.paidBy || SWEAT_PEOPLE[0],
     vendor:      entry.vendor || "",
     item:        entry.item || "",
-    category:    entry.category || "other",
+    category:    entry.category || "tech_build",
     amount:      entry.amount || 0,
     attribution: entry.attribution ?? 100,
     recurring:   entry.recurring || "one-time",
@@ -7966,13 +7974,19 @@ function ExpenseModal({ entry, isNew, onSave, onDelete, onClose }) {
   };
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal kanban-modal" onClick={e => e.stopPropagation()}>
-        <h2 style={{marginBottom: 20}}>{isNew ? "New expense" : "Edit expense"}</h2>
+      <div className="modal" style={{maxWidth: 560, width: "92%"}} onClick={e => e.stopPropagation()}>
+        <h2 style={{marginBottom: 20, fontSize: 18}}>{isNew ? "New expense" : "Edit expense"}</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group" style={{flex:1}}>
               <label className="form-label">Date</label>
               <input className="form-input" type="date" value={form.date} onChange={e => up("date", e.target.value)} />
+            </div>
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Paid by</label>
+              <select className="form-input" value={form.paidBy} onChange={e => up("paidBy", e.target.value)}>
+                {SWEAT_PEOPLE.map(p => <option key={p} value={p}>{p}</option>)}
+              </select>
             </div>
             <div className="form-group" style={{flex:1}}>
               <label className="form-label">Frequency</label>
@@ -7997,7 +8011,7 @@ function ExpenseModal({ entry, isNew, onSave, onDelete, onClose }) {
             <div className="form-group" style={{flex:1}}>
               <label className="form-label">Category</label>
               <select className="form-input" value={form.category} onChange={e => up("category", e.target.value)}>
-                {EXPENSE_CATEGORIES.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}
+                {CONTRIBUTION_CATEGORIES.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}
               </select>
             </div>
             <div className="form-group" style={{flex:1}}>
@@ -8013,7 +8027,7 @@ function ExpenseModal({ entry, isNew, onSave, onDelete, onClose }) {
             <label className="form-label">Notes</label>
             <textarea className="form-input" value={form.notes} onChange={e => up("notes", e.target.value)} placeholder="Receipt URL, attribution rationale, context..." />
           </div>
-          <div className="kanban-modal-actions">
+          <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 24, paddingTop: 16, borderTop: "1px solid #E2E8F0"}}>
             <div>{onDelete && <button type="button" className="btn btn-sm" style={{background:"#FEE2E2",color:"#DC2626",border:"1px solid #FECACA"}} onClick={onDelete}>Delete</button>}</div>
             <div style={{display:"flex",gap:8}}>
               <button type="button" className="btn btn-secondary btn-sm" onClick={onClose}>Cancel</button>
@@ -8033,7 +8047,7 @@ function SweatModal({ entry, isNew, onSave, onDelete, onClose }) {
     hours:       entry.hours || 0,
     hourlyRate:  entry.hourlyRate ?? 100,
     description: entry.description || "",
-    category:    entry.category || "product",
+    category:    entry.category || "tech_build",
   });
   const up = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const handleSubmit = e => {
@@ -8043,8 +8057,8 @@ function SweatModal({ entry, isNew, onSave, onDelete, onClose }) {
   };
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal kanban-modal" onClick={e => e.stopPropagation()}>
-        <h2 style={{marginBottom: 20}}>{isNew ? "Log sweat equity" : "Edit entry"}</h2>
+      <div className="modal" style={{maxWidth: 560, width: "92%"}} onClick={e => e.stopPropagation()}>
+        <h2 style={{marginBottom: 20, fontSize: 18}}>{isNew ? "Log sweat equity" : "Edit entry"}</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group" style={{flex:1}}>
@@ -8070,12 +8084,7 @@ function SweatModal({ entry, isNew, onSave, onDelete, onClose }) {
             <div className="form-group" style={{flex:1}}>
               <label className="form-label">Category</label>
               <select className="form-input" value={form.category} onChange={e => up("category", e.target.value)}>
-                <option value="product">Product</option>
-                <option value="legal">Legal</option>
-                <option value="marketing">Marketing</option>
-                <option value="operations">Operations</option>
-                <option value="research">Research</option>
-                <option value="financial">Financial</option>
+                {CONTRIBUTION_CATEGORIES.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}
               </select>
             </div>
           </div>
@@ -8083,7 +8092,7 @@ function SweatModal({ entry, isNew, onSave, onDelete, onClose }) {
             <label className="form-label">Description</label>
             <textarea className="form-input" value={form.description} onChange={e => up("description", e.target.value)} placeholder="What did you work on?" />
           </div>
-          <div className="kanban-modal-actions">
+          <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 24, paddingTop: 16, borderTop: "1px solid #E2E8F0"}}>
             <div>{onDelete && <button type="button" className="btn btn-sm" style={{background:"#FEE2E2",color:"#DC2626",border:"1px solid #FECACA"}} onClick={onDelete}>Delete</button>}</div>
             <div style={{display:"flex",gap:8}}>
               <button type="button" className="btn btn-secondary btn-sm" onClick={onClose}>Cancel</button>
@@ -8100,8 +8109,8 @@ function CapitalTracker() {
   const EXP_KEY   = "dewey_capital_expenses";
   const SWEAT_KEY = "dewey_capital_sweat";
 
-  const loadExp   = () => { try { const s = localStorage.getItem(EXP_KEY);   return s ? JSON.parse(s) : INITIAL_EXPENSES; } catch { return INITIAL_EXPENSES; } };
-  const loadSweat = () => { try { const s = localStorage.getItem(SWEAT_KEY); return s ? JSON.parse(s) : INITIAL_SWEAT;    } catch { return INITIAL_SWEAT;    } };
+  const loadExp   = () => { try { const s = localStorage.getItem(EXP_KEY);   return (s ? JSON.parse(s) : INITIAL_EXPENSES).map(migrateExpense); } catch { return INITIAL_EXPENSES; } };
+  const loadSweat = () => { try { const s = localStorage.getItem(SWEAT_KEY); return (s ? JSON.parse(s) : INITIAL_SWEAT).map(migrateSweat);      } catch { return INITIAL_SWEAT;    } };
 
   const [expenses, setExpenses]         = useState(loadExp);
   const [sweat, setSweat]               = useState(loadSweat);
@@ -8154,94 +8163,288 @@ function CapitalTracker() {
     input.click();
   };
 
-  const cashOneTime       = expenses.filter(e => e.recurring === "one-time").reduce((s, e) => s + (e.amount * e.attribution / 100), 0);
-  const monthlyRecurring  = expenses.filter(e => e.recurring === "monthly").reduce((s, e) => s + (e.amount * e.attribution / 100), 0);
-  const annualRecurring   = expenses.filter(e => e.recurring === "annual").reduce((s, e) => s + (e.amount * e.attribution / 100), 0);
-  const annualRunRate     = (monthlyRecurring * 12) + annualRecurring;
-  const totalHours        = sweat.reduce((s, x) => s + (x.hours || 0), 0);
-  const sweatValue        = sweat.reduce((s, x) => s + ((x.hours || 0) * (x.hourlyRate || 0)), 0);
+  const [expSort, setExpSort] = useState({ field: "date", dir: "desc" });
+  const [swSort, setSwSort]   = useState({ field: "date", dir: "desc" });
+
+  const now = new Date();
+  const yyyymm = (d) => d.getFullYear() * 100 + d.getMonth();
+  const nowYM = yyyymm(now);
+
+  const lifetimeOf = (e) => {
+    const eff = (e.amount || 0) * (e.attribution || 0) / 100;
+    if (!eff) return 0;
+    if (!e.date) return eff;
+    const start = new Date(e.date);
+    if (start > now) return 0;
+    if (e.recurring === "monthly") {
+      const months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth()) + 1;
+      return eff * Math.max(months, 1);
+    }
+    if (e.recurring === "annual") {
+      const years = now.getFullYear() - start.getFullYear() + 1;
+      return eff * Math.max(years, 1);
+    }
+    return eff;
+  };
+
+  const cashInMonth = (e, y, m) => {
+    if (!e.date) return 0;
+    const eff = (e.amount || 0) * (e.attribution || 0) / 100;
+    if (!eff) return 0;
+    const start = new Date(e.date);
+    const startYM = yyyymm(start);
+    const targetYM = y * 100 + m;
+    if (targetYM > nowYM) return 0;
+    if (e.recurring === "one-time") return startYM === targetYM ? eff : 0;
+    if (e.recurring === "monthly")  return targetYM >= startYM ? eff : 0;
+    if (e.recurring === "annual")   return start.getMonth() === m && targetYM >= startYM ? eff : 0;
+    return 0;
+  };
+
+  const lifetimeCash   = expenses.reduce((s, e) => s + lifetimeOf(e), 0);
+  const monthlyRecur   = expenses.filter(e => e.recurring === "monthly").reduce((s, e) => s + (e.amount * e.attribution / 100), 0);
+  const annualRecur    = expenses.filter(e => e.recurring === "annual").reduce((s, e) => s + (e.amount * e.attribution / 100), 0);
+  const annualRunRate  = (monthlyRecur * 12) + annualRecur;
+  const totalHours     = sweat.reduce((s, x) => s + (x.hours || 0), 0);
+  const sweatValue     = sweat.reduce((s, x) => s + ((x.hours || 0) * (x.hourlyRate || 0)), 0);
+  const totalInvested  = lifetimeCash + sweatValue;
+
+  const perPerson = SWEAT_PEOPLE.map(p => {
+    const cash  = expenses.filter(e => e.paidBy === p).reduce((s, e) => s + lifetimeOf(e), 0);
+    const hrs   = sweat.filter(s => s.person === p).reduce((acc, s) => acc + (s.hours || 0), 0);
+    const sweatVal = sweat.filter(s => s.person === p).reduce((acc, s) => acc + ((s.hours || 0) * (s.hourlyRate || 0)), 0);
+    const total = cash + sweatVal;
+    return { person: p, cash, hrs, sweatVal, total };
+  });
+  const maxPerPersonTotal = Math.max(...perPerson.map(p => p.total), 1);
+
+  const monthBuckets = [];
+  for (let i = 11; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    let cash = 0;
+    for (const e of expenses) cash += cashInMonth(e, d.getFullYear(), d.getMonth());
+    monthBuckets.push({ year: d.getFullYear(), month: d.getMonth(), label: d.toLocaleDateString("en-US", { month: "short" }), cash });
+  }
+  const maxCash = Math.max(...monthBuckets.map(b => b.cash), 1);
+
+  const byCat = {};
+  for (const e of expenses) {
+    const lt = lifetimeOf(e);
+    if (!lt) continue;
+    byCat[e.category] = (byCat[e.category] || 0) + lt;
+  }
+  const catRows = Object.entries(byCat).sort((a, b) => b[1] - a[1]);
+  const maxCatAmount = Math.max(...Object.values(byCat), 1);
+
+  const expSortVal = (e, f) => {
+    if (f === "effective") return e.amount * e.attribution / 100;
+    if (f === "lifetime")  return lifetimeOf(e);
+    return e[f];
+  };
+  const sortRows = (rows, sort, valFn) => [...rows].sort((a, b) => {
+    let av = valFn(a, sort.field), bv = valFn(b, sort.field);
+    if (typeof av === "string") av = av.toLowerCase();
+    if (typeof bv === "string") bv = bv.toLowerCase();
+    if (av == null) av = sort.dir === "asc" ? Infinity : -Infinity;
+    if (bv == null) bv = sort.dir === "asc" ? Infinity : -Infinity;
+    if (av < bv) return sort.dir === "asc" ? -1 : 1;
+    if (av > bv) return sort.dir === "asc" ?  1 : -1;
+    return 0;
+  });
+  const sortedExp   = sortRows(expenses, expSort, expSortVal);
+  const sortedSweat = sortRows(sweat, swSort, (s, f) => f === "value" ? (s.hours || 0) * (s.hourlyRate || 0) : s[f]);
+  const toggle = (setter) => (field) => setter(prev => prev.field === field ? { field, dir: prev.dir === "asc" ? "desc" : "asc" } : { field, dir: "desc" });
+  const toggleExp = toggle(setExpSort);
+  const toggleSw  = toggle(setSwSort);
+  const sortInd = (sort, field) => sort.field === field ? (sort.dir === "asc" ? " ↑" : " ↓") : "";
 
   const fmt    = (n) => "$" + (n || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const fmtInt = (n) => "$" + Math.round(n || 0).toLocaleString();
-  const cat    = (id) => EXPENSE_CATEGORIES.find(c => c.id === id) || { label: id, color: "#64748B" };
+  const cat    = (id) => CONTRIBUTION_CATEGORIES.find(c => c.id === id) || { label: id, color: "#64748B" };
+
+  const kpiCellStyle  = { padding: "18px 22px", flex: 1, borderRight: "1px solid #E2E8F0", minWidth: 0 };
+  const kpiLabelStyle = { fontSize: 11, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 600, marginBottom: 4 };
+  const kpiValStyle   = { fontSize: 26, fontWeight: 800, color: "#0F172A", fontVariantNumeric: "tabular-nums", lineHeight: 1.1 };
+  const kpiSubStyle   = { fontSize: 11, color: "#94A3B8", marginTop: 6 };
+  const thStyle       = { textAlign: "left", padding: "10px 12px", fontWeight: 600, fontSize: 11, color: "#475569", textTransform: "uppercase", letterSpacing: "0.04em", cursor: "pointer", userSelect: "none", borderBottom: "1px solid #E2E8F0", whiteSpace: "nowrap" };
+  const thRight       = { ...thStyle, textAlign: "right" };
+  const tdStyle       = { padding: "10px 12px", fontVariantNumeric: "tabular-nums" };
+  const headerBtn     = { background: "#1E293B", borderColor: "#334155", color: "#fff", gap: 6 };
 
   return (
-    <div>
-      <AppNav variant="buyer" activeTab="" />
-      <div className="page page-enter">
-        <div className="container" style={{maxWidth: 1200}}>
-          <div className="page-header">
-            <div>
-              <h1 style={{fontSize: 28}}>Capital tracker</h1>
-              <p style={{color: "#64748B", marginTop: 4}}>Cash and sweat equity invested in Dewey Sholes. Stored locally in this browser.</p>
+    <div style={{minHeight: "100vh", background: "#F8FAFC"}}>
+      <div style={{background: "#0F172A", color: "#fff", padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12}}>
+        <div style={{display: "flex", alignItems: "center", gap: 12}}>
+          <div style={{width: 8, height: 8, borderRadius: "50%", background: "#10B981"}} />
+          <div>
+            <div style={{fontSize: 13, fontWeight: 700, letterSpacing: "0.02em"}}>Capital Tracker</div>
+            <div style={{fontSize: 11, color: "#94A3B8"}}>Private workspace · stored locally in this browser</div>
+          </div>
+        </div>
+        <div style={{display: "flex", gap: 8, flexWrap: "wrap"}}>
+          <button className="btn btn-secondary btn-sm" style={headerBtn} onClick={handleExport}><Icon name="download" size={13} /> Export</button>
+          <button className="btn btn-secondary btn-sm" style={headerBtn} onClick={handleImport}><Icon name="upload" size={13} /> Import</button>
+          <button className="btn btn-secondary btn-sm" style={headerBtn} onClick={handleReset}><Icon name="x" size={13} /> Reset</button>
+          <button className="btn btn-secondary btn-sm" style={headerBtn} onClick={() => navigate("/")}>← Site</button>
+        </div>
+      </div>
+
+      <div style={{maxWidth: 1280, margin: "0 auto", padding: 24}}>
+        <div style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, display: "flex", flexWrap: "wrap", marginBottom: 20, overflow: "hidden"}}>
+          <div style={kpiCellStyle}>
+            <div style={kpiLabelStyle}>Total invested</div>
+            <div style={kpiValStyle}>{fmtInt(totalInvested)}</div>
+            <div style={kpiSubStyle}>Cash + sweat valuation</div>
+          </div>
+          <div style={kpiCellStyle}>
+            <div style={kpiLabelStyle}>Cash spent to date</div>
+            <div style={kpiValStyle}>{fmt(lifetimeCash)}</div>
+            <div style={kpiSubStyle}>Attributed to Dewey Sholes</div>
+          </div>
+          <div style={kpiCellStyle}>
+            <div style={kpiLabelStyle}>Run-rate</div>
+            <div style={kpiValStyle}>{fmtInt(annualRunRate)}<span style={{fontSize: 14, fontWeight: 500, color: "#64748B"}}>/yr</span></div>
+            <div style={kpiSubStyle}>{fmt(monthlyRecur)}/mo · {fmt(annualRecur)}/yr fixed</div>
+          </div>
+          <div style={{...kpiCellStyle, borderRight: "none"}}>
+            <div style={kpiLabelStyle}>Sweat equity</div>
+            <div style={kpiValStyle}>{totalHours.toFixed(1)}<span style={{fontSize: 14, fontWeight: 500, color: "#64748B"}}>h · {fmtInt(sweatValue)}</span></div>
+            <div style={kpiSubStyle}>At notional hourly rates</div>
+          </div>
+        </div>
+
+        <div style={{display: "grid", gridTemplateColumns: `repeat(${SWEAT_PEOPLE.length}, minmax(0, 1fr))`, gap: 16, marginBottom: 20}}>
+          {perPerson.map(p => {
+            const cashPct  = p.total ? (p.cash / p.total) * 100 : 0;
+            const sweatPct = 100 - cashPct;
+            return (
+              <div key={p.person} style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, padding: 18}}>
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12}}>
+                  <div>
+                    <div style={{fontSize: 12, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 600}}>{p.person}'s contribution</div>
+                    <div style={{fontSize: 28, fontWeight: 800, color: "#0F172A", fontVariantNumeric: "tabular-nums", lineHeight: 1.1, marginTop: 4}}>{fmtInt(p.total)}</div>
+                  </div>
+                  <div style={{textAlign: "right", fontSize: 11, color: "#94A3B8"}}>
+                    {p.total > 0 ? Math.round((p.total / Math.max(totalInvested, 1)) * 100) + "% of total" : "—"}
+                  </div>
+                </div>
+                <div style={{height: 6, background: "#F1F5F9", borderRadius: 3, overflow: "hidden", display: "flex", marginBottom: 10}}>
+                  {p.cash > 0  && <div style={{width: cashPct + "%",  background: "#4361EE"}} />}
+                  {p.sweatVal > 0 && <div style={{width: sweatPct + "%", background: "#10B981"}} />}
+                </div>
+                <div style={{display: "flex", justifyContent: "space-between", fontSize: 12}}>
+                  <div>
+                    <div style={{display: "flex", alignItems: "center", gap: 6, color: "#475569"}}>
+                      <span style={{width: 8, height: 8, borderRadius: 2, background: "#4361EE"}} />
+                      Cash <span style={{fontWeight: 600, color: "#0F172A", fontVariantNumeric: "tabular-nums"}}>{fmt(p.cash)}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div style={{display: "flex", alignItems: "center", gap: 6, color: "#475569"}}>
+                      <span style={{width: 8, height: 8, borderRadius: 2, background: "#10B981"}} />
+                      Sweat <span style={{fontWeight: 600, color: "#0F172A", fontVariantNumeric: "tabular-nums"}}>{p.hrs.toFixed(1)}h · {fmtInt(p.sweatVal)}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div style={{display: "grid", gridTemplateColumns: "minmax(0,2fr) minmax(0,1fr)", gap: 20, marginBottom: 20}}>
+          <div style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, padding: 18}}>
+            <div style={{display: "flex", justifyContent: "space-between", marginBottom: 14}}>
+              <div>
+                <div style={{fontSize: 13, fontWeight: 700, color: "#0F172A"}}>Cash spend by month</div>
+                <div style={{fontSize: 11, color: "#94A3B8"}}>Trailing 12 months · attribution-adjusted</div>
+              </div>
             </div>
-            <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
-              <button className="btn btn-secondary btn-sm" onClick={handleExport} style={{gap: 6}}><Icon name="download" size={14} /> Export</button>
-              <button className="btn btn-secondary btn-sm" onClick={handleImport} style={{gap: 6}}><Icon name="upload" size={14} /> Import</button>
-              <button className="btn btn-secondary btn-sm" onClick={handleReset} style={{gap: 6}}><Icon name="x" size={14} /> Reset</button>
+            <div style={{display: "flex", alignItems: "flex-end", gap: 6, height: 170}}>
+              {monthBuckets.map((b, i) => {
+                const h = (b.cash / maxCash) * 130;
+                return (
+                  <div key={i} style={{flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 6}}>
+                    <div style={{fontSize: 10, color: "#64748B", height: 12, fontVariantNumeric: "tabular-nums"}}>{b.cash > 0 ? "$" + Math.round(b.cash) : ""}</div>
+                    <div style={{width: "100%", maxWidth: 30, height: 130, display: "flex", alignItems: "flex-end"}}>
+                      <div style={{width: "100%", height: Math.max(h, b.cash > 0 ? 2 : 0), background: "#4361EE", borderRadius: "3px 3px 0 0"}} />
+                    </div>
+                    <div style={{fontSize: 11, color: "#64748B"}}>{b.label}</div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, marginBottom: 24}}>
-            <div className="card" style={{padding: 16}}>
-              <div style={{fontSize: 11, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: 600, marginBottom: 6}}>Cash invested (one-time)</div>
-              <div style={{fontSize: 24, fontWeight: 800, color: "#0F172A"}}>{fmt(cashOneTime)}</div>
-              <div style={{fontSize: 11, color: "#94A3B8", marginTop: 4}}>Attributed to Dewey Sholes</div>
+          <div style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, padding: 18}}>
+            <div style={{marginBottom: 14}}>
+              <div style={{fontSize: 13, fontWeight: 700, color: "#0F172A"}}>By category</div>
+              <div style={{fontSize: 11, color: "#94A3B8"}}>Lifetime cash spent</div>
             </div>
-            <div className="card" style={{padding: 16}}>
-              <div style={{fontSize: 11, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: 600, marginBottom: 6}}>Annual run-rate</div>
-              <div style={{fontSize: 24, fontWeight: 800, color: "#0F172A"}}>{fmtInt(annualRunRate)}/yr</div>
-              <div style={{fontSize: 11, color: "#94A3B8", marginTop: 4}}>{fmt(monthlyRecurring)}/mo · {fmt(annualRecurring)}/yr fixed</div>
-            </div>
-            <div className="card" style={{padding: 16}}>
-              <div style={{fontSize: 11, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: 600, marginBottom: 6}}>Sweat equity hours</div>
-              <div style={{fontSize: 24, fontWeight: 800, color: "#0F172A"}}>{totalHours.toFixed(1)}h</div>
-              <div style={{fontSize: 11, color: "#94A3B8", marginTop: 4}}>{SWEAT_PEOPLE.map(p => `${p}: ${sweat.filter(s => s.person === p).reduce((sum, s) => sum + (s.hours || 0), 0).toFixed(0)}h`).join(" · ")}</div>
-            </div>
-            <div className="card" style={{padding: 16}}>
-              <div style={{fontSize: 11, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: 600, marginBottom: 6}}>Sweat equity value</div>
-              <div style={{fontSize: 24, fontWeight: 800, color: "#0F172A"}}>{fmtInt(sweatValue)}</div>
-              <div style={{fontSize: 11, color: "#94A3B8", marginTop: 4}}>At notional hourly rates</div>
-            </div>
+            {catRows.length === 0 ? (
+              <div style={{fontSize: 12, color: "#94A3B8", padding: "20px 0"}}>No spend recorded yet.</div>
+            ) : (
+              <div style={{display: "flex", flexDirection: "column", gap: 10}}>
+                {catRows.map(([id, val]) => {
+                  const c = cat(id);
+                  return (
+                    <div key={id}>
+                      <div style={{display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4}}>
+                        <span style={{color: "#475569"}}>{c.label}</span>
+                        <span style={{color: "#0F172A", fontWeight: 600, fontVariantNumeric: "tabular-nums"}}>{fmt(val)}</span>
+                      </div>
+                      <div style={{height: 6, background: "#F1F5F9", borderRadius: 3, overflow: "hidden"}}>
+                        <div style={{width: (val / maxCatAmount) * 100 + "%", height: "100%", background: c.color}} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
+        </div>
 
-          <div style={{display: "flex", alignItems: "center", gap: 4, marginBottom: 16, borderBottom: "1px solid #E2E8F0"}}>
-            <button onClick={() => setTab("cash")}  style={{padding: "10px 16px", border: "none", background: "transparent", borderBottom: tab === "cash"  ? "2px solid #2563EB" : "2px solid transparent", color: tab === "cash"  ? "#2563EB" : "#64748B", fontWeight: 600, cursor: "pointer", marginBottom: -1, fontSize: 13}}>Cash expenses ({expenses.length})</button>
-            <button onClick={() => setTab("sweat")} style={{padding: "10px 16px", border: "none", background: "transparent", borderBottom: tab === "sweat" ? "2px solid #2563EB" : "2px solid transparent", color: tab === "sweat" ? "#2563EB" : "#64748B", fontWeight: 600, cursor: "pointer", marginBottom: -1, fontSize: 13}}>Sweat equity ({sweat.length})</button>
+        <div style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, overflow: "hidden"}}>
+          <div style={{display: "flex", alignItems: "center", borderBottom: "1px solid #E2E8F0"}}>
+            <button onClick={() => setTab("cash")}  style={{padding: "13px 18px", border: "none", background: "transparent", borderBottom: tab === "cash"  ? "2px solid #0F172A" : "2px solid transparent", color: tab === "cash"  ? "#0F172A" : "#64748B", fontWeight: 600, cursor: "pointer", marginBottom: -1, fontSize: 13}}>Cash expenses · {expenses.length}</button>
+            <button onClick={() => setTab("sweat")} style={{padding: "13px 18px", border: "none", background: "transparent", borderBottom: tab === "sweat" ? "2px solid #0F172A" : "2px solid transparent", color: tab === "sweat" ? "#0F172A" : "#64748B", fontWeight: 600, cursor: "pointer", marginBottom: -1, fontSize: 13}}>Sweat equity · {sweat.length}</button>
             <div style={{flex: 1}} />
             {tab === "cash"
-              ? <button className="btn btn-primary btn-sm" onClick={() => setCreatingExp(true)}   style={{marginBottom: 4, gap: 4}}><Icon name="plus" size={14} color="#fff" /> Add expense</button>
-              : <button className="btn btn-primary btn-sm" onClick={() => setCreatingSweat(true)} style={{marginBottom: 4, gap: 4}}><Icon name="plus" size={14} color="#fff" /> Log time</button>}
+              ? <button className="btn btn-primary btn-sm" onClick={() => setCreatingExp(true)}   style={{margin: 8, gap: 4}}><Icon name="plus" size={13} color="#fff" /> Add expense</button>
+              : <button className="btn btn-primary btn-sm" onClick={() => setCreatingSweat(true)} style={{margin: 8, gap: 4}}><Icon name="plus" size={13} color="#fff" /> Log time</button>}
           </div>
 
           {tab === "cash" ? (
-            <div className="card" style={{padding: 0, overflow: "hidden"}}>
+            <div style={{overflowX: "auto"}}>
               <table style={{width: "100%", borderCollapse: "collapse", fontSize: 13}}>
                 <thead>
-                  <tr style={{background: "#F8FAFC", borderBottom: "1px solid #E2E8F0"}}>
-                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Date</th>
-                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Vendor / item</th>
-                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Category</th>
-                    <th style={{textAlign: "right", padding: 12, fontWeight: 600, color: "#64748B"}}>Amount</th>
-                    <th style={{textAlign: "right", padding: 12, fontWeight: 600, color: "#64748B"}}>Attribution</th>
-                    <th style={{textAlign: "right", padding: 12, fontWeight: 600, color: "#64748B"}}>Effective</th>
-                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Frequency</th>
+                  <tr style={{background: "#F8FAFC"}}>
+                    <th style={thStyle}      onClick={() => toggleExp("date")}>Date{sortInd(expSort, "date")}</th>
+                    <th style={thStyle}      onClick={() => toggleExp("paidBy")}>Paid by{sortInd(expSort, "paidBy")}</th>
+                    <th style={thStyle}      onClick={() => toggleExp("vendor")}>Vendor / item{sortInd(expSort, "vendor")}</th>
+                    <th style={thStyle}      onClick={() => toggleExp("category")}>Category{sortInd(expSort, "category")}</th>
+                    <th style={thRight}      onClick={() => toggleExp("amount")}>Amount{sortInd(expSort, "amount")}</th>
+                    <th style={thRight}      onClick={() => toggleExp("attribution")}>Attr.{sortInd(expSort, "attribution")}</th>
+                    <th style={thRight}      onClick={() => toggleExp("effective")}>Effective{sortInd(expSort, "effective")}</th>
+                    <th style={thRight}      onClick={() => toggleExp("lifetime")}>Lifetime{sortInd(expSort, "lifetime")}</th>
+                    <th style={thStyle}      onClick={() => toggleExp("recurring")}>Frequency{sortInd(expSort, "recurring")}</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {expenses.length === 0 ? (
-                    <tr><td colSpan={7} style={{padding: 32, textAlign: "center", color: "#94A3B8"}}>No expenses logged yet.</td></tr>
-                  ) : expenses.map(e => {
+                  {sortedExp.length === 0 ? (
+                    <tr><td colSpan={9} style={{padding: 32, textAlign: "center", color: "#94A3B8"}}>No expenses logged yet.</td></tr>
+                  ) : sortedExp.map(e => {
                     const c = cat(e.category);
                     return (
                       <tr key={e.id} onClick={() => setEditingExp(e)} style={{borderBottom: "1px solid #F1F5F9", cursor: "pointer"}}>
-                        <td style={{padding: 12, color: "#475569"}}>{e.date || "—"}</td>
-                        <td style={{padding: 12}}><div style={{fontWeight: 600, color: "#0F172A"}}>{e.vendor || "—"}</div><div style={{color: "#94A3B8", fontSize: 12}}>{e.item}</div></td>
-                        <td style={{padding: 12}}><span style={{display: "inline-block", padding: "3px 10px", borderRadius: 100, fontSize: 11, fontWeight: 600, background: c.color + "22", color: c.color}}>{c.label}</span></td>
-                        <td style={{padding: 12, textAlign: "right", color: "#0F172A", fontVariantNumeric: "tabular-nums"}}>{fmt(e.amount)}</td>
-                        <td style={{padding: 12, textAlign: "right", color: "#64748B", fontVariantNumeric: "tabular-nums"}}>{e.attribution}%</td>
-                        <td style={{padding: 12, textAlign: "right", fontWeight: 600, color: "#0F172A", fontVariantNumeric: "tabular-nums"}}>{fmt(e.amount * e.attribution / 100)}</td>
-                        <td style={{padding: 12, color: "#64748B", textTransform: "capitalize"}}>{e.recurring}</td>
+                        <td style={{...tdStyle, color: "#475569"}}>{e.date || "—"}</td>
+                        <td style={{padding: "10px 12px", fontWeight: 600, color: "#0F172A"}}>{e.paidBy}</td>
+                        <td style={{padding: "10px 12px"}}><div style={{fontWeight: 600, color: "#0F172A"}}>{e.vendor || "—"}</div><div style={{color: "#94A3B8", fontSize: 12}}>{e.item}</div></td>
+                        <td style={{padding: "10px 12px"}}><span style={{display: "inline-block", padding: "2px 8px", borderRadius: 4, fontSize: 11, fontWeight: 600, background: c.color + "1A", color: c.color}}>{c.label}</span></td>
+                        <td style={{...tdStyle, textAlign: "right", color: "#475569"}}>{fmt(e.amount)}</td>
+                        <td style={{...tdStyle, textAlign: "right", color: "#94A3B8"}}>{e.attribution}%</td>
+                        <td style={{...tdStyle, textAlign: "right", color: "#475569"}}>{fmt(e.amount * e.attribution / 100)}</td>
+                        <td style={{...tdStyle, textAlign: "right", fontWeight: 600, color: "#0F172A"}}>{fmt(lifetimeOf(e))}</td>
+                        <td style={{padding: "10px 12px", color: "#64748B", textTransform: "capitalize"}}>{e.recurring}</td>
                       </tr>
                     );
                   })}
@@ -8249,40 +8452,40 @@ function CapitalTracker() {
               </table>
             </div>
           ) : (
-            <div className="card" style={{padding: 0, overflow: "hidden"}}>
+            <div style={{overflowX: "auto"}}>
               <table style={{width: "100%", borderCollapse: "collapse", fontSize: 13}}>
                 <thead>
-                  <tr style={{background: "#F8FAFC", borderBottom: "1px solid #E2E8F0"}}>
-                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Date</th>
-                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Person</th>
-                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Description</th>
-                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Category</th>
-                    <th style={{textAlign: "right", padding: 12, fontWeight: 600, color: "#64748B"}}>Hours</th>
-                    <th style={{textAlign: "right", padding: 12, fontWeight: 600, color: "#64748B"}}>Rate</th>
-                    <th style={{textAlign: "right", padding: 12, fontWeight: 600, color: "#64748B"}}>Value</th>
+                  <tr style={{background: "#F8FAFC"}}>
+                    <th style={thStyle} onClick={() => toggleSw("date")}>Date{sortInd(swSort, "date")}</th>
+                    <th style={thStyle} onClick={() => toggleSw("person")}>Person{sortInd(swSort, "person")}</th>
+                    <th style={thStyle} onClick={() => toggleSw("description")}>Description{sortInd(swSort, "description")}</th>
+                    <th style={thStyle} onClick={() => toggleSw("category")}>Category{sortInd(swSort, "category")}</th>
+                    <th style={thRight} onClick={() => toggleSw("hours")}>Hours{sortInd(swSort, "hours")}</th>
+                    <th style={thRight} onClick={() => toggleSw("hourlyRate")}>Rate{sortInd(swSort, "hourlyRate")}</th>
+                    <th style={thRight} onClick={() => toggleSw("value")}>Value{sortInd(swSort, "value")}</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {sweat.length === 0 ? (
+                  {sortedSweat.length === 0 ? (
                     <tr><td colSpan={7} style={{padding: 32, textAlign: "center", color: "#94A3B8"}}>No sweat equity logged yet. Click "Log time" above to start.</td></tr>
-                  ) : sweat.map(s => (
+                  ) : sortedSweat.map(s => (
                     <tr key={s.id} onClick={() => setEditingSweat(s)} style={{borderBottom: "1px solid #F1F5F9", cursor: "pointer"}}>
-                      <td style={{padding: 12, color: "#475569"}}>{s.date || "—"}</td>
-                      <td style={{padding: 12, fontWeight: 600, color: "#0F172A"}}>{s.person}</td>
-                      <td style={{padding: 12, color: "#475569"}}>{s.description || "—"}</td>
-                      <td style={{padding: 12, color: "#64748B", textTransform: "capitalize"}}>{s.category}</td>
-                      <td style={{padding: 12, textAlign: "right", color: "#0F172A", fontVariantNumeric: "tabular-nums"}}>{(s.hours || 0).toFixed(2)}h</td>
-                      <td style={{padding: 12, textAlign: "right", color: "#64748B", fontVariantNumeric: "tabular-nums"}}>${s.hourlyRate || 0}/h</td>
-                      <td style={{padding: 12, textAlign: "right", fontWeight: 600, color: "#0F172A", fontVariantNumeric: "tabular-nums"}}>{fmt((s.hours || 0) * (s.hourlyRate || 0))}</td>
+                      <td style={{...tdStyle, color: "#475569"}}>{s.date || "—"}</td>
+                      <td style={{padding: "10px 12px", fontWeight: 600, color: "#0F172A"}}>{s.person}</td>
+                      <td style={{padding: "10px 12px", color: "#475569"}}>{s.description || "—"}</td>
+                      <td style={{padding: "10px 12px", color: "#64748B", textTransform: "capitalize"}}>{s.category}</td>
+                      <td style={{...tdStyle, textAlign: "right", color: "#475569"}}>{(s.hours || 0).toFixed(2)}</td>
+                      <td style={{...tdStyle, textAlign: "right", color: "#94A3B8"}}>${s.hourlyRate || 0}/h</td>
+                      <td style={{...tdStyle, textAlign: "right", fontWeight: 600, color: "#0F172A"}}>{fmt((s.hours || 0) * (s.hourlyRate || 0))}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           )}
-
-          <p style={{fontSize: 12, color: "#94A3B8", marginTop: 16}}>Data is saved locally to this browser only. Use Export to back up; Import to restore on another device.</p>
         </div>
+
+        <p style={{fontSize: 11, color: "#94A3B8", marginTop: 14}}>Click any row to edit. Lifetime spend on recurring entries assumes the start date is correct — fill in dates so the math is right.</p>
       </div>
 
       {(editingExp || creatingExp) && (
