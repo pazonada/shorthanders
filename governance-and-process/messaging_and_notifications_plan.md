@@ -22,11 +22,16 @@ In-platform communication uses an **inbox model**: a messages table with threads
 
 Install is the gating step — if a CSR doesn't add the site to their home screen, push doesn't reach them. The platform will pitch and re-pitch install in multiple places:
 
+**v1:**
+
 - **CSR onboarding** — a dedicated step explaining the value ("get instant alerts the second a job comes in; one tap to accept") with platform-specific install instructions for iOS Safari and Android Chrome.
 - **CSR sidebar / quick-actions area** — persistent "Enable push notifications" card for users who haven't installed yet, dismissible but reappearing periodically.
-- **Post-job-miss nudge** — if a CSR misses a job they would likely have wanted, surface "you'd have heard about this instantly with push notifications. Install the app?" on next login.
 - **Onboarding email follow-up** — for CSRs who skipped the install step at signup, a follow-up email a day later walking them through it.
 - **Inside notification settings** — install pitch is the top item if they haven't installed.
+
+**Deferred to v1.1:**
+
+- **Post-job-miss nudge** — if a CSR was eligible for a job but didn't see it in time, surface "you'd have heard about this instantly with push notifications. Install the app?" on next login. Requires tracking which jobs each non-installer would have qualified for, so we're deferring to v1.1.
 
 The pitch leans on the economic motivation: missing alerts = missing income.
 
