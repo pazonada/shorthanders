@@ -7924,6 +7924,391 @@ function KanbanBoard() {
   );
 }
 
+// ─── Capital Tracker ────────────────────────────────────────────
+const EXPENSE_CATEGORIES = [
+  { id: "domain",    label: "Domain & DNS",          color: "#0EA5E9" },
+  { id: "hosting",   label: "Hosting & Infra",       color: "#8B5CF6" },
+  { id: "email",     label: "Email & Notifications", color: "#10B981" },
+  { id: "payments",  label: "Payments",              color: "#F59E0B" },
+  { id: "legal",     label: "Legal & Professional",  color: "#DC2626" },
+  { id: "marketing", label: "Marketing",             color: "#EC4899" },
+  { id: "tools",     label: "Tools & Software",      color: "#6366F1" },
+  { id: "other",     label: "Other",                 color: "#64748B" },
+];
+
+const INITIAL_EXPENSES = [
+  { id: "e1", date: "", vendor: "Domain registrar", item: "dewey-sholes domain",     category: "domain",   amount: 11, attribution: 100, recurring: "annual",   notes: "Edit: fill in actual purchase date." },
+  { id: "e2", date: "", vendor: "Vercel",           item: "Hosting plan",              category: "hosting",  amount: 0,  attribution: 50,  recurring: "monthly",  notes: "Edit: actual monthly cost. Shared with one other site — adjust attribution %." },
+  { id: "e3", date: "", vendor: "Supabase",         item: "Database & storage",        category: "hosting",  amount: 0,  attribution: 50,  recurring: "monthly",  notes: "Edit: actual cost. Shared — adjust attribution." },
+  { id: "e4", date: "", vendor: "Resend",           item: "Transactional email",       category: "email",    amount: 0,  attribution: 50,  recurring: "monthly",  notes: "Edit: actual cost. Shared — adjust attribution." },
+  { id: "e5", date: "", vendor: "Stripe",           item: "Payments processing",       category: "payments", amount: 0,  attribution: 100, recurring: "one-time", notes: "Stripe is free at rest; per-transaction fees logged here as they occur." },
+];
+
+const SWEAT_PEOPLE = ["Aud", "Rosie"];
+const INITIAL_SWEAT = [];
+
+function ExpenseModal({ entry, isNew, onSave, onDelete, onClose }) {
+  const [form, setForm] = useState({
+    date:        entry.date || "",
+    vendor:      entry.vendor || "",
+    item:        entry.item || "",
+    category:    entry.category || "other",
+    amount:      entry.amount || 0,
+    attribution: entry.attribution ?? 100,
+    recurring:   entry.recurring || "one-time",
+    notes:       entry.notes || "",
+  });
+  const up = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (!form.vendor.trim() && !form.item.trim()) return;
+    onSave(isNew ? form : { ...entry, ...form });
+  };
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal kanban-modal" onClick={e => e.stopPropagation()}>
+        <h2 style={{marginBottom: 20}}>{isNew ? "New expense" : "Edit expense"}</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-row">
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Date</label>
+              <input className="form-input" type="date" value={form.date} onChange={e => up("date", e.target.value)} />
+            </div>
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Frequency</label>
+              <select className="form-input" value={form.recurring} onChange={e => up("recurring", e.target.value)}>
+                <option value="one-time">One-time</option>
+                <option value="monthly">Monthly</option>
+                <option value="annual">Annual</option>
+              </select>
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Vendor</label>
+              <input className="form-input" value={form.vendor} onChange={e => up("vendor", e.target.value)} placeholder="Vercel, Stripe, lawyer name..." />
+            </div>
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Item</label>
+              <input className="form-input" value={form.item} onChange={e => up("item", e.target.value)} placeholder="What was purchased" />
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Category</label>
+              <select className="form-input" value={form.category} onChange={e => up("category", e.target.value)}>
+                {EXPENSE_CATEGORIES.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}
+              </select>
+            </div>
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Amount ($)</label>
+              <input className="form-input" type="number" step="0.01" min="0" value={form.amount} onChange={e => up("amount", parseFloat(e.target.value) || 0)} />
+            </div>
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Attribution to Dewey Sholes (%)</label>
+              <input className="form-input" type="number" min="0" max="100" value={form.attribution} onChange={e => up("attribution", parseInt(e.target.value) || 0)} />
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Notes</label>
+            <textarea className="form-input" value={form.notes} onChange={e => up("notes", e.target.value)} placeholder="Receipt URL, attribution rationale, context..." />
+          </div>
+          <div className="kanban-modal-actions">
+            <div>{onDelete && <button type="button" className="btn btn-sm" style={{background:"#FEE2E2",color:"#DC2626",border:"1px solid #FECACA"}} onClick={onDelete}>Delete</button>}</div>
+            <div style={{display:"flex",gap:8}}>
+              <button type="button" className="btn btn-secondary btn-sm" onClick={onClose}>Cancel</button>
+              <button type="submit" className="btn btn-primary btn-sm">{isNew ? "Add expense" : "Save changes"}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function SweatModal({ entry, isNew, onSave, onDelete, onClose }) {
+  const [form, setForm] = useState({
+    date:        entry.date || new Date().toISOString().split("T")[0],
+    person:      entry.person || SWEAT_PEOPLE[0],
+    hours:       entry.hours || 0,
+    hourlyRate:  entry.hourlyRate ?? 100,
+    description: entry.description || "",
+    category:    entry.category || "product",
+  });
+  const up = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (!form.hours) return;
+    onSave(isNew ? form : { ...entry, ...form });
+  };
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal kanban-modal" onClick={e => e.stopPropagation()}>
+        <h2 style={{marginBottom: 20}}>{isNew ? "Log sweat equity" : "Edit entry"}</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-row">
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Date</label>
+              <input className="form-input" type="date" value={form.date} onChange={e => up("date", e.target.value)} />
+            </div>
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Person</label>
+              <select className="form-input" value={form.person} onChange={e => up("person", e.target.value)}>
+                {SWEAT_PEOPLE.map(p => <option key={p} value={p}>{p}</option>)}
+              </select>
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Hours</label>
+              <input className="form-input" type="number" step="0.25" min="0" value={form.hours} onChange={e => up("hours", parseFloat(e.target.value) || 0)} />
+            </div>
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Notional rate ($/hour)</label>
+              <input className="form-input" type="number" step="1" min="0" value={form.hourlyRate} onChange={e => up("hourlyRate", parseFloat(e.target.value) || 0)} />
+            </div>
+            <div className="form-group" style={{flex:1}}>
+              <label className="form-label">Category</label>
+              <select className="form-input" value={form.category} onChange={e => up("category", e.target.value)}>
+                <option value="product">Product</option>
+                <option value="legal">Legal</option>
+                <option value="marketing">Marketing</option>
+                <option value="operations">Operations</option>
+                <option value="research">Research</option>
+                <option value="financial">Financial</option>
+              </select>
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Description</label>
+            <textarea className="form-input" value={form.description} onChange={e => up("description", e.target.value)} placeholder="What did you work on?" />
+          </div>
+          <div className="kanban-modal-actions">
+            <div>{onDelete && <button type="button" className="btn btn-sm" style={{background:"#FEE2E2",color:"#DC2626",border:"1px solid #FECACA"}} onClick={onDelete}>Delete</button>}</div>
+            <div style={{display:"flex",gap:8}}>
+              <button type="button" className="btn btn-secondary btn-sm" onClick={onClose}>Cancel</button>
+              <button type="submit" className="btn btn-primary btn-sm">{isNew ? "Log time" : "Save changes"}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function CapitalTracker() {
+  const EXP_KEY   = "dewey_capital_expenses";
+  const SWEAT_KEY = "dewey_capital_sweat";
+
+  const loadExp   = () => { try { const s = localStorage.getItem(EXP_KEY);   return s ? JSON.parse(s) : INITIAL_EXPENSES; } catch { return INITIAL_EXPENSES; } };
+  const loadSweat = () => { try { const s = localStorage.getItem(SWEAT_KEY); return s ? JSON.parse(s) : INITIAL_SWEAT;    } catch { return INITIAL_SWEAT;    } };
+
+  const [expenses, setExpenses]         = useState(loadExp);
+  const [sweat, setSweat]               = useState(loadSweat);
+  const [tab, setTab]                   = useState("cash");
+  const [editingExp, setEditingExp]     = useState(null);
+  const [editingSweat, setEditingSweat] = useState(null);
+  const [creatingExp, setCreatingExp]   = useState(false);
+  const [creatingSweat, setCreatingSweat] = useState(false);
+
+  useEffect(() => { localStorage.setItem(EXP_KEY,   JSON.stringify(expenses)); }, [expenses]);
+  useEffect(() => { localStorage.setItem(SWEAT_KEY, JSON.stringify(sweat));    }, [sweat]);
+
+  const addExp    = (data) => { setExpenses(prev => [{ ...data, id: "e" + Date.now() }, ...prev]); setCreatingExp(false); };
+  const updateExp = (data) => { setExpenses(prev => prev.map(e => e.id === data.id ? data : e)); setEditingExp(null); };
+  const deleteExp = (id)   => { setExpenses(prev => prev.filter(e => e.id !== id)); setEditingExp(null); };
+
+  const addSweat    = (data) => { setSweat(prev => [{ ...data, id: "s" + Date.now() }, ...prev]); setCreatingSweat(false); };
+  const updateSweat = (data) => { setSweat(prev => prev.map(s => s.id === data.id ? data : s)); setEditingSweat(null); };
+  const deleteSweat = (id)   => { setSweat(prev => prev.filter(s => s.id !== id)); setEditingSweat(null); };
+
+  const handleReset = () => {
+    if (confirm("Reset capital tracker to defaults? This cannot be undone.")) {
+      setExpenses(INITIAL_EXPENSES); setSweat(INITIAL_SWEAT);
+      localStorage.removeItem(EXP_KEY); localStorage.removeItem(SWEAT_KEY);
+    }
+  };
+  const handleExport = () => {
+    const data = { expenses, sweat, exportedAt: new Date().toISOString() };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a"); a.href = url; a.download = "dewey-capital-" + new Date().toISOString().split("T")[0] + ".json"; a.click();
+    URL.revokeObjectURL(url);
+  };
+  const handleImport = () => {
+    const input = document.createElement("input"); input.type = "file"; input.accept = ".json";
+    input.onchange = (e) => {
+      const file = e.target.files[0]; if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const data = JSON.parse(ev.target.result);
+          if (!Array.isArray(data.expenses) || !Array.isArray(data.sweat)) { alert("Invalid capital file."); return; }
+          if (confirm("Replace current data with imported file? This cannot be undone.")) {
+            setExpenses(data.expenses); setSweat(data.sweat);
+          }
+        } catch { alert("Could not parse file."); }
+      };
+      reader.readAsText(file);
+    };
+    input.click();
+  };
+
+  const cashOneTime       = expenses.filter(e => e.recurring === "one-time").reduce((s, e) => s + (e.amount * e.attribution / 100), 0);
+  const monthlyRecurring  = expenses.filter(e => e.recurring === "monthly").reduce((s, e) => s + (e.amount * e.attribution / 100), 0);
+  const annualRecurring   = expenses.filter(e => e.recurring === "annual").reduce((s, e) => s + (e.amount * e.attribution / 100), 0);
+  const annualRunRate     = (monthlyRecurring * 12) + annualRecurring;
+  const totalHours        = sweat.reduce((s, x) => s + (x.hours || 0), 0);
+  const sweatValue        = sweat.reduce((s, x) => s + ((x.hours || 0) * (x.hourlyRate || 0)), 0);
+
+  const fmt    = (n) => "$" + (n || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fmtInt = (n) => "$" + Math.round(n || 0).toLocaleString();
+  const cat    = (id) => EXPENSE_CATEGORIES.find(c => c.id === id) || { label: id, color: "#64748B" };
+
+  return (
+    <div>
+      <AppNav variant="buyer" activeTab="" />
+      <div className="page page-enter">
+        <div className="container" style={{maxWidth: 1200}}>
+          <div className="page-header">
+            <div>
+              <h1 style={{fontSize: 28}}>Capital tracker</h1>
+              <p style={{color: "#64748B", marginTop: 4}}>Cash and sweat equity invested in Dewey Sholes. Stored locally in this browser.</p>
+            </div>
+            <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+              <button className="btn btn-secondary btn-sm" onClick={handleExport} style={{gap: 6}}><Icon name="download" size={14} /> Export</button>
+              <button className="btn btn-secondary btn-sm" onClick={handleImport} style={{gap: 6}}><Icon name="upload" size={14} /> Import</button>
+              <button className="btn btn-secondary btn-sm" onClick={handleReset} style={{gap: 6}}><Icon name="x" size={14} /> Reset</button>
+            </div>
+          </div>
+
+          <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, marginBottom: 24}}>
+            <div className="card" style={{padding: 16}}>
+              <div style={{fontSize: 11, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: 600, marginBottom: 6}}>Cash invested (one-time)</div>
+              <div style={{fontSize: 24, fontWeight: 800, color: "#0F172A"}}>{fmt(cashOneTime)}</div>
+              <div style={{fontSize: 11, color: "#94A3B8", marginTop: 4}}>Attributed to Dewey Sholes</div>
+            </div>
+            <div className="card" style={{padding: 16}}>
+              <div style={{fontSize: 11, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: 600, marginBottom: 6}}>Annual run-rate</div>
+              <div style={{fontSize: 24, fontWeight: 800, color: "#0F172A"}}>{fmtInt(annualRunRate)}/yr</div>
+              <div style={{fontSize: 11, color: "#94A3B8", marginTop: 4}}>{fmt(monthlyRecurring)}/mo · {fmt(annualRecurring)}/yr fixed</div>
+            </div>
+            <div className="card" style={{padding: 16}}>
+              <div style={{fontSize: 11, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: 600, marginBottom: 6}}>Sweat equity hours</div>
+              <div style={{fontSize: 24, fontWeight: 800, color: "#0F172A"}}>{totalHours.toFixed(1)}h</div>
+              <div style={{fontSize: 11, color: "#94A3B8", marginTop: 4}}>{SWEAT_PEOPLE.map(p => `${p}: ${sweat.filter(s => s.person === p).reduce((sum, s) => sum + (s.hours || 0), 0).toFixed(0)}h`).join(" · ")}</div>
+            </div>
+            <div className="card" style={{padding: 16}}>
+              <div style={{fontSize: 11, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: 600, marginBottom: 6}}>Sweat equity value</div>
+              <div style={{fontSize: 24, fontWeight: 800, color: "#0F172A"}}>{fmtInt(sweatValue)}</div>
+              <div style={{fontSize: 11, color: "#94A3B8", marginTop: 4}}>At notional hourly rates</div>
+            </div>
+          </div>
+
+          <div style={{display: "flex", alignItems: "center", gap: 4, marginBottom: 16, borderBottom: "1px solid #E2E8F0"}}>
+            <button onClick={() => setTab("cash")}  style={{padding: "10px 16px", border: "none", background: "transparent", borderBottom: tab === "cash"  ? "2px solid #2563EB" : "2px solid transparent", color: tab === "cash"  ? "#2563EB" : "#64748B", fontWeight: 600, cursor: "pointer", marginBottom: -1, fontSize: 13}}>Cash expenses ({expenses.length})</button>
+            <button onClick={() => setTab("sweat")} style={{padding: "10px 16px", border: "none", background: "transparent", borderBottom: tab === "sweat" ? "2px solid #2563EB" : "2px solid transparent", color: tab === "sweat" ? "#2563EB" : "#64748B", fontWeight: 600, cursor: "pointer", marginBottom: -1, fontSize: 13}}>Sweat equity ({sweat.length})</button>
+            <div style={{flex: 1}} />
+            {tab === "cash"
+              ? <button className="btn btn-primary btn-sm" onClick={() => setCreatingExp(true)}   style={{marginBottom: 4, gap: 4}}><Icon name="plus" size={14} color="#fff" /> Add expense</button>
+              : <button className="btn btn-primary btn-sm" onClick={() => setCreatingSweat(true)} style={{marginBottom: 4, gap: 4}}><Icon name="plus" size={14} color="#fff" /> Log time</button>}
+          </div>
+
+          {tab === "cash" ? (
+            <div className="card" style={{padding: 0, overflow: "hidden"}}>
+              <table style={{width: "100%", borderCollapse: "collapse", fontSize: 13}}>
+                <thead>
+                  <tr style={{background: "#F8FAFC", borderBottom: "1px solid #E2E8F0"}}>
+                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Date</th>
+                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Vendor / item</th>
+                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Category</th>
+                    <th style={{textAlign: "right", padding: 12, fontWeight: 600, color: "#64748B"}}>Amount</th>
+                    <th style={{textAlign: "right", padding: 12, fontWeight: 600, color: "#64748B"}}>Attribution</th>
+                    <th style={{textAlign: "right", padding: 12, fontWeight: 600, color: "#64748B"}}>Effective</th>
+                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Frequency</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {expenses.length === 0 ? (
+                    <tr><td colSpan={7} style={{padding: 32, textAlign: "center", color: "#94A3B8"}}>No expenses logged yet.</td></tr>
+                  ) : expenses.map(e => {
+                    const c = cat(e.category);
+                    return (
+                      <tr key={e.id} onClick={() => setEditingExp(e)} style={{borderBottom: "1px solid #F1F5F9", cursor: "pointer"}}>
+                        <td style={{padding: 12, color: "#475569"}}>{e.date || "—"}</td>
+                        <td style={{padding: 12}}><div style={{fontWeight: 600, color: "#0F172A"}}>{e.vendor || "—"}</div><div style={{color: "#94A3B8", fontSize: 12}}>{e.item}</div></td>
+                        <td style={{padding: 12}}><span style={{display: "inline-block", padding: "3px 10px", borderRadius: 100, fontSize: 11, fontWeight: 600, background: c.color + "22", color: c.color}}>{c.label}</span></td>
+                        <td style={{padding: 12, textAlign: "right", color: "#0F172A", fontVariantNumeric: "tabular-nums"}}>{fmt(e.amount)}</td>
+                        <td style={{padding: 12, textAlign: "right", color: "#64748B", fontVariantNumeric: "tabular-nums"}}>{e.attribution}%</td>
+                        <td style={{padding: 12, textAlign: "right", fontWeight: 600, color: "#0F172A", fontVariantNumeric: "tabular-nums"}}>{fmt(e.amount * e.attribution / 100)}</td>
+                        <td style={{padding: 12, color: "#64748B", textTransform: "capitalize"}}>{e.recurring}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="card" style={{padding: 0, overflow: "hidden"}}>
+              <table style={{width: "100%", borderCollapse: "collapse", fontSize: 13}}>
+                <thead>
+                  <tr style={{background: "#F8FAFC", borderBottom: "1px solid #E2E8F0"}}>
+                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Date</th>
+                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Person</th>
+                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Description</th>
+                    <th style={{textAlign: "left",  padding: 12, fontWeight: 600, color: "#64748B"}}>Category</th>
+                    <th style={{textAlign: "right", padding: 12, fontWeight: 600, color: "#64748B"}}>Hours</th>
+                    <th style={{textAlign: "right", padding: 12, fontWeight: 600, color: "#64748B"}}>Rate</th>
+                    <th style={{textAlign: "right", padding: 12, fontWeight: 600, color: "#64748B"}}>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sweat.length === 0 ? (
+                    <tr><td colSpan={7} style={{padding: 32, textAlign: "center", color: "#94A3B8"}}>No sweat equity logged yet. Click "Log time" above to start.</td></tr>
+                  ) : sweat.map(s => (
+                    <tr key={s.id} onClick={() => setEditingSweat(s)} style={{borderBottom: "1px solid #F1F5F9", cursor: "pointer"}}>
+                      <td style={{padding: 12, color: "#475569"}}>{s.date || "—"}</td>
+                      <td style={{padding: 12, fontWeight: 600, color: "#0F172A"}}>{s.person}</td>
+                      <td style={{padding: 12, color: "#475569"}}>{s.description || "—"}</td>
+                      <td style={{padding: 12, color: "#64748B", textTransform: "capitalize"}}>{s.category}</td>
+                      <td style={{padding: 12, textAlign: "right", color: "#0F172A", fontVariantNumeric: "tabular-nums"}}>{(s.hours || 0).toFixed(2)}h</td>
+                      <td style={{padding: 12, textAlign: "right", color: "#64748B", fontVariantNumeric: "tabular-nums"}}>${s.hourlyRate || 0}/h</td>
+                      <td style={{padding: 12, textAlign: "right", fontWeight: 600, color: "#0F172A", fontVariantNumeric: "tabular-nums"}}>{fmt((s.hours || 0) * (s.hourlyRate || 0))}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          <p style={{fontSize: 12, color: "#94A3B8", marginTop: 16}}>Data is saved locally to this browser only. Use Export to back up; Import to restore on another device.</p>
+        </div>
+      </div>
+
+      {(editingExp || creatingExp) && (
+        <ExpenseModal
+          key={creatingExp ? "new-exp" : editingExp.id}
+          entry={creatingExp ? { date: new Date().toISOString().split("T")[0], vendor: "", item: "", category: "other", amount: 0, attribution: 100, recurring: "one-time", notes: "" } : editingExp}
+          isNew={creatingExp}
+          onSave={creatingExp ? addExp : updateExp}
+          onDelete={!creatingExp ? () => deleteExp(editingExp.id) : null}
+          onClose={() => { setEditingExp(null); setCreatingExp(false); }}
+        />
+      )}
+      {(editingSweat || creatingSweat) && (
+        <SweatModal
+          key={creatingSweat ? "new-sweat" : editingSweat.id}
+          entry={creatingSweat ? { date: new Date().toISOString().split("T")[0], person: SWEAT_PEOPLE[0], hours: 0, hourlyRate: 100, description: "", category: "product" } : editingSweat}
+          isNew={creatingSweat}
+          onSave={creatingSweat ? addSweat : updateSweat}
+          onDelete={!creatingSweat ? () => deleteSweat(editingSweat.id) : null}
+          onClose={() => { setEditingSweat(null); setCreatingSweat(false); }}
+        />
+      )}
+    </div>
+  );
+}
+
 // ─── Sign-In Modal ──────────────────────────────────────────────
 function SignInModal({ onClose }) {
   const [email, setEmail] = useState("");
@@ -9676,6 +10061,7 @@ function AppRouter() {
   if (route.startsWith("#/attorney-signup")) return <AttorneyOnboarding />;
   if (route.startsWith("#/reporter-signup")) return <ReporterOnboarding />;
   if (route.startsWith("#/kanban")) return <KanbanBoard />;
+  if (route.startsWith("#/capital")) return <CapitalTracker />;
   const rp = route.match(/^#\/reporters\/(.+)$/);
   if (rp) return <ReporterProfile reporterId={rp[1]} />;
   if (route === "#/reporters" || route === "#/reporters/") return <ReporterDirectory />;
