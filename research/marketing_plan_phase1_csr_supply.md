@@ -128,27 +128,47 @@ If there's $500-750 to spare:
 
 **The idea (Aud + Rosie, in active discussion):** Mail free branded business cards to each CSR who completes onboarding and gets license-verified. Cards include the CSR's name and license number, a tagline like "Find me on Dewey Sholes for a transcription!", and a direct link/QR to their Dewey Sholes profile.
 
+**The specific problem these cards solve (sharpened 2026-05-08):**
+
+Today, when an attorney finishes a court hearing and later realizes they need a transcript, they have to track down which CSR was on the record — often days or weeks after the fact. The CSR's name might be in the minute order, but contact info isn't. Calling the court clerk, hunting on CSR association directories, asking colleagues who they used last time — it's a real, recurring pain point in civil practice.
+
+**The use case:** at the end of a live hearing, the CSR who reported it hands the attorneys present a Dewey Sholes business card. The card is the attorney's shortcut to ordering the transcript later — they scan the QR or type the URL and land directly on the CSR's profile with a one-click "Request a transcript from a recent hearing" CTA pre-filled with what we know.
+
+**Why this framing sharpens the strategy:**
+- It's not generic networking swag. It's a *workflow* tool that solves a concrete attorney pain point.
+- The handoff is precise (post-hearing, in person, to attorneys who need exactly this CSR), so distribution volume per CSR is small — maybe 50-100 cards per active CSR per year, not 500.
+- The attorney's intent at moment-of-scan is *high* — they have a specific transcript they need, from this specific person. Conversion should be much higher than for cold marketing.
+- Live attendance is the use case (CSR was physically there). For audio-transcription jobs the CSR isn't on-site, so cards don't apply the same way.
+
 **Why it works for both sides:**
-- **CSR gets** a free, professionally produced asset to grow their book of business — something they can hand out at depositions, courthouses, bar events.
-- **Platform gets** CSR-driven attorney acquisition: every card distributed is an inbound referral with the CSR's personal endorsement implied.
+- **CSR gets** an effortless way to capture future transcript orders from attorneys they already worked with — without having to manage a CRM or follow up by email. The card is the follow-up.
+- **Attorney gets** the answer to "who was the CSR on this hearing?" handed to them at the moment they're most likely to need it, plus a trivial path to order.
+- **Platform gets** in-the-wild attorney acquisition with the CSR's implicit endorsement — every card handed out is a referral from someone who was just trusted to be on the record for a court proceeding.
 
 **Why it's now feasible:** the recently confirmed CSR profile identifier rule (license number as canonical URL key — see [governance-and-process/csr_account_procedures.md](../governance-and-process/csr_account_procedures.md#public-profile-url--identifier)) means we can pre-print cards with stable per-CSR URLs without worrying about identifier drift.
 
 **Open question — what does the URL on the card link to?**
 
+The sharpened use case (above) basically settles this: the attorney has a specific CSR they need, at the moment they need them. Asking them to land on a homepage and search for "the reporter who was at our 9am hearing yesterday" is exactly the friction the card was supposed to remove.
+
 | Option | Pros | Cons |
 |---|---|---|
-| **A. Direct profile link** (`deweysholes.com/csr/<license-number>`) | Lowest friction. Attorney lands on the CSR's profile, sees ratings/specialties/availability, books in 2 clicks. Standard marketplace pattern (Yelp, LinkedIn, Etsy). | Visiting attorney sees only that CSR's profile in isolation. Mitigated by making profile pages a fully-featured marketplace landing (logo, search, "browse all CSRs" prompt). |
-| **B. Homepage URL** + tell them to search | Brand impression first — attorney sees the platform's pitch. | Higher friction. Attorney may not bother searching for the specific CSR; risks them remembering "Dewey Sholes" generically and booking through any other channel. Weaker conversion. |
+| **A. Direct profile link** (`deweysholes.com/csr/<license-number>`) | Solves the use case directly. Attorney scans → lands on the CSR's profile → one tap to request a transcript. Standard marketplace pattern (Yelp, LinkedIn, Etsy). | Visiting attorney sees only that CSR's profile in isolation. Mitigated by making profile pages a fully-featured marketplace landing (logo, search, "browse all CSRs" prompt) so the brand impression still happens. |
+| **B. Homepage URL** + tell them to search | Brand impression first. | Reintroduces the exact pain point the card was supposed to fix. Attorney has to remember the CSR's name, type it in, hope the search works. If they bounce, they lose us the order. |
 
-**Aud's leaning (2026-05-08):** Option A. Profile page should include marketplace context (nav, search, "browse all CSRs") so the brand impression still happens, but the attorney's primary intent — book this specific CSR — should be one tap away. Standard marketplace conversion logic.
+**Decision (Aud, 2026-05-08): Option A.** The card's job is to be a precision tool, not a billboard.
+
+**Profile page implication:** when an attorney lands on a CSR profile via a card scan, the primary CTA should be **"Request a transcript from a recent hearing"** — not "Browse this CSR's availability." The flow should pre-fill what we can (the CSR is selected; the attorney enters case + date + delivery preferences). This is essentially the existing order flow with the reporter pre-selected and the entry point flagged so the page treats it as a "post-hearing follow-up" rather than a "fresh booking."
+
+**Tag for product:** the existing order flow at `#/order` supports selecting a specific reporter, but the entry experience from a card scan needs a small affordance — landing on the profile, the order CTA should read in the context of "this CSR you just worked with" rather than generic "book now." Track as a v1.1 product polish item, not blocking for the cards to ship.
 
 **Cost (rough):**
-- Standard 2x3.5" linen-finish cards: $0.10–0.20 each at Vistaprint/Moo (250-card minimum).
-- Per CSR: $25–50 for a useful starter quantity (250–500 cards), shipped.
-- For 100 pilot CSRs: ~$2,500–5,000 total. Variable-print the CSR-specific name + license number on a generic template.
+- Standard 2x3.5" linen-finish cards: $0.10–0.20 each at Vistaprint/Moo (250-card minimum at most printers).
+- The sharpened post-hearing use case suggests **~50–100 cards per CSR per year** is the right starter volume (a card per attorney at a typical hearing × hearings per CSR × hand-off rate). Lower than initial estimate.
+- Per CSR: ~$15–30 for 100 cards, shipped.
+- For 100 pilot CSRs: **~$1,500–3,000 total**. Variable-print the CSR-specific name + license number on a generic template.
 
-**When to launch:** tied to onboarding completion + license verification. CSR triggers "send me my cards" from the dashboard once verified, we ship in monthly batches.
+**When to launch:** tied to onboarding completion + license verification. Available initially to CSRs who indicated they accept **live attendance** jobs (the use case where cards apply); CSRs who only do audio transcription don't need cards yet. CSR triggers "send me my cards" from the dashboard once verified; we ship in monthly batches.
 
 **Risks / open issues:**
 - **Compliance with CSR's own branding.** Many CSRs already have firm-issued or self-issued cards. Frame ours as a "Dewey Sholes referral card" — additive, not replacement.
