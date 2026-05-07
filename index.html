@@ -7318,11 +7318,21 @@ function AttorneyOnboarding() {
   const update = (k, v) => setForm(f => ({...f, [k]: v}));
   const toggleArr = (k, v) => setForm(f => ({...f, [k]: f[k].includes(v) ? f[k].filter(x => x !== v) : [...f[k], v]}));
 
+  const navBar = (showCancel) => (
+    <nav className="app-nav"><div className="container"><div className="app-nav-inner">
+      <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+      {showCancel
+        ? <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Cancel</button>
+        : <div />}
+    </div></div></nav>
+  );
+
   // Screen 0: Welcome pitch
   if (screen === 0) {
     return (
+      <div>
+      {navBar(true)}
       <div className="reporter-welcome" style={{background: "var(--bg-page, #F8FAFC)"}}>
-        <a href="#/" style={{display: "inline-flex", marginBottom: 40}}><DeweyFullLogo height={40} theme={useTheme().dark ? "dark" : "light"} /></a>
         <h1 style={{fontSize: 44, fontWeight: 800, color: "var(--text, #0F172A)", lineHeight: 1.15, marginBottom: 12}}>Stop chasing reporters.<br /><span style={{color: "#4F46E5"}}>Start tracking cases.</span></h1>
         <p className="welcome-sub">Dewey Sholes matches you with certified court reporters, handles payment, and keeps every transcript in one place. You focus on your cases.</p>
         <div className="value-prop-grid">
@@ -7348,6 +7358,7 @@ function AttorneyOnboarding() {
         </div>
         <p style={{marginTop: 32, fontSize: 13, color: "var(--text-dim, #94A3B8)"}}>Join 312 attorneys already on the platform</p>
       </div>
+      </div>
     );
   }
 
@@ -7356,6 +7367,8 @@ function AttorneyOnboarding() {
     const courtLabels = form.courts.length ? form.courts.map(id => { const c = COURTS.find(x => x.id === id); return c ? c.name : id; }).slice(0, 3).join(", ") + (form.courts.length > 3 ? ` +${form.courts.length - 3} more` : "") : "Not specified";
     const practiceLabels = form.practiceAreas.length ? form.practiceAreas.join(", ") : "Not specified";
     return (
+      <div>
+      {navBar(false)}
       <div className="reporter-onboarding" style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", minHeight: "100vh", paddingTop: 60, paddingBottom: 60}}>
         <div className="success-screen" style={{width: "100%", maxWidth: 560}}>
           <div className="success-icon"><Icon name="checkCircle" size={64} /></div>
@@ -7390,6 +7403,7 @@ function AttorneyOnboarding() {
           <button className="btn btn-primary" style={{width: "100%", justifyContent: "center", fontSize: 16}} onClick={() => navigate("#/dashboard")}>Go to dashboard <Icon name="arrowRight" size={16} /></button>
         </div>
       </div>
+      </div>
     );
   }
 
@@ -7405,10 +7419,9 @@ function AttorneyOnboarding() {
   ];
 
   return (
+    <div>
+    {navBar(true)}
     <div className="reporter-onboarding" style={{background: "var(--bg-page, #F8FAFC)"}}>
-      <div style={{marginBottom: 32, textAlign: "center"}}>
-        <a href="#/" style={{display: "inline-flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
-      </div>
       <StepIndicator current={step} total={6} labels={["You", "Practice", "Courts", "Reporters", "Billing", "Password"]} />
       <div style={{height: 28}} />
       <div className="reporter-step-header" style={{textAlign: "left"}}>
@@ -7588,6 +7601,7 @@ function AttorneyOnboarding() {
           </button>
         )}
       </div>
+    </div>
     </div>
   );
 }
