@@ -6,8 +6,8 @@ These are two related but distinct populations the platform serves. This doc cap
 
 Fee-waiver clients and self-represented litigants (SRLs) are often conflated in marketing copy because they overlap in the access-to-justice conversation. They are not the same population:
 
-- **Self-Represented Litigant (SRL)** is a *legal-status* label — a party to a court case who is not represented by an attorney. Anyone can be an SRL regardless of income.
-- **Fee waiver** is a *financial-hardship* status — a court-granted exemption from court fees (forms FW-001 / FW-003), available to people who demonstrate inability to pay.
+- **Self-Represented Litigant (SRL)** is a *legal-status* label – a party to a court case who is not represented by an attorney. Anyone can be an SRL regardless of income.
+- **Fee waiver** is a *financial-hardship* status – a court-granted exemption from court fees (forms FW-001 / FW-003), available to people who demonstrate inability to pay.
 
 The Venn diagram is partial:
 
@@ -35,7 +35,7 @@ These two groups need *different* accommodations from the platform. This policy 
 
 ### Site copy rules for SRL framing
 
-- The homepage SRL callout addresses ordering accommodation only — no fee-waiver claim attached.
+- The homepage SRL callout addresses ordering accommodation only – no fee-waiver claim attached.
 - Do NOT bundle "fee waiver" into SRL marketing language. They are separate.
 - Do NOT imply Dewey Sholes is a legal-aid service. We are a marketplace.
 
@@ -43,7 +43,7 @@ These two groups need *different* accommodations from the platform. This policy 
 
 ### Who this applies to
 
-Anyone — represented or not — who has a court-granted fee waiver on file (FW-001 or FW-003). The largest TRF user volume in practice is **legal aid orgs and pro-bono attorneys representing fee-waiver clients**, not solo pro-se litigants.
+Anyone – represented or not – who has a court-granted fee waiver on file (FW-001 or FW-003). The largest TRF user volume in practice is **legal aid orgs and pro-bono attorneys representing fee-waiver clients**, not solo pro-se litigants.
 
 ### How payments flow (no float, ever)
 
@@ -51,11 +51,11 @@ The platform never floats a fee-waiver order. The flow is:
 
 1. The customer (firm, legal aid org, pro-bono attorney, or SRL) places an order and checks "fee waiver applies."
 2. **The customer pays the statutory transcript rate at checkout, exactly like any other order.** Stripe charge clears immediately.
-3. **Dewey Sholes pays the CSR on the standard payout schedule** — exactly like any other order. The CSR experience is identical regardless of fee-waiver status.
+3. **Dewey Sholes pays the CSR on the standard payout schedule** – exactly like any other order. The CSR experience is identical regardless of fee-waiver status.
 4. After delivery, the customer separately submits TRF reimbursement paperwork to the court.
 5. The state reimburses *the customer* directly (not Dewey Sholes), 8-10 weeks later, up to $2,500 per case, subject to TRF fund availability.
 
-The customer carries the float. We do not. This rule is non-negotiable — see [TRF Research Memo](../research/) for the underlying analysis.
+The customer carries the float. We do not. This rule is non-negotiable – see [TRF Research Memo](../research/) for the underlying analysis.
 
 ### What we provide at MVP (deferred auto-generation)
 
@@ -71,7 +71,7 @@ What we do *not* provide at MVP: pre-filled, ready-to-sign reimbursement applica
 
 ### Future: TRF auto-generation (v1.1+)
 
-When justified by volume — likely once a legal aid org or pro-bono partner is consistently sending fee-waiver orders — we will build the auto-fill engine. Trigger criteria:
+When justified by volume – likely once a legal aid org or pro-bono partner is consistently sending fee-waiver orders – we will build the auto-fill engine. Trigger criteria:
 
 - 20+ fee-waiver orders per month, OR
 - A partnership commitment from a legal aid org that requires it
@@ -92,11 +92,11 @@ The TRF (Trial Court Trust Fund line item, ~$300K/year per Gov. Code § 69953) r
 
 The following surfaces have been reviewed and aligned with this policy as of 2026-05-07:
 
-- Homepage SRL callout — ordering accommodation only, fee-waiver clause removed
-- Homepage pricing fee-waiver footer — speaks to anyone with a fee waiver, accurate framing on send-forms approach
-- Order flow fee-waiver checkbox + summary footnote — accurate "send forms after delivery" framing
-- TRF page (#/trf) — Step 2, FAQ f3, and CTA aligned with deferred auto-generation
-- "TRF reimbursement, made simple" use-cases card — aligned
+- Homepage SRL callout – ordering accommodation only, fee-waiver clause removed
+- Homepage pricing fee-waiver footer – speaks to anyone with a fee waiver, accurate framing on send-forms approach
+- Order flow fee-waiver checkbox + summary footnote – accurate "send forms after delivery" framing
+- TRF page (#/trf) – Step 2, FAQ f3, and CTA aligned with deferred auto-generation
+- "TRF reimbursement, made simple" use-cases card – aligned
 
 Future copy that touches either audience must follow this policy:
 - SRL framing → ordering accommodation, no fee-waiver assumption

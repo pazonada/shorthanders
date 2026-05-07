@@ -6833,7 +6833,7 @@ function ReporterOnboarding() {
             <div style={{display: "flex", flexDirection: "column", gap: 8, fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.5}}>
               <div style={{display: "flex", gap: 10, alignItems: "flex-start"}}>
                 <Icon name="star" size={14} color="#4361EE" style={{marginTop: 2, flexShrink: 0}} />
-                <span><strong style={{color: "var(--text, #0F172A)"}}>Auto-favorite status</strong> on their account the moment they sign up — you're at the top of their reporter list.</span>
+                <span><strong style={{color: "var(--text, #0F172A)"}}>Auto-favorite status</strong> on their account the moment they sign up – you're at the top of their reporter list.</span>
               </div>
               <div style={{display: "flex", gap: 10, alignItems: "flex-start"}}>
                 <Icon name="award" size={14} color="#4361EE" style={{marginTop: 2, flexShrink: 0}} />
@@ -6875,7 +6875,7 @@ function ReporterOnboarding() {
             <div style={{marginTop: 16, padding: 14, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10}}>
               <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 8}}>What we'll send them</div>
               <div style={{fontSize: 12, color: "var(--text-secondary, #475569)", lineHeight: 1.6, fontStyle: "italic"}}>
-                "{form.name || "Your CSR"} just joined Dewey Sholes — a transparent court-reporter platform with statutory pricing and pilot-rate fees. They'd like to keep working with you here. Sign up and your first transcript order's platform fee is waived."
+                "{form.name || "Your CSR"} just joined Dewey Sholes – a transparent court-reporter platform with statutory pricing and pilot-rate fees. They'd like to keep working with you here. Sign up and your first transcript order's platform fee is waived."
               </div>
             </div>
           )}
@@ -7940,10 +7940,10 @@ const SWEAT_PEOPLE = ["Aud", "Rosie"];
 
 const INITIAL_EXPENSES = [
   { id: "e1", date: "",           paidBy: "Aud", vendor: "Domain registrar", item: "dewey-sholes domain", category: "tech_build", amount: 11, attribution: 100, recurring: "annual",  notes: "Edit: fill in actual purchase date." },
-  { id: "e2", date: "2026-03-06", paidBy: "Aud", vendor: "Vercel",           item: "Hosting plan",        category: "tech_build", amount: 0,  attribution: 50,  recurring: "monthly", notes: "Edit: fill in actual monthly cost. Shared with another product — adjust attribution %." },
-  { id: "e3", date: "2026-04-06", paidBy: "Aud", vendor: "Supabase",         item: "Database & storage",  category: "tech_build", amount: 0,  attribution: 50,  recurring: "monthly", notes: "Edit: fill in actual monthly cost. Shared with another product — adjust attribution %." },
+  { id: "e2", date: "2026-03-06", paidBy: "Aud", vendor: "Vercel",           item: "Hosting plan",        category: "tech_build", amount: 0,  attribution: 50,  recurring: "monthly", notes: "Edit: fill in actual monthly cost. Shared with another product – adjust attribution %." },
+  { id: "e3", date: "2026-04-06", paidBy: "Aud", vendor: "Supabase",         item: "Database & storage",  category: "tech_build", amount: 0,  attribution: 50,  recurring: "monthly", notes: "Edit: fill in actual monthly cost. Shared with another product – adjust attribution %." },
   { id: "e4", date: "",           paidBy: "Aud", vendor: "Resend",           item: "Transactional email", category: "tech_build", amount: 0,  attribution: 50,  recurring: "monthly", notes: "Edit: fill in actual cost and start date. Shared with another product." },
-  { id: "e5", date: "",           paidBy: "Aud", vendor: "Stripe",           item: "Payments processing", category: "tech_build", amount: 0,  attribution: 0,   recurring: "monthly", notes: "Currently 0% attribution — Aud pays for Stripe via another product. Becomes a real Dewey Sholes cost once transactions start (per-transaction fees, plus any Stripe Atlas/Connect costs). Adjust attribution + amount when DS goes live." },
+  { id: "e5", date: "",           paidBy: "Aud", vendor: "Stripe",           item: "Payments processing", category: "tech_build", amount: 0,  attribution: 0,   recurring: "monthly", notes: "Currently 0% attribution – Aud pays for Stripe via another product. Becomes a real Dewey Sholes cost once transactions start (per-transaction fees, plus any Stripe Atlas/Connect costs). Adjust attribution + amount when DS goes live." },
 ];
 
 const INITIAL_SWEAT = [];
@@ -8325,7 +8325,7 @@ function CapitalTracker() {
                     <div style={{fontSize: 28, fontWeight: 800, color: "#0F172A", fontVariantNumeric: "tabular-nums", lineHeight: 1.1, marginTop: 4}}>{fmtInt(p.total)}</div>
                   </div>
                   <div style={{textAlign: "right", fontSize: 11, color: "#94A3B8"}}>
-                    {p.total > 0 ? Math.round((p.total / Math.max(totalInvested, 1)) * 100) + "% of total" : "—"}
+                    {p.total > 0 ? Math.round((p.total / Math.max(totalInvested, 1)) * 100) + "% of total" : "–"}
                   </div>
                 </div>
                 <div style={{height: 6, background: "#F1F5F9", borderRadius: 3, overflow: "hidden", display: "flex", marginBottom: 10}}>
@@ -8436,9 +8436,9 @@ function CapitalTracker() {
                     const c = cat(e.category);
                     return (
                       <tr key={e.id} onClick={() => setEditingExp(e)} style={{borderBottom: "1px solid #F1F5F9", cursor: "pointer"}}>
-                        <td style={{...tdStyle, color: "#475569"}}>{e.date || "—"}</td>
+                        <td style={{...tdStyle, color: "#475569"}}>{e.date || "–"}</td>
                         <td style={{padding: "10px 12px", fontWeight: 600, color: "#0F172A"}}>{e.paidBy}</td>
-                        <td style={{padding: "10px 12px"}}><div style={{fontWeight: 600, color: "#0F172A"}}>{e.vendor || "—"}</div><div style={{color: "#94A3B8", fontSize: 12}}>{e.item}</div></td>
+                        <td style={{padding: "10px 12px"}}><div style={{fontWeight: 600, color: "#0F172A"}}>{e.vendor || "–"}</div><div style={{color: "#94A3B8", fontSize: 12}}>{e.item}</div></td>
                         <td style={{padding: "10px 12px"}}><span style={{display: "inline-block", padding: "2px 8px", borderRadius: 4, fontSize: 11, fontWeight: 600, background: c.color + "1A", color: c.color}}>{c.label}</span></td>
                         <td style={{...tdStyle, textAlign: "right", color: "#475569"}}>{fmt(e.amount)}</td>
                         <td style={{...tdStyle, textAlign: "right", color: "#94A3B8"}}>{e.attribution}%</td>
@@ -8470,9 +8470,9 @@ function CapitalTracker() {
                     <tr><td colSpan={7} style={{padding: 32, textAlign: "center", color: "#94A3B8"}}>No sweat equity logged yet. Click "Log time" above to start.</td></tr>
                   ) : sortedSweat.map(s => (
                     <tr key={s.id} onClick={() => setEditingSweat(s)} style={{borderBottom: "1px solid #F1F5F9", cursor: "pointer"}}>
-                      <td style={{...tdStyle, color: "#475569"}}>{s.date || "—"}</td>
+                      <td style={{...tdStyle, color: "#475569"}}>{s.date || "–"}</td>
                       <td style={{padding: "10px 12px", fontWeight: 600, color: "#0F172A"}}>{s.person}</td>
-                      <td style={{padding: "10px 12px", color: "#475569"}}>{s.description || "—"}</td>
+                      <td style={{padding: "10px 12px", color: "#475569"}}>{s.description || "–"}</td>
                       <td style={{padding: "10px 12px", color: "#64748B", textTransform: "capitalize"}}>{s.category}</td>
                       <td style={{...tdStyle, textAlign: "right", color: "#475569"}}>{(s.hours || 0).toFixed(2)}</td>
                       <td style={{...tdStyle, textAlign: "right", color: "#94A3B8"}}>${s.hourlyRate || 0}/h</td>
@@ -8485,7 +8485,7 @@ function CapitalTracker() {
           )}
         </div>
 
-        <p style={{fontSize: 11, color: "#94A3B8", marginTop: 14}}>Click any row to edit. Lifetime spend on recurring entries assumes the start date is correct — fill in dates so the math is right.</p>
+        <p style={{fontSize: 11, color: "#94A3B8", marginTop: 14}}>Click any row to edit. Lifetime spend on recurring entries assumes the start date is correct – fill in dates so the math is right.</p>
       </div>
 
       {(editingExp || creatingExp) && (
@@ -8770,7 +8770,7 @@ function LandingPage() {
                 <Icon name="scale" size={16} color="#1E40AF" />
               </div>
               <div style={{fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.5}}>
-                <strong style={{color: "var(--text, #0F172A)", fontWeight: 700}}>Representing yourself?</strong> You still have a right to a transcript. We walk self-represented litigants through the ordering process step by step — no lawyer needed to get the record.
+                <strong style={{color: "var(--text, #0F172A)", fontWeight: 700}}>Representing yourself?</strong> You still have a right to a transcript. We walk self-represented litigants through the ordering process step by step – no lawyer needed to get the record.
               </div>
             </div>
             <a href="#/order" className="btn btn-secondary btn-sm" style={{whiteSpace: "nowrap", flexShrink: 0}}>Try it out <Icon name="arrowRight" size={14} color="#64748B" /></a>
@@ -8861,7 +8861,7 @@ function LandingPage() {
             <div className="pricing-footer">
               <div>
                 <p>Have a fee waiver on file?</p>
-                <div className="sub">Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court — up to $2,500 per case.</div>
+                <div className="sub">Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court – up to $2,500 per case.</div>
               </div>
               <a href="#/trf" className="btn" style={{textDecoration: "none"}}>Learn more</a>
             </div>
@@ -9886,7 +9886,7 @@ function TRFPage() {
           {/* CTA */}
           <div style={{background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 16, padding: 40, textAlign: "center", marginBottom: 32}}>
             <h3 style={{fontSize: 22, fontWeight: 800, marginBottom: 8}}>Ready to place an order?</h3>
-            <p style={{color: "var(--text-secondary)", marginBottom: 20, fontSize: 15}}>If your client has a fee waiver, indicate it during checkout — we'll send the TRF reimbursement forms and instructions after delivery.</p>
+            <p style={{color: "var(--text-secondary)", marginBottom: 20, fontSize: 15}}>If your client has a fee waiver, indicate it during checkout – we'll send the TRF reimbursement forms and instructions after delivery.</p>
             <a href="#/order" className="btn btn-primary">Start an order</a>
           </div>
 
