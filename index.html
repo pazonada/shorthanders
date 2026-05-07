@@ -3491,7 +3491,7 @@ function OrderFlow() {
                 {form.feeWaiver && (
                   <div style={{marginTop: 10, padding: 14, background: "#EFF6FF", border: "1px solid #93C5FD", borderRadius: 8, fontSize: 13, color: "#1E40AF", lineHeight: 1.6}}>
                     <Icon name="info" size={14} color="#3B82F6" style={{marginRight: 6, verticalAlign: "-2px"}} />
-                    <strong>Transcript Reimbursement Fund (TRF) eligible.</strong> Upon delivery, we'll generate the required paperwork for the litigant to apply for reimbursement through the California TRF. The attorney pays upfront; the litigant can submit for reimbursement up to $2,500 per case. <a href="#/trf" style={{color: "#2563EB", fontWeight: 600}}>Learn more about TRF</a>
+                    <strong>Transcript Reimbursement Fund (TRF) eligible.</strong> The attorney pays upfront. After delivery, we'll send TRF reimbursement forms and instructions; the litigant submits to the court for reimbursement of up to $2,500 per case. <a href="#/trf" style={{color: "#2563EB", fontWeight: 600}}>Learn more about TRF</a>
                   </div>
                 )}
               </div>
@@ -3604,7 +3604,7 @@ function OrderFlow() {
                     <span style={{fontSize: 14, color: "var(--text-secondary, #64748B)"}}>Estimated total</span>
                     <span style={{fontSize: 28, fontWeight: 800, color: "var(--text, #0F172A)"}}>${(est.lowCost * 1.08).toFixed(0)} <span style={{fontSize: 14, fontWeight: 400, color: "var(--text-muted, #94A3B8)"}}>– ${(est.highCost * 1.08).toFixed(0)}</span></span>
                   </div>
-                  {form.feeWaiver && <p style={{fontSize: 12, color: "#2563EB", marginTop: 8}}>Fee waiver indicated. TRF reimbursement paperwork will be generated upon delivery.</p>}
+                  {form.feeWaiver && <p style={{fontSize: 12, color: "#2563EB", marginTop: 8}}>Fee waiver indicated. We'll send TRF reimbursement forms and instructions after delivery.</p>}
                 </div>
               </div>
               <div className="review-section-card">
@@ -8770,7 +8770,7 @@ function LandingPage() {
                 <Icon name="scale" size={16} color="#1E40AF" />
               </div>
               <div style={{fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.5}}>
-                <strong style={{color: "var(--text, #0F172A)", fontWeight: 700}}>Representing yourself?</strong> You still have a right to a transcript. We walk self-represented litigants through the process step by step, with full support for court fee waivers.
+                <strong style={{color: "var(--text, #0F172A)", fontWeight: 700}}>Representing yourself?</strong> You still have a right to a transcript. We walk self-represented litigants through the ordering process step by step — no lawyer needed to get the record.
               </div>
             </div>
             <a href="#/order" className="btn btn-secondary btn-sm" style={{whiteSpace: "nowrap", flexShrink: 0}}>Try it out <Icon name="arrowRight" size={14} color="#64748B" /></a>
@@ -8861,7 +8861,7 @@ function LandingPage() {
             <div className="pricing-footer">
               <div>
                 <p>Have a fee waiver on file?</p>
-                <div className="sub">Order through us like any other transcript. We'll generate your TRF reimbursement application automatically.</div>
+                <div className="sub">Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court — up to $2,500 per case.</div>
               </div>
               <a href="#/trf" className="btn" style={{textDecoration: "none"}}>Learn more</a>
             </div>
@@ -9777,13 +9777,13 @@ function TRFPage() {
   const faqs = [
     { id: "f1", q: "What if the fund runs out?", a: "It does run out annually. Orders are processed first-come, first-served. We recommend submitting early in the fiscal year (July 1)." },
     { id: "f2", q: "Can I use TRF for audio transcription?", a: "Yes, TRF covers any official transcript regardless of how it was produced." },
-    { id: "f3", q: "Do I need to fill out paperwork?", a: "We pre-fill the application with all required case details. You review, sign, and submit to the court clerk." },
+    { id: "f3", q: "Do I need to fill out paperwork?", a: "Yes. After delivery we send the TRF reimbursement forms with instructions and the case details you'll need. You fill in the form, sign, and submit to the court clerk. Auto-fill is on our roadmap for a future release." },
     { id: "f4", q: "What if reimbursement is denied?", a: "The firm is responsible for the full cost. Denials are rare if the fee waiver is valid and the fund has not been exhausted." },
   ];
 
   const steps = [
     { num: "1", icon: "fileText", title: "Place your order", desc: "Place your order and indicate your client has a fee waiver on file." },
-    { num: "2", icon: "zap", title: "We generate the application", desc: "We auto-generate the TRF application with all required case details." },
+    { num: "2", icon: "send", title: "We send you the forms", desc: "After delivery, we email you the TRF reimbursement forms and step-by-step instructions, including the case details you'll need." },
     { num: "3", icon: "send", title: "Submit and get reimbursed", desc: "Submit to the court – reimbursement typically arrives in 8-10 weeks." },
   ];
 
@@ -9886,7 +9886,7 @@ function TRFPage() {
           {/* CTA */}
           <div style={{background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 16, padding: 40, textAlign: "center", marginBottom: 32}}>
             <h3 style={{fontSize: 22, fontWeight: 800, marginBottom: 8}}>Ready to place an order?</h3>
-            <p style={{color: "var(--text-secondary)", marginBottom: 20, fontSize: 15}}>If your client has a fee waiver, indicate it during checkout and we handle the rest.</p>
+            <p style={{color: "var(--text-secondary)", marginBottom: 20, fontSize: 15}}>If your client has a fee waiver, indicate it during checkout — we'll send the TRF reimbursement forms and instructions after delivery.</p>
             <a href="#/order" className="btn btn-primary">Start an order</a>
           </div>
 
@@ -10053,7 +10053,7 @@ function ForAttorneysPage() {
     { icon: "star", title: "Quality you can trust", desc: "Every reporter is rated on quality by other attorneys and tracked on timeliness automatically. Read real feedback before you book. Mark CSRs as preferred vendors so they appear first when you order." },
     { icon: "clock", title: "Deadline-driven pricing", desc: "Set your need-by date and the price calculates automatically – no negotiation, no hidden fees. The closer your deadline, the higher the rate. Want to save money? Order earlier." },
     { icon: "users", title: "Firm-wide visibility", desc: "Multiple attorneys and staff under one account. Role-based access for paralegals, legal assistants, and partners. Consolidated billing itemized by case and matter number." },
-    { icon: "shield", title: "TRF reimbursement built in", desc: "When your client has a fee waiver, we auto-generate the Transcript Reimbursement Fund paperwork. Submit to the court – reimbursement typically arrives in 8-10 weeks, up to $2,500 per case." },
+    { icon: "shield", title: "TRF reimbursement, made simple", desc: "When your client has a fee waiver, we send the Transcript Reimbursement Fund forms and instructions after delivery. Submit to the court – reimbursement typically arrives in 8-10 weeks, up to $2,500 per case." },
   ];
   const steps = [
     { num: "01", icon: "fileText", title: "Place your order", desc: "Select live attendance or post-hearing transcription. Enter case details, set your delivery deadline, and the price calculates automatically." },
