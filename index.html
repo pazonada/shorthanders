@@ -8538,6 +8538,45 @@ function CapitalTracker() {
   );
 }
 
+// ─── Role Selector Modal ─────────────────────────────────────────
+function RoleSelectorModal({ onClose }) {
+  const choose = (role) => {
+    onClose();
+    navigate(role === "attorney" ? "/attorney-signup" : "/reporter-signup");
+  };
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" style={{maxWidth: 560, width: "92%", padding: 32}} onClick={e => e.stopPropagation()}>
+        <h2 style={{fontSize: 22, fontWeight: 800, marginBottom: 6, textAlign: "center"}}>Which describes you?</h2>
+        <p style={{fontSize: 14, color: "var(--text-secondary, #64748B)", textAlign: "center", marginBottom: 24, lineHeight: 1.6}}>We'll send you to the right signup flow.</p>
+        <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12}}>
+          <button onClick={() => choose("attorney")} style={{padding: 24, background: "var(--bg-card, #fff)", border: "2px solid var(--border, #E2E8F0)", borderRadius: 14, cursor: "pointer", textAlign: "left", transition: "border-color 0.15s, transform 0.15s", fontFamily: "inherit"}}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "#4361EE"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border, #E2E8F0)"; e.currentTarget.style.transform = "translateY(0)"; }}>
+            <div style={{width: 40, height: 40, borderRadius: 10, background: "#EFF6FF", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12}}>
+              <Icon name="scale" size={20} color="#2563EB" />
+            </div>
+            <div style={{fontSize: 15, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 4}}>I'm an attorney or law firm</div>
+            <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)", lineHeight: 1.5}}>Order transcripts, manage cases, work with verified CSRs.</div>
+          </button>
+          <button onClick={() => choose("reporter")} style={{padding: 24, background: "var(--bg-card, #fff)", border: "2px solid var(--border, #E2E8F0)", borderRadius: 14, cursor: "pointer", textAlign: "left", transition: "border-color 0.15s, transform 0.15s", fontFamily: "inherit"}}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "#059669"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border, #E2E8F0)"; e.currentTarget.style.transform = "translateY(0)"; }}>
+            <div style={{width: 40, height: 40, borderRadius: 10, background: "#ECFDF5", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12}}>
+              <Icon name="mic" size={20} color="#059669" />
+            </div>
+            <div style={{fontSize: 15, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 4}}>I'm a court reporter</div>
+            <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)", lineHeight: 1.5}}>Get matched with jobs, keep 100% of the statutory rate.</div>
+          </button>
+        </div>
+        <div style={{textAlign: "center", marginTop: 20, fontSize: 13, color: "var(--text-secondary, #64748B)"}}>
+          Already have an account? <button onClick={onClose} style={{background: "none", border: "none", color: "#2563EB", fontWeight: 600, cursor: "pointer", padding: 0, fontSize: 13, fontFamily: "inherit"}}>Sign in instead</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Sign-In Modal ──────────────────────────────────────────────
 function SignInModal({ onClose }) {
   const [email, setEmail] = useState("");
@@ -8616,6 +8655,7 @@ function LandingPage() {
   const [scrolled, setScrolled] = useState(false);
   const [tab, setTab] = useState("attorney");
   const [showSignIn, setShowSignIn] = useState(false);
+  const [showRoleSelector, setShowRoleSelector] = useState(false);
 
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 20);
@@ -8654,7 +8694,7 @@ function LandingPage() {
             <div className="nav-actions">
               <ThemeToggle />
               <button className="btn-signin" onClick={() => setShowSignIn(true)}>Sign in</button>
-              <a href="#/attorney-signup" className="btn-getstarted">Get started</a>
+              <button className="btn-getstarted" onClick={() => setShowRoleSelector(true)} style={{border: "none", cursor: "pointer"}}>Get started</button>
             </div>
           </div>
         </div>
@@ -9010,6 +9050,7 @@ function LandingPage() {
       </footer>
 
       {showSignIn && <SignInModal onClose={() => setShowSignIn(false)} />}
+      {showRoleSelector && <RoleSelectorModal onClose={() => setShowRoleSelector(false)} />}
     </div>
   );
 }

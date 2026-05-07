@@ -189,6 +189,49 @@ The dashboard shows a "complete your profile" widget if the CSR hasn't filled ou
 
 Profile completeness affects matching — incomplete profiles rank lower.
 
+### Public profile URL & identifier
+
+**Every CSR profile is identified by their California CSR license number.** This is the canonical, stable identifier across the entire system.
+
+**URL pattern (real build):**
+- Canonical: `deweysholes.com/csr/<license-number>` (e.g., `deweysholes.com/csr/14892`)
+- A slug variant resolves and 301s to the canonical URL: `deweysholes.com/csr/jane-doe-14892` → `deweysholes.com/csr/14892`
+
+**Why license number, not an internal id or username:**
+- Already unique under California regulation (issued by the CA Court Reporters Board; no two CSRs share one).
+- Stable across name changes (marriage, rebrand), firm moves, and display-name preference changes.
+- Already what we use for credential verification — single source of truth.
+- Public information already (the CRB directory is publicly searchable), so using it as a URL leaks no private data.
+
+**What this enables:**
+- Stable, shareable URLs that don't break — works for business cards, email signatures, QR codes, marketing assets, support-ticket references, admin notes.
+- Search-engine indexability: each CSR profile is a single canonical URL.
+- Predictable deep-linking from external surfaces (Rosie's network outreach, partner sites, the CSR's own social bios).
+
+**Edge cases:**
+- **Invalid / unknown license number:** show "We don't have a profile for CSR #X. They might not have signed up yet." Provide a CTA to invite them or browse other CSRs.
+- **Paused account:** show a "this CSR is taking a break" state with an option to favorite for when they return — do not 404. This preserves the link's value when the CSR returns.
+- **Deplatformed account:** show a generic "this profile is no longer available" state. Do not surface deplatforming reason publicly.
+
+**Prototype note:**
+The current React-in-HTML prototype uses internal mock ids (`rep-1`, `rep-2`, etc.) at `#/reporters/<id>`. The real build standardizes on license number at `/csr/<license-number>`. When migrating, set up a redirect from the old `#/reporters/<id>` path to the new canonical URL so any in-flight links keep working.
+
+### Attorney/firm side: parallel identifier rule (with caveats)
+
+The same canonical-identifier principle applies on the buyer side, but with practical limits:
+
+- **When an attorney signs up directly: use their CA Bar number** as the canonical identifier. URL pattern: `deweysholes.com/atty/<bar-number>`. Same logic as CSR licenses — already unique by state regulation, stable, public information, what we use for verification.
+- **In practice, most accounts will be created by assistants signing up as themselves**, not by the attorney directly. Assistants don't have a bar number and aren't impersonating the attorney. For these accounts, fall back to:
+  - **Firm-level canonical URL** — `deweysholes.com/firm/<firm-slug>` for the firm's public/marketing-facing presence, with the firm slug derived from the firm's name and a disambiguating suffix if needed.
+  - **Internal account id** for the assistant's own account record (no public URL — assistants typically don't have public-facing profiles the way CSRs do).
+- **Firm accounts that include an attorney with a verified bar number** can have both URLs resolve to the same canonical record (the bar-number URL 301s to the firm URL, or vice versa, depending on which we pick as canonical).
+
+**Why this matters less than on the CSR side:**
+CSR profiles are public-facing marketplace listings — attorneys browse them, book them, refer them. Attorney/firm profiles are mostly internal (the firm's own dashboard, the firm's own team). Public-facing attorney/firm pages exist mainly for SEO, partnership outreach, and edge cases (e.g., a CSR wanting to attribute past work). So the URL-as-marketing-asset case is much weaker on this side.
+
+**Open question (not yet decided):**
+Whether to surface attorney/firm profiles publicly at all in the MVP. If we don't, the canonical-URL rule above is dormant — interesting only when we eventually expose those profiles. Track this with the marketing plan; revisit once we have firm-side signups in the pilot.
+
 ---
 
 ## Account state transitions

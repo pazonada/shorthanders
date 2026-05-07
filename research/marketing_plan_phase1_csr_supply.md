@@ -124,6 +124,43 @@ If there's $500-750 to spare:
 
 ---
 
+## CSR business cards (open idea, captured 2026-05-08)
+
+**The idea (Aud + Rosie, in active discussion):** Mail free branded business cards to each CSR who completes onboarding and gets license-verified. Cards include the CSR's name and license number, a tagline like "Find me on Dewey Sholes for a transcription!", and a direct link/QR to their Dewey Sholes profile.
+
+**Why it works for both sides:**
+- **CSR gets** a free, professionally produced asset to grow their book of business — something they can hand out at depositions, courthouses, bar events.
+- **Platform gets** CSR-driven attorney acquisition: every card distributed is an inbound referral with the CSR's personal endorsement implied.
+
+**Why it's now feasible:** the recently confirmed CSR profile identifier rule (license number as canonical URL key — see [governance-and-process/csr_account_procedures.md](../governance-and-process/csr_account_procedures.md#public-profile-url--identifier)) means we can pre-print cards with stable per-CSR URLs without worrying about identifier drift.
+
+**Open question — what does the URL on the card link to?**
+
+| Option | Pros | Cons |
+|---|---|---|
+| **A. Direct profile link** (`deweysholes.com/csr/<license-number>`) | Lowest friction. Attorney lands on the CSR's profile, sees ratings/specialties/availability, books in 2 clicks. Standard marketplace pattern (Yelp, LinkedIn, Etsy). | Visiting attorney sees only that CSR's profile in isolation. Mitigated by making profile pages a fully-featured marketplace landing (logo, search, "browse all CSRs" prompt). |
+| **B. Homepage URL** + tell them to search | Brand impression first — attorney sees the platform's pitch. | Higher friction. Attorney may not bother searching for the specific CSR; risks them remembering "Dewey Sholes" generically and booking through any other channel. Weaker conversion. |
+
+**Aud's leaning (2026-05-08):** Option A. Profile page should include marketplace context (nav, search, "browse all CSRs") so the brand impression still happens, but the attorney's primary intent — book this specific CSR — should be one tap away. Standard marketplace conversion logic.
+
+**Cost (rough):**
+- Standard 2x3.5" linen-finish cards: $0.10–0.20 each at Vistaprint/Moo (250-card minimum).
+- Per CSR: $25–50 for a useful starter quantity (250–500 cards), shipped.
+- For 100 pilot CSRs: ~$2,500–5,000 total. Variable-print the CSR-specific name + license number on a generic template.
+
+**When to launch:** tied to onboarding completion + license verification. CSR triggers "send me my cards" from the dashboard once verified, we ship in monthly batches.
+
+**Risks / open issues:**
+- **Compliance with CSR's own branding.** Many CSRs already have firm-issued or self-issued cards. Frame ours as a "Dewey Sholes referral card" — additive, not replacement.
+- **Distribution overhead.** Shipping individual orders is operationally heavy. Batch quarterly or use a print-on-demand integration (Moo / Sticker Mule / Vistaprint API).
+- **Card aging.** A paused or deplatformed CSR has cards in circulation. The profile-identifier policy already handles this gracefully (paused → "this CSR is taking a break" page; deplatformed → generic "no longer available"). Verify before launch.
+
+**Tag for marketing agent:** when next planning Phase 1 budget, evaluate whether business cards displace any of the schwag-mailer line item above. Both target high-value CSRs but with different mechanisms (cards = recurring distribution touchpoint; tumblers = one-shot wow moment).
+
+**Status:** undecided; not in MVP scope. Capture in Month 2-3 budget discussion.
+
+---
+
 ## Timeline
 
 | Week | Activity |
