@@ -1322,7 +1322,7 @@
   .theme-toggle:hover { background: var(--bg-hover); color: var(--text); }
 
   /* ─── Reporter Onboarding ────────────────────────── */
-  .reporter-onboarding { max-width: 640px; margin: 0 auto; padding: 48px 24px 80px; min-height: 100vh; }
+  .reporter-onboarding { max-width: 640px; margin: 0 auto; padding: 96px 24px 80px; min-height: 100vh; }
   .reporter-welcome { max-width: 800px; margin: 0 auto; padding: 80px 24px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
   .reporter-welcome h1 { font-size: 44px; font-weight: 800; color: var(--text, #0F172A); margin-bottom: 12px; line-height: 1.15; }
   .reporter-welcome h1 span { color: #2563EB; }
@@ -6699,12 +6699,21 @@ function ReporterOnboarding() {
   const [firmInvites, setFirmInvites] = useState([{firm: "", contact: "", email: ""}]);
   const [showColleagueInvite, setShowColleagueInvite] = useState(false);
 
+  const navBar = (showCancel) => (
+    <nav className="app-nav"><div className="container"><div className="app-nav-inner">
+      <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+      {showCancel
+        ? <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Cancel</button>
+        : <div />}
+    </div></div></nav>
+  );
+
   // Screen 0: Welcome / Pitch
   if (screen === 0) {
     return (
+      <div>
+      {navBar(true)}
       <div className="reporter-welcome" style={{background: "var(--bg-page, #F8FAFC)"}}>
-        <DeweyFullLogo height={44} theme={useTheme().dark ? "dark" : "light"} />
-        <div style={{height: 48}} />
         <h1>You report.<br /><span>We handle the rest.</span></h1>
         <p className="welcome-sub">Dewey Sholes connects you with attorneys who need certified court reporters. We handle the booking, communication, and payment. You focus on what you do best.</p>
         <div className="value-prop-grid">
@@ -6733,16 +6742,16 @@ function ReporterOnboarding() {
         </p>
         <p className="welcome-social-proof">Join 47 reporters already on the platform</p>
       </div>
+      </div>
     );
   }
 
   // Screen 1: Account Type Selection
   if (screen === 1) {
     return (
+      <div>
+      {navBar(true)}
       <div className="reporter-onboarding" style={{background: "var(--bg-page, #F8FAFC)"}}>
-        <div style={{marginBottom: 32, textAlign: "center"}}>
-          <a href="#/" style={{display: "inline-flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
-        </div>
         <div className="reporter-step-header">
           <h2>Welcome aboard</h2>
           <p>Dewey Sholes is currently a solo-CSR platform. You'll get your own listing on the marketplace and keep 100% of the statutory rate on every job.</p>
@@ -6792,6 +6801,7 @@ function ReporterOnboarding() {
           </button>
         </div>
       </div>
+      </div>
     );
   }
 
@@ -6810,10 +6820,9 @@ function ReporterOnboarding() {
     const addFirmInvite = () => setFirmInvites(prev => [...prev, {firm: "", contact: "", email: ""}]);
 
     return (
+      <div>
+      {navBar(true)}
       <div className="reporter-onboarding" style={{background: "var(--bg-page, #F8FAFC)"}}>
-        <div style={{marginBottom: 32, textAlign: "center"}}>
-          <a href="#/" style={{display: "inline-flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
-        </div>
         <div style={{maxWidth: 560, margin: "0 auto", padding: "0 20px"}}>
 
           {/* Header */}
@@ -6933,6 +6942,7 @@ function ReporterOnboarding() {
 
         </div>
       </div>
+      </div>
     );
   }
 
@@ -6941,6 +6951,8 @@ function ReporterOnboarding() {
     const jobTypeLabels = form.jobTypes.length ? form.jobTypes.join(", ") : "Not specified";
     const courtLabels = form.courts.length ? form.courts.map(id => { const c = COURTS.find(x => x.id === id); return c ? c.name : id; }).slice(0, 3).join(", ") + (form.courts.length > 3 ? ` +${form.courts.length - 3} more` : "") : "Not specified";
     return (
+      <div>
+      {navBar(false)}
       <div className="reporter-onboarding" style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "100vh"}}>
         <div className="success-screen" style={{width: "100%", maxWidth: 560}}>
           <div className="success-icon"><Icon name="checkCircle" size={64} /></div>
@@ -7018,6 +7030,7 @@ function ReporterOnboarding() {
           <button className="btn btn-primary" style={{width: "100%", justifyContent: "center", fontSize: 16}} onClick={() => navigate("#/reporter")}>Go to dashboard <Icon name="arrowRight" size={16} /></button>
         </div>
       </div>
+      </div>
     );
   }
 
@@ -7032,10 +7045,9 @@ function ReporterOnboarding() {
   ];
 
   return (
+    <div>
+    {navBar(true)}
     <div className="reporter-onboarding" style={{background: "var(--bg-page, #F8FAFC)"}}>
-      <div style={{marginBottom: 32, textAlign: "center"}}>
-        <a href="#/" style={{display: "inline-flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
-      </div>
       <StepIndicator current={step} total={5} labels={["Credentials", "Preferences", "Cases", "Payment", "Account"]} />
       <div style={{height: 28}} />
       <div className="reporter-step-header">
@@ -7286,6 +7298,7 @@ function ReporterOnboarding() {
           </button>
         )}
       </div>
+    </div>
     </div>
   );
 }
