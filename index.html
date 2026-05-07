@@ -7356,7 +7356,6 @@ function AttorneyOnboarding() {
         <div style={{marginTop: 16}}>
           <a href="#/dashboard" style={{color: "var(--brand, #2563EB)", textDecoration: "none"}}>Already have an account? Sign in</a>
         </div>
-        <p style={{marginTop: 32, fontSize: 13, color: "var(--text-dim, #94A3B8)"}}>Join 312 attorneys already on the platform</p>
       </div>
       </div>
     );
@@ -10095,18 +10094,10 @@ function ForAttorneysPage() {
   ];
   return (
     <div>
-      <nav className="app-nav">
-        <div className="container">
-          <div className="app-nav-inner">
-            <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
-            <div style={{display: "flex", alignItems: "center", gap: 16}}>
-              <ThemeToggle />
-              <a href="#/" style={{fontSize: 13, color: "var(--text-muted, #64748B)", textDecoration: "none"}}>Back to home</a>
-              <a href="#/attorney-signup" className="btn btn-primary btn-sm">Get started</a>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <nav className="app-nav"><div className="container"><div className="app-nav-inner">
+        <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+        <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Cancel</button>
+      </div></div></nav>
       <div className="page page-enter" style={{paddingBottom: 80}}>
         <div className="container" style={{maxWidth: 980}}>
           <div style={{textAlign: "center", marginBottom: 48}}>
@@ -10179,18 +10170,10 @@ function ForReportersPage() {
   ];
   return (
     <div>
-      <nav className="app-nav">
-        <div className="container">
-          <div className="app-nav-inner">
-            <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
-            <div style={{display: "flex", alignItems: "center", gap: 16}}>
-              <ThemeToggle />
-              <a href="#/" style={{fontSize: 13, color: "var(--text-muted, #64748B)", textDecoration: "none"}}>Back to home</a>
-              <a href="#/reporter-signup" className="btn btn-primary btn-sm">Apply to join</a>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <nav className="app-nav"><div className="container"><div className="app-nav-inner">
+        <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+        <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Cancel</button>
+      </div></div></nav>
       <div className="page page-enter" style={{paddingBottom: 80}}>
         <div className="container" style={{maxWidth: 980}}>
           <div style={{textAlign: "center", marginBottom: 48}}>
