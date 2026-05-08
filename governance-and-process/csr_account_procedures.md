@@ -189,6 +189,30 @@ The dashboard shows a "complete your profile" widget if the CSR hasn't filled ou
 
 Profile completeness affects matching — incomplete profiles rank lower.
 
+### What appears on the public profile (v1) and what doesn't
+
+A CSR's public profile page (visible to attorneys browsing the directory or arriving via a deep link) shows in v1:
+
+- Name, license number, profile photo, location, languages, certifications, specialties
+- Bio (CSR-authored)
+- Aggregate quality signals: rating + review count, on-time delivery rate, average turnaround
+- Weekly availability grid
+- Courts covered
+- Recent reviews (text, attorney name redacted to first name + last initial per existing policy)
+- **CTAs:** "Book this reporter" and "Request a transcript copy" (both pre-select the reporter when entering the corresponding flow)
+
+**What does NOT appear on the public profile in v1:**
+
+- **Recent cases worked.** The reporter onboarding collects up to 10 recent cases for matching/discovery purposes, but those are not displayed publicly. Confidentiality concerns + signal-to-noise: most attorneys won't browse cases when evaluating; they'll check rating + courts covered + availability.
+- **Job count completed on Dewey Sholes.** Avoids creating a cold-start penalty for new CSRs during pilot, and avoids implying a "leaderboard" dynamic.
+
+**Status of these decisions:** v1 only. Both questions are tagged for user testing (see `research/user_testing_attorney_guide.md` and `research/user_testing_csr_guide.md`):
+
+- *Attorney side:* Would seeing recent cases / job count change your decision to book? What signal do you actually use to evaluate an unfamiliar CSR?
+- *CSR side:* Are you comfortable having recent cases visible? Does it bother you to compete on visible job count?
+
+Revisit for v1.1 once user-testing data lands. Until then, the data is collected (CSR-side) but not exposed (attorney-side).
+
 ### Public profile URL & identifier
 
 **Every CSR profile is identified by their California CSR license number.** This is the canonical, stable identifier across the entire system.

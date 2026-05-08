@@ -2220,6 +2220,17 @@ function useToast() {
   return { toasts, addToast, removeToast };
 }
 
+function useToasts() {
+  const [toasts, setToasts] = useState([]);
+  const removeToast = (id) => setToasts(t => t.filter(x => x.id !== id));
+  const addToast = (title, message, variant) => {
+    const id = Date.now() + Math.random();
+    setToasts(t => [...t, { id, title, message, variant }]);
+    setTimeout(() => removeToast(id), 4000);
+  };
+  return { toasts, addToast, removeToast };
+}
+
 function ToastContainer({ toasts, onRemove }) {
   if (!toasts.length) return null;
   return (
@@ -3008,10 +3019,14 @@ function OrderTimeline({ step, dates }) {
 // ─── Order Flow ─────────────────────────────────────────────────
 function OrderFlow() {
   const [step, setStep] = useState(1);
+  const preselectedReporterId = (() => {
+    const m = window.location.hash.match(/[?&]reporter=([^&]+)/);
+    return m ? decodeURIComponent(m[1]) : null;
+  })();
   const [form, setForm] = useState({
     type: "", court: "", dept: "", caseNumber: "", caseName: "", caseType: "Family Law",
     hearingDate: "", hearingTime: "", duration: "60", interpreter: false, interpreterLang: "",
-    audioFile: "", reporterPref: "", selectedReporter: null, feeWaiver: false, notes: "",
+    audioFile: "", reporterPref: preselectedReporterId ? "favorite" : "", selectedReporter: preselectedReporterId, feeWaiver: false, notes: "",
     needByType: "", needByDate: "",
     costSplit: false, coPayers: [{ name: "", email: "", firm: "", share: "" }],
   });
@@ -9239,8 +9254,9 @@ function ReporterProfile({ reporterId }) {
                 {reporter.specialties.map(s => <span key={s} style={{fontSize: 11, color: "#64748B", background: "#F1F5F9", padding: "3px 10px", borderRadius: 100}}>{s}</span>)}
               </div>
             </div>
-            <div style={{display: "flex", gap: 8, alignItems: "flex-start"}}>
-              <button className="btn btn-primary btn-sm" onClick={() => navigate("/order")}>Book this reporter</button>
+            <div style={{display: "flex", gap: 8, alignItems: "flex-start", flexWrap: "wrap"}}>
+              <button className="btn btn-primary btn-sm" onClick={() => navigate("/order?reporter=" + reporter.id)}>Book this reporter</button>
+              <button className="btn btn-secondary btn-sm" onClick={() => navigate("/request-copy?reporter=" + reporter.id)}>Request a transcript copy</button>
               <button className="btn btn-sm" onClick={toggleFav} style={{background: isFav ? "#FEF3C7" : undefined, color: isFav ? "#92400E" : undefined}}>
                 <Icon name="star" size={14} /> {isFav ? "Favorited" : "Favorite"}
               </button>
@@ -9253,7 +9269,6 @@ function ReporterProfile({ reporterId }) {
         <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 20}}>
           {[
             { label: "Rating", value: reporter.rating, icon: "star", color: "#F59E0B", sub: reporter.reviewCount + " reviews" },
-            { label: "Jobs completed", value: reporter.stats.jobsCompleted, icon: "fileText", color: "#2563EB", sub: "since " + reporter.stats.memberSince },
             { label: "On-time rate", value: reporter.stats.onTimeRate + "%", icon: "clock", color: "#059669", sub: "delivery record" },
             { label: "Avg turnaround", value: reporter.stats.avgTurnaround, icon: "zap", color: "#7C3AED", sub: "per transcript" },
           ].map((s, i) => (
@@ -9632,6 +9647,12 @@ function RequestCopyPage() {
   const [requesterMessage, setRequesterMessage] = useState("");
   const [acknowledged, setAcknowledged] = useState(false);
 
+  const preselectedReporterId = (() => {
+    const m = window.location.hash.match(/[?&]reporter=([^&]+)/);
+    return m ? decodeURIComponent(m[1]) : null;
+  })();
+  const preselectedReporter = preselectedReporterId ? MOCK_REPORTERS.find(r => r.id === preselectedReporterId) : null;
+
   const doSearch = () => {
     const q = query.trim().toLowerCase();
     if (!q) { setResults([]); setSearched(false); return; }
@@ -9652,6 +9673,12 @@ function RequestCopyPage() {
       </div></div></nav>
       <div className="page page-enter">
         <div className="container" style={{maxWidth: 720}}>
+          {preselectedReporter && (
+            <div style={{marginBottom: 20, padding: "10px 14px", background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: 8, fontSize: 13, color: "#1E40AF", display: "flex", alignItems: "center", gap: 8}}>
+              <Icon name="user" size={14} color="#2563EB" />
+              Requesting a copy of work by <strong>{preselectedReporter.name}</strong>, CSR #{preselectedReporter.csrNumber}.
+            </div>
+          )}
           <StepIndicator current={step} total={3} labels={["Find the case", "Contact the reporter", "Confirmation"]} />
 
           {step === 1 && (
