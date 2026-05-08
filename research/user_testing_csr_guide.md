@@ -1,6 +1,6 @@
 # User testing guide — CSRs
 
-**Status:** Draft. Targeted for use once we have ~15-20 verified CSR contacts willing to take a 30-minute call.
+**Status:** Draft. Targeted for use once Rosie's network surfaces enough warm CSR contacts.
 **Owner:** Aud (drafting); Rosie (recruitment, co-facilitation).
 **Last updated:** 2026-05-08
 
@@ -22,17 +22,16 @@ These map to specific product/marketing decisions we've left open for testing.
 
 ## Method
 
-**Format:** 30-minute video calls (Zoom or Google Meet). Recorded with consent.
-**Sample size:** Aim for 8-12 completed interviews. Diminishing returns after that for our scale.
-**Compensation:** $50 Visa or Amazon gift card per completed interview. Mailed within 48 hours.
-**Tools:** Zoom recording + transcript, Notion or Otter for note-taking, Airtable for participant tracking.
+**Format:** 45-minute video calls (Zoom or Google Meet). Recorded with consent.
+**Sample size:** Up to 5 completed interviews. Pilot-stage scale; not aiming for statistical significance, just signal.
+**Compensation:** $25 Starbucks gift card per completed interview. Sent digitally within 24 hours.
+**Tools:** Zoom recording + transcript, simple notes doc, lightweight participant tracker.
 
-**Recruitment criteria (mix):**
-- 3-4 CSRs who do mostly **live attendance** in CA superior courts (the primary target for the cards strategy)
-- 2-3 CSRs who do **audio transcription** primarily (different workflow, different concerns)
-- 2-3 CSRs who are **newly licensed** (within last 24 months) — different incentive structure, no entrenched book of business
-- 1-2 CSRs who are **semi-retired or part-time** — different mental model, may be a key supply-side segment for pilot
-- Mix of solo CSRs and CSRs in small firms (boutique 2-5 reporter shops)
+**Recruitment criteria (mix within 5 slots — prioritize live attendance since that's the cards-strategy target):**
+- 2-3 CSRs who do mostly **live attendance** in CA superior courts
+- 1-2 CSRs who do **audio transcription** primarily
+- At least 1 **newly licensed** CSR (within last 24 months) if possible — different incentive structure, no entrenched book of business
+- Solo CSRs preferred over those embedded in agencies; we want decision-makers
 
 **Recruitment channels:**
 - Rosie's professional network (CSRs she's worked with on cases)
@@ -44,13 +43,15 @@ These map to specific product/marketing decisions we've left open for testing.
 
 ## Discussion guide
 
-### Warm-up (3 min)
+Total target: ~45 minutes. Time budgets are guidance, not hard caps — let the most useful threads run long.
+
+### Warm-up (3-5 min)
 
 - How did you become a CSR? How long have you been working?
 - What kind of work do you primarily do — live attendance, audio transcription, depositions, all of the above?
 - How do you find work today? (Agencies / direct attorney relationships / court appointments / mix?)
 
-### Current workflow (10 min)
+### Current workflow (12-15 min)
 
 The goal here is to understand the *real* flow without leading them.
 
@@ -61,7 +62,7 @@ The goal here is to understand the *real* flow without leading them.
 - Have you ever lost a transcript order because the attorney couldn't reach you, didn't remember your name, or went to a different CSR? How often does that happen?
 - How do you handle business cards or contact info today? Do you carry cards? Do you give them out?
 
-### Reactions to Dewey Sholes (12 min)
+### Reactions to Dewey Sholes (18-22 min)
 
 Walk through the prototype on screen-share. Do not over-explain — let them react.
 
@@ -81,7 +82,7 @@ Walk through the prototype on screen-share. Do not over-explain — let them rea
 - Mention: 100% of statutory rate, payment in 2 business days, no exclusivity, $99/yr listing fee waived during pilot.
   - *Reactions to each. Particularly listen for the "what's the catch" reaction.*
 
-### Hypothetical decisions (4 min)
+### Hypothetical decisions (5-7 min)
 
 Force a decision. Real numbers, real tradeoffs.
 
@@ -89,7 +90,7 @@ Force a decision. Real numbers, real tradeoffs.
 - What would change your mind from "no" to "yes"?
 - Who do you know who would be a strong fit for this? Would you refer them?
 
-### Wrap (1 min)
+### Wrap (2-3 min)
 
 - Is there anything I should have asked you that I didn't?
 - Can we follow up if we have more questions?
@@ -113,7 +114,7 @@ These are the specific things we're explicitly testing. Track each per-interview
 
 ## Output
 
-After 8-12 interviews, synthesize into:
+After up to 5 interviews, synthesize into:
 
 - A 1-page memo of the top 5 findings, with direct quotes.
 - A revised list of v1 vs v1.1 product decisions (this doc + `csr_account_procedures.md` get updated).

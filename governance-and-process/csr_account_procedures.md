@@ -206,7 +206,7 @@ A CSR's public profile page (visible to attorneys browsing the directory or arri
 - **Recent cases worked.** The reporter onboarding collects up to 10 recent cases for matching/discovery purposes, but those are not displayed publicly. Confidentiality concerns + signal-to-noise: most attorneys won't browse cases when evaluating; they'll check rating + courts covered + availability.
 - **Job count completed on Dewey Sholes.** Avoids creating a cold-start penalty for new CSRs during pilot, and avoids implying a "leaderboard" dynamic.
 
-**Status of these decisions:** v1 only. Both questions are tagged for user testing (see `research/user_testing_attorney_guide.md` and `research/user_testing_csr_guide.md`):
+**Status of these decisions:** v1 only. Both questions are tagged for user testing (see `research/user_testing_legal_assistant_guide.md` and `research/user_testing_csr_guide.md`):
 
 - *Attorney side:* Would seeing recent cases / job count change your decision to book? What signal do you actually use to evaluate an unfamiliar CSR?
 - *CSR side:* Are you comfortable having recent cases visible? Does it bother you to compete on visible job count?
