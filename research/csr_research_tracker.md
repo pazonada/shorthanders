@@ -89,10 +89,28 @@ Identifying who's court-employed is the highest-value enrichment. Suggested appr
 2. Other-metro CSRs as Phase 1A outreach moves outward.
 3. Rest of state on rolling basis.
 
-**Tooling recommendation:**
-- Start in **Google Sheets** (free, two-collaborator-friendly, easy to import the CRB Excel as starting data).
-- If the data structure outgrows a flat sheet (e.g., we want history of every email touch, multiple firms per CSR with their own metadata), graduate to **Airtable** (~$10/seat/month).
-- Hold off on a real CRM (Salesforce, Hubspot) until volume justifies it. The bootstrapped reality (per `marketing_strategy_master.md`) is hard to square with $30+/seat/month CRM tooling at this stage.
+**Tooling decision (locked, 2026-05-09):**
+
+The live tracker lives in **Google Sheets**, not in the Dewey Sholes platform backend. Reasoning:
+
+- Building admin CRM features into a platform that doesn't yet exist would push launch back by weeks for tooling that's operational, not customer-facing.
+- Sheets handles 4,700 rows without breaking a sweat.
+- Two-collaborator-friendly (Aud + Rosie), free, no credentials to manage.
+- When the data shape changes, just edit a column — no DB migration.
+
+**Email-side analytics live in Resend** (or whatever email provider we settle on). It already gives us per-recipient opens, clicks, bounces, and unsubscribes. We don't need to rebuild that.
+
+**Conversion attribution lives on the platform.** When a CSR signs up via a UTM-tagged link, the platform records `signup_source`, `signup_campaign`, `signup_batch`, and `signup_referrer_csr` on their user record. That's the one piece the platform genuinely owns — and it's a small feature added to the signup flow during the real build (see kanban task on UTM signup tracking).
+
+**Reconciliation workflow:**
+- After each email batch send: export Resend's per-recipient CSV (opens / clicks), bulk-paste into the corresponding Sheets columns. ~5 minutes per batch.
+- Signups: the platform's own DB has the authoritative record. Periodically pull the signup list and mark `outreach_status = signed_up` in Sheets.
+
+**When to revisit (graduating tooling):**
+- Sheets → Airtable (~$10/seat/month): when the schema outgrows flat (multiple touchpoints per CSR, history of contacts, deeper relationships between CSRs and firms).
+- Airtable → real CRM (Salesforce / Hubspot): not before 12+ months post-launch, and only if revenue supports the per-seat cost.
+
+**Bootstrap data:** A header-only CSV template lives at `research/csr_research_tracker_template.csv` — one-click import to Sheets, then layer the CRB Excel on top.
 
 ---
 
