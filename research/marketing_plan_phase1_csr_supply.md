@@ -44,11 +44,27 @@ Why 100 is enough:
 **Source:** 4,733 active CA CSRs from CRB data pull (completed)
 
 **Sequencing (Aud + Rosie, 2026-05-09):**
-1. **Bay Area first** — initial batches target the ~618 Bay Area CSRs.
-2. **Other major CA metros next** — LA, San Diego, Sacramento, OC.
-3. **Rest of state last** — every remaining licensed CSR in CA.
 
-This isn't a filter (we email all 4,733 eventually); it's a batch order. Bay Area first for the pilot because that's the geographic concentration where Phase 2 firm outreach will start.
+Two orthogonal cuts: **employment status** (freelance vs court-employed) and **geography** (Bay Area → other CA metros → rest of state).
+
+**Phase 1A — Freelance CSRs (primary target):**
+Per Rosie, roughly half of the 4,733 CRB licensees are court-employed (regularly assigned as the official reporter for a specific courthouse / department). The other ~2,500 are freelance — these are our urgent supply target.
+
+1. **Bay Area freelance** first (~300 CSRs estimated, pending research effort).
+2. **Other major CA metro freelance** — LA, San Diego, Sacramento, OC.
+3. **Rest of state freelance** — every remaining freelance licensee.
+
+**Phase 1B — Court-employed CSRs (secondary target):**
+Court-employed CSRs aren't out of the game — they may take freelance work occasionally and they may have transcripts from court appearances they could deliver via Dewey Sholes. They are not the urgent supply, but they're worth a separate, later batch with **different messaging** that emphasizes:
+- Side-income for occasional freelance jobs.
+- A simple delivery rail for transcripts they've already produced from their court work.
+- Not asking them to leave or replace their primary court employment.
+
+Same geo order within Phase 1B (Bay Area → other metros → rest of state).
+
+**The freelance-vs-employed split depends on the CSR research effort** — we have to identify which CSRs are court-employed before we can run this segmentation. See `research/csr_research_tracker.md` for the methodology.
+
+This isn't a filter (we email everyone in the universe eventually); it's a batch order. Bay Area first for the pilot because that's the geographic concentration where Phase 2 firm outreach will start. Freelance first because that's where the supply gap actually exists.
 
 **Batch size:** 100 CSRs per send. Rationale: lets us A/B subject lines and copy across batches, keeps daily volume well within Resend's free-tier limits, and gives time to triage replies before the next batch lands.
 
@@ -238,10 +254,11 @@ The sharpened use case (above) basically settles this: the attorney has a specif
 
 When the marketing agent next runs, the following Phase 1 work is queued:
 
-- **CRB email enrichment.** The CRB data has names + license numbers but not email addresses. Build a workflow to find emails for the Bay Area CSRs (~618) first, then move outward by metro. Acceptable inputs: LinkedIn, firm websites, professional directories. Document the find-rate and a guess at the per-CSR cost so we can decide whether to keep going.
-- **Email batch tracking sheet.** Create `research/csr_email_batch_tracker.md` (or Airtable equivalent) that logs per-batch: send date, batch number, geo segment, list size, opens, clicks, conversions to signup. Should match the UTM convention `?source=email&batch=NN`.
-- **Email sequence drafts.** Three actual email drafts (introduction / follow-up / final) ready for Aud + Rosie review. Honor editorial standards (en-dashes only) and the disclosure rule (we're not opening to firms until minimum CSR signup).
+- **CRB email enrichment.** The CRB data has names + license numbers but not email addresses. Build a workflow to find emails for the Bay Area CSRs (~618) first, then move outward by metro. Acceptable inputs: LinkedIn, firm websites, professional directories. Document the find-rate and a guess at the per-CSR cost so we can decide whether to keep going. Cross-reference with `research/csr_research_tracker.md` so emails feed into the per-CSR research record.
+- **Email batch tracking sheet.** Create `research/csr_email_batch_tracker.md` (or Airtable equivalent) that logs per-batch: send date, batch number, geo segment, employment-status segment (freelance vs court-employed), list size, opens, clicks, conversions to signup. Should match the UTM convention `?source=email&batch=NN`.
+- **Email sequence drafts.** Three actual email drafts (introduction / follow-up / final) ready for Aud + Rosie review. Honor editorial standards (en-dashes only) and the disclosure rule (we're not opening to firms until minimum CSR signup). **Two variants per touch:** one for freelance CSRs (the Phase 1A primary pitch) and one for court-employed CSRs (Phase 1B — emphasize side-income for occasional freelance work + a delivery rail for transcripts they've already produced).
 - **Referral link tracking.** Document the UTM scheme `?source=referral&csr=<license-number>` and the per-CSR analytics view we want in the dashboard once that's built.
+- **Court-employed segmentation research.** Help populate the `employment_status` field of the CSR research tracker by pulling from public sources (court official-reporter directories, LinkedIn employer fields, case captions). See `research/csr_research_tracker.md` for the schema and methodology.
 
 ---
 

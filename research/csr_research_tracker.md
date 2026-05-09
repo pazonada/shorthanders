@@ -1,0 +1,115 @@
+# CSR research tracker — schema and methodology
+
+**Owner:** Aud + Rosie (split research effort, ~50 CSRs/week each per Rosie's 2026-05-09 proposal)
+**Last updated:** 2026-05-09
+**Status:** Schema definition. The actual live tracker should live in Google Sheets or Airtable for collaborative editing — this markdown doc is the schema reference, not the working data.
+
+---
+
+## What this is
+
+A pre-signup CRM-style tracker that lets us segment, target, and personalize outreach to the ~4,733 CSRs in the CRB database. The goal is to know **before we email someone** whether they are likely freelance or court-employed, what firms they've worked with, and how to reach them.
+
+This is distinct from the post-signup CSR account record (managed in `governance-and-process/csr_account_procedures.md` and the platform's own database). This tracker is for the people *not yet on the platform*.
+
+---
+
+## Why we need it
+
+Two specific decisions depend on knowing which CSRs are court-employed vs. freelance:
+
+1. **Phase 1 batch sequencing** — freelance CSRs are the urgent supply target; court-employed CSRs are a secondary batch with different messaging (see `marketing_plan_phase1_csr_supply.md`).
+2. **Phase 2 firm targeting** — when CSRs sign up, we want to know which firms they've worked with. CSR-cited firms get the strongest personalized postcard outreach in Phase 2.
+
+Without a tracker, we'd be emailing 4,733 people with generic copy and no segmentation signal.
+
+---
+
+## Source of truth
+
+**Starting point:** the CRB website's downloadable Excel file of all licensed CSRs in California. Per Rosie (2026-05-09), this file already exists and can be downloaded — we just customize it with our additional fields. That gives us name + license number + (some) contact info as the seed.
+
+**Enrichment sources** (per CSR, as we research):
+- **LinkedIn profiles** — usually surfaces current employer, work history, location.
+- **Court employee directories** — many CA superior courts publish lists of "official reporters" by department.
+- **Old case captions** — public court records sometimes credit the CSR as "Official Reporter, Dept. X" for a specific courthouse, which is a strong court-employed signal.
+- **Firm websites** — for freelance CSRs who have an "as seen with" or "preferred vendors" mention.
+- **Google searches** — name + "CSR" + courthouse usually finds old transcript title pages or scheduling notices.
+- **Existing CSR / agency directories** — CCRA member directory, NCRA directory.
+
+---
+
+## Schema (proposed — Aud and Rosie should review and edit)
+
+| Field | Type | Notes |
+|---|---|---|
+| `csr_license_number` | string | Canonical key per `governance-and-process/csr_account_procedures.md`. Always present. |
+| `name` | string | Legal name from CRB. |
+| `email` | string | Empty until enriched. |
+| `phone` | string | Empty until enriched. |
+| `linkedin_url` | string | Empty until found. |
+| `metro` | enum | `bay_area` / `la` / `san_diego` / `oc` / `sacramento` / `other_ca` / `unknown`. |
+| `city` | string | Where available. |
+| `employment_status` | enum | `freelance` / `court_employed` / `unknown` — **the central segmentation field**. |
+| `employed_courthouse` | string | If `court_employed`, which courthouse + department where known. |
+| `license_issue_year` | int | From CRB. Used for newest-vs-experienced segmentation per the existing Phase 1 plan. |
+| `specialties` | tags | e.g. family_law, civil_lit, pi, probate. From public-profile mentions. |
+| `firms_worked_with` | list[string] | Firms identified through public records or LinkedIn. **Feeds Phase 2 Tier-1A targeting.** |
+| `outreach_status` | enum | `not_contacted` / `email_sent` / `email_opened` / `email_clicked` / `responded` / `signed_up` / `unsubscribed` / `bounced`. |
+| `last_contacted_date` | date | |
+| `email_batch_number` | int | Which Phase 1 batch they were in (matches `?batch=NN` UTM). |
+| `notes` | text | Researcher's free-form observations. |
+| `researcher` | string | `aud` / `rosie` / future delegate. |
+| `last_researched_date` | date | When the entry was last touched. |
+
+Add or remove fields as the research starts. The above is a starting proposal; nothing here is settled.
+
+---
+
+## Methodology — court-employed identification
+
+Identifying who's court-employed is the highest-value enrichment. Suggested approach:
+
+1. **Pull official-reporter lists** from each major CA superior court website. Many post these publicly. Match by name and license number.
+2. **LinkedIn employer field** — "Court Reporter, [Court name]" or "Official Reporter" usually means employed. "Freelance court reporter" or solo practice means freelance.
+3. **Search for recent case captions** naming the CSR. If the same CSR appears as the reporter for many cases in the same department, they're almost certainly the official reporter for that department.
+4. **Default to `unknown`** if none of the above lands. Don't guess — `unknown` is a useful state because it queues someone for further research.
+
+**Edge case:** some CSRs are court-employed but also do freelance work on their off days. Tag these as `court_employed` with a note in `notes` ("also takes freelance"). They go into Phase 1B but should be high-priority within that batch.
+
+---
+
+## Workflow
+
+**Aud + Rosie split the universe.** Per Rosie's proposal: roughly 50 CSRs/week each. At that pace, ~2,500 freelance CSRs takes ~25 weeks (~6 months) to fully research. Realistically, we don't need to research every one before launching — we need enough Bay Area freelance coverage to start Phase 1A.
+
+**Suggested first-pass priority** (within the research effort itself, not the outreach order):
+
+1. Bay Area CSRs first (~618 from the CRB pull). Goal: have all 618 categorized as freelance / court-employed / unknown within the first few weeks.
+2. Other-metro CSRs as Phase 1A outreach moves outward.
+3. Rest of state on rolling basis.
+
+**Tooling recommendation:**
+- Start in **Google Sheets** (free, two-collaborator-friendly, easy to import the CRB Excel as starting data).
+- If the data structure outgrows a flat sheet (e.g., we want history of every email touch, multiple firms per CSR with their own metadata), graduate to **Airtable** (~$10/seat/month).
+- Hold off on a real CRM (Salesforce, Hubspot) until volume justifies it. The bootstrapped reality (per `marketing_strategy_master.md`) is hard to square with $30+/seat/month CRM tooling at this stage.
+
+---
+
+## Privacy / ethical guardrails
+
+- We're researching **public information** about licensed professionals. CRB licensees are public record; LinkedIn profiles are public.
+- Do **not** scrape from sources with explicit terms-of-service prohibitions or pay-walled directories without a license.
+- Do **not** include data in this tracker that we wouldn't be comfortable showing the CSR if they asked. If we collected it, we should be able to defend collecting it.
+- When a CSR signs up and their record migrates to the platform's own database, the pre-signup tracker entry should be **flagged as migrated** (not deleted yet, in case we need to audit attribution) and eventually purged.
+
+---
+
+## Open tasks for whoever picks this up
+
+- [ ] Download the CRB CSR Excel file as the seed dataset.
+- [ ] Stand up the live tracker in Google Sheets with the schema above.
+- [ ] Aud + Rosie split the Bay Area chunk first (~309 CSRs each if 50/50).
+- [ ] Document an internal cadence for sync (weekly check-in, shared notes column).
+- [ ] When Phase 1A email outreach starts, populate `outreach_status`, `last_contacted_date`, `email_batch_number` from the email-batch tracker (cross-reference, don't double-enter).
+- [ ] When a CSR signs up, mark `outreach_status = signed_up` and migrate identity over to the platform's CSR record per `csr_account_procedures.md`.
