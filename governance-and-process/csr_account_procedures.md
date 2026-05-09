@@ -95,6 +95,14 @@ The CSR completes the onboarding flow at `#/reporter-signup`. Some items are man
 
 If the CSR skips these, their account stays Pending until profile is at least minimally complete. They get a nudge email to finish.
 
+### Captured for marketing trigger (encouraged)
+
+- **Firms you regularly work with.** Structured field — list of firm names + (optional) the city the firm is in. Each firm the CSR enters becomes a **trigger** that adds (or annotates) a row in the firm outreach tracker (`research/firm_outreach_tracker_template.csv`), tagging the CSR's license number into the firm's `cited_by_csr_licenses` field.
+
+  This is what powers the personalized Phase 2 firm outreach: when we email these firms, the copy reads *"Sarah Chen, a court reporter you've worked with, is now using Dewey Sholes..."* (per the Tier-1A path in `research/marketing_plan_phase2_law_firms.md`).
+
+  Distinct from the "recent cases" field — cases are about showcasing experience; firms are about marketplace network signaling. Both are collected, both are useful.
+
 ### Deferred to first payout
 
 - **W-9** — collected via Stripe Connect at first payout, NOT at signup. This avoids upfront paperwork friction. If they never get paid, we never need their SSN.

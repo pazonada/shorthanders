@@ -159,6 +159,22 @@ A subset of Tier 1 — **max 25 firms** — gets the postcard *plus* a box of ch
 
 **Tracking:** UTM `?source=postcard-chocolate&firm=<firm-slug>` so we can compare conversion against the postcard-only Tier 1.
 
+### CSR-cited firms: signup-triggered firm tracker population
+
+The strongest personalization angle in Phase 2 is **"a court reporter you've worked with is now on Dewey Sholes."** That requires data flowing in the other direction from the halo effect — CSRs supply the firm names, and the firm tracker picks up new entries automatically.
+
+Trigger flow:
+
+1. CSR completes onboarding and fills in the **"firms you regularly work with"** field (per `governance-and-process/csr_account_procedures.md`). Structured list of firm names + optional city.
+2. For each firm name the CSR submits, the platform either:
+   - **Appends a new row** in `firm_outreach_tracker` if the firm isn't already there, with `tier="1A"` (CSR-cited), `csr_relationship_signal="yes"`, and the CSR's license number in `cited_by_csr_licenses`.
+   - **Updates the existing row** if the firm is already in the tracker, by adding the new CSR's license number to the comma-separated `cited_by_csr_licenses` list.
+3. Phase 2 outreach pulls `cited_by_csr_licenses` to personalize the email/postcard copy.
+
+This is engineering work — the platform has to write to the firm tracker on signup. Captured in the kanban.
+
+**Fuzzy-matching note:** firm names will arrive in inconsistent formats (Walsh Family Law, Walsh Family Law LLP, The Walsh Firm, etc.). The platform should attempt a fuzzy match against existing firm-tracker rows before creating a new one, then surface ambiguous matches for human review during the weekly tracker reconciliation. Don't try to be perfect — surface the duplicates and let Aud or Rosie merge them.
+
 ### Halo effect: CSR signups triggered by firm signups
 
 When a firm signs up and names a specific CSR as a favorite, the platform sends an **automated email** to that CSR: *"A firm you've previously worked with — [Firm name] — just signed up to Dewey Sholes. Sign up to be on their favorites list and get more jobs from them in the future."*
