@@ -41,28 +41,39 @@ Without a tracker, we'd be emailing 4,733 people with generic copy and no segmen
 
 ## Schema (proposed — Aud and Rosie should review and edit)
 
-| Field | Type | Notes |
+| Field | Source | Notes |
 |---|---|---|
-| `csr_license_number` | string | Canonical key per `governance-and-process/csr_account_procedures.md`. Always present. |
-| `name` | string | Legal name from CRB. |
-| `email` | string | Empty until enriched. |
-| `phone` | string | Empty until enriched. |
-| `linkedin_url` | string | Empty until found. |
-| `metro` | enum | `bay_area` / `la` / `san_diego` / `oc` / `sacramento` / `other_ca` / `unknown`. |
-| `city` | string | Where available. |
-| `employment_status` | enum | `freelance` / `court_employed` / `unknown` — **the central segmentation field**. |
-| `employed_courthouse` | string | If `court_employed`, which courthouse + department where known. |
-| `license_issue_year` | int | From CRB. Used for newest-vs-experienced segmentation per the existing Phase 1 plan. |
-| `specialties` | tags | e.g. family_law, civil_lit, pi, probate. From public-profile mentions. |
-| `firms_worked_with` | list[string] | Firms identified through public records or LinkedIn. **Feeds Phase 2 Tier-1A targeting.** |
-| `outreach_status` | enum | `not_contacted` / `email_sent` / `email_opened` / `email_clicked` / `responded` / `signed_up` / `unsubscribed` / `bounced`. |
-| `last_contacted_date` | date | |
-| `email_batch_number` | int | Which Phase 1 batch they were in (matches `?batch=NN` UTM). |
-| `notes` | text | Researcher's free-form observations. |
-| `researcher` | string | `aud` / `rosie` / future delegate. |
-| `last_researched_date` | date | When the entry was last touched. |
+| `csr_license_number` | CRB | Canonical key per `governance-and-process/csr_account_procedures.md`. Always present. |
+| `last_name` | CRB | From CRB Excel. ALL CAPS in source — leave as-is or normalize in a Sheets formula. |
+| `first_name` | CRB | From CRB Excel. ALL CAPS in source. |
+| `email` | research | Empty until enriched (LinkedIn, firm websites, etc.). |
+| `phone` | research | Empty until enriched. |
+| `linkedin_url` | research | Empty until found. |
+| `metro` | derived | `bay_area` / `la` / `san_diego` / `oc` / `sacramento` / `other_ca` / `unknown`. Bay Area is auto-tagged from the existing `bay_area_active_csrs.csv` subset; other metros need to be classified by zip or city. |
+| `city` | CRB | From CRB Excel. |
+| `zip` | CRB | From CRB Excel. Useful for metro classification. |
+| `license_expiration` | CRB | From CRB Excel. Useful for re-licensing reminders and confirming the licensee is still active when we research. |
+| `employment_status` | research | `freelance` / `court_employed` / `unknown` — **the central segmentation field**. All seeded to `unknown` initially. |
+| `employed_courthouse` | research | If `court_employed`, which courthouse + department where known. |
+| `license_issue_year` | research | Useful for newest-vs-experienced segmentation. Not in the current CRB CSV — would need to be derived (lower license numbers = older) or pulled separately. |
+| `specialties` | research | e.g. family_law, civil_lit, pi, probate. From public-profile mentions. |
+| `firms_worked_with` | research | Firms identified through public records or LinkedIn. **Feeds Phase 2 Tier-1A targeting.** |
+| `outreach_status` | tracking | `not_contacted` / `email_sent` / `email_opened` / `email_clicked` / `responded` / `signed_up` / `unsubscribed` / `bounced`. All seeded to `not_contacted`. |
+| `last_contacted_date` | tracking | |
+| `email_batch_number` | tracking | Which Phase 1 batch they were in (matches `?batch=NN` UTM). |
+| `notes` | research | Researcher's free-form observations. |
+| `researcher` | tracking | `aud` / `rosie` / future delegate. |
+| `last_researched_date` | tracking | When the entry was last touched. |
 
-Add or remove fields as the research starts. The above is a starting proposal; nothing here is settled.
+Add or remove fields as the research starts. The above schema is the current working plan after seeding from the CRB pull.
+
+### Seed file (already populated)
+
+The CRB pull (kanban t33, completed 2026-03-22) is in the repo at `research/CSRs/all_active_ca_csrs.csv` (4,733 rows) and `research/CSRs/bay_area_active_csrs.csv` (537 rows).
+
+A seed file matching the tracker schema, **pre-populated with all 4,733 CSRs**, is at `research/csr_research_tracker_seed.csv`. Bay Area CSRs are auto-tagged with `metro=bay_area`; other metros are blank (to be classified). All `employment_status` values start as `unknown` (the research target). All `outreach_status` values start as `not_contacted`.
+
+To bootstrap the live tracker: import `csr_research_tracker_seed.csv` to Google Sheets (File → Import → Upload → "Replace spreadsheet"). It's the live tracker's starting state — no merge with the empty template needed.
 
 ---
 
