@@ -42,6 +42,8 @@ Anything in MVP scope should be captured in `marketing_strategy_master.md`, the 
 
 **Trigger condition for revisiting:** ≥ 50 active firms on the platform AND consistent feedback that physical pickup is a meaningful operational cost they'd pay us to absorb.
 
+**How we'll know if firms care:** Round-2 user testing (post-MVP) explicitly tests this. See the "Courier / court-runner cost validation" section in `research/user_testing_legal_assistant_guide.md` for the question set. Round 1 doesn't ask — would muddy the core marketplace-fit conversation.
+
 ---
 
 ## Idea 2: Deposition transcription expansion (Rosie, ongoing discussion)

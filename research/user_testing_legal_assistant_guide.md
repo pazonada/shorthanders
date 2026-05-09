@@ -133,6 +133,36 @@ Same length (45 min), same comp ($25 Starbucks).
 
 ---
 
+## Round 2 / post-MVP topics — explicitly NOT in this round
+
+Some firm-side questions are worth asking eventually but don't belong in this first round. Capture them here so they don't get lost; revisit in a second round of user testing/research after MVP launch when we have a track record to talk about.
+
+### Courier / court-runner cost validation (deferred from 2026-05-09)
+
+**Hypothesis to validate:** Per Rosie, firms currently pay ~$100 to dispatch a "court runner" to physically pick up a CD or transcript from a courthouse. The post-MVP growth idea is for Dewey Sholes to develop bulk-pickup relationships and offer the service at a lower price-point, especially for non-rush jobs (see `governance-and-process/post_mvp_growth_strategy.md`).
+
+**Why it's round 2, not round 1:**
+- The MVP doesn't include courier handling. Asking about it now risks the firm thinking we're already pitching it, which confuses the round-1 conversation.
+- The validation only matters if we hit marketplace fit on the core transcript flow. If we don't, the courier idea is moot anyway.
+- Round-2 conversations can be grounded in the firm's actual experience with Dewey Sholes rather than speculation about a service they haven't used.
+
+**Questions to ask in round 2:**
+- How often does your firm dispatch a courier to a courthouse (or anywhere) to pick up a CD, paper transcript, or other deliverable?
+- Roughly how much does it cost per dispatch? Is that a flat rate or hourly?
+- Who handles the logistics — you, an admin, an outside service?
+- Is this a recurring pain point or a once-in-a-while annoyance?
+- If Dewey Sholes offered bulk-pickup as an add-on bundled into the order, what price would feel like a meaningful win? Probe specific price points (e.g., "if we charged $40 for non-rush pickup, would you use it? $60? $80?").
+- For rush jobs specifically, would you still want a courier option even at parity with current pricing, just for the convenience of one-click logistics?
+- Are there cases where the current CD-pickup model is a hard blocker — e.g., a courthouse that hasn't moved to digital delivery — vs. cases where you'd just take digital if available?
+
+**Decision this informs:** Whether to invest in courier-service partnerships post-MVP, what price-points to target, and whether to position courier as standard / premium / enterprise tier.
+
+### Other questions deferred to round 2
+
+Add new round-2 topics here as they come up. Each should follow the same shape: hypothesis to validate, why round 2 not round 1, specific questions, decision it informs.
+
+---
+
 ## Output
 
 After up to 5 interviews (plus optional attorney), synthesize into:
