@@ -26,19 +26,24 @@ data alone (same effect as the original seed generation).
 
 Merge rules:
 - For licenses that exist in both files: update CRB-sourced fields (last_name,
-  first_name, city, zip, license_expiration); preserve all research/tracking
+  first_name, city, zip, license_expiration); preserve research/tracking
   fields (email, phone, linkedin_url, employment_status, employed_courthouse,
   specialties, firms_worked_with, outreach_status, last_contacted_date,
-  email_batch_number, notes, researcher, last_researched_date, metro).
-- For licenses in CRB but not in current state: add as new rows. metro is
-  blank (the Sheets ARRAYFORMULA will classify by ZIP). employment_status
-  defaults to 'unknown'. outreach_status defaults to 'not_contacted'.
+  email_batch_number, notes, researcher, last_researched_date); recompute
+  metro from ZIP using the lookup table.
+- For licenses in CRB but not in current state: add as new rows with metro
+  computed from ZIP, employment_status='unknown', outreach_status='not_contacted'.
 - For licenses in current state but not in CRB: keep the row so research
   isn't lost, but prefix the notes field with [LAPSED] so the researcher can
   find and review them. The deltas CSV also lists them under the LAPSED
-  change type.
+  change type. metro is recomputed for lapsed rows too.
 - For licenses in both, the deltas CSV lists changed CRB fields under
   UPDATED so you can spot-check before importing.
+
+The metro column is treated as a DERIVED field (always recomputed from ZIP,
+never preserved from existing state). To override the classification for a
+ZIP-3 prefix, edit research/zip_to_metro_lookup.csv. Per-row metro overrides
+are not supported by design — they would silently disagree with the rule.
 """
 
 import argparse
@@ -51,8 +56,12 @@ CRB_SOURCED_FIELDS = {
     'last_name', 'first_name', 'city', 'zip', 'license_expiration',
 }
 
+DERIVED_FIELDS = {
+    'metro',  # always recomputed from ZIP via the lookup table
+}
+
 PRESERVED_FIELDS = {
-    'email', 'phone', 'linkedin_url', 'metro', 'employment_status',
+    'email', 'phone', 'linkedin_url', 'employment_status',
     'employed_courthouse', 'license_issue_year', 'specialties',
     'firms_worked_with', 'outreach_status', 'last_contacted_date',
     'email_batch_number', 'notes', 'researcher', 'last_researched_date',
@@ -96,7 +105,27 @@ def load_current(path):
     return rows
 
 
-def build_merged_row(license_num, crb_row, existing_row):
+def load_zip_to_metro(path):
+    """Load ZIP-3 to metro lookup. Returns empty dict if path missing."""
+    mapping = {}
+    if path is None or not Path(path).exists():
+        return mapping
+    with open(path, newline='') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            mapping[row['zip_prefix']] = row['metro']
+    return mapping
+
+
+def derive_metro(zip_str, zip_to_metro):
+    """Compute metro from a ZIP using the 3-digit prefix. Falls back to other_ca."""
+    if not zip_str or not zip_to_metro:
+        return ''
+    prefix = str(zip_str)[:3]
+    return zip_to_metro.get(prefix, 'other_ca')
+
+
+def build_merged_row(license_num, crb_row, existing_row, zip_to_metro):
     out = {col: '' for col in OUTPUT_COLUMNS}
     out['csr_license_number'] = license_num
 
@@ -110,6 +139,11 @@ def build_merged_row(license_num, crb_row, existing_row):
     if existing_row:
         for field in PRESERVED_FIELDS:
             out[field] = existing_row.get(field, '')
+
+    # metro is always recomputed from ZIP — derived field, not manual.
+    # If you want to override, edit zip_to_metro_lookup.csv (changes the rule
+    # for every CSR with that ZIP-3 prefix). Per-row overrides aren't supported.
+    out['metro'] = derive_metro(out['zip'], zip_to_metro)
 
     if not out['employment_status']:
         out['employment_status'] = 'unknown'
@@ -125,10 +159,15 @@ def main():
     ap.add_argument('--current', help='Path to current tracker CSV (Sheets export). Omit for first-time seed.')
     ap.add_argument('--output', required=True, help='Path to write merged seed CSV.')
     ap.add_argument('--deltas', help='Path to write a deltas summary CSV (optional).')
+    ap.add_argument('--zip-lookup', default='research/zip_to_metro_lookup.csv',
+                    help='Path to ZIP-3 to metro lookup CSV (default: research/zip_to_metro_lookup.csv).')
     args = ap.parse_args()
 
     crb = load_crb(args.crb)
     current = load_current(args.current)
+    zip_to_metro = load_zip_to_metro(args.zip_lookup)
+    if not zip_to_metro:
+        print(f'WARNING: ZIP-to-metro lookup not loaded from {args.zip_lookup}; metro column will be blank.', file=sys.stderr)
 
     crb_licenses = set(crb.keys())
     current_licenses = set(current.keys())
@@ -142,13 +181,15 @@ def main():
     # Rows present in latest CRB pull (continuing + new)
     for license_num in sorted(crb_licenses):
         merged_rows.append(
-            build_merged_row(license_num, crb[license_num], current.get(license_num))
+            build_merged_row(license_num, crb[license_num], current.get(license_num), zip_to_metro)
         )
 
     # Lapsed rows kept with a marker so research isn't lost
     for license_num in sorted(lapsed_licenses):
         existing = current[license_num]
         out = {col: existing.get(col, '') for col in OUTPUT_COLUMNS}
+        # Recompute metro for lapsed rows too (if ZIP exists), keeps the field consistent
+        out['metro'] = derive_metro(out.get('zip', ''), zip_to_metro)
         marker = '[LAPSED — not in latest CRB pull]'
         existing_notes = out.get('notes', '')
         if marker not in existing_notes:
