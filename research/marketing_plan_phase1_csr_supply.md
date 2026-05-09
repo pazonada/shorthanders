@@ -42,19 +42,37 @@ Why 100 is enough:
 
 ### 1. Cold email to CRB database (Primary — highest volume)
 **Source:** 4,733 active CA CSRs from CRB data pull (completed)
-**Approach:** 
-- Segment by license issue date:
-  - **Newest CSRs (licensed last 2-3 years):** Hungry for work, no agency loyalty, most tech-comfortable
-  - **Most experienced CSRs (licensed 20+ years):** Deep attorney relationships, may be looking to simplify their practice before retirement
-- Email sequence (3 touches over 2 weeks):
-  1. Introduction: what Dewey Sholes is, why it exists, free pilot signup
-  2. Follow-up: address common concerns (IC status, how payment works, no exclusivity)
-  3. Final: social proof (how many reporters have signed up, Rosie's endorsement as a practicing attorney)
-- Personalize with their name and license info (we have it from CRB)
-- CRB records may not have email addresses — supplement via LinkedIn lookup, firm websites, or professional directory searches
 
-**Target conversion rate:** 3-5% = 140-235 signups from full list
-**Realistic Month 2 target:** Email 1,000-2,000 CSRs → 30-100 signups
+**Sequencing (Aud + Rosie, 2026-05-09):**
+1. **Bay Area first** — initial batches target the ~618 Bay Area CSRs.
+2. **Other major CA metros next** — LA, San Diego, Sacramento, OC.
+3. **Rest of state last** — every remaining licensed CSR in CA.
+
+This isn't a filter (we email all 4,733 eventually); it's a batch order. Bay Area first for the pilot because that's the geographic concentration where Phase 2 firm outreach will start.
+
+**Batch size:** 100 CSRs per send. Rationale: lets us A/B subject lines and copy across batches, keeps daily volume well within Resend's free-tier limits, and gives time to triage replies before the next batch lands.
+
+**Pitch in the cold email (locked elements):**
+- We're entering pilot phase.
+- Listing fee waived for first year.
+- They need to be willing to provide feedback during the pilot (light expectation, not heavy commitment).
+- Honest disclosure: **the platform doesn't open to law firms until we onboard a minimum number of CSRs**, so signing up now is signing up to be among the first reporters firms see when demand goes live.
+
+**Email sequence (3 touches over 2 weeks per CSR):**
+1. Introduction: what Dewey Sholes is, why it exists, free pilot signup, the feedback expectation, the "we're not opening to firms until we have enough CSRs" framing.
+2. Follow-up: address common concerns (IC status, how payment works, no exclusivity, statutory rate honored 100%).
+3. Final: social proof (how many reporters have signed up, Rosie's endorsement as a practicing attorney, the firms-side waitlist progress).
+
+**Personalization:** name + license info (from CRB pull). Email addresses are not in CRB records — supplement via LinkedIn, firm websites, or the marketing-agent's research pass (see "Marketing agent: open tasks" at the bottom of this doc).
+
+**What we track per email send:**
+- **Open rate** per batch (subject-line A/B signal)
+- **Click-through rate** to the landing page (per batch, per email touch in the sequence)
+- **Conversion rate** = signups attributable to the email (UTM-tagged signup link `?source=email&batch=NN`)
+- **Per-batch comparison** — is conversion stable across batches, or does it decay as we move from Bay Area → other metros → rest of state?
+
+**Target conversion rate:** 3-5% = 140-235 signups from the full list.
+**Realistic Month 2 target:** Email 1,000-2,000 CSRs → 30-100 signups.
 
 ### 2. Rosie's professional network (Highest quality)
 **Source:** Rosie's 22 years of practicing family law in CA
@@ -90,12 +108,19 @@ Why 100 is enough:
 ### 5. CSR referral program
 **Source:** Every CSR who signs up
 **Approach:**
-- Built into the platform: unique invite link in CSR dashboard
+- Built into the platform: unique referral link in CSR dashboard, copy-paste-able into emails to CSR friends.
 - Rewards (already defined in pilot pricing policy):
   - 1 referral → $10 Starbucks card
   - 5 referrals → $25 Amazon card
   - 10+ referrals → $50 Amazon card
-- Cost is minimal and only kicks in when it's working
+- Cost is minimal and only kicks in when it's working.
+
+**What we track per referral link:**
+- **Click-through rate** on the referral link (per CSR — surfaces which CSRs are actively sharing).
+- **Conversion rate** of referral-link visitors to signups.
+- **Reward triggers** — when a CSR crosses 1, 5, or 10 successful referrals.
+
+**UTM convention:** `?source=referral&csr=<license-number>` so we can attribute to the originating CSR.
 
 **Target:** 10-20 signups (secondary channel, grows over time)
 **Budget:** ~$250-500 in gift cards (only spent if it works)
@@ -206,6 +231,17 @@ The sharpened use case (above) basically settles this: the attorney has a specif
 | Warm network signups | 10-15 |
 | Time to 100 signups | 6-8 weeks from first outreach |
 | Geographic coverage (for live attendance) | At least 10 CSRs in each of LA, Bay Area, San Diego |
+
+---
+
+## Marketing agent: open tasks
+
+When the marketing agent next runs, the following Phase 1 work is queued:
+
+- **CRB email enrichment.** The CRB data has names + license numbers but not email addresses. Build a workflow to find emails for the Bay Area CSRs (~618) first, then move outward by metro. Acceptable inputs: LinkedIn, firm websites, professional directories. Document the find-rate and a guess at the per-CSR cost so we can decide whether to keep going.
+- **Email batch tracking sheet.** Create `research/csr_email_batch_tracker.md` (or Airtable equivalent) that logs per-batch: send date, batch number, geo segment, list size, opens, clicks, conversions to signup. Should match the UTM convention `?source=email&batch=NN`.
+- **Email sequence drafts.** Three actual email drafts (introduction / follow-up / final) ready for Aud + Rosie review. Honor editorial standards (en-dashes only) and the disclosure rule (we're not opening to firms until minimum CSR signup).
+- **Referral link tracking.** Document the UTM scheme `?source=referral&csr=<license-number>` and the per-CSR analytics view we want in the dashboard once that's built.
 
 ---
 
