@@ -39,6 +39,7 @@ Ensure all reporters listed on Dewey Sholes hold active, valid CSR licenses issu
    - Profiles reactivated (renewed)
    - Expiration dates updated
 5. Review report manually before applying changes
+6. **Also regenerate the pre-signup research tracker seed.** The same quarterly download is the source for `research/csr_research_tracker_seed.csv`, which feeds the Sheets-based research tracker (per `research/csr_research_tracker.md`). Without this step, the pre-signup Sheets snapshot drifts away from reality and we risk emailing licensees who are no longer active. The regen script keeps the existing tracker schema, preserves any research notes / outreach status / contact info already populated for matching license numbers, and adds rows for newly licensed CSRs.
 
 ### Automated Expiration Monitoring (Daily)
 

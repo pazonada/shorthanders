@@ -67,6 +67,10 @@ Without a tracker, we'd be emailing 4,733 people with generic copy and no segmen
 
 Add or remove fields as the research starts. The above schema is the current working plan after seeding from the CRB pull.
 
+### Keeping the data fresh
+
+The CRB Excel that seeds this tracker is itself updated by the California Department of Consumer Affairs on a rolling basis. The canonical sync schedule lives in `governance-and-process/CSR_License_Verification_Policy.md` — quarterly full syncs in **January, April, July, and October**. That same quarterly process regenerates this tracker's seed file so the pre-signup Sheets snapshot doesn't drift away from reality. Don't redefine the cadence here; defer to the verification policy as source of truth.
+
 ### Seed file (already populated)
 
 The CRB pull (kanban t33, completed 2026-03-22) is in the repo at `research/CSRs/all_active_ca_csrs.csv` (4,733 rows) and `research/CSRs/bay_area_active_csrs.csv` (537 rows).
