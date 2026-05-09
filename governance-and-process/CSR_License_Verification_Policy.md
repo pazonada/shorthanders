@@ -39,7 +39,15 @@ Ensure all reporters listed on Dewey Sholes hold active, valid CSR licenses issu
    - Profiles reactivated (renewed)
    - Expiration dates updated
 5. Review report manually before applying changes
-6. **Also regenerate the pre-signup research tracker seed.** The same quarterly download is the source for `research/csr_research_tracker_seed.csv`, which feeds the Sheets-based research tracker (per `research/csr_research_tracker.md`). Without this step, the pre-signup Sheets snapshot drifts away from reality and we risk emailing licensees who are no longer active. The regen script keeps the existing tracker schema, preserves any research notes / outreach status / contact info already populated for matching license numbers, and adds rows for newly licensed CSRs.
+6. **Also regenerate the pre-signup research tracker seed.** The same quarterly download is the source for `research/csr_research_tracker_seed.csv`, which feeds the Sheets-based research tracker (per `research/csr_research_tracker.md`). Without this step, the pre-signup Sheets snapshot drifts away from reality and we risk emailing licensees who are no longer active. Use `scripts/merge_crb_refresh.py` to do the merge:
+   ```
+   python3 scripts/merge_crb_refresh.py \
+     --crb path/to/fresh_crb_export.csv \
+     --current path/to/sheets_export.csv \
+     --output research/csr_research_tracker_seed.csv \
+     --deltas research/merge_deltas_YYYY-MM-DD.csv
+   ```
+   The script keeps the existing tracker schema, preserves all research/tracking fields (email, phone, linkedin_url, employment_status, employed_courthouse, specialties, firms_worked_with, outreach_status, last_contacted_date, email_batch_number, notes, researcher, last_researched_date, metro), updates CRB-sourced fields (last_name, first_name, city, zip, license_expiration), adds rows for newly licensed CSRs, and keeps lapsed rows with a `[LAPSED]` note prefix so research isn't lost. The deltas CSV summarizes NEW / LAPSED / UPDATED rows for review before re-importing to Sheets.
 
 ### Automated Expiration Monitoring (Daily)
 
