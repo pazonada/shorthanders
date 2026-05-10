@@ -1,9 +1,9 @@
 # Firm priority starter list
 
 **Owner:** Aud
-**Last updated:** 2026-05-06
-**Status:** Starter set (25 firms) – not final. Built on public web research; contact enrichment is a separate pass.
-**Goal:** Seed the firm outreach tracker with ~25 well-researched Bay Area firms. Quality over quantity.
+**Last updated:** 2026-05-09
+**Status:** Starter set (26 firms) – not final. Built on public web research; contact enrichment is a separate pass.
+**Goal:** Seed the firm outreach tracker with well-researched Bay Area firms. Quality over quantity.
 
 ---
 
@@ -15,15 +15,26 @@ Not all litigation generates equal transcript volume. The ranking below is based
 
 | Priority | Practice area | Why |
 |----------|---------------|-----|
-| 1 | Personal injury – plaintiff | Every PI case involves depositions: defendants, witnesses, treating physicians, expert witnesses. Active PI firm with 5+ attorneys = 10-20+ deposition orders/month. Contingency model = cost-conscious, receptive to transparent pricing. |
-| 2 | Insurance defense | Mirror image of PI plaintiff. High deposition volume, often 30+ orders/month at mid-size firms. Very price-sensitive because carriers audit every line item. Note: carrier approval may be needed for vendor changes – a complication to flag per-firm. |
-| 3 | Family law – contested/high-asset | Contested custody + high-asset divorces involve depositions (custody evaluators, forensic accountants, vocational experts) and court appearance transcripts. Rosie's domain – warm intro channel available here. |
+| 1 | Insurance defense | Mirror image of PI plaintiff but with strategic upside the plaintiff side doesn't have. High deposition volume (often 30+ orders/month at mid-size firms). Very price-sensitive because carriers audit every line item. Critically: defense firms are the on-ramp to direct-to-carrier outreach. Once a defense firm is on the platform and seeing cost savings, carriers can be pitched on pressuring ALL their panel firms to use Dewey Sholes – a top-down sales channel reaching ~70% of attorneys (per `~/.claude/projects/.../memory/project_insurance_carrier_channel.md`). See Section 1.5 below for the strategic logic. |
+| 2 | Personal injury – plaintiff | Every PI case involves depositions: defendants, witnesses, treating physicians, expert witnesses. Active PI firm with 5+ attorneys = 10-20+ deposition orders/month. Contingency model = cost-conscious, receptive to transparent pricing. |
+| 3 | Family law – contested/high-asset | Contested custody + high-asset divorces involve depositions (custody evaluators, forensic accountants, vocational experts) and court appearance transcripts. |
 | 4 | Employment law – plaintiff side | Discrimination, wrongful termination, harassment cases are deposition-heavy. California's strong employment protections keep caseloads high. |
 | 5 | Medical malpractice – plaintiff | Fewer cases per firm than PI, but long multi-expert depositions (200+ pages common). High per-order revenue. Boutique firms in this space are a very good fit. |
 | 6 | Civil/commercial litigation | Breach of contract, business torts, partnership disputes. Steady deposition work. Lower per-firm volume than PI but strong when it overlaps with the categories above. |
 | 7 | Probate/trust litigation | Only contested matters need transcripts. Volume is lower per firm but cases are long and complex – high per-order page count when they do order. |
 
 **Explicitly excluded practice areas:** transactional (M&A, corporate, securities, real estate), immigration, pure criminal defense. These rarely or never order depositions or hearing transcripts.
+
+### 1.5. Why insurance defense is a strategic priority (not just a target)
+
+The user position (Aud, 2026-05-09): insurance defense firms are deliberately high priority not just because they buy a lot of transcripts but because **they're the on-ramp to direct-to-carrier outreach**. The long-term play:
+
+1. Get a meaningful cluster of insurance defense firms on Dewey Sholes during the pilot.
+2. Document their cost savings vs. agency markups (transparent statutory rate + 12% platform fee vs. typical 50-85% agency premium).
+3. Pitch carriers (auto, GL, professional liability, workers' comp insurers) directly: *"Your panel firms are saving $X per case on transcripts via this platform. You can require it across your panel for the same savings."*
+4. Carriers pressure ALL their panel firms to switch – a top-down distribution channel reaching the ~70% of attorneys whose work flows through carrier relationships (per `project_insurance_carrier_channel.md`).
+
+**Implication for firm research:** carrier-locked vendor arrangements are NOT a disqualifier. They're a feature – those firms are the relationship anchors we need to build the carrier pitch. Cold outreach to defense firms with carrier panels is still worthwhile; even if conversion is slow, the firm becomes part of the future carrier conversation regardless.
 
 ### Attorney-count sweet spot: 5-50
 
@@ -37,14 +48,16 @@ Not all litigation generates equal transcript volume. The ranking below is based
 
 ### Geography priorities within the Bay Area
 
+The Bay Area is prioritized for one specific reason: **Rosie has expressed interest in attending paralegal events in SF.** Those events are a venue to make in-person contact with paralegals who work at our target firms – handing them a postcard, a Dewey Sholes pitch, or a CSR business card. That's the channel advantage SF has over LA or San Diego, not any pre-existing firm relationships.
+
 | Submarket | Priority | Rationale |
 |-----------|----------|-----------|
-| San Francisco (SF proper) | Highest | Densest concentration of litigation firms, most accessible for Rosie's warm network, SF Superior Court is one of the highest-volume courts in CA |
-| Oakland / Alameda County | High | Strong plaintiff PI bar, employment law cluster, lower rents mean more independent firms |
-| San Jose / Santa Clara County | High | Large family law market, strong employment law base, high-volume civil courts |
-| Walnut Creek / Contra Costa | Medium-high | Solid regional litigation bar; Bowles & Verna is the anchor name here; slightly further from Rosie's core network |
+| San Francisco (SF proper) | Highest | Densest concentration of litigation firms; SF Superior Court is one of the highest-volume courts in CA. **SF paralegal events that Rosie can attend are the in-person channel that makes Bay Area firms easier to reach than firms in other CA metros.** |
+| Oakland / Alameda County | High | Strong plaintiff PI bar, employment law cluster, lower rents mean more independent firms; under-served by entrenched CSR agencies relative to SF. Some East Bay paralegals attend SF paralegal events too. |
+| San Jose / Santa Clara County | High | Large family law market, strong employment law base, high-volume civil courts. South Bay paralegal association is separate from SF; in-person reach for Rosie is weaker here unless she also attends Santa Clara events. |
+| Walnut Creek / Contra Costa | Medium-high | Solid regional litigation bar; Bowles & Verna is the anchor name. |
 | Palo Alto / Silicon Valley | Medium | Commercial disputes and employment law, but skews toward BigLaw satellites and IP shops. Litigation boutiques exist but are harder to find. |
-| Marin / North Bay | Lower | Smaller market, lower volume, harder to justify early outreach budget |
+| Marin / North Bay | Lower | Smaller market, lower volume, harder to justify early outreach budget. |
 
 ### New disqualifiers (additions to the locked list)
 
@@ -53,8 +66,9 @@ The locked plan already excluded: BigLaw (100+ attorneys), solo practitioners, t
 Adding:
 
 - **Workers' compensation defense-only firms** – these firms use workers' comp administrative judges, not CSRs. Different transcript ecosystem entirely. (Example: Laughlin, Falbo, Levy & Moresi – 140+ attorneys and WC-only; excluded.)
-- **Firms that appear to have locked carrier panel contracts** – if research suggests a firm has an exclusive CSR vendor relationship through a carrier arrangement, flag it rather than prioritizing it for cold outreach. Rosie's warm channel is more likely to work here.
 - **Mediation/arbitration-only practices** – some boutiques have pivoted away from litigation entirely. If a firm's website emphasizes ADR over trial work, deprioritize.
+
+**NOT a disqualifier (clarification):** Carrier-locked vendor arrangements at insurance defense firms. Per Section 1.5, those firms are explicit priorities – the carrier relationship is the strategic upside, not a complication.
 
 ---
 
@@ -141,7 +155,7 @@ These are the firms that should receive postcard + chocolate (Tier 2) treatment 
 - **Metro:** SF
 - **Attorney count:** ~6 (partners + senior counsel confirmed; estimated ~6-8 total)
 - **Practice areas:** Family law – litigation focus, high-conflict/high-asset cases exclusively
-- **Why they qualify:** Self-described "trial lawyers who litigate high-conflict, high-stakes cases." Serves SF, Alameda, Contra Costa, Marin, San Mateo, Santa Clara. Family law specialist certifications. Active deposition practice for contested cases. Rosie may have a warm intro path given shared family law bar.
+- **Why they qualify:** Self-described "trial lawyers who litigate high-conflict, high-stakes cases." Serves SF, Alameda, Contra Costa, Marin, San Mateo, Santa Clara. Family law specialist certifications. Active deposition practice for contested cases.
 - **Disqualifiers:** None
 - **Tier:** 1B
 - **Confidence:** High
@@ -167,7 +181,7 @@ These are the firms that should receive postcard + chocolate (Tier 2) treatment 
 - **Metro:** SF
 - **Attorney count:** ~4-6 (4 named attorneys confirmed: Cardwell, Steigerwald, Young, Tong; possible additional associates)
 - **Practice areas:** Family law – Bay Area-wide litigation
-- **Why they qualify:** Boutique family law litigation firm at 150 Post St in SF. Multiple Super Lawyers selections. Active in Bay Area courts. Rosie is likely to know of this firm.
+- **Why they qualify:** Boutique family law litigation firm at 150 Post St in SF. Multiple Super Lawyers selections. Active in Bay Area courts.
 - **Disqualifiers:** None. Smaller count is a mild risk for volume, but boutique family law firms in SF tend to have active deposition schedules.
 - **Tier:** 1B
 - **Confidence:** Medium (attorney count estimated; 4 confirmed but may have additional)
@@ -180,7 +194,7 @@ These are the firms that should receive postcard + chocolate (Tier 2) treatment 
 - **Metro:** SF
 - **Attorney count:** ~4-6 (3 named partners + probable associates)
 - **Practice areas:** Family law – all phases including litigation
-- **Why they qualify:** Principals are certified Family Law Specialists. Reputation for complex, litigated cases. SF address. Rosie's warm network may include them.
+- **Why they qualify:** Principals are certified Family Law Specialists. Reputation for complex, litigated cases. SF address.
 - **Disqualifiers:** None. Same caveat as above on size.
 - **Tier:** 1B
 - **Confidence:** Medium
@@ -387,10 +401,10 @@ These are the firms that should receive postcard + chocolate (Tier 2) treatment 
 - **City:** Oakland
 - **Metro:** East Bay
 - **Attorney count:** ~5 (confirmed)
-- **Practice areas:** Personal injury defense, civil litigation, insurance defense, business litigation, real estate
-- **Why they qualify:** Insurance defense + civil litigation = high deposition volume. Oakland base. Boutique (5 attorneys) means paralegal/office manager has real vendor authority. Long-established firm (40+ years of experience per attorney). Defense-side firms are extremely price-sensitive because carrier clients audit costs.
-- **Disqualifiers:** Possible carrier-mandated vendor constraint – flag for Rosie to check before cold outreach. If they're locked into a carrier's preferred vendor list, cold email is low-ROI; warm intro is the play.
-- **Tier:** 1B (with flag)
+- **Practice areas:** Insurance defense, personal injury defense, civil litigation, business litigation, real estate
+- **Why they qualify (high priority):** Insurance defense practice = mirror image of PI plaintiff but with the strategic upside described in Section 1.5. Per the carrier-channel strategy, defense firms are explicit priorities for the pilot – even if conversion is slow, getting them on platform builds the case for direct-to-carrier outreach later. Oakland base, boutique structure (5 attorneys = paralegal has real vendor authority), 40+ years experience per attorney, very price-sensitive given carrier audits. No "carrier-locked vendor" disqualifier applies – that constraint is the channel we want to leverage long-term.
+- **Disqualifiers:** None.
+- **Tier:** 1B (insurance-defense priority – strong candidate for Tier 2 chocolate treatment if any signed-up CSR cites them)
 - **Confidence:** High
 - **Address:** Oakland (street address not confirmed in research – enrichment needed)
 
@@ -406,8 +420,8 @@ These are the firms that should receive postcard + chocolate (Tier 2) treatment 
 - **Attorney count:** ~51-77 employees total; likely 20-30 attorneys (estimated from named attorney list of ~16+ named, plus associates)
 - **Practice areas:** Personal injury, medical malpractice – plaintiff exclusively
 - **Why they qualify despite size:** This is the premier Northern California PI plaintiff firm. More million-dollar verdicts than any other firm in Northern CA. Med mal + complex PI = the highest per-case transcript spend of any firm on this list. At 20-30 attorneys, they have dedicated litigation support staff who handle transcript ordering as a routine function. They are exactly the type of firm that would benefit most from streamlined ordering and transparent pricing.
-- **Why they're flagged:** At the upper edge or slightly above our 50-attorney sweet spot. They may have an existing agency relationship that is entrenched. Rosie should check before committing to Tier 2 treatment.
-- **Tier:** 1B edge case – downgrade to Tier 1B (postcard only, not chocolate) until CSR relationship signal is confirmed
+- **Why they're flagged:** At the upper edge or slightly above our 50-attorney sweet spot. Procurement may run through a managing partner committee rather than a paralegal, which slows the sales cycle. They likely have an entrenched CSR agency relationship that's harder to displace cold.
+- **Tier:** 1B edge case – postcard only, not chocolate, until a CSR-relationship signal makes them Tier 1A
 - **Confidence:** Medium-high (attorney count estimated; firm existence and practice area are confirmed)
 - **Address:** 650 California St, 26th Floor, San Francisco, CA 94108
 
@@ -420,6 +434,47 @@ See entry #2 above. The Oakland office should be tracked separately if CSRs in t
 
 **25. Hoover Krepelka, LLP – note on employee vs. attorney count**
 See entry #18 above. The 36-41 employee figure from third-party data includes support staff. The actual attorney count is likely 15-25. Flagged for enrichment – if they have dedicated transcript ordering staff, the platform pitch resonates strongly at this scale.
+
+---
+
+### Additional insurance defense firms (per Section 1.5 strategic priority)
+
+**26. Demler, Armstrong & Rowland, LLP**
+- **City:** San Francisco (also Long Beach HQ, Northern + Southern CA offices)
+- **Metro:** SF
+- **Attorney count:** Mid-size boutique (size not publicly stated – needs enrichment); core partner group together 30+ years
+- **Practice areas:** Insurance coverage defense, general liability defense, catastrophic injury, construction litigation, insurance bad faith
+- **Why they qualify:** Founded 1979, 40+ years of insurance defense focus. Primerus member (mid-size law firm peer network – implies real but not BigLaw scale). Per Section 1.5 strategic priority: a long-tenured insurance defense firm with carrier relationships is exactly the kind of relationship anchor we want for the carrier-channel play.
+- **Disqualifiers:** None
+- **Tier:** 1B (insurance-defense priority)
+- **Confidence:** Medium (size not directly verified – flag for enrichment)
+- **Address:** SF office address not confirmed in research – enrichment needed
+
+---
+
+**27. Ridley Master**
+- **City:** San Mateo
+- **Metro:** SF Peninsula / South Bay border
+- **Attorney count:** 9 (confirmed via Lawyers.com listing)
+- **Practice areas:** Civil litigation defense, insurance defense, employment litigation
+- **Why they qualify:** AV-rated 9-attorney boutique on the SF Peninsula, serving the broader Bay Area (SF, Alameda, Contra Costa, Marin, Sonoma, Napa, Santa Clara, Santa Cruz, San Mateo, Monterey). Combined 100+ years insurance and civil defense experience. Sweet-spot size, geography, and practice area. Per Section 1.5 priority.
+- **Disqualifiers:** None
+- **Tier:** 1B (insurance-defense priority)
+- **Confidence:** High
+- **Address:** 1900 O'Farrell Street, Suite 280, San Mateo, CA 94403
+
+---
+
+**28. Murphy Pearson Bradley & Feeney**
+- **City:** San Francisco (also Sacramento, Seattle, Los Angeles)
+- **Metro:** SF / Multi-location
+- **Attorney count:** Not publicly listed – likely mid-size given 4 offices
+- **Practice areas:** Litigation, professional liability defense (legal malpractice, accountants, real estate professionals), business, employment, real estate/construction, white collar defense, trusts & estates litigation
+- **Why they qualify:** "Lawyer's lawyers" for professional liability – defending other attorneys, accountants, and professionals. Professional liability defense has very high deposition volume (often the lawyer's whole malpractice case turns on the underlying-matter deposition record). Complex multi-party litigation defense. SF HQ. Diversified practice beyond pure insurance defense, but the litigation/professional-liability practice fits our profile.
+- **Disqualifiers:** Confirm SF office attorney count is in sweet spot – multi-office firm could push the SF headcount above 50. If so, downgrade to edge case.
+- **Tier:** 1B (with size flag)
+- **Confidence:** Medium (size not directly verified – flag for enrichment)
+- **Address:** San Francisco office address – enrichment needed
 
 ---
 
@@ -451,9 +506,9 @@ The 25 firms above cover SF, East Bay, and South Bay well. The remaining 75 firm
 
 6. **Marin County.** Small market but some well-established family law and PI firms serve Marin Superior Court. Lower priority but worth a pass once the core 100 is assembled.
 
-**Blockers to note:**
+**Blockers and notes:**
 
-- **Insurance defense firms** are particularly hard to research because they don't market to plaintiffs and often don't list attorney counts publicly. Rosie's network and reporter-to-firm introductions are better channels to reach these firms than cold research.
+- **Insurance defense firms** are deliberately a top priority (per Section 1.5) but are harder to research because they don't market to plaintiffs and often don't list attorney counts or practice area details publicly. Plan to invest more discovery effort per defense firm than for plaintiff-side firms – the strategic value justifies it. Reporter-to-firm introductions (signed-up CSRs naming defense firms they've worked with) are a particularly high-signal channel here, since CSRs see the case captions on the defense side too.
 - **Solo practitioners with support staff** fall in a gray zone – they're excluded from the 5-attorney lower bound for cold outreach but are a good organic/word-of-mouth target. Don't invest postcard budget here, but don't block them from signing up.
 
 ---
