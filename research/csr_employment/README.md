@@ -1,6 +1,8 @@
 # CSR court-employment research
 
-**Purpose:** Identify which CSRs in our research tracker are employed by California superior courts as staff reporters (vs freelance / pro tempore). Per `marketing_plan_phase1_csr_supply.md`, court-employed CSRs go into Phase 1B outreach with different messaging emphasizing side-income for occasional freelance work and a delivery rail for transcripts they've already produced from their court appearances.
+**Purpose:** Identify which CSRs in our research tracker are employed by California superior courts as staff reporters — **so we can DEPRIORITIZE them for Phase 1 outreach**. Freelance CSRs are the urgent target; court-employed CSRs are a secondary, smaller batch with different messaging.
+
+The court-employed tag is the high-value output of this research. Without it, court-employed CSRs end up in Phase 1A and get the wrong pitch. The freelance tag (from pro tempore directories) is a nice-to-have positive confirmation, but every `unknown` row defaults to Phase 1A anyway, so freelance tagging doesn't materially change targeting — it just gives us extra data per CSR (especially email addresses, which pro tempore directories often publish).
 
 ---
 
@@ -49,23 +51,33 @@ Other courts may use different labels — adapt the mapping per court.
 
 ---
 
+## Methodology pivot (2026-05-09)
+
+After confirming that several major courts (SF, Alameda, Santa Clara, San Diego) do **not** publish staff reporter directories at all, the research expanded to include **pro tempore (freelance) directories** as a secondary signal:
+
+- Pro tempore lists confirm a CSR is **freelance / available for freelance**. They go into Phase 1A outreach with priority.
+- Pro tempore status doesn't *prove* a CSR isn't also staff at a different court (rare but possible), so this is a weaker signal than an explicit court-staff tag.
+- We tag matched pro tempore CSRs as `employment_status = freelance` only when their status is currently `unknown`. We never overwrite a `court_employed` tag with `freelance`.
+
+**Net effect:** the seed tracker now captures *both* directions of the segmentation (court-employed vs freelance) where the data is available. Many CSRs remain `unknown` because neither court publishes them.
+
 ## Coverage as of 2026-05-09
 
-| Court | Status | Active Staff matched to seed | Notes |
-|---|---|---|---|
-| Sacramento Superior Court | ✓ done | 40 | Public staff directory at saccourt.ca.gov. 119 reporters total in source; 85 matched to active CRB licenses; 40 Active Staff confirmed. |
-| LA Superior Court | not started | — | Searched; found Pro Tempore directory only. Staff list not obviously public. Needs deeper investigation. |
-| SF Superior Court | not started | — | Confirmed no public staff directory. Page directs users to call the department clerk. Bay Area priority — would need a different approach (LinkedIn-based research, or a direct ask if relationships permit). |
-| Santa Clara Superior Court | not started | — | Bay Area priority. Likely has a directory; needs investigation. |
-| Alameda Superior Court | not started | — | Bay Area priority. |
-| San Diego Superior Court | not started | — | Pro Tempore directory exists; staff list TBD. |
-| Orange County Superior Court | not started | — | Pro Tempore directory exists; staff list TBD. |
-| Riverside Superior Court | not started | — | Pro Tempore + Non-Staff directory found. Staff list separate. |
-| San Bernardino Superior Court | not started | — | |
-| Fresno Superior Court | not started | — | Court Reporter Directory exists; format TBD. |
-| Other CA superior courts (50+ counties) | not started | — | Smaller courts; lower priority. |
+| Court | Status | Court-employed matched | Freelance (pro tem) matched | Notes |
+|---|---|---|---|---|
+| Sacramento Superior Court | ✓ done | 40 | — | Public staff directory at saccourt.ca.gov. 119 reporters in source; 85 matched to active CRB licenses; 40 Active Staff confirmed. |
+| LA Superior Court | ✓ done (pro tem only) | — | 217 | Pro Tempore directory PDF (lascpubstorage, 2/13/26 update). 264 unique CSRs in source; 217 matched to seed and tagged freelance. Staff list not publicly available. |
+| Fresno Superior Court | ✓ done (pro tem only) | — | ~46 | Pro Tempore directory at fresno.courts.ca.gov. ~46 reporters in source. Tagged freelance. Staff list not separately published. |
+| SF Superior Court | ✗ not feasible | — | — | Confirmed no public directory of any kind. Page directs callers to department clerk. Would need direct ask via Rosie's network or LinkedIn-based research. |
+| Santa Clara Superior Court | ✗ not feasible | — | — | Confirmed no public reporter list. Page describes service policies but names no individuals. |
+| Alameda Superior Court | ✗ not feasible | — | — | Confirmed no public list. Refers callers to email transcripts@alameda.courts.ca.gov. |
+| San Diego Superior Court | not started | — | — | Pro Tempore directory exists per earlier search. Site returned 403 on direct fetch. Worth retry. |
+| Orange County Superior Court | not started | — | — | Pro Tempore directory page exists (occourts.org). |
+| Riverside Superior Court | not started | — | — | Two PDFs found (Pro Tempore + Non-Staff). |
+| San Bernardino Superior Court | not started | — | — | |
+| Other CA superior courts | not started | — | — | Smaller courts, lower priority. |
 
-**Progress:** 40 / ~2,300 estimated court-employed (per Rosie's "maybe half of 4,700" estimate). About 1.7% coverage. Sacramento was the easy case — most other courts will require more investigation, and SF in particular will likely need a different approach.
+**Progress:** 40 court-employed + 251 freelance = **291 enriched rows out of 4,732 active CSRs (~6%)**. The freelance tally combines unique-by-license-number across LA + Fresno (some overlap deduplicated). Most CA superior courts do not publish staff directories; this research approach will plateau around the courts that publish either staff or pro tempore lists publicly. For the remaining ~94%, segmentation must come from CSR-self-reported data at signup.
 
 ---
 
