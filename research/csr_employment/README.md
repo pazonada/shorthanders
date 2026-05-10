@@ -79,6 +79,10 @@ After confirming that several major courts (SF, Alameda, Santa Clara, San Diego)
 
 **Progress:** 40 court-employed + 251 freelance = **291 enriched rows out of 4,732 active CSRs (~6%)**. The freelance tally combines unique-by-license-number across LA + Fresno (some overlap deduplicated). Most CA superior courts do not publish staff directories; this research approach will plateau around the courts that publish either staff or pro tempore lists publicly. For the remaining ~94%, segmentation must come from CSR-self-reported data at signup.
 
+**Bonus enrichment from pro tempore data:** 242 email addresses added to the seed (pulled from the LA Pro Tempore PDF and Fresno Pro Tempore page). These are CSRs who voluntarily published their contact info to attract freelance work, so they're appropriate to email. Email deltas saved separately at `email_findings_2026-05-09.csv` for selective application to the live Sheet.
+
+**Note on the CRB licensee roster:** the CRB Excel pull (4,732 rows) contains License #, Last Name, First Name, City, State, Zip, Expiration, and Status — no email or phone. The CRB tracks regulatory data, not contact data. CSR contact info has to come from sources where the CSR voluntarily published it (pro tempore directories, firm websites, LinkedIn) or from paid email-finder tools (Hunter.io, Apollo).
+
 ---
 
 ## How to continue this research
