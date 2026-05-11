@@ -101,7 +101,7 @@
   @media (max-width: 860px) { .nav-links a:not(.nav-cta):not(.nav-signin) { display: none; } }
 
   /* ── hero ── */
-  .hero { position: relative; padding: 80px 0 24px; overflow: hidden; }
+  .hero { position: relative; padding: 80px 0 0; overflow: hidden; }
   .hero-glow {
     position: absolute;
     top: -120px; left: 50%;
@@ -265,7 +265,7 @@
   /* ── shorthand transition (between sections) ── */
   .shorthand-transition {
     max-width: 1280px;
-    margin: 16px auto 0;
+    margin: 0 auto;
     padding: 0 32px;
     text-align: center;
   }
@@ -277,9 +277,10 @@
     mix-blend-mode: multiply;
     user-select: none;
     pointer-events: none;
+    display: block;
   }
   @media (max-width: 720px) {
-    .shorthand-transition { padding: 0 20px; margin-top: 12px; }
+    .shorthand-transition { padding: 0 20px; }
     .shorthand-transition img { opacity: 0.6; }
   }
 
@@ -304,9 +305,9 @@
   }
 
   /* ── section primitives ── */
-  .section { padding: 56px 0; position: relative; }
-  @media (max-width: 720px) { .section { padding: 40px 0; } }
-  .section-header { max-width: 760px; margin: 0 auto 48px; text-align: center; }
+  .section { padding: 24px 0 56px; position: relative; }
+  @media (max-width: 720px) { .section { padding: 16px 0 40px; } }
+  .section-header { max-width: 760px; margin: 0 auto 40px; text-align: center; }
   .section-eyebrow {
     display: inline-block;
     font-family: 'JetBrains Mono', monospace;
