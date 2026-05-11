@@ -574,37 +574,87 @@
   .pricing-row .price.green { color: var(--sage-deep); }
   .pricing-row .price span { font-size: 13px; color: var(--muted); font-style: normal; font-family: 'Inter', sans-serif; }
   .pricing-note {
-    margin-top: 16px;
-    background: var(--brand-soft);
-    border: 1px solid var(--brand-pale);
-    border-radius: 12px;
-    padding: 14px 16px;
-    font-size: 13px; color: var(--brand-dark);
-    line-height: 1.7;
-  }
-  .pricing-note strong { font-weight: 700; }
-  .pricing-fineprint {
     margin-top: 14px;
     padding: 0 4px;
     font-size: 12px; color: var(--muted);
     line-height: 1.7;
   }
-  .pricing-fineprint strong { font-weight: 700; color: var(--ink-soft); }
-  .pricing-card-footer {
+  .pricing-note strong { font-weight: 700; color: var(--ink-soft); }
+  .pricing-approx {
+    margin-top: 8px;
+    padding: 0 4px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .tooltip-trigger {
+    border-bottom: 1px dotted var(--muted);
+    cursor: help;
+    position: relative;
+    display: inline-block;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+  .tooltip-content {
+    visibility: hidden;
+    opacity: 0;
     background: var(--ink);
     color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    padding: 14px 16px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 340px;
+    max-width: 90vw;
+    z-index: 100;
+    line-height: 1.55;
+    pointer-events: none;
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+    box-shadow: 0 12px 32px -10px rgba(0,0,0,0.35);
+    text-align: left;
+  }
+  .tooltip-content::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--ink);
+  }
+  .tooltip-trigger:hover .tooltip-content,
+  .tooltip-trigger:focus .tooltip-content {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  /* detached fee waiver bar (below pricing cards) */
+  .fee-waiver {
+    max-width: 1080px;
+    margin: 24px auto 0;
+    background: var(--ink);
+    color: #FFFFFF;
+    border-radius: 18px;
     padding: 22px 32px;
     display: flex; align-items: center; justify-content: space-between;
-    gap: 16px; flex-wrap: wrap;
+    gap: 20px; flex-wrap: wrap;
   }
-  .pricing-card-footer p { font-weight: 600; font-size: 15px; }
-  .pricing-card-footer .sub { color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 400; margin-top: 4px; max-width: 460px; }
-  .pricing-card-footer a {
-    color: var(--ink); background: var(--bg);
+  @media (max-width: 720px) { .fee-waiver { padding: 20px 24px; } }
+  .fee-waiver p { font-weight: 600; font-size: 15px; }
+  .fee-waiver .sub { color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 400; margin-top: 4px; max-width: 540px; line-height: 1.55; }
+  .fee-waiver a {
+    color: var(--ink); background: #FFFFFF;
     padding: 10px 18px; border-radius: 999px;
     font-size: 13px; font-weight: 600;
     text-decoration: none; white-space: nowrap;
+    transition: background 0.15s ease;
   }
+  .fee-waiver a:hover { background: var(--periwinkle); }
 
   .calc-card {
     background: var(--bg);
@@ -1135,16 +1185,9 @@
           <div class="pricing-note">
             <strong>Note:</strong> Prices shown are statutory transcript rates set by CA Gov. Code § 69950. Attorneys pay a flat 12% platform fee at checkout – reporters keep the full statutory rate. Total price shown at order entry.
           </div>
-          <div class="pricing-fineprint">
-            <strong>Why "approximately"?</strong> California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count, not the estimate.
+          <div class="pricing-approx">
+            <span class="tooltip-trigger" tabindex="0">Pricing is approximate<span class="tooltip-content">California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count, not the estimate.</span></span>
           </div>
-        </div>
-        <div class="pricing-card-footer">
-          <div>
-            <p>Have a fee waiver on file?</p>
-            <div class="sub">Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court – up to $2,500 per case.</div>
-          </div>
-          <a href="#">Learn more</a>
         </div>
       </div>
 
@@ -1173,6 +1216,15 @@
         </div>
         <p style="margin-top: 18px; font-size: 12px; color: var(--muted); line-height: 1.6;">Calculator is illustrative – final invoice is based on the actual certified word count.</p>
       </div>
+    </div>
+
+    <!-- Detached fee waiver bar -->
+    <div class="fee-waiver">
+      <div>
+        <p>Have a fee waiver on file?</p>
+        <div class="sub">Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court – up to $2,500 per case.</div>
+      </div>
+      <a href="#">Learn more</a>
     </div>
 
     <!-- Comparison -->
