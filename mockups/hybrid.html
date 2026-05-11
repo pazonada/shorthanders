@@ -571,14 +571,14 @@
     font-style: italic; font-size: 26px;
     color: var(--brand); line-height: 1;
   }
-  .pricing-attendance {
-    margin-top: 18px;
-    padding: 0 4px;
-    font-size: 14px;
-    color: var(--ink-soft);
-    line-height: 1.6;
+  .pricing-row .price-note {
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--sage-deep);
+    text-align: right;
+    letter-spacing: 0.02em;
   }
-  .pricing-attendance strong { color: var(--ink); font-weight: 700; }
   .pricing-row .price.green { color: var(--sage-deep); }
   .pricing-row .price span { font-size: 13px; color: var(--muted); font-style: normal; font-family: 'Inter', sans-serif; }
   .pricing-approx {
@@ -596,12 +596,12 @@
   }
   .pricing-note strong { font-weight: 700; color: var(--ink-soft); }
   .tooltip-trigger {
-    border-bottom: 1px dotted var(--muted);
+    border-bottom: 1px dotted var(--plum);
     cursor: help;
     position: relative;
     display: inline-block;
     font-weight: 700;
-    color: var(--ink-soft);
+    color: var(--plum);
   }
   .tooltip-content {
     visibility: hidden;
@@ -1187,14 +1187,15 @@
             <div><h3>Separate copy</h3><div class="sub">Ordered after original production</div></div>
             <div class="price">~$0.85 <span>/ page</span></div>
           </div>
-          <p class="pricing-attendance">
-            <strong>Live attendance:</strong> $300/half&nbsp;day · $500/full&nbsp;day · $800/trial&nbsp;day
-          </p>
-          <div class="pricing-approx">
-            <span class="tooltip-trigger" tabindex="0">Pricing is approximate<span class="tooltip-content">California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count, not the estimate.</span></span>
+          <div class="pricing-row">
+            <div><h3>Live attendance</h3><div class="sub">Half day · Full day · Trial day</div></div>
+            <div>
+              <div class="price">$300 · $500 · $800</div>
+              <div class="price-note">33% below agency rates</div>
+            </div>
           </div>
-          <div class="pricing-note">
-            <strong>Note:</strong> Prices shown are statutory transcript rates set by CA Gov. Code § 69950. Attorneys pay a flat 12% platform fee at checkout – reporters keep the full statutory rate. Total price shown at order entry.
+          <div class="pricing-approx">
+            <span class="tooltip-trigger" tabindex="0">Transcription pricing is approximate<span class="tooltip-content">California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count, not the estimate.</span></span>
           </div>
         </div>
       </div>
