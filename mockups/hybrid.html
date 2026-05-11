@@ -79,15 +79,15 @@
   .nav-links { display: flex; gap: 32px; align-items: center; }
   .nav-links a { color: var(--ink-soft); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.15s ease; }
   .nav-links a:hover { color: var(--brand); }
-  .nav-signin {
+  .nav-links a.nav-signin {
     font-size: 14px; font-weight: 500;
     color: var(--ink-soft);
     padding: 8px 14px;
     border-radius: 999px;
     transition: background 0.15s ease, color 0.15s ease;
   }
-  .nav-signin:hover { background: var(--bg-soft); color: var(--ink); }
-  .nav-cta {
+  .nav-links a.nav-signin:hover { background: var(--bg-soft); color: var(--ink); }
+  .nav-links a.nav-cta {
     background: var(--ink);
     color: #FFFFFF;
     padding: 10px 22px;
@@ -97,7 +97,7 @@
     text-decoration: none;
     transition: background 0.15s ease, transform 0.15s ease;
   }
-  .nav-cta:hover { background: var(--brand); color: #FFFFFF; transform: translateY(-1px); }
+  .nav-links a.nav-cta:hover { background: var(--brand); color: #FFFFFF; transform: translateY(-1px); }
   @media (max-width: 860px) { .nav-links a:not(.nav-cta):not(.nav-signin) { display: none; } }
 
   /* ── hero ── */
