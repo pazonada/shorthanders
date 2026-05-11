@@ -332,30 +332,39 @@
   }
 
   /* ── how it works ── */
-  .tab-toggle { display: flex; justify-content: center; margin-bottom: 36px; }
+  .tab-toggle { display: flex; justify-content: center; margin-bottom: 48px; }
   .tab-toggle-inner {
     display: inline-flex;
     background: var(--bg-soft);
-    border-radius: 12px;
-    padding: 5px;
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 6px;
+    gap: 4px;
+    box-shadow: 0 2px 8px -4px rgba(15,23,42,0.08);
   }
   .tab-btn {
-    padding: 10px 22px; border-radius: 8px;
-    font-size: 14px; font-weight: 600;
-    border: none; background: transparent; color: var(--muted);
-    cursor: pointer; transition: all 0.15s ease;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    letter-spacing: -0.005em;
   }
-  .tab-btn.active { background: var(--bg); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-  .tab-blurb { max-width: 720px; margin: 0 auto 40px; text-align: center; }
-  .tab-blurb h3 {
-    font-family: 'Instrument Serif', serif;
-    font-weight: 400;
-    font-size: clamp(28px, 3.4vw, 40px);
-    line-height: 1.15; letter-spacing: -0.02em;
-    color: var(--ink); margin-bottom: 14px;
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    background: var(--ink);
+    color: #FFFFFF;
+    box-shadow: 0 6px 16px -6px rgba(15,23,42,0.32);
   }
-  .tab-blurb h3 em { font-style: italic; color: var(--brand); }
-  .tab-blurb p { font-size: 16px; line-height: 1.65; color: var(--ink-soft); }
+  .tab-btn.active:hover { color: #FFFFFF; }
+  @media (max-width: 540px) {
+    .tab-toggle-inner { width: 100%; }
+    .tab-btn { flex: 1; padding: 12px 16px; font-size: 14px; }
+  }
   .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   @media (max-width: 860px) { .steps-grid { grid-template-columns: 1fr; } }
   .step-card {
@@ -423,9 +432,10 @@
 
   /* ── use cases ── */
   .usecases-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
   }
-  @media (max-width: 860px) { .usecases-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 1024px) { .usecases-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 720px) { .usecases-grid { grid-template-columns: 1fr; } }
   .usecase {
     background: var(--bg);
     border: 1px solid var(--rule);
@@ -465,7 +475,7 @@
   .usecase-label.sage { color: var(--sage-deep); }
   .usecase h3 {
     font-family: 'Instrument Serif', serif;
-    font-weight: 400; font-size: 34px;
+    font-weight: 400; font-size: 30px;
     line-height: 1.1; color: var(--ink);
     margin-bottom: 12px; letter-spacing: -0.02em;
   }
@@ -976,11 +986,6 @@
       </div>
     </div>
 
-    <div class="tab-blurb">
-      <h3>Stop chasing reporters. <em>Start tracking cases.</em></h3>
-      <p>We offer a persistent case management layer with the reporter marketplace built in. Split costs across parties, set your deadline and let pricing calculate automatically, and book the same trusted CSRs every time.</p>
-    </div>
-
     <div class="steps-grid">
       <div class="step-card">
         <div class="step-head">
@@ -1038,6 +1043,13 @@
   </div>
 </section>
 
+<!-- WAVY DIVIDER (above use cases) -->
+<div class="container">
+  <svg class="wave-divider standalone" viewBox="0 0 1200 32" preserveAspectRatio="none" width="100%" height="22" fill="none">
+    <path d="M0 16 Q 60 2, 120 16 T 240 16 T 360 16 T 480 16 T 600 16 T 720 16 T 840 16 T 960 16 T 1080 16 T 1200 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>
+</div>
+
 <!-- USE CASES -->
 <section class="section">
   <div class="container">
@@ -1082,20 +1094,16 @@
           <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Supporting docs reduce back-and-forth</li>
         </ul>
       </article>
-    </div>
 
-    <!-- Use case C - wide -->
-    <div class="usecase-wide">
-      <div class="usecase-wide-bar"></div>
-      <div class="usecase-wide-body">
-        <div class="usecase-wide-label">Use case C</div>
+      <article class="usecase sage">
+        <div class="usecase-bar sage"></div>
+        <div class="usecase-icon sage">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+        </div>
+        <div class="usecase-label sage">Use case C</div>
         <h3>Find the reporter for an existing case</h3>
         <p>Need a copy of a transcript already created in your case? Search by case number to find the original CSR and request a copy directly from them. Per California law, all parties will be notified before the CSR releases the copy.</p>
-      </div>
-      <a href="#" class="btn-primary" style="padding: 12px 20px; font-size: 13px;">
-        Find the CSR
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-      </a>
+      </article>
     </div>
   </div>
 </section>
@@ -1312,7 +1320,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Dewey Sholes. All rights reserved.</span>
-      <span class="sub">Now matching California attorneys with CSRs.</span>
+      <span class="sub">Matching California attorneys directly with CSRs.</span>
     </div>
   </div>
 </footer>
