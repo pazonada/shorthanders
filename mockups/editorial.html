@@ -11,15 +11,17 @@
   :root {
     --paper: #FAF8F3;
     --paper-2: #F2EFE7;
+    --paper-3: #ECE7D7;
     --ink: #0F172A;
     --ink-soft: #2C3344;
     --muted: #5B6070;
     --rule: #D9D4C7;
     --brand: #4361EE;
     --brand-dark: #2F46C8;
+    --brand-pale: #B7C3FF;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { -webkit-font-smoothing: antialiased; }
+  html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
   body {
     font-family: 'Inter', system-ui, sans-serif;
     color: var(--ink);
@@ -44,7 +46,7 @@
   @media (max-width: 720px) { .container { padding: 0 24px; } }
 
   /* ── nav ── */
-  .nav { padding: 28px 0 0; }
+  .nav { padding: 28px 0 0; position: relative; z-index: 3; }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; }
   .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
   .nav-links { display: flex; gap: 36px; align-items: center; }
@@ -102,7 +104,21 @@
   .dateline span + span::before { content: "·"; margin: 0 16px; color: var(--rule); }
 
   /* ── hero ── */
-  .hero { padding: 88px 0 56px; }
+  .hero { padding: 80px 0 56px; position: relative; }
+  .hero-shorthand-bg {
+    position: absolute;
+    top: 24px;
+    left: -40px;
+    right: -40px;
+    width: calc(100% + 80px);
+    height: auto;
+    opacity: 0.55;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @media (max-width: 720px) { .hero-shorthand-bg { opacity: 0.4; } }
+  .hero > * { position: relative; z-index: 1; }
   .hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
@@ -110,21 +126,6 @@
     align-items: end;
   }
   @media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; gap: 64px; } }
-  .kicker {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 19px;
-    color: var(--brand);
-    margin-bottom: 28px;
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .kicker::before {
-    content: "";
-    width: 36px; height: 1px; background: var(--brand);
-  }
   h1.headline {
     font-family: 'Fraunces', serif;
     font-weight: 500;
@@ -152,7 +153,7 @@
     align-items: center;
     gap: 12px;
     background: var(--ink);
-    color: var(--paper);
+    color: #FFFFFF;
     padding: 16px 28px;
     border-radius: 999px;
     font-size: 14px;
@@ -238,38 +239,578 @@
     color: var(--brand);
   }
 
-  /* ── ornament divider ── */
-  .ornament {
-    margin: 80px auto 0;
+  /* ── shared section primitives ── */
+  .section { padding: 128px 0; position: relative; }
+  @media (max-width: 720px) { .section { padding: 88px 0; } }
+  .section-header { max-width: 760px; margin-bottom: 80px; }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-eyebrow::before {
+    content: "";
+    width: 28px; height: 1px; background: var(--brand);
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(40px, 5.6vw, 76px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .section-title em { font-style: italic; color: var(--brand); font-weight: 400; }
+  .section-lede {
+    margin-top: 24px;
+    font-size: 19px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 580px;
+  }
+
+  /* ── section divider with § glyph ── */
+  .divider {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 18px;
-    color: var(--muted);
+    gap: 22px;
+    padding: 8px 0;
   }
-  .ornament::before, .ornament::after {
+  .divider::before, .divider::after {
     content: "";
-    flex: 0 0 100px;
+    flex: 0 0 110px;
     height: 1px;
     background: var(--rule);
   }
-  .ornament-glyph {
+  .divider-glyph {
     font-family: 'Fraunces', serif;
     font-style: italic;
-    font-size: 18px;
+    font-size: 24px;
     color: var(--brand);
   }
 
-  /* ── footer note ── */
-  .footnote {
-    margin-top: 28px;
+  /* ── section divider with shorthand graphic ── */
+  .divider-script {
+    display: flex;
+    justify-content: center;
+    padding: 56px 0 24px;
+  }
+  .divider-script img {
+    max-width: 720px;
+    width: 100%;
+    height: auto;
+    opacity: 0.6;
+    mix-blend-mode: multiply;
+  }
+  .divider-script-label {
     text-align: center;
     font-family: 'Fraunces', serif;
     font-style: italic;
-    font-size: 15px;
+    font-size: 17px;
     color: var(--muted);
-    padding-bottom: 80px;
+    margin-top: 8px;
   }
+  .divider-script-label em { color: var(--brand); font-weight: 500; font-style: italic; }
+
+  /* ── stats / "by the numbers" ── */
+  .bynumbers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 64px;
+  }
+  @media (max-width: 860px) { .bynumbers-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .stat-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(88px, 11vw, 156px);
+    line-height: 0.9;
+    color: var(--brand);
+    letter-spacing: -0.04em;
+  }
+  .stat-num span { font-size: 0.42em; color: var(--ink); font-style: normal; font-weight: 500; vertical-align: 0.55em; margin-left: 4px; }
+  .stat-label {
+    margin-top: 20px;
+    font-size: 17px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    max-width: 320px;
+  }
+  .stat-label em { font-style: italic; color: var(--ink); font-family: 'Fraunces', serif; font-size: 19px; }
+
+  /* ── how it works ── */
+  .steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 80px;
+    max-width: 1080px;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 140px 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    border-top: 1px solid var(--rule);
+    padding-top: 48px;
+  }
+  @media (max-width: 860px) {
+    .step { grid-template-columns: 80px 1fr; gap: 24px; }
+    .step-extra { grid-column: 1 / -1; padding-left: 0; }
+  }
+  .step-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 92px;
+    color: var(--brand);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+  }
+  .step-body h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+  .step-body h3 em { font-style: italic; color: var(--brand); font-weight: 400; }
+  .step-body p {
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    max-width: 500px;
+  }
+  .step-extra {
+    border-left: 1px solid var(--rule);
+    padding-left: 32px;
+  }
+  .step-extra-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .step-extra p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* ── use cases / "what we cover" ── */
+  .usecases-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  @media (max-width: 860px) { .usecases-grid { grid-template-columns: 1fr; } }
+  .usecase {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 56px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  @media (max-width: 720px) { .usecase { padding: 36px; } }
+  .usecase-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .usecase-label::before {
+    content: ""; width: 24px; height: 1px; background: var(--brand);
+  }
+  .usecase h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 18px;
+    letter-spacing: -0.02em;
+  }
+  .usecase h3 em { font-style: italic; color: var(--brand); font-weight: 400; }
+  .usecase > p {
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  .usecase-list { list-style: none; margin-bottom: 32px; }
+  .usecase-list li {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+    padding: 14px 0;
+    border-top: 1px solid var(--rule);
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .usecase-list li:last-child { border-bottom: 1px solid var(--rule); }
+  .usecase-list li::before {
+    content: "§";
+    color: var(--brand);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    flex: 0 0 18px;
+  }
+  .usecase-cta {
+    margin-top: auto;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+    align-self: flex-start;
+  }
+  .usecase-cta:hover { color: var(--brand); border-color: var(--brand); }
+
+  /* ── for attorneys ── */
+  .attorneys-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 960px) { .attorneys-grid { grid-template-columns: 1fr; gap: 56px; } }
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 540px) { .features-grid { grid-template-columns: 1fr; } }
+  .feature {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 26px;
+  }
+  .feature-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 12px;
+  }
+  .feature h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .feature p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ── for reporters (dark, with shorthand watermark) ── */
+  .reporters {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 160px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (max-width: 720px) { .reporters { padding: 96px 0; } }
+  .reporters-shorthand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 110%;
+    max-width: 1600px;
+    opacity: 0.07;
+    pointer-events: none;
+    filter: invert(1);
+    z-index: 0;
+  }
+  .reporters .container { position: relative; z-index: 1; }
+  .reporters .section-eyebrow { color: var(--brand-pale); }
+  .reporters .section-eyebrow::before { background: var(--brand-pale); }
+  .reporters .section-title { color: var(--paper); }
+  .reporters .section-title em { color: var(--brand-pale); }
+  .reporters .section-lede { color: rgba(250,248,243,0.7); max-width: 600px; }
+  .reporter-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 16px;
+  }
+  @media (max-width: 860px) { .reporter-cards { grid-template-columns: 1fr; } }
+  .reporter-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 4px;
+    padding: 36px 32px;
+    transition: background 0.15s ease;
+  }
+  .reporter-card:hover { background: rgba(255,255,255,0.07); }
+  .reporter-card-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 32px;
+    color: var(--brand-pale);
+    line-height: 1;
+    margin-bottom: 22px;
+  }
+  .reporter-card h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--paper);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .reporter-card h4 em { font-style: italic; color: var(--brand-pale); font-weight: 400; }
+  .reporter-card p {
+    font-size: 14px;
+    color: rgba(250,248,243,0.65);
+    line-height: 1.65;
+  }
+  .reporters-cta {
+    margin-top: 64px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn-ink-on-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--paper);
+    color: var(--ink);
+    padding: 16px 28px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .btn-ink-on-dark:hover { background: var(--brand-pale); transform: translateY(-1px); }
+  .btn-ink-on-dark svg { width: 14px; height: 14px; }
+  .btn-quiet-on-dark {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--paper);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(250,248,243,0.5);
+    padding-bottom: 2px;
+  }
+  .btn-quiet-on-dark:hover { color: var(--brand-pale); border-color: var(--brand-pale); }
+
+  /* ── pricing ── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  @media (max-width: 860px) { .pricing-grid { grid-template-columns: 1fr; } }
+  .pricing-card {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    padding: 48px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+  }
+  @media (max-width: 720px) { .pricing-card { padding: 32px; } }
+  .pricing-card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 20px;
+  }
+  .pricing-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .pricing-row:last-of-type { border-bottom: 0; }
+  .pricing-label h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .pricing-label p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  .pricing-price {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 48px;
+    color: var(--brand);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .pricing-price small {
+    font-size: 14px;
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    margin-left: 2px;
+  }
+  .pricing-price.free { color: var(--ink); }
+  .pricing-note {
+    margin-top: 28px;
+    padding: 20px 24px;
+    background: var(--paper);
+    border-left: 2px solid var(--brand);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .pricing-note strong { color: var(--ink); font-weight: 500; }
+
+  /* ── final CTA ── */
+  .cta { padding: 160px 0 80px; text-align: center; position: relative; }
+  @media (max-width: 720px) { .cta { padding: 96px 0 56px; } }
+  .cta-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 28px;
+  }
+  .cta-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(44px, 6.4vw, 88px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    max-width: 880px;
+    margin: 0 auto;
+    color: var(--ink);
+  }
+  .cta-title em { font-style: italic; color: var(--brand); font-weight: 400; }
+  .cta-actions {
+    margin-top: 48px;
+    display: flex;
+    gap: 28px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── footer (masthead) ── */
+  .footer {
+    border-top: 1px solid var(--rule);
+    padding: 72px 0 48px;
+    margin-top: 40px;
+    position: relative;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; } }
+  @media (max-width: 540px) { .footer-grid { grid-template-columns: 1fr; } }
+  .footer-brand h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 32px;
+    color: var(--ink);
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .footer-brand h4 em { font-style: italic; color: var(--brand); }
+  .footer-brand p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 360px;
+    line-height: 1.55;
+  }
+  .footer-col h5 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .footer-col a {
+    display: block;
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 6px 0;
+  }
+  .footer-col a:hover { color: var(--brand); }
+  .footer-bottom {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .footer-bottom .right span + span::before { content: "·"; margin: 0 14px; color: var(--rule); }
 </style>
 </head>
 <body>
@@ -287,10 +828,10 @@
         </svg>
       </a>
       <div class="nav-links">
-        <a href="#">How it works</a>
-        <a href="#">For attorneys</a>
-        <a href="#">For reporters</a>
-        <a href="#">Pricing</a>
+        <a href="#how">How it works</a>
+        <a href="#attorneys">For attorneys</a>
+        <a href="#reporters">For reporters</a>
+        <a href="#pricing">Pricing</a>
         <a href="#" class="nav-signin">Sign in</a>
         <a href="#" class="nav-cta">Get started</a>
       </div>
@@ -306,6 +847,7 @@
 
   <!-- HERO -->
   <section class="hero">
+    <img src="../graphics/keep-your-money-shorthand.png" alt="" class="hero-shorthand-bg" aria-hidden="true" />
     <div class="hero-grid">
       <div>
         <h1 class="headline">
@@ -353,8 +895,353 @@
         <span>STATUTORY PRICING, NO SURPRISES</span>
       </div>
     </div>
-
   </section>
+
+  <!-- BY THE NUMBERS -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">§ 01 — By the numbers</div>
+      <h2 class="section-title">A small marketplace, <em>built on trust.</em></h2>
+      <p class="section-lede">
+        We're a California pilot, not a national platform. Every reporter on Dewey Sholes is license-verified, every hearing is a public record, and every fee is the one the statute allows.
+      </p>
+    </div>
+
+    <div class="bynumbers-grid">
+      <div>
+        <div class="stat-tag">Certified reporters</div>
+        <div class="stat-num">2,400<span>+</span></div>
+        <p class="stat-label">California CSRs in our verified network. Each one carries an active state license, checked against the official CRB roster.</p>
+      </div>
+      <div>
+        <div class="stat-tag">Rush turnaround</div>
+        <div class="stat-num">24<span>h</span></div>
+        <p class="stat-label">From hearing transcript request to delivered certified copy. Statewide, expedited, no agency middle layer.</p>
+      </div>
+      <div>
+        <div class="stat-tag">Buyer fee</div>
+        <div class="stat-num">12<span>%</span></div>
+        <p class="stat-label">Flat platform fee for attorneys, on top of the statutory CSR rate. No surcharges, no surprise line items.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span class="divider-glyph">§</span></div>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="section-header">
+      <div class="section-eyebrow">§ 02 — How it works</div>
+      <h2 class="section-title">Three steps, <em>and you're on the record.</em></h2>
+      <p class="section-lede">
+        The whole thing is a fifteen-minute walk-through. We won't make you sit through a sales demo.
+      </p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01.</div>
+        <div class="step-body">
+          <h3>Open a <em>case file.</em></h3>
+          <p>Tell us the court, department, date, and approximate length. If you have a docket number, even better. We auto-fill what we can from public court calendars.</p>
+        </div>
+        <div class="step-extra">
+          <div class="step-extra-label">Average completion</div>
+          <p>"~ 90 seconds, including the captcha."</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">02.</div>
+        <div class="step-body">
+          <h3>Match with a <em>certified reporter.</em></h3>
+          <p>We surface CSRs available for your date and location – with active license numbers, sample work, and reporter-set rates. You choose. We confirm.</p>
+        </div>
+        <div class="step-extra">
+          <div class="step-extra-label">Median match time</div>
+          <p>"3 reporters reviewed, one chosen, all in under five minutes."</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">03.</div>
+        <div class="step-body">
+          <h3>Receive your <em>certified transcript.</em></h3>
+          <p>Delivered as PDF and (if you need it) ASCII e-tran. Cited line numbers, certified signature page, ready to file. Standard, expedited, or daily turnaround.</p>
+        </div>
+        <div class="step-extra">
+          <div class="step-extra-label">Delivery integrity</div>
+          <p>"Every transcript is digitally signed by the reporter who wrote it."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span class="divider-glyph">§</span></div>
+
+  <!-- WHAT WE COVER / USE CASES -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">§ 03 — What we cover</div>
+      <h2 class="section-title">Two ways to <em>get on the record.</em></h2>
+      <p class="section-lede">
+        Whether you need a reporter in the room or just a clean transcript of public-record audio, Dewey Sholes handles both.
+      </p>
+    </div>
+
+    <div class="usecases-grid">
+      <article class="usecase">
+        <div class="usecase-label">Option A</div>
+        <h3>Live <em>attendance.</em></h3>
+        <p>A certified shorthand reporter appears live at your hearing, in person or via authorized remote setup, and produces the official transcript.</p>
+        <ul class="usecase-list">
+          <li>Reporter assigned, confirmed, and credentialed to the court</li>
+          <li>Same-day rough transcript available on request</li>
+          <li>Daily, expedited, and standard turnaround options</li>
+          <li>Reporter rates set by the statute, not the agency</li>
+        </ul>
+        <a href="#" class="usecase-cta">Schedule live attendance →</a>
+      </article>
+
+      <article class="usecase">
+        <div class="usecase-label">Option B</div>
+        <h3>Audio <em>transcription.</em></h3>
+        <p>You already have the public-record audio – a courtroom mic, a clerk's recording, a public hearing. We transcribe it, certify it, and deliver it.</p>
+        <ul class="usecase-list">
+          <li>Certified by a California CSR upon completion</li>
+          <li>24-hour rush available for hearings under 4 hours</li>
+          <li>ASCII, PDF, and e-tran delivery formats</li>
+          <li>Citation-ready line numbering and page-and-line index</li>
+        </ul>
+        <a href="#" class="usecase-cta">Send us an audio file →</a>
+      </article>
+    </div>
+  </section>
+
+  <div class="divider"><span class="divider-glyph">§</span></div>
+
+  <!-- FOR ATTORNEYS -->
+  <section class="section" id="attorneys">
+    <div class="attorneys-grid">
+      <div>
+        <div class="section-eyebrow">§ 04 — For attorneys &amp; firms</div>
+        <h2 class="section-title">Hours back, <em>without the runaround.</em></h2>
+        <p class="section-lede">
+          Stop chasing three agencies for one rush transcript. One platform, every California CSR, transparent statutory pricing.
+        </p>
+        <p style="margin-top: 24px; font-family: 'Fraunces', serif; font-style: italic; font-size: 17px; color: var(--ink); max-width: 540px; line-height: 1.55;">
+          Built for solo practitioners and small firms who don't have a paralegal whose full-time job is wrangling reporters.
+        </p>
+        <div class="hero-actions" style="margin-top: 36px;">
+          <a href="#" class="btn-ink">
+            Order a transcript
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="#" class="btn-quiet">Firm pricing →</a>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature-label">§ A</div>
+          <h4>Statutory pricing</h4>
+          <p>Reporter rates set by California's CCP § 269 schedule. No agency markup. No mystery surcharges.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-label">§ B</div>
+          <h4>License-verified</h4>
+          <p>Every reporter cross-checked against the CRB roster. Number, status, and recent activity, on file.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-label">§ C</div>
+          <h4>One dashboard</h4>
+          <p>Every order, every transcript, every invoice. Search by case, date, or department. Export to ASCII.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-label">§ D</div>
+          <h4>24-hour rush</h4>
+          <p>Need it overnight? Mark the order rush. We surface only reporters who can hit your deadline.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHORTHAND DIVIDER → leading into reporters -->
+  <div class="divider-script">
+    <img src="../graphics/keep-your-money-shorthand.png" alt="keep your money, written in Gregg shorthand" />
+  </div>
+  <div class="divider-script-label">
+    <em>keep your money</em>, written in Gregg shorthand
+  </div>
+
+</div>
+
+<!-- FOR REPORTERS (dark) -->
+<section class="reporters" id="reporters">
+  <img src="../graphics/keep-your-money-shorthand.png" alt="" class="reporters-shorthand" aria-hidden="true" />
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">§ 05 — For reporters</div>
+      <h2 class="section-title">Keep your <em>money.</em></h2>
+      <p class="section-lede">
+        Most agencies pay reporters 40–60% of the statutory rate, then charge the firm the full schedule. We don't do that. Reporters set their own rates, and what the attorney pays is what the reporter earns.
+      </p>
+    </div>
+
+    <div class="reporter-cards">
+      <div class="reporter-card">
+        <div class="reporter-card-num">01.</div>
+        <h4>Set your <em>own rate.</em></h4>
+        <p>Within statutory limits, you decide what to charge. No agency margin, no take-it-or-leave-it desk rate. The dashboard is yours.</p>
+      </div>
+      <div class="reporter-card">
+        <div class="reporter-card-num">02.</div>
+        <h4>Choose your <em>own work.</em></h4>
+        <p>See the case, the court, the department, and the date before you accept. No surprise depos hours from a hearing. No mystery files.</p>
+      </div>
+      <div class="reporter-card">
+        <div class="reporter-card-num">03.</div>
+        <h4>Get paid <em>on time.</em></h4>
+        <p>Net-14 from upload. No chasing AP. No follow-up emails to the firm. The platform escrows on order and releases on delivery.</p>
+      </div>
+    </div>
+
+    <div class="reporters-cta">
+      <a href="#" class="btn-ink-on-dark">
+        Apply to join the pilot
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <a href="#" class="btn-quiet-on-dark">Read the reporter terms →</a>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="section-header" style="margin: 0 auto 80px; text-align: center;">
+      <div class="section-eyebrow" style="margin-left: auto; margin-right: auto;">§ 06 — Pricing</div>
+      <h2 class="section-title">A <em>schedule of fees,</em><br/>no fine print.</h2>
+      <p class="section-lede" style="margin-left: auto; margin-right: auto;">
+        Two tiers for firms, free for individuals, and a single flat platform fee on every order. That's it. The full schedule, on one page.
+      </p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-card-label">Article I — Platform</div>
+        <div class="pricing-row">
+          <div class="pricing-label">
+            <h4>Buyer fee</h4>
+            <p>Flat fee on every transcript order</p>
+          </div>
+          <div class="pricing-price">12<small>%</small></div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-label">
+            <h4>Individual attorneys</h4>
+            <p>Solo practitioners, contractor counsel</p>
+          </div>
+          <div class="pricing-price">$99<small>/yr</small></div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-label">
+            <h4>Firm tier</h4>
+            <p>Per seat, 3 seats or more, billed annually</p>
+          </div>
+          <div class="pricing-price">$79<small>/yr</small></div>
+        </div>
+        <p class="pricing-note">
+          <strong>No setup fee.</strong> No per-order minimum. No agency markup buried in your invoice.
+        </p>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-card-label">Article II — Reporters</div>
+        <div class="pricing-row">
+          <div class="pricing-label">
+            <h4>Listing</h4>
+            <p>Profile, license verification, scheduling</p>
+          </div>
+          <div class="pricing-price free">Free</div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-label">
+            <h4>Per-job platform fee</h4>
+            <p>Deducted on payout, all-in</p>
+          </div>
+          <div class="pricing-price">8<small>%</small></div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-label">
+            <h4>Payouts</h4>
+            <p>Net-14 from delivery, ACH or instant</p>
+          </div>
+          <div class="pricing-price free">Net-14</div>
+        </div>
+        <p class="pricing-note">
+          <strong>Set your own rate</strong> within California's statutory schedule. We never mark it up, never resell it, and never withhold past the platform fee.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta">
+    <div class="cta-eyebrow">§ 07 — Get started</div>
+    <h2 class="cta-title">
+      Files a hearing transcript today, <em>and you'll have it tomorrow.</em>
+    </h2>
+    <div class="cta-actions">
+      <a href="#" class="btn-ink">
+        Order a transcript
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <a href="#" class="btn-quiet">Or join as a reporter →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>Dewey <em>Sholes.</em></h4>
+        <p>
+          A California court-reporting marketplace, built for solo and small-firm attorneys – and the reporters who actually want to keep their money.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <a href="#">How it works</a>
+        <a href="#">For attorneys</a>
+        <a href="#">For reporters</a>
+        <a href="#">Pricing</a>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="#">About</a>
+        <a href="#">Press</a>
+        <a href="#">Contact</a>
+        <a href="#">Studio Crux</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="#">Terms of service</a>
+        <a href="#">Privacy policy</a>
+        <a href="#">Reporter terms</a>
+        <a href="#">CCP § 269 schedule</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Dewey Sholes · A Studio Crux project</span>
+      <div class="right">
+        <span>Built in California</span>
+        <span>Pilot v0.4</span>
+        <span>Vol. I · Issue 01</span>
+      </div>
+    </div>
+  </footer>
 
 </div>
 </body>
