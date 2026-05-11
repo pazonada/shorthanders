@@ -9,21 +9,39 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
+    /* ── neutrals ── */
     --bg: #FFFFFF;
     --bg-soft: #F8FAFC;
-    --bg-cream: #FBF9F3;
+    --cream: #FBF7EC;              /* warm paper, alt section bg */
+    --cream-deep: #F0E8D2;         /* deeper paper, rules */
     --ink: #0F172A;
     --ink-soft: #334155;
     --muted: #64748B;
     --dim: #94A3B8;
     --rule: #E2E8F0;
     --rule-strong: #CBD5E1;
+    --rule-cream: #E2D8B8;
+
+    /* ── primary brand ── */
     --brand: #2563EB;
     --brand-dark: #1D4ED8;
     --brand-soft: #EFF6FF;
     --brand-pale: #BFDBFE;
     --accent: #4F46E5;
     --accent-soft: #EEF2FF;
+
+    /* ── new palette additions ── */
+    --periwinkle: #9DB4FF;         /* pulled from the shorthand sketch */
+    --periwinkle-soft: #E6ECFF;
+    --periwinkle-deep: #5C7BE3;
+    --ochre: #C49B5B;              /* warm accent — rush, urgency */
+    --ochre-soft: #F8EFDB;
+    --ochre-deep: #8B6B33;
+    --sage: #7E9B7C;               /* organic accent — verified, certified */
+    --sage-soft: #E8EFE5;
+    --sage-deep: #4F6F4D;
+    --plum: #6B4A6E;               /* deep accent — rare, special states */
+    --plum-soft: #F0E6F0;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
@@ -180,8 +198,8 @@
   }
   .trust span { display: inline-flex; align-items: center; gap: 8px; }
   .trust .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); display: inline-block; }
-  .trust .dot.amber { background: #F59E0B; }
-  .trust .dot.green { background: #10B981; }
+  .trust .dot.ochre { background: var(--ochre); }
+  .trust .dot.sage { background: var(--sage); }
 
   /* ── order card ── */
   .order-card {
@@ -250,7 +268,7 @@
     font-weight: 500;
     color: var(--ink-soft);
   }
-  .order-field.brand { background: var(--brand-soft); border-color: var(--brand-pale); }
+  .order-field.brand { background: var(--brand-soft); border-color: var(--periwinkle); }
   .order-field.brand .v { color: var(--brand-dark); }
   .order-card-foot {
     margin-top: 22px;
@@ -365,7 +383,7 @@
     overflow: hidden;
     transition: border-color 0.15s ease, transform 0.15s ease;
   }
-  .stat-card:hover { border-color: var(--brand-pale); transform: translateY(-2px); }
+  .stat-card:hover { border-color: var(--periwinkle); transform: translateY(-2px); }
   .stat-card::before {
     content: "";
     position: absolute;
@@ -418,7 +436,7 @@
     gap: 14px;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
-  .step-card:hover { border-color: var(--brand-pale); box-shadow: 0 12px 32px -16px rgba(37,99,235,0.15); }
+  .step-card:hover { border-color: var(--periwinkle); box-shadow: 0 12px 32px -16px rgba(37,99,235,0.15); }
   .step-head {
     display: flex;
     align-items: baseline;
@@ -488,7 +506,7 @@
     overflow: hidden;
     transition: border-color 0.15s ease, transform 0.15s ease;
   }
-  .usecase:hover { border-color: var(--brand-pale); transform: translateY(-2px); }
+  .usecase:hover { border-color: var(--periwinkle); transform: translateY(-2px); }
   @media (max-width: 720px) { .usecase { padding: 32px; } }
   .usecase-tag {
     display: inline-flex;
@@ -505,7 +523,7 @@
     margin-bottom: 24px;
     align-self: flex-start;
   }
-  .usecase-tag.amber { background: #FFFBEB; color: #B45309; }
+  .usecase-tag.ochre { background: var(--ochre-soft); color: var(--ochre-deep); }
   .usecase h3 {
     font-family: 'Instrument Serif', serif;
     font-weight: 400;
@@ -570,7 +588,7 @@
     padding: 24px;
     transition: background 0.15s ease, border-color 0.15s ease;
   }
-  .feature:hover { background: var(--brand-soft); border-color: var(--brand-pale); }
+  .feature:hover { background: var(--brand-soft); border-color: var(--periwinkle); }
   .feature svg { width: 22px; height: 22px; color: var(--brand); margin-bottom: 14px; }
   .feature h4 {
     font-family: 'Instrument Serif', serif;
@@ -639,10 +657,10 @@
     z-index: 0;
   }
   .reporters .container { position: relative; z-index: 1; }
-  .reporters .section-eyebrow { color: var(--brand-pale); }
+  .reporters .section-eyebrow { color: var(--periwinkle); }
   .reporters .section-eyebrow::before { background: var(--brand-pale); }
   .reporters .section-title { color: var(--bg); }
-  .reporters .section-title em { color: var(--brand-pale); }
+  .reporters .section-title em { color: var(--periwinkle); }
   .reporters .section-lede { color: rgba(255,255,255,0.72); }
   .reporter-cards {
     display: grid;
@@ -670,14 +688,14 @@
     font-style: italic;
     font-weight: 400;
     font-size: 38px;
-    color: var(--brand-pale);
+    color: var(--periwinkle);
     line-height: 1;
   }
   .reporter-card-icon {
     width: 40px; height: 40px;
     border-radius: 10px;
     background: rgba(191,219,254,0.14);
-    color: var(--brand-pale);
+    color: var(--periwinkle);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -692,7 +710,7 @@
     letter-spacing: -0.015em;
     line-height: 1.15;
   }
-  .reporter-card h4 em { font-style: italic; color: var(--brand-pale); }
+  .reporter-card h4 em { font-style: italic; color: var(--periwinkle); }
   .reporter-card p {
     font-size: 14px;
     color: rgba(255,255,255,0.65);
@@ -729,7 +747,7 @@
     border-bottom: 1px solid rgba(255,255,255,0.5);
     padding-bottom: 2px;
   }
-  .btn-link-on-dark:hover { color: var(--brand-pale); border-color: var(--brand-pale); }
+  .btn-link-on-dark:hover { color: var(--periwinkle); border-color: var(--periwinkle); }
 
   /* small inline payout card to anchor reporter section */
   .payout-card {
@@ -757,7 +775,7 @@
     font-size: 22px;
     color: var(--bg);
   }
-  .payout-cell .v em { font-style: italic; color: var(--brand-pale); }
+  .payout-cell .v em { font-style: italic; color: var(--periwinkle); }
   .payout-cell .v.small { font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 600; }
 
   /* ── pricing ── */
@@ -779,7 +797,7 @@
     position: relative;
     overflow: hidden;
   }
-  .pricing-card.featured { border-color: var(--brand-pale); box-shadow: 0 24px 60px -20px rgba(37,99,235,0.18); }
+  .pricing-card.featured { border-color: var(--periwinkle); box-shadow: 0 24px 60px -20px rgba(37,99,235,0.18); }
   .pricing-card.featured::before {
     content: "";
     position: absolute;
@@ -961,6 +979,74 @@
     color: var(--muted);
   }
   .footer-bottom .right span + span::before { content: "·"; margin: 0 14px; color: var(--rule); }
+
+  /* ── style guide / palette swatches ── */
+  .styleguide {
+    background: var(--cream);
+    border-top: 1px solid var(--cream-deep);
+    padding: 96px 0;
+  }
+  @media (max-width: 720px) { .styleguide { padding: 64px 0; } }
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+  @media (max-width: 960px) { .palette-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .palette-grid { grid-template-columns: 1fr; } }
+  .swatch {
+    background: var(--bg);
+    border: 1px solid var(--rule-cream);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .swatch-chip {
+    height: 96px;
+    background: var(--brand);
+  }
+  .swatch-chip.brand { background: var(--brand); }
+  .swatch-chip.accent { background: var(--accent); }
+  .swatch-chip.periwinkle { background: var(--periwinkle); }
+  .swatch-chip.ochre { background: var(--ochre); }
+  .swatch-chip.sage { background: var(--sage); }
+  .swatch-chip.plum { background: var(--plum); }
+  .swatch-chip.ink { background: var(--ink); }
+  .swatch-chip.cream { background: var(--cream-deep); border-bottom: 1px solid var(--rule-cream); }
+  .swatch-body { padding: 16px 18px 20px; }
+  .swatch-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+  .swatch-name em { font-style: italic; color: var(--brand); }
+  .swatch-hex {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .swatch-role {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .swatch-role .tag {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .swatch-role .tag.new { background: var(--periwinkle-soft); color: var(--periwinkle-deep); }
 </style>
 </head>
 <body>
@@ -996,6 +1082,10 @@
     <img src="../graphics/keep-your-money-shorthand.png" alt="" class="hero-shorthand-bg" aria-hidden="true" />
     <div class="hero-grid">
       <div>
+        <div style="display:inline-flex; align-items:center; gap:12px; font-family:'Instrument Serif', serif; font-style:italic; font-size:20px; color:var(--brand); margin-bottom:24px;">
+          <span style="width:28px; height:1px; background:var(--brand); display:inline-block;"></span>
+          Pilot phase launching soon
+        </div>
         <h1 class="headline">
           Court transcripts,<br/>
           <em>finally simple.</em>
@@ -1011,9 +1101,9 @@
           <a href="#" class="btn-link">Join as a reporter →</a>
         </div>
         <div class="trust">
-          <span><i class="dot green"></i> CSR LICENSE-VERIFIED</span>
+          <span><i class="dot sage"></i> CSR LICENSE-VERIFIED</span>
           <span><i class="dot"></i> 24-HOUR RUSH</span>
-          <span><i class="dot amber"></i> STATUTORY PRICING</span>
+          <span><i class="dot ochre"></i> STATUTORY PRICING</span>
         </div>
       </div>
 
@@ -1067,10 +1157,10 @@
 </section>
 
 <!-- BY THE NUMBERS -->
-<section class="section">
+<section class="section" style="background: var(--cream); border-top: 1px solid var(--cream-deep); border-bottom: 1px solid var(--cream-deep);">
   <div class="container">
     <div class="section-header">
-      <div class="section-eyebrow">By the numbers</div>
+      <div class="section-eyebrow" style="color: var(--ochre-deep);">By the numbers</div>
       <h2 class="section-title">A small marketplace, <em>built on trust.</em></h2>
       <p class="section-lede">
         We're a California pilot, not a national platform. Every reporter is license-verified, every hearing is a public record, and every fee is the one the statute allows.
@@ -1174,7 +1264,7 @@
       </article>
 
       <article class="usecase">
-        <span class="usecase-tag amber">Option B · Audio</span>
+        <span class="usecase-tag ochre">Option B · Audio</span>
         <h3>Audio <em>transcription.</em></h3>
         <p>You already have the public-record audio – a courtroom mic, a clerk's recording, a public hearing. We transcribe it, certify it, and deliver it.</p>
         <ul class="usecase-list">
@@ -1405,6 +1495,85 @@
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
       <a href="#" class="btn-link">Or join as a reporter →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STYLE GUIDE / PALETTE -->
+<section class="styleguide">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Style guide · Palette</div>
+      <h3 class="section-title" style="font-size: clamp(32px, 4vw, 52px);">A small set of <em>working colors.</em></h3>
+      <p class="section-lede">
+        The blue and indigo stay primary. The new additions – periwinkle, ochre, sage, plum – give us warmer accents for certified / rush / verified states, and a deeper note for special cases.
+      </p>
+    </div>
+    <div class="palette-grid">
+      <div class="swatch">
+        <div class="swatch-chip brand"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Brand <em>blue</em></div>
+          <div class="swatch-hex">#2563EB</div>
+          <div class="swatch-role">Primary actions, links, headlines.</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip accent"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Indigo <em>accent</em></div>
+          <div class="swatch-hex">#4F46E5</div>
+          <div class="swatch-role">Gradient pair with brand, hero glow.</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip periwinkle"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Periwinkle</div>
+          <div class="swatch-hex">#9DB4FF</div>
+          <div class="swatch-role">Soft accent on dark backgrounds; matches the shorthand sketch tone. <span class="tag new">New</span></div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip ochre"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Ochre</div>
+          <div class="swatch-hex">#C49B5B</div>
+          <div class="swatch-role">Warm callouts – rush, statutory, schedule. Replaces harsh amber. <span class="tag new">New</span></div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip sage"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Sage</div>
+          <div class="swatch-hex">#7E9B7C</div>
+          <div class="swatch-role">Verified / certified states. Replaces saturated success green. <span class="tag new">New</span></div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip plum"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Plum</div>
+          <div class="swatch-hex">#6B4A6E</div>
+          <div class="swatch-role">Rare deep accent for special states – e.g. firm tier, daily turnaround. <span class="tag new">New</span></div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip cream"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Cream <em>paper</em></div>
+          <div class="swatch-hex">#FBF7EC</div>
+          <div class="swatch-role">Alternate section background – warmth without changing temperature. <span class="tag new">New</span></div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip ink"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Ink</div>
+          <div class="swatch-hex">#0F172A</div>
+          <div class="swatch-role">Headlines, dark sections, primary text.</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
