@@ -58,17 +58,31 @@
     letter-spacing: 0.01em;
   }
   .nav-links a:hover { color: var(--brand); }
-  .nav-cta {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 14px;
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--ink);
-    padding-bottom: 1px;
+  .nav-links a.nav-signin {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: 0;
+    margin-left: 12px;
   }
-  .nav-cta:hover { color: var(--brand); border-color: var(--brand); }
-  @media (max-width: 720px) { .nav-links { display: none; } }
+  .nav-links a.nav-signin:hover { color: var(--brand); }
+  .nav-links a.nav-cta {
+    background: var(--ink);
+    color: #FFFFFF;
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .nav-links a.nav-cta:hover { background: var(--brand); color: #FFFFFF; transform: translateY(-1px); }
+  @media (max-width: 720px) {
+    .nav-links a:not(.nav-cta):not(.nav-signin) { display: none; }
+  }
 
   /* ── dateline ── */
   .dateline {
@@ -277,7 +291,8 @@
         <a href="#">For attorneys</a>
         <a href="#">For reporters</a>
         <a href="#">Pricing</a>
-        <a href="#" class="nav-cta">Sign in →</a>
+        <a href="#" class="nav-signin">Sign in</a>
+        <a href="#" class="nav-cta">Get started</a>
       </div>
     </div>
   </nav>
@@ -293,7 +308,6 @@
   <section class="hero">
     <div class="hero-grid">
       <div>
-        <div class="kicker">A pilot from California, May 2026</div>
         <h1 class="headline">
           Court<br/>
           transcripts,<br/>
@@ -340,10 +354,6 @@
       </div>
     </div>
 
-    <div class="ornament">
-      <span class="ornament-glyph">§</span>
-    </div>
-    <p class="footnote">Continued below – How it works</p>
   </section>
 
 </div>
