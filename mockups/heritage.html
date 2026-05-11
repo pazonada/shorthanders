@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dewey Sholes – Heritage mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F4EFE3;
+    --paper-2: #ECE5D2;
+    --ink: #1A1A1A;
+    --ink-soft: #3A3A38;
+    --muted: #6E6A5C;
+    --rule: #C9C0AB;
+    --brand: #4361EE;
+    --warn: #B45309;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.13 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 220px 220px;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+    opacity: 0.7;
+  }
+
+  /* ── docket strip ── */
+  .docket {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 10px 0;
+    position: relative;
+    z-index: 3;
+  }
+  .docket .container { display: flex; justify-content: space-between; align-items: center; }
+  .docket .left { color: var(--paper); }
+  .docket .right { color: #BBC2D6; }
+  .docket .right span + span::before { content: "·"; margin: 0 12px; color: #555; }
+
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 2; }
+  @media (max-width: 720px) { .container { padding: 0 24px; } }
+
+  /* ── nav ── */
+  .nav { padding: 22px 0; border-bottom: 1px solid var(--rule); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+  .nav-brand { display: flex; align-items: center; }
+  .nav-links { display: flex; gap: 36px; align-items: center; }
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-links a:hover { color: var(--brand); }
+  .nav-cta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--ink);
+    padding: 10px 18px;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .nav-cta:hover { background: var(--ink); color: var(--paper); }
+  @media (max-width: 860px) { .nav-links { display: none; } }
+
+  /* ── hero with line-number gutter ── */
+  .hero { padding: 80px 0 64px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1.45fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .hero-grid { grid-template-columns: 32px 1fr; gap: 24px; }
+    .hero-side { grid-column: 1 / -1; margin-top: 56px; }
+  }
+
+  /* line-number gutter */
+  .gutter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.4;
+    padding-top: 8px;
+    border-right: 1px solid var(--rule);
+    padding-right: 12px;
+  }
+  .gutter span { display: block; padding: 6px 0; }
+
+  /* main column */
+  .case-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warn);
+    margin-bottom: 24px;
+  }
+  h1.headline {
+    font-family: 'Newsreader', serif;
+    font-weight: 500;
+    font-size: clamp(54px, 7.4vw, 110px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  h1.headline em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--brand);
+  }
+  .lede {
+    margin-top: 32px;
+    max-width: 600px;
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+  .lede strong { font-weight: 600; color: var(--ink); }
+  .hero-actions { margin-top: 40px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+  .btn-stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 16px 28px;
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+  .btn-stamp:hover { background: var(--brand); }
+  .btn-stamp svg { width: 14px; height: 14px; }
+  .btn-ghost {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 4px;
+    text-decoration: none;
+  }
+  .btn-ghost:hover { color: var(--brand); border-color: var(--brand); }
+
+  /* stenotype motif */
+  .steno-card {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    border-radius: 2px;
+    position: relative;
+  }
+  .steno-card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .steno-keys {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 6px;
+    margin-bottom: 28px;
+  }
+  .key {
+    aspect-ratio: 1 / 1.25;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+  .key.lit {
+    background: var(--brand);
+    color: var(--paper);
+    border-color: var(--brand);
+  }
+  .key.empty { background: transparent; border: none; }
+  .steno-readout {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--ink);
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+  .steno-readout span { color: var(--brand); }
+  .steno-meta {
+    margin-top: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── transcript-style trust bar ── */
+  .transcript {
+    margin-top: 88px;
+    border-top: 1.5px solid var(--ink);
+    border-bottom: 1.5px solid var(--ink);
+    padding: 24px 0;
+    display: grid;
+    grid-template-columns: 60px 1fr 1fr 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  @media (max-width: 860px) { .transcript { grid-template-columns: 1fr; gap: 12px; } }
+  .transcript-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .transcript-item h4 {
+    font-family: 'Newsreader', serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .transcript-item p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  .footer-mast {
+    margin-top: 40px;
+    padding: 18px 0 60px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .footer-mast span + span::before { content: "·"; margin: 0 10px; color: var(--rule); }
+</style>
+</head>
+<body>
+
+<!-- docket strip -->
+<div class="docket">
+  <div class="container">
+    <span class="left">Dewey Sholes · Transcript of Record</span>
+    <div class="right">
+      <span>Filed 11 May 2026</span>
+      <span>Vol. I, p. 01</span>
+      <span>Cause No. 2026-DS-0001</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#">
+        <svg height="40" viewBox="0 0 310 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="60" height="60" rx="13" fill="#0F172A"/>
+          <path d="M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50" fill="none" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="76" y="27" font-family="'Courier New',Courier,monospace" font-size="18" font-weight="700" fill="#0F172A" letter-spacing="4">DEWEY</text>
+          <text x="76" y="53" font-family="'Courier New',Courier,monospace" font-size="18" font-weight="700" fill="#4361EE" letter-spacing="4">SHOLES</text>
+        </svg>
+      </a>
+      <div class="nav-links">
+        <a href="#">How it works</a>
+        <a href="#">Attorneys</a>
+        <a href="#">Reporters</a>
+        <a href="#">Pricing</a>
+        <a href="#" class="nav-cta">Get started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid">
+      <!-- gutter -->
+      <div class="gutter">
+        <span>01</span><span>02</span><span>03</span><span>04</span>
+        <span>05</span><span>06</span><span>07</span><span>08</span>
+        <span>09</span><span>10</span><span>11</span><span>12</span>
+        <span>13</span><span>14</span><span>15</span>
+      </div>
+
+      <!-- main column -->
+      <div>
+        <div class="case-label">In the matter of court reporting · est. 2026</div>
+        <h1 class="headline">
+          Court transcripts,<br/>
+          <em>finally on the record.</em>
+        </h1>
+        <p class="lede">
+          Dewey Sholes matches attorneys with certified shorthand reporters for <strong>public court hearings</strong> – live attendance or post-hearing audio transcription. Statutory pricing, verified credentials, and a delivery clock you can actually trust.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn-stamp">
+            Order a transcript
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="#" class="btn-ghost">Join as a reporter →</a>
+        </div>
+      </div>
+
+      <!-- stenotype motif -->
+      <aside class="hero-side">
+        <div class="steno-card">
+          <div class="steno-card-label">Stenotype – key strike</div>
+          <div class="steno-keys">
+            <div class="key">S</div><div class="key lit">T</div><div class="key">K</div><div class="key">P</div><div class="key">W</div><div class="key empty"></div><div class="key">F</div><div class="key">R</div><div class="key lit">P</div><div class="key">B</div><div class="key">L</div>
+            <div class="key">S</div><div class="key">T</div><div class="key">K</div><div class="key">P</div><div class="key">W</div><div class="key empty"></div><div class="key lit">R</div><div class="key">B</div><div class="key">G</div><div class="key">S</div><div class="key">Z</div>
+            <div class="key empty"></div><div class="key empty"></div><div class="key empty"></div><div class="key lit">A</div><div class="key">O</div><div class="key empty"></div><div class="key">E</div><div class="key">U</div><div class="key empty"></div><div class="key empty"></div><div class="key empty"></div>
+          </div>
+          <div class="steno-readout">
+            T-P-R-A → <span>“transcript”</span>
+          </div>
+          <p class="steno-meta">240 wpm · Realtime · CSR-licensed, State of California</p>
+        </div>
+      </aside>
+    </div>
+
+    <!-- trust bar formatted like transcript header -->
+    <div class="transcript">
+      <div class="transcript-label">In re:</div>
+      <div class="transcript-item">
+        <h4>License-verified CSRs</h4>
+        <p>Every reporter, every booking</p>
+      </div>
+      <div class="transcript-item">
+        <h4>24-hour rush available</h4>
+        <p>Statewide, expedited delivery</p>
+      </div>
+      <div class="transcript-item">
+        <h4>Statutory pricing</h4>
+        <p>No surprises, no upcharges</p>
+      </div>
+    </div>
+
+    <!-- masthead-style footer -->
+    <div class="footer-mast">
+      <span>Dewey Sholes · est. 2026</span>
+      <div>
+        <span>Studio Crux</span>
+        <span>Bay Area, California</span>
+        <span>v0.4 – pilot</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

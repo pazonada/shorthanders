@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dewey Sholes – Hero mockup gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #F8FAFC;
+    color: #0F172A;
+    line-height: 1.55;
+    padding: 64px 32px;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #4361EE;
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+  }
+  h1 em { font-style: italic; color: #4361EE; }
+  p.intro { font-size: 17px; color: #475569; max-width: 640px; margin-bottom: 56px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 28px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px -16px rgba(15,23,42,0.12);
+  }
+  .card .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: #94A3B8;
+    margin-bottom: 12px;
+  }
+  .card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 26px;
+    margin-bottom: 12px;
+  }
+  .card p { font-size: 14px; color: #64748B; line-height: 1.6; margin-bottom: 18px; flex: 1; }
+  .card .tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px;
+  }
+  .card .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #475569;
+    background: #F1F5F9;
+    border-radius: 4px;
+    padding: 4px 8px;
+  }
+  .card .open {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: #0F172A;
+    border-bottom: 1px solid #0F172A;
+    align-self: flex-start;
+    padding-bottom: 2px;
+  }
+  footer {
+    margin-top: 72px;
+    padding-top: 28px;
+    border-top: 1px solid #E2E8F0;
+    font-size: 13px;
+    color: #94A3B8;
+  }
+  footer code {
+    font-family: 'JetBrains Mono', monospace;
+    background: #F1F5F9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #475569;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Mockups · Hero direction studies · May 2026</p>
+  <h1>Three takes on a more <em>artistic</em> hero.</h1>
+  <p class="intro">
+    Same logo, same brand color. Three different temperatures, each leaning on different pieces of the Synapse playbook – display serif, asymmetric layout, marginalia, ornamental dividers, and a court-reporting heritage motif. Open each one and compare.
+  </p>
+
+  <div class="grid">
+    <a class="card" href="editorial.html">
+      <div class="num">01</div>
+      <h3>Editorial</h3>
+      <p>Closest to The Synapse. Fraunces display serif, italic kicker, asymmetric two-column hero with a pull-quote in the side margin, paper texture, ornamental § divider.</p>
+      <div class="tags">
+        <span class="tag">Fraunces</span>
+        <span class="tag">Asymmetric</span>
+        <span class="tag">Pull-quote</span>
+        <span class="tag">Cream paper</span>
+      </div>
+      <span class="open">Open mockup →</span>
+    </a>
+
+    <a class="card" href="heritage.html">
+      <div class="num">02</div>
+      <h3>Heritage</h3>
+      <p>Leans into the court-reporting roots. Docket strip, line-number gutter, Newsreader serif headline, an abstract stenotype keyboard motif, transcript-style trust bar, masthead footer.</p>
+      <div class="tags">
+        <span class="tag">Newsreader</span>
+        <span class="tag">Line-number gutter</span>
+        <span class="tag">Stenotype motif</span>
+        <span class="tag">Docket header</span>
+      </div>
+      <span class="open">Open mockup →</span>
+    </a>
+
+    <a class="card" href="hybrid.html">
+      <div class="num">03</div>
+      <h3>Hybrid</h3>
+      <p>The shippable middle path. Instrument Serif headline, keeps the order-card on the right (slightly tilted, more editorial), wavy SVG divider, marginalia footer, white background.</p>
+      <div class="tags">
+        <span class="tag">Instrument Serif</span>
+        <span class="tag">Order-card kept</span>
+        <span class="tag">Wave divider</span>
+        <span class="tag">White bg</span>
+      </div>
+      <span class="open">Open mockup →</span>
+    </a>
+  </div>
+
+  <footer>
+    Files live in <code>mockups/</code>. The real site at <code>/index.html</code> is untouched.
+  </footer>
+</div>
+</body>
+</html>

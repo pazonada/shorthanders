@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dewey Sholes – Editorial mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAF8F3;
+    --paper-2: #F2EFE7;
+    --ink: #0F172A;
+    --ink-soft: #2C3344;
+    --muted: #5B6070;
+    --rule: #D9D4C7;
+    --brand: #4361EE;
+    --brand-dark: #2F46C8;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 25% 30%, rgba(67,97,238,0.05), transparent 55%),
+      radial-gradient(circle at 80% 70%, rgba(255,200,120,0.06), transparent 55%);
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 180px 180px;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+    opacity: 0.55;
+  }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 2; }
+  @media (max-width: 720px) { .container { padding: 0 24px; } }
+
+  /* ── nav ── */
+  .nav { padding: 28px 0 0; }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+  .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-links { display: flex; gap: 36px; align-items: center; }
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 14px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  .nav-links a:hover { color: var(--brand); }
+  .nav-cta {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 1px;
+  }
+  .nav-cta:hover { color: var(--brand); border-color: var(--brand); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* ── dateline ── */
+  .dateline {
+    margin-top: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 12px 0;
+  }
+  .dateline span + span::before { content: "·"; margin: 0 16px; color: var(--rule); }
+
+  /* ── hero ── */
+  .hero { padding: 88px 0 56px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 96px;
+    align-items: end;
+  }
+  @media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; gap: 64px; } }
+  .kicker {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 19px;
+    color: var(--brand);
+    margin-bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .kicker::before {
+    content: "";
+    width: 36px; height: 1px; background: var(--brand);
+  }
+  h1.headline {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(58px, 8.6vw, 124px);
+    line-height: 0.94;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+  }
+  h1.headline em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--brand);
+  }
+  .lede {
+    margin-top: 40px;
+    max-width: 560px;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .lede strong { font-weight: 600; color: var(--ink); }
+  .hero-actions { margin-top: 44px; display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+  .btn-ink {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 16px 28px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .btn-ink:hover { background: var(--brand); transform: translateY(-1px); }
+  .btn-ink svg { width: 14px; height: 14px; }
+  .btn-quiet {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+  }
+  .btn-quiet:hover { color: var(--brand); border-color: var(--brand); }
+
+  /* ── side panel (editorial detail) ── */
+  .side {
+    border-left: 1px solid var(--rule);
+    padding-left: 40px;
+    padding-bottom: 12px;
+  }
+  @media (max-width: 960px) { .side { border-left: 0; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 36px; } }
+  .side-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .pullquote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.42;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  .pullquote::before {
+    content: "\201C";
+    font-size: 56px;
+    line-height: 0;
+    position: relative;
+    top: 18px;
+    margin-right: 4px;
+    color: var(--brand);
+  }
+  .attrib {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .attrib strong { color: var(--ink); font-weight: 600; }
+
+  /* ── trust bar (marginalia) ── */
+  .trust {
+    margin-top: 96px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 28px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 720px) { .trust { grid-template-columns: 1fr; } }
+  .trust-item { display: flex; align-items: center; gap: 12px; }
+  .trust-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--brand);
+  }
+
+  /* ── ornament divider ── */
+  .ornament {
+    margin: 80px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    color: var(--muted);
+  }
+  .ornament::before, .ornament::after {
+    content: "";
+    flex: 0 0 100px;
+    height: 1px;
+    background: var(--rule);
+  }
+  .ornament-glyph {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--brand);
+  }
+
+  /* ── footer note ── */
+  .footnote {
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--muted);
+    padding-bottom: 80px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#">
+        <svg height="38" viewBox="0 0 310 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="60" height="60" rx="13" fill="#0F172A"/>
+          <path d="M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50" fill="none" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="76" y="27" font-family="'Courier New',Courier,monospace" font-size="18" font-weight="700" fill="#0F172A" letter-spacing="4">DEWEY</text>
+          <text x="76" y="53" font-family="'Courier New',Courier,monospace" font-size="18" font-weight="700" fill="#4361EE" letter-spacing="4">SHOLES</text>
+        </svg>
+      </a>
+      <div class="nav-links">
+        <a href="#">How it works</a>
+        <a href="#">For attorneys</a>
+        <a href="#">For reporters</a>
+        <a href="#">Pricing</a>
+        <a href="#" class="nav-cta">Sign in →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- DATELINE -->
+  <div class="dateline">
+    <span>California · Pilot 2026</span>
+    <span>San Francisco Bay Area</span>
+    <span>Vol. I · Issue 01</span>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="kicker">A pilot from California, May 2026</div>
+        <h1 class="headline">
+          Court<br/>
+          transcripts,<br/>
+          <em>finally simple.</em>
+        </h1>
+        <p class="lede">
+          Dewey Sholes matches attorneys with certified court reporters for <strong>public court hearings</strong> – live attendance or post-hearing audio transcription. Statutory pricing, verified credentials, delivery you can count on.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn-ink">
+            Order a transcript
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="#" class="btn-quiet">Join as a reporter →</a>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="side-label">From the field, March 2026</div>
+        <p class="pullquote">
+          I used to chase three agencies for one rush transcript. Now I tap a button and a CSR I trust is on the line that morning.
+        </p>
+        <p class="attrib">
+          <strong>R. Park</strong><br/>
+          Senior Paralegal, Lozano LLP<br/>
+          San Mateo County, CA
+        </p>
+      </aside>
+    </div>
+
+    <!-- TRUST / MARGINALIA -->
+    <div class="trust">
+      <div class="trust-item">
+        <span class="trust-num">01</span>
+        <span>CSR LICENSE-VERIFIED</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-num">02</span>
+        <span>24-HOUR RUSH AVAILABLE</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-num">03</span>
+        <span>STATUTORY PRICING, NO SURPRISES</span>
+      </div>
+    </div>
+
+    <div class="ornament">
+      <span class="ornament-glyph">§</span>
+    </div>
+    <p class="footnote">Continued below – How it works</p>
+  </section>
+
+</div>
+</body>
+</html>
