@@ -12,8 +12,8 @@
     /* ── neutrals ── */
     --bg: #FFFFFF;
     --bg-soft: #F8FAFC;
-    --cream: #FBF7EC;              /* warm paper, alt section bg */
-    --cream-deep: #F0E8D2;         /* deeper paper, rules */
+    --cream: #FBF7EC;
+    --cream-deep: #F0E8D2;
     --ink: #0F172A;
     --ink-soft: #334155;
     --muted: #64748B;
@@ -31,16 +31,16 @@
     --accent-soft: #EEF2FF;
 
     /* ── new palette additions ── */
-    --periwinkle: #9DB4FF;         /* pulled from the shorthand sketch */
+    --periwinkle: #9DB4FF;
     --periwinkle-soft: #E6ECFF;
     --periwinkle-deep: #5C7BE3;
-    --ochre: #C49B5B;              /* warm accent — rush, urgency */
+    --ochre: #C49B5B;
     --ochre-soft: #F8EFDB;
     --ochre-deep: #8B6B33;
-    --sage: #7E9B7C;               /* organic accent — verified, certified */
+    --sage: #7E9B7C;
     --sage-soft: #E8EFE5;
     --sage-deep: #4F6F4D;
-    --plum: #6B4A6E;               /* deep accent — rare, special states */
+    --plum: #6B4A6E;
     --plum-soft: #F0E6F0;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -80,8 +80,7 @@
   .nav-links a { color: var(--ink-soft); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.15s ease; }
   .nav-links a:hover { color: var(--brand); }
   .nav-signin {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 14px; font-weight: 500;
     color: var(--ink-soft);
     padding: 8px 14px;
     border-radius: 999px;
@@ -102,11 +101,7 @@
   @media (max-width: 860px) { .nav-links a:not(.nav-cta):not(.nav-signin) { display: none; } }
 
   /* ── hero ── */
-  .hero {
-    position: relative;
-    padding: 80px 0 56px;
-    overflow: hidden;
-  }
+  .hero { position: relative; padding: 80px 0 56px; overflow: hidden; }
   .hero-glow {
     position: absolute;
     top: -120px; left: 50%;
@@ -118,18 +113,17 @@
   }
   .hero-shorthand-bg {
     position: absolute;
-    top: 24px;
-    left: 0;
-    right: 0;
+    top: 0;
+    left: 0; right: 0;
     width: 100%;
     height: auto;
-    opacity: 0.65;
+    opacity: 0.7;
     mix-blend-mode: multiply;
     pointer-events: none;
     z-index: 0;
     user-select: none;
   }
-  @media (max-width: 720px) { .hero-shorthand-bg { opacity: 0.5; } }
+  @media (max-width: 720px) { .hero-shorthand-bg { opacity: 0.55; } }
   .hero-grid {
     position: relative;
     z-index: 1;
@@ -139,7 +133,17 @@
     align-items: center;
   }
   @media (max-width: 1024px) { .hero-grid { grid-template-columns: 1fr; gap: 48px; } }
-
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--brand);
+    margin-bottom: 24px;
+  }
+  .kicker::before { content: ""; width: 28px; height: 1px; background: var(--brand); }
   h1.headline {
     font-family: 'Instrument Serif', serif;
     font-weight: 400;
@@ -157,43 +161,37 @@
     max-width: 560px;
   }
   .lede strong { font-weight: 600; color: var(--ink); }
-
   .hero-actions { margin-top: 36px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
   .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--ink);
-    color: #FFFFFF;
-    padding: 16px 28px;
-    border-radius: 999px;
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.15s ease;
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--ink); color: #FFFFFF;
+    padding: 16px 28px; border-radius: 999px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none; transition: all 0.15s ease;
   }
   .btn-primary:hover { background: var(--brand); transform: translateY(-1px); }
   .btn-primary svg { width: 16px; height: 16px; }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--bg); color: var(--ink-soft);
+    border: 1px solid var(--rule);
+    padding: 16px 28px; border-radius: 999px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none; transition: all 0.15s ease;
+  }
+  .btn-secondary:hover { border-color: var(--rule-strong); }
+  .btn-secondary svg { width: 16px; height: 16px; }
   .btn-link {
     font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 18px;
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--ink);
-    padding-bottom: 2px;
-    transition: all 0.15s ease;
+    font-style: italic; font-size: 18px;
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--ink); padding-bottom: 2px;
   }
   .btn-link:hover { color: var(--brand); border-color: var(--brand); }
-
   .trust {
-    margin-top: 48px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 28px;
+    margin-top: 48px; display: flex; flex-wrap: wrap; gap: 28px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.06em;
+    font-size: 12px; letter-spacing: 0.06em;
     color: var(--muted);
   }
   .trust span { display: inline-flex; align-items: center; gap: 8px; }
@@ -214,784 +212,525 @@
     background: var(--bg-soft);
     border-bottom: 1px solid var(--rule);
     padding: 16px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
+    font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
   }
   .order-card-head .pill {
-    background: var(--brand-soft);
-    color: var(--brand);
-    padding: 4px 12px;
-    border-radius: 999px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
+    background: var(--brand-soft); color: var(--brand);
+    padding: 4px 12px; border-radius: 999px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
   }
   .order-card-body { padding: 28px; }
-  .order-card-label {
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    color: var(--muted);
-    font-size: 16px;
-    margin-bottom: 6px;
+  .order-card-tabs { display: flex; gap: 6px; margin-bottom: 22px; }
+  .order-card-tab {
+    padding: 8px 16px; border-radius: 8px;
+    font-size: 12px; font-weight: 600;
+    border: 1px solid var(--rule); background: var(--bg); color: var(--muted);
   }
-  .order-card-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 30px;
-    line-height: 1.15;
-    color: var(--ink);
-    margin-bottom: 22px;
-  }
-  .order-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-  .order-field {
-    background: var(--bg-soft);
-    border: 1px solid var(--rule);
-    border-radius: 12px;
-    padding: 12px 14px;
-  }
+  .order-card-tab.active { background: var(--brand-soft); border-color: var(--brand-pale); color: var(--brand); }
+  .order-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px; }
+  .order-fields.three { grid-template-columns: 1fr 1fr 1fr; }
+  .order-field { background: var(--bg-soft); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 14px; }
   .order-field label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--dim);
-    display: block;
-    margin-bottom: 6px;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--dim); display: block; margin-bottom: 6px;
   }
-  .order-field .v {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--ink-soft);
-  }
-  .order-field.brand { background: var(--brand-soft); border-color: var(--periwinkle); }
+  .order-field .v { font-size: 13px; font-weight: 500; color: var(--ink-soft); }
+  .order-field.brand { background: var(--brand-soft); border-color: var(--brand-pale); }
   .order-field.brand .v { color: var(--brand-dark); }
   .order-card-foot {
-    margin-top: 22px;
-    padding-top: 18px;
+    margin-top: 18px; padding-top: 16px;
     border-top: 1px dashed var(--rule);
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
+    display: flex; align-items: baseline; justify-content: space-between;
   }
-  .order-card-price {
-    font-family: 'Instrument Serif', serif;
-    font-size: 36px;
-    color: var(--ink);
-  }
+  .order-card-price { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--ink); }
   .order-card-price span { font-size: 14px; color: var(--muted); font-family: 'Inter', sans-serif; }
   .order-card-cta {
-    background: var(--ink);
-    color: #FFFFFF;
-    padding: 12px 22px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 600;
+    background: var(--ink); color: #FFFFFF;
+    padding: 10px 18px; border-radius: 999px;
+    font-size: 12px; font-weight: 600;
     text-decoration: none;
-    transition: background 0.15s ease;
   }
   .order-card-cta:hover { background: var(--brand); }
 
-  /* ── wavy divider ── */
+  /* ── wave divider ── */
   .wave-divider {
-    margin: 56px 0 0;
-    display: block;
-    color: var(--brand);
-    opacity: 0.7;
-  }
-  .wave-divider.standalone {
-    margin: 0;
-    padding: 24px 0;
+    margin: 56px 0 0; display: block;
+    color: var(--brand); opacity: 0.7;
   }
 
   /* ── editorial strip ── */
   .strip {
     padding: 28px 0 80px;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 32px;
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px;
     align-items: center;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--muted);
+    font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted);
   }
   .strip-glyph {
     font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 26px;
-    color: var(--brand);
-    line-height: 1;
+    font-style: italic; font-size: 26px;
+    color: var(--brand); line-height: 1;
   }
   .strip .l { text-align: right; }
-  @media (max-width: 720px) { .strip { grid-template-columns: 1fr; text-align: center; gap: 12px; } .strip .l { text-align: center; } }
+  @media (max-width: 720px) {
+    .strip { grid-template-columns: 1fr; text-align: center; gap: 12px; }
+    .strip .l { text-align: center; }
+  }
 
-  /* ── shared section primitives ── */
+  /* ── section primitives ── */
   .section { padding: 120px 0; position: relative; }
   @media (max-width: 720px) { .section { padding: 80px 0; } }
-  .section-header { max-width: 760px; margin-bottom: 72px; }
-  .section-header.center { margin-left: auto; margin-right: auto; text-align: center; }
+  .section-header { max-width: 760px; margin: 0 auto 56px; text-align: center; }
   .section-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
+    display: inline-block;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.18em;
+    font-size: 11px; letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--brand);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
-  .section-eyebrow::before { content: ""; width: 24px; height: 1px; background: var(--brand); }
-  .section-header.center .section-eyebrow::before { display: none; }
   .section-title {
     font-family: 'Instrument Serif', serif;
     font-weight: 400;
-    font-size: clamp(40px, 5.4vw, 72px);
+    font-size: clamp(40px, 5.4vw, 68px);
     line-height: 1.05;
     letter-spacing: -0.025em;
     color: var(--ink);
   }
   .section-title em { font-style: italic; color: var(--brand); }
   .section-lede {
-    margin-top: 22px;
-    font-size: 18px;
-    line-height: 1.65;
-    color: var(--ink-soft);
-    max-width: 580px;
-  }
-  .section-header.center .section-lede { margin-left: auto; margin-right: auto; }
-
-  /* ── by the numbers ── */
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-  @media (max-width: 860px) { .stats-grid { grid-template-columns: 1fr; } }
-  .stat-card {
-    background: var(--bg);
-    border: 1px solid var(--rule);
-    border-radius: 16px;
-    padding: 40px 32px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.15s ease, transform 0.15s ease;
-  }
-  .stat-card:hover { border-color: var(--periwinkle); transform: translateY(-2px); }
-  .stat-card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--brand), var(--accent));
-    opacity: 0;
-    transition: opacity 0.15s ease;
-  }
-  .stat-card:hover::before { opacity: 1; }
-  .stat-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 18px;
-  }
-  .stat-num {
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(80px, 9.5vw, 132px);
-    line-height: 0.9;
-    color: var(--brand);
-    letter-spacing: -0.04em;
-  }
-  .stat-num span { font-size: 0.4em; color: var(--ink); font-style: normal; font-weight: 500; vertical-align: 0.55em; margin-left: 4px; }
-  .stat-label {
     margin-top: 18px;
-    font-size: 15px;
+    font-size: 18px; line-height: 1.65;
     color: var(--ink-soft);
-    line-height: 1.6;
+    max-width: 580px; margin-left: auto; margin-right: auto;
   }
 
   /* ── how it works ── */
-  .how-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+  .tab-toggle { display: flex; justify-content: center; margin-bottom: 36px; }
+  .tab-toggle-inner {
+    display: inline-flex;
+    background: var(--bg-soft);
+    border-radius: 12px;
+    padding: 5px;
   }
-  @media (max-width: 860px) { .how-grid { grid-template-columns: 1fr; } }
+  .tab-btn {
+    padding: 10px 22px; border-radius: 8px;
+    font-size: 14px; font-weight: 600;
+    border: none; background: transparent; color: var(--muted);
+    cursor: pointer; transition: all 0.15s ease;
+  }
+  .tab-btn.active { background: var(--bg); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .tab-blurb { max-width: 720px; margin: 0 auto 40px; text-align: center; }
+  .tab-blurb h3 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(28px, 3.4vw, 40px);
+    line-height: 1.15; letter-spacing: -0.02em;
+    color: var(--ink); margin-bottom: 14px;
+  }
+  .tab-blurb h3 em { font-style: italic; color: var(--brand); }
+  .tab-blurb p { font-size: 16px; line-height: 1.65; color: var(--ink-soft); }
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 860px) { .steps-grid { grid-template-columns: 1fr; } }
   .step-card {
     background: var(--bg);
     border: 1px solid var(--rule);
     border-radius: 16px;
-    padding: 36px 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+    padding: 32px 28px;
+    display: flex; flex-direction: column; gap: 12px;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
-  .step-card:hover { border-color: var(--periwinkle); box-shadow: 0 12px 32px -16px rgba(37,99,235,0.15); }
-  .step-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 8px;
+  .step-card:hover { border-color: var(--brand-pale); box-shadow: 0 12px 32px -16px rgba(37,99,235,0.15); }
+  .step-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .step-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--brand-soft);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--brand);
   }
+  .step-icon svg { width: 20px; height: 20px; }
   .step-num {
     font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 56px;
-    color: var(--brand);
-    line-height: 0.9;
-    letter-spacing: -0.03em;
+    font-style: italic; font-size: 28px;
+    color: var(--brand); line-height: 0.9;
   }
-  .step-icon {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    background: var(--brand-soft);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--brand);
-  }
-  .step-icon svg { width: 22px; height: 22px; }
   .step-card h3 {
     font-family: 'Instrument Serif', serif;
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 1.15;
-    color: var(--ink);
+    font-weight: 400; font-size: 26px;
+    line-height: 1.18; color: var(--ink);
     letter-spacing: -0.015em;
   }
-  .step-card h3 em { font-style: italic; color: var(--brand); }
-  .step-card p {
-    font-size: 15px;
-    color: var(--ink-soft);
-    line-height: 1.65;
+  .step-card p { font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
+
+  .srl-callout {
+    max-width: 760px;
+    margin: 40px auto 0;
+    padding: 18px 22px;
+    background: var(--cream);
+    border: 1px solid var(--cream-deep);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
   }
-  .step-card-meta {
-    margin-top: auto;
-    padding-top: 16px;
-    border-top: 1px dashed var(--rule);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
+  .srl-callout-l { display: flex; align-items: center; gap: 12px; flex: 1 1 320px; min-width: 0; }
+  .srl-callout-icon {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: var(--ochre-soft);
+    color: var(--ochre-deep);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
   }
-  .step-card-meta span { color: var(--brand); }
+  .srl-callout-icon svg { width: 16px; height: 16px; }
+  .srl-callout-text { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+  .srl-callout-text strong { font-weight: 700; color: var(--ink); }
+  .srl-cta {
+    white-space: nowrap; flex-shrink: 0;
+    background: var(--bg); color: var(--ink-soft);
+    border: 1px solid var(--rule);
+    padding: 8px 16px; border-radius: 999px;
+    font-size: 13px; font-weight: 600;
+    text-decoration: none;
+  }
+  .srl-cta:hover { border-color: var(--rule-strong); }
+
+  .seemore { display: flex; justify-content: center; margin-top: 36px; }
 
   /* ── use cases ── */
   .usecases-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
   }
   @media (max-width: 860px) { .usecases-grid { grid-template-columns: 1fr; } }
   .usecase {
     background: var(--bg);
     border: 1px solid var(--rule);
     border-radius: 20px;
-    padding: 48px;
+    padding: 44px;
     position: relative;
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
     overflow: hidden;
     transition: border-color 0.15s ease, transform 0.15s ease;
   }
-  .usecase:hover { border-color: var(--periwinkle); transform: translateY(-2px); }
-  @media (max-width: 720px) { .usecase { padding: 32px; } }
-  .usecase-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+  .usecase:hover { border-color: var(--brand-pale); transform: translateY(-2px); }
+  @media (max-width: 720px) { .usecase { padding: 28px; } }
+  .usecase-bar {
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--brand);
+  }
+  .usecase-bar.ochre { background: var(--ochre); }
+  .usecase-bar.sage { background: var(--sage); }
+  .usecase-icon {
+    width: 52px; height: 52px; border-radius: 14px;
     background: var(--brand-soft);
     color: var(--brand);
-    padding: 6px 14px;
-    border-radius: 999px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    margin-bottom: 24px;
-    align-self: flex-start;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 22px;
   }
-  .usecase-tag.ochre { background: var(--ochre-soft); color: var(--ochre-deep); }
+  .usecase-icon.ochre { background: var(--ochre-soft); color: var(--ochre-deep); }
+  .usecase-icon.sage { background: var(--sage-soft); color: var(--sage-deep); }
+  .usecase-icon svg { width: 24px; height: 24px; }
+  .usecase-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 8px;
+  }
+  .usecase-label.ochre { color: var(--ochre-deep); }
+  .usecase-label.sage { color: var(--sage-deep); }
   .usecase h3 {
     font-family: 'Instrument Serif', serif;
-    font-weight: 400;
-    font-size: 36px;
-    line-height: 1.1;
-    color: var(--ink);
-    margin-bottom: 14px;
-    letter-spacing: -0.02em;
+    font-weight: 400; font-size: 34px;
+    line-height: 1.1; color: var(--ink);
+    margin-bottom: 12px; letter-spacing: -0.02em;
   }
-  .usecase h3 em { font-style: italic; color: var(--brand); }
   .usecase > p {
-    font-size: 16px;
-    color: var(--ink-soft);
-    line-height: 1.65;
-    margin-bottom: 28px;
+    font-size: 15px; color: var(--ink-soft);
+    line-height: 1.7; margin-bottom: 24px;
   }
-  .usecase-list { list-style: none; margin-bottom: 32px; }
+  .usecase-list { list-style: none; margin-bottom: 20px; }
   .usecase-list li {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    padding: 10px 0;
-    font-size: 14px;
-    color: var(--ink-soft);
-    line-height: 1.55;
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 9px 0; font-size: 14px;
+    color: var(--ink-soft); line-height: 1.55;
   }
-  .usecase-list li svg { flex: 0 0 16px; margin-top: 4px; color: var(--brand); }
-  .usecase-cta {
-    margin-top: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 17px;
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--ink);
-    padding-bottom: 2px;
-    align-self: flex-start;
-  }
-  .usecase-cta:hover { color: var(--brand); border-color: var(--brand); }
-
-  /* ── for attorneys ── */
-  .attorneys-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 64px;
-    align-items: center;
-  }
-  @media (max-width: 960px) { .attorneys-grid { grid-template-columns: 1fr; gap: 48px; } }
-  .features-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  @media (max-width: 540px) { .features-grid { grid-template-columns: 1fr; } }
-  .feature {
-    background: var(--bg-soft);
-    border: 1px solid var(--rule);
-    border-radius: 14px;
-    padding: 24px;
-    transition: background 0.15s ease, border-color 0.15s ease;
-  }
-  .feature:hover { background: var(--brand-soft); border-color: var(--periwinkle); }
-  .feature svg { width: 22px; height: 22px; color: var(--brand); margin-bottom: 14px; }
-  .feature h4 {
-    font-family: 'Instrument Serif', serif;
-    font-size: 22px;
-    font-weight: 400;
-    color: var(--ink);
-    margin-bottom: 6px;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-  }
-  .feature p {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.55;
-  }
-
-  /* ── shorthand transition divider ── */
-  .shorthand-transition {
-    padding: 56px 0 32px;
-    text-align: center;
-  }
-  .shorthand-transition img {
-    max-width: 760px;
-    width: 100%;
-    height: auto;
-    opacity: 0.7;
-    mix-blend-mode: multiply;
-  }
-  .shorthand-transition-cap {
-    margin-top: 4px;
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 17px;
-    color: var(--muted);
-  }
-  .shorthand-transition-cap em { color: var(--brand); font-weight: 400; }
-
-  /* ── for reporters (dark) ── */
-  .reporters {
-    background: linear-gradient(135deg, #0B1120 0%, #0F172A 50%, #1E1B4B 100%);
-    color: var(--bg);
-    padding: 140px 0;
-    position: relative;
-    overflow: hidden;
-  }
-  @media (max-width: 720px) { .reporters { padding: 88px 0; } }
-  .reporters-shorthand {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 110%;
-    max-width: 1600px;
-    opacity: 0.06;
-    pointer-events: none;
-    filter: invert(1);
-    z-index: 0;
-    user-select: none;
-  }
-  .reporters-glow {
-    position: absolute;
-    top: 0; right: 0;
-    width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .reporters .container { position: relative; z-index: 1; }
-  .reporters .section-eyebrow { color: var(--periwinkle); }
-  .reporters .section-eyebrow::before { background: var(--brand-pale); }
-  .reporters .section-title { color: var(--bg); }
-  .reporters .section-title em { color: var(--periwinkle); }
-  .reporters .section-lede { color: rgba(255,255,255,0.72); }
-  .reporter-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  @media (max-width: 860px) { .reporter-cards { grid-template-columns: 1fr; } }
-  .reporter-card {
-    background: rgba(255,255,255,0.04);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 16px;
-    padding: 32px 28px;
-    transition: background 0.15s ease, transform 0.15s ease;
-  }
-  .reporter-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-2px); }
-  .reporter-card-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 18px;
-  }
-  .reporter-card-num {
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 38px;
-    color: var(--periwinkle);
-    line-height: 1;
-  }
-  .reporter-card-icon {
-    width: 40px; height: 40px;
+  .usecase-list li svg { flex: 0 0 16px; margin-top: 3px; color: var(--brand); }
+  .usecase.ochre .usecase-list li svg { color: var(--ochre-deep); }
+  .usecase-pricecallout {
+    margin-top: 16px;
+    padding: 12px 14px;
+    background: var(--brand-soft);
     border-radius: 10px;
-    background: rgba(191,219,254,0.14);
-    color: var(--periwinkle);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 13px;
+    color: var(--brand-dark);
+    line-height: 1.55;
   }
-  .reporter-card-icon svg { width: 20px; height: 20px; }
-  .reporter-card h4 {
-    font-family: 'Instrument Serif', serif;
-    font-weight: 400;
-    font-size: 26px;
-    color: var(--bg);
-    margin-bottom: 10px;
-    letter-spacing: -0.015em;
-    line-height: 1.15;
-  }
-  .reporter-card h4 em { font-style: italic; color: var(--periwinkle); }
-  .reporter-card p {
-    font-size: 14px;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.65;
-  }
-  .reporters-cta {
-    margin-top: 56px;
-    display: flex;
-    gap: 24px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .btn-on-dark {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--bg);
-    color: var(--ink);
-    padding: 16px 28px;
-    border-radius: 999px;
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.15s ease;
-  }
-  .btn-on-dark:hover { background: var(--brand-pale); transform: translateY(-1px); }
-  .btn-on-dark svg { width: 16px; height: 16px; }
-  .btn-link-on-dark {
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 17px;
-    color: var(--bg);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(255,255,255,0.5);
-    padding-bottom: 2px;
-  }
-  .btn-link-on-dark:hover { color: var(--periwinkle); border-color: var(--periwinkle); }
+  .usecase-pricecallout strong { font-weight: 700; }
+  .usecase-pricecallout .sub { font-size: 11px; color: var(--brand); margin-top: 2px; }
 
-  /* small inline payout card to anchor reporter section */
-  .payout-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 14px;
-    padding: 24px;
-    margin-top: 48px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 20px;
-    align-items: center;
+  .usecase-wide {
+    margin-top: 28px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 18px;
+    padding: 32px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 24px;
+    position: relative; overflow: hidden;
   }
-  @media (max-width: 720px) { .payout-card { grid-template-columns: 1fr 1fr; } }
-  .payout-cell .l {
+  @media (max-width: 720px) { .usecase-wide { padding: 28px; } }
+  .usecase-wide-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--sage); }
+  .usecase-wide-body { flex: 1; min-width: 260px; }
+  .usecase-wide-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.16em;
+    font-size: 11px; letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 4px;
+    color: var(--sage-deep);
+    margin-bottom: 8px;
   }
-  .payout-cell .v {
+  .usecase-wide h3 {
     font-family: 'Instrument Serif', serif;
-    font-size: 22px;
-    color: var(--bg);
+    font-weight: 400; font-size: 26px;
+    line-height: 1.2; color: var(--ink);
+    margin-bottom: 6px; letter-spacing: -0.015em;
   }
-  .payout-cell .v em { font-style: italic; color: var(--periwinkle); }
-  .payout-cell .v.small { font-size: 15px; font-family: 'Inter', sans-serif; font-weight: 600; }
+  .usecase-wide p {
+    font-size: 14px; color: var(--ink-soft);
+    line-height: 1.7;
+  }
 
   /* ── pricing ── */
-  .pricing-grid {
+  .pricing { background: var(--cream); border-top: 1px solid var(--cream-deep); border-bottom: 1px solid var(--cream-deep); }
+  .pricing .section-eyebrow { color: var(--ochre-deep); }
+  .pricing-cards-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
     max-width: 1080px;
     margin: 0 auto;
   }
-  @media (max-width: 860px) { .pricing-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 860px) { .pricing-cards-row { grid-template-columns: 1fr; } }
   .pricing-card {
     background: var(--bg);
-    border: 1px solid var(--rule);
-    padding: 40px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
+    border: 1px solid var(--rule-cream);
+    border-radius: 18px;
     overflow: hidden;
+    display: flex; flex-direction: column;
   }
-  .pricing-card.featured { border-color: var(--periwinkle); box-shadow: 0 24px 60px -20px rgba(37,99,235,0.18); }
-  .pricing-card.featured::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--brand), var(--accent));
+  .pricing-body { padding: 32px 36px; }
+  @media (max-width: 720px) { .pricing-body { padding: 24px 28px; } }
+  .pricing-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 18px 0;
   }
-  @media (max-width: 720px) { .pricing-card { padding: 28px; } }
-  .pricing-card-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+  .pricing-row + .pricing-row { border-top: 1px solid var(--rule); }
+  .pricing-row h3 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-size: 22px;
+    color: var(--ink); letter-spacing: -0.01em;
+  }
+  .pricing-row .sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .pricing-row .price {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic; font-size: 30px;
+    color: var(--brand); line-height: 1;
+  }
+  .pricing-row .price.green { color: var(--sage-deep); }
+  .pricing-row .price span { font-size: 13px; color: var(--muted); font-style: normal; font-family: 'Inter', sans-serif; }
+  .pricing-note {
+    margin-top: 16px;
+    background: var(--brand-soft);
+    border: 1px solid var(--brand-pale);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 13px; color: var(--brand-dark);
+    line-height: 1.7;
+  }
+  .pricing-note strong { font-weight: 700; }
+  .pricing-fineprint {
+    margin-top: 14px;
+    padding: 0 4px;
+    font-size: 12px; color: var(--muted);
+    line-height: 1.7;
+  }
+  .pricing-fineprint strong { font-weight: 700; color: var(--ink-soft); }
+  .pricing-card-footer {
+    background: var(--ink);
+    color: #FFFFFF;
+    padding: 22px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .pricing-card-footer p { font-weight: 600; font-size: 15px; }
+  .pricing-card-footer .sub { color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 400; margin-top: 4px; max-width: 460px; }
+  .pricing-card-footer a {
+    color: var(--ink); background: var(--bg);
+    padding: 10px 18px; border-radius: 999px;
+    font-size: 13px; font-weight: 600;
+    text-decoration: none; white-space: nowrap;
+  }
+
+  .calc-card {
+    background: var(--bg);
+    border: 1px solid var(--rule-cream);
+    border-radius: 18px;
+    padding: 32px 36px;
+    display: flex; flex-direction: column;
+  }
+  @media (max-width: 720px) { .calc-card { padding: 24px 28px; } }
+  .calc-card-head {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.18em;
+    font-size: 11px; letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--brand);
     margin-bottom: 18px;
-    align-self: flex-start;
   }
-  .pricing-row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 32px;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--rule);
-    align-items: baseline;
-  }
-  .pricing-row:last-of-type { border-bottom: 0; }
-  .pricing-label h4 {
+  .calc-card h3 {
     font-family: 'Instrument Serif', serif;
-    font-weight: 400;
-    font-size: 22px;
-    color: var(--ink);
-    letter-spacing: -0.01em;
+    font-weight: 400; font-size: 26px;
+    color: var(--ink); margin-bottom: 18px;
+    line-height: 1.2; letter-spacing: -0.015em;
   }
-  .pricing-label p {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 3px;
-    line-height: 1.5;
+  .calc-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 14px 0;
   }
-  .pricing-price {
+  .calc-row + .calc-row { border-top: 1px solid var(--rule); }
+  .calc-row label { font-size: 14px; color: var(--ink-soft); }
+  .calc-row .v {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px; color: var(--ink);
+  }
+  .calc-row.total .v {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic; font-size: 32px;
+    color: var(--brand);
+  }
+
+  .comparison {
+    margin-top: 56px;
+    max-width: 1080px; margin-left: auto; margin-right: auto;
+  }
+  .comparison-header { text-align: center; margin-bottom: 24px; }
+  .comparison-header h3 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-size: clamp(28px, 3.6vw, 44px);
+    line-height: 1.1; color: var(--ink); letter-spacing: -0.02em;
+  }
+  .comparison-header p { margin-top: 8px; font-size: 16px; color: var(--ink-soft); }
+  .comparison-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 720px) { .comparison-cards { grid-template-columns: 1fr; } }
+  .comparison-card {
+    background: var(--bg);
+    border: 1px solid var(--rule-cream);
+    border-radius: 18px;
+    padding: 32px;
+  }
+  .comparison-card.agency { background: var(--bg); }
+  .comparison-card.dewey { background: var(--bg); border-color: var(--brand-pale); box-shadow: 0 16px 40px -20px rgba(37,99,235,0.18); }
+  .comp-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted); margin-bottom: 12px;
+  }
+  .comparison-card.dewey .comp-label { color: var(--brand); }
+  .comp-stat {
     font-family: 'Instrument Serif', serif;
     font-style: italic;
-    font-weight: 400;
-    font-size: 44px;
-    color: var(--brand);
-    line-height: 1;
-    letter-spacing: -0.03em;
-  }
-  .pricing-price small {
-    font-size: 13px;
-    color: var(--muted);
-    font-family: 'Inter', sans-serif;
-    font-style: normal;
-    margin-left: 2px;
-  }
-  .pricing-price.free { color: var(--ink); }
-  .pricing-note {
-    margin-top: 28px;
-    padding: 18px 22px;
-    background: var(--brand-soft);
-    border-radius: 12px;
-    font-size: 14px;
-    color: var(--ink-soft);
-    line-height: 1.65;
-  }
-  .pricing-note strong { color: var(--ink); font-weight: 600; }
-
-  /* ── final CTA ── */
-  .cta {
-    padding: 140px 0 80px;
-    text-align: center;
-    position: relative;
-  }
-  @media (max-width: 720px) { .cta { padding: 88px 0 56px; } }
-  .cta::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 800px; height: 500px;
-    background: radial-gradient(ellipse at center top, rgba(67,97,238,0.10) 0%, transparent 65%);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .cta > * { position: relative; z-index: 1; }
-  .cta-eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--brand);
-    margin-bottom: 24px;
-  }
-  .cta-title {
-    font-family: 'Instrument Serif', serif;
-    font-weight: 400;
-    font-size: clamp(44px, 6.4vw, 84px);
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    max-width: 880px;
-    margin: 0 auto;
-    color: var(--ink);
-  }
-  .cta-title em { font-style: italic; color: var(--brand); }
-  .cta-actions {
-    margin-top: 44px;
-    display: flex;
-    gap: 24px;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  /* ── footer ── */
-  .footer {
-    border-top: 1px solid var(--rule);
-    padding: 64px 0 36px;
-    margin-top: 20px;
-  }
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 48px;
-    align-items: start;
-  }
-  @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; } }
-  @media (max-width: 540px) { .footer-grid { grid-template-columns: 1fr; } }
-  .footer-brand h4 {
-    font-family: 'Instrument Serif', serif;
-    font-weight: 400;
-    font-size: 28px;
-    color: var(--ink);
-    margin-bottom: 14px;
+    font-size: 30px; line-height: 1.1;
+    color: var(--ink); margin-bottom: 12px;
     letter-spacing: -0.02em;
   }
-  .footer-brand h4 em { font-style: italic; color: var(--brand); }
-  .footer-brand p {
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 16px;
-    color: var(--muted);
-    max-width: 360px;
-    line-height: 1.55;
+  .comparison-card.dewey .comp-stat { color: var(--brand); }
+  .comp-detail { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
+  .comparison-footnote { margin-top: 18px; text-align: center; font-size: 12px; color: var(--muted); }
+  .pilot-callout {
+    text-align: center; margin-top: 36px;
+    font-size: 14px; color: var(--ink-soft);
+    line-height: 1.7; max-width: 760px;
+    margin-left: auto; margin-right: auto;
   }
-  .footer-col h5 {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 16px;
-    font-weight: 500;
-  }
-  .footer-col a {
-    display: block;
-    font-size: 14px;
-    color: var(--ink-soft);
-    text-decoration: none;
-    padding: 6px 0;
-    transition: color 0.15s ease;
-  }
-  .footer-col a:hover { color: var(--brand); }
-  .footer-bottom {
-    margin-top: 56px;
-    padding-top: 22px;
-    border-top: 1px solid var(--rule);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .footer-bottom .right span + span::before { content: "·"; margin: 0 14px; color: var(--rule); }
+  .pilot-callout strong { color: var(--ink); font-weight: 700; }
 
-  /* ── style guide / palette swatches ── */
+  /* ── compliance ── */
+  .compliance-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    align-items: center;
+  }
+  @media (max-width: 960px) { .compliance-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .compliance-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage-deep);
+    margin-bottom: 14px;
+  }
+  .compliance h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-size: clamp(36px, 5vw, 60px);
+    line-height: 1.05; color: var(--ink);
+    letter-spacing: -0.025em;
+  }
+  .compliance h2 em { font-style: italic; color: var(--brand); }
+  .compliance-text {
+    margin-top: 22px; font-size: 17px; line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  .compliance-features { margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+  .compliance-features > div {
+    display: flex; gap: 12px; align-items: flex-start;
+    font-size: 14px; color: var(--ink-soft); line-height: 1.55;
+  }
+  .compliance-features svg { width: 18px; height: 18px; flex: 0 0 18px; color: var(--brand); margin-top: 2px; }
+  .compliance-card {
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 18px;
+    padding: 28px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .compliance-item {
+    display: flex; gap: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .compliance-item:last-child { border-bottom: 0; padding-bottom: 0; }
+  .compliance-check {
+    flex: 0 0 28px; width: 28px; height: 28px;
+    border-radius: 8px;
+    background: var(--brand-soft);
+    color: var(--brand);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .compliance-check svg { width: 16px; height: 16px; }
+  .compliance-item strong {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 700; color: var(--ink);
+    display: block;
+  }
+  .compliance-item .sub {
+    font-size: 12px; color: var(--muted);
+    line-height: 1.5; margin-top: 3px;
+  }
+
+  /* ── style guide / palette ── */
   .styleguide {
     background: var(--cream);
     border-top: 1px solid var(--cream-deep);
     padding: 96px 0;
   }
   @media (max-width: 720px) { .styleguide { padding: 64px 0; } }
+  .styleguide .section-header { text-align: left; margin: 0 0 48px; }
+  .styleguide .section-lede { margin-left: 0; margin-right: 0; }
   .palette-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
-    margin-top: 48px;
   }
   @media (max-width: 960px) { .palette-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 480px) { .palette-grid { grid-template-columns: 1fr; } }
@@ -1000,13 +739,9 @@
     border: 1px solid var(--rule-cream);
     border-radius: 14px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
   }
-  .swatch-chip {
-    height: 96px;
-    background: var(--brand);
-  }
+  .swatch-chip { height: 96px; background: var(--brand); }
   .swatch-chip.brand { background: var(--brand); }
   .swatch-chip.accent { background: var(--accent); }
   .swatch-chip.periwinkle { background: var(--periwinkle); }
@@ -1018,24 +753,16 @@
   .swatch-body { padding: 16px 18px 20px; }
   .swatch-name {
     font-family: 'Instrument Serif', serif;
-    font-size: 20px;
-    color: var(--ink);
-    letter-spacing: -0.01em;
-    margin-bottom: 4px;
+    font-size: 20px; color: var(--ink);
+    letter-spacing: -0.01em; margin-bottom: 4px;
   }
   .swatch-name em { font-style: italic; color: var(--brand); }
   .swatch-hex {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin-bottom: 8px;
+    font-size: 11px; letter-spacing: 0.1em;
+    color: var(--muted); margin-bottom: 8px;
   }
-  .swatch-role {
-    font-size: 12px;
-    color: var(--ink-soft);
-    line-height: 1.5;
-  }
+  .swatch-role { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
   .swatch-role .tag {
     display: inline-block;
     margin-top: 6px;
@@ -1047,6 +774,55 @@
     text-transform: uppercase;
   }
   .swatch-role .tag.new { background: var(--periwinkle-soft); color: var(--periwinkle-deep); }
+
+  /* ── footer ── */
+  .footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.7);
+    padding: 64px 0 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; } }
+  @media (max-width: 540px) { .footer-grid { grid-template-columns: 1fr; } }
+  .footer-brand-inner { margin-bottom: 16px; }
+  .footer-brand p {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic; font-size: 17px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.55; max-width: 360px;
+  }
+  .footer h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 16px; font-weight: 500;
+  }
+  .footer ul { list-style: none; }
+  .footer ul li a {
+    display: block;
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    padding: 6px 0;
+    transition: color 0.15s ease;
+  }
+  .footer ul li a:hover { color: var(--periwinkle); }
+  .footer-bottom {
+    margin-top: 56px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 12px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-bottom .sub { font-family: 'Instrument Serif', serif; font-style: italic; }
 </style>
 </head>
 <body>
@@ -1064,9 +840,9 @@
         </svg>
       </a>
       <div class="nav-links">
-        <a href="#how">How it works</a>
-        <a href="#attorneys">For attorneys</a>
-        <a href="#reporters">For reporters</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#">For attorneys</a>
+        <a href="#">For reporters</a>
         <a href="#pricing">Pricing</a>
         <a href="#" class="nav-signin">Sign in</a>
         <a href="#" class="nav-cta">Get started</a>
@@ -1078,65 +854,76 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-glow"></div>
+  <img src="../graphics/keep-your-money-shorthand.png" alt="" class="hero-shorthand-bg" aria-hidden="true" />
   <div class="container">
-    <img src="../graphics/keep-your-money-shorthand.png" alt="" class="hero-shorthand-bg" aria-hidden="true" />
     <div class="hero-grid">
       <div>
-        <div style="display:inline-flex; align-items:center; gap:12px; font-family:'Instrument Serif', serif; font-style:italic; font-size:20px; color:var(--brand); margin-bottom:24px;">
-          <span style="width:28px; height:1px; background:var(--brand); display:inline-block;"></span>
-          Pilot phase launching soon
-        </div>
+        <div class="kicker">Pilot phase launching soon</div>
         <h1 class="headline">
           Court transcripts,<br/>
           <em>finally simple.</em>
         </h1>
         <p class="lede">
-          Dewey Sholes matches attorneys with certified court reporters for <strong>public court hearings</strong> – live attendance or post-hearing audio transcription. Statutory pricing, verified credentials, and delivery you can count on.
+          Dewey Sholes matches attorneys with certified court reporters for <strong>public court hearings</strong> – live attendance or post-hearing audio transcription. Transparent statutory pricing, verified credentials, and delivery you can count on.
         </p>
         <div class="hero-actions">
           <a href="#" class="btn-primary">
             Order a transcript
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>
-          <a href="#" class="btn-link">Join as a reporter →</a>
+          <a href="#" class="btn-secondary">
+            Join as a reporter
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 3 11 8 6 13"/></svg>
+          </a>
         </div>
         <div class="trust">
           <span><i class="dot sage"></i> CSR LICENSE-VERIFIED</span>
-          <span><i class="dot"></i> 24-HOUR RUSH</span>
-          <span><i class="dot ochre"></i> STATUTORY PRICING</span>
+          <span><i class="dot"></i> 24-HOUR RUSH AVAILABLE</span>
+          <span><i class="dot ochre"></i> STATUTORY PRICING, NO SURPRISES</span>
         </div>
       </div>
 
-      <!-- order card -->
+      <!-- order card (matches live site fields) -->
       <div class="order-card">
         <div class="order-card-head">
-          <span>Order ticket · #2026-04-0271</span>
+          <span>app.deweysholes.com/new-order</span>
           <span class="pill">Live attendance</span>
         </div>
         <div class="order-card-body">
-          <div class="order-card-label">A hearing in</div>
-          <div class="order-card-title">LA Superior Court,<br/>Dept. 56.</div>
+          <div class="order-card-tabs">
+            <span class="order-card-tab active">Live attendance</span>
+            <span class="order-card-tab">Transcription</span>
+          </div>
           <div class="order-fields">
             <div class="order-field">
-              <label>Date</label>
-              <div class="v">May 24, 2026</div>
+              <label>Court</label>
+              <div class="v">LA Superior Court – Stanley Mosk</div>
             </div>
             <div class="order-field">
-              <label>Length</label>
-              <div class="v">~2 hrs</div>
+              <label>Department</label>
+              <div class="v">Dept. 56</div>
+            </div>
+          </div>
+          <div class="order-fields three">
+            <div class="order-field">
+              <label>Case number</label>
+              <div class="v">24STFL09821</div>
+            </div>
+            <div class="order-field">
+              <label>Hearing date</label>
+              <div class="v">May 25, 2026</div>
             </div>
             <div class="order-field brand">
-              <label>Reporter</label>
-              <div class="v">M. Sandoval, CSR #14082</div>
-            </div>
-            <div class="order-field">
-              <label>Delivery</label>
-              <div class="v">24-hr rush</div>
+              <label>Turnaround</label>
+              <div class="v">Expedited (3–5 days)</div>
             </div>
           </div>
           <div class="order-card-foot">
-            <div class="order-card-price">$640<span>&nbsp;all-in</span></div>
-            <a href="#" class="order-card-cta">Confirm →</a>
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);margin-bottom:3px;">Estimated cost</div>
+              <div class="order-card-price">$142 <span>– $218</span></div>
+            </div>
+            <a href="#" class="order-card-cta">Submit order →</a>
           </div>
         </div>
       </div>
@@ -1146,355 +933,310 @@
     <svg class="wave-divider" viewBox="0 0 1200 32" preserveAspectRatio="none" width="100%" height="22" fill="none">
       <path d="M0 16 Q 60 2, 120 16 T 240 16 T 360 16 T 480 16 T 600 16 T 720 16 T 840 16 T 960 16 T 1080 16 T 1200 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
     </svg>
-
-    <!-- editorial strip -->
-    <div class="strip">
-      <div class="l">California · Pilot 2026</div>
-      <div class="strip-glyph">§</div>
-      <div>SF Bay Area · est. May 2026</div>
-    </div>
-  </div>
-</section>
-
-<!-- BY THE NUMBERS -->
-<section class="section" style="background: var(--cream); border-top: 1px solid var(--cream-deep); border-bottom: 1px solid var(--cream-deep);">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color: var(--ochre-deep);">By the numbers</div>
-      <h2 class="section-title">A small marketplace, <em>built on trust.</em></h2>
-      <p class="section-lede">
-        We're a California pilot, not a national platform. Every reporter is license-verified, every hearing is a public record, and every fee is the one the statute allows.
-      </p>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-tag">Certified reporters</div>
-        <div class="stat-num">2,400<span>+</span></div>
-        <p class="stat-label">California CSRs in our verified network. Each one carries an active state license, checked against the CRB roster.</p>
-      </div>
-      <div class="stat-card">
-        <div class="stat-tag">Rush turnaround</div>
-        <div class="stat-num">24<span>h</span></div>
-        <p class="stat-label">From transcript request to certified copy, delivered. Statewide, expedited, no agency middleman.</p>
-      </div>
-      <div class="stat-card">
-        <div class="stat-tag">Buyer fee</div>
-        <div class="stat-num">12<span>%</span></div>
-        <p class="stat-label">Flat platform fee for attorneys, on top of the statutory CSR rate. No surcharges, no surprise line items.</p>
-      </div>
-    </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="section" id="how" style="padding-top: 32px;">
+<section class="section" id="how-it-works">
   <div class="container">
     <div class="section-header">
-      <div class="section-eyebrow">How it works</div>
-      <h2 class="section-title">Three steps, <em>and you're on the record.</em></h2>
-      <p class="section-lede">
-        The whole flow is a fifteen-minute walk-through. No sales demo, no onboarding call.
-      </p>
+      <h2 class="section-title">How <em>Dewey Sholes</em> works</h2>
+      <p class="section-lede">Three steps. No phone calls, no fax machines, no mysteries.</p>
     </div>
 
-    <div class="how-grid">
+    <div class="tab-toggle">
+      <div class="tab-toggle-inner">
+        <button class="tab-btn active">I'm part of a law firm</button>
+        <button class="tab-btn">I'm a court reporter</button>
+      </div>
+    </div>
+
+    <div class="tab-blurb">
+      <h3>Stop chasing reporters. <em>Start tracking cases.</em></h3>
+      <p>We offer a persistent case management layer with the reporter marketplace built in. Split costs across parties, set your deadline and let pricing calculate automatically, and book the same trusted CSRs every time.</p>
+    </div>
+
+    <div class="steps-grid">
       <div class="step-card">
         <div class="step-head">
-          <div class="step-num">01.</div>
           <div class="step-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           </div>
+          <span class="step-num">01.</span>
         </div>
-        <h3>Open a <em>case file.</em></h3>
-        <p>Tell us the court, department, date, and approximate length. Got a docket number? Even better. We auto-fill what we can from public court calendars.</p>
-        <div class="step-card-meta">~ 90 seconds · <span>incl. captcha</span></div>
+        <h3>Place your order</h3>
+        <p>Select live attendance or post-hearing transcription. Enter case details, set your delivery deadline, and the price calculates automatically.</p>
       </div>
 
       <div class="step-card">
         <div class="step-head">
-          <div class="step-num">02.</div>
           <div class="step-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
+          <span class="step-num">02.</span>
         </div>
-        <h3>Match a <em>certified reporter.</em></h3>
-        <p>We surface CSRs available for your date and location – with active license numbers, sample work, and reporter-set rates. You choose; we confirm.</p>
-        <div class="step-card-meta">3 reporters reviewed · <span>under 5 minutes</span></div>
+        <h3>We match a reporter</h3>
+        <p>A licensed, jurisdiction-verified CSR accepts your job, usually within hours. Preference is given to CSRs you've prioritized. You're notified instantly.</p>
       </div>
 
       <div class="step-card">
         <div class="step-head">
-          <div class="step-num">03.</div>
           <div class="step-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
+          <span class="step-num">03.</span>
         </div>
-        <h3>Receive your <em>certified transcript.</em></h3>
-        <p>Delivered as PDF and ASCII e-tran. Cited line numbers, certified signature page, ready to file. Standard, expedited, or daily turnaround.</p>
-        <div class="step-card-meta">Digitally signed · <span>by the reporter</span></div>
+        <h3>Certified transcript, delivered</h3>
+        <p>Your court-admissible transcript arrives on schedule with the reporter's certification attached. Payment is automatic.</p>
       </div>
+    </div>
+
+    <div class="seemore">
+      <a href="#" class="btn-primary">
+        See more details
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+    <!-- SRL callout -->
+    <div class="srl-callout">
+      <div class="srl-callout-l">
+        <div class="srl-callout-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h10M3 8h10M3 11h7"/></svg>
+        </div>
+        <div class="srl-callout-text">
+          <strong>Representing yourself?</strong> You still have a right to a transcript. We walk self-represented litigants through the ordering process step by step – no lawyer needed to get the record.
+        </div>
+      </div>
+      <a href="#" class="srl-cta">Try it out →</a>
     </div>
   </div>
 </section>
 
-<!-- WHAT WE COVER / USE CASES -->
+<!-- USE CASES -->
 <section class="section" style="padding-top: 32px;">
   <div class="container">
     <div class="section-header">
-      <div class="section-eyebrow">What we cover</div>
-      <h2 class="section-title">Two ways to <em>get on the record.</em></h2>
-      <p class="section-lede">
-        Whether you need a reporter in the room or just a clean transcript of public-record audio, Dewey Sholes handles both.
-      </p>
+      <h2 class="section-title">Three ways to <em>get your record.</em></h2>
+      <p class="section-lede">Dewey Sholes supports you whether the public hearing is upcoming, has already happened, or someone else already ordered the transcript. Depositions and private proceedings are not supported at this time.</p>
     </div>
 
     <div class="usecases-grid">
       <article class="usecase">
-        <span class="usecase-tag">Option A · Live</span>
-        <h3>Live <em>attendance.</em></h3>
-        <p>A certified shorthand reporter appears at your hearing, in person or via authorized remote setup, and produces the official transcript.</p>
+        <div class="usecase-bar"></div>
+        <div class="usecase-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="usecase-label">Use case A</div>
+        <h3>Live attendance</h3>
+        <p>Need a reporter at an upcoming hearing? We'll match you with a licensed CSR who can attend in person or remotely and deliver your transcript on the turnaround you choose.</p>
         <ul class="usecase-list">
-          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Reporter assigned, confirmed, and credentialed to the court</li>
-          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Same-day rough transcript available on request</li>
-          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Daily, expedited, and standard turnaround options</li>
-          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Reporter rates set by statute, not by an agency</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> In-person or remote attendance</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Real-time or same-day options</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Reporter confirmed before your hearing</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Cost-splitting across parties built in</li>
         </ul>
-        <a href="#" class="usecase-cta">Schedule live attendance →</a>
+        <div class="usecase-pricecallout">
+          <strong>$300/half day · $500/full day · $800/trial day</strong>
+          <div class="sub">33% below agency rates + statutory transcript rate</div>
+        </div>
       </article>
 
-      <article class="usecase">
-        <span class="usecase-tag ochre">Option B · Audio</span>
-        <h3>Audio <em>transcription.</em></h3>
-        <p>You already have the public-record audio – a courtroom mic, a clerk's recording, a public hearing. We transcribe it, certify it, and deliver it.</p>
+      <article class="usecase ochre">
+        <div class="usecase-bar ochre"></div>
+        <div class="usecase-icon ochre">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10a7 7 0 0 1-14 0"/><line x1="12" y1="17" x2="12" y2="22"/></svg>
+        </div>
+        <div class="usecase-label ochre">Use case B</div>
+        <h3>Post-hearing transcription</h3>
+        <p>Already have the court audio? Upload it and we'll match you with a certified reporter who'll transcribe, certify, and deliver, with your case docs pre-loaded for accuracy.</p>
         <ul class="usecase-list">
-          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Certified by a California CSR upon completion</li>
-          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> 24-hour rush available for hearings under 4 hours</li>
-          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> ASCII, PDF, and e-tran delivery formats</li>
-          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Citation-ready line numbering and page-and-line index</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Upload MP3, WAV, or court-format audio</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Track job progress in real time</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Message your CSR directly through the platform</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 6 11 3 8"/></svg> Supporting docs reduce back-and-forth</li>
         </ul>
-        <a href="#" class="usecase-cta">Send us an audio file →</a>
       </article>
     </div>
-  </div>
-</section>
 
-<!-- FOR ATTORNEYS -->
-<section class="section" id="attorneys" style="padding-top: 32px;">
-  <div class="container">
-    <div class="attorneys-grid">
-      <div>
-        <div class="section-eyebrow">For attorneys &amp; firms</div>
-        <h2 class="section-title">Hours back, <em>without the runaround.</em></h2>
-        <p class="section-lede">
-          Stop chasing three agencies for one rush transcript. One platform, every California CSR, transparent statutory pricing.
-        </p>
-        <p style="margin-top: 22px; font-family: 'Instrument Serif', serif; font-style: italic; font-size: 18px; color: var(--ink-soft); max-width: 540px; line-height: 1.55;">
-          Built for solo practitioners and small firms who don't have a paralegal whose full-time job is wrangling reporters.
-        </p>
-        <div class="hero-actions" style="margin-top: 32px;">
-          <a href="#" class="btn-primary">
-            Order a transcript
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </a>
-          <a href="#" class="btn-link">Firm pricing →</a>
-        </div>
+    <!-- Use case C - wide -->
+    <div class="usecase-wide">
+      <div class="usecase-wide-bar"></div>
+      <div class="usecase-wide-body">
+        <div class="usecase-wide-label">Use case C</div>
+        <h3>Find the reporter for an existing case</h3>
+        <p>Need a copy of a transcript already created in your case? Search by case number to find the original CSR and request a copy directly from them. Per California law, all parties will be notified before the CSR releases the copy.</p>
       </div>
-
-      <div class="features-grid">
-        <div class="feature">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1l3 6 6 1-4.5 4.5L18 19l-6-3-6 3 1.5-6.5L3 8l6-1z"/></svg>
-          <h4>Statutory pricing</h4>
-          <p>Reporter rates set by California's CCP § 269 schedule. No agency markup. No mystery surcharges.</p>
-        </div>
-        <div class="feature">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <h4>License-verified</h4>
-          <p>Every reporter cross-checked against the CRB roster. Number, status, recent activity, on file.</p>
-        </div>
-        <div class="feature">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-          <h4>One dashboard</h4>
-          <p>Every order, every transcript, every invoice. Search by case, date, or department. Export to ASCII.</p>
-        </div>
-        <div class="feature">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <h4>24-hour rush</h4>
-          <p>Need it overnight? Mark the order rush. We surface only reporters who can hit your deadline.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SHORTHAND TRANSITION → leading into reporters -->
-<div class="container">
-  <div class="shorthand-transition">
-    <img src="../graphics/keep-your-money-shorthand.png" alt="keep your money, written in Gregg shorthand" />
-    <div class="shorthand-transition-cap"><em>keep your money</em>, written in Gregg shorthand</div>
-  </div>
-</div>
-
-<!-- FOR REPORTERS (dark) -->
-<section class="reporters" id="reporters">
-  <img src="../graphics/keep-your-money-shorthand.png" alt="" class="reporters-shorthand" aria-hidden="true" />
-  <div class="reporters-glow"></div>
-  <div class="container">
-    <div class="section-header">
-      <div class="section-eyebrow">For reporters</div>
-      <h2 class="section-title">Keep your <em>money.</em></h2>
-      <p class="section-lede">
-        Most agencies pay reporters 40–60% of the statutory rate, then bill the firm the full schedule. We don't do that. Reporters set their own rates, and what the attorney pays is what the reporter earns.
-      </p>
-    </div>
-
-    <div class="reporter-cards">
-      <div class="reporter-card">
-        <div class="reporter-card-head">
-          <div class="reporter-card-num">01.</div>
-          <div class="reporter-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          </div>
-        </div>
-        <h4>Set your <em>own rate.</em></h4>
-        <p>Within statutory limits, you decide what to charge. No agency margin, no take-it-or-leave-it desk rate. The dashboard is yours.</p>
-      </div>
-      <div class="reporter-card">
-        <div class="reporter-card-head">
-          <div class="reporter-card-num">02.</div>
-          <div class="reporter-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </div>
-        </div>
-        <h4>Choose your <em>own work.</em></h4>
-        <p>See the case, the court, the department, and the date before you accept. No surprise depo hours on a hearing booking. No mystery files.</p>
-      </div>
-      <div class="reporter-card">
-        <div class="reporter-card-head">
-          <div class="reporter-card-num">03.</div>
-          <div class="reporter-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-          </div>
-        </div>
-        <h4>Get paid <em>on time.</em></h4>
-        <p>Net-14 from upload. No chasing AP. No follow-up emails to the firm. We escrow on order and release on delivery.</p>
-      </div>
-    </div>
-
-    <!-- mini payout strip to reinforce "keep your money" -->
-    <div class="payout-card">
-      <div class="payout-cell">
-        <div class="l">Statutory rate</div>
-        <div class="v">$640<span style="font-size:14px;color:rgba(255,255,255,0.4)">.00</span></div>
-      </div>
-      <div class="payout-cell">
-        <div class="l">Agency take (typical)</div>
-        <div class="v small" style="color:#FCA5A5">– $288.00</div>
-      </div>
-      <div class="payout-cell">
-        <div class="l">Dewey Sholes fee</div>
-        <div class="v small" style="color:rgba(255,255,255,0.7)">– $51.20</div>
-      </div>
-      <div class="payout-cell">
-        <div class="l">You keep</div>
-        <div class="v"><em>$588.80</em></div>
-      </div>
-    </div>
-
-    <div class="reporters-cta">
-      <a href="#" class="btn-on-dark">
-        Apply to join the pilot
+      <a href="#" class="btn-primary" style="padding: 12px 20px; font-size: 13px;">
+        Find the CSR
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
-      <a href="#" class="btn-link-on-dark">Read the reporter terms →</a>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
-<section class="section" id="pricing">
+<section class="section pricing" id="pricing">
   <div class="container">
-    <div class="section-header center">
+    <div class="section-header">
       <div class="section-eyebrow">Pricing</div>
-      <h2 class="section-title">Two tiers, <em>one flat fee.</em></h2>
-      <p class="section-lede">
-        Free for individuals to browse. A flat 12% platform fee for attorneys on every order. Reporters list free and pay 8% on payout. That's the entire schedule.
-      </p>
+      <h2 class="section-title">Pricing set by <em>California statute.</em></h2>
+      <p class="section-lede">No hidden fees, no negotiation games. Transcript rates are set by law. We just make them easy to understand.</p>
     </div>
 
-    <div class="pricing-grid">
-      <div class="pricing-card featured">
-        <span class="pricing-card-label">For attorneys</span>
-        <div class="pricing-row">
-          <div class="pricing-label">
-            <h4>Buyer fee</h4>
-            <p>Flat fee on every transcript order</p>
-          </div>
-          <div class="pricing-price">12<small>%</small></div>
-        </div>
-        <div class="pricing-row">
-          <div class="pricing-label">
-            <h4>Individual attorneys</h4>
-            <p>Solo practitioners, contractor counsel</p>
-          </div>
-          <div class="pricing-price">$99<small>/yr</small></div>
-        </div>
-        <div class="pricing-row">
-          <div class="pricing-label">
-            <h4>Firm tier</h4>
-            <p>Per seat, 3 seats or more, billed annually</p>
-          </div>
-          <div class="pricing-price">$79<small>/yr</small></div>
-        </div>
-        <p class="pricing-note">
-          <strong>No setup fee.</strong> No per-order minimum. No agency markup buried in your invoice.
-        </p>
-      </div>
-
+    <div class="pricing-cards-row">
       <div class="pricing-card">
-        <span class="pricing-card-label">For reporters</span>
-        <div class="pricing-row">
-          <div class="pricing-label">
-            <h4>Listing</h4>
-            <p>Profile, license verification, scheduling</p>
+        <div class="pricing-body">
+          <div class="pricing-row">
+            <div><h3>Original transcript</h3><div class="sub">First copy ordered</div></div>
+            <div class="price">~$3.67 <span>/ page</span></div>
           </div>
-          <div class="pricing-price free">Free</div>
-        </div>
-        <div class="pricing-row">
-          <div class="pricing-label">
-            <h4>Per-job platform fee</h4>
-            <p>Deducted on payout, all-in</p>
+          <div class="pricing-row">
+            <div><h3>Simultaneous copy</h3><div class="sub">Ordered at same time as original</div></div>
+            <div class="price green">~$0.65 <span>/ page</span></div>
           </div>
-          <div class="pricing-price">8<small>%</small></div>
-        </div>
-        <div class="pricing-row">
-          <div class="pricing-label">
-            <h4>Payouts</h4>
-            <p>Net-14 from delivery, ACH or instant</p>
+          <div class="pricing-row">
+            <div><h3>Separate copy</h3><div class="sub">Ordered after original production</div></div>
+            <div class="price">~$0.85 <span>/ page</span></div>
           </div>
-          <div class="pricing-price free">Net-14</div>
+          <div class="pricing-note">
+            <strong>Note:</strong> Prices shown are statutory transcript rates set by CA Gov. Code § 69950. Attorneys pay a flat 12% platform fee at checkout – reporters keep the full statutory rate. Total price shown at order entry.
+          </div>
+          <div class="pricing-fineprint">
+            <strong>Why "approximately"?</strong> California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count, not the estimate.
+          </div>
         </div>
-        <p class="pricing-note">
-          <strong>Set your own rate</strong> within California's statutory schedule. We never mark it up, never resell it.
-        </p>
+        <div class="pricing-card-footer">
+          <div>
+            <p>Have a fee waiver on file?</p>
+            <div class="sub">Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court – up to $2,500 per case.</div>
+          </div>
+          <a href="#">Learn more</a>
+        </div>
+      </div>
+
+      <div class="calc-card">
+        <div class="calc-card-head">Pricing calculator</div>
+        <h3>Estimate your transcript cost</h3>
+        <div class="calc-row">
+          <label>Pages</label>
+          <div class="v">~75</div>
+        </div>
+        <div class="calc-row">
+          <label>Type</label>
+          <div class="v">Original</div>
+        </div>
+        <div class="calc-row">
+          <label>Statutory rate</label>
+          <div class="v">$275.25</div>
+        </div>
+        <div class="calc-row">
+          <label>Dewey Sholes platform fee (12%)</label>
+          <div class="v">$33.03</div>
+        </div>
+        <div class="calc-row total">
+          <label>Estimated total</label>
+          <div class="v">$308.28</div>
+        </div>
+        <p style="margin-top: 18px; font-size: 12px; color: var(--muted); line-height: 1.6;">Calculator is illustrative – final invoice is based on the actual certified word count.</p>
       </div>
     </div>
+
+    <!-- Comparison -->
+    <div class="comparison">
+      <div class="comparison-header">
+        <h3>Where does your money go?</h3>
+        <p>Most agencies keep the majority of what you pay. We don't.</p>
+      </div>
+      <div class="comparison-cards">
+        <div class="comparison-card agency">
+          <div class="comp-label">Traditional agency</div>
+          <div class="comp-stat">Reporter sees 15–50%</div>
+          <div class="comp-detail">Agencies mark up the statutory rate by 50–85%. The reporter who did the work may see as little as 16 cents of every dollar you paid.</div>
+        </div>
+        <div class="comparison-card dewey">
+          <div class="comp-label">Dewey Sholes</div>
+          <div class="comp-stat">Reporter keeps 100%</div>
+          <div class="comp-detail">You pay the statutory rate plus a flat 12% platform fee. The reporter receives the full statutory rate – no middleman cut, no markup.</div>
+        </div>
+      </div>
+      <div class="comparison-footnote">The 12% platform fee is paid by the attorney. Reporters pay a flat annual listing fee only – no per-job deductions.</div>
+    </div>
+
+    <p class="pilot-callout">
+      <strong>Join our 6-month pilot and save:</strong> Law firms pay an 8% platform fee for your first year (normally 12%). CSRs get the $99 listing fee waived for your first year.
+    </p>
   </div>
 </section>
 
-<!-- FINAL CTA -->
-<section class="cta">
+<!-- COMPLIANCE -->
+<section class="section compliance">
   <div class="container">
-    <div class="cta-eyebrow">Get started</div>
-    <h2 class="cta-title">
-      File a hearing transcript today, <em>have it tomorrow.</em>
-    </h2>
-    <div class="cta-actions">
-      <a href="#" class="btn-primary">
-        Order a transcript
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-      </a>
-      <a href="#" class="btn-link">Or join as a reporter →</a>
+    <div class="compliance-grid">
+      <div>
+        <div class="compliance-label">Compliance built in</div>
+        <h2>Every transcript is court-admissible. <em>Period.</em></h2>
+        <p class="compliance-text">
+          Credentials aren't just checked at signup; they're verified at every job acceptance. Jurisdiction matching, format standards, and certification requirements are enforced automatically.
+        </p>
+        <div class="compliance-features">
+          <div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Automated CSR license verification against state databases</span>
+          </div>
+          <div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Jurisdiction-reporter matching prevents out-of-scope assignments</span>
+          </div>
+          <div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Compliance rules updated on CA's statutory schedule (Jan 1 / Jul 1)</span>
+          </div>
+          <div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>W-9 collected at onboarding; no year-end tax document chasing</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="compliance-card">
+        <div class="compliance-item">
+          <div class="compliance-check">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 4 6 11 3 8"/></svg>
+          </div>
+          <div>
+            <strong>CSR License #14892</strong>
+            <div class="sub">Verified active – California Court Reporters Board</div>
+          </div>
+        </div>
+        <div class="compliance-item">
+          <div class="compliance-check">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 4 6 11 3 8"/></svg>
+          </div>
+          <div>
+            <strong>Jurisdiction: Los Angeles County</strong>
+            <div class="sub">Matched to case filing jurisdiction</div>
+          </div>
+        </div>
+        <div class="compliance-item">
+          <div class="compliance-check">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 4 6 11 3 8"/></svg>
+          </div>
+          <div>
+            <strong>CA MTFS format compliance</strong>
+            <div class="sub">25 lines/page, ~65 characters/line, auto-enforced</div>
+          </div>
+        </div>
+        <div class="compliance-item">
+          <div class="compliance-check">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 4 6 11 3 8"/></svg>
+          </div>
+          <div>
+            <strong>Certification statement attached</strong>
+            <div class="sub">Meets CA Rules of Court Rule 8.144</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1506,74 +1248,18 @@
       <div class="section-eyebrow">Style guide · Palette</div>
       <h3 class="section-title" style="font-size: clamp(32px, 4vw, 52px);">A small set of <em>working colors.</em></h3>
       <p class="section-lede">
-        The blue and indigo stay primary. The new additions – periwinkle, ochre, sage, plum – give us warmer accents for certified / rush / verified states, and a deeper note for special cases.
+        The blue and indigo stay primary. The new additions – periwinkle, ochre, sage, plum – give us warmer accents for certified / rush / verified states, and a deeper note for special cases. Cream paper serves as the alternate section background.
       </p>
     </div>
     <div class="palette-grid">
-      <div class="swatch">
-        <div class="swatch-chip brand"></div>
-        <div class="swatch-body">
-          <div class="swatch-name">Brand <em>blue</em></div>
-          <div class="swatch-hex">#2563EB</div>
-          <div class="swatch-role">Primary actions, links, headlines.</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-chip accent"></div>
-        <div class="swatch-body">
-          <div class="swatch-name">Indigo <em>accent</em></div>
-          <div class="swatch-hex">#4F46E5</div>
-          <div class="swatch-role">Gradient pair with brand, hero glow.</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-chip periwinkle"></div>
-        <div class="swatch-body">
-          <div class="swatch-name">Periwinkle</div>
-          <div class="swatch-hex">#9DB4FF</div>
-          <div class="swatch-role">Soft accent on dark backgrounds; matches the shorthand sketch tone. <span class="tag new">New</span></div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-chip ochre"></div>
-        <div class="swatch-body">
-          <div class="swatch-name">Ochre</div>
-          <div class="swatch-hex">#C49B5B</div>
-          <div class="swatch-role">Warm callouts – rush, statutory, schedule. Replaces harsh amber. <span class="tag new">New</span></div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-chip sage"></div>
-        <div class="swatch-body">
-          <div class="swatch-name">Sage</div>
-          <div class="swatch-hex">#7E9B7C</div>
-          <div class="swatch-role">Verified / certified states. Replaces saturated success green. <span class="tag new">New</span></div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-chip plum"></div>
-        <div class="swatch-body">
-          <div class="swatch-name">Plum</div>
-          <div class="swatch-hex">#6B4A6E</div>
-          <div class="swatch-role">Rare deep accent for special states – e.g. firm tier, daily turnaround. <span class="tag new">New</span></div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-chip cream"></div>
-        <div class="swatch-body">
-          <div class="swatch-name">Cream <em>paper</em></div>
-          <div class="swatch-hex">#FBF7EC</div>
-          <div class="swatch-role">Alternate section background – warmth without changing temperature. <span class="tag new">New</span></div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-chip ink"></div>
-        <div class="swatch-body">
-          <div class="swatch-name">Ink</div>
-          <div class="swatch-hex">#0F172A</div>
-          <div class="swatch-role">Headlines, dark sections, primary text.</div>
-        </div>
-      </div>
+      <div class="swatch"><div class="swatch-chip brand"></div><div class="swatch-body"><div class="swatch-name">Brand <em>blue</em></div><div class="swatch-hex">#2563EB</div><div class="swatch-role">Primary actions, links, headlines.</div></div></div>
+      <div class="swatch"><div class="swatch-chip accent"></div><div class="swatch-body"><div class="swatch-name">Indigo <em>accent</em></div><div class="swatch-hex">#4F46E5</div><div class="swatch-role">Gradient pair with brand, hero glow.</div></div></div>
+      <div class="swatch"><div class="swatch-chip periwinkle"></div><div class="swatch-body"><div class="swatch-name">Periwinkle</div><div class="swatch-hex">#9DB4FF</div><div class="swatch-role">Soft accent on dark backgrounds; matches the shorthand sketch tone. <span class="tag new">New</span></div></div></div>
+      <div class="swatch"><div class="swatch-chip ochre"></div><div class="swatch-body"><div class="swatch-name">Ochre</div><div class="swatch-hex">#C49B5B</div><div class="swatch-role">Warm callouts – rush, statutory, schedule. Replaces harsh amber. <span class="tag new">New</span></div></div></div>
+      <div class="swatch"><div class="swatch-chip sage"></div><div class="swatch-body"><div class="swatch-name">Sage</div><div class="swatch-hex">#7E9B7C</div><div class="swatch-role">Verified / certified states. Replaces saturated success green. <span class="tag new">New</span></div></div></div>
+      <div class="swatch"><div class="swatch-chip plum"></div><div class="swatch-body"><div class="swatch-name">Plum</div><div class="swatch-hex">#6B4A6E</div><div class="swatch-role">Rare deep accent for special states – e.g. firm tier, daily turnaround. <span class="tag new">New</span></div></div></div>
+      <div class="swatch"><div class="swatch-chip cream"></div><div class="swatch-body"><div class="swatch-name">Cream <em>paper</em></div><div class="swatch-hex">#FBF7EC</div><div class="swatch-role">Alternate section background – warmth without changing temperature. <span class="tag new">New</span></div></div></div>
+      <div class="swatch"><div class="swatch-chip ink"></div><div class="swatch-body"><div class="swatch-name">Ink</div><div class="swatch-hex">#0F172A</div><div class="swatch-role">Headlines, dark sections, primary text.</div></div></div>
     </div>
   </div>
 </section>
@@ -1583,39 +1269,48 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <h4>Dewey <em>Sholes.</em></h4>
-        <p>
-          A California court-reporting marketplace, built for solo and small-firm attorneys – and the reporters who actually want to keep their money.
-        </p>
+        <div class="footer-brand-inner">
+          <svg height="34" viewBox="0 0 310 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="60" height="60" rx="13" fill="#FFFFFF"/>
+            <path d="M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50" fill="none" stroke="#0F172A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="76" y="27" font-family="'Courier New',Courier,monospace" font-size="18" font-weight="700" fill="#FFFFFF" letter-spacing="4">DEWEY</text>
+            <text x="76" y="53" font-family="'Courier New',Courier,monospace" font-size="18" font-weight="700" fill="#9DB4FF" letter-spacing="4">SHOLES</text>
+          </svg>
+        </div>
+        <p>A modern marketplace for court transcript ordering and certified reporter matching.</p>
       </div>
-      <div class="footer-col">
-        <h5>Product</h5>
-        <a href="#">How it works</a>
-        <a href="#">For attorneys</a>
-        <a href="#">For reporters</a>
-        <a href="#">Pricing</a>
+      <div>
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#">For attorneys</a></li>
+          <li><a href="#">For reporters</a></li>
+          <li><a href="#">Find a reporter</a></li>
+          <li><a href="#">Place an order</a></li>
+        </ul>
       </div>
-      <div class="footer-col">
-        <h5>Company</h5>
-        <a href="#">About</a>
-        <a href="#">Press</a>
-        <a href="#">Contact</a>
-        <a href="#">Studio Crux</a>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact us</a></li>
+          <li><a href="#">Legal</a></li>
+        </ul>
       </div>
-      <div class="footer-col">
-        <h5>Legal</h5>
-        <a href="#">Terms of service</a>
-        <a href="#">Privacy policy</a>
-        <a href="#">Reporter terms</a>
-        <a href="#">CCP § 269 schedule</a>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Privacy policy</a></li>
+          <li><a href="#">Terms of service</a></li>
+        </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Dewey Sholes · A Studio Crux project</span>
-      <div class="right">
-        <span>Built in California</span>
-        <span>Pilot v0.4</span>
-      </div>
+      <span>&copy; 2026 Dewey Sholes. All rights reserved.</span>
+      <span class="sub">Now matching California attorneys with CSRs.</span>
     </div>
   </div>
 </footer>
