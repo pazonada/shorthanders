@@ -111,17 +111,23 @@
     z-index: 0;
     pointer-events: none;
   }
+  .hero-card-area { position: relative; }
+  .hero-card-area .order-card { position: relative; z-index: 1; }
   .hero-shorthand-bg {
     position: absolute;
-    top: 0;
-    left: 0; right: 0;
-    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 125%;
+    max-width: 760px;
     height: auto;
-    opacity: 0.7;
-    mix-blend-mode: multiply;
+    opacity: 0.95;
     pointer-events: none;
     z-index: 0;
     user-select: none;
+  }
+  @media (max-width: 1024px) {
+    .hero-shorthand-bg { width: 110%; max-width: 620px; opacity: 0.7; }
   }
   @media (max-width: 720px) { .hero-shorthand-bg { opacity: 0.55; } }
   .hero-grid {
@@ -973,6 +979,8 @@
       </div>
 
       <!-- order card (matches live site fields) -->
+      <div class="hero-card-area">
+      <img src="../graphics/logo-sh-grey.png" alt="" class="hero-shorthand-bg" aria-hidden="true" />
       <div class="order-card">
         <div class="order-card-head">
           <span>app.deweysholes.com/new-order</span>
@@ -1015,6 +1023,7 @@
             <a href="#" class="order-card-cta">Submit order →</a>
           </div>
         </div>
+      </div>
       </div>
     </div>
 
