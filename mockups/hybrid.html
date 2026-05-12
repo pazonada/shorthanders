@@ -122,7 +122,6 @@
     max-width: 760px;
     height: auto;
     opacity: 0.95;
-    filter: url(#hero-shorthand-amp);
     pointer-events: none;
     z-index: 0;
     user-select: none;
@@ -923,15 +922,6 @@
 </head>
 <body>
 
-<!-- SVG filter: amplify alpha of the faint steno-shorthand PNG so its strokes are visible -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <filter id="hero-shorthand-amp" x="0" y="0" width="100%" height="100%">
-      <feComponentTransfer><feFuncA type="linear" slope="9"/></feComponentTransfer>
-    </filter>
-  </defs>
-</svg>
-
 <!-- NAV -->
 <nav class="nav">
   <div class="container">
@@ -990,7 +980,7 @@
 
       <!-- order card (matches live site fields) -->
       <div class="hero-card-area">
-      <img src="../graphics/logo-sh-grey.png" alt="" class="hero-shorthand-bg" aria-hidden="true" />
+      <img src="../graphics/logo-sh-grey-bold.png" alt="" class="hero-shorthand-bg" aria-hidden="true" />
       <div class="order-card">
         <div class="order-card-head">
           <span>app.deweysholes.com/new-order</span>
