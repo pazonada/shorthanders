@@ -2148,6 +2148,124 @@
   }
   .fee-waiver a:hover { background: var(--periwinkle); }
 
+  /* ═══ PRICING SLIDE-UP ROUTE ═══ */
+  @keyframes pricingSlideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+  .pricing-slideup { animation: pricingSlideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .section.hybrid.pricing { background: var(--cream); border-top: 1px solid var(--cream-deep); border-bottom: 1px solid var(--cream-deep); padding-top: 80px; padding-bottom: 80px; }
+
+  /* ═══ PRICING CARDS (used by #/pricing) ═══ */
+  .pricing-cards-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; max-width: 1080px; margin: 0 auto;
+  }
+  @media (max-width: 860px) { .pricing-cards-row { grid-template-columns: 1fr; } }
+  .pricing-card {
+    background: var(--bg);
+    border: 1px solid var(--rule-cream);
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .pricing-body { padding: 32px 36px; }
+  @media (max-width: 720px) { .pricing-body { padding: 24px 28px; } }
+  .pricing-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 18px 0; gap: 16px;
+  }
+  .pricing-row + .pricing-row { border-top: 1px solid var(--rule); }
+  .pricing-row h3 {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 600; font-size: 16px;
+    color: var(--ink); letter-spacing: -0.005em; margin: 0;
+  }
+  .pricing-row .sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .pricing-row .price {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic; font-size: 26px;
+    color: var(--brand); line-height: 1;
+    white-space: nowrap;
+  }
+  .pricing-row .price.green { color: var(--sage-deep); }
+  .pricing-row .price span { font-size: 13px; color: var(--muted); font-style: normal; font-family: 'Inter', sans-serif; }
+  .pricing-row .price-note {
+    margin-top: 6px; font-size: 11px; font-weight: 600;
+    color: var(--sage-deep); text-align: right;
+    letter-spacing: 0.02em;
+  }
+  .pricing-approx { margin-top: 18px; padding: 0 4px; font-size: 12px; color: var(--muted); line-height: 1.7; }
+
+  /* tooltip */
+  .tooltip-trigger {
+    border-bottom: 1px dotted var(--plum);
+    cursor: help; position: relative; display: inline-block;
+    font-weight: 700; color: var(--plum);
+  }
+  .tooltip-content {
+    visibility: hidden; opacity: 0;
+    background: var(--ink); color: #FFFFFF;
+    font-size: 12px; font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    padding: 14px 16px; border-radius: 10px;
+    position: absolute;
+    bottom: calc(100% + 12px); left: 0;
+    width: 320px; max-width: calc(100vw - 80px);
+    z-index: 100; line-height: 1.55;
+    pointer-events: none;
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+    box-shadow: 0 12px 32px -10px rgba(0,0,0,0.35);
+    text-align: left;
+  }
+  .tooltip-content::after {
+    content: ""; position: absolute;
+    top: 100%; left: 28px;
+    border: 6px solid transparent; border-top-color: var(--ink);
+  }
+  .tooltip-trigger:hover .tooltip-content,
+  .tooltip-trigger:focus .tooltip-content { visibility: visible; opacity: 1; }
+
+  /* calculator card (PricingCalculator renders into this layout) */
+  .calc-card {
+    background: var(--bg); border: 1px solid var(--rule-cream);
+    border-radius: 18px; padding: 32px 36px;
+    display: flex; flex-direction: column;
+  }
+  @media (max-width: 720px) { .calc-card { padding: 24px 28px; } }
+
+  /* comparison block */
+  .comparison-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 720px) { .comparison-cards { grid-template-columns: 1fr; } }
+  .comparison-card {
+    background: var(--bg); border: 1px solid var(--rule-cream);
+    border-radius: 18px; padding: 32px;
+  }
+  .comparison-card.dewey { border-color: var(--brand-pale); box-shadow: 0 16px 40px -20px rgba(37,99,235,0.18); }
+  .comp-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .comparison-card.dewey .comp-label { color: var(--brand); }
+  .comp-stat {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic; font-size: 30px;
+    line-height: 1.1; color: var(--ink);
+    margin-bottom: 12px; letter-spacing: -0.02em;
+  }
+  .comparison-card.dewey .comp-stat { color: var(--brand); }
+  .comp-detail { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
+  .comparison-footnote { margin-top: 18px; text-align: center; font-size: 12px; color: var(--muted); }
+  .pilot-callout {
+    text-align: center; margin-top: 36px;
+    font-size: 14px; color: var(--ink-soft);
+    line-height: 1.7; max-width: 760px;
+    margin-left: auto; margin-right: auto;
+  }
+  .pilot-callout strong { color: var(--ink); font-weight: 700; }
+
   /* ═══ HYBRID TIER CARD OVERRIDES (for ForReporters) ═══ */
   .reporter-tiers.hybrid-tiers { max-width: 960px; }
   .reporter-tiers.hybrid-tiers .reporter-tier-card {
@@ -11034,6 +11152,95 @@ function ForReportersPage() {
   );
 }
 
+// ─── Pricing Page (slide-up route) ──────────────────────────────
+function PricingPage() {
+  return (
+    <div className="pricing-slideup">
+      <MarketingNav />
+
+      <section className="section hybrid pricing" style={{paddingTop: 56}}>
+        <div className="container">
+          <div className="section-header">
+            <div className="section-eyebrow" style={{color: "var(--ochre-deep)"}}>Pricing</div>
+            <h2 className="section-title">Pricing set by <em>California statute.</em></h2>
+            <p className="section-lede">No hidden fees, no negotiation games. Transcript rates are set by law. We just make them easy to understand.</p>
+          </div>
+
+          <div className="pricing-cards-row">
+            <div className="pricing-card">
+              <div className="pricing-body">
+                <div className="pricing-row">
+                  <div><h3>Original transcript</h3><div className="sub">First copy ordered</div></div>
+                  <div className="price">~$3.67 <span>/ page</span></div>
+                </div>
+                <div className="pricing-row">
+                  <div><h3>Simultaneous copy</h3><div className="sub">Ordered at same time as original</div></div>
+                  <div className="price green">~$0.65 <span>/ page</span></div>
+                </div>
+                <div className="pricing-row">
+                  <div><h3>Separate copy</h3><div className="sub">Ordered after original production</div></div>
+                  <div className="price">~$0.85 <span>/ page</span></div>
+                </div>
+                <div className="pricing-row">
+                  <div><h3>Live attendance</h3><div className="sub">Half day · Full day · Trial day</div></div>
+                  <div style={{textAlign: "right"}}>
+                    <div className="price">${PRICING.attendanceHalfDay} · ${PRICING.attendanceFullDay} · ${PRICING.attendanceTrialDay}</div>
+                    <div className="price-note">33% below agency rates</div>
+                  </div>
+                </div>
+                <div className="pricing-approx">
+                  <span className="tooltip-trigger" tabIndex="0">
+                    Transcription pricing is approximate
+                    <span className="tooltip-content">California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count, not the estimate.</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <PricingCalculator />
+          </div>
+
+          {/* Fee waiver */}
+          <div className="fee-waiver" style={{maxWidth: 1080, margin: "32px auto 0"}}>
+            <div>
+              <p>Have a fee waiver on file?</p>
+              <div className="sub">Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court – up to $2,500 per case.</div>
+            </div>
+            <a href="#/trf">Learn more</a>
+          </div>
+
+          {/* Comparison */}
+          <div className="comparison" style={{marginTop: 56, maxWidth: 1080, marginLeft: "auto", marginRight: "auto"}}>
+            <div className="comparison-header" style={{textAlign: "center", marginBottom: 24}}>
+              <h3 style={{fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: "clamp(28px, 3.6vw, 44px)", lineHeight: 1.1, color: "var(--ink)", letterSpacing: "-0.02em"}}>Where does your money go?</h3>
+              <p style={{marginTop: 8, fontSize: 16, color: "var(--ink-soft)"}}>Most agencies keep the majority of what you pay. We don't.</p>
+            </div>
+            <div className="comparison-cards">
+              <div className="comparison-card agency">
+                <div className="comp-label">Traditional agency</div>
+                <div className="comp-stat">Reporter sees 15–50%</div>
+                <div className="comp-detail">Agencies mark up the statutory rate by 50–85%. The reporter who did the work may see as little as 16 cents of every dollar you paid.</div>
+              </div>
+              <div className="comparison-card dewey">
+                <div className="comp-label">Dewey Sholes</div>
+                <div className="comp-stat">Reporter keeps 100%</div>
+                <div className="comp-detail">You pay the statutory rate plus a flat 12% platform fee. The reporter receives the full statutory rate – no middleman cut, no markup.</div>
+              </div>
+            </div>
+            <div className="comparison-footnote">The 12% platform fee is paid by the attorney. Reporters pay a flat annual listing fee only – no per-job deductions.</div>
+          </div>
+
+          <p className="pilot-callout">
+            <strong>Join our 6-month pilot and save:</strong> Law firms pay an 8% platform fee for your first year (normally 12%). CSRs get the $99 listing fee waived for your first year.
+          </p>
+        </div>
+      </section>
+
+      <HybridFooter />
+    </div>
+  );
+}
+
 function AppRouter() {
   const route = useRoute();
   const m = route.match(/^#\/order\/(.+)$/);
@@ -11057,6 +11264,7 @@ function AppRouter() {
   if (route.startsWith("#/forgot-password")) return <ForgotPasswordPage />;
   if (route.startsWith("#/for-attorneys")) return <ForAttorneysPage />;
   if (route.startsWith("#/for-reporters")) return <ForReportersPage />;
+  if (route.startsWith("#/pricing")) return <PricingPage />;
   if (route.startsWith("#/contact")) return <ContactPage />;
   if (route.startsWith("#/faq")) return <FaqPage />;
   if (route.startsWith("#/about")) return <AboutPage />;
