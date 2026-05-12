@@ -1789,6 +1789,378 @@
 
   /* wave divider */
   .wave-divider { margin: 56px 0 0; display: block; color: var(--brand); opacity: 0.7; }
+  .wave-divider.standalone { margin: 40px 0; }
+
+  /* ═══ NAV (hybrid sticky) ═══ */
+  .nav {
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--rule);
+    box-shadow: none;
+    z-index: 50;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .nav.scrolled { background: rgba(255,255,255,0.95); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+  .nav-brand-text { font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: 0.18em; font-size: 13px; color: var(--ink); }
+  .nav-brand-text em { font-style: normal; color: var(--brand); display: block; }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links > a:not(.nav-signin):not(.nav-cta) {
+    color: var(--ink-soft); text-decoration: none;
+    font-size: 14px; font-weight: 500; transition: color 0.15s ease;
+    background: none; border: none; padding: 0; cursor: pointer;
+  }
+  .nav-links > a:not(.nav-signin):not(.nav-cta):hover { color: var(--brand); }
+  .nav-links a.nav-signin, .nav-links button.nav-signin {
+    font-size: 14px; font-weight: 500;
+    color: var(--ink-soft); background: none; border: none; cursor: pointer;
+    padding: 8px 14px; border-radius: 999px;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .nav-links a.nav-signin:hover, .nav-links button.nav-signin:hover { background: var(--bg-soft); color: var(--ink); }
+  .nav-links a.nav-cta, .nav-links button.nav-cta {
+    background: var(--ink); color: #FFFFFF;
+    padding: 10px 22px; border-radius: 999px;
+    font-size: 14px; font-weight: 600;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .nav-links a.nav-cta:hover, .nav-links button.nav-cta:hover { background: var(--brand); color: #FFFFFF; transform: translateY(-1px); }
+  @media (max-width: 860px) { .nav-links > a:not(.nav-cta):not(.nav-signin) { display: none; } }
+
+  /* ═══ HERO (hybrid two-column with order card) ═══ */
+  .hero { padding: 80px 0 0; position: relative; overflow: hidden; }
+  .hero-glow {
+    position: absolute;
+    top: -120px; left: 50%;
+    transform: translateX(-50%);
+    width: 1100px; height: 700px;
+    background: radial-gradient(ellipse at center top, rgba(67,97,238,0.10) 0%, transparent 65%);
+    z-index: 0; pointer-events: none;
+  }
+  .hero-card-area { position: relative; }
+  .hero-card-area .order-card { position: relative; z-index: 1; }
+  .hero-shorthand-bg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 168%; max-width: 970px;
+    height: auto;
+    opacity: 0.15;
+    pointer-events: none; z-index: 0; user-select: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+  }
+  @media (max-width: 1024px) {
+    .hero-shorthand-bg { width: 129%; max-width: 713px; opacity: 0.12; }
+  }
+  @media (max-width: 720px) { .hero-shorthand-bg { opacity: 0.10; } }
+  .hero-grid {
+    position: relative; z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 72px; align-items: center;
+  }
+  @media (max-width: 1024px) { .hero-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .headline {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(52px, 7vw, 96px);
+    line-height: 1.02; letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  .headline em { font-style: italic; color: var(--brand); }
+  .hero .hero-actions { margin-top: 36px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; flex-direction: row; justify-content: flex-start; }
+
+  /* ═══ ORDER CARD ═══ */
+  .order-card {
+    background: #FFF;
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    box-shadow: 0 30px 80px -28px rgba(15,23,42,0.18);
+    overflow: hidden;
+    transform: rotate(-0.4deg);
+  }
+  .order-card-head {
+    background: var(--bg-soft);
+    border-bottom: 1px solid var(--rule);
+    padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .order-card-head .pill {
+    background: var(--brand-soft); color: var(--brand);
+    padding: 4px 12px; border-radius: 999px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+  }
+  .order-card-body { padding: 28px; }
+  .order-card-tabs { display: flex; gap: 6px; margin-bottom: 22px; }
+  .order-card-tab {
+    padding: 8px 16px; border-radius: 8px;
+    font-size: 12px; font-weight: 600;
+    border: 1px solid var(--rule); background: var(--bg); color: var(--muted);
+  }
+  .order-card-tab.active { background: var(--brand-soft); border-color: var(--brand-pale); color: var(--brand); }
+  .order-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px; }
+  .order-fields.three { grid-template-columns: 1fr 1fr 1fr; }
+  .order-field { background: var(--bg-soft); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 14px; }
+  .order-field label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--dim); display: block; margin-bottom: 6px;
+  }
+  .order-field .v { font-size: 13px; font-weight: 500; color: var(--ink-soft); }
+  .order-field.brand { background: var(--brand-soft); border-color: var(--brand-pale); }
+  .order-field.brand .v { color: var(--brand-dark); }
+  .order-card-foot {
+    margin-top: 18px; padding-top: 16px;
+    border-top: 1px dashed var(--rule);
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .order-card-price { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--ink); }
+  .order-card-price span { font-size: 14px; color: var(--muted); font-family: 'Inter', sans-serif; }
+  .order-card-cta {
+    background: var(--ink); color: #FFFFFF;
+    padding: 10px 18px; border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    text-decoration: none; transition: background 0.15s ease;
+  }
+  .order-card-cta:hover { background: var(--brand); color: #FFFFFF; }
+
+  /* ═══ SHORTHAND TRANSITION ═══ */
+  .shorthand-transition { max-width: 1280px; margin: 0 auto; padding: 0 32px; text-align: center; }
+  .shorthand-transition img {
+    max-width: 100%; width: 100%; height: auto;
+    opacity: 0.75; mix-blend-mode: multiply;
+    user-select: none; pointer-events: none; display: block;
+  }
+  @media (max-width: 720px) {
+    .shorthand-transition { padding: 0 20px; }
+    .shorthand-transition img { opacity: 0.6; }
+  }
+
+  /* ═══ SECTION PRIMITIVES (hybrid) — scoped to .section.hybrid ═══ */
+  .section.hybrid { padding: 24px 0 56px; position: relative; background: none; }
+  @media (max-width: 720px) { .section.hybrid { padding: 16px 0 40px; } }
+  .section.hybrid .section-header { max-width: 760px; margin: 0 auto 40px; text-align: center; }
+  .section-eyebrow {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--brand);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-size: clamp(40px, 5.4vw, 68px);
+    line-height: 1.05; letter-spacing: -0.025em; color: var(--ink);
+  }
+  .section-title em { font-style: italic; color: var(--brand); }
+  .section-lede {
+    margin-top: 18px;
+    font-size: 18px; line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 580px; margin-left: auto; margin-right: auto;
+  }
+
+  /* ═══ HOW IT WORKS ═══ */
+  .tab-toggle { display: flex; justify-content: center; margin-bottom: 48px; }
+  .tab-toggle-inner {
+    display: inline-flex; background: var(--bg-soft);
+    border: 1px solid var(--rule); border-radius: 14px;
+    padding: 6px; gap: 4px;
+    box-shadow: 0 2px 8px -4px rgba(15,23,42,0.08);
+  }
+  .tab-btn {
+    padding: 14px 32px; border-radius: 10px;
+    font-size: 16px; font-weight: 600;
+    border: none; background: transparent;
+    color: var(--ink-soft); cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active { background: var(--ink); color: #FFFFFF; box-shadow: 0 6px 16px -6px rgba(15,23,42,0.32); }
+  .tab-btn.active:hover { color: #FFFFFF; }
+  @media (max-width: 540px) { .tab-toggle-inner { width: 100%; } .tab-btn { flex: 1; padding: 12px 16px; font-size: 14px; } }
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 860px) { .steps-grid { grid-template-columns: 1fr; } }
+  .step-card {
+    background: var(--bg); border: 1px solid var(--rule);
+    border-radius: 16px; padding: 32px 28px;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .step-card:hover { border-color: var(--brand-pale); box-shadow: 0 12px 32px -16px rgba(37,99,235,0.15); }
+  .step-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .step-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--brand-soft); color: var(--brand);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-icon svg { width: 20px; height: 20px; }
+  .step-num { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 28px; color: var(--brand); line-height: 0.9; }
+  .step-card h3 {
+    font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 26px;
+    line-height: 1.18; color: var(--ink); letter-spacing: -0.015em;
+  }
+  .step-card p { font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
+  .seemore { display: flex; justify-content: center; margin-top: 36px; }
+
+  /* SRL callout */
+  .srl-callout {
+    max-width: 760px; margin: 40px auto 0;
+    padding: 18px 22px;
+    background: var(--cream);
+    border: 1px solid var(--cream-deep);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .srl-callout-l { display: flex; align-items: center; gap: 12px; flex: 1 1 320px; min-width: 0; }
+  .srl-callout-icon {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: var(--ochre-soft); color: var(--ochre-deep);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .srl-callout-icon svg { width: 16px; height: 16px; }
+  .srl-callout-text { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+  .srl-callout-text strong { font-weight: 700; color: var(--ink); }
+  .srl-cta {
+    white-space: nowrap; flex-shrink: 0;
+    background: var(--bg); color: var(--ink-soft);
+    border: 1px solid var(--rule);
+    padding: 8px 16px; border-radius: 999px;
+    font-size: 13px; font-weight: 600; text-decoration: none;
+  }
+  .srl-cta:hover { border-color: var(--rule-strong); color: var(--ink); }
+
+  /* ═══ USE CASES ═══ */
+  .usecases-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  @media (max-width: 1024px) { .usecases-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 720px) { .usecases-grid { grid-template-columns: 1fr; } }
+  .usecase {
+    background: var(--bg); border: 1px solid var(--rule);
+    border-radius: 20px; padding: 44px;
+    position: relative; display: flex; flex-direction: column;
+    overflow: hidden;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .usecase:hover { border-color: var(--brand-pale); transform: translateY(-2px); }
+  @media (max-width: 720px) { .usecase { padding: 28px; } }
+  .usecase-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--brand); }
+  .usecase-bar.ochre { background: var(--ochre); }
+  .usecase-bar.sage { background: var(--sage); }
+  .usecase-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--brand-soft); color: var(--brand);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 22px;
+  }
+  .usecase-icon.ochre { background: var(--ochre-soft); color: var(--ochre-deep); }
+  .usecase-icon.sage { background: var(--sage-soft); color: var(--sage-deep); }
+  .usecase-icon svg { width: 24px; height: 24px; }
+  .usecase-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--brand);
+    margin-bottom: 8px;
+  }
+  .usecase-label.ochre { color: var(--ochre-deep); }
+  .usecase-label.sage { color: var(--sage-deep); }
+  .usecase h3 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 30px; line-height: 1.1; color: var(--ink);
+    margin-bottom: 12px; letter-spacing: -0.02em;
+  }
+  .usecase > p { font-size: 15px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 24px; }
+  .usecase-list { list-style: none; margin-bottom: 20px; }
+  .usecase-list li { display: flex; gap: 12px; align-items: flex-start; padding: 9px 0; font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+  .usecase-list li svg { flex: 0 0 16px; width: 16px; height: 16px; margin-top: 3px; color: var(--brand); }
+  .usecase.ochre .usecase-list li svg { color: var(--ochre-deep); }
+  .usecase.sage .usecase-list li svg { color: var(--sage-deep); }
+  .usecase-pricecallout {
+    margin-top: 16px; padding: 12px 14px;
+    background: var(--brand-soft); border-radius: 10px;
+    font-size: 13px; color: var(--brand-dark); line-height: 1.55;
+  }
+  .usecase-pricecallout strong { font-weight: 700; }
+
+  /* ═══ COMPLIANCE ═══ */
+  .compliance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  @media (max-width: 960px) { .compliance-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .compliance-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--sage-deep);
+    margin-bottom: 14px;
+  }
+  .section.compliance h2 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: clamp(36px, 5vw, 60px);
+    line-height: 1.05; color: var(--ink); letter-spacing: -0.025em;
+  }
+  .section.compliance h2 em { font-style: italic; color: var(--brand); }
+  .compliance-text { margin-top: 22px; font-size: 17px; line-height: 1.7; color: var(--ink-soft); }
+  .compliance-features { margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+  .compliance-features > div { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+  .compliance-features svg { width: 18px; height: 18px; flex: 0 0 18px; color: var(--brand); margin-top: 2px; }
+  .compliance-card {
+    background: var(--bg); border: 1px solid var(--rule);
+    border-radius: 18px; padding: 28px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .compliance-item { display: flex; gap: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+  .compliance-item:last-child { border-bottom: 0; padding-bottom: 0; }
+  .compliance-check {
+    flex: 0 0 28px; width: 28px; height: 28px;
+    border-radius: 8px; background: var(--brand-soft); color: var(--brand);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .compliance-check svg { width: 16px; height: 16px; }
+  .compliance-item strong { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--ink); display: block; }
+  .compliance-item .sub { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 3px; }
+
+  /* ═══ FOOTER (hybrid dark) ═══ */
+  .footer.hybrid {
+    background: var(--ink);
+    color: rgba(255,255,255,0.7);
+    padding: 64px 0 32px;
+  }
+  .footer.hybrid .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; align-items: start; }
+  @media (max-width: 860px) { .footer.hybrid .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; } }
+  @media (max-width: 540px) { .footer.hybrid .footer-grid { grid-template-columns: 1fr; } }
+  .footer.hybrid .footer-brand-inner { margin-bottom: 16px; }
+  .footer.hybrid .footer-brand p {
+    font-family: 'Instrument Serif', serif; font-style: italic; font-size: 17px;
+    color: rgba(255,255,255,0.7); line-height: 1.55; max-width: 360px;
+  }
+  .footer.hybrid h4 {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); margin-bottom: 16px; font-weight: 500;
+  }
+  .footer.hybrid ul { list-style: none; padding: 0; margin: 0; }
+  .footer.hybrid ul li a {
+    display: block; font-size: 14px;
+    color: rgba(255,255,255,0.75); text-decoration: none;
+    padding: 6px 0; transition: color 0.15s ease;
+  }
+  .footer.hybrid ul li a:hover { color: var(--periwinkle); }
+  .footer.hybrid .footer-bottom {
+    margin-top: 56px; padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 12px;
+    font-size: 13px; color: rgba(255,255,255,0.5);
+  }
+  .footer.hybrid .footer-bottom .sub { font-family: 'Instrument Serif', serif; font-style: italic; }
 </style>
 </head>
 <body>
@@ -8859,18 +9231,14 @@ function LandingPage() {
         <div className="container">
           <div className="nav-inner">
             <a href="#" className="nav-brand">
-              <DeweyFullLogo height={38} theme={useTheme().dark ? "dark" : "light"} />
+              <DeweyFullLogo height={34} theme="light" />
             </a>
             <div className="nav-links">
-              <a href="#how-it-works" onClick={e => { e.preventDefault(); document.getElementById("how-it-works")?.scrollIntoView({behavior: "smooth", block: "start"}); }}>How it works</a>
               <a href="#/for-attorneys">For attorneys</a>
               <a href="#/for-reporters">For reporters</a>
-              <a href="#pricing" onClick={e => { e.preventDefault(); document.getElementById("pricing")?.scrollIntoView({behavior: "smooth", block: "start"}); }}>Pricing</a>
-            </div>
-            <div className="nav-actions">
-              <ThemeToggle />
-              <button className="btn-signin" onClick={() => setShowSignIn(true)}>Sign in</button>
-              <button className="btn-getstarted" onClick={() => setShowRoleSelector(true)} style={{border: "none", cursor: "pointer"}}>Get started</button>
+              <a href="#/pricing">Pricing</a>
+              <button className="nav-signin" onClick={() => setShowSignIn(true)}>Sign in</button>
+              <button className="nav-cta" onClick={() => setShowRoleSelector(true)}>Get started</button>
             </div>
           </div>
         </div>
@@ -8878,290 +9246,213 @@ function LandingPage() {
 
       {/* ─── HERO ─── */}
       <section className="hero">
-        <div className="hero-bg">
-          <div className="hero-bg-gradient1"></div>
-          <div className="hero-bg-gradient2"></div>
-          <div className="hero-bg-dots"></div>
-          <img src="graphics/keep-your-money-shorthand.png" alt="" className="hero-shorthand" aria-hidden="true" />
-        </div>
+        <div className="hero-glow"></div>
         <div className="container">
-          <div className="hero-content">
-            <div className="hero-badge">
-              <span className="hero-badge-dot"></span>
-              Pilot phase launching soon
+          <div className="hero-grid">
+            <div>
+              <div className="kicker">Pilot phase launching soon</div>
+              <h1 className="headline">
+                Court transcripts,<br />
+                <em>finally simple.</em>
+              </h1>
+              <p className="lede">
+                Dewey Sholes matches attorneys with certified court reporters for <strong>public court hearings</strong> – live attendance or post-hearing audio transcription. Transparent statutory pricing, verified credentials, and delivery you can count on.
+              </p>
+              <div className="hero-actions">
+                <a href="#/order" className="btn btn-primary">
+                  Order a transcript
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                </a>
+                <a href="#/reporter-signup" className="btn btn-secondary">
+                  Join as a reporter
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 3 11 8 6 13"/></svg>
+                </a>
+              </div>
+              <div className="trust">
+                <span><i className="dot sage"></i> CSR LICENSE-VERIFIED</span>
+                <span><i className="dot"></i> RUSH JOBS AVAILABLE</span>
+                <span><i className="dot ochre"></i> STATUTORY TRANSCRIPTION PRICING</span>
+                <span><i className="dot plum"></i> LOW RATES FOR LIVE ATTENDANCE</span>
+              </div>
             </div>
-            <h1>Court transcripts,<br /><span className="gradient-text">finally simple.</span></h1>
-            <p className="hero-subtitle">
-              Dewey Sholes matches attorneys with certified court reporters for <strong>public court hearings</strong> – live attendance or post-hearing audio transcription. Transparent statutory pricing, verified credentials, and delivery you can count on.
-            </p>
-            <div className="hero-actions">
-              <a href="#/order" className="btn btn-primary">
-                Order a transcript
-                <Icon name="arrowRight" size={16} color="#fff" />
-              </a>
-              <a href="#/reporter-signup" className="btn btn-secondary">
-                Join as a reporter
-                <Icon name="chevronRight" size={16} color="#64748B" />
-              </a>
-            </div>
-            <div className="hero-trust">
-              <span><Icon name="shield" size={16} color="#059669" /> CSR license-verified</span>
-              <span><Icon name="clock" size={16} color="#2563EB" /> 24-hour rush available</span>
-              <span><Icon name="scale" size={16} color="#D97706" /> Statutory pricing, no surprises</span>
-            </div>
-          </div>
 
-          {/* Hero visual */}
-          <div className="hero-visual">
-            <div className="hero-card-glow">
-              <div className="hero-card">
-                <div className="hero-card-bar">
-                  <div className="hero-card-dot"></div>
-                  <div className="hero-card-dot"></div>
-                  <div className="hero-card-dot"></div>
-                  <div className="hero-card-url"><span>app.deweysholes.com/new-order</span></div>
+            {/* order card */}
+            <div className="hero-card-area">
+              <img src="graphics/hp-text-grey.png" alt="" className="hero-shorthand-bg" aria-hidden="true" />
+              <div className="order-card">
+                <div className="order-card-head">
+                  <span>app.deweysholes.com/new-order</span>
+                  <span className="pill">Live attendance</span>
                 </div>
-                <div className="hero-card-body">
-                  <div className="card-tabs">
-                    <span className="card-tab active">Live attendance</span>
-                    <span className="card-tab">Transcription</span>
+                <div className="order-card-body">
+                  <div className="order-card-tabs">
+                    <span className="order-card-tab active">Live attendance</span>
+                    <span className="order-card-tab">Transcription</span>
                   </div>
-                  <div className="card-fields">
-                    <div className="card-field">
+                  <div className="order-fields">
+                    <div className="order-field">
                       <label>Court</label>
-                      <div className="card-field-value">LA Superior Court – Stanley Mosk</div>
+                      <div className="v">LA Superior Court – Stanley Mosk</div>
                     </div>
-                    <div className="card-field">
+                    <div className="order-field">
                       <label>Department</label>
-                      <div className="card-field-value">Dept. 56</div>
+                      <div className="v">Dept. 56</div>
                     </div>
                   </div>
-                  <div className="card-fields card-fields-3">
-                    <div className="card-field">
+                  <div className="order-fields three">
+                    <div className="order-field">
                       <label>Case number</label>
-                      <div className="card-field-value">24STFL09821</div>
+                      <div className="v">24STFL09821</div>
                     </div>
-                    <div className="card-field">
+                    <div className="order-field">
                       <label>Hearing date</label>
-                      <div className="card-field-value">{getHearingDate()}</div>
+                      <div className="v">{getHearingDate()}</div>
                     </div>
-                    <div className="card-field">
+                    <div className="order-field brand">
                       <label>Turnaround</label>
-                      <div className="card-field-value highlight">Expedited (3–5 days)</div>
+                      <div className="v">Expedited (3–5 days)</div>
                     </div>
                   </div>
-                  <div className="card-footer">
+                  <div className="order-card-foot">
                     <div>
-                      <div className="card-footer-label">Estimated cost</div>
-                      <div className="card-footer-price">$142 <span>– $218</span></div>
+                      <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--dim)", marginBottom: 3}}>Estimated cost</div>
+                      <div className="order-card-price">$142 <span>– $218</span></div>
                     </div>
-                    <span className="btn btn-primary btn-sm" style={{pointerEvents: "none", cursor: "default"}}>Submit order →</span>
+                    <a href="#/order" className="order-card-cta">Submit order →</a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <svg className="wave-divider" viewBox="0 0 1200 32" preserveAspectRatio="none" width="100%" height="22" fill="none">
+            <path d="M0 16 Q 60 2, 120 16 T 240 16 T 360 16 T 480 16 T 600 16 T 720 16 T 840 16 T 960 16 T 1080 16 T 1200 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+          </svg>
         </div>
       </section>
 
       {/* ─── HOW IT WORKS ─── */}
-      <section id="how-it-works" className="how">
+      <section id="how-it-works" className="section hybrid">
         <div className="container">
           <div className="section-header">
-            <h2>How <span className="gradient-text">Dewey Sholes</span> works</h2>
-            <p>Three steps. No phone calls, no fax machines, no mysteries.</p>
+            <h2 className="section-title">How <em>Dewey Sholes</em> works</h2>
           </div>
+
           <div className="tab-toggle">
             <div className="tab-toggle-inner">
-              <button className={"tab-btn" + (tab === "attorney" ? " active" : "")} onClick={() => setTab("attorney")}>I'm part of a law firm</button>
-              <button className={"tab-btn" + (tab === "reporter" ? " active" : "")} onClick={() => setTab("reporter")}>I'm a court reporter</button>
+              <button className={"tab-btn" + (tab === "attorney" ? " active" : "")} onClick={() => setTab("attorney")}>For law firms</button>
+              <button className={"tab-btn" + (tab === "reporter" ? " active" : "")} onClick={() => setTab("reporter")}>For reporters</button>
             </div>
           </div>
-          <div style={{maxWidth: 720, margin: "0 auto 32px", textAlign: "center"}}>
-            {tab === "attorney" ? (
-              <>
-                <h3 style={{fontSize: 26, fontWeight: 800, color: "var(--text, #0F172A)", letterSpacing: "-0.01em", lineHeight: 1.25, marginBottom: 10}}>Stop chasing reporters. Start tracking cases.</h3>
-                <p style={{fontSize: 15, color: "var(--text-secondary, #475569)", lineHeight: 1.7, margin: 0}}>We offer a persistent case management layer with the reporter marketplace built in. Split costs across parties, set your deadline and let pricing calculate automatically, and book the same trusted CSRs every time.</p>
-              </>
-            ) : (
-              <>
-                <h3 style={{fontSize: 26, fontWeight: 800, color: "var(--text, #0F172A)", letterSpacing: "-0.01em", lineHeight: 1.25, marginBottom: 10}}>Your license. Your tools. We handle the rest.</h3>
-                <p style={{fontSize: 15, color: "var(--text-secondary, #475569)", lineHeight: 1.7, margin: 0}}>Accept jobs that match your preferences. Keep 100% of your statutory rate with no agency cut. Get paid in two business days. Build your reputation through ratings and preferred-vendor status.</p>
-              </>
-            )}
-          </div>
+
           <div className="steps-grid">
             {stepsData[tab].map((s, i) => (
-              <div className="step" key={tab + i}>
-                <div className="step-header">
-                  <div className="step-icon"><Icon name={s.icon} size={20} color="#fff" /></div>
-                  <span className="step-number">0{i + 1}</span>
+              <div className="step-card" key={tab + i}>
+                <div className="step-head">
+                  <div className="step-icon"><Icon name={s.icon} size={20} color="#2563EB" /></div>
+                  <span className="step-num">0{i + 1}.</span>
                 </div>
                 <h3>{s.title}</h3>
                 <p>{s.desc}</p>
               </div>
             ))}
           </div>
-          <div style={{display: "flex", justifyContent: "center", marginTop: 32}}>
-            <a href={tab === "attorney" ? "#/for-attorneys" : "#/for-reporters"} className="btn btn-primary">See more details <Icon name="arrowRight" size={16} color="#fff" /></a>
+
+          <div className="seemore">
+            <a href={tab === "attorney" ? "#/for-attorneys" : "#/for-reporters"} className="btn btn-primary">
+              See more details
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
           </div>
 
-          {/* ─── SRL CALLOUT (compact) ─── */}
-          <div style={{maxWidth: 720, margin: "40px auto 0", padding: "16px 20px", background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap"}}>
-            <div style={{display: "flex", alignItems: "center", gap: 12, flex: "1 1 320px", minWidth: 0}}>
-              <div style={{width: 32, height: 32, borderRadius: 8, background: "#EFF6FF", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
-                <Icon name="scale" size={16} color="#1E40AF" />
+          {/* SRL callout */}
+          <div className="srl-callout">
+            <div className="srl-callout-l">
+              <div className="srl-callout-icon">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 5h10M3 8h10M3 11h7"/></svg>
               </div>
-              <div style={{fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.5}}>
-                <strong style={{color: "var(--text, #0F172A)", fontWeight: 700}}>Representing yourself?</strong> You still have a right to a transcript. We walk self-represented litigants through the ordering process step by step – no lawyer needed to get the record.
+              <div className="srl-callout-text">
+                <strong>Representing yourself?</strong> You still have a right to a transcript. We walk self-represented litigants through the ordering process step by step – no lawyer needed to get the record.
               </div>
             </div>
-            <a href="#/order" className="btn btn-secondary btn-sm" style={{whiteSpace: "nowrap", flexShrink: 0}}>Try it out <Icon name="arrowRight" size={14} color="#64748B" /></a>
+            <a href="#/order" className="srl-cta">Try it out →</a>
           </div>
         </div>
       </section>
 
+      {/* wavy divider above use cases */}
+      <div className="container">
+        <svg className="wave-divider standalone" viewBox="0 0 1200 32" preserveAspectRatio="none" width="100%" height="22" fill="none">
+          <path d="M0 16 Q 60 2, 120 16 T 240 16 T 360 16 T 480 16 T 600 16 T 720 16 T 840 16 T 960 16 T 1080 16 T 1200 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+        </svg>
+      </div>
+
       {/* ─── USE CASES ─── */}
-      <section className="usecases">
+      <section className="section hybrid">
         <div className="container">
           <div className="section-header">
-            <h2>Three ways to get your record</h2>
-            <p>Dewey Sholes supports you whether the public hearing is upcoming, has already happened, or someone else already ordered the transcript. Depositions and private proceedings are not supported at this time.</p>
+            <h2 className="section-title">Three ways to <em>get your record.</em></h2>
+            <p className="section-lede">Dewey Sholes supports you whether the public hearing is upcoming, has already happened, or someone else already ordered the transcript. Depositions and private proceedings are not supported at this time.</p>
           </div>
+
           <div className="usecases-grid">
-            <div className="usecase-card">
-              <div className="accent-bar blue"></div>
-              <div className="usecase-icon blue"><Icon name="mapPin" size={28} color="#2563EB" /></div>
-              <div className="usecase-label blue">Use case A</div>
+            <article className="usecase">
+              <div className="usecase-bar"></div>
+              <div className="usecase-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div className="usecase-label">Use case A</div>
               <h3>Live attendance</h3>
               <p>Need a reporter at an upcoming hearing? We'll match you with a licensed CSR who can attend in person or remotely and deliver your transcript on the turnaround you choose.</p>
               <ul className="usecase-list">
                 {["In-person or remote attendance", "Real-time or same-day options", "Reporter confirmed before your hearing", "Cost-splitting across parties built in"].map((t, i) => (
-                  <li key={i}><Icon name="checkCircle" size={16} color="#2563EB" />{t}</li>
+                  <li key={i}><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="13 4 6 11 3 8"/></svg> {t}</li>
                 ))}
               </ul>
-              <div style={{marginTop: 16, padding: "10px 14px", background: "#EFF6FF", borderRadius: 8, fontSize: 13, color: "#1E40AF"}}>
+              <div className="usecase-pricecallout">
                 <strong>${PRICING.attendanceHalfDay}/half day · ${PRICING.attendanceFullDay}/full day · ${PRICING.attendanceTrialDay}/trial day</strong>
-                <div style={{fontSize: 11, color: "#3B82F6", marginTop: 2}}>33% below agency rates + statutory transcript rate</div>
+                <div className="sub" style={{fontSize: 11, color: "var(--brand)", marginTop: 2}}>33% below agency rates + statutory transcript rate</div>
               </div>
-            </div>
-            <div className="usecase-card">
-              <div className="accent-bar amber"></div>
-              <div className="usecase-icon amber"><Icon name="mic" size={28} color="#D97706" /></div>
-              <div className="usecase-label amber">Use case B</div>
+            </article>
+
+            <article className="usecase ochre">
+              <div className="usecase-bar ochre"></div>
+              <div className="usecase-icon ochre">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10a7 7 0 0 1-14 0"/><line x1="12" y1="17" x2="12" y2="22"/></svg>
+              </div>
+              <div className="usecase-label ochre">Use case B</div>
               <h3>Post-hearing transcription</h3>
               <p>Already have the court audio? Upload it and we'll match you with a certified reporter who'll transcribe, certify, and deliver, with your case docs pre-loaded for accuracy.</p>
               <ul className="usecase-list">
                 {["Upload MP3, WAV, or court-format audio", "Track job progress in real time", "Message your CSR directly through the platform", "Supporting docs reduce back-and-forth"].map((t, i) => (
-                  <li key={i}><Icon name="checkCircle" size={16} color="#D97706" />{t}</li>
+                  <li key={i}><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="13 4 6 11 3 8"/></svg> {t}</li>
                 ))}
               </ul>
-            </div>
+            </article>
+
+            <article className="usecase sage">
+              <div className="usecase-bar sage"></div>
+              <div className="usecase-icon sage">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+              </div>
+              <div className="usecase-label sage">Use case C</div>
+              <h3>Find the reporter for an existing case</h3>
+              <p>Need a copy of a transcript already created in your case? Search by case number to find the original CSR and request a copy directly from them. Per California law, all parties will be notified before the CSR releases the copy.</p>
+              <div style={{marginTop: "auto", paddingTop: 16}}>
+                <a href="#/request-copy" className="srl-cta" style={{display: "inline-flex", alignItems: "center", gap: 6}}>Find the CSR →</a>
+              </div>
+            </article>
           </div>
-
-          <div style={{marginTop: 32, background: "#fff", border: "1px solid #E2E8F0", borderRadius: 16, padding: "32px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 24}}>
-            <div style={{flex: 1, minWidth: 260}}>
-              <div style={{fontSize: 11, fontWeight: 700, color: "#059669", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8}}>Use case C</div>
-              <h3 style={{fontSize: 20, fontWeight: 700, color: "#0F172A", marginBottom: 8}}>Find the reporter for an existing case</h3>
-              <p style={{fontSize: 15, color: "#64748B", lineHeight: 1.7, margin: 0}}>Need a copy of a transcript already created in your case? Search by case number to find the original CSR and request a copy directly from them. Per California law, all parties will be notified before the CSR releases the copy.</p>
-            </div>
-            <a href="#/request-copy" className="btn btn-primary btn-sm" style={{whiteSpace: "nowrap"}}>Find the CSR <Icon name="arrowRight" size={14} color="#fff" /></a>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ─── PRICING ─── */}
-      <section id="pricing" className="pricing">
-        <div className="container">
-          <div className="section-header">
-            <h2>Pricing set by <span className="gradient-text">California statute</span></h2>
-            <p>No hidden fees, no negotiation games. Transcript rates are set by law. We just make them easy to understand.</p>
-          </div>
-
-          <div className="pricing-cards-row">
-          <div className="pricing-card">
-            <div className="pricing-body">
-              <div className="pricing-row">
-                <div><h3>Original transcript</h3><div className="sub">First copy ordered</div></div>
-                <div className="price">~$3.67 <span>/ page</span></div>
-              </div>
-              <div className="pricing-row">
-                <div><h3>Simultaneous copy</h3><div className="sub">Ordered at same time as original</div></div>
-                <div className="price green">~$0.65 <span>/ page</span></div>
-              </div>
-              <div className="pricing-row">
-                <div><h3>Separate copy</h3><div className="sub">Ordered after original production</div></div>
-                <div className="price">~$0.85 <span>/ page</span></div>
-              </div>
-              <div style={{marginTop: 16, background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: 12, padding: 16, fontSize: 13, color: "#1E40AF", lineHeight: 1.7}}>
-                <strong>Note:</strong> Prices shown are statutory transcript rates set by CA Gov. Code § 69950. Attorneys pay a flat 12% platform fee at checkout – reporters keep the full statutory rate. Total price shown at order entry.
-              </div>
-              <div style={{marginTop: 16, padding: "0 4px", fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.7}}>
-                <strong style={{fontWeight: 700, color: "var(--text-secondary, #475569)"}}>Why "approximately"?</strong> California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count, not the estimate.
-              </div>
-            </div>
-            <div className="pricing-footer">
-              <div>
-                <p>Have a fee waiver on file?</p>
-                <div className="sub">Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court – up to $2,500 per case.</div>
-              </div>
-              <a href="#/trf" className="btn" style={{textDecoration: "none"}}>Learn more</a>
-            </div>
-          </div>
-          <PricingCalculator />
-          </div>
-
-          {/* Competitive Comparison */}
-          <div className="pricing-comparison">
-            <div className="pricing-comparison-header">
-              <h3>Where does your money go?</h3>
-              <p>Most agencies keep the majority of what you pay. We don't.</p>
-            </div>
-            <div className="comparison-cards">
-              <div className="comparison-card agency">
-                <div className="comp-label">Traditional agency</div>
-                <div className="comp-stat">Reporter sees 15–50%</div>
-                <div className="comp-detail">Agencies mark up the statutory rate by 50–85%. The reporter who did the work may see as little as 16 cents of every dollar you paid.</div>
-              </div>
-              <div className="comparison-card dewey">
-                <div className="comp-label">Dewey Sholes</div>
-                <div className="comp-stat">Reporter keeps 100%</div>
-                <div className="comp-detail">You pay the statutory rate plus a flat 12% platform fee. The reporter receives the full statutory rate – no middleman cut, no markup.</div>
-              </div>
-            </div>
-            <div className="comparison-footnote">The 12% platform fee is paid by the attorney. Reporters pay a flat annual listing fee only – no per-job deductions.</div>
-          </div>
-
-          <p style={{textAlign: "center", marginTop: 32, fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.7, maxWidth: 720, marginLeft: "auto", marginRight: "auto"}}>
-            <strong style={{color: "var(--text, #0F172A)"}}>Join our 6-month pilot and save:</strong> Law firms pay an 8% platform fee for your first year (normally 12%). CSRs get the $99 listing fee waived for your first year.
-          </p>
-
         </div>
       </section>
 
       {/* ─── COMPLIANCE ─── */}
-      <section className="compliance">
+      <section className="section hybrid compliance">
         <div className="container">
           <div className="compliance-grid">
-            <div style={{order: 2}}>
-              <div className="compliance-card">
-                {[
-                  { label: "CSR License #14892", sub: "Verified active – California Court Reporters Board" },
-                  { label: "Jurisdiction: Los Angeles County", sub: "Matched to case filing jurisdiction" },
-                  { label: "CA MTFS format compliance", sub: "25 lines/page, ~65 characters/line, auto-enforced" },
-                  { label: "Certification statement attached", sub: "Meets CA Rules of Court Rule 8.144" },
-                ].map((item, i) => (
-                  <div className="compliance-item" key={i}>
-                    <div className="compliance-check"><Icon name="checkCircle" size={16} color="#4361EE" /></div>
-                    <div><strong>{item.label}</strong><div className="sub">{item.sub}</div></div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div style={{order: 1}}>
+            <div>
               <div className="compliance-label">Compliance built in</div>
-              <h2>Every transcript is court-admissible. Period.</h2>
+              <h2>Every transcript is court-admissible. <em>Period.</em></h2>
               <p className="compliance-text">
                 Credentials aren't just checked at signup; they're verified at every job acceptance. Jurisdiction matching, format standards, and certification requirements are enforced automatically.
               </p>
@@ -9172,16 +9463,35 @@ function LandingPage() {
                   "Compliance rules updated on CA's statutory schedule (Jan 1 / Jul 1)",
                   "W-9 collected at onboarding; no year-end tax document chasing",
                 ].map((t, i) => (
-                  <div key={i}><Icon name="shield" size={16} color="#4361EE" /><span>{t}</span></div>
+                  <div key={i}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>{t}</span>
+                  </div>
                 ))}
               </div>
+            </div>
+
+            <div className="compliance-card">
+              {[
+                { label: "CSR License #14892", sub: "Verified active – California Court Reporters Board" },
+                { label: "Jurisdiction: Los Angeles County", sub: "Matched to case filing jurisdiction" },
+                { label: "CA MTFS format compliance", sub: "25 lines/page, ~65 characters/line, auto-enforced" },
+                { label: "Certification statement attached", sub: "Meets CA Rules of Court Rule 8.144" },
+              ].map((item, i) => (
+                <div className="compliance-item" key={i}>
+                  <div className="compliance-check">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="13 4 6 11 3 8"/></svg>
+                  </div>
+                  <div><strong>{item.label}</strong><div className="sub">{item.sub}</div></div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
       {/* ─── FOOTER ─── */}
-      <footer className="footer">
+      <footer className="footer hybrid">
         <div className="container">
           <div className="footer-grid">
             <div className="footer-brand">
@@ -9202,18 +9512,16 @@ function LandingPage() {
             <div>
               <h4>Resources</h4>
               <ul>
+                <li><a href="#/pricing">Pricing</a></li>
                 <li><a href="#/faq">FAQ</a></li>
                 <li><a href="#/about">About</a></li>
                 <li><a href="#/contact">Contact us</a></li>
-                <li><a href="#/terms">Legal</a></li>
               </ul>
             </div>
             <div>
               <h4>Company</h4>
               <ul>
                 <li><a href="#/about">About</a></li>
-                <li><a href="#/contact">Contact</a></li>
-                <li><a href="#/faq">FAQ</a></li>
                 <li><a href="#/privacy">Privacy policy</a></li>
                 <li><a href="#/terms">Terms of service</a></li>
               </ul>
