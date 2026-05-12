@@ -177,8 +177,7 @@
   .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: #EFF6FF; border: 1px solid #BFDBFE; color: #1D4ED8; font-size: 11px; font-weight: 700; padding: 6px 16px; border-radius: 100px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 32px; }
   .hero-badge-dot { width: 6px; height: 6px; background: #3B82F6; border-radius: 50%; animation: pulse 2s infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-  .hero h1 { font-size: 48px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; color: #0F172A; }
-  @media (min-width: 1024px) { .hero h1 { font-size: 72px; } }
+  /* (legacy .hero h1 sizing removed — .headline class controls hero typography now) */
   .hero-subtitle { margin-top: 24px; font-size: 18px; color: #64748B; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.7; }
   @media (min-width: 1024px) { .hero-subtitle { font-size: 20px; } }
   .hero-actions { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
@@ -226,8 +225,7 @@
   .how { padding: 96px 0; background: #fff; }
   @media (min-width: 1024px) { .how { padding: 128px 0; } }
   .section-header { text-align: center; margin-bottom: 64px; }
-  .section-header h2 { font-size: 32px; font-weight: 800; color: #0F172A; letter-spacing: -0.02em; }
-  @media (min-width: 1024px) { .section-header h2 { font-size: 48px; } }
+  /* (legacy .section-header h2 sizing removed — .section-title controls section heads now) */
   .section-header p { margin-top: 16px; font-size: 18px; color: #64748B; max-width: 540px; margin-left: auto; margin-right: auto; }
   .tab-toggle { display: flex; justify-content: center; margin-bottom: 56px; }
   .tab-toggle-inner { display: inline-flex; background: #F1F5F9; border-radius: 12px; padding: 6px; }
@@ -1109,7 +1107,6 @@
     .app-nav-user > span:last-of-type:not(.app-nav-avatar) { display: none; }
     .app-nav-user > a[href*="settings"] { display: none; }
     .app-nav-user { gap: 6px; }
-    .hero h1 { font-size: 36px; }
     .hero-subtitle { font-size: 16px; }
     .hero-visual { display: none; }
     .stats-grid { grid-template-columns: 1fr; gap: 24px; }
@@ -1134,7 +1131,6 @@
     .analytics-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 480px) {
-    .hero h1 { font-size: 28px; }
     .hero-actions { gap: 12px; }
     .hero-actions .btn { width: 100%; justify-content: center; }
     .stat-cards { grid-template-columns: 1fr; }
@@ -2467,17 +2463,10 @@
 <script type="text/babel">
 const { useState, useEffect, useRef, createContext, useContext } = React;
 
-// ─── Theme Context ──────────────────────────────────────────────
+// ─── Theme Context (dark mode removed — kept as no-ops for any straggler refs) ──
 const ThemeContext = createContext({ dark: false, toggle: () => {} });
-function useTheme() { return useContext(ThemeContext); }
-function ThemeToggle() {
-  const { dark, toggle } = useTheme();
-  return (
-    <button className="theme-toggle" onClick={toggle} title={dark ? "Light mode" : "Dark mode"}>
-      <Icon name={dark ? "sun" : "moon"} size={16} />
-    </button>
-  );
-}
+function useTheme() { return { dark: false, toggle: () => {} }; }
+function ThemeToggle() { return null; }
 
 // ─── SVG Icons (inline) ─────────────────────────────────────────
 const Icon = ({ name, size = 20, color = "currentColor", strokeWidth = 2 }) => {
@@ -3743,7 +3732,7 @@ function AppNav({ variant, activeTab, onTabChange }) {
       <div className="container">
         <div className="app-nav-inner">
           <div style={{display: "flex", alignItems: "center", gap: 24}}>
-            <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+            <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
             <div className="app-nav-links">
               {tabs.map(([key, label]) => (
                 <button key={key} className={"app-nav-link" + (activeTab === key ? " active" : "")} onClick={() => key === "messages" ? navigate("/messages") : key === "reporters" ? navigate("/reporters") : onTabChange(key)}>{label}</button>
@@ -3900,7 +3889,7 @@ function OrderFlow() {
     return (
       <div>
         <nav className="app-nav"><div className="container"><div className="app-nav-inner">
-          <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+          <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
           <div />
         </div></div></nav>
         <div className="page page-enter"><div className="container" style={{maxWidth: 640, margin: "0 auto"}}>
@@ -3958,7 +3947,7 @@ function OrderFlow() {
   return (
     <div>
       <nav className="app-nav"><div className="container"><div className="app-nav-inner">
-        <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+        <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
         <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Cancel</button>
       </div></div></nav>
       <div className="page page-enter">
@@ -7544,7 +7533,7 @@ function ReporterOnboarding() {
 
   const navBar = (showCancel) => (
     <nav className="app-nav"><div className="container"><div className="app-nav-inner">
-      <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+      <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
       {showCancel
         ? <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Cancel</button>
         : <div />}
@@ -8163,7 +8152,7 @@ function AttorneyOnboarding() {
 
   const navBar = (showCancel) => (
     <nav className="app-nav"><div className="container"><div className="app-nav-inner">
-      <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+      <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
       {showCancel
         ? <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Cancel</button>
         : <div />}
@@ -9729,7 +9718,6 @@ function LandingPage() {
             {stepsData[tab].map((s, i) => (
               <div className="step-card" key={tab + i}>
                 <div className="step-head">
-                  <div className="step-icon"><Icon name={s.icon} size={20} color="#2563EB" /></div>
                   <span className="step-num">0{i + 1}.</span>
                 </div>
                 <h3>{s.title}</h3>
@@ -9748,9 +9736,6 @@ function LandingPage() {
           {/* SRL callout */}
           <div className="srl-callout">
             <div className="srl-callout-l">
-              <div className="srl-callout-icon">
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 5h10M3 8h10M3 11h7"/></svg>
-              </div>
               <div className="srl-callout-text">
                 <strong>Representing yourself?</strong> You still have a right to a transcript. We walk self-represented litigants through the ordering process step by step – no lawyer needed to get the record.
               </div>
@@ -10525,7 +10510,7 @@ function RequestCopyPage() {
   return (
     <div>
       <nav className="app-nav"><div className="container"><div className="app-nav-inner">
-        <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+        <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
         <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Cancel</button>
       </div></div></nav>
       <div className="page page-enter">
@@ -10752,7 +10737,7 @@ function TRFPage() {
   return (
     <div>
       <nav className="app-nav"><div className="container"><div className="app-nav-inner">
-        <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme={useTheme().dark ? "dark" : "light"} /></a>
+        <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
         <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Cancel</button>
       </div></div></nav>
       <div className="page page-enter">
@@ -10866,7 +10851,7 @@ function CostSplitPayPage() {
     return (
       <div style={{minHeight: "100vh", background: "var(--bg-page, #F8FAFC)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24}}>
         <div style={{maxWidth: 480, width: "100%", textAlign: "center"}}>
-          <DeweyFullLogo height={36} theme={useTheme().dark ? "dark" : "light"} />
+          <DeweyFullLogo height={36} theme="light" />
           <div style={{marginTop: 40}}>
             <div style={{width: 64, height: 64, borderRadius: "50%", background: "#DCFCE7", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 16}}>
               <Icon name="checkCircle" size={32} color="#059669" />
@@ -10898,7 +10883,7 @@ function CostSplitPayPage() {
     <div style={{minHeight: "100vh", background: "var(--bg-page, #F8FAFC)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24}}>
       <div style={{maxWidth: 520, width: "100%"}}>
         <div style={{textAlign: "center", marginBottom: 32}}>
-          <DeweyFullLogo height={36} theme={useTheme().dark ? "dark" : "light"} />
+          <DeweyFullLogo height={36} theme="light" />
         </div>
         <div style={{background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, padding: 28, boxShadow: "0 4px 24px rgba(0,0,0,0.06)"}}>
           <div style={{marginBottom: 24}}>
@@ -10960,7 +10945,7 @@ function ForgotPasswordPage() {
     return (
       <div style={{minHeight: "100vh", background: "var(--bg-page, #F8FAFC)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24}}>
         <div style={{maxWidth: 440, width: "100%", textAlign: "center"}}>
-          <DeweyFullLogo height={36} theme={useTheme().dark ? "dark" : "light"} />
+          <DeweyFullLogo height={36} theme="light" />
           <div style={{marginTop: 40}}>
             <div style={{width: 56, height: 56, borderRadius: "50%", background: "#DBEAFE", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 16}}>
               <Icon name="mail" size={24} color="#2563EB" />
@@ -10981,7 +10966,7 @@ function ForgotPasswordPage() {
     <div style={{minHeight: "100vh", background: "var(--bg-page, #F8FAFC)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24}}>
       <div style={{maxWidth: 440, width: "100%"}}>
         <div style={{textAlign: "center", marginBottom: 32}}>
-          <DeweyFullLogo height={36} theme={useTheme().dark ? "dark" : "light"} />
+          <DeweyFullLogo height={36} theme="light" />
         </div>
         <div style={{background: "var(--bg-card, #fff)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, padding: 28, boxShadow: "0 4px 24px rgba(0,0,0,0.06)"}}>
           <h2 style={{fontSize: 22, fontWeight: 700, color: "var(--text, #0F172A)", margin: "0 0 6px"}}>Reset your password</h2>
@@ -11058,7 +11043,6 @@ function ForAttorneysPage() {
             {steps.map((s, i) => (
               <div className="step-card" key={i}>
                 <div className="step-head">
-                  <div className="step-icon"><Icon name={s.icon} size={20} color="#2563EB" /></div>
                   <span className="step-num">{s.num}.</span>
                 </div>
                 <h3>{s.title}</h3>
@@ -11164,9 +11148,6 @@ function ForReportersPage() {
             {steps.map((s, i) => (
               <div className="step-card" key={i}>
                 <div className="step-head">
-                  <div className="step-icon" style={{background: "var(--sage-soft)", color: "var(--sage-deep)"}}>
-                    <Icon name={s.icon} size={20} color="#4F6F4D" />
-                  </div>
                   <span className="step-num" style={{color: "var(--sage-deep)"}}>{s.num}.</span>
                 </div>
                 <h3>{s.title}</h3>
@@ -11385,14 +11366,8 @@ function AppRouter() {
 }
 
 function App() {
-  const [dark, setDark] = useState(false);
-  const toggle = () => setDark(d => !d);
-  useEffect(() => { document.documentElement.dataset.theme = dark ? "dark" : "light"; }, [dark]);
-  return (
-    <ThemeContext.Provider value={{ dark, toggle }}>
-      <AppRouter />
-    </ThemeContext.Provider>
-  );
+  useEffect(() => { document.documentElement.dataset.theme = "light"; }, []);
+  return <AppRouter />;
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));
