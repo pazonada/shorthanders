@@ -2340,14 +2340,21 @@
   }
   @media (max-width: 720px) { .calc-card { padding: 24px 28px; } }
 
-  /* comparison block */
-  .comparison-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-  @media (max-width: 720px) { .comparison-cards { grid-template-columns: 1fr; } }
-  .comparison-card {
-    background: var(--bg); border: 1px solid var(--rule-cream);
-    border-radius: 18px; padding: 32px;
+  /* comparison block — unified bordered panel with internal divider */
+  .comparison-cards {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    background: var(--bg);
+    border: 1px solid var(--rule-cream);
+    border-radius: 18px; overflow: hidden;
   }
-  .comparison-card.dewey { border-color: var(--brand-pale); box-shadow: 0 16px 40px -20px rgba(37,99,235,0.18); }
+  @media (max-width: 720px) { .comparison-cards { grid-template-columns: 1fr; } }
+  .comparison-card { padding: 32px; position: relative; }
+  @media (min-width: 721px) {
+    .comparison-card + .comparison-card { border-left: 1px solid var(--rule-cream); }
+  }
+  @media (max-width: 720px) {
+    .comparison-card + .comparison-card { border-top: 1px solid var(--rule-cream); }
+  }
   .comp-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px; letter-spacing: 0.16em;
@@ -11335,14 +11342,10 @@ function PricingPage() {
             <div className="comparison-footnote">The 12% platform fee is paid by the attorney. Reporters pay a flat annual listing fee only – no per-job deductions.</div>
           </div>
 
-          {/* Fee waiver — moved below "where does your money go?" */}
-          <div className="fee-waiver" style={{maxWidth: 1080, margin: "40px auto 0"}}>
-            <div>
-              <p>Have a fee waiver on file?</p>
-              <div className="sub">Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court – up to $2,500 per case.</div>
-            </div>
-            <a href="#/trf">Learn more</a>
-          </div>
+          {/* Fee waiver — quiet inline note */}
+          <p style={{maxWidth: 720, margin: "32px auto 0", textAlign: "center", fontSize: 14, lineHeight: 1.65, color: "var(--ink-soft)"}}>
+            <strong style={{color: "var(--ink)", fontWeight: 600}}>Have a fee waiver on file?</strong> Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court – up to $2,500 per case. <a href="#/trf" style={{color: "var(--brand)", textDecoration: "underline", textDecorationThickness: 1, textUnderlineOffset: 3}}>Learn more →</a>
+          </p>
 
           <p className="pilot-callout" id="pilot-callout">
             <sup className="footnote-marker" style={{marginRight: 4}}>*</sup>
