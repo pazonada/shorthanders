@@ -2148,6 +2148,106 @@
   }
   .fee-waiver a:hover { background: var(--periwinkle); }
 
+  /* ═══════════════════════════════════════════════════════════════
+     APP CHROME — hybrid overrides that propagate to every app screen
+     (signup flows, order flow, dashboard, messages, transcript, etc.)
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* App nav */
+  .app-nav {
+    position: sticky;
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--rule);
+    box-shadow: none;
+  }
+  .app-nav-inner { height: 72px; }
+  .app-nav-link {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink-soft);
+    border-radius: 999px;
+    padding: 8px 16px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .app-nav-link:hover { background: var(--bg-soft); color: var(--ink); }
+  .app-nav-link.active { background: var(--brand-soft); color: var(--brand); font-weight: 600; }
+  .app-nav-avatar {
+    background: var(--ink);
+    color: #FFFFFF;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+  }
+
+  /* Page chrome */
+  .page { padding-top: 56px; padding-bottom: 80px; background: var(--bg); }
+  .page-header h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(34px, 4vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .page-header h1 em { font-style: italic; color: var(--brand); }
+  .page-header p {
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+    line-height: 1.55;
+  }
+
+  /* Card primitive */
+  .card {
+    background: var(--bg) !important;
+    border: 1px solid var(--rule) !important;
+    border-radius: 16px !important;
+    box-shadow: none !important;
+  }
+
+  /* Form inputs */
+  .form-input {
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-size: 14px;
+    color: var(--ink);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .form-input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
+  .form-input::placeholder { color: var(--dim); }
+  .form-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  /* Form file dropzone */
+  .form-file {
+    border: 1px dashed var(--rule-strong);
+    background: var(--bg-soft);
+    border-radius: 14px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .form-file:hover { border-color: var(--brand-pale); background: var(--brand-soft); }
+
+  /* Common section headlines inside app views */
+  .page h2,
+  .page-content h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+  }
+  .page h2 em { font-style: italic; color: var(--brand); }
+
   /* ═══ REPORTER DIRECTORY CARD HOVER ═══ */
   .reporter-card:hover { border-color: var(--brand-pale) !important; box-shadow: 0 12px 32px -18px rgba(37,99,235,0.18); }
 
