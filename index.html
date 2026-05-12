@@ -2371,6 +2371,15 @@
     margin-left: auto; margin-right: auto;
   }
   .pilot-callout strong { color: var(--ink); font-weight: 700; }
+  .footnote-marker {
+    color: var(--brand);
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 0.85em;
+    font-weight: 400;
+    vertical-align: super;
+    line-height: 0;
+  }
 
   /* ═══ HYBRID TIER CARD OVERRIDES (for ForReporters) ═══ */
   .reporter-tiers.hybrid-tiers { max-width: 960px; }
@@ -11260,8 +11269,10 @@ function PricingPage() {
         <div className="container">
           <div className="section-header">
             <div className="section-eyebrow" style={{color: "var(--ochre-deep)"}}>Pricing</div>
-            <h2 className="section-title">Pricing set by <em>California statute.</em></h2>
-            <p className="section-lede">No hidden fees, no negotiation games. Transcript rates are set by law. We just make them easy to understand.</p>
+            <h2 className="section-title">Standardized fees for <em>transcriptions and live attendance.</em></h2>
+            <p className="section-lede" style={{maxWidth: 720}}>
+              With Dewey Sholes, there are no hidden fees or negotiation games. Transcript rates are set by law, and live attendance rates are fixed at roughly a third lower than CSR agencies. Court reporters keep what they earn, while firms pay a standard 12% fee<sup className="footnote-marker">*</sup> for each transcription job.
+            </p>
           </div>
 
           <div className="pricing-cards-row">
@@ -11280,11 +11291,16 @@ function PricingPage() {
                   <div className="price">~$0.85 <span>/ page</span></div>
                 </div>
                 <div className="pricing-row">
-                  <div><h3>Live attendance</h3><div className="sub">Half day · Full day · Trial day</div></div>
-                  <div style={{textAlign: "right"}}>
-                    <div className="price">${PRICING.attendanceHalfDay} · ${PRICING.attendanceFullDay} · ${PRICING.attendanceTrialDay}</div>
-                    <div className="price-note">33% below agency rates</div>
-                  </div>
+                  <div><h3>Live attendance – half day</h3><div className="sub">Up to 4 hours of attendance</div></div>
+                  <div className="price">${PRICING.attendanceHalfDay} <span>/ session</span></div>
+                </div>
+                <div className="pricing-row">
+                  <div><h3>Live attendance – full day</h3><div className="sub">4+ hours, single day</div></div>
+                  <div className="price">${PRICING.attendanceFullDay} <span>/ session</span></div>
+                </div>
+                <div className="pricing-row">
+                  <div><h3>Live attendance – trial day</h3><div className="sub">Per day, multi-day trial</div></div>
+                  <div className="price">${PRICING.attendanceTrialDay} <span>/ day</span></div>
                 </div>
                 <div className="pricing-approx">
                   <span className="tooltip-trigger" tabIndex="0">
@@ -11296,15 +11312,6 @@ function PricingPage() {
             </div>
 
             <PricingCalculator />
-          </div>
-
-          {/* Fee waiver */}
-          <div className="fee-waiver" style={{maxWidth: 1080, margin: "32px auto 0"}}>
-            <div>
-              <p>Have a fee waiver on file?</p>
-              <div className="sub">Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court – up to $2,500 per case.</div>
-            </div>
-            <a href="#/trf">Learn more</a>
           </div>
 
           {/* Comparison */}
@@ -11328,7 +11335,17 @@ function PricingPage() {
             <div className="comparison-footnote">The 12% platform fee is paid by the attorney. Reporters pay a flat annual listing fee only – no per-job deductions.</div>
           </div>
 
-          <p className="pilot-callout">
+          {/* Fee waiver — moved below "where does your money go?" */}
+          <div className="fee-waiver" style={{maxWidth: 1080, margin: "40px auto 0"}}>
+            <div>
+              <p>Have a fee waiver on file?</p>
+              <div className="sub">Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court – up to $2,500 per case.</div>
+            </div>
+            <a href="#/trf">Learn more</a>
+          </div>
+
+          <p className="pilot-callout" id="pilot-callout">
+            <sup className="footnote-marker" style={{marginRight: 4}}>*</sup>
             <strong>Join our 6-month pilot and save:</strong> Law firms pay an 8% platform fee for your first year (normally 12%). CSRs get the $99 listing fee waived for your first year.
           </p>
         </div>
