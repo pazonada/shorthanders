@@ -1970,6 +1970,7 @@
     font-size: 18px; line-height: 1.65;
     color: var(--ink-soft);
     max-width: 580px; margin-left: auto; margin-right: auto;
+    text-wrap: pretty;
   }
 
   /* ═══ HOW IT WORKS ═══ */
@@ -2340,6 +2341,15 @@
   }
   @media (max-width: 720px) { .calc-card { padding: 24px 28px; } }
 
+  /* Reusable italic-serif card heading (h3/h4 inside cards on any page) */
+  .card-title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-style: italic;
+    font-size: 26px; line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--ink); margin: 0;
+  }
+
   /* "Where does your money go?" — comparison chart + fee-waiver aside */
   .moneygo-grid {
     display: grid;
@@ -2351,7 +2361,7 @@
 
   .comparison-chart {
     background: var(--bg);
-    border: 1px solid var(--rule-cream);
+    border: 2px solid var(--ink);
     border-radius: 18px;
     overflow: hidden;
   }
@@ -2376,8 +2386,8 @@
   .cc-stat {
     padding: 22px 24px 8px;
     font-family: 'Instrument Serif', serif;
-    font-style: italic; font-size: 34px;
-    line-height: 1.1; letter-spacing: -0.015em;
+    font-style: italic; font-size: 26px;
+    line-height: 1.15; letter-spacing: -0.015em;
     color: var(--ink);
   }
   .cc-stat + .cc-stat { border-left: 1px solid var(--rule); }
@@ -2386,6 +2396,7 @@
     padding: 0 24px 22px;
     font-size: 14px; line-height: 1.6;
     color: var(--ink-soft);
+    text-wrap: pretty;
   }
   .cc-detail + .cc-detail { border-left: 1px solid var(--rule); }
   .cc-footnote {
@@ -2393,6 +2404,7 @@
     border-top: 1px solid var(--rule);
     font-size: 12px; color: var(--muted);
     line-height: 1.55; text-align: center;
+    text-wrap: pretty;
   }
   @media (max-width: 720px) {
     .cc-head + .cc-head { border-left: none; border-top: 1px solid var(--rule-cream); }
@@ -2408,16 +2420,10 @@
     display: flex; flex-direction: column;
     gap: 14px;
   }
-  .fee-waiver-card h4 {
-    font-family: 'Instrument Serif', serif;
-    font-weight: 400; font-style: italic;
-    font-size: 26px; line-height: 1.15;
-    letter-spacing: -0.015em;
-    color: var(--ink); margin: 0;
-  }
   .fee-waiver-card p {
     font-size: 14px; line-height: 1.6;
     color: var(--ink-soft); margin: 0;
+    text-wrap: pretty;
   }
   .fee-waiver-card a {
     align-self: flex-start; margin-top: auto;
@@ -2433,16 +2439,19 @@
     font-size: 14px; color: var(--ink-soft);
     line-height: 1.7; max-width: 760px;
     margin-left: auto; margin-right: auto;
+    text-wrap: pretty;
   }
   .pilot-callout strong { color: var(--ink); font-weight: 700; }
   .footnote-marker {
     color: var(--brand);
     font-family: 'Instrument Serif', serif;
     font-style: italic;
-    font-size: 0.85em;
+    font-size: 0.7em;
     font-weight: 400;
-    vertical-align: super;
+    position: relative;
+    top: -0.45em;
     line-height: 0;
+    margin-left: 1px;
   }
 
   /* ═══ HYBRID TIER CARD OVERRIDES (for ForReporters) ═══ */
@@ -7504,7 +7513,7 @@ function PricingCalculator() {
 
   return (
     <div className="calc-card">
-      <h3>Estimate your cost</h3>
+      <h3 className="card-title" style={{textAlign: "center", marginBottom: 20}}>Estimate your cost</h3>
       <div className="calc-row">
         <div className="form-group">
           <label className="form-label">Service type</label>
@@ -7579,11 +7588,6 @@ function PricingCalculator() {
           {turnaroundFee < 0 && <span>Discount: -${Math.abs(turnaroundFee).toFixed(2)}</span>}
           <span>Platform fee: <span style={{textDecoration: "line-through", color: "#94A3B8"}}>12%</span> <strong style={{color: "#2563EB"}}>8% pilot</strong> = +${platformFee.toFixed(2)}</span>
         </div>
-        {isLive && (
-          <div style={{fontSize: 11, color: "var(--text-muted, #64748B)", marginTop: 8}}>
-            Attendance fees are significantly below typical agency rates. Reporter keeps 100%.
-          </div>
-        )}
         <a href="#/order" className="btn btn-primary btn-sm" style={{marginTop: 16}}>Order now <Icon name="arrowRight" size={14} color="#fff" /></a>
       </div>
     </div>
@@ -11397,7 +11401,7 @@ function PricingPage() {
                 <div className="cc-footnote">The 12% platform fee is paid by the attorney. Reporters pay a flat annual listing fee only – no per-job deductions.</div>
               </div>
               <aside className="fee-waiver-card">
-                <h4>Have a fee waiver on file?</h4>
+                <h4 className="card-title">Have a fee waiver on file?</h4>
                 <p>Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court – up to $2,500 per case.</p>
                 <a href="#/trf">Learn more →</a>
               </aside>
@@ -11405,8 +11409,7 @@ function PricingPage() {
           </div>
 
           <p className="pilot-callout" id="pilot-callout">
-            <sup className="footnote-marker" style={{marginRight: 4}}>*</sup>
-            <strong>Join our 6-month pilot and save:</strong> Law firms pay an 8% platform fee for your first year (normally 12%). CSRs get the $99 listing fee waived for your first year.
+            <sup className="footnote-marker">*</sup><strong>Join our 6-month pilot and save:</strong> Law firms pay an 8% platform fee for your first year (normally 12%). CSRs get the $99 listing fee waived for your first year.
           </p>
         </div>
       </section>
