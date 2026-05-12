@@ -2148,6 +2148,9 @@
   }
   .fee-waiver a:hover { background: var(--periwinkle); }
 
+  /* ═══ REPORTER DIRECTORY CARD HOVER ═══ */
+  .reporter-card:hover { border-color: var(--brand-pale) !important; box-shadow: 0 12px 32px -18px rgba(37,99,235,0.18); }
+
   /* ═══ PRICING SLIDE-UP ROUTE ═══ */
   @keyframes pricingSlideUp {
     from { transform: translateY(40px); opacity: 0; }
@@ -9852,17 +9855,19 @@ function ReporterDirectory() {
   const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   return (
-    <div className="page page-enter">
-      <div className="container" style={{maxWidth: 1100, padding: "32px 20px"}}>
-        <div className="page-header" style={{marginBottom: 24}}>
-          <div>
-            <h1 style={{fontSize: 24, fontWeight: 700}}>Find a reporter</h1>
-            <p style={{color: "#64748B", marginTop: 4}}>Browse verified court reporters across California</p>
+    <div>
+      <MarketingNav />
+      <section className="section hybrid" style={{paddingTop: 56, paddingBottom: 24}}>
+        <div className="container">
+          <div className="section-header" style={{textAlign: "left", maxWidth: "none", marginBottom: 24}}>
+            <div className="kicker" style={{marginBottom: 16}}>Find a reporter</div>
+            <h1 className="h-section" style={{fontSize: "clamp(36px, 4.8vw, 56px)"}}>Browse verified court reporters across <em>California.</em></h1>
           </div>
         </div>
-
+      </section>
+      <div className="container" style={{maxWidth: 1100, paddingBottom: 80}}>
         {/* Filters */}
-        <div className="card" style={{padding: 16, marginBottom: 24}}>
+        <div className="card" style={{padding: 16, marginBottom: 24, background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 16}}>
           <div style={{display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center"}}>
             <div style={{flex: "1 1 200px", position: "relative"}}>
               <Icon name="search" size={16} style={{position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#94A3B8"}} />
@@ -9892,24 +9897,24 @@ function ReporterDirectory() {
         {/* Reporter cards */}
         <div style={{display: "flex", flexDirection: "column", gap: 16}}>
           {filtered.map(r => (
-            <div className="card" key={r.id} style={{padding: 0, overflow: "hidden", cursor: "pointer"}} onClick={() => navigate("/reporters/" + r.id)}>
+            <div className="reporter-card" key={r.id} onClick={() => navigate("/reporters/" + r.id)} style={{padding: 0, overflow: "hidden", cursor: "pointer", background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 16, transition: "border-color 0.15s ease, box-shadow 0.15s ease"}}>
               <div style={{display: "flex", gap: 20, padding: 24, flexWrap: "wrap"}}>
                 {/* Avatar + core info */}
                 <div style={{display: "flex", gap: 16, flex: "1 1 300px", minWidth: 0}}>
-                  <div style={{width: 56, height: 56, borderRadius: "50%", background: "linear-gradient(135deg, #2563EB, #4F46E5)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18, flexShrink: 0}}>{r.initials}</div>
+                  <div style={{width: 56, height: 56, borderRadius: "50%", background: "var(--ink)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontWeight: 400, fontSize: 22, flexShrink: 0, letterSpacing: "0.02em"}}>{r.initials}</div>
                   <div style={{minWidth: 0}}>
-                    <div style={{display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap"}}>
-                      <span style={{fontSize: 16, fontWeight: 700, color: "var(--text-primary)"}}>{r.name}</span>
-                      <span style={{fontSize: 12, color: "#64748B"}}>CSR #{r.csrNumber}</span>
-                      {favorites.includes(r.id) && <span style={{fontSize: 11, fontWeight: 600, background: "#FEF3C7", color: "#92400E", padding: "2px 8px", borderRadius: 100}}>Favorite</span>}
+                    <div style={{display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap"}}>
+                      <span style={{fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: 24, color: "var(--ink)", letterSpacing: "-0.01em"}}>{r.name}</span>
+                      <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.12em", color: "var(--muted)", textTransform: "uppercase"}}>CSR #{r.csrNumber}</span>
+                      {favorites.includes(r.id) && <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ochre-deep)", background: "var(--ochre-soft)", padding: "3px 10px", borderRadius: 999, fontWeight: 600}}>Favorite</span>}
                     </div>
-                    <div style={{fontSize: 13, color: "#64748B", marginTop: 2}}><Icon name="mapPin" size={12} /> {r.city} · {r.counties.join(", ")}</div>
-                    <div style={{display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap"}}>
-                      {r.certifications.map(c => <span key={c} style={{fontSize: 10, fontWeight: 700, background: "#DBEAFE", color: "#1E40AF", padding: "2px 8px", borderRadius: 100}}>{c}</span>)}
-                      {r.languages.filter(l => l !== "English").map(l => <span key={l} style={{fontSize: 10, fontWeight: 600, background: "#D1FAE5", color: "#065F46", padding: "2px 8px", borderRadius: 100}}>{l}</span>)}
+                    <div style={{fontSize: 13, color: "var(--ink-soft)", marginTop: 4}}><Icon name="mapPin" size={12} /> {r.city} · {r.counties.join(", ")}</div>
+                    <div style={{display: "flex", gap: 6, marginTop: 10, flexWrap: "wrap"}}>
+                      {r.certifications.map(c => <span key={c} style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", fontWeight: 600, background: "var(--brand-soft)", color: "var(--brand-dark)", padding: "3px 10px", borderRadius: 999}}>{c}</span>)}
+                      {r.languages.filter(l => l !== "English").map(l => <span key={l} style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", fontWeight: 600, background: "var(--sage-soft)", color: "var(--sage-deep)", padding: "3px 10px", borderRadius: 999}}>{l}</span>)}
                     </div>
                     <div style={{display: "flex", gap: 4, marginTop: 8, flexWrap: "wrap"}}>
-                      {r.specialties.map(s => <span key={s} style={{fontSize: 10, color: "#64748B", background: "#F1F5F9", padding: "2px 8px", borderRadius: 100}}>{s}</span>)}
+                      {r.specialties.map(s => <span key={s} style={{fontSize: 11, color: "var(--muted)", background: "var(--bg-soft)", padding: "3px 10px", borderRadius: 999}}>{s}</span>)}
                     </div>
                   </div>
                 </div>
@@ -9917,29 +9922,29 @@ function ReporterDirectory() {
                 {/* Stats */}
                 <div style={{display: "flex", gap: 24, alignItems: "center", flex: "0 0 auto", flexWrap: "wrap"}}>
                   <div style={{textAlign: "center"}}>
-                    <div style={{fontSize: 20, fontWeight: 800, color: "#F59E0B", display: "flex", alignItems: "center", gap: 4, justifyContent: "center"}}>
-                      <Icon name="star" size={16} /> {r.rating}
+                    <div style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 28, color: "var(--ochre-deep)", display: "flex", alignItems: "center", gap: 4, justifyContent: "center", lineHeight: 1}}>
+                      <Icon name="star" size={16} color="#8B6B33" /> {r.rating}
                     </div>
-                    <div style={{fontSize: 11, color: "#94A3B8"}}>{r.reviewCount} reviews</div>
+                    <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: "var(--dim)", textTransform: "uppercase", marginTop: 4}}>{r.reviewCount} reviews</div>
                   </div>
                   <div style={{textAlign: "center"}}>
-                    <div style={{fontSize: 20, fontWeight: 800, color: "var(--text-primary)"}}>{r.stats.jobsCompleted}</div>
-                    <div style={{fontSize: 11, color: "#94A3B8"}}>jobs</div>
+                    <div style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 28, color: "var(--ink)", lineHeight: 1}}>{r.stats.jobsCompleted}</div>
+                    <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: "var(--dim)", textTransform: "uppercase", marginTop: 4}}>Jobs</div>
                   </div>
                   <div style={{textAlign: "center"}}>
-                    <div style={{fontSize: 20, fontWeight: 800, color: "#059669"}}>{r.stats.onTimeRate}%</div>
-                    <div style={{fontSize: 11, color: "#94A3B8"}}>on time</div>
+                    <div style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 28, color: "var(--sage-deep)", lineHeight: 1}}>{r.stats.onTimeRate}%</div>
+                    <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: "var(--dim)", textTransform: "uppercase", marginTop: 4}}>On time</div>
                   </div>
                   <div style={{textAlign: "center"}}>
-                    <div style={{fontSize: 20, fontWeight: 800, color: "#2563EB"}}>{r.stats.avgTurnaround}</div>
-                    <div style={{fontSize: 11, color: "#94A3B8"}}>avg turnaround</div>
+                    <div style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 28, color: "var(--brand)", lineHeight: 1}}>{r.stats.avgTurnaround}</div>
+                    <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: "var(--dim)", textTransform: "uppercase", marginTop: 4}}>Turnaround</div>
                   </div>
                 </div>
 
                 {/* Actions */}
                 <div style={{display: "flex", flexDirection: "column", gap: 8, justifyContent: "center", flex: "0 0 auto"}}>
                   <button className="btn btn-primary btn-sm" onClick={e => { e.stopPropagation(); navigate("/order"); }} style={{whiteSpace: "nowrap"}}>Book now</button>
-                  <button className="btn btn-sm" onClick={e => { e.stopPropagation(); toggleFav(r.id); }} style={{whiteSpace: "nowrap", background: favorites.includes(r.id) ? "#FEF3C7" : undefined, color: favorites.includes(r.id) ? "#92400E" : undefined}}>
+                  <button className="btn btn-secondary btn-sm" onClick={e => { e.stopPropagation(); toggleFav(r.id); }} style={{whiteSpace: "nowrap", background: favorites.includes(r.id) ? "var(--ochre-soft)" : undefined, color: favorites.includes(r.id) ? "var(--ochre-deep)" : undefined, borderColor: favorites.includes(r.id) ? "var(--ochre-soft)" : undefined}}>
                     <Icon name="star" size={14} /> {favorites.includes(r.id) ? "Favorited" : "Favorite"}
                   </button>
                 </div>
@@ -9947,15 +9952,16 @@ function ReporterDirectory() {
             </div>
           ))}
           {filtered.length === 0 && (
-            <div className="card" style={{padding: 48, textAlign: "center"}}>
+            <div style={{padding: 48, textAlign: "center", background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 16}}>
               <Icon name="search" size={32} color="#CBD5E1" />
-              <p style={{color: "#94A3B8", marginTop: 12}}>No reporters match your filters</p>
-              <button className="btn btn-sm" onClick={() => { setSearch(""); setCounty("all"); setSpecialty("all"); setShowFavOnly(false); }} style={{marginTop: 8}}>Clear filters</button>
+              <p style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 22, color: "var(--ink-soft)", marginTop: 12}}>No reporters match your filters.</p>
+              <button className="btn btn-secondary btn-sm" onClick={() => { setSearch(""); setCounty("all"); setSpecialty("all"); setShowFavOnly(false); }} style={{marginTop: 14}}>Clear filters</button>
             </div>
           )}
         </div>
       </div>
       <ToastContainer toasts={toasts} onRemove={removeToast} />
+      <HybridFooter />
     </div>
   );
 }
@@ -9977,68 +9983,68 @@ function ReporterProfile({ reporterId }) {
   const slotLabels = ["AM", "PM", "Eve"];
 
   return (
-    <div className="page page-enter">
-      <div className="container" style={{maxWidth: 900, padding: "32px 20px"}}>
+    <div>
+      <MarketingNav />
+      <div className="container" style={{maxWidth: 960, padding: "40px 24px 80px"}}>
         {/* Back link */}
-        <button className="btn btn-sm" onClick={() => navigate("/reporters")} style={{marginBottom: 20}}>
-          <Icon name="arrowLeft" size={14} /> Back to directory
+        <button className="btn-link" onClick={() => navigate("/reporters")} style={{marginBottom: 28, fontSize: 15}}>
+          ← Back to directory
         </button>
 
         {/* Header card */}
-        <div className="card" style={{padding: 28, marginBottom: 20}}>
-          <div style={{display: "flex", gap: 20, flexWrap: "wrap"}}>
-            <div style={{width: 72, height: 72, borderRadius: "50%", background: "linear-gradient(135deg, #2563EB, #4F46E5)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 24, flexShrink: 0}}>{reporter.initials}</div>
-            <div style={{flex: 1, minWidth: 200}}>
-              <div style={{display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap"}}>
-                <h1 style={{fontSize: 22, fontWeight: 700, margin: 0}}>{reporter.name}</h1>
-                <span style={{fontSize: 13, color: "#64748B"}}>CSR #{reporter.csrNumber}</span>
-                {isFav && <span style={{fontSize: 11, fontWeight: 600, background: "#FEF3C7", color: "#92400E", padding: "2px 8px", borderRadius: 100}}>Favorite</span>}
+        <div style={{padding: 32, marginBottom: 24, background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 20}}>
+          <div style={{display: "flex", gap: 24, flexWrap: "wrap"}}>
+            <div style={{width: 84, height: 84, borderRadius: "50%", background: "var(--ink)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontWeight: 400, fontSize: 30, flexShrink: 0, letterSpacing: "0.02em"}}>{reporter.initials}</div>
+            <div style={{flex: 1, minWidth: 220}}>
+              <div style={{display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap"}}>
+                <h1 style={{fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: 40, color: "var(--ink)", margin: 0, letterSpacing: "-0.02em", lineHeight: 1.05}}>{reporter.name}</h1>
+                <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.14em", color: "var(--muted)", textTransform: "uppercase"}}>CSR #{reporter.csrNumber}</span>
+                {isFav && <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ochre-deep)", background: "var(--ochre-soft)", padding: "3px 10px", borderRadius: 999, fontWeight: 600}}>Favorite</span>}
               </div>
-              <div style={{fontSize: 14, color: "#64748B", marginTop: 4}}><Icon name="mapPin" size={13} /> {reporter.city} · {reporter.counties.join(", ")}</div>
-              <div style={{display: "flex", gap: 6, marginTop: 10, flexWrap: "wrap"}}>
-                {reporter.certifications.map(c => <span key={c} style={{fontSize: 11, fontWeight: 700, background: "#DBEAFE", color: "#1E40AF", padding: "3px 10px", borderRadius: 100}}>{c}</span>)}
-                {reporter.languages.filter(l => l !== "English").map(l => <span key={l} style={{fontSize: 11, fontWeight: 600, background: "#D1FAE5", color: "#065F46", padding: "3px 10px", borderRadius: 100}}>{l}</span>)}
-                {reporter.specialties.map(s => <span key={s} style={{fontSize: 11, color: "#64748B", background: "#F1F5F9", padding: "3px 10px", borderRadius: 100}}>{s}</span>)}
+              <div style={{fontSize: 14, color: "var(--ink-soft)", marginTop: 6}}><Icon name="mapPin" size={13} /> {reporter.city} · {reporter.counties.join(", ")}</div>
+              <div style={{display: "flex", gap: 6, marginTop: 14, flexWrap: "wrap"}}>
+                {reporter.certifications.map(c => <span key={c} style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", fontWeight: 600, background: "var(--brand-soft)", color: "var(--brand-dark)", padding: "3px 10px", borderRadius: 999}}>{c}</span>)}
+                {reporter.languages.filter(l => l !== "English").map(l => <span key={l} style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", fontWeight: 600, background: "var(--sage-soft)", color: "var(--sage-deep)", padding: "3px 10px", borderRadius: 999}}>{l}</span>)}
+                {reporter.specialties.map(s => <span key={s} style={{fontSize: 11, color: "var(--muted)", background: "var(--bg-soft)", padding: "3px 10px", borderRadius: 999}}>{s}</span>)}
               </div>
             </div>
             <div style={{display: "flex", gap: 8, alignItems: "flex-start", flexWrap: "wrap"}}>
               <button className="btn btn-primary btn-sm" onClick={() => navigate("/order?reporter=" + reporter.id)}>Book this reporter</button>
               <button className="btn btn-secondary btn-sm" onClick={() => navigate("/request-copy?reporter=" + reporter.id)}>Request a transcript copy</button>
-              <button className="btn btn-sm" onClick={toggleFav} style={{background: isFav ? "#FEF3C7" : undefined, color: isFav ? "#92400E" : undefined}}>
+              <button className="btn btn-secondary btn-sm" onClick={toggleFav} style={{background: isFav ? "var(--ochre-soft)" : undefined, color: isFav ? "var(--ochre-deep)" : undefined, borderColor: isFav ? "var(--ochre-soft)" : undefined}}>
                 <Icon name="star" size={14} /> {isFav ? "Favorited" : "Favorite"}
               </button>
             </div>
           </div>
-          {reporter.bio && <p style={{fontSize: 14, color: "#64748B", marginTop: 16, lineHeight: 1.6, borderTop: "1px solid var(--border-color)", paddingTop: 16}}>{reporter.bio}</p>}
+          {reporter.bio && <p style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 18, color: "var(--ink-soft)", marginTop: 22, lineHeight: 1.55, borderTop: "1px solid var(--rule)", paddingTop: 20}}>{reporter.bio}</p>}
         </div>
 
         {/* Stats row */}
-        <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 20}}>
+        <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 16, marginBottom: 24}}>
           {[
-            { label: "Rating", value: reporter.rating, icon: "star", color: "#F59E0B", sub: reporter.reviewCount + " reviews" },
-            { label: "On-time rate", value: reporter.stats.onTimeRate + "%", icon: "clock", color: "#059669", sub: "delivery record" },
-            { label: "Avg turnaround", value: reporter.stats.avgTurnaround, icon: "zap", color: "#7C3AED", sub: "per transcript" },
+            { label: "Rating", value: reporter.rating, color: "var(--ochre-deep)", sub: reporter.reviewCount + " reviews" },
+            { label: "On-time rate", value: reporter.stats.onTimeRate + "%", color: "var(--sage-deep)", sub: "Delivery record" },
+            { label: "Avg turnaround", value: reporter.stats.avgTurnaround, color: "var(--brand)", sub: "Per transcript" },
           ].map((s, i) => (
-            <div className="card" key={i} style={{padding: 16, textAlign: "center"}}>
-              <Icon name={s.icon} size={16} color={s.color} />
-              <div style={{fontSize: 24, fontWeight: 800, color: s.color, marginTop: 4}}>{s.value}</div>
-              <div style={{fontSize: 11, color: "#94A3B8", marginTop: 2}}>{s.sub}</div>
+            <div key={i} style={{padding: 22, textAlign: "center", background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 16}}>
+              <div style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 40, color: s.color, lineHeight: 1}}>{s.value}</div>
+              <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.14em", color: "var(--dim)", textTransform: "uppercase", marginTop: 8}}>{s.sub}</div>
             </div>
           ))}
         </div>
 
         <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20}}>
           {/* Availability */}
-          <div className="card" style={{padding: 20}}>
-            <h3 style={{fontSize: 14, fontWeight: 700, marginBottom: 12}}>Weekly availability</h3>
+          <div style={{padding: 24, background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 16}}>
+            <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 14}}>Weekly availability</div>
             <div style={{display: "grid", gridTemplateColumns: "auto repeat(3, 1fr)", gap: 4, fontSize: 11}}>
               <div></div>
-              {slotLabels.map(s => <div key={s} style={{textAlign: "center", color: "#94A3B8", fontWeight: 600}}>{s}</div>)}
+              {slotLabels.map(s => <div key={s} style={{textAlign: "center", fontFamily: "'JetBrains Mono', monospace", color: "var(--dim)", fontWeight: 500, letterSpacing: "0.1em"}}>{s}</div>)}
               {dayLabels.map((day, di) => (
                 <React.Fragment key={day}>
-                  <div style={{fontWeight: 600, color: "#64748B", paddingRight: 8}}>{day}</div>
+                  <div style={{fontFamily: "'JetBrains Mono', monospace", fontWeight: 500, color: "var(--ink-soft)", paddingRight: 8, letterSpacing: "0.08em"}}>{day}</div>
                   {reporter.availability[di].map((avail, si) => (
-                    <div key={si} style={{width: "100%", height: 24, borderRadius: 4, background: avail ? "#D1FAE5" : "#FEE2E2", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: avail ? "#065F46" : "#DC2626"}}>
+                    <div key={si} style={{width: "100%", height: 24, borderRadius: 6, background: avail ? "var(--sage-soft)" : "var(--bg-soft)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: avail ? "var(--sage-deep)" : "var(--dim)"}}>
                       {avail ? "✓" : "–"}
                     </div>
                   ))}
@@ -10048,11 +10054,11 @@ function ReporterProfile({ reporterId }) {
           </div>
 
           {/* Courts */}
-          <div className="card" style={{padding: 20}}>
-            <h3 style={{fontSize: 14, fontWeight: 700, marginBottom: 12}}>Courts covered</h3>
+          <div style={{padding: 24, background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 16}}>
+            <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 14}}>Courts covered</div>
             <div style={{display: "flex", flexDirection: "column", gap: 8}}>
               {reporter.courts.map(c => (
-                <div key={c} style={{display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--text-primary)"}}>
+                <div key={c} style={{display: "flex", alignItems: "center", gap: 8, fontSize: 14, color: "var(--ink-soft)"}}>
                   <Icon name="mapPin" size={12} color="#94A3B8" /> {c}
                 </div>
               ))}
@@ -10061,41 +10067,45 @@ function ReporterProfile({ reporterId }) {
         </div>
 
         {/* Reviews */}
-        <div className="card" style={{padding: 20, marginTop: 20}}>
-          <h3 style={{fontSize: 14, fontWeight: 700, marginBottom: 16}}>Reviews ({reporter.reviewCount})</h3>
-          <div style={{display: "flex", flexDirection: "column", gap: 16}}>
+        <div style={{padding: 28, marginTop: 24, background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 16}}>
+          <div style={{display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 18}}>
+            <h2 style={{fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: 28, color: "var(--ink)", letterSpacing: "-0.015em", margin: 0}}>Reviews</h2>
+            <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.14em", color: "var(--muted)", textTransform: "uppercase"}}>{reporter.reviewCount} total</span>
+          </div>
+          <div style={{display: "flex", flexDirection: "column", gap: 18}}>
             {(showAllReviews ? reporter.reviews : reporter.reviews.slice(0, 3)).map((rev, i) => (
-              <div key={i} style={{borderBottom: i < reporter.reviews.length - 1 ? "1px solid var(--border-color, #E2E8F0)" : "none", paddingBottom: 16}}>
+              <div key={i} style={{borderBottom: i < (showAllReviews ? reporter.reviews.length : Math.min(reporter.reviews.length, 3)) - 1 ? "1px solid var(--rule)" : "none", paddingBottom: 18}}>
                 <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8}}>
                   <div>
-                    <span style={{fontWeight: 600, fontSize: 13, color: "var(--text, #0F172A)"}}>{rev.attorney}</span>
-                    {rev.caseType && <span style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", marginLeft: 8}}>{rev.caseType}</span>}
+                    <span style={{fontWeight: 600, fontSize: 14, color: "var(--ink)"}}>{rev.attorney}</span>
+                    {rev.caseType && <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.1em", color: "var(--dim)", marginLeft: 10, textTransform: "uppercase"}}>{rev.caseType}</span>}
                   </div>
-                  <span style={{fontSize: 12, color: "#94A3B8"}}>{rev.date}</span>
+                  <span style={{fontSize: 12, color: "var(--dim)"}}>{rev.date}</span>
                 </div>
-                <div style={{display: "flex", gap: 10, marginBottom: 8, alignItems: "center"}}>
+                <div style={{display: "flex", gap: 10, marginBottom: 10, alignItems: "center"}}>
                   <div style={{display: "flex", alignItems: "center", gap: 4}}>
-                    <span style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Quality:</span>
+                    <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.1em", color: "var(--dim)", textTransform: "uppercase"}}>Quality</span>
                     <div style={{display: "flex", gap: 1}}>
-                      {[1,2,3,4,5].map(n => <Icon key={n} name="star" size={11} color={n <= rev.rating ? "#F59E0B" : "#E2E8F0"} />)}
+                      {[1,2,3,4,5].map(n => <Icon key={n} name="star" size={11} color={n <= rev.rating ? "#C49B5B" : "#E2E8F0"} />)}
                     </div>
                   </div>
                   {rev.timeliness && (
-                    <span style={{fontSize: 11, padding: "1px 6px", borderRadius: 4, background: rev.timeliness >= 4.5 ? "#D1FAE5" : rev.timeliness >= 3.5 ? "#FEF3C7" : "#FEE2E2", color: rev.timeliness >= 4.5 ? "#065F46" : rev.timeliness >= 3.5 ? "#92400E" : "#DC2626", fontWeight: 600}}>
-                      Timeliness: {rev.timeliness}
+                    <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", padding: "2px 8px", borderRadius: 999, background: rev.timeliness >= 4.5 ? "var(--sage-soft)" : rev.timeliness >= 3.5 ? "var(--ochre-soft)" : "var(--plum-soft)", color: rev.timeliness >= 4.5 ? "var(--sage-deep)" : rev.timeliness >= 3.5 ? "var(--ochre-deep)" : "var(--plum)", fontWeight: 600}}>
+                      Timeliness {rev.timeliness}
                     </span>
                   )}
                 </div>
-                {rev.text && <p style={{fontSize: 13, color: "var(--text-secondary, #64748B)", lineHeight: 1.6, margin: 0}}>{rev.text}</p>}
+                {rev.text && <p style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 16, color: "var(--ink-soft)", lineHeight: 1.55, margin: 0}}>{rev.text}</p>}
               </div>
             ))}
           </div>
           {reporter.reviews.length > 3 && !showAllReviews && (
-            <button className="btn btn-sm" onClick={() => setShowAllReviews(true)} style={{marginTop: 12}}>Show all reviews</button>
+            <button className="btn btn-secondary btn-sm" onClick={() => setShowAllReviews(true)} style={{marginTop: 16}}>Show all reviews</button>
           )}
         </div>
       </div>
       <ToastContainer toasts={toasts} onRemove={removeToast} />
+      <HybridFooter />
     </div>
   );
 }
