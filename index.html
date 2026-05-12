@@ -1814,7 +1814,7 @@
     font-size: 14px; font-weight: 500;
     color: var(--ink-soft); background: none; border: none; cursor: pointer;
     padding: 8px 14px; border-radius: 999px;
-    text-decoration: none;
+    text-decoration: none; white-space: nowrap; line-height: 1;
     transition: background 0.15s ease, color 0.15s ease;
   }
   .nav-links a.nav-signin:hover, .nav-links button.nav-signin:hover { background: var(--bg-soft); color: var(--ink); }
@@ -1823,10 +1823,17 @@
     padding: 10px 22px; border-radius: 999px;
     font-size: 14px; font-weight: 600;
     text-decoration: none; border: none; cursor: pointer;
+    white-space: nowrap; line-height: 1;
     transition: background 0.15s ease, transform 0.15s ease;
   }
   .nav-links a.nav-cta:hover, .nav-links button.nav-cta:hover { background: var(--brand); color: #FFFFFF; transform: translateY(-1px); }
   @media (max-width: 860px) { .nav-links > a:not(.nav-cta):not(.nav-signin) { display: none; } }
+  @media (max-width: 540px) {
+    .nav-links { gap: 8px; }
+    .nav-links a.nav-signin, .nav-links button.nav-signin { font-size: 12px; padding: 7px 10px; }
+    .nav-links a.nav-cta, .nav-links button.nav-cta { font-size: 12px; padding: 9px 16px; }
+    .nav-inner { height: 64px; }
+  }
 
   /* ═══ HERO (hybrid two-column with order card) ═══ */
   .hero { padding: 80px 0 0; position: relative; overflow: hidden; }
