@@ -2340,37 +2340,94 @@
   }
   @media (max-width: 720px) { .calc-card { padding: 24px 28px; } }
 
-  /* comparison block — unified bordered panel with internal divider */
-  .comparison-cards {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  /* "Where does your money go?" — comparison chart + fee-waiver aside */
+  .moneygo-grid {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 20px;
+    align-items: stretch;
+  }
+  @media (max-width: 860px) { .moneygo-grid { grid-template-columns: 1fr; } }
+
+  .comparison-chart {
     background: var(--bg);
     border: 1px solid var(--rule-cream);
-    border-radius: 18px; overflow: hidden;
+    border-radius: 18px;
+    overflow: hidden;
   }
-  @media (max-width: 720px) { .comparison-cards { grid-template-columns: 1fr; } }
-  .comparison-card { padding: 32px; position: relative; }
-  @media (min-width: 721px) {
-    .comparison-card + .comparison-card { border-left: 1px solid var(--rule-cream); }
+  .cc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .cc-head {
+    padding: 14px 24px;
+    background: var(--periwinkle-soft);
+    border-bottom: 1px solid var(--rule-cream);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; font-weight: 700;
+    color: var(--ink-soft);
+  }
+  .cc-head + .cc-head { border-left: 1px solid var(--rule-cream); }
+  .cc-head.dewey {
+    color: var(--brand);
+    background: rgba(37,99,235,0.08);
+  }
+  .cc-stat {
+    padding: 22px 24px 8px;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic; font-size: 34px;
+    line-height: 1.1; letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .cc-stat + .cc-stat { border-left: 1px solid var(--rule); }
+  .cc-stat.dewey { color: var(--brand); }
+  .cc-detail {
+    padding: 0 24px 22px;
+    font-size: 14px; line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .cc-detail + .cc-detail { border-left: 1px solid var(--rule); }
+  .cc-footnote {
+    padding: 12px 24px 16px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px; color: var(--muted);
+    line-height: 1.55; text-align: center;
   }
   @media (max-width: 720px) {
-    .comparison-card + .comparison-card { border-top: 1px solid var(--rule-cream); }
+    .cc-head + .cc-head { border-left: none; border-top: 1px solid var(--rule-cream); }
+    .cc-stat + .cc-stat { border-left: none; border-top: 1px solid var(--rule); }
+    .cc-detail + .cc-detail { border-left: none; }
   }
-  .comp-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 12px;
+
+  .fee-waiver-card {
+    background: var(--bg);
+    border: 2px solid var(--ink);
+    border-radius: 18px;
+    padding: 26px 28px;
+    display: flex; flex-direction: column;
+    gap: 14px;
   }
-  .comparison-card.dewey .comp-label { color: var(--brand); }
-  .comp-stat {
+  .fee-waiver-card h4 {
     font-family: 'Instrument Serif', serif;
-    font-style: italic; font-size: 30px;
-    line-height: 1.1; color: var(--ink);
-    margin-bottom: 12px; letter-spacing: -0.02em;
+    font-weight: 400; font-style: italic;
+    font-size: 26px; line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--ink); margin: 0;
   }
-  .comparison-card.dewey .comp-stat { color: var(--brand); }
-  .comp-detail { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
-  .comparison-footnote { margin-top: 18px; text-align: center; font-size: 12px; color: var(--muted); }
+  .fee-waiver-card p {
+    font-size: 14px; line-height: 1.6;
+    color: var(--ink-soft); margin: 0;
+  }
+  .fee-waiver-card a {
+    align-self: flex-start; margin-top: auto;
+    padding: 10px 18px; border-radius: 999px;
+    background: var(--ink); color: #FFFFFF;
+    font-size: 13px; font-weight: 600;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.15s ease;
+  }
+  .fee-waiver-card a:hover { background: var(--ink-soft); }
   .pilot-callout {
     text-align: center; margin-top: 36px;
     font-size: 14px; color: var(--ink-soft);
@@ -11321,31 +11378,31 @@ function PricingPage() {
             <PricingCalculator />
           </div>
 
-          {/* Comparison */}
-          <div className="comparison" style={{marginTop: 56, maxWidth: 1080, marginLeft: "auto", marginRight: "auto"}}>
-            <div className="comparison-header" style={{textAlign: "center", marginBottom: 24}}>
+          {/* "Where does your money go?" — comparison chart + fee-waiver aside */}
+          <div style={{marginTop: 56, maxWidth: 1080, marginLeft: "auto", marginRight: "auto"}}>
+            <div style={{textAlign: "center", marginBottom: 28}}>
               <h3 style={{fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: "clamp(28px, 3.6vw, 44px)", lineHeight: 1.1, color: "var(--ink)", letterSpacing: "-0.02em"}}>Where does your money go?</h3>
               <p style={{marginTop: 8, fontSize: 16, color: "var(--ink-soft)"}}>Most agencies keep the majority of what you pay. We don't.</p>
             </div>
-            <div className="comparison-cards">
-              <div className="comparison-card agency">
-                <div className="comp-label">Traditional agency</div>
-                <div className="comp-stat">Reporter sees 15–50%</div>
-                <div className="comp-detail">Agencies mark up the statutory rate by 50–85%. The reporter who did the work may see as little as 16 cents of every dollar you paid.</div>
+            <div className="moneygo-grid">
+              <div className="comparison-chart">
+                <div className="cc-grid">
+                  <div className="cc-head">Traditional agency</div>
+                  <div className="cc-head dewey">Dewey Sholes</div>
+                  <div className="cc-stat">Reporter sees 15–50%</div>
+                  <div className="cc-stat dewey">Reporter keeps 100%</div>
+                  <div className="cc-detail">Agencies mark up the statutory rate by 50–85%. The reporter who did the work may see as little as 16 cents of every dollar you paid.</div>
+                  <div className="cc-detail">You pay the statutory rate plus a flat 12% platform fee. The reporter receives the full statutory rate – no middleman cut, no markup.</div>
+                </div>
+                <div className="cc-footnote">The 12% platform fee is paid by the attorney. Reporters pay a flat annual listing fee only – no per-job deductions.</div>
               </div>
-              <div className="comparison-card dewey">
-                <div className="comp-label">Dewey Sholes</div>
-                <div className="comp-stat">Reporter keeps 100%</div>
-                <div className="comp-detail">You pay the statutory rate plus a flat 12% platform fee. The reporter receives the full statutory rate – no middleman cut, no markup.</div>
-              </div>
+              <aside className="fee-waiver-card">
+                <h4>Have a fee waiver on file?</h4>
+                <p>Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court – up to $2,500 per case.</p>
+                <a href="#/trf">Learn more →</a>
+              </aside>
             </div>
-            <div className="comparison-footnote">The 12% platform fee is paid by the attorney. Reporters pay a flat annual listing fee only – no per-job deductions.</div>
           </div>
-
-          {/* Fee waiver — quiet inline note */}
-          <p style={{maxWidth: 720, margin: "32px auto 0", textAlign: "center", fontSize: 14, lineHeight: 1.65, color: "var(--ink-soft)"}}>
-            <strong style={{color: "var(--ink)", fontWeight: 600}}>Have a fee waiver on file?</strong> Order like any other transcript. After delivery, we'll send the TRF reimbursement forms and instructions to submit to the court – up to $2,500 per case. <a href="#/trf" style={{color: "var(--brand)", textDecoration: "underline", textDecorationThickness: 1, textUnderlineOffset: 3}}>Learn more →</a>
-          </p>
 
           <p className="pilot-callout" id="pilot-callout">
             <sup className="footnote-marker" style={{marginRight: 4}}>*</sup>
