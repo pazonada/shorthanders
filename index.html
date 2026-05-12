@@ -3993,7 +3993,7 @@ function OrderFlow() {
                   </ul>
                   <div style={{marginTop: 12, padding: "8px 12px", background: "var(--bg-page, #F8FAFC)", borderRadius: 8, fontSize: 12, color: "var(--text-secondary, #64748B)"}}>
                     <strong style={{color: "var(--text, #0F172A)"}}>Attendance fees:</strong> ${PRICING.attendanceHalfDay}/half day · ${PRICING.attendanceFullDay}/full day · ${PRICING.attendanceTrialDay}/trial day
-                    <div style={{marginTop: 2}}>33% below agency rates – reporter keeps 100%</div>
+                    <div style={{marginTop: 2}}>Significantly below typical agency rates – reporter keeps 100%</div>
                   </div>
                 </div>
                 <div className={"type-card-enhanced amber" + (form.type === "transcription" ? " selected" : "")} onClick={() => update("type", "transcription")}>
@@ -4326,7 +4326,7 @@ function OrderFlow() {
                       <span>${(attendanceFee + est.lowCost * 1.08).toLocaleString()} – ${(attendanceFee + est.highCost * 1.08).toLocaleString()}</span>
                     </div>
                     <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
-                      {form.type === "live" ? "Attendance fees standardized at 33% below agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Statutory rate: $1.13 per 100 words (CA Gov. Code 69950). <strong style={{color: "#2563EB"}}>Pilot rate (8%) locked in for your first year.</strong>
+                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Statutory rate: $1.13 per 100 words (CA Gov. Code 69950). <strong style={{color: "#2563EB"}}>Pilot rate (8%) locked in for your first year.</strong>
                     </p>
                   </>;
                 })()}
@@ -7517,7 +7517,7 @@ function PricingCalculator() {
         </div>
         {isLive && (
           <div style={{fontSize: 11, color: "var(--text-muted, #64748B)", marginTop: 8}}>
-            Attendance fees are 33% below agency rates. Reporter keeps 100%.
+            Attendance fees are significantly below typical agency rates. Reporter keeps 100%.
           </div>
         )}
         <a href="#/order" className="btn btn-primary btn-sm" style={{marginTop: 16}}>Order now <Icon name="arrowRight" size={14} color="#fff" /></a>
@@ -9792,7 +9792,7 @@ function LandingPage() {
               </ul>
               <div className="usecase-pricecallout">
                 <strong>${PRICING.attendanceHalfDay}/half day · ${PRICING.attendanceFullDay}/full day · ${PRICING.attendanceTrialDay}/trial day</strong>
-                <div className="sub" style={{fontSize: 11, color: "var(--brand)", marginTop: 2}}>33% below agency rates + statutory transcript rate</div>
+                <div className="sub" style={{fontSize: 11, color: "var(--brand)", marginTop: 2}}>Below typical agency rates + statutory transcript rate</div>
               </div>
             </article>
 
@@ -11267,11 +11267,11 @@ function PricingPage() {
 
       <section className="section hybrid pricing" style={{paddingTop: 56}}>
         <div className="container">
-          <div className="section-header">
+          <div className="section-header" style={{maxWidth: 660}}>
             <div className="section-eyebrow" style={{color: "var(--ochre-deep)"}}>Pricing</div>
-            <h2 className="section-title">Standardized fees for <em>transcriptions and live attendance.</em></h2>
-            <p className="section-lede" style={{maxWidth: 720}}>
-              With Dewey Sholes, there are no hidden fees or negotiation games. Transcript rates are set by law, and live attendance rates are fixed at roughly a third lower than CSR agencies. Court reporters keep what they earn, while firms pay a standard 12% fee<sup className="footnote-marker">*</sup> for each transcription job.
+            <h2 className="section-title">Standardized rates, <em>no hidden fees or negotiations.</em></h2>
+            <p className="section-lede" style={{maxWidth: 620}}>
+              Transcript rates are set by law, and live attendance rates are fixed at roughly a third lower than CSR agencies. Court reporters keep what they earn, while firms pay a standard 12% fee<sup className="footnote-marker">*</sup> for each transcription job.
             </p>
           </div>
 
