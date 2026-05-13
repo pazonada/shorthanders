@@ -8,6 +8,7 @@
 
 ## Changelog
 
+- **v2.5 (2026-05-13):** Added specialty taxonomy detail to the "Self-declared with optional proof" capability bucket. Standardized controlled vocabulary of ~15 specialties drives matching; a separate free-text "Additional expertise" field on the profile handles niche / unusual expertise informationally without polluting the matching surface; a "Request a new specialty" pathway lets the controlled vocabulary evolve (5+ requests within 90 days → added to standard list). Documents why standardization is necessary given the auto-match design and how attorney-side niche needs are covered via "Notes for the reporter" and favorites.
 - **v2.4 (2026-05-13):** Added explicit "CSR capabilities and job requirements" section defining what CSRs declare (credentials, specialties, equipment, operational settings), what attorneys specify in orders (jurisdiction, dates, realtime/interpreter/sealed needs), and the hard-filter vs. soft-preference matrix that governs which capability dimensions exclude a CSR from a pool vs. boost their ranking. Existing Phase 2 "specialty fit as soft preference" now references this section for the underlying definitions.
 - **v2.3 (2026-05-05):** Added quick-reference cascade table and per-tier example timelines (Rush 24h, Expedited 5-day, Standard 7-day) at the top of the matching algorithm section.
 - **v2.2 (2026-05-05):** Three SLA tiers (Rush / Expedited / Standard) explicitly mapped to per-tier response windows; flagged calculator-vs-legal-doc Standard-deadline discrepancy as `[NEEDS RECONCILE]`. Phase 4 auto-cancel moved from "deadline reached" to "12h before deadline" so the attorney has runway to rebook.
@@ -79,11 +80,53 @@ CSRs declare their capabilities during onboarding and can edit them anytime in p
 
 **2. Self-declared with optional proof** — CSR checks a box, optionally uploads supporting evidence. Profile shows "self-declared" until proof is attached, then shows "verified."
 
-| Category | Examples |
+Self-declared capabilities are split into two structurally distinct fields: a **standardized controlled vocabulary** (drives matching) and a **free-text "additional expertise" field** (informational, doesn't drive matching).
+
+##### Standardized specialties — controlled vocabulary (drives matching)
+
+The matching algorithm operates on a fixed set of specialties to keep filtering and ranking precise. CSRs multi-select from this list during onboarding and can edit anytime.
+
+| Category | Standardized values |
 |---|---|
-| Subject-matter specialty | Medical / Expert, Technical / Engineering, Intellectual Property / Patent, Financial / Securities, Government / Military |
-| Job-type comfort | Interpreted proceedings (with language pairs declared), Sealed / confidential matters, Multi-party arbitrations, Trials (jury / non-jury) |
+| Subject-matter specialty | Medical / Expert, Technical / Engineering, Intellectual Property / Patent, Financial / Securities, Government / Military, Construction Defect, Employment, Family Law, Probate, Workers Compensation, Criminal |
+| Job-type comfort | Interpreted proceedings (with language pairs declared from a controlled language list), Sealed / Confidential matters, Multi-party arbitrations, Trials (jury / non-jury) |
 | Equipment | Realtime feed capable, Video synchronization capable, In-person reporting, Remote/Zoom reporting only |
+
+The starting list above is **~15 standardized specialties** plus language pairs plus equipment flags. Limited intentionally — every additional specialty is one more dimension the matching algorithm has to reason about, and a list that's too long becomes noise. Better to start tight and expand based on real demand (see "Request a new specialty" below).
+
+##### Free-text "additional expertise" field (informational only)
+
+A separate single text field on the CSR profile (500 character cap). Doesn't drive auto-matching. Used for:
+
+- Niche expertise that doesn't fit the standardized list (maritime / admiralty, veterinary expert testimony, agricultural disputes, specific scientific domains)
+- Unusual language fluency that isn't on the controlled list
+- Court-specific experience ("frequent appearances in Marin Superior Family Law dept.")
+- Equipment quirks or preferences ("Stenograph Luminex II, prefer two-screen setup")
+
+Surfaced on the public profile so attorneys reviewing an auto-matched CSR get richer trust signal. Keyword-searchable by admin for occasional manual surfacing on unusual jobs. **Not used by the algorithm itself**; the auto-match cascade only looks at the standardized fields.
+
+##### "Request a new specialty" pathway
+
+If a CSR thinks their niche should be a standardized specialty, they can submit a request from their profile. Admin reviews monthly.
+
+**Rule of thumb:** if 5+ CSRs request the same specialty within a rolling 90-day window, it gets added to the standardized list. This way the controlled vocabulary evolves with actual supply patterns rather than being frozen at launch.
+
+Side benefit: a flood of requests for a single specialty is a market signal. Eight requests for "Maritime / Admiralty" in a quarter means there's a CSR community we should be marketing to that we're currently missing.
+
+##### Why standardize at all (rationale for the controlled vocabulary)
+
+The auto-match decision already settled (per v2 design principle: attorneys don't browse CSRs at order time). Auto-matching only works if the algorithm has clean, structured data to filter and rank on. Free-form specialties would fragment the supply pool — a "Medical malpractice" CSR and a "Med-Mal" CSR look identical to a human but require fuzzy matching or human normalization to combine algorithmically.
+
+The free-text "additional expertise" field handles every realistic edge case (niche specialties, unusual languages, court-specific experience) without polluting the matching surface. The "request new specialty" pathway prevents the controlled list from going stale.
+
+##### Attorney-side handling of niche needs
+
+The attorney never browses CSRs (auto-match remains default). For one-off niche needs not covered by the standardized list, two existing mechanisms apply:
+
+1. **"Notes for the reporter" field on the order** (already in scope). Attorney writes "expert is a marine biologist; familiarity with cetacean terminology preferred." Invited CSRs see this in the invite card and self-select.
+2. **Favorites flow** (already in scope). If the attorney has a working relationship with a specific CSR for unusual work, they favorite that CSR — Phase 1 of the cascade prioritizes favorites before the general pool.
+
+Between standardized specialties for matching, free-text "additional expertise" for trust signal on the profile, "Notes for the reporter" for one-off needs, and favorites for relationship continuity, every realistic scenario is covered without making the attorney browse.
 
 **3. Operational settings** — CSR-controlled, not verified.
 
@@ -451,6 +494,8 @@ Tagged `[NEEDS ROSIE]` inline above. Consolidated:
 5. **Drop the 3.5 rating floor entirely?** v1 said "above 3.5 enters the pool." v2 currently drops the floor in favor of the fairness slot. Confirm.
 6. **Capability surface to CSRs** (added 2026-05-13) — when an invite is sent, should the in-app job card show the CSR which of their declared specialties matched the job ("This job matches your Medical specialty")? Aud leans toward yes — gives CSRs information to decide whether to accept and reinforces the value of declaring specialties accurately.
 7. **Specialty self-declaration verification path** (added 2026-05-13) — for specialties without an NCRA equivalent (Medical, Technical, IP, etc.), is a soft "view supporting evidence" link sufficient (CSR uploads sample/credentials, no DS verification), or do we need light admin review? Aud leans toward the upload-and-display-only model with bad actors caught via job ratings.
+8. **Starting specialty list** (added 2026-05-13) — confirm the ~15 standardized specialties listed under "Self-declared with optional proof." Anything missing that's high-frequency in CA hearing/arbitration work and worth shipping in V1? Anything on the list that's so rare it should start in the free-text field rather than the controlled vocabulary?
+9. **Specialty-request threshold** (added 2026-05-13) — proposed: 5+ requests within 90 days promotes a free-text specialty into the controlled vocabulary. Confirm the threshold or adjust based on Rosie's read of CA-market niche-specialty frequency.
 
 ### Resolved (2026-05-05)
 
