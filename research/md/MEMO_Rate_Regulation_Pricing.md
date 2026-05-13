@@ -3,7 +3,26 @@
 
 **Prepared for:** Briscoe Sholes founding team
 **Date:** March 13, 2026
-**Status:** Research draft
+**Status:** Research draft — see May 2026 clarification below
+
+---
+
+## Important clarification (added 2026-05-13)
+
+This memo originally treated the Gov. Code § 69950 rate as a hard cap on all transcripts of CA court proceedings. That framing is **overly broad and likely incorrect** as applied to DS.
+
+After review on 2026-05-12 (Rosie + Aud), we believe:
+
+- **§ 69950 applies primarily to transcripts produced by court-employed reporters** (the "official reporter" the court provides when one is assigned), billed to parties through the court's clerk.
+- **When a private CSR is privately retained** — by a party directly or through a platform / agency — the per-page rate is **market-based**, not statutorily fixed. Agencies like Atkinson-Baker and Aiken-Welch routinely charge $5.50–$7/page for hearing transcripts and pay their CSRs $4.40/page take-out, which would be plainly unlawful if § 69950 were a hard cap on all transcripts. Their continued operation is the strongest evidence that the statute does not apply to private-retention work.
+- **Appearance / per-diem fees are unregulated** (per Rosie). Private agencies charge $1,800+ for a half-day hearing in Contra Costa, $3,000+ for full-day hearings in other CA markets — without statutory constraint.
+- **Deposition transcripts are not statutorily capped at all** in CA. CCP § 2025.510 governs procedure, not price. Market sets the rate.
+
+**What this means for DS:** our pricing is meaningfully less constrained than this memo originally suggested. We are a marketplace for privately-retained CSRs, not a court-administered transcript service. The recalibration analysis in [csr_agency_live_attendance_rates.md](../csr_agency_live_attendance_rates.md) and [pricing_questions_rosie_and_csrs.md](../pricing_questions_rosie_and_csrs.md) reflects the updated read.
+
+**Open follow-up:** a written legal opinion from a CA attorney with court-reporter-statute experience is worth $500–1,000 of outside-counsel time. Confirms what's above before pilot launch, and gives us defensible posture if a buyer or competitor challenges our pricing.
+
+The remainder of the original memo is preserved below for record. Sections affected by this clarification are flagged inline with **[REVISED 2026-05-13]**.
 
 ---
 
@@ -18,7 +37,7 @@
 | First copy ordered separately (not simultaneously) | $0.26 |
 | Additional copies (purchased at same time as another copy) | $0.20 |
 
-These rates are set by statute and are non-negotiable. Neither the platform, the reporters, nor the parties can deviate from them for court hearing transcripts.
+**[REVISED 2026-05-13]** These rates apply to **court-administered transcripts** — i.e., transcripts produced by court-employed reporters and sold to parties through the court's clerk. They do **not** function as a hard cap on transcripts produced by privately-retained CSRs operating through a private marketplace or agency. The original "non-negotiable" framing of this paragraph was overly broad.
 
 ### How These Rates Were Set
 
@@ -28,7 +47,7 @@ Gov. Code § 69950.5 required the Judicial Council to report recommendations for
 
 ### Deposition Transcript Rates
 
-Both court hearing and deposition transcript rates are governed by the same statutory framework. The same per-100-word rates apply. Code of Civil Procedure § 2025.510 governs deposition transcript requirements and costs. The party noticing the deposition bears the transcription costs unless a court orders otherwise.
+**[REVISED 2026-05-13]** Deposition transcript rates are **not statutorily capped** in CA. CCP § 2025.510 governs deposition procedure and cost allocation among parties, but does not set a per-page rate. Private agencies set deposition transcript rates by market — typically $4–7/page for original, with separate copy rates and various line-item add-ons. The original claim that "both court hearing and deposition transcript rates are governed by the same statutory framework" was incorrect.
 
 ---
 

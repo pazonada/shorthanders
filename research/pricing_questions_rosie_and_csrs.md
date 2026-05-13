@@ -181,6 +181,131 @@ Anything beyond V1 goes into a pricing-roadmap doc with explicit "we heard this 
 
 ---
 
+## Strategic framing — Rosie's "streamline, not eliminate" thesis
+
+Added 2026-05-13 after Rosie's reaction to the Caldarella agency invoice (see [agency_invoice_evidence.md](agency_invoice_evidence.md)).
+
+> "I think the agency justifies its admin costs but the whole point of the platform is not quite eliminating but streamlining and automating those tasks." — Rosie, 2026-05-13
+
+**Why this matters:** the agency invoice from Caldarella's Facebook post had four "admin" line items totaling **$557 (24% of the bill)** — Administrative/Account Service Fee, Production Fee, E-Bundle, Electronic Delivery, plus exhibit handling. Each is a real task someone has to perform: scheduling, formatting the PDF, bundling files, sending the email, scanning exhibits.
+
+**The DS thesis isn't that these tasks are fake.** It's that software does them at near-zero marginal cost where the agency does them with paid humans:
+
+| Agency line item | On DS |
+|---|---|
+| Admin / scheduling | Built into booking flow — pennies of compute |
+| Production fee (PDF assembly) | Template + CSR upload — zero |
+| E-Bundle | Auto-generated on transcript upload — zero |
+| Electronic delivery | Auto-email on completion — zero |
+| Exhibit handling | CSR handles via platform OR firm handles own — zero platform cost |
+
+That's how a 24%-of-invoice agency markup compresses to an 11–12% platform fee. **Not by eliminating the work — by automating it.**
+
+**Why this is a better brand pitch than "agencies are evil":**
+
+- It's the truth (agencies do real work)
+- It positions DS as a peer / replacement, not an attacker
+- It's the same story as DoorDash vs. restaurant phone delivery, or Stripe vs. merchant-services brokers — software automating coordination work humans used to do
+- It survives any future direct comparison: agencies can match a fee rate, but they can't match a fee rate plus near-zero per-job overhead
+
+This framing belongs in landing-page copy, cold-email body text, and the eventual CSR pitch deck. **It's also a quote we should attribute back to Rosie** if/when DS does press — she said it cleanest.
+
+---
+
+## Rosie's vision (worth quoting back to her in marketing)
+
+Also from her 2026-05-12 answers:
+
+> "My vision for this is that DS will charge law firms less than the current standard, but reporters will keep more of it versus agencies, so it's a win-win."
+
+That's the brand positioning thesis in 27 words. The agency invoice evidence in [agency_invoice_evidence.md](agency_invoice_evidence.md) shows it's quantitatively true: same $2,311 agency invoice becomes $1,842 on DS — attorney saves $469, CSR earns $241 more. Win-win is not aspirational; it's the math.
+
+---
+
+## Answers received from Rosie (2026-05-12)
+
+Captured from her 2026-05-12 written response. **Important caveat:** Q1–Q5 (legal status of § 69950 and hearing-vs-audio pricing) were answered before the 2026-05-13 clarification that § 69950 applies to court-administered transcripts, not privately-retained CSRs. Her answers on transcript page rates reflect the older "statutory cap on all transcripts" understanding. Her answers on **appearance fees, agency economics, scope edge cases, and cancellation realism** are not affected by that clarification and remain authoritative.
+
+### Headline data points (new, not in any prior research)
+
+- **Contra Costa private-agency rate:** ~$1,800 for a half-day hearing. (Rosie, from a recent matter she handled.) This is the first published-by-someone-actually-paying-it CA private hearing rate we've captured. Our current DS half-day rate ($255) is **7x below** this figure. Even the SF-rate proposal ($316) is 6x below.
+- **LA market:** "Attorney fee rates are close to twice Bay area rates, and as I recall deposition reporters charged a lot more too." Confirms LA is the high-rate outlier in CA, consistent with the statutory per-diem survey.
+- **Appearance fees are unregulated.** Rosie: "Showing up and being at the hearing is different, and I think it's pretty unregulated." Consistent with the 2026-05-13 statutory clarification — § 69950 doesn't reach appearance/per-diem fees regardless of how it's read.
+
+These should be folded into [csr_agency_live_attendance_rates.md](csr_agency_live_attendance_rates.md) as live data points.
+
+### Q&A summary (selected high-value answers)
+
+**Audio transcription positioning (Q3, Q5):**
+
+Rosie was emphatic: "Audio transcriptions are not a substitute. Don't call them that. They're only used when the court approves them because no CSR was available. The substitute for audio recordings is no transcript at all." Also: "it's a misdemeanor to make your own recording of a hearing. The audio files are only provided when the court has approved them."
+
+Marketing implication: never describe audio transcription as a fallback or alternative to live-attended hearings. Audio is an *exception* the court grants when no CSR was available; the default substitute is no transcript at all. Re-read any current copy that frames audio as "another way to get a transcript."
+
+**Agency economics (Q6, Q7):**
+
+Rosie: "I've never been on the CSR side. I don't know."
+
+Implication: this question goes to CSR user testing. Rosie can't fill the gap from her own experience. The Caldarella invoice + Atkinson-Baker rate-card analysis are our best current data; CSR conversations need to refine the typical-split number.
+
+**In-person vs. remote (Q8):**
+
+> "That's a hot-button issue. There's a big debate in the whole industry about whether in-person or remote should be treated differently. Remote saves on travel costs and it seems to me the CSRs like it better. If they travel to be in person, they can charge for travel and I believe incidentals. So that's where the difference would be. I think we research what everyone else is doing and do the same."
+
+Implication: don't innovate here. Mirror the market consensus. Travel and incidentals are the existing differentiator. Probably means we add a travel-time billable to in-person jobs and otherwise treat remote and in-person identically — pending CSR user testing to confirm.
+
+**Travel (Q11):**
+
+> "Travel time is very billable and it's usually a pretty big expense."
+
+Direct quote. Travel needs to be a billable line item in V1, not an afterthought.
+
+**After-hours and weekend (Q12):**
+
+> "Almost never. The courts are all open at specified days and times which are published to the public in advance and they're closed at all other times. ... Weekends absolutely never."
+
+Implication: V1 is correct to defer after-hours / weekend handling. Court hearings essentially don't happen outside court hours.
+
+**Short hearings / calendar calls (Q13):**
+
+> "Law firms hate half-day rates because you have to pay $1500 or $2000 for maybe 10 minutes. But it makes sense for reporters. ... I've completed 9:00 hearings by 9:05 and I've also sat around until noon. So the half-day might be the winner."
+
+She also raised a future idea worth capturing: a "shared CSR" model where a firm or a couple of firms share a reporter's fee to cover multiple matters during the same time slot. Complex but interesting; parking it for now.
+
+Implication: keep half-day as the floor for V1. Don't try to model sub-half-day appearances. Revisit if attorneys complain about it post-pilot.
+
+**Scope edge cases (Q14, Q15, Q16):**
+
+- **Public meetings / agency hearings:** "I guess if they do it, we ought to offer it if we're the one-stop shop for transcript ordering. But I don't know who the buyers are or how we'd market to them. Outside my experience or expertise." — *Park for Phase 2+; not a V1 priority.*
+- **WCAB / NLRB:** "I always forget WCAB, NLRB, etc. aren't actual court. They operate exactly like court, so yes, in scope." — *In scope. Update [scope_public_court_proceedings_only.md](../governance-and-process/scope_public_court_proceedings_only.md) to make this explicit.*
+- **Daily transcript copy during multi-day trials:** "Usually during trial a draft is provided for free immediately to everyone who's paid for the real thing. The usefulness of a draft in this context is to prepare for the next day, as opposed to having a more accurate record for appeal. Everyone expects errors but they just need the information." — *Important billing-model insight: rough drafts during trial are FREE to those who already paid for the final. Update trial-pricing model accordingly.*
+
+**Cancellation realism (Q17, Q18, Q19):**
+
+- **24-hour cutoff:** Rosie thinks it's "in the middle." She walked through the CA tentative-ruling system: by 2pm day-before, judge publishes tentative ruling; by 4pm, parties must contest if they want a hearing. So **it's actually 4pm the day before** when parties know for certain whether the hearing will happen. Possible refinement: shift our cancellation cutoff from "24 hours" to "4pm the business day before" to align with how CA practice actually works.
+- **CNA frequency:** "In any given calendar, if there's about 15 lines, at least two will have no-shows." But Rosie notes: for cases where the attorney is *hiring* a CSR specifically, no-shows are rare because the hiring attorney plans to be there. CNAs are more common for depositions. **Important terminology note:** *"testimony is something very specific, as opposed to attorneys, judges, and non-witnesses talking. Just to keep in mind for wording."* — review CNA policy copy for this distinction.
+- **Jury trial cancellations:** "Jury trials are big money for the reporters, pretty much guaranteed to be working the full day several days in a row, so that makes sense. They're also way more likely to settle at the last minute, so this also makes sense... A jury trial is also the court's second-highest priority after domestic violence to provide its own reporters. We'll get fewer of those jobs than other types of hearings. Let's do what everyone else does here." — *Confirms higher cancellation penalty for trials is industry norm. Implement.*
+
+**Recalibration framing (Q20, Q21):**
+
+- **Q20 (live-attendance base rate):** Rosie hadn't seen the half-day/full-day options laid out the way we presented them. Her practical anchor: Contra Costa half-day at ~$1,800 from a private agency. Strong implication that our current pricing is dramatically below market.
+- **Q21 (hearing transcript page rate):** Rosie said "keep it to the statutory but with all the add-ons that are allowed plus whatever the reporter is paid for their actual time." **This answer is stale after the 2026-05-13 statutory clarification** — the per-page cap she was preserving doesn't actually apply to privately-retained CSRs. We should revisit this question with her on the next call.
+
+### Follow-ups that came out of Rosie's answers
+
+Open product / governance changes worth landing before pilot:
+
+1. Update [scope_public_court_proceedings_only.md](../governance-and-process/scope_public_court_proceedings_only.md) to add WCAB and NLRB as in-scope (per Rosie Q15).
+2. Add a travel-time billable line item to V1 pricing (per Rosie Q11).
+3. Review CNA policy copy for "testimony vs. talking" terminology precision (per Rosie Q18).
+4. Consider refining cancellation cutoff from "24 hours" to "4pm the business day before" to align with CA tentative-ruling practice (per Rosie Q17).
+5. Audit any marketing copy that frames audio transcription as a "substitute" or "alternative" — replace with language reflecting that it's an exception when no CSR is available (per Rosie Q3, Q5).
+6. Add daily-trial-draft-included logic to trial-day pricing (per Rosie Q16).
+7. Update [csr_agency_live_attendance_rates.md](csr_agency_live_attendance_rates.md) with the Contra Costa $1,800 half-day data point (per Rosie Q20).
+8. Re-pose Q21 (hearing transcript rate) on the next call with Rosie, now that we understand § 69950 doesn't cap privately-retained CSR transcripts.
+
+---
+
 ## Related documents
 
 - [csr_agency_live_attendance_rates.md](csr_agency_live_attendance_rates.md) — court statutory per-diem survey + the agency rate gap

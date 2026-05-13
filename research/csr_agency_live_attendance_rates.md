@@ -35,6 +35,8 @@
 | Hahn & Bowersock (now Atkinson-Baker/Veritext) | Local agency (acquired) | Southern California | N/P | N/P | N/P | Both; quote-walled | [veritext.com/atkinson-baker](https://www.veritext.com/atkinson-baker/) | 2026-05-12 |
 | **Industry reference – Judicial Council estimate** | – | California (all civil) | – | **≈ $3,300 / day average** for a privately-hired court reporter (Judicial Council cited by Bay Area Legal Aid) | – | Hearings/trials | [baylegal.org/court-reporter-shortage-faq](https://baylegal.org/court-reporter-shortage-faq/) | 2026-05-12 |
 | **Industry reference – StenoScout 2026 pricing guide** | – | National with CA examples | – | Sessions $250–$1,500+; realtime adds 10–50%; most baseline depositions $400–700 | – | Mixed | [stenoscout.com/blog/how-much-does-court-reporter-cost](https://stenoscout.com/blog/how-much-does-court-reporter-cost/) | 2026-05-12 |
+| **Rosie's direct experience – Contra Costa** | Practitioner data point | Contra Costa County | **≈ $1,800** (half-day, private agency, recent matter) | – | – | **Court hearing** | Rosie 2026-05-12 (written answer to Q20 of [pricing_questions_rosie_and_csrs.md](pricing_questions_rosie_and_csrs.md)) | 2026-05-12 |
+| **Rosie's market read – LA** | Practitioner inference | Los Angeles | – | "Close to 2× Bay Area rates" for attorney fees and deposition reporters | – | Hearings & depositions | Rosie 2026-05-12 (same source) | 2026-05-12 |
 
 ---
 
