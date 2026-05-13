@@ -123,7 +123,71 @@ Published industry references put deposition appearance fees at roughly **$400�
 
 ---
 
-## 4. Honest gaps
+## 4. Appearance-fee synthesis from individual CSR rate cards (added 2026-05-13)
+
+In addition to the agency / court survey above, Aud shared 10+ images of working-CSR rate cards (IC's running their own books). Most were FL-sourced; a few were CA-specific or state-contract documents. Normalizing each to **weekday in-person regular court hearing appearance, full-day equivalent (8 hours)**:
+
+| Source | State | Full-day appearance | Notes |
+|---|---|---|---|
+| West-Central FL CSR (Card 1) | FL | $480 | $240 base + $240 in-person modality stack |
+| Excel rate card (Card 2) | unknown | ~$300-400 | $150 first 2 hrs + hourly |
+| FL Lexitas state contract – court hearings | FL (state) | **$948.60** | Closest analog to "default market rate" for state CSR work |
+| FL Lexitas state contract – depositions | FL (state) | $805.80 | – |
+| FL Lexitas state contract – board / public meetings | FL (state) | $2,040 | Public meeting tier (out of DS scope) |
+| Private CSR Card 5 – hearing w/ transcript ordered | unknown | ~$550 | $275 / first 4 hrs |
+| Private CSR Card 5 – hearing w/o transcript order | unknown | ~$1,000 | $500 / first 4 hrs (higher rate when no transcript revenue follows) |
+| Private CSR Card 6 (weekday in-person regular) | unknown | ~$910 | Extrapolated from Saturday jury-trial example |
+| Private CSR Card 7 (West-Central FL detail) | FL | $340 | $100 first 2 hrs + $40 hourly |
+| Denise Paddock CSR (publicly posted) | **CA** | **$1,900+** | OC solo — only CA private CSR rate publicly posted |
+| Rosie's direct experience (Contra Costa) | **CA** | **~$3,600** | Half-day was $1,800; full-day extrapolated |
+| Judicial Council aggregate (Bay Area Legal Aid cite) | **CA** | **~$3,300** | Wide-band industry average |
+| LA market (Rosie's read) | **CA** | ~$1,900-2,000 | "Close to 2× Bay Area" — but Bay Area is itself high |
+
+### The clear CA-vs-FL premium
+
+FL data points cluster **$340-$1,000** (low end private CSRs; top end is the state-contract Lexitas rate).
+
+CA data points cluster **$1,900-$3,600** (Denise Paddock published rate as the floor; Rosie's Contra Costa and the JC aggregate as the higher end).
+
+**CA is roughly 2-3× FL** for the same work. Several plausible reasons:
+- Cost of living premium (especially Bay Area / LA)
+- CA's well-documented reporter shortage drives up private-market rates
+- CA's statutory page rate is a floor that doesn't constrain appearance fees, leaving more room for private market premium
+- FL's heavy use of digital court reporting suppresses private-CSR demand and pricing
+
+### What this means for DS recalibration
+
+The "Bay Area court statutory per-diem" anchors I previously leaned on ($316 half / $631 full SF) are **cost-recovery floors for court-employed reporters**, not market prices. Private CA reporters bill substantially above that.
+
+The right pricing anchors for the Bay Area private market are the CA-specific data points: **$1,800-3,600 full-day**. To position DS as meaningfully cheaper than agencies (per Rosie's "win-win" vision) while still paying CSRs well above agency take-out:
+
+| Tier | Half-day | Full-day | Reasoning |
+|---|---|---|---|
+| Anchor — typical CA private agency | $1,800 | ~$2,500-3,600 | What Bay Area attorneys actually pay agencies today |
+| DS pilot — ~50% below agency | $900 | $1,500 | Significant attorney savings; CSR keeps 100% (vs. 30-60% via agency); above FL Lexitas state contract |
+| **DS pilot — split the difference** (recommended) | **$1,050** | **$1,650** | The "I don't want to undersell, but I don't want to overshoot before data" hedge — between the $900/$1,500 conservative and $1,200/$1,800 aggressive |
+| DS pilot — more aggressive (~35% below agency) | $1,200 | $1,800 | Closer to private agency floor; strong CSR raise |
+| DS pilot — conservative (~70% below agency) | $700 | $1,200 | Still well above court statutory ($596 Bay Area mean); safer if CSRs balk |
+| Floor I wouldn't go below | $500 | $900 | Anything lower undersells the work; CSRs do this rate through agencies today |
+
+Note: this revises the earlier "$600 half / $1,100 full" guess upward. The earlier number was anchored too heavily on FL rate cards and Bay Area court statutory; with CA-specific evidence properly weighted, the recommended landing zone is **$1,050 / $1,650** — between the two original tiers. The ±20% CSR rate-setting band means premium CSRs can position at $1,260/$1,980 (top of band) and cold-start CSRs can sit at $840/$1,320 (bottom of band), giving the platform a published *middle* rate rather than a ceiling or floor.
+
+**Survey is the validator.** Final landing should be confirmed by Stage 1 CSR survey results (Q7/Q8 ask CSRs their own private-direct rates). If 30-60 CSR responses cluster materially above or below $1,650 full-day, adjust before pilot launch.
+
+The ±20% CSR rate-setting band (per AB-5 prong 3) means individual CSRs can adjust their published rate up to $1,080/$1,800 (top of band) or down to $720/$1,200 (bottom of band). Premium CSRs (Denise Paddock-tier) can position at the top; cold-start CSRs can use the bottom of the band for visibility.
+
+### Trial-day implications
+
+Current code: $2,200/trial-day. Most private cards add a *trial premium* on top of standard full-day rather than doubling it:
+- Card 6 example: ~$910 weekday in-person regular + $400 jury-trial premium ≈ $1,310 jury trial day
+- Card 1 FL: $240 base + $240 in-person + $200 jury trial premium = $680 jury trial day
+- Card 7 FL: $570 weekday trial appearance (lower-tier rate card)
+
+If DS full-day lands at $1,500, **trial-day at 1.3-1.5× full-day = $1,950-$2,250**. Current $2,200 is roughly right under that math, but should be reframed in code as "full-day × trial premium" rather than a standalone number — so the trial rate updates when the full-day rate moves.
+
+---
+
+## 5. Honest gaps
 
 - **15 of 17 surveyed agencies are quote-walled** – they show service descriptions and contact forms only, no rate sheets. This is the dominant practice in the CA court-reporting industry; firms guard pricing as competitive information and tailor quotes per attorney/firm.
 - **Only 1 agency (Denise Paddock CSR)** published a court-appearance full-day per-diem on its public site. That data point is also a solo-reporter agency in Orange County, so it represents one reporter's pricing rather than agency-wide multi-reporter pricing.
@@ -137,7 +201,7 @@ Published industry references put deposition appearance fees at roughly **$400�
 
 ---
 
-## 5. Sources
+## 6. Sources
 
 All accessed 2026-05-12.
 
