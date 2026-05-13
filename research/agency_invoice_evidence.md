@@ -156,12 +156,121 @@ Once we have a CA pilot underway, this invoice + the DS comparison is a compelli
 
 ---
 
-## Caveats worth flagging
+## Second data point: a remote-Zoom deposition invoice (March 2023)
 
-- **The exact CSR take-home is estimated**, not directly observed. The $4.40/page rate comes from Atkinson-Baker; this invoice may be from a different agency with different reporter payouts. The 39% agency-take figure could be ±5–10 percentage points.
-- **Exhibit handling is real work** that someone has to do. On DS, either the CSR does it (and bills for it) or the firm handles its own exhibits. The "$50 estimated" in the DS comparison is a placeholder — we should decide explicitly whether DS supports a la carte exhibit handling or whether the firm handles its own (and if the latter, surface that as a feature, not a gap).
-- **Production Fee, E-Bundle, Electronic Delivery** are largely software-substitutable. On DS, these are essentially "we generated and emailed a PDF" — zero marginal cost. That's where the 24% non-CSR markup disappears, not because agencies are evil but because we have software they don't.
-- **This is one invoice.** Pattern claims need more data points. If Rosie or her network can supply 2–3 more anonymized invoices, we can publish ranges rather than a single anecdote.
+Captured 2026-05-13. Different CA agency, different case type, different year — and a more dramatic version of the same pattern. **The pure agency markup share is much higher when remote services stack.**
+
+### The invoice (#91319)
+
+A remote Zoom deposition, March 2023, full-day with 1.75 hours overtime + realtime feed + exhibit management. Two transcripts ordered (original to noticing party, certified copy to opposing counsel).
+
+| Bucket | Subtotal |
+|---|---|
+| Original transcript section (201 pgs × $5.95 + appearance + overtime + extras) | $2,007.85 |
+| Copy transcript section (133 pgs × $3.75 + extras) | $653.55 |
+| Remote services (Zoom set-up + technician + exhibit management) | $1,525.00 |
+| **Total** | **$4,186.40** |
+
+### CSR-attributable vs. pure agency markup
+
+| Category | Amount | Share |
+|---|---|---|
+| CSR work (stenography + appearance + overtime + exhibit handling) | **~$2,199** | 53% |
+| Pure agency markup line items | **~$1,987** | **47%** |
+
+Pure-markup line items on this invoice:
+
+- **Original Held By Code: $35** — CSR is statutorily required to hold the original per CCP § 2025.510(c) regardless; charging for it is air
+- **Litigation Package × 2: $90** — same line item that appeared on Caldarella's invoice; appears to be a universal agency revenue inflator
+- **Remote Surcharge $0.75/pg × 2 transcripts: $207** — per-page fee for the work being on Zoom instead of in person
+- **Shipping (electronic only): $35** — for emailing a PDF
+- **Printing Fee: $95** — for an electronic transcript
+- **Remote Exhibit Management (10 hrs × $25): $250** — agency staffs a person; CSR doesn't see this revenue
+- **Remote Technician Hourly (10 hrs × $95): $950** — tech sits on Zoom; agency pays them maybe $40-50/hr and keeps the rest
+- **Remote Set-Up Fee: $325** — for clicking "schedule Zoom"
+
+### CSR take-home
+
+If the CSR is paid at Atkinson-Baker-style reporter-payout rates ($3.00–$4.40/pg, plus appearance + overtime split), the CSR cleared roughly **$1,200–$1,800** on this $4,186 invoice. **Agency kept 70–82%.**
+
+### Same job on DS — hypothetical
+
+| | Agency | DS (proposed) |
+|---|---|---|
+| Original transcript (201 × $5.50) | $1,195.95 | $1,105.50 |
+| Copy transcript (133 × $1.75) | $498.75 | $232.75 |
+| Appearance fee (full day) | $200.00 | ~$631 (SF rate) |
+| Overtime (1.75 hrs) | $166.25 | $166.25 |
+| Exhibit handling | $388 | ~$200 (in CSR's per-job rate) |
+| Remote infrastructure (set-up, tech, surcharges) | $1,732 | $0 (platform automates) |
+| Other markup (held by code, litigation pkg, shipping, printing) | $300 | $0 |
+| Platform fee (12% on CSR take ~$2,335) | – | $280 |
+| **Attorney pays** | **$4,186.40** | **~$2,615** |
+| **CSR keeps** | **$1,200–1,800 (29–43%)** | **$2,335 (89%)** |
+
+Attorney saves **$1,571 (38% lower)**. CSR earns **$500–1,100 more**.
+
+### Three things this invoice teaches that Caldarella's didn't
+
+1. **Remote work is where agencies harvest the most margin.** Per-page remote surcharge + remote technician + set-up fees stack on top of everything else. A platform that automates remote infrastructure (and bakes it into the platform fee, not a line item) captures massive value. Court hearings rarely have this remote-services stack since courts handle their own video, but depositions almost always do.
+
+2. **"Litigation Package" is the canonical bundled-air line item.** It appeared on both invoices from different agencies. The marketing copy should call it out by name as the universal example of opaque markup.
+
+3. **Agency take-rate is wildly variable.** Caldarella's arbitration: 39% to the agency. This remote depo: 70-82%. The variability itself is a problem we can position against — attorneys never know what slice they're paying for.
+
+---
+
+## Competitive context: EcoScribe Solutions (added 2026-05-13)
+
+[EcoScribe Solutions](https://ecoscribesolutions.com/the-ecoscribe-solutions-difference/) is a CA-based court-reporting agency running the **same "transparent pricing, no hidden fees" pitch DS has been designing** — but for depositions, not court hearings.
+
+### Their positioning
+
+- "Transparent pricing structure" + "no hidden fees"
+- **"Save up to 27%"** vs. traditional agencies (their claim, their math)
+- Bundle into a flat fee everything that legacy agencies itemize
+
+### What EcoScribe bundles in (vs. legacy agency line-itemizing)
+
+Their list of "included" services maps almost exactly to the line items we identified on invoice #91319 above:
+
+| Agency line item (legacy) | EcoScribe handling |
+|---|---|
+| Exhibit linking and scanning | Included |
+| Video encoding and hosting | Included |
+| Etrans and condensed transcripts | Included |
+| ASCII formatting | Included |
+| Zoom connection and Remote Set-Up | Included |
+| Remote Surcharge (per-page) | Included |
+| Printing Fee | Included |
+| Exhibit Management hourly | Included |
+| Office rentals for in-person | Complimentary |
+
+This is direct validation that the line items we flagged as "pure agency markup" in the invoice analyses above are exactly the ones a modern transparency-positioned competitor absorbs into flat pricing.
+
+### Implications for DS
+
+1. **The transparency pitch is market-validated.** Not theoretical — EcoScribe is doing it and has a marketing page about it.
+2. **DS can credibly claim bigger savings.** Invoice analyses show 20% (Caldarella) to 38% (#91319) DS savings vs. legacy agencies. Average ~30%. **"Up to 38%" or "30% average" beats EcoScribe's 27%.**
+3. **EcoScribe is depositions-only.** Not a today-competitor for DS's court-hearings scope. Becomes a competitor only if/when DS expands to depos in Year 3+.
+4. **DS's court-hearings-first wedge is the edge.** EcoScribe isn't in this segment; legacy agencies are unfocused on it (they prefer higher-margin depos). Path to dominant court-hearing platform position is open.
+5. **The "bundle aggressively" design decision is confirmed.** Two independent companies (DS, EcoScribe) arrived at the same conclusion from the same data. Market clearly rewards "no surprises" pricing in this category.
+
+### Where DS goes further than EcoScribe (positioning-side)
+
+- **"CSR keeps 100% of stated rate."** EcoScribe doesn't make this claim — they're still an agency, presumably still keeping a meaningful share of the CSR's labor.
+- **Marketplace vs. agency model.** EcoScribe is a transparent agency; DS is a marketplace. Different AB-5 posture, different CSR-side pitch.
+- **CA-specific depth.** EcoScribe markets to a broader audience; DS pilot is Bay Area first with deep local court / CSR knowledge.
+
+---
+
+## Combined caveats worth flagging
+
+- **The exact CSR take-home is estimated**, not directly observed. We use Atkinson-Baker reporter-payout rates ($3.00–$4.40/pg depending on case type) as a proxy. Specific take-home varies by agency contract.
+- **Exhibit handling is real work** that someone has to do. On DS, either the CSR does it (and bills for it) or the firm handles its own exhibits. The "$50–$200 estimated" placeholders in the DS comparisons should be replaced once we decide DS's exhibit-handling model.
+- **Production Fee, Litigation Package, E-Bundle, Remote Set-Up, Printing Fee, Shipping (Electronic)** are all largely software-substitutable. On DS these are "auto-generate and email a PDF" — zero marginal cost. That's where the agency markup disappears, not because agencies are evil but because we have software they don't (the "streamline-not-eliminate" thesis, per Rosie 2026-05-13).
+- **Two invoices are a directional pattern, not a published rate range.** We can confidently say "agency take-rate ranges from ~39% on non-remote arbitrations to ~70-82% on remote depos" — but for marketing claims, 3-5 more anonymized invoices would let us publish averages with confidence intervals.
+- **The 2023 (invoice #91319) vs. 2025 (Caldarella) rate stability** ($5.95/pg → $5.50/pg, similar adjacent line items) suggests CA agency rates are roughly flat over time. Our recalibration anchor doesn't need an inflation adjustment.
 
 ---
 

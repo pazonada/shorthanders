@@ -158,7 +158,7 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 
 **Concept paragraph shown to respondents (~75 words):**
 
-> Dewey Sholes is a new platform that connects California attorneys directly with court reporters for hearings and audio transcription. Reporters keep 100% of their stated rate. Attorneys pay the reporter's rate plus a 12% platform fee. There's no agency in between. Reporters set their own rate within a 20% band of platform defaults. The platform handles scheduling, billing, transcript delivery — replacing the admin work agencies typically charge for.
+> Dewey Sholes is a new platform that connects California attorneys directly with court reporters for live-attended court hearings (with audio transcription supported in the rare cases where a reporter wasn't on the record and the court has approved release of the audio). Reporters keep 100% of their stated rate. Attorneys pay the reporter's rate plus a 12% platform fee. There's no agency in between. Reporters set their own rate within a 20% band of platform defaults. The platform handles scheduling, billing, transcript delivery — replacing the admin work agencies typically charge for.
 
 **Q11.** Based on that description alone, how interested would you be in trying this platform?
 - Very interested

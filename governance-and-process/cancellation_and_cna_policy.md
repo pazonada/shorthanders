@@ -11,7 +11,9 @@
 Two real-world scenarios come up regularly in court reporting that we need clear policies for:
 
 1. **Attorney cancels** the booking before the CSR has done the work
-2. **Witness doesn't show up** (Certified Non-Appearance / CNA) — the CSR did the work but no testimony was taken
+2. **The scheduled appearance doesn't happen as planned** (Certified Non-Appearance / CNA) — the CSR did the work but the proceedings didn't take place as scheduled (e.g., witness no-show in cases where one was expected, or the matter is taken off-calendar at the last moment)
+
+> **Terminology note (per Rosie 2026-05-13):** "Testimony" is a specific legal term — it refers to a witness's sworn evidence on the record. Hearings often happen without testimony (attorneys arguing motions, judges ruling, parties stipulating). "No testimony was taken" is therefore *not* a good synonym for "the proceedings didn't happen as scheduled." We use the broader phrasing ("appearance doesn't happen as planned," "proceedings off-calendar," "witness non-appearance" where specifically meant) throughout this policy.
 
 Both involve the same core question: *who pays the CSR for what*? Industry standard handles both predictably, and we follow that standard so CSRs aren't penalized for situations outside their control.
 
@@ -52,7 +54,7 @@ These are admin-reviewed case by case, not automated.
 
 ## Certified Non-Appearance (CNA) policy
 
-A CNA happens when the CSR shows up for a scheduled job, but the witness or other essential party doesn't appear, so no testimony is taken. The CSR may produce a brief "non-appearance" record (1-3 pages stating who appeared, who didn't, when proceedings ended).
+A CNA happens when the CSR shows up for a scheduled job, but the witness or other essential party doesn't appear, so the proceedings can't take place as scheduled. The CSR may produce a brief "non-appearance" record (1-3 pages stating who appeared, who didn't, when proceedings ended).
 
 ### Two sub-scenarios
 
@@ -82,7 +84,7 @@ When uploading the transcript through the platform, the CSR selects a "Job type"
 
 - **Standard transcript** (default — proceedings happened normally)
 - **Certified Non-Appearance with transcript** (1-3 page CNA record produced)
-- **Certified Non-Appearance — no transcript** (just attendance, no testimony taken)
+- **Certified Non-Appearance — no transcript** (just attendance; appearance didn't happen as scheduled, no on-the-record proceedings)
 
 For the CNA-with-transcript option, the CSR uploads the brief CNA document the same way they'd upload any transcript. For the no-transcript option, no file is uploaded — the CSR just marks the job complete with the CNA designation and notes describing the non-appearance.
 

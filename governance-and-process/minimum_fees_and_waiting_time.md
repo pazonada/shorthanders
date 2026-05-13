@@ -101,7 +101,40 @@ A small note on the calculator clarifies: "Orders below $50 are billed at our $5
 - **Separate waiting-time billing** for live attendance — the per-diem covers it
 - **Realtime / rough draft surcharges** — these are deposition conventions, not common in court hearing work
 - **Video surcharges** — courts handle their own video; not our problem
-- **Interpreter surcharges** — interpreter-present transcripts already bill at the same statutory rate (same word count)
+- **Interpreter surcharges** — interpreter-present transcripts already bill at the same statutory rate (same word count) *(revisit after CSR survey — Rosie 5/12 hedged on this; CSRs in the FB group are complaining specifically about interpreter rates)*
+
+---
+
+## What we ARE adding (added 2026-05-13)
+
+### Travel-time billable
+
+Per Rosie 5/12 ("Travel time is very billable and it's usually a pretty big expense") and rate-card review showing $50/hr as the consistent industry rate, **DS adds a travel-time line item to V1**.
+
+**How it works:**
+
+- **In-person live attendance only.** Remote/Zoom jobs don't incur travel.
+- **CSR-defined travel-free radius** during onboarding (default: 30 minutes one-way from their declared home base). Within that radius, no travel fee.
+- **Beyond the free radius:** travel time billed at **$50/hr default**, in 15-minute increments, capped at 4 hours round-trip per job.
+- **CSR can adjust travel rate** within the same ±20% band as their other rates (per AB 5 prong 3 — see [rating_and_matching_policy.md](rating_and_matching_policy.md)).
+- **Attorney sees travel-fee estimate at order time** based on assigned CSR's home base → courthouse drive time (Google Maps API or similar), shown as a separate calculator line item.
+
+Open question for Rosie (in [pricing_questions_rosie_and_csrs.md](../research/pricing_questions_rosie_and_csrs.md)): should the travel-free radius be CSR-defined (proposed) or platform-fixed at 30 minutes? Aud leans CSR-defined.
+
+### Trial-day daily drafts (free to those who paid for the final)
+
+Per Rosie 5/12: "Usually during trial a draft is provided for free immediately to everyone who's paid for the real thing. The usefulness of a draft in this context is to prepare for the next day."
+
+For multi-day trial bookings:
+
+- **Rough daily draft is included automatically in the trial-day rate** — not a separate billable.
+- Available the morning after each trial day to all parties who have *already paid for the final certified transcript*.
+- Parties who haven't ordered the final transcript don't receive the daily draft.
+- "Final" here means an order placed at the time of booking the trial-day attendance; not a post-trial add-on.
+
+This implies a small product change: the trial-day booking flow must capture transcript-ordering parties at booking time (not after the trial), so the system knows who gets the daily draft.
+
+**Why it works this way:** the daily draft's value is preparation for the next day, which only matters if the party is already committed to the case-record-level transcript. Bundling avoids the "I'd like to read tonight's testimony but I haven't paid yet" loophole. Aligns with how CA trial practice already works per Rosie.
 
 ---
 

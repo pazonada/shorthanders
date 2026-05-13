@@ -13,6 +13,7 @@
 - Live attendance at courtroom hearings (motions, family law calendars, civil hearings, criminal hearings, probate, etc.)
 - Post-hearing audio transcription of court audio (where the court permits recording and the audio is available)
 - Certified Non-Appearances at court hearings (when a party or witness fails to appear at a scheduled court hearing)
+- **Quasi-court administrative tribunals operating like court** *(added 2026-05-13 per Rosie)* — specifically WCAB (Workers Compensation Appeals Board) and NLRB hearings. These aren't Article VI courts, but they are public, operate under court-style procedural rules, and CSRs work them the same way. Per Rosie: "I always forget WCAB, NLRB, etc. aren't actual court. They operate exactly like court, so yes, in scope." Same scope rules apply (no sealed proceedings, no private mediation, etc.).
 
 **We are NOT currently serving (deferred to future releases):**
 
@@ -31,7 +32,9 @@ External messaging uses "not at this time" rather than "never" — Rosie wants t
 
 ### Regulatory clarity
 
-Public court proceedings are matters of public record. The pricing is set by **CA Gov. Code 69950** (statutory rate of $1.13 per 100 words for original transcripts). The custodial chain is well-established (CSR delivers to court or party who ordered it). The platform's role as a marketplace is straightforward.
+Public court proceedings are matters of public record. The custodial chain is well-established (CSR delivers to court or party who ordered it). The platform's role as a marketplace is straightforward.
+
+*Note (2026-05-13):* the original version of this section said pricing is "set by CA Gov. Code § 69950." That framing is overly broad — § 69950 applies to court-administered transcripts (produced by court-employed reporters and sold through the clerk), not to privately-retained CSRs operating through a marketplace. See [MEMO_Rate_Regulation_Pricing.md](../research/md/MEMO_Rate_Regulation_Pricing.md) for the full clarification.
 
 Depositions, by contrast, are **private commercial transactions** with:
 - No statutory rate cap (deposition rates are negotiated, typically higher)
