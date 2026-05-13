@@ -8169,7 +8169,7 @@ function ReporterOnboarding() {
           <div className="toggle-row">
             <div>
               <div className="toggle-label">Allow copy requests from other parties</div>
-              <div className="toggle-sub">Recommended – additional revenue at the statutory copy rate ($0.65/page)</div>
+              <div className="toggle-sub">Recommended – additional revenue at the platform simultaneous-copy rate ($2.00/page)</div>
             </div>
             <label className="toggle-switch">
               <input type="checkbox" checked={form.allowCopyRequests} onChange={() => update("allowCopyRequests", !form.allowCopyRequests)} />
@@ -10730,7 +10730,7 @@ function RequestCopyPage() {
                 <ul style={{margin: "8px 0 0 16px", padding: 0}}>
                   <li>The reporter receives your request and decides whether to fulfill it</li>
                   <li>If they accept, they'll notify all parties (CCP &sect; 2025.570 requires a 30-day window for protective orders)</li>
-                  <li>After that window, the reporter delivers the copy at the statutory copy rate ($0.65/page) plus our 12% platform fee</li>
+                  <li>After that window, the reporter delivers the copy at the platform simultaneous-copy rate ($2.00/page) plus our 12% platform fee</li>
                   <li>Dewey Sholes does not store transcripts or fulfill copy requests directly – the reporter is in control</li>
                 </ul>
               </div>
@@ -11344,11 +11344,11 @@ function PricingPage() {
                 </div>
                 <div className="pricing-row">
                   <div><h3>Simultaneous copy</h3><div className="sub">Ordered at same time as original</div></div>
-                  <div className="price green">~$0.65 <span>/ page</span></div>
+                  <div className="price green">$2.00 <span>/ page</span></div>
                 </div>
                 <div className="pricing-row">
                   <div><h3>Separate copy</h3><div className="sub">Ordered after original production</div></div>
-                  <div className="price">~$0.85 <span>/ page</span></div>
+                  <div className="price">$2.50 <span>/ page</span></div>
                 </div>
                 <div className="pricing-row">
                   <div><h3>Live attendance – half day</h3><div className="sub">Up to 4 hours of attendance</div></div>
