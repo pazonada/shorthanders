@@ -452,6 +452,62 @@ Each step shows who was invited (count, not names — except the eventual winner
 
 ---
 
+## Discovery & promotion (separate from matching)
+
+Surfaces where attorneys *encounter* CSRs outside of the auto-match cascade. Per Rosie 2026-05-13: "We could also do that thing where we feature a reporter on your page like targeted ads so it gives them some exposure."
+
+This is a deliberate concept separation. **Auto-match** assigns CSRs to specific jobs based on capability + ranking + fairness. **Discovery** is everything that puts CSRs in front of attorneys at moments when no specific job is being placed — homepage, favorites discovery, email digests, specialty pages, post-match "similar CSRs" suggestions.
+
+### The hard rule that makes this safe
+
+**Discovery placement does NOT affect auto-match ranking, ever.** The cascade still selects CSRs purely on capability, rating, workload, fairness, and geography. Featured CSRs do not jump the queue on actual bookings.
+
+What featured placement *does* affect is what attorneys see at moments of **browsing-with-intent**, primarily for building favorites. A favorited CSR then enters Phase 1 of the cascade for that firm — which is the most powerful effect of featured visibility, but it's an indirect one mediated by attorney choice.
+
+Without this rule, paid-or-promoted placement degenerates into "pay to win at matching" — the failure mode that breaks marketplace trust. With this rule, featured placement is a discovery / relationship-building tool that respects the matching algorithm's integrity.
+
+### Surfaces where featured CSRs could appear
+
+| Surface | What attorneys see | Why featured placement makes sense here |
+|---|---|---|
+| Attorney dashboard / homepage | Rotating "Featured CSR" card | High-traffic surface; light-touch exposure |
+| Favorites discovery page | Grid/list of CSRs the firm could favorite | Browsing-with-intent surface; favorites feed Phase 1 of cascade |
+| Email digests | Weekly/monthly "New CSRs in your area" + spotlights | Long-form discovery outside the app |
+| Post-match CSR profile | "Other CSRs you might want to favorite" similar-to | Captures attention when attorney is already evaluating a CSR |
+| Specialty / county pages | Featured Family Law CSRs, Featured Bay Area CSRs, etc. | Targeted by attorney's known interests |
+
+### Models to consider (not yet decided)
+
+Three structurally different approaches; we can use one, two, or all three at different surfaces.
+
+| Model | Who controls placement | Revenue to DS | Best fit |
+|---|---|---|---|
+| **Free editorial rotation** | DS staff curates | None | Community-building, cold-start visibility for new CSRs, pre-pilot launch readiness |
+| **Earned badges** | Algorithm picks based on rating, on-time rate, etc. | None | Quality signal; rewards good behavior; aligns with marketplace meritocracy |
+| **Paid promotion** | CSR pays for placement (monthly fee, per-impression, or per-favorite-conversion) | Recurring revenue line beyond listing fee + buyer fee | Year 2+ once we have data on attorney browse behavior |
+
+**Working assumption for launch:** start with free editorial rotation + earned badges. Both can launch with minimal additional product surface. Defer the paid-promotion design to Year 2 after we see how attorneys actually use the discovery surfaces during pilot.
+
+### Why this is a real strategic lever (not just a feature)
+
+Three reasons it matters more than it looks:
+
+1. **Cold-start visibility for new CSRs.** A CSR with zero ratings can't compete in auto-match ranking (the fairness slot helps slowly). Featured placement on browsing surfaces lets new CSRs build favorites, which then surface them in Phase 1 of future cascades. It's the supply-side onboarding ramp.
+2. **Second revenue line.** Buyer fee + listing fee are the only current revenue sources. A paid-promotion tier — even priced modestly — compounds as the platform grows and reduces dependence on per-transaction take rate.
+3. **AB 5 posture.** "CSRs control their own marketing on the platform" is one more factor supporting the independent-contractor classification under § 2778. CSRs who pay to promote themselves are behaving like independent professionals running their own books.
+
+### Pilot status
+
+**Not in V1.** Pilot launches without featured-CSR surfaces. We add discovery features post-pilot once we know:
+
+- Whether attorneys actually browse CSRs outside the cascade (favorites and post-match profile views are the proxies to watch)
+- Which surfaces drive favoriting behavior (informs where featured placement is worth investing)
+- Whether CSRs would pay for promotion (CSR user testing question, can be added to the existing interview script)
+
+The matching policy reflects this concept now so we don't accidentally design the matching cascade in a way that conflicts with discovery later.
+
+---
+
 ## Pilot phase algorithm (during 6-month pilot window)
 
 **Keep it simple. No ratings in the matching algorithm during pilot.**
