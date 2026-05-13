@@ -37,6 +37,32 @@
 | **Industry reference – StenoScout 2026 pricing guide** | – | National with CA examples | – | Sessions $250–$1,500+; realtime adds 10–50%; most baseline depositions $400–700 | – | Mixed | [stenoscout.com/blog/how-much-does-court-reporter-cost](https://stenoscout.com/blog/how-much-does-court-reporter-cost/) | 2026-05-12 |
 | **Rosie's direct experience – Contra Costa** | Practitioner data point | Contra Costa County | **≈ $1,800** (half-day, private agency, recent matter) | – | – | **Court hearing** | Rosie 2026-05-12 (written answer to Q20 of [pricing_questions_rosie_and_csrs.md](pricing_questions_rosie_and_csrs.md)) | 2026-05-12 |
 | **Rosie's market read – LA** | Practitioner inference | Los Angeles | – | "Close to 2× Bay Area rates" for attorney fees and deposition reporters | – | Hearings & depositions | Rosie 2026-05-12 (same source) | 2026-05-12 |
+| **Tina Sherman (CSR) – self-reported income** | Working CSR in CA workers comp niche | CA (remote) | – | **$16K–22K / month** ($192K–264K / year) on a curated workload of ~2 depos/day, 10a–5p, no evenings/weekends | – | Workers Comp depositions | [Court Reporter Rates Discussion Facebook group](https://www.facebook.com/groups/259194643242710/) — 14 reactions on the post | 2026-05-13 |
+
+### Why WC reporters earn this much: the O+2 structural quirk
+
+Tina Sherman explained the structural reason CA WC pays so well: "In California it's an automatic O+2." That is, **every** workers-comp deposition transcript is automatically produced as Original + 2 certified copies, regardless of how many parties separately order. The per-page rate applies to each deliverable.
+
+| Deliverable | Pages | Rate (illustrative) | Subtotal |
+|---|---|---|---|
+| Original | 100 | $3.00–5.00/pg | $300–500 |
+| Copy 1 (certified) | 100 | $1.75/pg | $175 |
+| Copy 2 (certified) | 100 | $1.75/pg | $175 |
+| **Total per 100-page WC depo** | | | **$650–850** |
+
+A non-WC civil deposition typically delivers Original + 1 simultaneous copy (or original only) — roughly half the gross per identical job. WC's automatic O+2 effectively doubles the transcript billing baseline.
+
+**Structural reason (statutory):** CA WC cases have at least three required-document recipients — applicant, defense/carrier, sometimes WCAB or defense expert. Lab. Code § 5710 and 8 CCR § 10579 drive the deliverable expectation. Industry practice is to bill all three upfront rather than chase per-party orders.
+
+**Implication for DS:**
+
+1. **Multi-copy billing must be modeled cleanly.** Original rate ≠ copy rate. The default deliverable structure varies by case type (WC = auto O+2; civil non-WC = O+1 or O-only). The current DS pricing model has [simultaneousCopy: 0.65, separateCopy: 0.85] in `index.html:2747` but no mechanism to default a job to O+2 vs. O+1 vs. O-only based on case type.
+
+2. **WCAB is a real revenue opportunity, not a fringe.** Rosie's 5/12 answer confirmed WCAB in scope. Tina's $200–264K/year income validates that the niche is meaningful, not anecdotal. Tina is the prototype DS supply target: remote, niche-focused, runs her own workflow, curates her hours.
+
+3. **The "CSR shortage" pitch needs precision.** The shortage is acute for *in-person court attendance in under-served counties* (Contra Costa, San Diego). For *remote depo work in focused niches*, the CSRs who've adapted are thriving. Marketing should be specific about which CSR segment we're solving for.
+
+4. **Tina is a credibility-grade voice in the FB group** (14 reactions, anonymous "this is incredible!!" reply). If Rosie's network has any path to her, she's a clear early-supply target — similar to Caldarella. Worth flagging for outreach.
 
 ---
 

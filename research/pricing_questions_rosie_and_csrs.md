@@ -99,6 +99,7 @@ Grouped by theme. Domain/legal answers we can't get from web research or CSR use
 14. **Public meetings / public hearings / agency hearings** (city council, school board, ALJ) — in DS scope or out? Many CSRs do this work; rate-card data suggests it's a separate quote-only category.
 15. **Workers Comp hearings at WCAB** — they're public quasi-court. In scope?
 16. **Daily transcript copy during multi-day trials** — when an attorney orders next-morning delivery of each trial day. Do you order this in your practice? How is it typically priced (per-day with rush multiplier, or flat)?
+17. **Multi-copy billing structure by case type** *(added 2026-05-13)* — Tina Sherman (CA WC reporter, Facebook 5/13) confirmed CA WC is **automatic O+2** (Original + 2 certified copies on every transcript). General civil depo is typically O+1 (or O-only). The CSR's rate applies to each deliverable, so WC effectively bills ~2x per page count vs. an O-only job. Two product questions for you: (a) Should the DS booking flow default to O+2 for WC jobs, O+1 for civil depos, O-only for court hearings — or let the ordering attorney choose? (b) Should the per-copy rate be CSR-settable within bands (consistent with our broader rate-setting design) or platform-fixed at the simultaneous-copy / separate-copy rates already in `index.html:2747`? This affects the multi-party cost-splitting UX and the billing engine.
 
 ### F. Cancellation and CNA realism
 

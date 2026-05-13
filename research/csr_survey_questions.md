@@ -17,6 +17,8 @@ Per Aud's 2026-05-13 plan: CSR research happens in two stages.
 
 The survey opt-in invites respondents to volunteer for follow-up prototype testing. Stage 2 participants are selected from that pool to match a mix of work types, experience levels, and geographies.
 
+**Important split (added 2026-05-13):** the conceptual / business-model / pricing questions that were originally part of [user_testing_csr_guide.md](user_testing_csr_guide.md) have been **absorbed into this survey** so that Stage 2 prototype-testing sessions can stay focused on site content and UX — not abstract concept feedback. Stage 1 establishes the business validation; Stage 2 validates the actual product.
+
 ---
 
 ## Survey design notes
@@ -43,10 +45,17 @@ The survey opt-in invites respondents to volunteer for follow-up prototype testi
 
 **Q2.** What type of CSR work do you primarily do? (select all that apply)
 - Live attendance at court hearings
-- Live attendance at depositions
+- Live attendance at depositions (general civil)
+- Live attendance at workers comp (WCAB) depositions specifically
 - Audio transcription (post-hearing)
 - Captioning / CART
 - Other (please describe)
+
+**Q2a.** *(If WC selected in Q2)* What percentage of your monthly work is WC?
+- 25% or less
+- 26–50%
+- 51–75%
+- 76–100% (mostly or all WC)
 
 **Q3.** Where do most of your jobs come from today? (select all that apply)
 - A specific agency I work with regularly
@@ -77,7 +86,44 @@ The survey opt-in invites respondents to volunteer for follow-up prototype testi
 
 ---
 
-### Section 2 — Current rates and economics (5 questions)
+### Section 2 — Current workflow and pain points (5 questions, new)
+
+These absorb the concept-validation parts of the prior CSR interview guide. We capture them quantitatively in the survey so that Stage 2 prototype-testing sessions can stay focused on the actual product walkthrough.
+
+**Q5a.** When you finish a live hearing today, what's the typical post-hearing workflow with the attorney? (select all that apply)
+- Attorney decides on the spot whether to order a transcript
+- Attorney decides days or weeks later
+- I leave my contact info before leaving the courtroom
+- I rely on the attorney remembering me / having my agency's info
+- I rarely get post-hearing transcript orders
+- Other (please describe)
+
+**Q5b.** Of your live hearings, roughly what percentage end up with a transcript order *weeks later* (not at the time)?
+- 0–10%
+- 11–25%
+- 26–50%
+- 51–75%
+- More than 75%
+
+**Q5c.** Have you ever lost a transcript order because the attorney couldn't reach you, didn't remember your name, or went to a different CSR?
+- Yes, regularly
+- Yes, occasionally
+- Rarely
+- Never
+- Not sure
+
+**Q5d.** Do you currently hand out business cards at the end of hearings?
+- Yes, always
+- Sometimes
+- Rarely
+- Never
+- Other (please describe)
+
+**Q5e.** What's the single biggest pain point in your day-to-day work? (free text, 1–3 sentences)
+
+---
+
+### Section 3 — Current rates and economics (5 questions)
 
 **Q6.** When you work through an agency, roughly what percentage of the attorney's bill do you take home? (best estimate; we know agencies don't always disclose)
 - Less than 40%
@@ -108,7 +154,7 @@ The survey opt-in invites respondents to volunteer for follow-up prototype testi
 
 ---
 
-### Section 3 — Concept reaction (6 questions)
+### Section 4 — Concept reaction (6 questions)
 
 **Concept paragraph shown to respondents (~75 words):**
 
@@ -158,7 +204,7 @@ The survey opt-in invites respondents to volunteer for follow-up prototype testi
 
 ---
 
-### Section 4 — Pricing perception (3 questions)
+### Section 5 — Pricing perception (3 questions)
 
 **Q17.** Based on what you've read, the platform pays you 100% of your stated rate, and the attorney pays a 12% platform fee on top. Does the 12% feel:
 - Way too low — they'll go out of business
@@ -183,7 +229,7 @@ The survey opt-in invites respondents to volunteer for follow-up prototype testi
 
 ---
 
-### Section 5 — Pilot interest and follow-up (3 questions)
+### Section 6 — Pilot interest, referrals, and follow-up (5 questions)
 
 **Q20.** During the 6-month pilot, the platform listing fee is waived and you can sign up at no cost. How likely are you to sign up at $0?
 - Very likely
@@ -191,6 +237,14 @@ The survey opt-in invites respondents to volunteer for follow-up prototype testi
 - Neutral
 - Somewhat unlikely
 - Very unlikely
+
+**Q20a.** If you answered "neutral," "somewhat unlikely," or "very unlikely" — what would change your mind from "no" to "yes"? (free text, optional, 1–3 sentences)
+
+**Q20b.** If you sign up and have a good experience, how likely are you to refer another CSR you know to the platform?
+- Very likely
+- Somewhat likely
+- Neutral
+- Unlikely
 
 **Q21.** Would you be willing to do a 60-minute prototype walkthrough call (paid honorarium) to give us deeper feedback on the actual platform?
 - Yes — please contact me
@@ -207,12 +261,13 @@ The survey opt-in invites respondents to volunteer for follow-up prototype testi
 
 | Section | What success looks like | What failure looks like |
 |---|---|---|
-| Background | Mix of years, work types, counties (so we know who's responding) | All respondents look the same — survey isn't reaching the whole CSR community |
-| Current economics | Real data on agency splits + direct rates — fills the [pricing_questions_rosie_and_csrs.md](pricing_questions_rosie_and_csrs.md) Q6/Q7 gap that Rosie couldn't answer | Most respondents say "I don't know" — we still need user testing to learn |
-| Concept reaction | Top concerns are addressable (volume, trust, payment) and excitement is real (no agency cut, direct relationships) | Top concerns are existential (concept itself rejected, "agencies are fine") |
-| Featured reporter (Q14) | Meaningful interest (>40% say "yes") — validates Rosie's idea | Low interest (<20%) — defer post-pilot indefinitely |
-| Pricing perception | 12% feels reasonable, $99 listing feels reasonable | Pricing rejected — needs rethinking before pilot |
-| Pilot interest | >50% "very likely" at $0 listing — supply-side wedge is real | <30% "very likely" — supply acquisition harder than projected |
+| 1 — Background | Mix of years, work types, counties; meaningful WC representation (Q2a) | All respondents look the same — survey isn't reaching the whole CSR community |
+| 2 — Workflow & pain (new) | Lost-transcript-order is real (Q5c >50% say yes); post-hearing handoff is messy (Q5a) — validates the business-card / direct-relationship thesis | Workflow is already smooth; we're solving a non-problem |
+| 3 — Current economics | Real data on agency splits + direct rates — fills the [pricing_questions_rosie_and_csrs.md](pricing_questions_rosie_and_csrs.md) Q6/Q7 gap that Rosie couldn't answer | Most respondents say "I don't know" — we still need user testing to learn |
+| 4 — Concept reaction | Top concerns are addressable (volume, trust, payment) and excitement is real (no agency cut, direct relationships) | Top concerns are existential (concept itself rejected, "agencies are fine") |
+| 4 — Featured reporter (Q14) | Meaningful interest (>40% say "yes") — validates Rosie's idea | Low interest (<20%) — defer post-pilot indefinitely |
+| 5 — Pricing perception | 12% feels reasonable, $99 listing feels reasonable | Pricing rejected — needs rethinking before pilot |
+| 6 — Pilot interest + referrals | >50% "very likely" at $0 listing; strong referral willingness (Q20b) — supply-side wedge is real | <30% "very likely" — supply acquisition harder than projected |
 
 ---
 
