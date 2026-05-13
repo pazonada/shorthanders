@@ -2757,9 +2757,9 @@ const PRICING = {
   firmPerReporter: 79,
   firmMinReporters: 3,
   firmMaxReporters: 10,
-  attendanceHalfDay: 255,
-  attendanceFullDay: 509,
-  attendanceTrialDay: 2200,
+  attendanceHalfDay: 1050,
+  attendanceFullDay: 1650,
+  attendanceTrialDay: 2310,
 };
 
 // ─── Notifications Mock Data ─────────────────────────────────────
@@ -5209,8 +5209,8 @@ function BuyerDashboard() {
         const scheduledTime = new Date(cancelOrder.hearingDate + "T09:00:00");
         const hoursUntil = (scheduledTime - new Date()) / 3600000;
         let feeTier, feeAmount, feeLabel, refundAmount;
-        const orderCost = cancelOrder.cost || 255;
-        const halfDayFee = 255;
+        const orderCost = cancelOrder.cost || PRICING.attendanceHalfDay;
+        const halfDayFee = PRICING.attendanceHalfDay;
         if (hoursUntil > 24) {
           feeTier = "none";
           feeAmount = 0;
