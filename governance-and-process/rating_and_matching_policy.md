@@ -8,6 +8,7 @@
 
 ## Changelog
 
+- **v2.4 (2026-05-13):** Added explicit "CSR capabilities and job requirements" section defining what CSRs declare (credentials, specialties, equipment, operational settings), what attorneys specify in orders (jurisdiction, dates, realtime/interpreter/sealed needs), and the hard-filter vs. soft-preference matrix that governs which capability dimensions exclude a CSR from a pool vs. boost their ranking. Existing Phase 2 "specialty fit as soft preference" now references this section for the underlying definitions.
 - **v2.3 (2026-05-05):** Added quick-reference cascade table and per-tier example timelines (Rush 24h, Expedited 5-day, Standard 7-day) at the top of the matching algorithm section.
 - **v2.2 (2026-05-05):** Three SLA tiers (Rush / Expedited / Standard) explicitly mapped to per-tier response windows; flagged calculator-vs-legal-doc Standard-deadline discrepancy as `[NEEDS RECONCILE]`. Phase 4 auto-cancel moved from "deadline reached" to "12h before deadline" so the attorney has runway to rebook.
 - **v2.1 (2026-05-05):** Rosie answers: specialty matching is a **soft preference** in ranking (not a hard filter); late-stage escalation is **all-call to everyone in the eligible pool** (not batches of 10). Phase 3 split into two sub-phases: **3a (48h–72h):** batches of 10 with 3h windows; **3b (72h+):** all-call to every eligible CSR. Phase 4 ops notification now sits at the same 72h trigger as 3b. Updated ranking logic and removed resolved items from open-questions list.
@@ -55,6 +56,134 @@ A **composite score** (weighted average of all three) is calculated for matching
 - **Outlier detection:** If an attorney's ratings consistently diverge from consensus (e.g., rates everyone 1 star), algorithmically reduce that attorney's weight on composite scores
 - **Recency weighting:** Recent ratings carry more weight than old ones
 - **Volume weighting:** A CSR with 50 ratings is more stable than one with 3
+
+---
+
+## CSR capabilities and job requirements
+
+The matching algorithm relies on two structured data sets: what CSRs *can* do (capabilities) and what each order *needs* (requirements). This section defines both, along with how they map onto the hard-filter vs. soft-preference distinction the cascade uses.
+
+### CSR capability dimensions
+
+CSRs declare their capabilities during onboarding and can edit them anytime in profile settings. Capabilities fall into four buckets:
+
+**1. Verified credentials** — DS verifies via external source.
+
+| Credential | What it is | How DS verifies |
+|---|---|---|
+| CRB license | Active CA Court Reporters Board certification | Auto-checked against CRB database on signup and periodically thereafter. Required to participate. |
+| RPR | NCRA Registered Professional Reporter | Verified via NCRA member directory lookup or CSR-uploaded certificate |
+| RMR | NCRA Registered Merit Reporter (advanced) | Same as RPR |
+| CRR | NCRA Certified Realtime Reporter | Same as RPR. Required to accept jobs that need realtime feed. |
+| CRC | NCRA Certified Realtime Captioner | Same as RPR. Required for CART/captioning work if DS ever supports it. |
+
+**2. Self-declared with optional proof** — CSR checks a box, optionally uploads supporting evidence. Profile shows "self-declared" until proof is attached, then shows "verified."
+
+| Category | Examples |
+|---|---|
+| Subject-matter specialty | Medical / Expert, Technical / Engineering, Intellectual Property / Patent, Financial / Securities, Government / Military |
+| Job-type comfort | Interpreted proceedings (with language pairs declared), Sealed / confidential matters, Multi-party arbitrations, Trials (jury / non-jury) |
+| Equipment | Realtime feed capable, Video synchronization capable, In-person reporting, Remote/Zoom reporting only |
+
+**3. Operational settings** — CSR-controlled, not verified.
+
+| Setting | Default | Range |
+|---|---|---|
+| Service radius (live jobs) | CSR-defined | County list, driving-distance cap, or specific courthouse list |
+| Max concurrent jobs | 5 | 1–20 |
+| Availability windows | Weekdays 8a–6p | CSR sets weekly schedule |
+| Job-type preferences | Live + audio | Either or both |
+| After-hours / weekend opt-in | Off | On/off toggle, optionally with surcharge multiplier |
+| Rate adjustments | 0% from default | ±20% (per AB-5 rate-setting band) |
+
+**4. Track record** — computed from completed-job history, not declared.
+
+- Composite rating (1–5, recency-weighted)
+- On-time delivery rate (% of transcripts delivered by deadline)
+- Completed-job count (lifetime and last 90 days)
+- Specialty job count (per specialty category — surfaces actual experience independent of self-declaration)
+
+### Job requirement dimensions
+
+When an attorney places an order, the order captures requirements in two layers. Most are auto-populated from court / case selection at booking time.
+
+**Required (drive hard filters):**
+
+| Field | Notes |
+|---|---|
+| Jurisdiction / courthouse | Drives service-radius filter for live jobs |
+| Date and time | Drives availability conflict checking |
+| Job type | Court hearing (live) / Audio transcription |
+| Realtime feed needed? | If yes, only CRR-certified CSRs eligible |
+| Interpreted? | If yes, language must match a language declared by the CSR |
+| Confidential / sealed designation | If yes, only CSRs who opted into sealed work |
+| Witness no-show coverage (CNA) | Standard for all jobs; not a filter |
+
+**Preferred (drive soft signals in ranking):**
+
+| Field | Notes |
+|---|---|
+| Case type / subject matter | Boosts CSRs with matching specialty |
+| Witness type (expert, technical, treating physician, etc.) | Boosts specialists |
+| Expected duration (half / full / trial day) | Drives attendance fee tier, not eligibility |
+| Turnaround tier (rush / expedited / standard) | Drives SLA + price multiplier; doesn't filter CSRs |
+| Firm's prior CSR (favorite) | Routes to Phase 1 favorites round |
+
+---
+
+## Capability matching: hard filters vs. soft preferences
+
+The cascade applies hard filters first to define the eligible pool, then uses soft preferences to rank within that pool.
+
+### Hard filters (CSR excluded from pool if missing)
+
+A CSR who fails any hard filter never sees the invite. Hard filters are non-negotiable because they reflect either legal requirement, declared capability gaps, or scheduling conflicts.
+
+| Filter | Applies to | Notes |
+|---|---|---|
+| Active CRB license | All jobs | Verified at signup and on a recurring sync — see [csr_license_sync.md](agent-actions/csr_license_sync.md) |
+| Service radius covers courthouse | Live jobs only | Audio jobs have no geographic filter |
+| CRR certification | Jobs requiring realtime feed | Self-declared without CRR is insufficient — must hold the cert |
+| Declared language match | Interpreted jobs | E.g., a Mandarin interpreted depo requires the CSR to have declared Mandarin |
+| Sealed-work opt-in | Sealed / confidential jobs | CSRs explicitly opt into sealed work; not a default |
+| Calendar availability | All live jobs | No conflicting accepted job in the requested window |
+| Workload below declared max | All jobs | CSR's `max concurrent jobs` setting honored |
+
+### Soft preferences (boost ranking, don't exclude)
+
+Within the eligible pool, the algorithm boosts CSRs whose capabilities align well with the job. None of these excludes a CSR — they just affect order in the ranked-slot fill.
+
+| Signal | How it weighs | Notes |
+|---|---|---|
+| Specialty match | Significant boost | Per Rosie (2026-05-05): soft preference, not hard filter. A non-specialist remains eligible if highly rated and lightly loaded. |
+| RPR / RMR / CRR / CRC certification | Modest boost | General signal of professional competence beyond CRB license |
+| Composite rating (recency-weighted) | Significant boost | See Phase 2 ranking logic |
+| Past completion of similar specialty jobs | Modest boost | Computed from track-record dimension — actual experience often beats self-declared experience |
+| Low current workload | Modest boost | Already in v1 ranking logic |
+| Short travel time to courthouse (live only) | Tiebreaker | Geography already filtered hard; travel time is a finer-grained preference within radius |
+
+### Fairness slot is exempt from soft preferences
+
+Per Rosie (2026-05-05) and confirmed in Phase 2 selection logic: the fairness slot in each batch (1 of 3 in Phase 2, 3 of 10 in Phase 3a) does **not** apply soft preferences. The goal is to give cold-start CSRs visibility even on jobs whose specialty they haven't built up yet. A new CSR without Medical specialty can still be invited on a medical-witness depo through the fairness slot.
+
+Hard filters still apply to fairness-slot CSRs — a CSR can't accept a job they're legally or operationally not equipped for (e.g., no CRR cert → can't take a realtime job, even via fairness rotation).
+
+### What's surfaced to the attorney
+
+The order detail view (described under "Attorney-side UX" below) shows which capabilities matched and which were near-misses. Sample:
+
+```
+Sarah Chen
+✓ License verified (CRB)
+✓ RPR + CRR certified (NCRA)
+✓ Medical/Expert specialty — 23 prior medical depos completed
+✓ Available in your courthouse's radius
+4.9★ · 142 jobs · 99% on-time
+```
+
+This makes the match legible: the attorney sees *why* this CSR was selected, not just "the algorithm picked her."
+
+`[NEEDS ROSIE]` — confirm whether soft-preference boost should be visible to CSRs too ("this job matches your Medical specialty"). Aud leans toward yes — helps CSRs decide whether to accept.
 
 ---
 
@@ -169,10 +298,10 @@ After the favorites round expires (or is skipped):
 
 #### How a batch of 3 is selected
 
-The candidate pool for a batch is **all active CSRs** (no minimum-rating gate). The selection mixes ranking with deliberate fairness:
+The candidate pool for a batch is **all active CSRs who pass the job's hard filters** (see "Capability matching: hard filters vs. soft preferences" above). No minimum-rating gate is applied. The selection mixes ranking with deliberate fairness:
 
 - **2 slots — top of ranked list** by:
-  1. **Case-type / specialty fit** (soft preference) — CSRs whose declared specialties or completed-job history overlap with the order's case type rank ahead of CSRs without that experience. Specialty fit is a tiebreak/boost, not a hard filter — a non-specialist still ranks fine if they're high-rated and lightly loaded.
+  1. **Case-type / specialty fit** (soft preference, defined under "Soft preferences" above) — CSRs whose declared specialties or completed-job history overlap with the order's case type rank ahead of CSRs without that experience. Specialty fit is a tiebreak/boost, not a hard filter — a non-specialist still ranks fine if they're high-rated and lightly loaded.
   2. Composite rating (recency-weighted)
   3. Lowest current workload (active accepted jobs / pages due / upcoming live dates)
   4. (Live only) shorter travel time to courthouse as tiebreaker
@@ -320,6 +449,8 @@ Tagged `[NEEDS ROSIE]` inline above. Consolidated:
 3. **Phase 4 thresholds** — Phase 3 all-call is confirmed (Rosie 2026-05-05). Auto-cancel at 12h-before-deadline confirmed by Aud (2026-05-05). Still need Rosie's sign-off on: (a) ops-notification at 72h for std/ext, (b) the per-tier response windows in the table above (Rush 2h / Expedited 12h proposed / Standard 24h).
 4. **Ignored invites and CSR metrics** — do they count toward overload? toward a fairness-rotation cooldown so chronically unresponsive CSRs aren't repeatedly invited?
 5. **Drop the 3.5 rating floor entirely?** v1 said "above 3.5 enters the pool." v2 currently drops the floor in favor of the fairness slot. Confirm.
+6. **Capability surface to CSRs** (added 2026-05-13) — when an invite is sent, should the in-app job card show the CSR which of their declared specialties matched the job ("This job matches your Medical specialty")? Aud leans toward yes — gives CSRs information to decide whether to accept and reinforces the value of declaring specialties accurately.
+7. **Specialty self-declaration verification path** (added 2026-05-13) — for specialties without an NCRA equivalent (Medical, Technical, IP, etc.), is a soft "view supporting evidence" link sufficient (CSR uploads sample/credentials, no DS verification), or do we need light admin review? Aud leans toward the upload-and-display-only model with bad actors caught via job ratings.
 
 ### Resolved (2026-05-05)
 
