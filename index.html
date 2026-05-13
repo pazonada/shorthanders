@@ -2725,11 +2725,11 @@ const MOCK_ACTIVE_JOBS = [
 ];
 
 const MOCK_PAYOUTS = [
-  { case: "Martinez v. Pacific Holdings", date: "2026-03-31", pages: 45, amount: 165.15, status: "Paid", type: "Live attendance", attorney: "Jennifer Walsh", rate: "$3.67/pg", attendance: 255, tier: "Expedited" },
-  { case: "In re Estate of Williams", date: "2026-03-10", pages: 28, amount: 102.76, status: "Paid", type: "Transcription", attorney: "Sarah Kim", rate: "$3.67/pg", attendance: 0, tier: "Standard" },
-  { case: "Davis v. Metro Transit", date: "2026-03-05", pages: 54, amount: 198.18, status: "Paid", type: "Transcription", attorney: "David Park", rate: "$3.67/pg", attendance: 0, tier: "Expedited" },
-  { case: "Park v. Golden Gate Ins.", date: "2026-02-28", pages: 41, amount: 150.47, status: "Paid", type: "Live attendance", attorney: "Maria Rodriguez", rate: "$3.67/pg", attendance: 255, tier: "Standard" },
-  { case: "Thompson custody hearing", date: "2026-02-20", pages: 33, amount: 121.11, status: "Pending", type: "Transcription", attorney: "Robert Chen", rate: "$3.67/pg", attendance: 0, tier: "Rush" },
+  { case: "Martinez v. Pacific Holdings", date: "2026-03-31", pages: 45, amount: 225.00, status: "Paid", type: "Live attendance", attorney: "Jennifer Walsh", rate: "$5.00/pg", attendance: 1050, tier: "Expedited" },
+  { case: "In re Estate of Williams", date: "2026-03-10", pages: 28, amount: 140.00, status: "Paid", type: "Transcription", attorney: "Sarah Kim", rate: "$5.00/pg", attendance: 0, tier: "Standard" },
+  { case: "Davis v. Metro Transit", date: "2026-03-05", pages: 54, amount: 270.00, status: "Paid", type: "Transcription", attorney: "David Park", rate: "$5.00/pg", attendance: 0, tier: "Expedited" },
+  { case: "Park v. Golden Gate Ins.", date: "2026-02-28", pages: 41, amount: 205.00, status: "Paid", type: "Live attendance", attorney: "Maria Rodriguez", rate: "$5.00/pg", attendance: 1050, tier: "Standard" },
+  { case: "Thompson custody hearing", date: "2026-02-20", pages: 33, amount: 165.00, status: "Pending", type: "Transcription", attorney: "Robert Chen", rate: "$5.00/pg", attendance: 0, tier: "Rush" },
 ];
 
 const MOCK_REPORTER_EARNINGS = [
@@ -2745,7 +2745,7 @@ const TEAM = [
 ];
 
 const PRICING = {
-  ratePerPage: 3.67,
+  ratePerPage: 5.00,
   simultaneousCopy: 0.65,
   separateCopy: 0.85,
   platformFee: 0.12,
@@ -3047,10 +3047,10 @@ const MOCK_ORDER_DETAIL = {
       number: "INV-2026-0342", date: "2026-03-01",
       billTo: { name: "Jennifer Walsh, Esq.", firm: "Walsh Family Law Group", address: "123 Main St, Los Angeles, CA 90012" },
       items: [
-        { desc: "Original transcript – Family Law hearing", qty: "~35 pages", rate: "$3.67", amount: "$128.45" },
-        { desc: "Rush turnaround (1.5x)", qty: "1", rate: "$64.23", amount: "$64.23" },
+        { desc: "Original transcript – Family Law hearing", qty: "~35 pages", rate: "$5.00", amount: "$175.00" },
+        { desc: "Rush turnaround (1.5x)", qty: "1", rate: "$87.50", amount: "$87.50" },
       ],
-      subtotal: "$192.68", platformFee: "$23.12", total: "$215.80", status: "pending",
+      subtotal: "$262.50", platformFee: "$31.50", total: "$294.00", status: "pending",
     },
   },
 };
@@ -4391,7 +4391,7 @@ function OrderFlow() {
                       <span>${(attendanceFee + est.lowCost * 1.08).toLocaleString()} – ${(attendanceFee + est.highCost * 1.08).toLocaleString()}</span>
                     </div>
                     <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
-                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Statutory rate: $1.13 per 100 words (CA Gov. Code 69950). <strong style={{color: "#2563EB"}}>Pilot rate (8%) locked in for your first year.</strong>
+                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Baseline transcript rate: $5.00/page (reporters can set their own within a ±20% band). <strong style={{color: "#2563EB"}}>Pilot rate (8%) locked in for your first year.</strong>
                     </p>
                   </>;
                 })()}
@@ -6894,7 +6894,7 @@ function AdminDashboard() {
               <div className="compliance-list">
                 {[
                   { title: "CSR license verification", desc: "All active reporters have valid California CSR licenses on file.", status: "pass", icon: "shield" },
-                  { title: "Statutory rate compliance", desc: "Transcript pricing follows CA Gov. Code 69950 statutory rates ($3.67/page).", status: "pass", icon: "fileText" },
+                  { title: "Transparent pricing", desc: "Transcript pricing at $5.00/page baseline, reporter-set within ±20% bands. No hidden line items.", status: "pass", icon: "fileText" },
                   { title: "Transcript certification", desc: "All delivered transcripts include CSR certification page.", status: "pass", icon: "checkCircle" },
                   { title: "Record retention", desc: "Transcripts and order records retained for minimum 10 years per CA requirements.", status: "pass", icon: "clock" },
                   { title: "CCPA data privacy", desc: "User data handling compliant with California Consumer Privacy Act.", status: "pass", icon: "shield" },
@@ -8526,7 +8526,7 @@ const DEFAULT_KANBAN_TASKS = [
   // ── Done (22) ──
   { id: "t01", title: "AB 5 / IC Classification Research", description: "AB 3136 exempts CSRs from ABC test. Borello test applies. Memo documents analysis for lawyer review.", column: "done", priority: "high", assignee: ["Aud"], category: "legal", dueDate: "", createdAt: "2026-03-13", notes: "Research complete. Memo finalized." },
   { id: "t02", title: "TRF Research Memo", description: "$2,500/case cap, 8-10 week processing, $300K annual funding. Platform will NOT carry TRF float.", column: "done", priority: "high", assignee: ["Aud"], category: "research", dueDate: "", createdAt: "2026-03-13", notes: "Founder decision: no float. Firm pays upfront, platform generates reimbursement paperwork." },
-  { id: "t03", title: "Rate Regulation & Pricing Memo", description: "Folio multiplier problem, SB 478 compliance, statutory rates ($1.13/100 words). Feeds pricing UX.", column: "done", priority: "high", assignee: ["Aud"], category: "research", dueDate: "", createdAt: "2026-03-13", notes: "" },
+  { id: "t03", title: "Rate Regulation & Pricing Memo", description: "Folio multiplier problem, SB 478 compliance. Statutory rate scope clarified May 2026 — § 69950 binds court-administered transcripts, not privately-retained CSRs. Feeds pricing UX.", column: "done", priority: "high", assignee: ["Aud"], category: "research", dueDate: "", createdAt: "2026-03-13", notes: "" },
   { id: "t04", title: "State Bar / Confidentiality Memo", description: "CA Rule 1.6 applies to attorney-client audio. Platform needs contractual safeguards, encryption, SOC 2.", column: "done", priority: "high", assignee: ["Aud"], category: "legal", dueDate: "", createdAt: "2026-03-13", notes: "" },
   { id: "t05", title: "CRB Briefing Doc", description: "Prep document for Court Reporters Board: license verification, TRF coordination, information sharing.", column: "done", priority: "medium", assignee: ["Aud"], category: "operations", dueDate: "", createdAt: "2026-03-14", notes: "" },
   { id: "t06", title: "Judicial Council Briefing Doc", description: "Focus: fee waiver flow, ER integration, access-to-justice framing. 1M+ proceedings without transcripts.", column: "done", priority: "medium", assignee: ["Aud"], category: "operations", dueDate: "", createdAt: "2026-03-14", notes: "" },
@@ -10344,7 +10344,7 @@ function FaqPage() {
   const sections = [
     { title: "For attorneys", items: [
       { id: "a1", q: "How do I place a transcript order?", a: "Click \"Order a transcript\" from the homepage, choose live attendance or post-hearing transcription, enter your case details, set your delivery deadline, and submit. Your deadline determines the turnaround tier and price automatically. We'll match you with a qualified reporter, usually within hours." },
-      { id: "a2", q: "How does pricing work?", a: "Pricing is based on California statutory rates ($3.67/page) plus a platform fee. During the pilot, the platform fee is 8% (standard rate after Year 1: 12%). Your delivery deadline determines the turnaround tier: Rush (1-2 business days, 1.5x rate), Expedited (3-5 business days, statutory rate), or Standard (6+ business days, 15% savings). Set your need-by date and the price calculates automatically." },
+      { id: "a2", q: "How does pricing work?", a: "Transcript pricing is $5.00 per page baseline (each reporter sets their own rate within a ±20% band), plus a platform fee. During the pilot, the platform fee is 8% (standard rate after Year 1: 12%). Your delivery deadline determines the turnaround tier: Rush (1-2 business days, 1.5x rate), Expedited (3-5 business days, baseline rate), or Standard (6+ business days, 15% savings). Set your need-by date and the price calculates automatically." },
       { id: "a3", q: "Can I split the cost with other parties?", a: "Yes. When placing an order, toggle \"Split cost with other parties\" and add co-paying attorneys by name and email. Each party receives a secure payment link. The job is only posted to reporters once all parties have paid – no chasing, no partial payments. Co-payers don't need a Dewey Sholes account." },
       { id: "a4", q: "What if I'm unhappy with a transcript?", a: "You can request corrections within 90 days of delivery. Specify the pages and describe the issue, and the reporter will be notified to upload a corrected version. No additional cost for corrections – the reporter's statutory rate covers delivering an accurate transcript." },
       { id: "a5", q: "How do I know if a reporter is any good?", a: "Every reporter has a quality rating (1-5 stars, rated by attorneys) and a timeliness score (auto-calculated from their delivery history). You can also read written feedback from other attorneys on the reporter's profile. Reporters with consistently high ratings appear first in search results." },
@@ -11340,7 +11340,7 @@ function PricingPage() {
               <div className="pricing-body">
                 <div className="pricing-row">
                   <div><h3>Original transcript</h3><div className="sub">First copy ordered</div></div>
-                  <div className="price">~$3.67 <span>/ page</span></div>
+                  <div className="price">$5.00 <span>/ page</span></div>
                 </div>
                 <div className="pricing-row">
                   <div><h3>Simultaneous copy</h3><div className="sub">Ordered at same time as original</div></div>
@@ -11365,7 +11365,7 @@ function PricingPage() {
                 <div className="pricing-approx">
                   <span className="tooltip-trigger" tabIndex="0">
                     Transcription pricing is approximate
-                    <span className="tooltip-content">California prices transcripts per 100 words (Gov. Code § 69950), not per page. We display per-page estimates using a standard conversion (~250–350 words per page, depending on county practice). Your final invoice is always calculated from the actual certified word count, not the estimate.</span>
+                    <span className="tooltip-content">Page rates shown are baseline defaults; reporters can set their own rate within a ±20% band. Final invoice is calculated from the certified page count delivered with the transcript, not an estimate. Add-ons (interpreter, expedite multipliers, etc.) shown as separate line items.</span>
                   </span>
                 </div>
               </div>
