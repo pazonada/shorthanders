@@ -25,16 +25,19 @@ CSRs on Dewey Sholes are independent contractors. We score favorably on 8-9 of 1
 - Do not dictate how reporters produce transcripts
 - Allow reporters to decline any job with no penalty or rating impact
 - No exclusivity requirements
-- Pay per job (per-page statutory rate), not per hour
+- Pay per job (per-page rate, not per hour)
 - No equipment or proprietary software requirements
+- **Rate-setting band exposed in CSR settings UI** (added 2026-05-14): CSRs can set or negotiate their own rate within a ±20% band of platform baseline via a self-serve slider in their profile settings. This directly addresses CA Labor Code §2778(b)(2)(B): *"The individual has the ability to set or negotiate their own rates for the services performed."* Out-of-band requests are handled via direct email negotiation with the platform team.
 
-### Onboarding language (already in prototype)
-"By joining Dewey Sholes, you confirm that you are an independent professional, not an employee of Dewey Sholes or its parent company. You choose which jobs to accept, set your own schedule, and control how you perform your work."
+### Onboarding language (already in prototype – updated 2026-05-14)
+"By joining Dewey Sholes, you confirm that you are an independent professional, not an employee of Dewey Sholes or its parent company. You choose which jobs to accept, set your own schedule, **set or negotiate your own rates (within the ±20% band exposed in your profile settings, or outside that band by emailing us)**, and control how you perform your work."
+
+The Terms of service "Independent contractor relationship" section also explicitly cites the rate-setting band as part of what makes CSRs independent contractors under §2778.
 
 ### Risk matrix
 | Scenario | Likelihood | Severity |
 |----------|-----------|----------|
-| ABC test Prong B challenge | Medium | High |
+| ABC test Prong B challenge | Medium-Low (reduced by exposed §2778 rate-setting band) | High |
 | EDD audit reclassifying reporters | Low-Medium | High |
 | Individual misclassification claim | Low | Medium |
 | Class action by reporters | Very Low (reporters benefit from IC status) | Very High |

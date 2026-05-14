@@ -116,7 +116,7 @@ Per Rosie 5/12 ("Travel time is very billable and it's usually a pretty big expe
 - **In-person live attendance only.** Remote/Zoom jobs don't incur travel.
 - **CSR-defined travel-free radius** during onboarding (default: 30 minutes one-way from their declared home base). Within that radius, no travel fee.
 - **Beyond the free radius:** travel time billed at **$50/hr default**, in 15-minute increments, capped at 4 hours round-trip per job.
-- **Rate adjustments deferred post-launch.** At V1 launch, the $50/hr travel rate is platform-set and flat for every CSR. The ±20% rate-setting band (per AB-5 prong 3 – see [rating_and_matching_policy.md](rating_and_matching_policy.md)) is defined in policy but not exposed in the V1 UI; CSRs who need a different travel rate can request an adjustment from us manually until we ship the self-serve band.
+- **CSR can adjust the travel rate** within the same ±20% rate-setting band as their other rates (per AB-5 §2778 – see [rating_and_matching_policy.md](rating_and_matching_policy.md)). The slider in CSR settings → Your rates moves all of a CSR's rates together; if a CSR wants to set a different multiplier for travel specifically, they can email us to request a manual adjustment outside the band.
 - **Attorney sees travel-fee estimate at order time** based on assigned CSR's home base → courthouse drive time (Google Maps API or similar), shown as a separate calculator line item.
 
 Open question for Rosie (in [pricing_questions_rosie_and_csrs.md](../research/pricing_questions_rosie_and_csrs.md)): should the travel-free radius be CSR-defined (proposed) or platform-fixed at 30 minutes? Aud leans CSR-defined.

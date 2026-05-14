@@ -137,7 +137,7 @@ Between standardized specialties for matching, free-text "additional expertise" 
 | Availability windows | Weekdays 8a–6p | CSR sets weekly schedule |
 | Job-type preferences | Live + audio | Either or both |
 | After-hours / weekend opt-in | Off | On/off toggle, optionally with surcharge multiplier |
-| Rate adjustments | 0% from default | ±20% (per AB-5 rate-setting band) |
+| Rate adjustments | ±20% from default (per AB-5 §2778 rate-setting band) | Same – V1 ships with the band exposed |
 
 **4. Track record** – computed from completed-job history, not declared.
 

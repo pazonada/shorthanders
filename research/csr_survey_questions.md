@@ -161,12 +161,10 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 > Dewey Sholes is a new website that lets California attorneys hire court reporters directly for live court hearings. (We can also handle audio transcription in the rare cases where no reporter was on the record and the court approves releasing the audio.)
 >
 > Here's how it works for you, the reporter:
-> - You keep 100% of the platform's published rate. No agency cut. No platform commission on your earnings.
-> - At launch, every reporter on the platform earns the same published rate. We've set those rates well above the statutory minimums and close to what private-direct work pays. (Specific dollar amounts in Section 5.)
-> - Attorneys pay your rate plus a flat 12% platform fee on top, so the 12% never comes out of your pocket.
+> - You keep 100% of your rate. No agency cut. No platform commission on your earnings.
+> - The platform sets a baseline rate (specific dollar amounts in Section 5, well above statutory and close to what private-direct work pays). You can set your own rate up to 20% higher or 20% lower than baseline – your choice, your slider.
+> - Attorneys pay your rate plus a flat 12% platform fee on top, so the 12% never comes out of your pocket. They see your actual rate when they get matched with you and can confirm or ask for a different reporter.
 > - The site handles scheduling, payment, and transcript delivery, so you don't pay an agency to do those things for you.
->
-> *Looking ahead: we're planning to add a feature later where you'd be able to set your own rate within a range around the platform default. We want to launch with simple flat pricing first, then build that out once we know what reporters and attorneys actually want. Section 5 asks what you'd think of that.*
 
 **Q11.** Based on that description, how interested would you be in trying this site?
 - Very interested
@@ -177,7 +175,7 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 
 **Q12.** Which parts of this idea appeal to you most? (pick up to three)
 - Keeping 100% of my rate (no agency cut)
-- Setting my own rate *(planned for a future release – not in V1)*
+- Setting my own rate within a ±20% band
 - Working with attorneys directly
 - Less admin work
 - Modern booking and scheduling tools
@@ -221,7 +219,7 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 - A little high
 - Way too high
 
-**Q18.** *(Planned for a future release, not V1.)* If we later added a feature where the site suggests a starting rate and you can change it up to 20% higher or lower, does that feel:
+**Q18.** The site suggests a baseline rate, and you can change it up to 20% higher or 20% lower. Does that feel:
 - Like real control over my pricing
 - A little limiting but I could live with it
 - Too restrictive
