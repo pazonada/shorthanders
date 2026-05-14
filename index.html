@@ -3053,6 +3053,9 @@ const MOCK_ORDER_DETAIL = {
     invoice: {
       number: "INV-2026-0342", date: "2026-03-01",
       billTo: { name: "Jennifer Walsh, Esq.", firm: "Walsh Family Law Group", address: "123 Main St, Los Angeles, CA 90012" },
+      caseName: "Okafor v. Sunrise Medical Group",
+      caseNumber: "25STCV02901",
+      clientMatter: "2025-PI-0117",
       items: [
         { desc: "Original transcript – Family Law hearing", qty: "~35 pages", rate: "$5.00", amount: "$175.00" },
         { desc: "Rush turnaround (1.5x)", qty: "1", rate: "$87.50", amount: "$87.50" },
@@ -3075,9 +3078,9 @@ const MOCK_SETTINGS = {
     cards: [{ brand: "Visa", last4: "4242", expiry: "12/27", isDefault: true }, { brand: "Amex", last4: "1001", expiry: "06/26", isDefault: false }],
     address: "123 Main St, Los Angeles, CA 90012",
     invoices: [
-      { id: "INV-2026-0342", date: "2026-03-01", amount: "$215.80", status: "Pending" },
-      { id: "INV-2026-0298", date: "2026-02-14", amount: "$387.20", status: "Paid" },
-      { id: "INV-2026-0201", date: "2026-01-22", amount: "$156.80", status: "Paid" },
+      { id: "INV-2026-0342", date: "2026-03-01", amount: "$215.80", status: "Pending", caseName: "Okafor v. Sunrise Medical Group", caseNumber: "25STCV02901", clientMatter: "2025-PI-0117" },
+      { id: "INV-2026-0298", date: "2026-02-14", amount: "$387.20", status: "Paid", caseName: "Chen v. Westbrook Properties", caseNumber: "25STCV01482", clientMatter: "2025-CIV-0089" },
+      { id: "INV-2026-0201", date: "2026-01-22", amount: "$156.80", status: "Paid", caseName: "Martinez v. Pacific Holdings", caseNumber: "24STFL09821", clientMatter: "2024-FAM-0214" },
     ],
   },
 };
@@ -3930,6 +3933,7 @@ function OrderFlow() {
   })();
   const [form, setForm] = useState({
     type: "", court: "", dept: "", caseNumber: "", caseName: "", caseType: "Family Law",
+    clientMatter: "",
     hearingDate: "", hearingTime: "", duration: "60", interpreter: false, interpreterLang: "",
     audioFile: "", reporterPref: preselectedReporterId ? "favorite" : "", selectedReporter: preselectedReporterId, feeWaiver: false, notes: "",
     needByType: "", needByDate: "",
@@ -4126,6 +4130,13 @@ function OrderFlow() {
                 <div className="form-group">
                   <label className="form-label">Case name / caption</label>
                   <input className="form-input" placeholder="e.g. Martinez v. Pacific Holdings" value={form.caseName} onChange={e => update("caseName", e.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Your internal matter / client reference <span style={{fontWeight: 400, color: "var(--text-muted, #94A3B8)", fontSize: 12}}>(optional)</span></label>
+                  <input className="form-input" placeholder="e.g. 2026-FAM-0042 or Martinez/Divorce" value={form.clientMatter} onChange={e => update("clientMatter", e.target.value)} />
+                  <p style={{fontSize: 12, color: "var(--text-muted, #64748B)", marginTop: 6, lineHeight: 1.5}}>
+                    For your firm's internal billing reconciliation. Whatever you enter here appears on the invoice next to the case caption, so your accounting team can match the charge to the right client matter.
+                  </p>
                 </div>
 
                 {form.type === "live" ? (
@@ -4499,6 +4510,7 @@ function OrderFlow() {
                   <div className="review-field"><label>Case number</label><div className="val">{form.caseNumber || "Not specified"}</div></div>
                   <div className="review-field"><label>Case name</label><div className="val">{form.caseName || "Not specified"}</div></div>
                   <div className="review-field"><label>Case type</label><div className="val">{form.caseType}</div></div>
+                  {form.clientMatter && <div className="review-field"><label>Your matter reference</label><div className="val">{form.clientMatter}</div></div>}
                   {form.notes && <div className="review-field" style={{gridColumn: "1 / -1"}}><label>Special instructions</label><div className="val">{form.notes}</div></div>}
                 </div>
               </div>
@@ -5034,6 +5046,13 @@ function BuyerDashboard() {
                         <div className="bir-info">
                           <div className="bir-id">{inv.id}</div>
                           <div className="bir-date">{inv.date}</div>
+                          {(inv.caseName || inv.clientMatter) && (
+                            <div className="bir-matter" style={{fontSize: 11, color: "var(--text-muted, #64748B)", marginTop: 2, lineHeight: 1.4}}>
+                              {inv.caseName && <span>{inv.caseName}</span>}
+                              {inv.caseName && inv.clientMatter && <span> · </span>}
+                              {inv.clientMatter && <span>Matter ref: {inv.clientMatter}</span>}
+                            </div>
+                          )}
                         </div>
                         <div className="bir-amount">{inv.amount}</div>
                         <span className={"badge badge-" + (inv.status === "Paid" ? "completed" : "pending")}>{inv.status}</span>
@@ -5050,7 +5069,7 @@ function BuyerDashboard() {
                 <Icon name="shield" size={16} color="#2563EB" />
                 <div>
                   <strong>Transparent pricing</strong>
-                  <p>All orders billed at California statutory rates plus a flat {(PRICING.platformFee * 100).toFixed(0)}% attorney-side platform fee. No hidden charges. Your reporter keeps the full statutory rate.</p>
+                  <p>All orders billed at the reporter's stated rate plus a flat {(PRICING.platformFee * 100).toFixed(0)}% attorney-side platform fee. No hidden charges. Your reporter keeps 100% of their stated rate.</p>
                 </div>
               </div>
             </div>
@@ -7052,6 +7071,16 @@ function InvoiceView({ invoice, onClose }) {
               <div>{invoice.status === "pending" ? "Payment pending" : "Paid"}</div>
             </div>
           </div>
+          {(invoice.caseName || invoice.caseNumber || invoice.clientMatter) && (
+            <div className="invoice-matter" style={{padding: "12px 16px", background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 8, marginBottom: 20, fontSize: 13}}>
+              <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6}}>For your firm's internal billing reconciliation</div>
+              <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 8}}>
+                {invoice.caseName && <div><strong style={{color: "#475569"}}>Case:</strong> {invoice.caseName}</div>}
+                {invoice.caseNumber && <div><strong style={{color: "#475569"}}>Case number:</strong> {invoice.caseNumber}</div>}
+                {invoice.clientMatter && <div><strong style={{color: "#475569"}}>Your matter ref:</strong> {invoice.clientMatter}</div>}
+              </div>
+            </div>
+          )}
           <table className="invoice-table">
             <thead><tr><th>Description</th><th>Qty</th><th>Rate</th><th style={{textAlign: "right"}}>Amount</th></tr></thead>
             <tbody>
@@ -7382,6 +7411,13 @@ function SettingsPage() {
                       <div className="bir-info">
                         <div className="bir-id">{inv.id}</div>
                         <div className="bir-date">{inv.date}</div>
+                        {(inv.caseName || inv.clientMatter) && (
+                          <div className="bir-matter" style={{fontSize: 11, color: "var(--text-muted, #64748B)", marginTop: 2, lineHeight: 1.4}}>
+                            {inv.caseName && <span>{inv.caseName}</span>}
+                            {inv.caseName && inv.clientMatter && <span> · </span>}
+                            {inv.clientMatter && <span>Matter ref: {inv.clientMatter}</span>}
+                          </div>
+                        )}
                       </div>
                       <div className="bir-amount">{inv.amount}</div>
                       <span className={"badge badge-" + (inv.status === "Paid" ? "completed" : "pending")}>{inv.status}</span>
