@@ -4390,15 +4390,15 @@ function OrderFlow() {
                     <div className="price-line"><span>Statutory rate (per page)</span><strong>${PRICING.ratePerPage.toFixed(2)}</strong></div>
                     <div className="price-line"><span>Turnaround ({tierLabel(effectiveTurnaround)})</span><strong>{est.mult === 1 ? "No adjustment" : est.mult > 1 ? "+" + ((est.mult - 1) * 100).toFixed(0) + "%" : "-" + ((1 - est.mult) * 100).toFixed(0) + "%"}</strong></div>
                     <div className="price-line">
-                      <span>Platform fee <span style={{fontSize: 11, padding: "1px 6px", borderRadius: 4, background: "#DBEAFE", color: "#1E40AF", fontWeight: 700, marginLeft: 4}}>Pilot: 8%</span> <span style={{textDecoration: "line-through", color: "var(--text-muted, #94A3B8)", fontSize: 12}}>12%</span></span>
-                      <strong>${(((est.lowCost + est.highCost) / 2 + attendanceFee) * 0.08).toFixed(2)}</strong>
+                      <span>Platform fee ({(PRICING.platformFee * 100).toFixed(0)}%)</span>
+                      <strong>${(((est.lowCost + est.highCost) / 2 + attendanceFee) * PRICING.platformFee).toFixed(2)}</strong>
                     </div>
                     <div className="price-total">
                       <span>Estimated total</span>
-                      <span>${(attendanceFee + est.lowCost * 1.08).toLocaleString()} – ${(attendanceFee + est.highCost * 1.08).toLocaleString()}</span>
+                      <span>${(attendanceFee + est.lowCost * (1 + PRICING.platformFee)).toLocaleString()} – ${(attendanceFee + est.highCost * (1 + PRICING.platformFee)).toLocaleString()}</span>
                     </div>
                     <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
-                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Baseline transcript rate: $5.00/page (reporters can set their own within a ±20% band). <strong style={{color: "#2563EB"}}>Pilot rate (8%) locked in for your first year.</strong>
+                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Baseline transcript rate: ${PRICING.ratePerPage.toFixed(2)}/page (reporters can set their own within a ±20% band).
                     </p>
                   </>;
                 })()}
@@ -4623,7 +4623,7 @@ function BuyerDashboard() {
       <AppNav variant="buyer" activeTab={tab} onTabChange={t => { setTab(t); setSelectedCase(null); }} />
       <div className="page page-enter">
         <div className="container">
-          {/* Pilot welcome banner */}
+          {/* Founding firm welcome banner */}
           {showNudge && tab === "cases" && !selectedCase && (
             <div style={{marginBottom: 20, padding: 18, background: "linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #E0E7FF 100%)", border: "1px solid #93C5FD", borderRadius: 14, position: "relative"}}>
               <button onClick={() => setShowNudge(false)} style={{position: "absolute", top: 10, right: 12, background: "none", border: "none", color: "#93C5FD", cursor: "pointer", fontSize: 18}}>×</button>
@@ -4632,9 +4632,9 @@ function BuyerDashboard() {
                   <Icon name="zap" size={22} color="#fff" />
                 </div>
                 <div style={{flex: 1}}>
-                  <h3 style={{margin: "0 0 4px", fontSize: 16, fontWeight: 700, color: "#1E3A8A"}}>Welcome to the Dewey Sholes pilot!</h3>
+                  <h3 style={{margin: "0 0 4px", fontSize: 16, fontWeight: 700, color: "#1E3A8A"}}>Welcome to Dewey Sholes.</h3>
                   <p style={{margin: "0 0 10px", fontSize: 13, color: "#3B82F6", lineHeight: 1.6}}>
-                    You're locked in at <strong>8% platform fees</strong> (standard: 12%) for your entire first year. Set your delivery deadline and the price calculates automatically. Split costs with co-counsel in a few clicks.
+                    You're a founding firm – we'll be in touch directly as we launch new features and want your feedback. Set your delivery deadline and the price calculates automatically. Split costs with co-counsel in a few clicks.
                   </p>
                   <div style={{display: "flex", gap: 8, flexWrap: "wrap"}}>
                     <a href="#/order" className="btn btn-sm" style={{background: "#2563EB", color: "#fff", border: "none", padding: "6px 14px", borderRadius: 6, fontWeight: 600, fontSize: 12, textDecoration: "none"}}>Place your first order <Icon name="arrowRight" size={12} /></a>
@@ -4968,18 +4968,18 @@ function BuyerDashboard() {
                 </div>
               </div>
 
-              {/* Pilot pricing banner */}
+              {/* Founding firm banner */}
               <div style={{padding: 16, background: "linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)", border: "1px solid #93C5FD", borderRadius: 12, marginBottom: 24, display: "flex", alignItems: "center", gap: 14}}>
                 <div style={{width: 40, height: 40, borderRadius: 10, background: "#2563EB", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
                   <Icon name="zap" size={20} color="#fff" />
                 </div>
                 <div style={{flex: 1}}>
-                  <div style={{fontSize: 14, fontWeight: 700, color: "#1E40AF", marginBottom: 2}}>Pilot member since Mar 15, 2026</div>
+                  <div style={{fontSize: 14, fontWeight: 700, color: "#1E40AF", marginBottom: 2}}>Founding firm – joined Mar 15, 2026</div>
                   <div style={{fontSize: 13, color: "#3B82F6", lineHeight: 1.5}}>
-                    <strong>8% platform fee</strong> (standard: 12%) · Locked in through <strong>Mar 15, 2027</strong>
+                    Direct line to the founders, first access to new features, and a say in what we build next.
                   </div>
                 </div>
-                <span style={{fontSize: 11, padding: "4px 10px", borderRadius: 100, background: "#2563EB", color: "#fff", fontWeight: 700, flexShrink: 0}}>Pilot rate</span>
+                <span style={{fontSize: 11, padding: "4px 10px", borderRadius: 100, background: "#2563EB", color: "#fff", fontWeight: 700, flexShrink: 0}}>Founding firm</span>
               </div>
 
               <div className="quick-stats-row" style={{marginBottom: 24}}>
@@ -6008,18 +6008,18 @@ function ReporterDashboard() {
                 </div>
               </div>
 
-              {/* Pilot pricing banner */}
+              {/* Founding reporter banner */}
               <div style={{padding: 16, background: "linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)", border: "1px solid #86EFAC", borderRadius: 12, marginBottom: 24, display: "flex", alignItems: "center", gap: 14}}>
                 <div style={{width: 40, height: 40, borderRadius: 10, background: "#059669", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
                   <Icon name="zap" size={20} color="#fff" />
                 </div>
                 <div style={{flex: 1}}>
-                  <div style={{fontSize: 14, fontWeight: 700, color: "#065F46", marginBottom: 2}}>Pilot member – listing fee waived</div>
+                  <div style={{fontSize: 14, fontWeight: 700, color: "#065F46", marginBottom: 2}}>Founding reporter – joined Mar 10, 2026</div>
                   <div style={{fontSize: 13, color: "#059669", lineHeight: 1.5}}>
-                    Your <strong>$99/yr listing fee</strong> is waived through <strong>Mar 15, 2027</strong> · Code PIONEER2026
+                    Direct line to the founders, first dibs on new features, and a say in how the platform evolves.
                   </div>
                 </div>
-                <span style={{fontSize: 11, padding: "4px 10px", borderRadius: 100, background: "#059669", color: "#fff", fontWeight: 700, flexShrink: 0}}>Free</span>
+                <span style={{fontSize: 11, padding: "4px 10px", borderRadius: 100, background: "#059669", color: "#fff", fontWeight: 700, flexShrink: 0}}>Founding reporter</span>
               </div>
 
               <div className="stat-cards">
@@ -6597,13 +6597,13 @@ function AdminDashboard() {
                     <div className="metric-trend up">+22% vs Feb</div>
                   </div>
                   <div className="metric-card">
-                    <div className="metric-label">Platform fee revenue (8% pilot)</div>
-                    <div className="metric-value" style={{color: "#059669"}}>$3,860</div>
+                    <div className="metric-label">Platform fee revenue (12%)</div>
+                    <div className="metric-value" style={{color: "#059669"}}>$5,790</div>
                     <div className="metric-trend up">+22% vs Feb</div>
                   </div>
                   <div className="metric-card">
                     <div className="metric-label">CSR payouts</div>
-                    <div className="metric-value">$44,390</div>
+                    <div className="metric-value">$42,460</div>
                     <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>335 completed jobs</div>
                   </div>
                   <div className="metric-card">
@@ -6619,21 +6619,7 @@ function AdminDashboard() {
                   <div className="metric-card">
                     <div className="metric-label">Listing fee revenue (annual)</div>
                     <div className="metric-value" style={{color: "#94A3B8"}}>$0</div>
-                    <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Waived during pilot</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Pilot pricing status */}
-              <div style={{marginTop: 24, padding: 16, background: "linear-gradient(135deg, #EFF6FF, #DBEAFE)", border: "1px solid #93C5FD", borderRadius: 12}}>
-                <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-                  <div>
-                    <div style={{fontSize: 14, fontWeight: 700, color: "#1E40AF", marginBottom: 4}}>Pilot pricing active</div>
-                    <div style={{fontSize: 13, color: "#3B82F6"}}>89% of users on pilot rate (8%). Standard rate (12%) applies to 34 users who signed up after pilot window.</div>
-                  </div>
-                  <div style={{textAlign: "right"}}>
-                    <div style={{fontSize: 12, color: "#3B82F6"}}>Pilot revenue if at standard rate</div>
-                    <div style={{fontSize: 18, fontWeight: 800, color: "#1E40AF"}}>$5,790 <span style={{fontSize: 12, fontWeight: 400}}>vs. $3,860 actual</span></div>
+                    <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>First billing cycle Mar 2027</div>
                   </div>
                 </div>
               </div>
@@ -6712,7 +6698,7 @@ function AdminDashboard() {
                 </div>
                 <div className="quick-stat">
                   <Icon name="zap" size={18} color="#7C3AED" />
-                  <div><div className="quick-stat-value">89%</div><div className="quick-stat-label">pilot rate users</div></div>
+                  <div><div className="quick-stat-value">89%</div><div className="quick-stat-label">founding cohort</div></div>
                 </div>
               </div>
               <div style={{marginBottom: 16, display: "flex", gap: 10}}>
@@ -6748,7 +6734,7 @@ function AdminDashboard() {
                         <strong style={{fontSize: 14, color: "var(--text, #0F172A)"}}>{u.name}</strong>
                         <span style={{fontSize: 11, fontWeight: 600, padding: "1px 8px", borderRadius: 100, background: u.role === "Attorney" ? "#DBEAFE" : "#D1FAE5", color: u.role === "Attorney" ? "#1E40AF" : "#065F46"}}>{u.role}</span>
                         <span style={{fontSize: 11, fontWeight: 600, padding: "1px 8px", borderRadius: 100, background: u.status === "active" ? "#D1FAE5" : u.status === "paused" ? "#FEF3C7" : "#FEE2E2", color: u.status === "active" ? "#065F46" : u.status === "paused" ? "#92400E" : "#DC2626"}}>{u.status}</span>
-                        {u.tier === "pilot" && <span style={{fontSize: 10, fontWeight: 700, padding: "1px 6px", borderRadius: 4, background: "#DBEAFE", color: "#1E40AF"}}>PILOT</span>}
+                        {u.tier === "pilot" && <span style={{fontSize: 10, fontWeight: 700, padding: "1px 6px", borderRadius: 4, background: "#DBEAFE", color: "#1E40AF"}}>FOUNDING</span>}
                       </div>
                       <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginTop: 2}}>
                         {u.email} · {u.barCsr} {u.firm !== "–" ? " · " + u.firm : ""} · Joined {u.joined} · {u.orders} orders
@@ -7497,10 +7483,8 @@ function PricingCalculator() {
   const transcriptBase = effectivePages * PRICING.ratePerPage;
   const turnaroundFee = transcriptBase * (mult - 1);
   const subtotal = attendanceFee + transcriptBase + turnaroundFee;
-  const pilotRate = 0.08;
-  const platformFee = subtotal * pilotRate;
+  const platformFee = subtotal * PRICING.platformFee;
   const total = subtotal + platformFee;
-  const standardTotal = subtotal + (subtotal * PRICING.platformFee);
 
   const formatDuration = (min) => {
     const h = Math.floor(min / 60);
@@ -7577,15 +7561,12 @@ function PricingCalculator() {
       </div>
       <div className="calc-result">
         <div className="calc-total">${total.toFixed(2)} <span>estimated</span></div>
-        <div style={{fontSize: 12, color: "#2563EB", fontWeight: 600, margin: "-4px 0 8px"}}>
-          Pilot rate – you save ${(standardTotal - total).toFixed(2)} vs. standard pricing
-        </div>
         <div className="calc-breakdown">
           {isLive && <span>Attendance: ${attendanceFee.toLocaleString()}</span>}
           <span>Transcript ({effectivePages} pg): ${transcriptBase.toFixed(2)}</span>
           {turnaroundFee > 0 && <span>Turnaround: +${turnaroundFee.toFixed(2)}</span>}
           {turnaroundFee < 0 && <span>Discount: -${Math.abs(turnaroundFee).toFixed(2)}</span>}
-          <span>Platform fee: <span style={{textDecoration: "line-through", color: "#94A3B8"}}>12%</span> <strong style={{color: "#2563EB"}}>8% pilot</strong> = +${platformFee.toFixed(2)}</span>
+          <span>Platform fee ({(PRICING.platformFee * 100).toFixed(0)}%): +${platformFee.toFixed(2)}</span>
         </div>
         <a href="#/order" className="btn btn-primary btn-sm" style={{marginTop: 16}}>Order now <Icon name="arrowRight" size={14} color="#fff" /></a>
       </div>
@@ -7649,7 +7630,7 @@ function ReporterOnboarding() {
           </div>
         </div>
         <div style={{marginTop: 16, padding: 12, background: "rgba(5,150,105,0.08)", border: "1px solid rgba(5,150,105,0.2)", borderRadius: 10, textAlign: "center"}}>
-          <span style={{fontSize: 14, fontWeight: 700, color: "#059669"}}>Pilot special: $99/yr listing fee waived for your first year</span>
+          <span style={{fontSize: 14, fontWeight: 700, color: "#059669"}}>Founding reporter perks: direct founder support, first dibs on new features, and a say in the roadmap</span>
         </div>
         <button className="btn btn-primary" style={{fontSize: 17, padding: "16px 48px"}} onClick={() => setScreen(1)}>Get started <Icon name="arrowRight" size={18} /></button>
         <p className="welcome-social-proof" style={{marginTop: 20}}>
@@ -7679,7 +7660,7 @@ function ReporterOnboarding() {
             </div>
             <div>
               <div style={{fontSize: 15, fontWeight: 700, color: "var(--text, #0F172A)"}}>Individual CSR account</div>
-              <div style={{fontSize: 13, color: "var(--text-secondary, #475569)"}}>${PRICING.listingFeeIndividual}/year listing fee – <strong style={{color: "#059669"}}>waived during pilot</strong></div>
+              <div style={{fontSize: 13, color: "var(--text-secondary, #475569)"}}>${PRICING.listingFeeIndividual}/year listing fee</div>
             </div>
           </div>
           <ul style={{margin: 0, paddingLeft: 20, fontSize: 13, color: "var(--text-secondary, #475569)", lineHeight: 1.8}}>
@@ -7747,7 +7728,7 @@ function ReporterOnboarding() {
             </div>
             <h2 style={{fontSize: 24, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 8}}>Bring your usual firms with you</h2>
             <p style={{fontSize: 14, color: "var(--text-secondary, #64748B)", lineHeight: 1.6, maxWidth: 480, margin: "0 auto"}}>
-              Invite the law firms you already work with. They get pilot pricing, you get auto-favorite status with their account, plus rewards when they place orders.
+              Invite the law firms you already work with. They get founding-firm onboarding perks, you get auto-favorite status with their account, plus rewards when they place orders.
             </p>
           </div>
 
@@ -7799,7 +7780,7 @@ function ReporterOnboarding() {
             <div style={{marginTop: 16, padding: 14, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10}}>
               <div style={{fontSize: 11, fontWeight: 700, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 8}}>What we'll send them</div>
               <div style={{fontSize: 12, color: "var(--text-secondary, #475569)", lineHeight: 1.6, fontStyle: "italic"}}>
-                "{form.name || "Your CSR"} just joined Dewey Sholes – a transparent court-reporter platform with statutory pricing and pilot-rate fees. They'd like to keep working with you here. Sign up and your first transcript order's platform fee is waived."
+                "{form.name || "Your CSR"} just joined Dewey Sholes – a transparent court-reporter marketplace with flat 12% platform fees, no agency markup, and the ability to keep your usual reporters at the top of your list. They'd like to keep working with you here."
               </div>
             </div>
           )}
@@ -7896,8 +7877,8 @@ function ReporterOnboarding() {
             <div className="ps-row"><span className="ps-label">Courts</span><span className="ps-value">{courtLabels}</span></div>
           </div>
           <div className="promo-callout">
-            <strong>Your first year's listing fee is waived!</strong>
-            <span>Code PIONEER2026 – $99 value applied to your account</span>
+            <strong>Welcome aboard, founding reporter.</strong>
+            <span>Direct founder support, first dibs on new features, and a say in the roadmap.</span>
           </div>
 
           {/* PWA install prompt */}
@@ -8152,7 +8133,7 @@ function ReporterOnboarding() {
         </div>
         <div className="info-callout">
           <div className="callout-icon"><Icon name="shield" size={16} /></div>
-          <p>Dewey Sholes charges a ${PRICING.listingFeeIndividual}/year listing fee (waived during the pilot). No per-job deductions, no agency cut – you keep 100% of the statutory rate for every transcript. Traditional agencies take 50–85%; we take zero from your earnings. Payment within 2 business days of delivery.</p>
+          <p>Dewey Sholes charges a ${PRICING.listingFeeIndividual}/year listing fee. No per-job deductions, no agency cut – you keep 100% of your stated rate for every transcript. Traditional agencies take 50–85%; we take zero from your earnings. Payment within 2 business days of delivery.</p>
         </div>
         <hr className="section-divider" />
         <div className="form-group">
@@ -8576,7 +8557,7 @@ const DEFAULT_KANBAN_TASKS = [
   { id: "t65", title: "Record UTM params on signup for marketing attribution", description: "On the real-build signup pages (CSR + attorney/firm), read source/campaign/batch/csr URL query params on mount and persist them to the user record at signup. Fields to capture: signup_source, signup_campaign, signup_batch, signup_referrer_csr (license number for halo and referral attribution). Required for attributing pilot signups to email batches, postcard mailers, referral links, and halo emails. Small feature – about half a day of work – but blocks marketing-tracking integrity.", column: "todo", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-05-09", notes: "Depends on t54 (real build scaffolded). UTM conventions defined in research/marketing_plan_phase1_csr_supply.md and marketing_plan_phase2_law_firms.md. Pre-signup tracker (Sheets) handles outbound metrics; this feature handles authoritative signup attribution on the platform side.", tags: ["P1"] },
   { id: "t66", title: "CSR onboarding 'firms you work with' field + firm-tracker trigger", description: "Add structured 'firms you regularly work with' field to CSR onboarding (list of firm names + optional city). On submit, each firm name triggers a write to the firm outreach tracker: append a new row with tier=1A and the CSR's license in cited_by_csr_licenses, OR if firm already exists, append CSR license to the existing row's list. Fuzzy-match firm names before creating new rows (Walsh Family Law vs Walsh Family Law LLP) and surface ambiguous matches for human review. Powers the Tier-1A personalization in Phase 2: 'a court reporter you've worked with is now on Dewey Sholes.'", column: "todo", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-05-09", notes: "Depends on t54. Schema in research/firm_outreach_tracker_template.csv. Trigger flow specified in research/marketing_plan_phase2_law_firms.md (CSR-cited firms section). Distinct from existing 'recent cases' field (cases = experience showcase; firms = marketplace network signal).", tags: ["P1", "marketing"] },
   { id: "t63", title: "Legal assistant incentive program (pilot only)", description: "Points-based reward economy for legal assistants who book jobs during the 6-month pilot. Earn 10 points per completed order. Redeem from a catalog: $10 Starbucks card (30 pts / 3 orders), branded canvas tote (60 pts / 6 orders), real branded Stanley tumbler (100 pts / 10 orders). Users choose what to redeem and when. Per-individual not per-firm. Anti-gaming protections (min order $50, refund-revokes-points, single-account enforcement, fraud review on Stanley redemptions). Tremendous/Tango Card API for digital gift cards. ~6 days of build effort. Realistic reward cost: 13-15% of platform revenue (Stanley reframed as a $60 customer acquisition cost for high-LTV firms).", column: "backlog", priority: "high", assignee: ["Aud"], category: "marketing", dueDate: "", createdAt: "2026-05-02", notes: "Build during Phase 2 (firm onboarding). Full spec at research/legal_assistant_incentive_program.md. PILOT-ONLY – drives early adoption. Points expire 30 days after pilot ends (with email warning). Pausable mid-pilot if cash runs low; existing balances always honored.", tags: ["P1", "marketing"] },
-  { id: "t62", title: "Pilot pricing auto-application system", description: "Users who sign up during the pilot period automatically get discounted pricing – no promo codes needed. CSRs: $99/yr listing fee waived for first year. Attorneys: 8% platform fee (vs 12%) for first year. Set pricing_tier and pilot_expires_at on the user record at signup based on created_at. Fee calculation checks tier at transaction time. Dashboard shows 'Pilot pricing active' banner with expiration date. 30-day email before pilot_expires_at warns of rate change. After expiration, standard pricing auto-applies.", column: "todo", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-04-11", notes: "Pilot window: 6 months (extendable via platform config). Months 1-2 for CSR onboarding to 100+, months 3-5 for firm onboarding, month 6 for refinement.", tags: ["P1"] },
+  { id: "t62", title: "Founding-member tagging + admin reporting", description: "Tag the first cohort of attorney/reporter signups as 'founding' for internal segmentation and outreach (no discounted pricing – everyone pays the standard 12% platform fee and $99/yr listing fee). Set founding_member=true and joined_cohort='launch-2026' on the user record for users who sign up within the launch window. Surface in admin dashboards and CRM exports so we can prioritize support, feedback requests, and product-input sessions. No price logic, no expiration, no banners promising rate locks.", column: "todo", priority: "high", assignee: ["Aud"], category: "product", dueDate: "", createdAt: "2026-04-11", notes: "Launch window: 6 months from public launch. Use the founding cohort to anchor early case studies and reference firms.", tags: ["P1"] },
 
   // ── Backlog ──
   { id: "t36", title: "Dispute resolution research", description: "Court rules for transcript correction in CA.", column: "backlog", priority: "low", assignee: ["Aud"], category: "legal", dueDate: "", createdAt: "2026-03-15", notes: "", tags: ["P2", "legal"] },
@@ -9702,7 +9683,7 @@ function LandingPage() {
         <div className="container">
           <div className="hero-grid">
             <div>
-              <div className="kicker">Pilot phase launching soon</div>
+              <div className="kicker">Now onboarding founding firms and reporters</div>
               <h1 className="headline">
                 Court transcripts,<br />
                 <em>finally simple.</em>
@@ -10351,7 +10332,7 @@ function FaqPage() {
   const sections = [
     { title: "For attorneys", items: [
       { id: "a1", q: "How do I place a transcript order?", a: "Click \"Order a transcript\" from the homepage, choose live attendance or post-hearing transcription, enter your case details, set your delivery deadline, and submit. Your deadline determines the turnaround tier and price automatically. We'll match you with a qualified reporter, usually within hours." },
-      { id: "a2", q: "How does pricing work?", a: "Transcript pricing is $5.00 per page baseline (each reporter sets their own rate within a ±20% band), plus a platform fee. During the pilot, the platform fee is 8% (standard rate after Year 1: 12%). Your delivery deadline determines the turnaround tier: Rush (1-2 business days, 1.5x rate), Expedited (3-5 business days, baseline rate), or Standard (6+ business days, 15% savings). Set your need-by date and the price calculates automatically." },
+      { id: "a2", q: "How does pricing work?", a: "Transcript pricing is $5.00 per page baseline (each reporter sets their own rate within a ±20% band), plus a flat 12% platform fee. Your delivery deadline determines the turnaround tier: Rush (1-2 business days, 1.5x rate), Expedited (3-5 business days, baseline rate), or Standard (6+ business days, 15% savings). Set your need-by date and the price calculates automatically." },
       { id: "a3", q: "Can I split the cost with other parties?", a: "Yes. When placing an order, toggle \"Split cost with other parties\" and add co-paying attorneys by name and email. Each party receives a secure payment link. The job is only posted to reporters once all parties have paid – no chasing, no partial payments. Co-payers don't need a Dewey Sholes account." },
       { id: "a4", q: "What if I'm unhappy with a transcript?", a: "You can request corrections within 90 days of delivery. Specify the pages and describe the issue, and the reporter will be notified to upload a corrected version. No additional cost for corrections – the reporter's statutory rate covers delivering an accurate transcript." },
       { id: "a5", q: "How do I know if a reporter is any good?", a: "Every reporter has a quality rating (1-5 stars, rated by attorneys) and a timeliness score (auto-calculated from their delivery history). You can also read written feedback from other attorneys on the reporter's profile. Reporters with consistently high ratings appear first in search results." },
@@ -10362,14 +10343,14 @@ function FaqPage() {
       { id: "r1", q: "How do I get started as a reporter on Dewey Sholes?", a: "Sign up through our reporter onboarding flow. You'll need to provide your CSR license number, reporting method, certifications, and preferences. We verify your credentials with the California Court Reporters Board before activating your profile." },
       { id: "r2", q: "How and when do I get paid?", a: "Payment is released automatically within 2 business days of delivery acceptance by the attorney. If the attorney doesn't respond within 2 business days, payment auto-releases. Funds are deposited to your linked bank account via Stripe." },
       { id: "r3", q: "How does job matching work?", a: "You'll receive push notifications for new jobs matching your case type preferences and turnaround capabilities. Each job shows the court, deadline, estimated pages, and your potential earnings. Accept with one tap, or decline – no penalty for declining." },
-      { id: "r4", q: "What are the listing fees?", a: "Individual reporter listing is $99 per year, waived during the 6-month pilot for your entire first year. CSR firm accounts (3-10 reporters under one account with centralized billing) are deferred to a future release – you can express interest at signup and we'll notify you when they're available." },
+      { id: "r4", q: "What are the listing fees?", a: "Individual reporter listing is $99 per year, billed annually. CSR firm accounts (3-10 reporters under one account with centralized billing) are deferred to a future release – you can express interest at signup and we'll notify you when they're available." },
       { id: "r5", q: "How does the check-in system work?", a: "After you accept a job, the platform checks in at the midpoint of the delivery window to confirm you're on track. You can respond \"On track,\" request a deadline extension, or release the job for reassignment. Rush jobs are automatically reassigned if you report you're not on track." },
       { id: "r6", q: "How are ratings calculated?", a: "Your profile shows two scores: Timeliness (auto-calculated from your delivery dates vs. deadlines) and Quality (rated 1-5 by attorneys after each delivery, with optional written feedback). Higher ratings mean you appear first in search results and get more job offers." },
     ]},
     { title: "General", items: [
       { id: "g1", q: "Is my data secure?", a: "Yes. All data is encrypted in transit (TLS 1.3) and at rest (AES-256). Transcripts are accessible only to the ordering attorney and the assigned reporter via time-limited signed URLs. We use Stripe for payment processing and are building toward SOC 2 compliance. We never send transcripts via email – only secure download links." },
-      { id: "g2", q: "What is the pilot program?", a: "We're currently running a pilot in California. Attorneys who sign up during the pilot get an 8% platform fee (standard: 12%) locked in for their entire first year. Reporters get their $99/yr listing fee waived for the first year. The pilot helps us refine the platform before scaling statewide." },
-      { id: "g3", q: "What fees does Dewey Sholes charge?", a: "Attorneys pay a platform fee on each order (8% during pilot, 12% standard). Reporters pay an annual $99 listing fee (waived during the pilot). Reporters keep 100% of the statutory transcript rate – we never take a cut of your earnings. CSR firm accounts (multiple reporters under one account) are coming in a future release." },
+      { id: "g2", q: "What does it mean to be a founding firm or founding reporter?", a: "We're currently in our launch window in California. Firms and reporters who sign up now get direct support from the founders, first access to new features as we roll them out, and a real say in how the platform evolves. Pricing is the same as everyone else: attorneys pay a flat 12% platform fee on each order, reporters pay a $99/yr listing fee." },
+      { id: "g3", q: "What fees does Dewey Sholes charge?", a: "Attorneys pay a flat 12% platform fee on each order. Reporters pay a $99/yr listing fee, billed annually. Reporters keep 100% of their stated transcript rate – we never take a cut of your earnings. CSR firm accounts (multiple reporters under one account) are coming in a future release." },
       { id: "g4", q: "Do you handle depositions?", a: "Not at this time. Dewey Sholes currently focuses on public court proceedings – live courtroom hearings and audio transcription of court audio. We're not handling depositions because they're private proceedings that often involve protected health information, sealed materials, and party-specific confidentiality stipulations that require additional security and compliance infrastructure. We may expand to deposition support in a future release, but for now, we encourage you to work with a deposition agency for those needs." },
       { id: "g5", q: "How do I contact support?", a: "Click the ? button in the bottom-right corner of any dashboard page to report an issue or ask a question. You can also visit our contact page or email support@deweysholes.com. We respond within 1 business day." },
       { id: "g6", q: "Which jurisdictions do you serve?", a: "We currently serve all of California. Any CSR licensed by the California Court Reporters Board can sign up. For transcription jobs, the reporter can be located anywhere in the state. For live attendance, the reporter needs to be in or near the court's county." },
@@ -11303,13 +11284,13 @@ function ForReportersPage() {
         </div>
       </section>
 
-      {/* Pilot CTA */}
+      {/* Founding reporter CTA */}
       <section className="section hybrid" style={{paddingBottom: 96}}>
         <div className="container">
           <div className="fee-waiver" style={{maxWidth: 880, margin: "0 auto"}}>
             <div>
-              <p>Pilot special: $99 listing fee waived.</p>
-              <div className="sub">Sign up during our 6-month pilot and pay $0 for your first year. Build your client base while we build the platform. No commitment.</div>
+              <p>Founding reporter perks.</p>
+              <div className="sub">Join now and get direct support from the founders, first dibs on new features, and a say in how the platform evolves. Build your client base while we build the platform.</div>
             </div>
             <a href="#/reporter-signup">Apply to join →</a>
           </div>
@@ -11333,7 +11314,7 @@ function PricingPage() {
             <div className="section-eyebrow" style={{color: "var(--ochre-deep)"}}>Pricing</div>
             <h2 className="section-title">Transparent rates, <em>no hidden line items.</em></h2>
             <p className="section-lede" style={{maxWidth: 820}}>
-              Transcript pricing at $5.00/page baseline (reporters can set their own within a ±20% band), and live attendance rates set well below typical CSR agency fees. Court reporters keep what they earn, while firms pay a standard 12% fee<sup className="footnote-marker">*</sup> for each transcription job — because the platform automates the line items agencies bill as extras.
+              Transcript pricing at $5.00/page baseline (reporters can set their own within a ±20% band), and live attendance rates set well below typical CSR agency fees. Court reporters keep what they earn, while firms pay a flat 12% platform fee for each transcription job – because the platform automates the line items agencies bill as extras.
             </p>
           </div>
 
@@ -11402,9 +11383,6 @@ function PricingPage() {
             </div>
           </div>
 
-          <p className="pilot-callout" id="pilot-callout">
-            <sup className="footnote-marker">*</sup><strong>Join our 6-month pilot and save:</strong> Law firms pay an 8% platform fee for your first year (normally 12%). CSRs get the $99 listing fee waived for your first year.
-          </p>
         </div>
       </section>
 
