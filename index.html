@@ -7901,7 +7901,8 @@ function ReporterOnboarding() {
     jobTypes: [], caseTypes: [], courts: [], turnarounds: [],
     recentCases: [{caseName: "", caseNumber: "", court: "", date: "", role: "Live attendance"}],
     phone: "", notifSmsJobs: true, notifEmail: true, notifSmsReminders: true, allowCopyRequests: true,
-    name: "", email: "", password: ""
+    name: "", email: "", password: "",
+    promoCode: "", promoCodeOpen: false  // Founding-cohort promo code (email-only outreach)
   });
   const update = (k, v) => setForm(prev => ({ ...prev, [k]: v }));
   const toggleArr = (k, v) => setForm(prev => ({
@@ -7934,7 +7935,7 @@ function ReporterOnboarding() {
           <div className="value-prop-card">
             <div className="vp-icon green"><Icon name="dollarSign" size={24} /></div>
             <h3>Keep 100% of your rate</h3>
-            <p>No agency taking 50-85% of your earnings. You keep every dollar of the statutory rate. Payment in 2 business days, every time.</p>
+            <p>No agency taking 50-85% of your earnings. You keep every dollar of your published rate. Payment in 2 business days, every time.</p>
           </div>
           <div className="value-prop-card">
             <div className="vp-icon blue"><Icon name="bell" size={24} /></div>
@@ -7951,6 +7952,21 @@ function ReporterOnboarding() {
           <span style={{fontSize: 14, fontWeight: 700, color: "#059669"}}>Founding reporter perks: direct founder support, first dibs on new features, and a say in the roadmap</span>
         </div>
         <button className="btn btn-primary" style={{fontSize: 17, padding: "16px 48px"}} onClick={() => setScreen(1)}>Get started <Icon name="arrowRight" size={18} /></button>
+
+        {/* Promo code (optional, email-only outreach) */}
+        <div style={{marginTop: 20, textAlign: "center"}}>
+          {!form.promoCodeOpen ? (
+            <button type="button" onClick={() => update("promoCodeOpen", true)} style={{background: "none", border: "none", color: "var(--text-muted, #94A3B8)", fontSize: 12, cursor: "pointer", textDecoration: "underline dotted", padding: 4}}>
+              Have a promo code?
+            </button>
+          ) : (
+            <div style={{display: "inline-flex", gap: 8, alignItems: "center", padding: "8px 14px", background: "var(--bg-card, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10}}>
+              <input className="form-input" placeholder="Enter code" value={form.promoCode || ""} onChange={e => update("promoCode", e.target.value.toUpperCase())} style={{fontSize: 13, width: 160, padding: "6px 10px"}} maxLength={20} />
+              <span style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Applied at signup</span>
+            </div>
+          )}
+        </div>
+
         <p className="welcome-social-proof" style={{marginTop: 20}}>
           <a href="#/reporter" style={{color: "var(--brand, #2563EB)", textDecoration: "none"}}>Already have an account? Sign in</a>
         </p>
@@ -8528,6 +8544,7 @@ function AttorneyOnboarding() {
     favoriteReporters: [],
     billingPref: "", notifStatus: true, notifAssignment: true, notifDelivery: true, notifMarketing: false,
     password: "", confirmPassword: "",
+    promoCode: "", promoCodeOpen: false,  // Founding-cohort promo code (email-only outreach)
   });
   const update = (k, v) => setForm(f => ({...f, [k]: v}));
   const toggleArr = (k, v) => setForm(f => ({...f, [k]: f[k].includes(v) ? f[k].filter(x => x !== v) : [...f[k], v]}));
@@ -8553,7 +8570,7 @@ function AttorneyOnboarding() {
           <div className="value-prop-card">
             <div className="vp-icon green"><Icon name="dollarSign" size={24} color="#059669" /></div>
             <h3>Transparent pricing</h3>
-            <p>California statutory rates plus a flat 12% platform fee. Your reporter keeps the full rate – no agency markup.</p>
+            <p>Published rates plus a flat 12% platform fee. Reporters keep 100% of their rate – no agency markup.</p>
           </div>
           <div className="value-prop-card">
             <div className="vp-icon blue"><Icon name="fileText" size={24} color="#2563EB" /></div>
@@ -8567,6 +8584,21 @@ function AttorneyOnboarding() {
           </div>
         </div>
         <button className="btn btn-primary" style={{fontSize: 18, padding: "16px 40px", marginTop: 40}} onClick={() => setScreen(1)}>Create your account <Icon name="arrowRight" size={18} color="#fff" /></button>
+
+        {/* Promo code (optional, email-only outreach) */}
+        <div style={{marginTop: 20, textAlign: "center"}}>
+          {!form.promoCodeOpen ? (
+            <button type="button" onClick={() => update("promoCodeOpen", true)} style={{background: "none", border: "none", color: "var(--text-muted, #94A3B8)", fontSize: 12, cursor: "pointer", textDecoration: "underline dotted", padding: 4}}>
+              Have a promo code?
+            </button>
+          ) : (
+            <div style={{display: "inline-flex", gap: 8, alignItems: "center", padding: "8px 14px", background: "var(--bg-card, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10}}>
+              <input className="form-input" placeholder="Enter code" value={form.promoCode || ""} onChange={e => update("promoCode", e.target.value.toUpperCase())} style={{fontSize: 13, width: 160, padding: "6px 10px"}} maxLength={20} />
+              <span style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Applied at signup</span>
+            </div>
+          )}
+        </div>
+
         <div style={{marginTop: 16}}>
           <a href="#/dashboard" style={{color: "var(--brand, #2563EB)", textDecoration: "none"}}>Already have an account? Sign in</a>
         </div>

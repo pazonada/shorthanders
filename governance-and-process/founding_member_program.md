@@ -35,14 +35,60 @@ The first 6 months from public launch are the "launch window." Users who sign up
 - Early case-study / reference-firm opportunities (for firms who want them)
 
 **What founding members don't get:**
-- Discounted pricing
-- Locked-in rates
-- Fee waivers
-- Promo codes
+- A discounted-then-bumps-up pricing tier (the retired model)
+- Locked-in rates that expire on a date certain
+- Publicly advertised fee discounts
 
-**Implementation:** Set `founding_member = true` and `joined_cohort = "launch-2026"` on the user record at signup, when `created_at` falls within the launch window. No price logic touches this flag — it's used purely for internal segmentation, CRM exports, and admin dashboards.
+**Implementation:** Set `founding_member = true` and `joined_cohort = "launch-2026"` on the user record at signup, when `created_at` falls within the launch window. No price logic touches this flag – it's used purely for internal segmentation, CRM exports, and admin dashboards.
 
-The launch window is configurable at the platform level — we can extend it without redefining anyone's pricing because there's no pricing tier attached.
+The launch window is configurable at the platform level – we can extend it without redefining anyone's pricing because there's no pricing tier attached.
+
+---
+
+## Email-only promo codes (added 2026-05-14)
+
+A discretionary marketing tool for the founding cohort. Codes are handed out via **direct outreach only** – never advertised on the site, never listed in public marketing copy, never linked from the footer.
+
+### How they work
+
+- Founders or the marketing-strategist agent generate a code (e.g. `BAYAREA2026`, `WALSH-FIRM-MAY`) tied to a specific outreach campaign or recipient.
+- The code carries an associated incentive: a one-time platform-fee waiver on first order, a one-time partial discount, or a one-time gift card redemption. Capped value per recipient.
+- The signup flow has a collapsed "Have a promo code?" link on the welcome screen (attorney + CSR). Clicking expands an input. The code is captured on the user record at signup.
+- On first qualifying transaction, the incentive applies automatically; the code is then consumed and can't be reused by that account.
+
+### What codes can carry
+
+| Incentive | Constraint | Example use |
+|---|---|---|
+| One-time platform-fee waiver | First order only | Reactivating a stalled firm-outreach conversation |
+| Partial platform-fee discount (e.g. 50% off first order) | First order only | Founding-firm direct outreach via Rosie's network |
+| Gift card on signup (e.g. $25 Amazon) | Subject to anti-gaming guardrails | CSR survey completion bonus |
+| Free first month of CSR listing fee | Drops to $99/yr after | Founding-reporter recruitment via FB groups |
+
+### What codes can't carry
+
+- No multi-year discount tiers (re-creates the churn cliff we just retired)
+- No "first year free / locked rate" gimmicks (same reason)
+- No site-wide-publicized codes (defeats the email-only constraint)
+- No codes that apply to every order indefinitely (compounds into a permanent margin hit)
+
+### Why email-only
+
+The whole point of retiring the pilot-pricing tier was to avoid the rate-change-warning problem ("your discount ends on date X"). Public codes recreate that problem the moment they're listed.
+
+Email-only codes have none of those properties:
+- They're capped, one-time, and never advertised
+- A CSR or attorney who didn't get the code never sees it referenced anywhere
+- They don't create a churn cliff because they're not a tier with an expiration
+
+### Governance
+
+The marketing-strategist agent (`.claude/agents/marketing-strategist.md`) is the day-to-day owner of which codes are generated and to whom. Aud signs off on any code with a value above $50 per recipient. Codes are tracked in the admin dashboard so we know which outreach surfaces are converting.
+
+**Open questions for follow-up:**
+- Code-generation UI: do we build admin tooling in V1, or generate codes ad hoc in a spreadsheet?
+- Capped budget per quarter: needs Rosie sign-off. Propose $1,000/quarter cap on aggregate code-value redemptions until we have revenue to justify more.
+- Anti-gaming: same guardrails as the CSR referral program (no self-referrals, first-order-only verification, refund-revokes-redemption).
 
 ---
 
