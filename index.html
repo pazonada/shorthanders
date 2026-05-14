@@ -4409,7 +4409,7 @@ function OrderFlow() {
                       <span>${(attendanceFee + est.lowCost * (1 + PRICING.platformFee)).toLocaleString()} – ${(attendanceFee + est.highCost * (1 + PRICING.platformFee)).toLocaleString()}</span>
                     </div>
                     <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
-                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Baseline transcript rate: ${PRICING.ratePerPage.toFixed(2)}/page (reporters can set their own within a ±20% band).
+                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Transcript rate at launch: ${PRICING.ratePerPage.toFixed(2)}/page, the same for every reporter on the platform.
                     </p>
                   </>;
                 })()}
@@ -5069,7 +5069,7 @@ function BuyerDashboard() {
                 <Icon name="shield" size={16} color="#2563EB" />
                 <div>
                   <strong>Transparent pricing</strong>
-                  <p>All orders billed at the reporter's stated rate plus a flat {(PRICING.platformFee * 100).toFixed(0)}% attorney-side platform fee. No hidden charges. Your reporter keeps 100% of their stated rate.</p>
+                  <p>All orders billed at our published rates plus a flat {(PRICING.platformFee * 100).toFixed(0)}% attorney-side platform fee. No hidden charges. Your reporter keeps 100% of their earnings – we never deduct from what they're paid.</p>
                 </div>
               </div>
             </div>
@@ -6906,7 +6906,7 @@ function AdminDashboard() {
               <div className="compliance-list">
                 {[
                   { title: "CSR license verification", desc: "All active reporters have valid California CSR licenses on file.", status: "pass", icon: "shield" },
-                  { title: "Transparent pricing", desc: "Transcript pricing at $5.00/page baseline, reporter-set within ±20% bands. No hidden line items.", status: "pass", icon: "fileText" },
+                  { title: "Transparent pricing", desc: "Transcript pricing at $5.00/page, the same for every reporter at launch. No hidden line items. CSR rate-setting bands deferred post-launch.", status: "pass", icon: "fileText" },
                   { title: "Transcript certification", desc: "All delivered transcripts include CSR certification page.", status: "pass", icon: "checkCircle" },
                   { title: "Record retention", desc: "Transcripts and order records retained for minimum 10 years per CA requirements.", status: "pass", icon: "clock" },
                   { title: "CCPA data privacy", desc: "User data handling compliant with California Consumer Privacy Act.", status: "pass", icon: "shield" },
@@ -8169,7 +8169,7 @@ function ReporterOnboarding() {
         </div>
         <div className="info-callout">
           <div className="callout-icon"><Icon name="shield" size={16} /></div>
-          <p>Dewey Sholes charges a ${PRICING.listingFeeIndividual}/year listing fee. No per-job deductions, no agency cut – you keep 100% of your stated rate for every transcript. Traditional agencies take 50–85%; we take zero from your earnings. Payment within 2 business days of delivery.</p>
+          <p>Dewey Sholes charges a ${PRICING.listingFeeIndividual}/year listing fee. No per-job deductions, no agency cut – you keep 100% of the published rate for every transcript. Traditional agencies take 50–85%; we take zero from your earnings. Payment within 2 business days of delivery.</p>
         </div>
         <hr className="section-divider" />
         <div className="form-group">
@@ -10368,7 +10368,7 @@ function FaqPage() {
   const sections = [
     { title: "For attorneys", items: [
       { id: "a1", q: "How do I place a transcript order?", a: "Click \"Order a transcript\" from the homepage, choose live attendance or post-hearing transcription, enter your case details, set your delivery deadline, and submit. Your deadline determines the turnaround tier and price automatically. We'll match you with a qualified reporter, usually within hours." },
-      { id: "a2", q: "How does pricing work?", a: "Transcript pricing is $5.00 per page baseline (each reporter sets their own rate within a ±20% band), plus a flat 12% platform fee. Your delivery deadline determines the turnaround tier: Rush (1-2 business days, 1.5x rate), Expedited (3-5 business days, baseline rate), or Standard (6+ business days, 15% savings). Set your need-by date and the price calculates automatically." },
+      { id: "a2", q: "How does pricing work?", a: "Transcript pricing is $5.00 per page at launch, the same for every reporter on the platform, plus a flat 12% platform fee. Your delivery deadline determines the turnaround tier: Rush (1-2 business days, 1.5x rate), Expedited (3-5 business days, baseline rate), or Standard (6+ business days, 15% savings). Set your need-by date and the price calculates automatically. (Reporter rate-setting bands are planned for a future release once we have launch-window data.)" },
       { id: "a3", q: "Can I split the cost with other parties?", a: "Yes. When placing an order, toggle \"Split cost with other parties\" and add co-paying attorneys by name and email. Each party receives a secure payment link. The job is only posted to reporters once all parties have paid – no chasing, no partial payments. Co-payers don't need a Dewey Sholes account." },
       { id: "a4", q: "What if I'm unhappy with a transcript?", a: "You can request corrections within 90 days of delivery. Specify the pages and describe the issue, and the reporter will be notified to upload a corrected version. No additional cost for corrections – the reporter's statutory rate covers delivering an accurate transcript." },
       { id: "a5", q: "How do I know if a reporter is any good?", a: "Every reporter has a quality rating (1-5 stars, rated by attorneys) and a timeliness score (auto-calculated from their delivery history). You can also read written feedback from other attorneys on the reporter's profile. Reporters with consistently high ratings appear first in search results." },
@@ -11190,7 +11190,7 @@ function ForAttorneysPage() {
 function ForReportersPage() {
   const benefits = [
     { icon: "zap", title: "Jobs that find you", desc: "Get push notifications for jobs matching your preferences. See the deadline and your earnings upfront. Accept with one tap – decline with no penalty." },
-    { icon: "dollarSign", title: "Keep 100% of your rate", desc: "No agency taking 50-85% of your earnings. You keep the full statutory rate on every job. Payment within 2 business days of delivery, every time." },
+    { icon: "dollarSign", title: "Keep 100% of your rate", desc: "No agency taking 50-85% of your earnings. You keep the full published rate on every job. Payment within 2 business days of delivery, every time." },
     { icon: "star", title: "Build your reputation", desc: "Attorneys rate your quality after every delivery and can mark you as a preferred vendor – giving you first right of refusal on their future jobs. Great ratings mean you appear first in search and get more offers." },
     { icon: "clock", title: "Real-time check-ins", desc: "The platform pings you mid-job to keep delivery on track. If you need more time, request an extension. If you can't finish, release the job – early releases don't count against you." },
     { icon: "shield", title: "Credentials handled", desc: "Your CSR license is auto-verified at signup and re-checked quarterly. W-9 collected at first payout – no paperwork upfront. We file your 1099 at year-end." },
@@ -11350,7 +11350,7 @@ function PricingPage() {
             <div className="section-eyebrow" style={{color: "var(--ochre-deep)"}}>Pricing</div>
             <h2 className="section-title">Transparent rates, <em>no hidden line items.</em></h2>
             <p className="section-lede" style={{maxWidth: 820}}>
-              Transcript pricing at $5.00/page baseline (reporters can set their own within a ±20% band), and live attendance rates set well below typical CSR agency fees. Court reporters keep what they earn, while firms pay a flat 12% platform fee for each transcription job – because the platform automates the line items agencies bill as extras.
+              Transcript pricing at $5.00 per page, the same for every reporter on the platform at launch. Live attendance rates set well below typical CSR agency fees. Court reporters keep what they earn, while firms pay a flat 12% platform fee for each job – because the platform automates the line items agencies bill as extras.
             </p>
           </div>
 
@@ -11384,7 +11384,7 @@ function PricingPage() {
                 <div className="pricing-approx">
                   <span className="tooltip-trigger" tabIndex="0">
                     Transcription pricing is approximate
-                    <span className="tooltip-content">Page rates shown are baseline defaults; reporters can set their own rate within a ±20% band. Final invoice is calculated from the certified page count delivered with the transcript, not an estimate. Add-ons (interpreter, expedite multipliers, etc.) shown as separate line items.</span>
+                    <span className="tooltip-content">Page rates shown are the platform-set rates at launch (the same for every reporter). Final invoice is calculated from the certified page count delivered with the transcript, not an estimate. Add-ons (interpreter, expedite multipliers, etc.) shown as separate line items.</span>
                   </span>
                 </div>
               </div>

@@ -61,6 +61,6 @@ When we have consistent revenue and cash reserves, revisit Net-30 with these gua
 - **Credit card on file as backup:** If the invoice isn't paid by day 30, auto-charge the card
 - **Volume discounts:** Negotiate per-page rate discounts for firms committing to monthly minimums
 - **Billing cycle sync:** Allow firms to align invoicing with their internal billing cycle (1st of month, 15th, etc.)
-- **Reporter payment unchanged:** Reporters always get paid in 2 business days regardless of attorney billing terms — the platform floats the difference from reserves
+- **Reporter payment unchanged:** Reporters always get paid in 2 business days regardless of attorney billing terms – the platform floats the difference from reserves
 
 **Trigger to revisit:** When monthly platform fee revenue consistently exceeds $5,000/month for 3+ months.

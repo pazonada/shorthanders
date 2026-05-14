@@ -161,10 +161,12 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 > Dewey Sholes is a new website that lets California attorneys hire court reporters directly for live court hearings. (We can also handle audio transcription in the rare cases where no reporter was on the record and the court approves releasing the audio.)
 >
 > Here's how it works for you, the reporter:
-> - You keep 100% of your stated rate. No agency cut.
-> - Attorneys pay your rate plus a flat 12% platform fee.
-> - You set your own rate. The site suggests a starting price, and you can go up to 20% higher or lower.
+> - You keep 100% of the platform's published rate. No agency cut. No platform commission on your earnings.
+> - At launch, every reporter on the platform earns the same published rate. We've set those rates well above the statutory minimums and close to what private-direct work pays. (Specific dollar amounts in Section 5.)
+> - Attorneys pay your rate plus a flat 12% platform fee on top, so the 12% never comes out of your pocket.
 > - The site handles scheduling, payment, and transcript delivery, so you don't pay an agency to do those things for you.
+>
+> *Looking ahead: we're planning to add a feature later where you'd be able to set your own rate within a range around the platform default. We want to launch with simple flat pricing first, then build that out once we know what reporters and attorneys actually want. Section 5 asks what you'd think of that.*
 
 **Q11.** Based on that description, how interested would you be in trying this site?
 - Very interested
@@ -175,12 +177,12 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 
 **Q12.** Which parts of this idea appeal to you most? (pick up to three)
 - Keeping 100% of my rate (no agency cut)
-- Setting my own rate
+- Setting my own rate *(planned for a future release – not in V1)*
 - Working with attorneys directly
 - Less admin work
 - Modern booking and scheduling tools
 - Pricing that's clear to the attorney
-- Being featured to attorneys (more on this in Q14)
+- Being featured to attorneys (more on this in Q14) *(planned for a future release – not in V1)*
 - Other (please describe)
 
 **Q13.** Which parts of this idea worry you most? (pick up to three)
@@ -212,14 +214,14 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 
 ### Section 5 – What you think of our pricing (2 questions)
 
-**Q17.** The site pays you 100% of your stated rate. The attorney pays a 12% platform fee on top. Does the 12% feel:
+**Q17.** The site pays you 100% of the published rate. The attorney pays a 12% platform fee on top. Does the 12% feel:
 - Way too low – they'll go out of business
 - A little low
 - About right
 - A little high
 - Way too high
 
-**Q18.** If the site suggests a starting rate and you can change it up to 20% higher or lower, does that feel:
+**Q18.** *(Planned for a future release, not V1.)* If we later added a feature where the site suggests a starting rate and you can change it up to 20% higher or lower, does that feel:
 - Like real control over my pricing
 - A little limiting but I could live with it
 - Too restrictive
