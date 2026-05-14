@@ -2,7 +2,7 @@
 
 **Owner:** Aud
 **Last updated:** 2026-05-02
-**Status:** Confirmed for MVP / pilot
+**Status:** Confirmed for MVP / launch
 
 This is the authoritative document for how CSR (Certified Shorthand Reporter) accounts work on Dewey Sholes from signup through deactivation. It consolidates and references existing policies; deep dives on specific topics live in their dedicated docs.
 
@@ -10,15 +10,15 @@ This is the authoritative document for how CSR (Certified Shorthand Reporter) ac
 
 ## Account types
 
-### MVP / pilot: solo CSRs only
+### MVP / launch: solo CSRs only
 
-For the 6-month pilot, **only solo CSR accounts are supported**. Each account represents one individual licensed CSR.
+For the 6-month launch window, **only solo CSR accounts are supported**. Each account represents one individual licensed CSR.
 
-### Deferred: CSR firm accounts (post-pilot)
+### Deferred: CSR firm accounts (post-launch)
 
-CSR firm accounts (3-10 reporters under one account with consolidated billing and a firm-wide availability dashboard) are **deferred to v2**. There aren't enough small CSR firms in CA to justify building this for the pilot.
+CSR firm accounts (3-10 reporters under one account with consolidated billing and a firm-wide availability dashboard) are **deferred to v2**. There aren't enough small CSR firms in CA to justify building this at launch.
 
-**During the pilot, CSRs from boutique firms** can either:
+**During the launch window, CSRs from boutique firms** can either:
 - Sign up individually and use Dewey Sholes solo (preferred path)
 - Indicate during onboarding they'd be interested in a future firm account, so we can gauge demand
 
@@ -97,16 +97,16 @@ If the CSR skips these, their account stays Pending until profile is at least mi
 
 ### Captured for marketing trigger (encouraged)
 
-- **Firms you regularly work with.** Structured field — list of firm names + (optional) the city the firm is in. Each firm the CSR enters becomes a **trigger** that adds (or annotates) a row in the firm outreach tracker (`research/firm_outreach_tracker_template.csv`), tagging the CSR's license number into the firm's `cited_by_csr_licenses` field.
+- **Firms you regularly work with.** Structured field – list of firm names + (optional) the city the firm is in. Each firm the CSR enters becomes a **trigger** that adds (or annotates) a row in the firm outreach tracker (`research/firm_outreach_tracker_template.csv`), tagging the CSR's license number into the firm's `cited_by_csr_licenses` field.
 
   This is what powers the personalized Phase 2 firm outreach: when we email these firms, the copy reads *"Sarah Chen, a court reporter you've worked with, is now using Dewey Sholes..."* (per the Tier-1A path in `research/marketing_plan_phase2_law_firms.md`).
 
-  Distinct from the "recent cases" field — cases are about showcasing experience; firms are about marketplace network signaling. Both are collected, both are useful.
+  Distinct from the "recent cases" field – cases are about showcasing experience; firms are about marketplace network signaling. Both are collected, both are useful.
 
 ### Deferred to first payout
 
-- **W-9** — collected via Stripe Connect at first payout, NOT at signup. This avoids upfront paperwork friction. If they never get paid, we never need their SSN.
-- **Bank account details** — same: collected via Stripe Connect identity verification flow before first payout.
+- **W-9** – collected via Stripe Connect at first payout, NOT at signup. This avoids upfront paperwork friction. If they never get paid, we never need their SSN.
+- **Bank account details** – same: collected via Stripe Connect identity verification flow before first payout.
 
 ### Deferred to discretion
 
@@ -115,8 +115,8 @@ If the CSR skips these, their account stays Pending until profile is at least mi
 - Languages other than English
 - Certifications beyond CSR (RMR, CRR, RPR)
 - Past case history (helps discoverability but optional)
-- Court-appointed status (badge displayed if checked — see below)
-- Copy request opt-in (defaults to ON — see below)
+- Court-appointed status (badge displayed if checked – see below)
+- Copy request opt-in (defaults to ON – see below)
 - Notification preferences (defaults set during signup)
 - "Interested in firm accounts" indicator
 
@@ -158,7 +158,7 @@ Stripe's identity verification flow handles SSN collection during the bank-link 
 
 - **$99/year for individual CSRs**, billed annually from signup date
 - CSR firm tier (deferred): $79/reporter/year (3–10 reporters under one account)
-- No founding-cohort waiver — see `founding_member_program.md` for what the founding-cohort tag does (non-pricing perks only)
+- No founding-cohort waiver – see `founding_member_program.md` for what the founding-cohort tag does (non-pricing perks only)
 
 ---
 
@@ -196,7 +196,7 @@ The dashboard shows a "complete your profile" widget if the CSR hasn't filled ou
 - At least 1 court / jurisdiction
 - Weekly availability grid
 
-Profile completeness affects matching — incomplete profiles rank lower.
+Profile completeness affects matching – incomplete profiles rank lower.
 
 ### What appears on the public profile (v1) and what doesn't
 
@@ -213,7 +213,7 @@ A CSR's public profile page (visible to attorneys browsing the directory or arri
 **What does NOT appear on the public profile in v1:**
 
 - **Recent cases worked.** The reporter onboarding collects up to 10 recent cases for matching/discovery purposes, but those are not displayed publicly. Confidentiality concerns + signal-to-noise: most attorneys won't browse cases when evaluating; they'll check rating + courts covered + availability.
-- **Job count completed on Dewey Sholes.** Avoids creating a cold-start penalty for new CSRs during pilot, and avoids implying a "leaderboard" dynamic.
+- **Job count completed on Dewey Sholes.** Avoids creating a cold-start penalty for new CSRs during the launch window, and avoids implying a "leaderboard" dynamic.
 
 **Status of these decisions:** v1 only. Both questions are tagged for user testing (see `research/user_testing_legal_assistant_guide.md` and `research/user_testing_csr_guide.md`):
 
@@ -233,17 +233,17 @@ Revisit for v1.1 once user-testing data lands. Until then, the data is collected
 **Why license number, not an internal id or username:**
 - Already unique under California regulation (issued by the CA Court Reporters Board; no two CSRs share one).
 - Stable across name changes (marriage, rebrand), firm moves, and display-name preference changes.
-- Already what we use for credential verification — single source of truth.
+- Already what we use for credential verification – single source of truth.
 - Public information already (the CRB directory is publicly searchable), so using it as a URL leaks no private data.
 
 **What this enables:**
-- Stable, shareable URLs that don't break — works for business cards, email signatures, QR codes, marketing assets, support-ticket references, admin notes.
+- Stable, shareable URLs that don't break – works for business cards, email signatures, QR codes, marketing assets, support-ticket references, admin notes.
 - Search-engine indexability: each CSR profile is a single canonical URL.
 - Predictable deep-linking from external surfaces (Rosie's network outreach, partner sites, the CSR's own social bios).
 
 **Edge cases:**
 - **Invalid / unknown license number:** show "We don't have a profile for CSR #X. They might not have signed up yet." Provide a CTA to invite them or browse other CSRs.
-- **Paused account:** show a "this CSR is taking a break" state with an option to favorite for when they return — do not 404. This preserves the link's value when the CSR returns.
+- **Paused account:** show a "this CSR is taking a break" state with an option to favorite for when they return – do not 404. This preserves the link's value when the CSR returns.
 - **Deplatformed account:** show a generic "this profile is no longer available" state. Do not surface deplatforming reason publicly.
 
 **Prototype note:**
@@ -253,17 +253,17 @@ The current React-in-HTML prototype uses internal mock ids (`rep-1`, `rep-2`, et
 
 The same canonical-identifier principle applies on the buyer side, but with practical limits:
 
-- **When an attorney signs up directly: use their CA Bar number** as the canonical identifier. URL pattern: `deweysholes.com/atty/<bar-number>`. Same logic as CSR licenses — already unique by state regulation, stable, public information, what we use for verification.
+- **When an attorney signs up directly: use their CA Bar number** as the canonical identifier. URL pattern: `deweysholes.com/atty/<bar-number>`. Same logic as CSR licenses – already unique by state regulation, stable, public information, what we use for verification.
 - **In practice, most accounts will be created by assistants signing up as themselves**, not by the attorney directly. Assistants don't have a bar number and aren't impersonating the attorney. For these accounts, fall back to:
-  - **Firm-level canonical URL** — `deweysholes.com/firm/<firm-slug>` for the firm's public/marketing-facing presence, with the firm slug derived from the firm's name and a disambiguating suffix if needed.
-  - **Internal account id** for the assistant's own account record (no public URL — assistants typically don't have public-facing profiles the way CSRs do).
+  - **Firm-level canonical URL** – `deweysholes.com/firm/<firm-slug>` for the firm's public/marketing-facing presence, with the firm slug derived from the firm's name and a disambiguating suffix if needed.
+  - **Internal account id** for the assistant's own account record (no public URL – assistants typically don't have public-facing profiles the way CSRs do).
 - **Firm accounts that include an attorney with a verified bar number** can have both URLs resolve to the same canonical record (the bar-number URL 301s to the firm URL, or vice versa, depending on which we pick as canonical).
 
 **Why this matters less than on the CSR side:**
-CSR profiles are public-facing marketplace listings — attorneys browse them, book them, refer them. Attorney/firm profiles are mostly internal (the firm's own dashboard, the firm's own team). Public-facing attorney/firm pages exist mainly for SEO, partnership outreach, and edge cases (e.g., a CSR wanting to attribute past work). So the URL-as-marketing-asset case is much weaker on this side.
+CSR profiles are public-facing marketplace listings – attorneys browse them, book them, refer them. Attorney/firm profiles are mostly internal (the firm's own dashboard, the firm's own team). Public-facing attorney/firm pages exist mainly for SEO, partnership outreach, and edge cases (e.g., a CSR wanting to attribute past work). So the URL-as-marketing-asset case is much weaker on this side.
 
 **Open question (not yet decided):**
-Whether to surface attorney/firm profiles publicly at all in the MVP. If we don't, the canonical-URL rule above is dormant — interesting only when we eventually expose those profiles. Track this with the marketing plan; revisit once we have firm-side signups in the pilot.
+Whether to surface attorney/firm profiles publicly at all in the MVP. If we don't, the canonical-URL rule above is dormant – interesting only when we eventually expose those profiles. Track this with the marketing plan; revisit once we have firm-side signups during the launch window.
 
 ---
 
@@ -278,7 +278,7 @@ Initiated from Settings → Security → Account status.
 2. CSR confirms → account state set to Paused
 3. Profile hidden from directory and matching algorithm
 4. No new job notifications sent
-5. Active jobs are unaffected — CSR completes them as normal
+5. Active jobs are unaffected – CSR completes them as normal
 6. CSR receives confirmation email
 7. Yellow banner displays on dashboard: "Your account is paused. Reactivate when ready."
 
@@ -298,7 +298,7 @@ Initiated from Settings → Security → Danger zone.
 3. CSR must complete or release any active jobs before deletion can proceed
 4. CSR can download a data export (per CCPA)
 5. CSR types "DELETE" to confirm
-6. Account state set to Deleted (deactivated) — 30-day grace period begins
+6. Account state set to Deleted (deactivated) – 30-day grace period begins
 7. Profile hidden, no access to dashboard except a "reactivate" prompt
 8. After 30 days, account is permanently deleted; data is anonymized per retention policy
 
@@ -314,7 +314,7 @@ Per `CSR_License_Verification_Policy.md`:
 2. 7 days before expiration: second warning, more urgent
 3. Day of expiration: account auto-suspends
 4. CSR cannot accept new jobs until they renew with the CRB and the platform re-verifies
-5. Existing jobs are flagged for admin review — typically transferred to another CSR per `late_delivery_and_deplatforming_policy.md` release flow
+5. Existing jobs are flagged for admin review – typically transferred to another CSR per `late_delivery_and_deplatforming_policy.md` release flow
 6. Once renewed, CSR triggers re-verification from settings; account returns to Active
 
 ### Suspension via strikes
@@ -343,7 +343,7 @@ Per `late_delivery_and_deplatforming_policy.md`:
 | Quality rating received | Email |
 | Copy requests from other parties | Email (if opted in) |
 | License expiration warnings | Email + SMS |
-| Pilot pricing reminders | Email |
+| Renewal reminders | Email |
 | Platform updates | Email |
 
 ### What the CSR can change
@@ -376,7 +376,7 @@ When ON:
 When OFF:
 - Their name and CSR# do not appear in case lookup search results
 - They are not contactable for copy requests through the platform
-- (Other parties can still find them through the CRB or court records — we just don't facilitate)
+- (Other parties can still find them through the CRB or court records – we just don't facilitate)
 
 ---
 
@@ -457,30 +457,30 @@ CSRs (as CA residents) have rights under the California Consumer Privacy Act:
 
 - **Right to access:** Download all data the platform has about them (Settings → Security → Download my data)
 - **Right to delete:** Initiate account deletion (Settings → Security → Delete account)
-- **Right to opt out of sale of personal info:** N/A — we don't sell personal info, but the toggle is in Settings → Privacy as a confirmation
+- **Right to opt out of sale of personal info:** N/A – we don't sell personal info, but the toggle is in Settings → Privacy as a confirmation
 - **Right to correct:** Profile editing covers this; for read-only fields (license #), CSR can request correction via Support
 
 ---
 
 ## Open questions / future decisions
 
-1. **Multi-CSR firm accounts** — deferred to v2; collecting interest signals during pilot. Decision criterion: build if 5+ firms express interest.
-2. **Linking multiple email addresses to one CSR account** — not supported; each account is one email. Revisit if CSRs request it.
-3. **Account ownership transfer** — what happens if a CSR retires and wants to give their book of business / favorited attorneys to another CSR? Not supported in MVP. Discuss with Rosie.
-4. **Account suspension during medical leave** — currently CSRs use the pause feature. Consider whether a longer "extended leave" state is needed for >6 month leaves.
-5. **CSRs who lose their license but want to keep an inactive profile** — currently auto-suspended. Should we allow a "former CSR / view-only profile" state? Probably not; suspended is the right state.
+1. **Multi-CSR firm accounts** – deferred to v2; collecting interest signals during the launch window. Decision criterion: build if 5+ firms express interest.
+2. **Linking multiple email addresses to one CSR account** – not supported; each account is one email. Revisit if CSRs request it.
+3. **Account ownership transfer** – what happens if a CSR retires and wants to give their book of business / favorited attorneys to another CSR? Not supported in MVP. Discuss with Rosie.
+4. **Account suspension during medical leave** – currently CSRs use the pause feature. Consider whether a longer "extended leave" state is needed for >6 month leaves.
+5. **CSRs who lose their license but want to keep an inactive profile** – currently auto-suspended. Should we allow a "former CSR / view-only profile" state? Probably not; suspended is the right state.
 
 ---
 
 ## Related documents
 
-- `CSR_License_Verification_Policy.md` — license verification details
-- `billing_and_payment_policy.md` — payment timing
-- `late_delivery_and_deplatforming_policy.md` — strikes, release flow, deplatforming
-- `rating_and_matching_policy.md` — rating system + matching algorithm
-- `cost_splitting_policy.md` — cost-split mechanics from CSR perspective
-- `payment_failure_policy.md` — payout failures
-- `founding_member_program.md` — founding-cohort segmentation and referral incentives
-- `transcript_correction_policy.md` — correction request handling
-- `transcript_retention_and_custody_policy.md` — what CSRs can/can't do with transcripts
-- `confidentiality_and_audio_retention.md` — audio retention by CSRs
+- `CSR_License_Verification_Policy.md` – license verification details
+- `billing_and_payment_policy.md` – payment timing
+- `late_delivery_and_deplatforming_policy.md` – strikes, release flow, deplatforming
+- `rating_and_matching_policy.md` – rating system + matching algorithm
+- `cost_splitting_policy.md` – cost-split mechanics from CSR perspective
+- `payment_failure_policy.md` – payout failures
+- `founding_member_program.md` – founding-cohort segmentation and referral incentives
+- `transcript_correction_policy.md` – correction request handling
+- `transcript_retention_and_custody_policy.md` – what CSRs can/can't do with transcripts
+- `confidentiality_and_audio_retention.md` – audio retention by CSRs

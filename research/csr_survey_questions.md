@@ -2,7 +2,7 @@
 
 **Owner:** Aud
 **Last updated:** 2026-05-14
-**Status:** Draft – plain-English pass complete; pricing-content fix for Q19/Q20 still pending (see open question at end). Then ready for Rosie review before sending.
+**Status:** Draft – plain-English pass complete; Q19/Q20 rewritten to test $99/yr willingness directly with a free-text follow-up. Ready for Rosie review before sending.
 
 ---
 
@@ -210,7 +210,7 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 
 ---
 
-### Section 5 – What you think of our pricing (3 questions)
+### Section 5 – What you think of our pricing (2 questions)
 
 **Q17.** The site pays you 100% of your stated rate. The attorney pays a 12% platform fee on top. Does the 12% feel:
 - Way too low – they'll go out of business
@@ -225,28 +225,20 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 - Too restrictive
 - Doesn't really matter to me
 
-**Q19.** *[CONTENT FIX PENDING – pricing model changed, see open question at end of doc]* How much would you pay per year for a basic listing on the site (after the first year, which is free during pilot)?
-- $0 – wouldn't pay anything
-- $25–$49
-- $50–$99
-- $100–$149
-- $150+
-- It depends on what I'm getting (free text follow-up)
-
 ---
 
 ### Section 6 – Would you sign up? (5 questions)
 
-**Q20.** *[CONTENT FIX PENDING – pricing model changed, see open question at end of doc]* During the 6-month pilot, the listing fee is waived and you can sign up at no cost. How likely are you to sign up at $0?
-- Very likely
-- Somewhat likely
-- Neutral
-- Somewhat unlikely
-- Very unlikely
+**Read this first.** Dewey Sholes charges reporters a flat $99 per year for a listing. There's no agency cut on your earnings – you keep 100% of what you charge per job. The $99/year is the only fee you'd pay us.
 
-**Q20a.** If you answered neutral, somewhat unlikely, or very unlikely: what would change your mind? (optional, 1–3 sentences)
+**Q19.** Would you sign up at $99/year?
+- Yes
+- Maybe
+- No
 
-**Q20b.** If you sign up and have a good experience, how likely are you to tell another reporter you know about the site?
+**Q19a.** If you answered Maybe or No: what would make $99/year feel worth it to you? (1–3 sentences. There are no wrong answers – tell us what you'd actually need to see.)
+
+**Q20.** If you sign up and have a good experience, how likely are you to tell another reporter you know about the site?
 - Very likely
 - Somewhat likely
 - Neutral
@@ -257,7 +249,7 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 - Maybe – depends on timing
 - No
 
-**Q22.** (If Yes/Maybe above) How can we reach you?
+**Q22.** (If Yes or Maybe above) How can we reach you?
 - Email (optional)
 - Name (optional)
 
@@ -271,9 +263,9 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 | 2 – Workflow & pain (new) | Lost-transcript-order is real (Q5c >50% say yes); post-hearing handoff is messy (Q5a) – validates the business-card / direct-relationship thesis | Workflow is already smooth; we're solving a non-problem |
 | 3 – Current economics | Real data on agency splits + direct rates – fills the [pricing_questions_rosie_and_csrs.md](pricing_questions_rosie_and_csrs.md) Q6/Q7 gap that Rosie couldn't answer | Most respondents say "I don't know" – we still need user testing to learn |
 | 4 – Concept reaction | Top concerns are addressable (volume, trust, payment) and excitement is real (no agency cut, direct relationships) | Top concerns are existential (concept itself rejected, "agencies are fine") |
-| 4 – Featured reporter (Q14) | Meaningful interest (>40% say "yes") – validates Rosie's idea | Low interest (<20%) – defer post-pilot indefinitely |
-| 5 – Pricing perception | 12% feels reasonable, $99 listing feels reasonable | Pricing rejected – needs rethinking before pilot |
-| 6 – Pilot interest + referrals | >50% "very likely" at $0 listing; strong referral willingness (Q20b) – supply-side wedge is real | <30% "very likely" – supply acquisition harder than projected |
+| 4 – Featured reporter (Q14) | Meaningful interest (>40% say "yes") – validates Rosie's idea | Low interest (<20%) – defer indefinitely |
+| 5 – Pricing perception | 12% feels reasonable; 20% rate-setting band feels like meaningful control | Either rejected – needs rethinking before sending firms |
+| 6 – Signup + referrals (Q19, Q19a, Q20) | Majority say Yes or Maybe at $99/yr; Q19a free text identifies a handful of high-leverage perks that move Maybe/No to Yes; strong referral willingness | <30% Yes at $99/yr – supply acquisition harder than projected at this price, or perks aren't compelling enough |
 
 ---
 
@@ -282,30 +274,26 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 - **Soft launch:** Rosie sends to 10 trusted CSR contacts first to catch survey-design issues. 1 week to refine.
 - **Wave 1:** Cal-CCRA mailing list, Rosie's professional network, CSR Facebook groups (Court Reporter Rates Discussion is 11K members – Caldarella's audience). 2 weeks.
 - **Wave 2:** Boost via paid LinkedIn promotion targeting CA CSRs ($100 budget). 1 week.
-- **Honorarium for completion:** $10 digital gift card to first 50 completers (caps cost at $500). Or skip if response rate is strong organically.
+- **Thank-you for completion:** $10 digital gift card to first 50 completers (caps cost at $500). Or skip if response rate is strong organically.
 
 Target n = 30–60 completed responses. Subset of ~10 volunteers self-select for Stage 2 prototype testing.
 
 ---
 
-## Open question (pre-Rosie review)
+## What to revisit after Stage 1 results
 
-### Q19 / Q20 reflect the retired pilot-pricing model
+The pricing-question design (Q19 + Q19a) tests willingness to pay at the actual $99/yr we're charging. Once we have 30+ responses, we'll know:
 
-Both questions still assume the 6-month pilot with a waived $99/yr listing fee. We retired that model on 2026-05-14 (see [../governance-and-process/founding_member_program.md](../governance-and-process/founding_member_program.md)): everyone pays $99/yr from day one, founding-cohort members get non-pricing perks (founder access, feature previews, roadmap input) instead.
+- Whether $99/yr is a hard "no" at this audience or a "maybe" that perks can unlock
+- Which perks have actual leverage (the free-text follow-up reveals this)
+- Whether the founder-access / roadmap-input perks we're offering as founding-member benefits map to anything CSRs actually value
 
-Q19 and Q20 must be rewritten before the survey ships. Options to discuss with Rosie:
+**Decisions deferred until after Stage 1:**
+- Do we keep the $99/yr price, lower it, or layer in tiered options based on the demand curve we see?
+- Do we add a launch-window incentive (e.g., first-year discount) if the no-rate becomes a real signup barrier?
+- Do the founding-cohort perks need to be rebuilt around what CSRs surface in Q19a free text?
 
-| Option | What we'd ask | What we'd learn |
-|---|---|---|
-| **A. Test $99/yr willingness directly** | "Would you sign up at $99/yr? Yes / Maybe / No" + a follow-up on what would change a "no" to a "yes" | Whether $99/yr is a real friction point at signup, and what perks/value would unlock it |
-| **B. Price-laddering question** | Ask which annual price feels fair: $0 / $25 / $50 / $75 / $99 / $150 / "depends" | Maps the demand curve – lets us decide later if $99 is too steep |
-| **C. Two-part: willingness + reasoning** | First ask Yes/Maybe/No at $99/yr. Then a follow-up: "If maybe or no, what would make it worth it to you?" (free text) | Combines (A) with qualitative depth |
-| **D. Drop pricing questions entirely** | Skip Q19/Q20, just ask "How likely are you to sign up?" without a price anchor | Cleanest – but we don't learn what price-related friction looks like at $99 |
-
-Aud's lean: **Option C.** It gets us a clear willingness-to-pay signal at the actual price we're charging, plus the open-ended "what would make it worth it" reveals what perks have leverage (founder access? referrals? something else?).
-
-Q20a (the follow-up free-text) survives in any option above and stays useful.
+We deliberately retired the prior pilot-pricing tier (waived $99/yr first year, then bumps up) before this survey ships, because the discounted-then-bumps-up model creates a churn cliff and the survey results would have been muddied by the implicit "but only for a year" framing. Cleaner to test $99/yr directly and let the survey tell us if we need to revisit.
 
 ---
 

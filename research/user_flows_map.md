@@ -1,20 +1,20 @@
-# Dewey Sholes — User flows map
+# Dewey Sholes – User flows map
 
 **Last updated:** 2026-04-11
-**Status:** Prototype audit — what exists vs. what's needed for real build
+**Status:** Prototype audit – what exists vs. what's needed for real build
 
 ---
 
 ## CSR (court reporter) flows
 
-### Onboarding (9 screens) — COMPLETE in prototype
+### Onboarding (9 screens) – COMPLETE in prototype
 
 ```
 Welcome/pitch
   |
   v
-Account type ─── Individual ($99/yr, waived in pilot)
-  |                  └── Firm ($79/reporter/yr, 3-10 reporters)
+Account type ─── Individual ($99/yr)
+  |                  └── Firm ($79/reporter/yr, 3-10 reporters) – deferred
   v
 [Step 1] Credentials
   CSR license #, method (steno/voice), certifications, languages, court-employed status
@@ -25,7 +25,7 @@ Account type ─── Individual ($99/yr, waived in pilot)
   |
   v
 [Step 3] Case history
-  Add recent cases (name, number, court, date, role) — up to 10
+  Add recent cases (name, number, court, date, role) – up to 10
   |
   v
 [Step 4] Payment & notifications
@@ -48,7 +48,7 @@ Success
 [Reporter Dashboard]
 ```
 
-### Reporter dashboard — COMPLETE in prototype
+### Reporter dashboard – COMPLETE in prototype
 
 ```
 Dashboard
@@ -90,7 +90,7 @@ Sidebar always shows:
    CSR needs to: upload file, confirm page count,
    sign certification ("I certify under penalty of perjury..."),
    submit for delivery
-   Status: NOT in prototype — critical path
+   Status: NOT in prototype – critical path
 
 !! Job matching notification → acceptance
    CSR gets notified (push/SMS/email), reviews job details,
@@ -123,7 +123,7 @@ Sidebar always shows:
 
 ## Attorney / law firm flows
 
-### Onboarding (8 screens) — COMPLETE in prototype
+### Onboarding (8 screens) – COMPLETE in prototype
 
 ```
 Welcome/pitch
@@ -161,7 +161,7 @@ Success
 [Buyer Dashboard]
 ```
 
-### Order flow (5 steps) — COMPLETE in prototype
+### Order flow (5 steps) – COMPLETE in prototype
 
 ```
 [Step 1] Type selection
@@ -194,7 +194,7 @@ Confirmation
   Order #, what happens next (3 steps), dashboard link
 ```
 
-### Buyer dashboard — COMPLETE in prototype
+### Buyer dashboard – COMPLETE in prototype
 
 ```
 Dashboard
@@ -234,17 +234,17 @@ Dashboard
         Invite member button
 ```
 
-### Additional attorney flows — COMPLETE in prototype
+### Additional attorney flows – COMPLETE in prototype
 
 ```
-Request copy flow (#/request-copy) — 4 steps
+Request copy flow (#/request-copy) – 4 steps
   Search case → Review details → Pricing ($0.20/page + 12%) → Confirmation
 
-Transcript viewer — full-screen overlay
+Transcript viewer – full-screen overlay
   Title page, appearances, testimony, certification
   Zoom, page nav, print/download
 
-Invoice view — full-screen overlay
+Invoice view – full-screen overlay
   Itemized invoice with print/download
 
 Order detail page (#/order/:id)
@@ -262,7 +262,7 @@ Order detail page (#/order/:id)
 !! Correction request flow
    Attorney flags specific sections, reporter gets notified,
    reporter uploads corrected version
-   Status: NOT in prototype — just an alert() placeholder
+   Status: NOT in prototype – just an alert() placeholder
 
 !! Cost-split co-payer experience
    Co-payer receives email link, sees case details and their share,
@@ -318,14 +318,14 @@ Dark mode toggle
 ```
 !! Account management (both CSR + attorney)
    Edit profile: name, email, phone, firm, photo, bio, credentials
-   Change password (in settings — exists in prototype but not functional)
+   Change password (in settings – exists in prototype but not functional)
    Update payment methods (add/remove cards, update bank info)
    Pause account: temporarily hide from marketplace (CSR: stop receiving
      job notifications, profile hidden from directory; attorney: no new orders)
      → "Reactivate" button when ready to come back
    Delete/close account:
      → Confirmation flow: "Are you sure?" with consequences listed
-     → Check for open orders/active jobs — must resolve before closing
+     → Check for open orders/active jobs – must resolve before closing
      → Data export: download your data before deletion (CCPA requirement)
      → Grace period: 30 days to reactivate before permanent deletion
      → Per our custody policy: attorney transcript copies retained 90 days
@@ -358,20 +358,24 @@ Dark mode toggle
    Renewal receipt / invoice
    Status: NOT in prototype
 
-!! Pilot pricing auto-application
-   Users who sign up during the pilot period automatically get:
-     CSR: $99/yr listing fee waived for first year
-     Attorney: 8% platform fee (vs 12%) for first year
-   No promo codes — pricing_tier and pilot_expires_at set at signup
-   based on created_at falling within pilot window.
-   Fee calculation checks tier at transaction time:
-     if pricing_tier = 'pilot' AND now < pilot_expires_at → 8%
-     else → 12%
-   Dashboard shows banner: "Pilot pricing active — [rate] through [date]"
-   30-day email before pilot_expires_at: "Your pilot rate is ending"
-   After expiration: standard pricing auto-applies, no action needed
-   Status: promo codes shown in prototype onboarding success screens
-           but no real pricing tier system
+!! Founding-member tagging (segmentation only, no price logic)
+   Users who sign up during the launch window get tagged in the DB:
+     founding_member = true
+     joined_cohort   = "launch-2026"
+   Set at signup based on created_at falling within launch window.
+   No pricing tier, no rate-lock, no expiration. Tag is used purely
+   for internal segmentation (admin dashboards, CRM exports, founder
+   feedback touchpoints).
+   Dashboard banner: "Founding firm / founding reporter" – feature
+   highlight only, no rate claim.
+   Per the 2026-05-14 pricing reset, the prior pilot-pricing tier (8%
+   firms / waived $99 CSRs / Year-1 rate-lock + expiration emails)
+   was retired. Everyone pays the standard 12% buyer fee and $99/yr
+   listing fee from day one.
+   See ../governance-and-process/founding_member_program.md for the
+   rationale and the full tag schema.
+   Status: founding-firm / founding-reporter banners shown in prototype
+           dashboards; tag schema not yet wired into the real build.
 
 !! Data export (CCPA compliance)
    User requests export of all their data
@@ -479,12 +483,12 @@ Landing page (#/)
   social proof, footer
 
 Static pages:
-  FAQ (#/faq) — accordion Q&A for attorneys, reporters, general
-  About (#/about) — problem, solution, founders
-  Terms (#/terms) — 8-section TOS draft
-  Privacy (#/privacy) — 7-section privacy policy draft
-  Contact (#/contact) — form + office info
-  TRF info (#/trf) — Transcript Reimbursement Fund details
+  FAQ (#/faq) – accordion Q&A for attorneys, reporters, general
+  About (#/about) – problem, solution, founders
+  Terms (#/terms) – 8-section TOS draft
+  Privacy (#/privacy) – 7-section privacy policy draft
+  Contact (#/contact) – form + office info
+  TRF info (#/trf) – Transcript Reimbursement Fund details
 ```
 
 ---
@@ -509,7 +513,7 @@ Static pages:
 | 12 | Profile editing (both roles) | Users need to update their info post-onboarding |
 | 13 | Report an issue / request support | Users need a way to get help |
 
-### Should-have for pilot (Month 2)
+### Should-have for launch (Month 2)
 
 | # | Flow | Why |
 |---|------|-----|
@@ -532,6 +536,6 @@ Static pages:
 | 25 | Re-order / repeat order | Convenience feature |
 | 26 | TRF paperwork generation | Fee waiver support |
 | 27 | Admin financial reporting | Business intelligence |
-| 28 | Delete/close account + data export (CCPA) | Regulatory requirement, but low volume at pilot |
+| 28 | Delete/close account + data export (CCPA) | Regulatory requirement, but low volume at launch |
 | 29 | Report a user | Trust & safety, low priority until scale |
 | 30 | Onboarding email sequence | Activation optimization |

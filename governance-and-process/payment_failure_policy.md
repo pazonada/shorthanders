@@ -8,7 +8,7 @@
 
 ## How money flows through the platform
 
-Dewey Sholes uses Stripe Connect as the payment layer. Money never sits in Studio Crux's business bank account — Stripe holds funds and routes them.
+Dewey Sholes uses Stripe Connect as the payment layer. Money never sits in Studio Crux's business bank account – Stripe holds funds and routes them.
 
 ```
 Attorney pays $215 via Stripe
@@ -25,8 +25,8 @@ Stripe splits automatically:
 ```
 
 ### Why this matters
-- Studio Crux never holds client funds in its own bank account — avoids money transmitter licensing, commingling, and trust accounting requirements
-- Stripe is PCI Level 1 certified — we never see or store card numbers
+- Studio Crux never holds client funds in its own bank account – avoids money transmitter licensing, commingling, and trust accounting requirements
+- Stripe is PCI Level 1 certified – we never see or store card numbers
 - CSRs set up Stripe Connect accounts during onboarding (identity verification + bank account linking)
 - Studio Crux receives only its platform fee, deposited on its own schedule (daily/weekly/monthly)
 
@@ -41,7 +41,7 @@ Stripe splits automatically:
 **What happens:**
 - Order is NOT created. No job is posted to reporters.
 - Attorney sees: "Payment failed. Please check your card details or try a different payment method."
-- No notification to anyone else — nothing has happened yet.
+- No notification to anyone else – nothing has happened yet.
 
 **Resolution:** Attorney updates their payment method and resubmits. Self-service, no admin involvement.
 
@@ -65,10 +65,10 @@ Stripe splits automatically:
 **Trigger:** Stripe attempts to transfer earnings to CSR's bank account, bank rejects (wrong account number, closed account, etc.).
 
 **What happens:**
-- Funds stay in Stripe platform balance (safe — not lost).
+- Funds stay in Stripe platform balance (safe – not lost).
 - CSR is notified: "Your payout of $197.80 couldn't be processed. Please update your bank information in Settings."
-- Attorney is NOT notified — their part is done. They accepted delivery and their card was charged successfully.
-- Admin dashboard shows a flag: "Payout failed for [CSR name] — $197.80"
+- Attorney is NOT notified – their part is done. They accepted delivery and their card was charged successfully.
+- Admin dashboard shows a flag: "Payout failed for [CSR name] – $197.80"
 
 **Escalation (if not resolved within 7 days):**
 - Second notification to CSR: "Your payout is still pending. Update your bank details to receive $197.80."
@@ -82,8 +82,8 @@ Stripe splits automatically:
 
 **What happens:**
 - Attorney is notified: "Payment for [case] couldn't be processed. Please update your payment method within 48 hours to release payment to your reporter."
-- CSR is notified: "Payment for [case] is delayed due to a billing issue. We're working on it — you'll be paid as soon as it's resolved."
-- Admin dashboard shows a flag: "Payment hold — attorney card declined for [case]"
+- CSR is notified: "Payment for [case] is delayed due to a billing issue. We're working on it – you'll be paid as soon as it's resolved."
+- Admin dashboard shows a flag: "Payment hold – attorney card declined for [case]"
 
 **Escalation (if not resolved within 48 hours):**
 - Second notification to attorney with stronger urgency.
@@ -95,27 +95,27 @@ Stripe splits automatically:
 
 **Trigger:** Attorney disputes a charge, requests a correction, or the job is cancelled after payment.
 
-**Pilot approach:** Handle case-by-case. No automated refund flow.
+**Launch approach:** Handle case-by-case. No automated refund flow.
 - Admin reviews the dispute
 - If refund is warranted: issue through Stripe dashboard manually
 - CSR payout is adjusted accordingly (if transcript wasn't delivered, CSR isn't paid)
-- If transcript was delivered and accepted, no refund — the correction request flow applies instead
+- If transcript was delivered and accepted, no refund – the correction request flow applies instead
 
 ---
 
-## Pilot simplifications
+## Launch simplifications
 
-For the 15-25 firm pilot, we keep it simple:
+For the 15-25 firm launch cohort, we keep it simple:
 
 | Scenario | Automated? | Manual fallback |
 |----------|-----------|----------------|
-| Card decline at order | Yes — error message, retry | None needed |
-| Co-payer decline | Yes — notify ordering attorney after 24h | Admin can step in |
-| CSR payout failure | Yes — notify CSR | Admin follows up after 7 days |
-| Auto-release card expired | Yes — notify attorney | Admin follows up after 48h |
+| Card decline at order | Yes – error message, retry | None needed |
+| Co-payer decline | Yes – notify ordering attorney after 24h | Admin can step in |
+| CSR payout failure | Yes – notify CSR | Admin follows up after 7 days |
+| Auto-release card expired | Yes – notify attorney | Admin follows up after 48h |
 | Refund | No | Admin handles via Stripe dashboard |
 
-**What we build for launch:** Error messages for scenarios 1-4. Notifications for scenarios 2-4. Everything else is manual admin work during pilot.
+**What we build for launch:** Error messages for scenarios 1-4. Notifications for scenarios 2-4. Everything else is manual admin work during the launch window.
 
 **What we build later:** Automated retry logic, dunning email sequences, self-service refund requests, payment advance for stuck CSR payouts.
 
@@ -123,6 +123,6 @@ For the 15-25 firm pilot, we keep it simple:
 
 ## Related policies
 
-- [Billing & payment policy](billing_and_payment_policy.md) — 2 business day payment timing, upfront charging
-- [Cost-splitting policy](cost_splitting_policy.md) — all parties pay upfront before job is created
-- [Late delivery & deplatforming policy](late_delivery_and_deplatforming_policy.md) — what happens when jobs go wrong
+- [Billing & payment policy](billing_and_payment_policy.md) – 2 business day payment timing, upfront charging
+- [Cost-splitting policy](cost_splitting_policy.md) – all parties pay upfront before job is created
+- [Late delivery & deplatforming policy](late_delivery_and_deplatforming_policy.md) – what happens when jobs go wrong

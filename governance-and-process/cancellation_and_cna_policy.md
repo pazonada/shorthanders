@@ -2,7 +2,7 @@
 
 **Owner:** Aud
 **Last updated:** 2026-05-02
-**Status:** Draft — covers two related scenarios that have been open items
+**Status:** Draft – covers two related scenarios that have been open items
 
 ---
 
@@ -11,9 +11,9 @@
 Two real-world scenarios come up regularly in court reporting that we need clear policies for:
 
 1. **Attorney cancels** the booking before the CSR has done the work
-2. **The scheduled appearance doesn't happen as planned** (Certified Non-Appearance / CNA) — the CSR did the work but the proceedings didn't take place as scheduled (e.g., witness no-show in cases where one was expected, or the matter is taken off-calendar at the last moment)
+2. **The scheduled appearance doesn't happen as planned** (Certified Non-Appearance / CNA) – the CSR did the work but the proceedings didn't take place as scheduled (e.g., witness no-show in cases where one was expected, or the matter is taken off-calendar at the last moment)
 
-> **Terminology note (per Rosie 2026-05-13):** "Testimony" is a specific legal term — it refers to a witness's sworn evidence on the record. Hearings often happen without testimony (attorneys arguing motions, judges ruling, parties stipulating). "No testimony was taken" is therefore *not* a good synonym for "the proceedings didn't happen as scheduled." We use the broader phrasing ("appearance doesn't happen as planned," "proceedings off-calendar," "witness non-appearance" where specifically meant) throughout this policy.
+> **Terminology note (per Rosie 2026-05-13):** "Testimony" is a specific legal term – it refers to a witness's sworn evidence on the record. Hearings often happen without testimony (attorneys arguing motions, judges ruling, parties stipulating). "No testimony was taken" is therefore *not* a good synonym for "the proceedings didn't happen as scheduled." We use the broader phrasing ("appearance doesn't happen as planned," "proceedings off-calendar," "witness non-appearance" where specifically meant) throughout this policy.
 
 Both involve the same core question: *who pays the CSR for what*? Industry standard handles both predictably, and we follow that standard so CSRs aren't penalized for situations outside their control.
 
@@ -36,7 +36,7 @@ When an attorney cancels a booking before the proceedings begin:
 | **More than 24 hours** | Hasn't started or traveled | $0 cancellation fee | Full refund |
 | **Less than 24 hours**, CSR has not yet left for location | Calendar blocked | Half-day attendance fee | Partial refund (full minus half-day fee) |
 | **Day-of**, CSR is en route or has arrived | Showed up / on the way | Full attendance fee (half-day or full-day per scheduled job type) | Partial refund (full minus attendance fee) |
-| **After proceedings have started** | Job is in progress | Treated as a regular job — CSR delivers what was completed; standard pricing applies | No cancellation refund; attorney pays for what was completed |
+| **After proceedings have started** | Job is in progress | Treated as a regular job – CSR delivers what was completed; standard pricing applies | No cancellation refund; attorney pays for what was completed |
 
 **Why the 24-hour cutoff:**
 
@@ -60,7 +60,7 @@ A CNA happens when the CSR shows up for a scheduled job, but the witness or othe
 
 #### CNA with brief transcript
 
-The CSR produces a short certified document recording the non-appearance. Standard practice — courts and attorneys often want this on the record.
+The CSR produces a short certified document recording the non-appearance. Standard practice – courts and attorneys often want this on the record.
 
 **Pricing:**
 - Full attendance fee (half-day or full-day, whichever was booked)
@@ -82,11 +82,11 @@ The CSR shows up, witness doesn't appear, no transcript is produced.
 
 When uploading the transcript through the platform, the CSR selects a "Job type" option:
 
-- **Standard transcript** (default — proceedings happened normally)
+- **Standard transcript** (default – proceedings happened normally)
 - **Certified Non-Appearance with transcript** (1-3 page CNA record produced)
-- **Certified Non-Appearance — no transcript** (just attendance; appearance didn't happen as scheduled, no on-the-record proceedings)
+- **Certified Non-Appearance – no transcript** (just attendance; appearance didn't happen as scheduled, no on-the-record proceedings)
 
-For the CNA-with-transcript option, the CSR uploads the brief CNA document the same way they'd upload any transcript. For the no-transcript option, no file is uploaded — the CSR just marks the job complete with the CNA designation and notes describing the non-appearance.
+For the CNA-with-transcript option, the CSR uploads the brief CNA document the same way they'd upload any transcript. For the no-transcript option, no file is uploaded – the CSR just marks the job complete with the CNA designation and notes describing the non-appearance.
 
 ### What the attorney sees
 
@@ -100,9 +100,9 @@ For the CNA-with-transcript option, the CSR uploads the brief CNA document the s
 
 ### Why no discount for CNA
 
-Some attorneys may ask "why am I paying full attendance for a job where nothing happened?" The answer: **the CSR did everything they were asked to do.** They blocked their day, traveled, set up, and stood ready. The witness's failure to appear is not the CSR's responsibility — and in most cases, it's the attorney's responsibility (their client, their adversary's client, or their subpoena that didn't get served properly).
+Some attorneys may ask "why am I paying full attendance for a job where nothing happened?" The answer: **the CSR did everything they were asked to do.** They blocked their day, traveled, set up, and stood ready. The witness's failure to appear is not the CSR's responsibility – and in most cases, it's the attorney's responsibility (their client, their adversary's client, or their subpoena that didn't get served properly).
 
-This is consistent with industry standard. Charging less for CNAs would penalize CSRs for events outside their control, which would make Dewey Sholes a worse deal for them than agencies — defeating the whole purpose of the platform.
+This is consistent with industry standard. Charging less for CNAs would penalize CSRs for events outside their control, which would make Dewey Sholes a worse deal for them than agencies – defeating the whole purpose of the platform.
 
 ---
 
@@ -118,7 +118,7 @@ Treated like a CNA with brief transcript. CSR documents the disposition on the r
 
 ### Multiple witnesses, one no-shows but others appear
 
-Not a CNA — proceedings happened with the witnesses who appeared. Standard pricing. CSR can note the missing witness in their certificate.
+Not a CNA – proceedings happened with the witnesses who appeared. Standard pricing. CSR can note the missing witness in their certificate.
 
 ### Attorney didn't show but witness did
 
@@ -126,7 +126,7 @@ Rare. Treat as a CNA from the witness's perspective, with attendance fee owed to
 
 ### CSR is late or doesn't show
 
-Not a CNA situation — this is a CSR performance issue. Triggers the late delivery / deplatforming policy (strikes, possible reassignment). CSR forfeits attendance fee.
+Not a CNA situation – this is a CSR performance issue. Triggers the late delivery / deplatforming policy (strikes, possible reassignment). CSR forfeits attendance fee.
 
 ### Reschedule after a CNA
 
@@ -134,16 +134,16 @@ Counts as a new booking with a new attendance fee. The original CNA is closed an
 
 ---
 
-## Pilot phase considerations
+## Launch phase considerations
 
-During the pilot, we handle ambiguous cases case-by-case rather than enforcing strict automated rules. Aud personally reviews any cancellation or CNA dispute that arises so we can:
+During the launch window, we handle ambiguous cases case-by-case rather than enforcing strict automated rules. Aud personally reviews any cancellation or CNA dispute that arises so we can:
 
 - Build a feel for how often these scenarios actually occur
 - Refine the policy if real cases surface gaps
 - Maintain attorney goodwill while still protecting CSR earnings
 - Document specific edge cases as they come up
 
-After the pilot, we'll formalize the dispute resolution process based on what we've learned.
+After the launch window, we'll formalize the dispute resolution process based on what we've learned.
 
 ---
 
@@ -165,17 +165,17 @@ After the pilot, we'll formalize the dispute resolution process based on what we
 
 ## Related documents
 
-- `billing_and_payment_policy.md` — payment timing
-- `late_delivery_and_deplatforming_policy.md` — what happens if the CSR is the one who fails to appear
-- `payment_failure_policy.md` — what happens if cancellation refund fails
-- `transcript_correction_policy.md` — separate scenario; not applicable to CNAs
-- `scope_public_court_proceedings_only.md` — platform scope (court hearings only)
-- General contract principles — attorney's obligation to pay vendor for committed time
+- `billing_and_payment_policy.md` – payment timing
+- `late_delivery_and_deplatforming_policy.md` – what happens if the CSR is the one who fails to appear
+- `payment_failure_policy.md` – what happens if cancellation refund fails
+- `transcript_correction_policy.md` – separate scenario; not applicable to CNAs
+- `scope_public_court_proceedings_only.md` – platform scope (court hearings only)
+- General contract principles – attorney's obligation to pay vendor for committed time
 
 ---
 
 ## Open questions
 
 1. Should we offer attorneys a "cancellation insurance" option at booking time (small fee, full refund regardless of timing)? Probably not for MVP, but worth revisiting.
-2. Should CSRs be able to negotiate their own cancellation/CNA terms separate from platform defaults? No — keeping it standardized simplifies trust and pricing.
-3. How should we surface CNA frequency on attorney profiles? If an attorney has 5+ CNAs in a month, that might indicate poor witness coordination — but we shouldn't penalize them for one or two. Probably just log internally; don't display.
+2. Should CSRs be able to negotiate their own cancellation/CNA terms separate from platform defaults? No – keeping it standardized simplifies trust and pricing.
+3. How should we surface CNA frequency on attorney profiles? If an attorney has 5+ CNAs in a month, that might indicate poor witness coordination – but we shouldn't penalize them for one or two. Probably just log internally; don't display.

@@ -2,7 +2,7 @@
 
 **Owner:** Aud & Rosie
 **Last updated:** 2026-03-26
-**Status:** Draft — confirmed in Rosie call 3/26
+**Status:** Draft – confirmed in Rosie call 3/26
 
 ---
 
@@ -42,8 +42,8 @@ Dewey Sholes does **not** adjudicate transcript accuracy. The reporter's profess
 
 ---
 
-## Deferred to pilot phase
+## Deferred to launch phase
 
-Per Rosie: "This is not a big thing to worry about right now. Let's return to this scenario at the pilot phase."
+Per Rosie: "This is not a big thing to worry about right now. Let's return to this scenario at the launch phase."
 
-During pilot, handle correction requests case-by-case. If patterns emerge (e.g., one reporter consistently producing error-heavy transcripts), address through the strike/deplatforming system.
+During the launch window, handle correction requests case-by-case. If patterns emerge (e.g., one reporter consistently producing error-heavy transcripts), address through the strike/deplatforming system.

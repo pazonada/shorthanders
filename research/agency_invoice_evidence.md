@@ -46,7 +46,7 @@ Splitting the invoice by who performs the labor:
 
 ## What the CSR actually nets
 
-Using the Atkinson-Baker reporter-payout rate sheet (CA agency, public via screenshot — see [pricing_questions_rosie_and_csrs.md](pricing_questions_rosie_and_csrs.md) research summary): the agency pays its CSRs **$4.40/page for hearings, trials, and arbitrations**. Personal-injury deposition rate is $3.00/page; this is an arbitration so we use $4.40.
+Using the Atkinson-Baker reporter-payout rate sheet (CA agency, public via screenshot – see [pricing_questions_rosie_and_csrs.md](pricing_questions_rosie_and_csrs.md) research summary): the agency pays its CSRs **$4.40/page for hearings, trials, and arbitrations**. Personal-injury deposition rate is $3.00/page; this is an arbitration so we use $4.40.
 
 | | Amount | Share of invoice |
 |---|---|---|
@@ -98,9 +98,9 @@ Same 319-page arbitration transcript, run through the proposed DS pricing model.
 
 ---
 
-## The CSR's reaction — verbatim
+## The CSR's reaction – verbatim
 
-From the top comment on the Facebook post, by Caldarella Cassandra (a working CSR with a published rate sheet of her own — see prior rate-card research):
+From the top comment on the Facebook post, by Caldarella Cassandra (a working CSR with a published rate sheet of her own – see prior rate-card research):
 
 > The agencies overcharging like this is why the attorneys are turning on us, saying we're making too much. What attorneys don't realize is that we're held to statutory rates and we're working with 50-year old rates without having gotten the cost of living increases for 50 years, but the agencies can do this without a license or repercussions. The agencies are destroying our industry and are putting us all out of a job. We must stop this before it's too late. Tell attorneys what your charges are. Send attorneys your invoices so they can see that reporters are NOT the ones overcharging. Advocate for transparency laws in your states where agencies have to reveal their costs, like they do in the medical industry now. We can't let stenographers go by way of the dinosaurs and become extinct.
 
@@ -144,7 +144,7 @@ When emailing law firms in Phase 2, include the invoice screenshot (anonymized) 
 
 ### 3. CSR-side recruitment proof
 
-For Phase 1 cold-email to CSRs, include a graphic showing the CSR-take side: *"$1,403 out of a $2,311 invoice is what this reporter actually earned. On DS, that same reporter would earn $1,645 — and her attorney would still pay $469 less. Want to see how?"*
+For Phase 1 cold-email to CSRs, include a graphic showing the CSR-take side: *"$1,403 out of a $2,311 invoice is what this reporter actually earned. On DS, that same reporter would earn $1,645 – and her attorney would still pay $469 less. Want to see how?"*
 
 ### 4. Outreach to Caldarella specifically
 
@@ -152,13 +152,13 @@ She's a working CSR, articulate, has a published rate sheet, holds authority in 
 
 ### 5. Press / earned-media angle
 
-Once we have a CA pilot underway, this invoice + the DS comparison is a compelling story for legal-industry press (*Daily Journal*, *The Recorder*, *Law360* in CA). Lede: *"How a Bay Area startup is breaking the court-reporter agency model — by showing reporters where the money was going."*
+Once we have a CA launch underway, this invoice + the DS comparison is a compelling story for legal-industry press (*Daily Journal*, *The Recorder*, *Law360* in CA). Lede: *"How a Bay Area startup is breaking the court-reporter agency model – by showing reporters where the money was going."*
 
 ---
 
 ## Second data point: a remote-Zoom deposition invoice (March 2023)
 
-Captured 2026-05-13. Different CA agency, different case type, different year — and a more dramatic version of the same pattern. **The pure agency markup share is much higher when remote services stack.**
+Captured 2026-05-13. Different CA agency, different case type, different year – and a more dramatic version of the same pattern. **The pure agency markup share is much higher when remote services stack.**
 
 ### The invoice (#91319)
 
@@ -180,20 +180,20 @@ A remote Zoom deposition, March 2023, full-day with 1.75 hours overtime + realti
 
 Pure-markup line items on this invoice:
 
-- **Original Held By Code: $35** — CSR is statutorily required to hold the original per CCP § 2025.510(c) regardless; charging for it is air
-- **Litigation Package × 2: $90** — same line item that appeared on Caldarella's invoice; appears to be a universal agency revenue inflator
-- **Remote Surcharge $0.75/pg × 2 transcripts: $207** — per-page fee for the work being on Zoom instead of in person
-- **Shipping (electronic only): $35** — for emailing a PDF
-- **Printing Fee: $95** — for an electronic transcript
-- **Remote Exhibit Management (10 hrs × $25): $250** — agency staffs a person; CSR doesn't see this revenue
-- **Remote Technician Hourly (10 hrs × $95): $950** — tech sits on Zoom; agency pays them maybe $40-50/hr and keeps the rest
-- **Remote Set-Up Fee: $325** — for clicking "schedule Zoom"
+- **Original Held By Code: $35** – CSR is statutorily required to hold the original per CCP § 2025.510(c) regardless; charging for it is air
+- **Litigation Package × 2: $90** – same line item that appeared on Caldarella's invoice; appears to be a universal agency revenue inflator
+- **Remote Surcharge $0.75/pg × 2 transcripts: $207** – per-page fee for the work being on Zoom instead of in person
+- **Shipping (electronic only): $35** – for emailing a PDF
+- **Printing Fee: $95** – for an electronic transcript
+- **Remote Exhibit Management (10 hrs × $25): $250** – agency staffs a person; CSR doesn't see this revenue
+- **Remote Technician Hourly (10 hrs × $95): $950** – tech sits on Zoom; agency pays them maybe $40-50/hr and keeps the rest
+- **Remote Set-Up Fee: $325** – for clicking "schedule Zoom"
 
 ### CSR take-home
 
 If the CSR is paid at Atkinson-Baker-style reporter-payout rates ($3.00–$4.40/pg, plus appearance + overtime split), the CSR cleared roughly **$1,200–$1,800** on this $4,186 invoice. **Agency kept 70–82%.**
 
-### Same job on DS — hypothetical
+### Same job on DS – hypothetical
 
 | | Agency | DS (proposed) |
 |---|---|---|
@@ -216,13 +216,13 @@ Attorney saves **$1,571 (38% lower)**. CSR earns **$500–1,100 more**.
 
 2. **"Litigation Package" is the canonical bundled-air line item.** It appeared on both invoices from different agencies. The marketing copy should call it out by name as the universal example of opaque markup.
 
-3. **Agency take-rate is wildly variable.** Caldarella's arbitration: 39% to the agency. This remote depo: 70-82%. The variability itself is a problem we can position against — attorneys never know what slice they're paying for.
+3. **Agency take-rate is wildly variable.** Caldarella's arbitration: 39% to the agency. This remote depo: 70-82%. The variability itself is a problem we can position against – attorneys never know what slice they're paying for.
 
 ---
 
 ## Competitive context: EcoScribe Solutions (added 2026-05-13)
 
-[EcoScribe Solutions](https://ecoscribesolutions.com/the-ecoscribe-solutions-difference/) is a CA-based court-reporting agency running the **same "transparent pricing, no hidden fees" pitch DS has been designing** — but for depositions, not court hearings.
+[EcoScribe Solutions](https://ecoscribesolutions.com/the-ecoscribe-solutions-difference/) is a CA-based court-reporting agency running the **same "transparent pricing, no hidden fees" pitch DS has been designing** – but for depositions, not court hearings.
 
 ### Their positioning
 
@@ -250,7 +250,7 @@ This is direct validation that the line items we flagged as "pure agency markup"
 
 ### Implications for DS
 
-1. **The transparency pitch is market-validated.** Not theoretical — EcoScribe is doing it and has a marketing page about it.
+1. **The transparency pitch is market-validated.** Not theoretical – EcoScribe is doing it and has a marketing page about it.
 2. **DS can credibly claim bigger savings.** Invoice analyses show 20% (Caldarella) to 38% (#91319) DS savings vs. legacy agencies. Average ~30%. **"Up to 38%" or "30% average" beats EcoScribe's 27%.**
 3. **EcoScribe is depositions-only.** Not a today-competitor for DS's court-hearings scope. Becomes a competitor only if/when DS expands to depos in Year 3+.
 4. **DS's court-hearings-first wedge is the edge.** EcoScribe isn't in this segment; legacy agencies are unfocused on it (they prefer higher-margin depos). Path to dominant court-hearing platform position is open.
@@ -258,9 +258,9 @@ This is direct validation that the line items we flagged as "pure agency markup"
 
 ### Where DS goes further than EcoScribe (positioning-side)
 
-- **"CSR keeps 100% of stated rate."** EcoScribe doesn't make this claim — they're still an agency, presumably still keeping a meaningful share of the CSR's labor.
+- **"CSR keeps 100% of stated rate."** EcoScribe doesn't make this claim – they're still an agency, presumably still keeping a meaningful share of the CSR's labor.
 - **Marketplace vs. agency model.** EcoScribe is a transparent agency; DS is a marketplace. Different AB-5 posture, different CSR-side pitch.
-- **CA-specific depth.** EcoScribe markets to a broader audience; DS pilot is Bay Area first with deep local court / CSR knowledge.
+- **CA-specific depth.** EcoScribe markets to a broader audience; DS launch is Bay Area first with deep local court / CSR knowledge.
 
 ---
 
@@ -268,8 +268,8 @@ This is direct validation that the line items we flagged as "pure agency markup"
 
 - **The exact CSR take-home is estimated**, not directly observed. We use Atkinson-Baker reporter-payout rates ($3.00–$4.40/pg depending on case type) as a proxy. Specific take-home varies by agency contract.
 - **Exhibit handling is real work** that someone has to do. On DS, either the CSR does it (and bills for it) or the firm handles its own exhibits. The "$50–$200 estimated" placeholders in the DS comparisons should be replaced once we decide DS's exhibit-handling model.
-- **Production Fee, Litigation Package, E-Bundle, Remote Set-Up, Printing Fee, Shipping (Electronic)** are all largely software-substitutable. On DS these are "auto-generate and email a PDF" — zero marginal cost. That's where the agency markup disappears, not because agencies are evil but because we have software they don't (the "streamline-not-eliminate" thesis, per Rosie 2026-05-13).
-- **Two invoices are a directional pattern, not a published rate range.** We can confidently say "agency take-rate ranges from ~39% on non-remote arbitrations to ~70-82% on remote depos" — but for marketing claims, 3-5 more anonymized invoices would let us publish averages with confidence intervals.
+- **Production Fee, Litigation Package, E-Bundle, Remote Set-Up, Printing Fee, Shipping (Electronic)** are all largely software-substitutable. On DS these are "auto-generate and email a PDF" – zero marginal cost. That's where the agency markup disappears, not because agencies are evil but because we have software they don't (the "streamline-not-eliminate" thesis, per Rosie 2026-05-13).
+- **Two invoices are a directional pattern, not a published rate range.** We can confidently say "agency take-rate ranges from ~39% on non-remote arbitrations to ~70-82% on remote depos" – but for marketing claims, 3-5 more anonymized invoices would let us publish averages with confidence intervals.
 - **The 2023 (invoice #91319) vs. 2025 (Caldarella) rate stability** ($5.95/pg → $5.50/pg, similar adjacent line items) suggests CA agency rates are roughly flat over time. Our recalibration anchor doesn't need an inflation adjustment.
 
 ---

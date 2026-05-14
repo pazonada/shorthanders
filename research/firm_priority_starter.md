@@ -29,7 +29,7 @@ Not all litigation generates equal transcript volume. The ranking below is based
 
 The user position (Aud, 2026-05-09): insurance defense firms are deliberately high priority not just because they buy a lot of transcripts but because **they're the on-ramp to direct-to-carrier outreach**. The long-term play:
 
-1. Get a meaningful cluster of insurance defense firms on Dewey Sholes during the pilot.
+1. Get a meaningful cluster of insurance defense firms on Dewey Sholes during the launch window.
 2. Document their cost savings vs. agency markups (transparent statutory rate + 12% platform fee vs. typical 50-85% agency premium).
 3. Pitch carriers (auto, GL, professional liability, workers' comp insurers) directly: *"Your panel firms are saving $X per case on transcripts via this platform. You can require it across your panel for the same savings."*
 4. Carriers pressure ALL their panel firms to switch – a top-down distribution channel reaching the ~70% of attorneys whose work flows through carrier relationships (per `project_insurance_carrier_channel.md`).
@@ -40,7 +40,7 @@ The user position (Aud, 2026-05-09): insurance defense firms are deliberately hi
 
 **Lower bound (5 attorneys):** Below 5, the firm is effectively a solo or very small group. Volume is low and there's rarely dedicated support staff to handle transcript ordering. These firms end up in the "secondary" segment.
 
-**Upper bound (50 attorneys):** Above 50 starts to bring in institutional procurement behavior – preferred vendor lists, partner-level approval for new vendors, procurement committee cycles. These are Phase 2 targets at best, not the pilot cohort.
+**Upper bound (50 attorneys):** Above 50 starts to bring in institutional procurement behavior – preferred vendor lists, partner-level approval for new vendors, procurement committee cycles. These are Phase 2 targets at best, not the launch cohort.
 
 **Sweet spot (10-30 attorneys):** Enough volume to matter month-over-month. Small enough that a paralegal or office manager has real discretion over vendor selection without committee sign-off. Managing partner is often reachable directly. Firm is likely unhappy with their current court reporter sourcing situation but hasn't locked in a long-term agency contract.
 
@@ -118,7 +118,7 @@ Each firm entry in Section 3 carries a confidence signal:
 
 Firms are sorted by tier and then by rough confidence + expected transcript volume within each tier.
 
-### Tier 1B – Bay Area mid-size litigation (core pilot cohort)
+### Tier 1B – Bay Area mid-size litigation (core launch cohort)
 
 These are the firms that should receive postcard + chocolate (Tier 2) treatment if they're in the top 25 by volume signal.
 
@@ -402,7 +402,7 @@ These are the firms that should receive postcard + chocolate (Tier 2) treatment 
 - **Metro:** East Bay
 - **Attorney count:** ~5 (confirmed)
 - **Practice areas:** Insurance defense, personal injury defense, civil litigation, business litigation, real estate
-- **Why they qualify (high priority):** Insurance defense practice = mirror image of PI plaintiff but with the strategic upside described in Section 1.5. Per the carrier-channel strategy, defense firms are explicit priorities for the pilot – even if conversion is slow, getting them on platform builds the case for direct-to-carrier outreach later. Oakland base, boutique structure (5 attorneys = paralegal has real vendor authority), 40+ years experience per attorney, very price-sensitive given carrier audits. No "carrier-locked vendor" disqualifier applies – that constraint is the channel we want to leverage long-term.
+- **Why they qualify (high priority):** Insurance defense practice = mirror image of PI plaintiff but with the strategic upside described in Section 1.5. Per the carrier-channel strategy, defense firms are explicit priorities for the launch window – even if conversion is slow, getting them on platform builds the case for direct-to-carrier outreach later. Oakland base, boutique structure (5 attorneys = paralegal has real vendor authority), 40+ years experience per attorney, very price-sensitive given carrier audits. No "carrier-locked vendor" disqualifier applies – that constraint is the channel we want to leverage long-term.
 - **Disqualifiers:** None.
 - **Tier:** 1B (insurance-defense priority – strong candidate for Tier 2 chocolate treatment if any signed-up CSR cites them)
 - **Confidence:** High

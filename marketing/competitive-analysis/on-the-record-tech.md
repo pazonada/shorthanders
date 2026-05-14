@@ -121,7 +121,7 @@ What is NOT visible: attorney-facing booking, statutory rate data, CA CRB integr
 
 - **No demand side.** Attorneys and legal assistants cannot use On The Record. There is no product for the firm. This is a practice-management tool, not a marketplace.
 - **No court-hearing focus.** The workflow is built around depositions and transcript production. No evidence of public-hearing attendance, statutory rate compliance, or CA CRB verification.
-- **Geographic ambiguity.** No CA-specific compliance posture. DS's CA-specific positioning (statutory rates, CRB verification) is a meaningful differentiator for our pilot.
+- **Geographic ambiguity.** No CA-specific compliance posture. DS's CA-specific positioning (statutory rates, CRB verification) is a meaningful differentiator for our launch window.
 - **MarketPlace is reporter-to-support-staff.** Their "MarketPlace" label could create confusion if attorneys search for it, but the product doesn't serve them. If DS gets compared to On The Record, we win on the "brings you new work" dimension immediately.
 - **Subscription model vs. transaction-fee model.** For a reporter who picks up occasional DS jobs, DS costs nothing upfront ($99/yr) and only charges when paid. If a reporter is just starting out, our model may be lower risk.
 

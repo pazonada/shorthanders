@@ -2,7 +2,7 @@
 
 **Owner:** Aud
 **Last updated:** 2026-05-02
-**Status:** Living document — update as we learn what works
+**Status:** Living document – update as we learn what works
 
 This is the top-level strategy doc. Phase-specific tactics live in:
 - `marketing_plan_phase1_csr_supply.md`
@@ -16,7 +16,7 @@ This is the top-level strategy doc. Phase-specific tactics live in:
 
 These are what we measure success by, in order of importance:
 
-| Metric | Pilot target | Why it matters |
+| Metric | Launch target | Why it matters |
 |---|---|---|
 | Active CSRs (signed up + completed at least 1 job) | 100+ before firm outreach | Without supply, demand-side marketing wastes money |
 | Active firms (signed up + placed at least 2 orders) | 15-25 by month 5 | Threshold for proving the marketplace works |
@@ -34,11 +34,11 @@ These are what we measure success by, in order of importance:
 ### Primary audience 1: CSRs (supply side)
 - **Decision-maker:** The CSR themselves
 - **Best channels:** Cold email (CRB list), Rosie's network, CSR Facebook groups, LinkedIn
-- **Best message:** Keep 100% of your statutory rate, no agency cut, pilot fee waived
+- **Best message:** Keep 100% of your stated rate, no agency cut, direct access to founders during launch
 - **Marketing phase:** Phase 1 (Month 2)
 
 ### Primary audience 2: Legal assistants & paralegals at small-to-midsize litigation firms
-- **Decision-maker:** Legal assistant or paralegal — NOT the partner
+- **Decision-maker:** Legal assistant or paralegal – NOT the partner
   - Why: Partners say "get me the transcript." Legal assistants pick which platform/agency to use. They're the operational decision-maker.
 - **Best channels:** Direct outreach, paralegal association meetups, LinkedIn, reporter-to-firm intros, incentive program
 - **Best message:** Save time chasing reporters, transparent pricing, your boss won't know the difference (it just works)
@@ -48,13 +48,13 @@ These are what we measure success by, in order of importance:
 - **Decision-maker:** Vendor management or claims leadership at carriers
 - **Best channels:** Defense firm intros, LinkedIn outreach, industry events (CLM, PLUS)
 - **Best message:** Reduce ALAE, transparent statutory pricing, audit-friendly cost data
-- **Marketing phase:** Phase 3 (Month 6+, requires pilot data)
+- **Marketing phase:** Phase 3 (Month 6+, requires launch-window data)
 
 ### Secondary audience 2: Self-represented litigants (SRLs)
 - **Decision-maker:** The litigant themselves
 - **Best channels:** Court self-help centers, legal aid orgs, search marketing
 - **Best message:** TRF reimbursement, fee waiver support, transparent statutory pricing
-- **Marketing phase:** Post-pilot — not a focus during launch
+- **Marketing phase:** Post-launch – not a focus during the initial launch window
 
 ---
 
@@ -62,7 +62,7 @@ These are what we measure success by, in order of importance:
 
 **We win by being the easiest option for the legal assistant.**
 
-Most marketplace marketing focuses on the principal buyer (in this case, attorneys). But attorneys aren't shopping — they're delegating. The legal assistant is the actual user, the actual evaluator, and the actual referrer. If we make their job easier and reward them personally for using the platform, they will:
+Most marketplace marketing focuses on the principal buyer (in this case, attorneys). But attorneys aren't shopping – they're delegating. The legal assistant is the actual user, the actual evaluator, and the actual referrer. If we make their job easier and reward them personally for using the platform, they will:
 
 1. Default to Dewey Sholes when their boss asks for a transcript
 2. Tell other legal assistants in their network about it
@@ -80,13 +80,13 @@ Most marketplace marketing focuses on the principal buyer (in this case, attorne
 |---|---|---|
 | CSR signup welcome email | Account created | Auto-send onboarding sequence (welcome, complete profile, your first job, license verified) |
 | Firm signup welcome email | Account created | Auto-send onboarding sequence (welcome, place first order, here's how cost-split works) |
-| Pilot pricing application | Account created during pilot window | Auto-set `pricing_tier="pilot"` and `pilot_expires_at` per t62 |
+| Founding-member tagging | Account created during launch window | Auto-set `founding_member=true` and `joined_cohort="launch-2026"` per t62. No price logic – tag is segmentation only. |
 | Push notifications | New job posted matching CSR preferences | Firebase Cloud Messaging delivers instantly |
 | Email notifications | Job state changes | Order confirmation, reporter assigned, transcript delivered, payment processed, license expiring |
 | Legal assistant incentive tracking | Order completed and accepted | Increment job count for the assistant, trigger reward email at threshold |
 | Reward delivery (digital) | Reaches Tier 1 (3 jobs) | Auto-issue $25 Amazon gift card via Tremendous/Tango Card API |
 | CSR referral tracking | Referred CSR completes onboarding | Increment counter, deliver gift card at thresholds |
-| 30-day pre-expiration emails | `pilot_expires_at` minus 30 days | "Your pilot rate ends [date]" warning |
+| Founding-member feedback touchpoints | Quarterly, on `joined_cohort` anniversary | "How's the platform working? What should we build next?" – preserves the founder-access perk we're selling at signup |
 | Search retargeting | User views pricing page but doesn't sign up | Email follow-up with personalized info (later phase) |
 
 ### Semi-automated (templates ready, send manually)
@@ -112,11 +112,11 @@ Most marketplace marketing focuses on the principal buyer (in this case, attorne
 
 ### Don't do (yet)
 
-- Paid ads (Google, LinkedIn, Meta) — wait until product/market fit and unit economics are proven
-- SEO content marketing — too slow for our timeline; revisit Year 2
-- Influencer marketing — not relevant to legal industry
-- Trade show booths — too expensive ($2-10K each); attend as a participant instead
-- PR firm — not justified pre-revenue
+- Paid ads (Google, LinkedIn, Meta) – wait until product/market fit and unit economics are proven
+- SEO content marketing – too slow for our timeline; revisit Year 2
+- Influencer marketing – not relevant to legal industry
+- Trade show booths – too expensive ($2-10K each); attend as a participant instead
+- PR firm – not justified pre-revenue
 
 ---
 
@@ -130,10 +130,10 @@ Most marketplace marketing focuses on the principal buyer (in this case, attorne
 - Compliant (CSR-verified, regulatory boundaries respected)
 
 ### What we are NOT
-- A court reporting service (regulatory landmine — we're a marketplace)
+- A court reporting service (regulatory landmine – we're a marketplace)
 - A staffing agency (we don't manage CSR work product)
 - A custodian of records (CSRs control their notes; we just transfer files)
-- A discount service (we don't undercut statutory rates — we just don't add agency markup)
+- A discount service (we don't undercut statutory rates – we just don't add agency markup)
 
 ### Voice
 - **Direct.** No legal jargon when plain English works.
@@ -161,7 +161,7 @@ Most marketplace marketing focuses on the principal buyer (in this case, attorne
 
 **Phase 3 budget (carrier channel):** $0 until revenue justifies it
 - All outreach is direct/personal
-- Maybe a fractional BD hire ($2-3K/month) once pilot is generating revenue
+- Maybe a fractional BD hire ($2-3K/month) once the launch window is generating revenue
 
 **Tools/software:**
 - Email sending (Resend or SendGrid free tier): $0

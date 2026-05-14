@@ -2,7 +2,7 @@
 
 **Owner:** Aud
 **Last updated:** 2026-05-02
-**Status:** Draft — for pilot launch
+**Status:** Draft – for launch
 
 ---
 
@@ -10,9 +10,9 @@
 
 Two scenarios came up while researching CA court reporter compensation:
 
-1. **Tiny transcripts** — what if an attorney orders a transcription of a 5-minute audio file? At the statutory rate ($3.67/page × ~3 pages), the CSR would earn $11 for the time spent transcribing, certifying, and delivering. Not viable.
+1. **Tiny transcripts** – what if an attorney orders a transcription of a 5-minute audio file? At the statutory rate ($3.67/page × ~3 pages), the CSR would earn $11 for the time spent transcribing, certifying, and delivering. Not viable.
 
-2. **Hearing delays** — what if a CSR shows up for a 9 AM hearing that doesn't actually start until 10:30 AM? They've blocked 90+ minutes that they could have used for other work.
+2. **Hearing delays** – what if a CSR shows up for a 9 AM hearing that doesn't actually start until 10:30 AM? They've blocked 90+ minutes that they could have used for other work.
 
 Industry CSRs (in the deposition market we're not entering) handle these with minimum transcript fees ($300+) and waiting-time billing (~$40/hour). We need our own answers since we're court-proceedings only.
 
@@ -20,7 +20,7 @@ Industry CSRs (in the deposition market we're not entering) handle these with mi
 
 ## Decision: lean on the existing per-diem attendance fee model
 
-**For live attendance jobs:** the half-day ($255) and full-day ($509) per diems already cover both scenarios. The CSR is paid for the day — whether it runs short, runs long, has waiting time, or any combination. **No separate minimum fee or waiting time billing needed.**
+**For live attendance jobs:** the half-day ($255) and full-day ($509) per diems already cover both scenarios. The CSR is paid for the day – whether it runs short, runs long, has waiting time, or any combination. **No separate minimum fee or waiting time billing needed.**
 
 **For audio transcription jobs:** add a **minimum transcript fee of $50** to protect CSRs from losing money on tiny audio files. Anything under ~13 pages bumps up to the floor.
 
@@ -39,19 +39,19 @@ This means:
 | Hearing scheduled 9 AM, doesn't start until 10:30 AM | Full attendance fee owed. CSR was on-site as scheduled. |
 | Hearing scheduled half-day, runs 30 minutes | Half-day attendance fee owed. CSR cleared their morning. |
 | Hearing scheduled half-day, runs 6 hours | Bumps to full-day fee (>4 hours = full day per existing policy). |
-| Continuance — hearing postponed to next day | Full attendance fee owed for showing up. New booking required for new date. |
+| Continuance – hearing postponed to next day | Full attendance fee owed for showing up. New booking required for new date. |
 | Hearing cancelled <24 hours out | Half-day attendance fee per cancellation policy. |
 | CSR arrives, no proceedings happen at all | Full attendance fee per cancellation policy day-of rule. |
 
 **Why this works:** the per-diem is a contract for the CSR's time, not for a specific volume of work. Courts are unpredictable; the per-diem absorbs that unpredictability.
 
-**Edge case worth flagging:** if a hearing genuinely runs **all day plus several hours late** (rare but happens), the full-day fee may feel inadequate. We'll handle these case-by-case during pilot. If patterns emerge, we can add an "extended hours" tier later.
+**Edge case worth flagging:** if a hearing genuinely runs **all day plus several hours late** (rare but happens), the full-day fee may feel inadequate. We'll handle these case-by-case during the launch window. If patterns emerge, we can add an "extended hours" tier later.
 
 ---
 
 ## Audio transcription: $50 minimum fee
 
-For post-hearing audio transcription, there's no attendance fee — only the per-page rate. To prevent CSRs from losing money on tiny audio files:
+For post-hearing audio transcription, there's no attendance fee – only the per-page rate. To prevent CSRs from losing money on tiny audio files:
 
 **Minimum transcript fee: $50**
 
@@ -98,10 +98,10 @@ A small note on the calculator clarifies: "Orders below $50 are billed at our $5
 
 ## What we're NOT adding
 
-- **Separate waiting-time billing** for live attendance — the per-diem covers it
-- **Realtime / rough draft surcharges** — these are deposition conventions, not common in court hearing work
-- **Video surcharges** — courts handle their own video; not our problem
-- **Interpreter surcharges** — interpreter-present transcripts already bill at the same statutory rate (same word count) *(revisit after CSR survey — Rosie 5/12 hedged on this; CSRs in the FB group are complaining specifically about interpreter rates)*
+- **Separate waiting-time billing** for live attendance – the per-diem covers it
+- **Realtime / rough draft surcharges** – these are deposition conventions, not common in court hearing work
+- **Video surcharges** – courts handle their own video; not our problem
+- **Interpreter surcharges** – interpreter-present transcripts already bill at the same statutory rate (same word count) *(revisit after CSR survey – Rosie 5/12 hedged on this; CSRs in the FB group are complaining specifically about interpreter rates)*
 
 ---
 
@@ -116,7 +116,7 @@ Per Rosie 5/12 ("Travel time is very billable and it's usually a pretty big expe
 - **In-person live attendance only.** Remote/Zoom jobs don't incur travel.
 - **CSR-defined travel-free radius** during onboarding (default: 30 minutes one-way from their declared home base). Within that radius, no travel fee.
 - **Beyond the free radius:** travel time billed at **$50/hr default**, in 15-minute increments, capped at 4 hours round-trip per job.
-- **CSR can adjust travel rate** within the same ±20% band as their other rates (per AB 5 prong 3 — see [rating_and_matching_policy.md](rating_and_matching_policy.md)).
+- **CSR can adjust travel rate** within the same ±20% band as their other rates (per AB 5 prong 3 – see [rating_and_matching_policy.md](rating_and_matching_policy.md)).
 - **Attorney sees travel-fee estimate at order time** based on assigned CSR's home base → courthouse drive time (Google Maps API or similar), shown as a separate calculator line item.
 
 Open question for Rosie (in [pricing_questions_rosie_and_csrs.md](../research/pricing_questions_rosie_and_csrs.md)): should the travel-free radius be CSR-defined (proposed) or platform-fixed at 30 minutes? Aud leans CSR-defined.
@@ -127,7 +127,7 @@ Per Rosie 5/12: "Usually during trial a draft is provided for free immediately t
 
 For multi-day trial bookings:
 
-- **Rough daily draft is included automatically in the trial-day rate** — not a separate billable.
+- **Rough daily draft is included automatically in the trial-day rate** – not a separate billable.
 - Available the morning after each trial day to all parties who have *already paid for the final certified transcript*.
 - Parties who haven't ordered the final transcript don't receive the daily draft.
 - "Final" here means an order placed at the time of booking the trial-day attendance; not a post-trial add-on.
@@ -152,6 +152,6 @@ This implies a small product change: the trial-day booking flow must capture tra
 
 ## Related documents
 
-- `billing_and_payment_policy.md` — payment timing
-- `cancellation_and_cna_policy.md` — what happens when proceedings don't happen
-- `founding_member_program.md` — founding-cohort segmentation and referral incentives (no pricing tier)
+- `billing_and_payment_policy.md` – payment timing
+- `cancellation_and_cna_policy.md` – what happens when proceedings don't happen
+- `founding_member_program.md` – founding-cohort segmentation and referral incentives (no pricing tier)

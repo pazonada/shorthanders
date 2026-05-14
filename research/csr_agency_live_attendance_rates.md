@@ -37,7 +37,7 @@
 | **Industry reference – StenoScout 2026 pricing guide** | – | National with CA examples | – | Sessions $250–$1,500+; realtime adds 10–50%; most baseline depositions $400–700 | – | Mixed | [stenoscout.com/blog/how-much-does-court-reporter-cost](https://stenoscout.com/blog/how-much-does-court-reporter-cost/) | 2026-05-12 |
 | **Rosie's direct experience – Contra Costa** | Practitioner data point | Contra Costa County | **≈ $1,800** (half-day, private agency, recent matter) | – | – | **Court hearing** | Rosie 2026-05-12 (written answer to Q20 of [pricing_questions_rosie_and_csrs.md](pricing_questions_rosie_and_csrs.md)) | 2026-05-12 |
 | **Rosie's market read – LA** | Practitioner inference | Los Angeles | – | "Close to 2× Bay Area rates" for attorney fees and deposition reporters | – | Hearings & depositions | Rosie 2026-05-12 (same source) | 2026-05-12 |
-| **Tina Sherman (CSR) – self-reported income** | Working CSR in CA workers comp niche | CA (remote) | – | **$16K–22K / month** ($192K–264K / year) on a curated workload of ~2 depos/day, 10a–5p, no evenings/weekends | – | Workers Comp depositions | [Court Reporter Rates Discussion Facebook group](https://www.facebook.com/groups/259194643242710/) — 14 reactions on the post | 2026-05-13 |
+| **Tina Sherman (CSR) – self-reported income** | Working CSR in CA workers comp niche | CA (remote) | – | **$16K–22K / month** ($192K–264K / year) on a curated workload of ~2 depos/day, 10a–5p, no evenings/weekends | – | Workers Comp depositions | [Court Reporter Rates Discussion Facebook group](https://www.facebook.com/groups/259194643242710/) – 14 reactions on the post | 2026-05-13 |
 
 ### Why WC reporters earn this much: the O+2 structural quirk
 
@@ -50,9 +50,9 @@ Tina Sherman explained the structural reason CA WC pays so well: "In California 
 | Copy 2 (certified) | 100 | $1.75/pg | $175 |
 | **Total per 100-page WC depo** | | | **$650–850** |
 
-A non-WC civil deposition typically delivers Original + 1 simultaneous copy (or original only) — roughly half the gross per identical job. WC's automatic O+2 effectively doubles the transcript billing baseline.
+A non-WC civil deposition typically delivers Original + 1 simultaneous copy (or original only) – roughly half the gross per identical job. WC's automatic O+2 effectively doubles the transcript billing baseline.
 
-**Structural reason (statutory):** CA WC cases have at least three required-document recipients — applicant, defense/carrier, sometimes WCAB or defense expert. Lab. Code § 5710 and 8 CCR § 10579 drive the deliverable expectation. Industry practice is to bill all three upfront rather than chase per-party orders.
+**Structural reason (statutory):** CA WC cases have at least three required-document recipients – applicant, defense/carrier, sometimes WCAB or defense expert. Lab. Code § 5710 and 8 CCR § 10579 drive the deliverable expectation. Industry practice is to bill all three upfront rather than chase per-party orders.
 
 **Implication for DS:**
 
@@ -62,7 +62,7 @@ A non-WC civil deposition typically delivers Original + 1 simultaneous copy (or 
 
 3. **The "CSR shortage" pitch needs precision.** The shortage is acute for *in-person court attendance in under-served counties* (Contra Costa, San Diego). For *remote depo work in focused niches*, the CSRs who've adapted are thriving. Marketing should be specific about which CSR segment we're solving for.
 
-4. **Tina is a credibility-grade voice in the FB group** (14 reactions, anonymous "this is incredible!!" reply). If Rosie's network has any path to her, she's a clear early-supply target — similar to Caldarella. Worth flagging for outreach.
+4. **Tina is a credibility-grade voice in the FB group** (14 reactions, anonymous "this is incredible!!" reply). If Rosie's network has any path to her, she's a clear early-supply target – similar to Caldarella. Worth flagging for outreach.
 
 ---
 
@@ -85,7 +85,7 @@ These are the fees parties pay to the court when an *official* reporter is provi
 | **OAH (Cal. Office of Administrative Hearings) – CSR contract rates** | N/P in raw search (regional, in Price Book) | N/P in raw search | – | Contract 2024-04-01 to 2027-03-31 | [DGS OAH contract page](https://www.dgs.ca.gov/OAH/Case-Types/General-Jurisdiction/Resources/Page-Content/General-Jurisdiction-Resources-List-Folder/Find-Contract-Information-to-Obtain-OAH-Court-Reporter-Services) | 2026-05-12 |
 | **US District Court, Central District of CA (federal reference)** | $150 (non-realtime) / $162 (realtime) / $177 (realtime certified) | $300 / $325 / $355 | – | Federal contract rate | [cacd.uscourts.gov contract reporter rates](https://www.cacd.uscourts.gov/news/diem-rate-increase-contract-court-reporters) | 2026-05-12 |
 
-Note on the Contra Costa, San Mateo, and Ventura numbers: these are the court's *pay rate to the reporter* in employer-side job postings, not the § 68086 fee the parties are charged. They are still useful as a market floor — a private agency must clear these to attract reporters off the court bench.
+Note on the Contra Costa, San Mateo, and Ventura numbers: these are the court's *pay rate to the reporter* in employer-side job postings, not the § 68086 fee the parties are charged. They are still useful as a market floor – a private agency must clear these to attract reporters off the court bench.
 
 ---
 
@@ -103,7 +103,7 @@ Industry-aggregate references (not single-firm, but published):
 Because the agency sample with published hearing rates is n = 1, **mean / median / range on the private side cannot be honestly computed**. The honest range from the available signals is roughly **$1,500–$3,300 per full day for court hearings**, with the lower end being for a basic motion appearance and the upper end being a trial day with realtime/expedited transcript add-ons.
 
 ### 3b. Court statutory per-diems (§ 68086, party-paid)
-Counting LA, SF, Alameda (2015), San Bernardino, Riverside — n = 5 published amounts.
+Counting LA, SF, Alameda (2015), San Bernardino, Riverside – n = 5 published amounts.
 - **Half-day:** range **$280 – $440**; mean **$348.80**; median **$326**.
 - **Full-day:** range **$560 – $880**; mean **$691.20**; median **$631**.
 
@@ -138,10 +138,10 @@ In addition to the agency / court survey above, Aud shared 10+ images of working
 | Private CSR Card 5 – hearing w/o transcript order | unknown | ~$1,000 | $500 / first 4 hrs (higher rate when no transcript revenue follows) |
 | Private CSR Card 6 (weekday in-person regular) | unknown | ~$910 | Extrapolated from Saturday jury-trial example |
 | Private CSR Card 7 (West-Central FL detail) | FL | $340 | $100 first 2 hrs + $40 hourly |
-| Denise Paddock CSR (publicly posted) | **CA** | **$1,900+** | OC solo — only CA private CSR rate publicly posted |
+| Denise Paddock CSR (publicly posted) | **CA** | **$1,900+** | OC solo – only CA private CSR rate publicly posted |
 | Rosie's direct experience (Contra Costa) | **CA** | **~$3,600** | Half-day was $1,800; full-day extrapolated |
 | Judicial Council aggregate (Bay Area Legal Aid cite) | **CA** | **~$3,300** | Wide-band industry average |
-| LA market (Rosie's read) | **CA** | ~$1,900-2,000 | "Close to 2× Bay Area" — but Bay Area is itself high |
+| LA market (Rosie's read) | **CA** | ~$1,900-2,000 | "Close to 2× Bay Area" – but Bay Area is itself high |
 
 ### The clear CA-vs-FL premium
 
@@ -163,16 +163,16 @@ The right pricing anchors for the Bay Area private market are the CA-specific da
 
 | Tier | Half-day | Full-day | Reasoning |
 |---|---|---|---|
-| Anchor — typical CA private agency | $1,800 | ~$2,500-3,600 | What Bay Area attorneys actually pay agencies today |
-| DS pilot — ~50% below agency | $900 | $1,500 | Significant attorney savings; CSR keeps 100% (vs. 30-60% via agency); above FL Lexitas state contract |
-| **DS pilot — split the difference** (recommended) | **$1,050** | **$1,650** | The "I don't want to undersell, but I don't want to overshoot before data" hedge — between the $900/$1,500 conservative and $1,200/$1,800 aggressive |
-| DS pilot — more aggressive (~35% below agency) | $1,200 | $1,800 | Closer to private agency floor; strong CSR raise |
-| DS pilot — conservative (~70% below agency) | $700 | $1,200 | Still well above court statutory ($596 Bay Area mean); safer if CSRs balk |
+| Anchor – typical CA private agency | $1,800 | ~$2,500-3,600 | What Bay Area attorneys actually pay agencies today |
+| DS launch – ~50% below agency | $900 | $1,500 | Significant attorney savings; CSR keeps 100% (vs. 30-60% via agency); above FL Lexitas state contract |
+| **DS launch – split the difference** (recommended) | **$1,050** | **$1,650** | The "I don't want to undersell, but I don't want to overshoot before data" hedge – between the $900/$1,500 conservative and $1,200/$1,800 aggressive |
+| DS launch – more aggressive (~35% below agency) | $1,200 | $1,800 | Closer to private agency floor; strong CSR raise |
+| DS launch – conservative (~70% below agency) | $700 | $1,200 | Still well above court statutory ($596 Bay Area mean); safer if CSRs balk |
 | Floor I wouldn't go below | $500 | $900 | Anything lower undersells the work; CSRs do this rate through agencies today |
 
-Note: this revises the earlier "$600 half / $1,100 full" guess upward. The earlier number was anchored too heavily on FL rate cards and Bay Area court statutory; with CA-specific evidence properly weighted, the recommended landing zone is **$1,050 / $1,650** — between the two original tiers. The ±20% CSR rate-setting band means premium CSRs can position at $1,260/$1,980 (top of band) and cold-start CSRs can sit at $840/$1,320 (bottom of band), giving the platform a published *middle* rate rather than a ceiling or floor.
+Note: this revises the earlier "$600 half / $1,100 full" guess upward. The earlier number was anchored too heavily on FL rate cards and Bay Area court statutory; with CA-specific evidence properly weighted, the recommended landing zone is **$1,050 / $1,650** – between the two original tiers. The ±20% CSR rate-setting band means premium CSRs can position at $1,260/$1,980 (top of band) and cold-start CSRs can sit at $840/$1,320 (bottom of band), giving the platform a published *middle* rate rather than a ceiling or floor.
 
-**Survey is the validator.** Final landing should be confirmed by Stage 1 CSR survey results (Q7/Q8 ask CSRs their own private-direct rates). If 30-60 CSR responses cluster materially above or below $1,650 full-day, adjust before pilot launch.
+**Survey is the validator.** Final landing should be confirmed by Stage 1 CSR survey results (Q7/Q8 ask CSRs their own private-direct rates). If 30-60 CSR responses cluster materially above or below $1,650 full-day, adjust before launch launch.
 
 The ±20% CSR rate-setting band (per AB-5 prong 3) means individual CSRs can adjust their published rate up to $1,080/$1,800 (top of band) or down to $720/$1,200 (bottom of band). Premium CSRs (Denise Paddock-tier) can position at the top; cold-start CSRs can use the bottom of the band for visibility.
 
@@ -183,7 +183,7 @@ Current code: $2,200/trial-day. Most private cards add a *trial premium* on top 
 - Card 1 FL: $240 base + $240 in-person + $200 jury trial premium = $680 jury trial day
 - Card 7 FL: $570 weekday trial appearance (lower-tier rate card)
 
-If DS full-day lands at $1,500, **trial-day at 1.3-1.5× full-day = $1,950-$2,250**. Current $2,200 is roughly right under that math, but should be reframed in code as "full-day × trial premium" rather than a standalone number — so the trial rate updates when the full-day rate moves.
+If DS full-day lands at $1,500, **trial-day at 1.3-1.5× full-day = $1,950-$2,250**. Current $2,200 is roughly right under that math, but should be reframed in code as "full-day × trial premium" rather than a standalone number – so the trial rate updates when the full-day rate moves.
 
 ---
 

@@ -2,7 +2,7 @@
 
 **Owner:** Aud & Rosie
 **Last updated:** 2026-05-05
-**Status:** v2 Draft — pending Rosie review of items tagged `[NEEDS ROSIE]`
+**Status:** v2 Draft – pending Rosie review of items tagged `[NEEDS ROSIE]`
 
 ---
 
@@ -22,9 +22,9 @@
 
 Attorneys rate CSRs on three dimensions after each completed job:
 
-1. **Communication / responsiveness** — How well did the CSR communicate during the job?
-2. **Timeliness of delivery** — Was the transcript delivered on time?
-3. **Transcript quality** — Was the transcript accurate and professionally formatted?
+1. **Communication / responsiveness** – How well did the CSR communicate during the job?
+2. **Timeliness of delivery** – Was the transcript delivered on time?
+3. **Transcript quality** – Was the transcript accurate and professionally formatted?
 
 A **composite score** (weighted average of all three) is calculated for matching algorithm use.
 
@@ -68,7 +68,7 @@ The matching algorithm relies on two structured data sets: what CSRs *can* do (c
 
 CSRs declare their capabilities during onboarding and can edit them anytime in profile settings. Capabilities fall into four buckets:
 
-**1. Verified credentials** — DS verifies via external source.
+**1. Verified credentials** – DS verifies via external source.
 
 | Credential | What it is | How DS verifies |
 |---|---|---|
@@ -78,11 +78,11 @@ CSRs declare their capabilities during onboarding and can edit them anytime in p
 | CRR | NCRA Certified Realtime Reporter | Same as RPR. Required to accept jobs that need realtime feed. |
 | CRC | NCRA Certified Realtime Captioner | Same as RPR. Required for CART/captioning work if DS ever supports it. |
 
-**2. Self-declared with optional proof** — CSR checks a box, optionally uploads supporting evidence. Profile shows "self-declared" until proof is attached, then shows "verified."
+**2. Self-declared with optional proof** – CSR checks a box, optionally uploads supporting evidence. Profile shows "self-declared" until proof is attached, then shows "verified."
 
 Self-declared capabilities are split into two structurally distinct fields: a **standardized controlled vocabulary** (drives matching) and a **free-text "additional expertise" field** (informational, doesn't drive matching).
 
-##### Standardized specialties — controlled vocabulary (drives matching)
+##### Standardized specialties – controlled vocabulary (drives matching)
 
 The matching algorithm operates on a fixed set of specialties to keep filtering and ranking precise. CSRs multi-select from this list during onboarding and can edit anytime.
 
@@ -92,7 +92,7 @@ The matching algorithm operates on a fixed set of specialties to keep filtering 
 | Job-type comfort | Interpreted proceedings (with language pairs declared from a controlled language list), Sealed / Confidential matters, Multi-party arbitrations, Trials (jury / non-jury) |
 | Equipment | Realtime feed capable, Video synchronization capable, In-person reporting, Remote/Zoom reporting only |
 
-The starting list above is **~15 standardized specialties** plus language pairs plus equipment flags. Limited intentionally — every additional specialty is one more dimension the matching algorithm has to reason about, and a list that's too long becomes noise. Better to start tight and expand based on real demand (see "Request a new specialty" below).
+The starting list above is **~15 standardized specialties** plus language pairs plus equipment flags. Limited intentionally – every additional specialty is one more dimension the matching algorithm has to reason about, and a list that's too long becomes noise. Better to start tight and expand based on real demand (see "Request a new specialty" below).
 
 ##### Free-text "additional expertise" field (informational only)
 
@@ -115,7 +115,7 @@ Side benefit: a flood of requests for a single specialty is a market signal. Eig
 
 ##### Why standardize at all (rationale for the controlled vocabulary)
 
-The auto-match decision already settled (per v2 design principle: attorneys don't browse CSRs at order time). Auto-matching only works if the algorithm has clean, structured data to filter and rank on. Free-form specialties would fragment the supply pool — a "Medical malpractice" CSR and a "Med-Mal" CSR look identical to a human but require fuzzy matching or human normalization to combine algorithmically.
+The auto-match decision already settled (per v2 design principle: attorneys don't browse CSRs at order time). Auto-matching only works if the algorithm has clean, structured data to filter and rank on. Free-form specialties would fragment the supply pool – a "Medical malpractice" CSR and a "Med-Mal" CSR look identical to a human but require fuzzy matching or human normalization to combine algorithmically.
 
 The free-text "additional expertise" field handles every realistic edge case (niche specialties, unusual languages, court-specific experience) without polluting the matching surface. The "request new specialty" pathway prevents the controlled list from going stale.
 
@@ -124,11 +124,11 @@ The free-text "additional expertise" field handles every realistic edge case (ni
 The attorney never browses CSRs (auto-match remains default). For one-off niche needs not covered by the standardized list, two existing mechanisms apply:
 
 1. **"Notes for the reporter" field on the order** (already in scope). Attorney writes "expert is a marine biologist; familiarity with cetacean terminology preferred." Invited CSRs see this in the invite card and self-select.
-2. **Favorites flow** (already in scope). If the attorney has a working relationship with a specific CSR for unusual work, they favorite that CSR — Phase 1 of the cascade prioritizes favorites before the general pool.
+2. **Favorites flow** (already in scope). If the attorney has a working relationship with a specific CSR for unusual work, they favorite that CSR – Phase 1 of the cascade prioritizes favorites before the general pool.
 
 Between standardized specialties for matching, free-text "additional expertise" for trust signal on the profile, "Notes for the reporter" for one-off needs, and favorites for relationship continuity, every realistic scenario is covered without making the attorney browse.
 
-**3. Operational settings** — CSR-controlled, not verified.
+**3. Operational settings** – CSR-controlled, not verified.
 
 | Setting | Default | Range |
 |---|---|---|
@@ -139,12 +139,12 @@ Between standardized specialties for matching, free-text "additional expertise" 
 | After-hours / weekend opt-in | Off | On/off toggle, optionally with surcharge multiplier |
 | Rate adjustments | 0% from default | ±20% (per AB-5 rate-setting band) |
 
-**4. Track record** — computed from completed-job history, not declared.
+**4. Track record** – computed from completed-job history, not declared.
 
 - Composite rating (1–5, recency-weighted)
 - On-time delivery rate (% of transcripts delivered by deadline)
 - Completed-job count (lifetime and last 90 days)
-- Specialty job count (per specialty category — surfaces actual experience independent of self-declaration)
+- Specialty job count (per specialty category – surfaces actual experience independent of self-declaration)
 
 ### Job requirement dimensions
 
@@ -184,9 +184,9 @@ A CSR who fails any hard filter never sees the invite. Hard filters are non-nego
 
 | Filter | Applies to | Notes |
 |---|---|---|
-| Active CRB license | All jobs | Verified at signup and on a recurring sync — see [csr_license_sync.md](agent-actions/csr_license_sync.md) |
+| Active CRB license | All jobs | Verified at signup and on a recurring sync – see [csr_license_sync.md](agent-actions/csr_license_sync.md) |
 | Service radius covers courthouse | Live jobs only | Audio jobs have no geographic filter |
-| CRR certification | Jobs requiring realtime feed | Self-declared without CRR is insufficient — must hold the cert |
+| CRR certification | Jobs requiring realtime feed | Self-declared without CRR is insufficient – must hold the cert |
 | Declared language match | Interpreted jobs | E.g., a Mandarin interpreted depo requires the CSR to have declared Mandarin |
 | Sealed-work opt-in | Sealed / confidential jobs | CSRs explicitly opt into sealed work; not a default |
 | Calendar availability | All live jobs | No conflicting accepted job in the requested window |
@@ -194,14 +194,14 @@ A CSR who fails any hard filter never sees the invite. Hard filters are non-nego
 
 ### Soft preferences (boost ranking, don't exclude)
 
-Within the eligible pool, the algorithm boosts CSRs whose capabilities align well with the job. None of these excludes a CSR — they just affect order in the ranked-slot fill.
+Within the eligible pool, the algorithm boosts CSRs whose capabilities align well with the job. None of these excludes a CSR – they just affect order in the ranked-slot fill.
 
 | Signal | How it weighs | Notes |
 |---|---|---|
 | Specialty match | Significant boost | Per Rosie (2026-05-05): soft preference, not hard filter. A non-specialist remains eligible if highly rated and lightly loaded. |
 | RPR / RMR / CRR / CRC certification | Modest boost | General signal of professional competence beyond CRB license |
 | Composite rating (recency-weighted) | Significant boost | See Phase 2 ranking logic |
-| Past completion of similar specialty jobs | Modest boost | Computed from track-record dimension — actual experience often beats self-declared experience |
+| Past completion of similar specialty jobs | Modest boost | Computed from track-record dimension – actual experience often beats self-declared experience |
 | Low current workload | Modest boost | Already in v1 ranking logic |
 | Short travel time to courthouse (live only) | Tiebreaker | Geography already filtered hard; travel time is a finer-grained preference within radius |
 
@@ -209,7 +209,7 @@ Within the eligible pool, the algorithm boosts CSRs whose capabilities align wel
 
 Per Rosie (2026-05-05) and confirmed in Phase 2 selection logic: the fairness slot in each batch (1 of 3 in Phase 2, 3 of 10 in Phase 3a) does **not** apply soft preferences. The goal is to give cold-start CSRs visibility even on jobs whose specialty they haven't built up yet. A new CSR without Medical specialty can still be invited on a medical-witness depo through the fairness slot.
 
-Hard filters still apply to fairness-slot CSRs — a CSR can't accept a job they're legally or operationally not equipped for (e.g., no CRR cert → can't take a realtime job, even via fairness rotation).
+Hard filters still apply to fairness-slot CSRs – a CSR can't accept a job they're legally or operationally not equipped for (e.g., no CRR cert → can't take a realtime job, even via fairness rotation).
 
 ### What's surfaced to the attorney
 
@@ -219,14 +219,14 @@ The order detail view (described under "Attorney-side UX" below) shows which cap
 Sarah Chen
 ✓ License verified (CRB)
 ✓ RPR + CRR certified (NCRA)
-✓ Medical/Expert specialty — 23 prior medical depos completed
+✓ Medical/Expert specialty – 23 prior medical depos completed
 ✓ Available in your courthouse's radius
 4.9★ · 142 jobs · 99% on-time
 ```
 
 This makes the match legible: the attorney sees *why* this CSR was selected, not just "the algorithm picked her."
 
-`[NEEDS ROSIE]` — confirm whether soft-preference boost should be visible to CSRs too ("this job matches your Medical specialty"). Aud leans toward yes — helps CSRs decide whether to accept.
+`[NEEDS ROSIE]` – confirm whether soft-preference boost should be visible to CSRs too ("this job matches your Medical specialty"). Aud leans toward yes – helps CSRs decide whether to accept.
 
 ---
 
@@ -235,11 +235,11 @@ This makes the match legible: the attorney sees *why* this CSR was selected, not
 ### Design principles
 
 - **Attorneys don't pick reporters at order time.** The cascade runs automatically. The 3-mode picker ("Match me with the best available" / "Choose from favorites" / "Choose from top-rated") is removed from the order flow.
-- **Favorites get first crack, in parallel.** No ranking among favorites — first to accept wins.
+- **Favorites get first crack, in parallel.** No ranking among favorites – first to accept wins.
 - **The general pool fans out in small batches** so CSRs aren't drowning in invites and the system doesn't over-commit a job.
 - **Cold-start fairness is built in.** New CSRs and lower-rated CSRs get rotated into batches even when top-rated CSRs are available, so they can build a track record and we don't ossify a leaderboard.
 - **Geography matters for live, not for audio.** Live transcription is filtered to the courthouse's service radius before anything else; audio transcription has no geographic constraint.
-- **Invites stay live until the job is claimed.** Earlier-batch CSRs who didn't respond aren't timed out when the pool widens — they can still accept until someone takes the job. When a CSR claims it, every still-live invitee is notified.
+- **Invites stay live until the job is claimed.** Earlier-batch CSRs who didn't respond aren't timed out when the pool widens – they can still accept until someone takes the job. When a CSR claims it, every still-live invitee is notified.
 
 ### Quick reference: the cascade at a glance
 
@@ -247,9 +247,9 @@ This makes the match legible: the attorney sees *why* this CSR was selected, not
 |---|---|---|---|---|---|
 | **1: Favorites** | Order placed | All firm favorites in parallel *(live: in-radius favorites only)* | Everyone at once | Rush **2h** / Exp **12h** / Std **24h** | A favorite accepts (done), all decline (advance early), or window expires |
 | **2: General pool batches** | Phase 1 ends, no acceptance | Top of ranked list + 1 fairness slot *(live: in-radius only)* | **3 at a time** | Rush **2h** / Exp **12h** / Std **24h** | Someone accepts, all 3 decline (advance early), or window expires → next batch of 3 |
-| **3a: Acceleration** | 48h from placement, no acceptance | Same mix, scaled up — 7 ranked + 3 fairness | **10 at a time** | **3h** (all tiers) | Someone accepts, all 10 decline, or window expires → next batch of 10 |
-| **3b: All-call** | 72h from placement, no acceptance | Every eligible CSR in active pool *(live: all in-radius CSRs)* | Everyone at once | No per-CSR window — invite stays live | Someone accepts, or auto-cancel fires |
-| **4: Auto-cancel** | 12h before order deadline, no acceptance | — | — | — | Order cancels, full refund, all live invites close, attorney notified |
+| **3a: Acceleration** | 48h from placement, no acceptance | Same mix, scaled up – 7 ranked + 3 fairness | **10 at a time** | **3h** (all tiers) | Someone accepts, all 10 decline, or window expires → next batch of 10 |
+| **3b: All-call** | 72h from placement, no acceptance | Every eligible CSR in active pool *(live: all in-radius CSRs)* | Everyone at once | No per-CSR window – invite stays live | Someone accepts, or auto-cancel fires |
+| **4: Auto-cancel** | 12h before order deadline, no acceptance | – | – | – | Order cancels, full refund, all live invites close, attorney notified |
 
 ### Example timelines
 
@@ -285,7 +285,7 @@ Standard job, 7-day (168h) deadline:
   Hour 156 ─ AUTO-CANCEL (12h before deadline)
 ```
 
-**Edge case:** a 3-day Expedited job (72h deadline) auto-cancels at hour 60 — Phase 3b never fires because 12h-pre-deadline arrives before the 72h Phase 3b trigger.
+**Edge case:** a 3-day Expedited job (72h deadline) auto-cancels at hour 60 – Phase 3b never fires because 12h-pre-deadline arrives before the 72h Phase 3b trigger.
 
 ### SLA tiers
 
@@ -297,9 +297,9 @@ Three tiers, surfaced in the homepage cost estimator:
 | **Expedited** | 3-5 biz days | 1.0× |
 | **Standard** | 6+ biz days | 0.85× |
 
-`[NEEDS RECONCILE]` — `legal_signoffs_tracker.md` v1 lists Standard as "2+ weeks." The user-facing calculator says "6+ biz days." Treating the calculator (user-facing) as authoritative here; flag for the legal-doc owner to align.
+`[NEEDS RECONCILE]` – `legal_signoffs_tracker.md` v1 lists Standard as "2+ weeks." The user-facing calculator says "6+ biz days." Treating the calculator (user-facing) as authoritative here; flag for the legal-doc owner to align.
 
-The matching cascade respects all three tiers — see "Per-tier response windows" below. The label "rush" elsewhere in this doc means specifically the Rush tier (1-2 biz days), not just "any short deadline."
+The matching cascade respects all three tiers – see "Per-tier response windows" below. The label "rush" elsewhere in this doc means specifically the Rush tier (1-2 biz days), not just "any short deadline."
 
 ### Per-tier CSR response windows
 
@@ -308,10 +308,10 @@ These windows define **how long an invited CSR has to accept a job** before the 
 | Tier | CSR response window (Phase 1 & Phase 2) |
 |---|---|
 | Rush (1-2 biz days) | **2 hours** |
-| Expedited (3-5 biz days) | **12 hours** `[NEEDS ROSIE]` — proposed; v1 grouped Expedited with Standard at 24h |
+| Expedited (3-5 biz days) | **12 hours** `[NEEDS ROSIE]` – proposed; v1 grouped Expedited with Standard at 24h |
 | Standard (6+ biz days) | **24 hours** |
 
-Phase 3a (batches of 10, after 48h) uses a **fixed 3h response window** across all tiers — it's not tier-dependent. Phase 3b (after 72h) is an all-call with no per-CSR window; it stays open until someone accepts or until the 12h-pre-deadline auto-cancel fires.
+Phase 3a (batches of 10, after 48h) uses a **fixed 3h response window** across all tiers – it's not tier-dependent. Phase 3b (after 72h) is an all-call with no per-CSR window; it stays open until someone accepts or until the 12h-pre-deadline auto-cancel fires.
 
 ---
 
@@ -319,21 +319,21 @@ Phase 3a (batches of 10, after 48h) uses a **fixed 3h response window** across a
 
 - The invite goes to **all favorites on the firm's account simultaneously** the moment the order is placed.
 - The first favorite to accept wins. Everyone else gets a "this job has been claimed" notification.
-- **Live jobs:** the favorites pool is **pre-filtered to favorites within the courthouse's service radius**. Out-of-region favorites are skipped for this phase. (Definition of "service radius" — see `[NEEDS ROSIE]` Q4 below.)
+- **Live jobs:** the favorites pool is **pre-filtered to favorites within the courthouse's service radius**. Out-of-region favorites are skipped for this phase. (Definition of "service radius" – see `[NEEDS ROSIE]` Q4 below.)
 - **Audio jobs:** all favorites get the invite; no geographic filter.
 - **Window:** see "Per-tier response windows" table above.
 
-If no favorite accepts (or the firm has no favorites, or no favorites are eligible for a live job), the cascade moves to Phase 2 immediately when the window closes — or earlier if every eligible favorite has explicitly declined.
+If no favorite accepts (or the firm has no favorites, or no favorites are eligible for a live job), the cascade moves to Phase 2 immediately when the window closes – or earlier if every eligible favorite has explicitly declined.
 
 ---
 
-### Phase 2: General pool — batches of 3
+### Phase 2: General pool – batches of 3
 
 After the favorites round expires (or is skipped):
 
 - Invite goes to **3 CSRs at a time** from the general pool.
 - The first to accept wins. Other invitees in that batch (and any earlier-phase invitees still holding live invites) get a "claimed" notification.
-- **Decline-fast:** if all 3 in a batch explicitly decline before the window closes, immediately fan out to the next batch — don't wait the full window.
+- **Decline-fast:** if all 3 in a batch explicitly decline before the window closes, immediately fan out to the next batch – don't wait the full window.
 - **Invite lifecycle:** invites do not auto-expire when the next batch goes out. A CSR invited in batch 1 can still accept after batch 2 ships, up until the job is claimed by someone else.
 - **Live jobs:** the general pool is restricted to CSRs whose service radius covers the courthouse. (Same definition as Phase 1.)
 - **Audio jobs:** no geographic filter; the entire active general pool is in scope.
@@ -343,18 +343,18 @@ After the favorites round expires (or is skipped):
 
 The candidate pool for a batch is **all active CSRs who pass the job's hard filters** (see "Capability matching: hard filters vs. soft preferences" above). No minimum-rating gate is applied. The selection mixes ranking with deliberate fairness:
 
-- **2 slots — top of ranked list** by:
-  1. **Case-type / specialty fit** (soft preference, defined under "Soft preferences" above) — CSRs whose declared specialties or completed-job history overlap with the order's case type rank ahead of CSRs without that experience. Specialty fit is a tiebreak/boost, not a hard filter — a non-specialist still ranks fine if they're high-rated and lightly loaded.
+- **2 slots – top of ranked list** by:
+  1. **Case-type / specialty fit** (soft preference, defined under "Soft preferences" above) – CSRs whose declared specialties or completed-job history overlap with the order's case type rank ahead of CSRs without that experience. Specialty fit is a tiebreak/boost, not a hard filter – a non-specialist still ranks fine if they're high-rated and lightly loaded.
   2. Composite rating (recency-weighted)
   3. Lowest current workload (active accepted jobs / pages due / upcoming live dates)
   4. (Live only) shorter travel time to courthouse as tiebreaker
-- **1 slot — fairness rotation** from one of:
-  - New CSRs (fewer than 10 rated jobs — the existing "benefit of the doubt" provisional pool)
+- **1 slot – fairness rotation** from one of:
+  - New CSRs (fewer than 10 rated jobs – the existing "benefit of the doubt" provisional pool)
   - Mid-rated CSRs (composite below the platform median) who haven't been invited recently
   - Reserved so that **every batch contains at least one CSR who isn't already top-of-list**
-  - Fairness slot does **not** apply specialty filter — the goal is to give cold-start CSRs exposure regardless of case type.
+  - Fairness slot does **not** apply specialty filter – the goal is to give cold-start CSRs exposure regardless of case type.
 
-`[NEEDS ROSIE]` — confirm the 2-of-3 / 1-of-3 split, or whether this should rotate based on supply (e.g., if there are no eligible new/mid CSRs, all 3 slots go to ranked list).
+`[NEEDS ROSIE]` – confirm the 2-of-3 / 1-of-3 split, or whether this should rotate based on supply (e.g., if there are no eligible new/mid CSRs, all 3 slots go to ranked list).
 
 #### Overload protection (carried forward from v1)
 
@@ -372,30 +372,30 @@ If 48 hours pass from order placement with no acceptance:
 - Batch size steps up from **3 → 10** at a time.
 - Response window per batch tightens to **3 hours**.
 - Same selection mix applies, scaled up: **7 ranked + 3 fairness** (`[NEEDS ROSIE]` to confirm split at batch-of-10 size).
-- Same invite-stays-live behavior — earlier-batch invitees can still accept.
+- Same invite-stays-live behavior – earlier-batch invitees can still accept.
 
 ### Phase 3b: All-call after 72 hours
 
 If 72 hours pass from order placement with still no acceptance, the cascade gives up on batching and **opens the invite to every eligible CSR in the active pool, in parallel**.
 
 - **Audio jobs:** "every eligible CSR" = the entire active general pool (no geographic filter).
-- **Live jobs:** "every eligible CSR" = every active CSR whose service radius covers the courthouse. (Out-of-radius CSRs are still excluded — geography never relaxes for live work.)
+- **Live jobs:** "every eligible CSR" = every active CSR whose service radius covers the courthouse. (Out-of-radius CSRs are still excluded – geography never relaxes for live work.)
 - First-accept wins; everyone else gets the "claimed" notification.
-- All previously-invited CSRs (Phase 1 favorites, every Phase 2 batch, every Phase 3a batch) keep their live invites — they're now alongside the all-call pool, not replaced by it.
-- **Rationale (Rosie, 2026-05-05):** at this point the work is hard to fill and we should stop trying to be clever about who sees the invite — just open it up.
+- All previously-invited CSRs (Phase 1 favorites, every Phase 2 batch, every Phase 3a batch) keep their live invites – they're now alongside the all-call pool, not replaced by it.
+- **Rationale (Rosie, 2026-05-05):** at this point the work is hard to fill and we should stop trying to be clever about who sees the invite – just open it up.
 
 ---
 
 ### Phase 4: Human escalation & auto-cancel
 
-`[NEEDS ROSIE]` — thresholds below are Aud's draft, partially confirmed.
+`[NEEDS ROSIE]` – thresholds below are Aud's draft, partially confirmed.
 
 | Trigger | Order type | Action |
 |---|---|---|
 | 72 hours from placement, no acceptance | Standard / Expedited | Phase 3b all-call begins **and** Dewey Sholes ops is notified to manually outreach / problem-solve. |
 | **12 hours before deadline, no acceptance** | **Any** | **Auto-cancel + full refund.** Notify the attorney that no CSR accepted, the refund has been issued, and they can either re-place the order with an extended deadline (which restarts the cascade) or work with another provider. All live invites are closed at this moment. |
 
-Auto-cancelling at the 12h-before-deadline mark — instead of waiting for the deadline itself — gives the attorney runway to rebook. We don't leave them hanging until the moment of failure.
+Auto-cancelling at the 12h-before-deadline mark – instead of waiting for the deadline itself – gives the attorney runway to rebook. We don't leave them hanging until the moment of failure.
 
 For a Rush job (1-2 biz days), the 12h-before-deadline mark may fall before Phase 3a's 48h trigger, in which case the cascade auto-cancels straight from Phase 2 without ever reaching Phase 3.
 
@@ -405,10 +405,10 @@ For a Rush job (1-2 biz days), the 12h-before-deadline mark may fall before Phas
 
 For live attendance jobs, **geography is the most important filter** and is applied before all other logic:
 
-1. Define the courthouse's **service radius** — `[NEEDS ROSIE]` Q4 — options:
+1. Define the courthouse's **service radius** – `[NEEDS ROSIE]` Q4 – options:
    - County match
    - Driving-distance cap (e.g., 30 miles, 60 minutes)
-   - CSR-defined service area on the CSR profile (preferred — gives the CSR control)
+   - CSR-defined service area on the CSR profile (preferred – gives the CSR control)
 2. **Phase 1** offers to firm favorites *who fall inside that radius* (in parallel).
 3. If no in-radius favorites accept, **Phase 2** opens to all in-radius CSRs (batches of 3).
 4. Within in-radius candidates, ranking applies as usual (rating → workload → travel time as tiebreaker).
@@ -433,7 +433,7 @@ For audio (post-hearing) transcription, **no geographic filter applies**. The en
 - **Decline:** CSR can decline explicitly (counts toward the decline-fast trigger for their batch).
 - **Ignore:** CSR doesn't respond before window expires; their invite stays live, they don't count toward the decline-fast trigger.
 
-`[NEEDS ROSIE]` — confirm whether ignored invites count toward overload metrics or fairness-rotation cooldown.
+`[NEEDS ROSIE]` – confirm whether ignored invites count toward overload metrics or fairness-rotation cooldown.
 
 ---
 
@@ -448,7 +448,7 @@ Opened to general pool   …  Mar 13, 2:14 PM (no favorite accepted)
 Assigned to Sarah Chen   →  pending
 ```
 
-Each step shows who was invited (count, not names — except the eventual winner) and when. This makes the algorithm legible and gives the attorney signal if their job is at risk of not finding a match.
+Each step shows who was invited (count, not names – except the eventual winner) and when. This makes the algorithm legible and gives the attorney signal if their job is at risk of not finding a match.
 
 ---
 
@@ -456,15 +456,15 @@ Each step shows who was invited (count, not names — except the eventual winner
 
 Surfaces where attorneys *encounter* CSRs outside of the auto-match cascade. Per Rosie 2026-05-13: "We could also do that thing where we feature a reporter on your page like targeted ads so it gives them some exposure."
 
-This is a deliberate concept separation. **Auto-match** assigns CSRs to specific jobs based on capability + ranking + fairness. **Discovery** is everything that puts CSRs in front of attorneys at moments when no specific job is being placed — homepage, favorites discovery, email digests, specialty pages, post-match "similar CSRs" suggestions.
+This is a deliberate concept separation. **Auto-match** assigns CSRs to specific jobs based on capability + ranking + fairness. **Discovery** is everything that puts CSRs in front of attorneys at moments when no specific job is being placed – homepage, favorites discovery, email digests, specialty pages, post-match "similar CSRs" suggestions.
 
 ### The hard rule that makes this safe
 
 **Discovery placement does NOT affect auto-match ranking, ever.** The cascade still selects CSRs purely on capability, rating, workload, fairness, and geography. Featured CSRs do not jump the queue on actual bookings.
 
-What featured placement *does* affect is what attorneys see at moments of **browsing-with-intent**, primarily for building favorites. A favorited CSR then enters Phase 1 of the cascade for that firm — which is the most powerful effect of featured visibility, but it's an indirect one mediated by attorney choice.
+What featured placement *does* affect is what attorneys see at moments of **browsing-with-intent**, primarily for building favorites. A favorited CSR then enters Phase 1 of the cascade for that firm – which is the most powerful effect of featured visibility, but it's an indirect one mediated by attorney choice.
 
-Without this rule, paid-or-promoted placement degenerates into "pay to win at matching" — the failure mode that breaks marketplace trust. With this rule, featured placement is a discovery / relationship-building tool that respects the matching algorithm's integrity.
+Without this rule, paid-or-promoted placement degenerates into "pay to win at matching" – the failure mode that breaks marketplace trust. With this rule, featured placement is a discovery / relationship-building tool that respects the matching algorithm's integrity.
 
 ### Surfaces where featured CSRs could appear
 
@@ -482,23 +482,23 @@ Three structurally different approaches; we can use one, two, or all three at di
 
 | Model | Who controls placement | Revenue to DS | Best fit |
 |---|---|---|---|
-| **Free editorial rotation** | DS staff curates | None | Community-building, cold-start visibility for new CSRs, pre-pilot launch readiness |
+| **Free editorial rotation** | DS staff curates | None | Community-building, cold-start visibility for new CSRs, pre-launch readiness |
 | **Earned badges** | Algorithm picks based on rating, on-time rate, etc. | None | Quality signal; rewards good behavior; aligns with marketplace meritocracy |
 | **Paid promotion** | CSR pays for placement (monthly fee, per-impression, or per-favorite-conversion) | Recurring revenue line beyond listing fee + buyer fee | Year 2+ once we have data on attorney browse behavior |
 
-**Working assumption for launch:** start with free editorial rotation + earned badges. Both can launch with minimal additional product surface. Defer the paid-promotion design to Year 2 after we see how attorneys actually use the discovery surfaces during pilot.
+**Working assumption for launch:** start with free editorial rotation + earned badges. Both can launch with minimal additional product surface. Defer the paid-promotion design to Year 2 after we see how attorneys actually use the discovery surfaces during the launch window.
 
 ### Why this is a real strategic lever (not just a feature)
 
 Three reasons it matters more than it looks:
 
 1. **Cold-start visibility for new CSRs.** A CSR with zero ratings can't compete in auto-match ranking (the fairness slot helps slowly). Featured placement on browsing surfaces lets new CSRs build favorites, which then surface them in Phase 1 of future cascades. It's the supply-side onboarding ramp.
-2. **Second revenue line.** Buyer fee + listing fee are the only current revenue sources. A paid-promotion tier — even priced modestly — compounds as the platform grows and reduces dependence on per-transaction take rate.
+2. **Second revenue line.** Buyer fee + listing fee are the only current revenue sources. A paid-promotion tier – even priced modestly – compounds as the platform grows and reduces dependence on per-transaction take rate.
 3. **AB 5 posture.** "CSRs control their own marketing on the platform" is one more factor supporting the independent-contractor classification under § 2778. CSRs who pay to promote themselves are behaving like independent professionals running their own books.
 
-### Pilot status
+### Launch status
 
-**Not in V1.** Pilot launches without featured-CSR surfaces. We add discovery features post-pilot once we know:
+**Not in V1.** Launches without featured-CSR surfaces. We add discovery features post-launch once we know:
 
 - Whether attorneys actually browse CSRs outside the cascade (favorites and post-match profile views are the proxies to watch)
 - Which surfaces drive favoriting behavior (informs where featured placement is worth investing)
@@ -508,21 +508,21 @@ The matching policy reflects this concept now so we don't accidentally design th
 
 ---
 
-## Pilot phase algorithm (during 6-month pilot window)
+## Launch-window matching algorithm (during 6-month launch window window)
 
-**Keep it simple. No ratings in the matching algorithm during pilot.**
+**Keep it simple. No ratings in the matching algorithm during the launch window.**
 
 1. Phase 1: parallel favorites round, same as v2 (24h standard / 2h rush window).
-2. Phase 2: round-robin / availability-based batches of 3 — no rating signal yet (we don't have enough data).
+2. Phase 2: round-robin / availability-based batches of 3 – no rating signal yet (we don't have enough data).
 3. Phases 3-4 unchanged: same time-based escalation.
-4. Geographic pre-filter for live jobs unchanged — geography matters from day one.
-5. Collect ratings during pilot even though they don't affect matching — build the dataset from day one.
+4. Geographic pre-filter for live jobs unchanged – geography matters from day one.
+5. Collect ratings during the launch window even though they don't affect matching – build the dataset from day one.
 
 ### Transition to ratings-informed matching
 
 | Phase | Timing | Algorithm change |
 |-------|--------|-----------------|
-| Pilot | Months 1-3 | Favorites + round-robin batches. Ratings collected but not used in selection. |
+| Launch | Months 1-3 | Favorites + round-robin batches. Ratings collected but not used in selection. |
 | Phase 1 | Months 3-6 | Ratings used as tiebreaker within ranked-list slot. Fairness slot active from day one. |
 | Phase 2 | Months 6+ (when avg CSR has 10+ rated jobs) | Full ranking + fairness model as described above. |
 
@@ -532,9 +532,9 @@ The matching policy reflects this concept now so we don't accidentally design th
 
 If CSRs sign up but don't get jobs for a while:
 
-- Regular email updates: "The platform is growing — here's our progress"
+- Regular email updates: "The platform is growing – here's our progress"
 - Milestone notifications: "12 new law firms joined this month"
-- Periodic survey for product feedback (part of pilot agreement)
+- Periodic survey for product feedback (part of launch-window agreement)
 - Goal: prevent churn before demand materializes
 
 ---
@@ -543,15 +543,15 @@ If CSRs sign up but don't get jobs for a while:
 
 Tagged `[NEEDS ROSIE]` inline above. Consolidated:
 
-1. **Fairness slot split** — confirm 2-of-3 ranked + 1-of-3 fairness in standard (Phase 2) batches and the analog 7-of-10 ranked + 3-of-10 fairness for Phase 3a batches.
-2. **Service radius definition for live jobs** — county / driving distance / CSR-defined service area? (Aud leans toward CSR-defined.)
-3. **Phase 4 thresholds** — Phase 3 all-call is confirmed (Rosie 2026-05-05). Auto-cancel at 12h-before-deadline confirmed by Aud (2026-05-05). Still need Rosie's sign-off on: (a) ops-notification at 72h for std/ext, (b) the per-tier response windows in the table above (Rush 2h / Expedited 12h proposed / Standard 24h).
-4. **Ignored invites and CSR metrics** — do they count toward overload? toward a fairness-rotation cooldown so chronically unresponsive CSRs aren't repeatedly invited?
+1. **Fairness slot split** – confirm 2-of-3 ranked + 1-of-3 fairness in standard (Phase 2) batches and the analog 7-of-10 ranked + 3-of-10 fairness for Phase 3a batches.
+2. **Service radius definition for live jobs** – county / driving distance / CSR-defined service area? (Aud leans toward CSR-defined.)
+3. **Phase 4 thresholds** – Phase 3 all-call is confirmed (Rosie 2026-05-05). Auto-cancel at 12h-before-deadline confirmed by Aud (2026-05-05). Still need Rosie's sign-off on: (a) ops-notification at 72h for std/ext, (b) the per-tier response windows in the table above (Rush 2h / Expedited 12h proposed / Standard 24h).
+4. **Ignored invites and CSR metrics** – do they count toward overload? toward a fairness-rotation cooldown so chronically unresponsive CSRs aren't repeatedly invited?
 5. **Drop the 3.5 rating floor entirely?** v1 said "above 3.5 enters the pool." v2 currently drops the floor in favor of the fairness slot. Confirm.
-6. **Capability surface to CSRs** (added 2026-05-13) — when an invite is sent, should the in-app job card show the CSR which of their declared specialties matched the job ("This job matches your Medical specialty")? Aud leans toward yes — gives CSRs information to decide whether to accept and reinforces the value of declaring specialties accurately.
-7. **Specialty self-declaration verification path** (added 2026-05-13) — for specialties without an NCRA equivalent (Medical, Technical, IP, etc.), is a soft "view supporting evidence" link sufficient (CSR uploads sample/credentials, no DS verification), or do we need light admin review? Aud leans toward the upload-and-display-only model with bad actors caught via job ratings.
-8. **Starting specialty list** (added 2026-05-13) — confirm the ~15 standardized specialties listed under "Self-declared with optional proof." Anything missing that's high-frequency in CA hearing/arbitration work and worth shipping in V1? Anything on the list that's so rare it should start in the free-text field rather than the controlled vocabulary?
-9. **Specialty-request threshold** (added 2026-05-13) — proposed: 5+ requests within 90 days promotes a free-text specialty into the controlled vocabulary. Confirm the threshold or adjust based on Rosie's read of CA-market niche-specialty frequency.
+6. **Capability surface to CSRs** (added 2026-05-13) – when an invite is sent, should the in-app job card show the CSR which of their declared specialties matched the job ("This job matches your Medical specialty")? Aud leans toward yes – gives CSRs information to decide whether to accept and reinforces the value of declaring specialties accurately.
+7. **Specialty self-declaration verification path** (added 2026-05-13) – for specialties without an NCRA equivalent (Medical, Technical, IP, etc.), is a soft "view supporting evidence" link sufficient (CSR uploads sample/credentials, no DS verification), or do we need light admin review? Aud leans toward the upload-and-display-only model with bad actors caught via job ratings.
+8. **Starting specialty list** (added 2026-05-13) – confirm the ~15 standardized specialties listed under "Self-declared with optional proof." Anything missing that's high-frequency in CA hearing/arbitration work and worth shipping in V1? Anything on the list that's so rare it should start in the free-text field rather than the controlled vocabulary?
+9. **Specialty-request threshold** (added 2026-05-13) – proposed: 5+ requests within 90 days promotes a free-text specialty into the controlled vocabulary. Confirm the threshold or adjust based on Rosie's read of CA-market niche-specialty frequency.
 
 ### Resolved (2026-05-05)
 

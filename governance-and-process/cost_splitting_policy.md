@@ -2,7 +2,7 @@
 
 **Owner:** Aud & Rosie
 **Last updated:** 2026-04-11
-**Status:** Confirmed — Rosie approved design 4/11
+**Status:** Confirmed – Rosie approved design 4/11
 **Priority:** Build into order flow (prototype complete, needs real build)
 
 ---
@@ -17,26 +17,26 @@ Per Rosie (4/11): "Our cost-split feature should only be for people who've alrea
 
 ### Core principle
 
-**All parties pay upfront. The job is only created once every share is paid.** The platform facilitates an agreement that parties have already reached — it does not create, enforce, or collect on payment obligations.
+**All parties pay upfront. The job is only created once every share is paid.** The platform facilitates an agreement that parties have already reached – it does not create, enforce, or collect on payment obligations.
 
 ### Flow
 
 1. **Ordering attorney** creates a transcript order through Dewey Sholes
 2. In the pricing step, they toggle **"Split cost with other parties"**
-3. They add co-paying attorneys (name, email, share percentage) — up to 5 co-payers
+3. They add co-paying attorneys (name, email, share percentage) – up to 5 co-payers
 4. Each co-payer receives an email with a **secure payment link** to confirm and pay their share
 5. **The job is only posted to reporters once all shares are collected**
 6. If a co-payer doesn't confirm:
    - The ordering attorney is notified
    - They can: (a) cover the remaining share themselves and proceed, (b) cancel the order entirely, or (c) replace the non-responsive party with someone else
    - **Per Rosie (4/11): offer all three options.** Let the ordering attorney decide.
-7. The CSR sees **one job** and receives **one full payment** — they don't need to know it was split
+7. The CSR sees **one job** and receives **one full payment** – they don't need to know it was split
 
 ### What co-payers see
 
 - An email: "[Attorney Name] has invited you to split the cost of a transcript for [Case Name / Number]"
 - A secure page showing: case details, their share amount, and a payment form
-- **No Dewey Sholes account required** — guest checkout via payment link
+- **No Dewey Sholes account required** – guest checkout via payment link
 - After paying, they see a confirmation and a nudge to create an account for future orders
 
 ### What we do NOT do
@@ -54,7 +54,7 @@ Per Rosie (4/11): "Our cost-split feature should only be for people who've alrea
 |------|-----------------|
 | Transcript cost | Statutory rate, split per agreed shares |
 | Platform fee (12%) | Applied to each party's share separately |
-| Reporter payout | Full statutory rate within 2 business days of delivery — reporter is unaffected by split |
+| Reporter payout | Full statutory rate within 2 business days of delivery – reporter is unaffected by split |
 
 ---
 
@@ -89,7 +89,7 @@ Per Rosie (4/11): ~70% of attorneys functionally work for insurance carriers who
 
 ---
 
-## Deferred to post-pilot
+## Deferred to post-launch
 
 - **Volume discount arrangements** for firms that consistently use the same reporters (per Rosie: revisit when there's revenue)
 - **Billing cycle sync** for firms that want to pay on net-30 or match their internal billing cycle

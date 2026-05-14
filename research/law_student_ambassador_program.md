@@ -2,7 +2,7 @@
 
 **Owner:** Aud
 **Last updated:** 2026-05-02
-**Status:** Concept — not yet activated
+**Status:** Concept – not yet activated
 
 ---
 
@@ -45,13 +45,13 @@ This is cheaper than sponsorship, more scalable than founder attendance, and giv
 ### Compensation
 - **$25/hour** for event hours (4-8 hour shifts typical)
 - **Travel reimbursement** for events more than 30 miles from their school
-- **Gear stipend** — branded polo, jacket, hat, lanyard provided free; they keep what fits and looks professional
+- **Gear stipend** – branded polo, jacket, hat, lanyard provided free; they keep what fits and looks professional
 - **Bonus structure (optional)**: $5 per qualified lead (legal assistant or paralegal whose info they captured), capped at $50/event
 
 **Estimated cost per event:** $100-200 for a typical 4-6 hour event, plus travel.
 
 ### Where to find them
-- Law school career services offices — post a paid gig listing
+- Law school career services offices – post a paid gig listing
 - Law school student government / professional organizations (ABA Law Student Division chapters, paralegal student associations)
 - LinkedIn (search for current law students in the city)
 - Referrals from first hires (they'll know other students looking for similar work)
@@ -82,7 +82,7 @@ We give them a 1-page cheat sheet:
 - 3 sample opening lines for approaching people
 - The 3 main pain points we solve (chasing reporters, opaque pricing, slow payments)
 - The 3 features that close it (cost-split, ratings, deadline-driven pricing)
-- The pilot offer ($25 gift card after 3 jobs, free CSR listing for first year)
+- The founding-firm offer ($25 gift card after 3 jobs; firms tagged as founding get founder-led onboarding and direct access)
 - A "talk to my founder" handoff line for when someone wants more info
 
 ---
@@ -96,13 +96,13 @@ We give them a 1-page cheat sheet:
 - **Continuing education seminars for paralegals** ($20-100 entry, but high concentration of target users)
 
 ### Tier 2: Mid-cost, evaluate per event
-- **Statewide paralegal conferences** (LAPA, SFPA, OCPA — $100-300 entry)
+- **Statewide paralegal conferences** (LAPA, SFPA, OCPA – $100-300 entry)
 - **Regional bar association annual meetings** (variable cost; sometimes have unattended exhibit tables for $200-500)
 - **CLE seminars on litigation topics** (more attorneys than legal assistants, but useful for cross-promotion)
 
 ### Tier 3: Skip for now
-- **Large state-wide attorney conferences** (CA State Bar Annual Meeting — $5K+ for booth, mostly attorneys not legal assistants)
-- **National conferences** (NALA, NFPA — too far, too expensive, too broad)
+- **Large state-wide attorney conferences** (CA State Bar Annual Meeting – $5K+ for booth, mostly attorneys not legal assistants)
+- **National conferences** (NALA, NFPA – too far, too expensive, too broad)
 
 ---
 
@@ -157,10 +157,10 @@ If those numbers hold, we're paying ~10% of LTV to acquire a firm via events. Th
 
 ## Next steps
 
-1. Research full list of CA events June 2026 - December 2026 (see [ca_events_research.md](ca_events_research.md) — to be created)
-2. Pilot one cheap event in the Bay Area in June or July to test the model
+1. Research full list of CA events June 2026 - December 2026 (see [ca_events_research.md](ca_events_research.md) – to be created)
+2. Run one cheap test event in the Bay Area in June or July to test the model
 3. Hire 1-2 ambassadors in the Bay Area first (closer to Rosie, easier to manage)
-4. Expand to LA, SD, OC if pilot works
+4. Expand to LA, SD, OC if it works
 5. Build a simple ambassador onboarding doc + conversation script
 6. Create branded gear order (~$200 for 4 ambassadors)
 7. Print initial swag run (~$300 for first 10 events worth)

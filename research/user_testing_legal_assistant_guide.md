@@ -1,7 +1,7 @@
-# User testing guide — paralegals / legal assistants (+ optional 1 attorney)
+# User testing guide – paralegals / legal assistants (+ optional 1 attorney)
 
 **Status:** Draft. Targeted for use once Rosie's network surfaces enough warm legal-assistant contacts.
-**Owner:** Aud (drafting); Rosie (recruitment, co-facilitation — most pilot firms are her network).
+**Owner:** Aud (drafting); Rosie (recruitment, co-facilitation – most launch-cohort firms are her network).
 **Last updated:** 2026-05-08
 
 ---
@@ -10,7 +10,7 @@
 
 Inside law firms, **legal assistants and paralegals are the primary user of a transcript-ordering platform.** Attorneys typically delegate the actual ordering and tracking to support staff. So testing with assistants gives us truer signal about workflow friction, ordering speed, and what features matter day-to-day.
 
-If we can also fit in **one attorney interview** (likely a friend of Rosie's), great — see "Optional attorney interview" below for how to adapt the same questions. But the assistant interviews are the priority and the attorney one is not assured.
+If we can also fit in **one attorney interview** (likely a friend of Rosie's), great – see "Optional attorney interview" below for how to adapt the same questions. But the assistant interviews are the priority and the attorney one is not assured.
 
 ---
 
@@ -19,7 +19,7 @@ If we can also fit in **one attorney interview** (likely a friend of Rosie's), g
 This is **discovery and validation**, not usability testing of a polished product. Specific questions:
 
 1. **Is the post-hearing transcript-tracking pain real?** When the firm needs a transcript from a hearing weeks ago, how do they find the CSR today, and is that actually painful enough to motivate a new platform?
-2. **What does the assistant's workflow actually look like** — order frequency, where the order info comes from, how it gets billed back to the case?
+2. **What does the assistant's workflow actually look like** – order frequency, where the order info comes from, how it gets billed back to the case?
 3. **What signals do they use to evaluate an unfamiliar CSR?** Specifically: rating, on-time rate, recent cases, courts covered, prior firm relationship. Which actually matter?
 4. **What kills trust in a new transcript marketplace?** Pricing transparency, certification authenticity, dispute handling, data security.
 5. **Will firms actually use Dewey Sholes** if it works as designed, given their existing CSR relationships? What would make them switch?
@@ -31,18 +31,18 @@ This is **discovery and validation**, not usability testing of a polished produc
 ## Method
 
 **Format:** 45-minute video calls (Zoom or Google Meet). Recorded with consent.
-**Sample size:** Up to 5 paralegals / legal assistants. Plus 1 attorney if we can land one (Rosie's network — likely but not assured).
+**Sample size:** Up to 5 paralegals / legal assistants. Plus 1 attorney if we can land one (Rosie's network – likely but not assured).
 **Compensation:** $25 Starbucks gift card per completed interview. Sent digitally within 24 hours. Same comp for the optional attorney.
 **Tools:** Zoom recording + transcript, simple notes doc, lightweight participant tracker.
 
 **Recruitment criteria (mix within 5 assistant slots):**
 - 3-4 **assistants/paralegals at solo or small firms** (1-10 attorneys)
-- 1-2 **assistants/paralegals at mid-size firms** (10-50 attorneys) — different procurement workflow
+- 1-2 **assistants/paralegals at mid-size firms** (10-50 attorneys) – different procurement workflow
 - Mix of practice areas: family law, civil litigation, PI, probate (Rosie's network bias is fine)
 - Prefer assistants who actually place transcript orders themselves (vs. just handling other admin)
 
 **Recruitment channels:**
-- Rosie's direct network (highest priority — warm intros)
+- Rosie's direct network (highest priority – warm intros)
 - BASF chapter contacts via Rosie
 - Pilot firm targeting list (`research/CA_Pilot_Firm_Targeting.md`)
 
@@ -65,7 +65,7 @@ Total target: ~45 minutes. Time budgets are guidance.
 - How often do you give up or delay because finding the CSR is too hard?
 - When the same CSR has worked your firm's hearings before, do you keep their info anywhere? Where?
 - How do you decide which CSR to use when you have a choice? Rate, turnaround, prior relationship, who's available?
-- How much does the firm pay per page today? Do you know? *(Most assistants don't — they just file the invoice.)*
+- How much does the firm pay per page today? Do you know? *(Most assistants don't – they just file the invoice.)*
 - How does the cost flow back to the client / case? Pass-through, marked up, billed at firm rate?
 
 ### Reactions to Dewey Sholes (18-22 min)
@@ -74,9 +74,9 @@ Walk through prototype on screen-share.
 
 - Show landing page. *Reactions: who is this for, would you try it?*
 - Show the order flow. **Specific prompts:**
-  - Pricing transparency — does seeing the breakdown change how you feel about ordering?
-  - Cost-splitting toggle — would the firm actually use this? In what scenarios?
-  - Need-by date driving turnaround tier — does this match how the firm thinks about deadlines?
+  - Pricing transparency – does seeing the breakdown change how you feel about ordering?
+  - Cost-splitting toggle – would the firm actually use this? In what scenarios?
+  - Need-by date driving turnaround tier – does this match how the firm thinks about deadlines?
   - **Time savings probe:** If this saves you 10 minutes per order, how many minutes per week is that for your firm? Is that worth anything?
 - Show a CSR profile page. **Specific prompts:**
   - If your firm had never used this CSR before, what would convince the attorney to book them? What's missing?
@@ -97,7 +97,7 @@ Walk through prototype on screen-share.
 
 - If you needed a transcript tomorrow, would you try Dewey Sholes? What would make you not try it?
 - How would your firm's procurement / vendor-onboarding process treat a new platform like this? Are there blockers (W-9, MSA, COI, security review)?
-- During the pilot, attorneys get an 8% platform fee instead of 12% for their first year. Does that matter to your firm?
+- Firms that sign up during our 6-month launch window are tagged as "founding firms" – founder-led onboarding, direct access to the team, first dibs on new features. Pricing is the same flat 12% for everyone. Do those founding-firm perks matter to your firm, or would you sign up either way?
 
 ### Wrap (2-3 min)
 
@@ -123,17 +123,17 @@ Same length (45 min), same comp ($25 Starbucks).
 
 | Question | Hypothesis to test | Decision it informs |
 |---|---|---|
-| Is the post-hearing CSR-tracking pain real and acute? | Yes — assistants will spontaneously cite it before we prompt. | Whether the cards strategy is solving a real problem. If we have to lead them to the pain, the pain isn't acute. |
+| Is the post-hearing CSR-tracking pain real and acute? | Yes – assistants will spontaneously cite it before we prompt. | Whether the cards strategy is solving a real problem. If we have to lead them to the pain, the pain isn't acute. |
 | Does cases-on-profile change booking decisions? | Mostly no. Rating and on-time rate carry more weight. | Whether to build the cases-display feature for v1.1. |
-| Does job-count-on-profile change booking decisions? | Yes — high count signals confidence, low or zero discourages. | Strong argument NOT to show job-count during pilot when most CSRs are at zero. |
+| Does job-count-on-profile change booking decisions? | Yes – high count signals confidence, low or zero discourages. | Strong argument NOT to show job-count during the launch window when most CSRs are at zero. |
 | Will the firm actually scan a card-QR after a hearing? | Yes if professional and the link is direct. | Settles the link-target question (already leaning direct profile). |
-| Is the cost-splitting feature a real win? | Yes — Rosie has flagged it as a key differentiator. | Whether to keep cost-splitting in MVP critical path. |
-| Does the assistant incentive program actually motivate? | Mixed — some firms have policies against personal rewards. | Whether to keep it pilot-only or kill it. |
+| Is the cost-splitting feature a real win? | Yes – Rosie has flagged it as a key differentiator. | Whether to keep cost-splitting in MVP critical path. |
+| Does the assistant incentive program actually motivate? | Mixed – some firms have policies against personal rewards. | Whether to keep it launch-window-only or kill it. |
 | What's the trust-killer for the firm? | File security + transcript authenticity. | Where to invest in design/security messaging. |
 
 ---
 
-## Round 2 / post-MVP topics — explicitly NOT in this round
+## Round 2 / post-MVP topics – explicitly NOT in this round
 
 Some firm-side questions are worth asking eventually but don't belong in this first round. Capture them here so they don't get lost; revisit in a second round of user testing/research after MVP launch when we have a track record to talk about.
 
@@ -149,11 +149,11 @@ Some firm-side questions are worth asking eventually but don't belong in this fi
 **Questions to ask in round 2:**
 - How often does your firm dispatch a courier to a courthouse (or anywhere) to pick up a CD, paper transcript, or other deliverable?
 - Roughly how much does it cost per dispatch? Is that a flat rate or hourly?
-- Who handles the logistics — you, an admin, an outside service?
+- Who handles the logistics – you, an admin, an outside service?
 - Is this a recurring pain point or a once-in-a-while annoyance?
 - If Dewey Sholes offered bulk-pickup as an add-on bundled into the order, what price would feel like a meaningful win? Probe specific price points (e.g., "if we charged $40 for non-rush pickup, would you use it? $60? $80?").
 - For rush jobs specifically, would you still want a courier option even at parity with current pricing, just for the convenience of one-click logistics?
-- Are there cases where the current CD-pickup model is a hard blocker — e.g., a courthouse that hasn't moved to digital delivery — vs. cases where you'd just take digital if available?
+- Are there cases where the current CD-pickup model is a hard blocker – e.g., a courthouse that hasn't moved to digital delivery – vs. cases where you'd just take digital if available?
 
 **Decision this informs:** Whether to invest in courier-service partnerships post-MVP, what price-points to target, and whether to position courier as standard / premium / enterprise tier.
 
