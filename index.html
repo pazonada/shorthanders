@@ -2768,9 +2768,19 @@ const PRICING = {
   attendanceFullDay: 1650,
   attendanceTrialDay: 2310,
   travelRatePerHour: 50,
-  // Per AB-5 §2778, CSRs set their own rate within ±20% of the platform default.
-  // V1 launches with this band exposed in the CSR settings UI. See
-  // governance-and-process/rating_and_matching_policy.md.
+  // Per AB-5 §2778, CSRs set their own rate. V1 ships with a hybrid band:
+  // - Standard band (default UI slider range): ±20% of platform baseline.
+  //   CSRs in this band get standard matching-algorithm priority.
+  // - Expanded band (opt-in): ±50% of platform baseline. CSRs who explicitly
+  //   opt into the expanded band can set rates wider, but the matching
+  //   algorithm deprioritizes them (they get fewer auto-match offers).
+  // - Anything outside ±50%: handled by direct email negotiation.
+  // See governance-and-process/rating_and_matching_policy.md.
+  rateBandStandardLow: 0.80,
+  rateBandStandardHigh: 1.20,
+  rateBandExpandedLow: 0.50,
+  rateBandExpandedHigh: 1.50,
+  // Legacy names kept as aliases for backward compatibility within this file.
   rateBandLow: 0.80,
   rateBandHigh: 1.20,
 };
@@ -4138,7 +4148,7 @@ function OrderFlow() {
               <span>${total.toFixed(2)}</span>
             </div>
             <p style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", marginTop: 10, lineHeight: 1.5}}>
-              Final invoice is calculated from the certified page count delivered with the transcript, not this estimate. {reporter.name.split(" ")[0]} sets their own rate within ±20% of platform baseline ({pct === 0 ? "they're at baseline" : `they're ${pct > 0 ? "+" : ""}${pct}% from baseline`}).
+              Final invoice is calculated from the certified page count delivered with the transcript, not this estimate. {reporter.name.split(" ")[0]} {pct === 0 ? "is at the platform baseline" : `is ${pct > 0 ? "+" : ""}${pct}% from the platform baseline`} – reporters set their own rates (standard ±20% band, with some opting into a wider band).
             </p>
           </div>
 
@@ -4606,7 +4616,7 @@ function OrderFlow() {
                       <span>${(attendanceFee + est.lowCost * (1 + PRICING.platformFee)).toLocaleString()} – ${(attendanceFee + est.highCost * (1 + PRICING.platformFee)).toLocaleString()}</span>
                     </div>
                     <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
-                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Baseline transcript rate ${PRICING.ratePerPage.toFixed(2)}/page; reporters can set their own rate within a ±20% band, so the exact rate depends on who's matched to your job. You'll see your matched reporter's actual rates before the order is confirmed.
+                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Baseline transcript rate ${PRICING.ratePerPage.toFixed(2)}/page; reporters set their own rate (standard ±20% band, with some opting into a wider band that gets lower matching priority), so the exact rate depends on who's matched to your job. You'll see your matched reporter's actual rates before the order is confirmed.
                     </p>
                   </>;
                 })()}
@@ -7308,6 +7318,7 @@ function SettingsPage() {
   const [deleteConfirmText, setDeleteConfirmText] = useState("");
   const [settingsRole, setSettingsRole] = useState("attorney"); // toggle for prototype demo
   const [csrRateMultiplier, setCsrRateMultiplier] = useState(1.05); // CSR rate-band setting (default = Sarah Chen's mock value)
+  const [csrExpandedBand, setCsrExpandedBand] = useState(false); // Opt-in expanded ±50% band (with matching-priority warning)
 
   const toggleNotif = (idx, channel) => {
     setNotifs(n => n.map((item, i) => i === idx ? {...item, [channel]: !item[channel]} : item));
@@ -7436,10 +7447,14 @@ function SettingsPage() {
                   <div className="settings-section">
                     <h3><Icon name="dollarSign" size={14} /> Your rates</h3>
                     <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 14, lineHeight: 1.6}}>
-                      Set your rate within ±20% of platform defaults. Your rates appear on your public profile and the order-flow match preview, so attorneys see exactly what they'll pay before they confirm. Per CA Labor Code §2778, you have the right to set or negotiate your own rates – this is how we expose that.
+                      Set your rate using the slider below. Your rate appears on your public profile and in the attorney's match preview, so they see exactly what they'll pay before they confirm. Per CA Labor Code §2778, you have the right to set or negotiate your own rates – this is how we expose that.
                     </p>
                     {(() => {
                       const mult = csrRateMultiplier;
+                      const sliderMin = csrExpandedBand ? PRICING.rateBandExpandedLow : PRICING.rateBandStandardLow;
+                      const sliderMax = csrExpandedBand ? PRICING.rateBandExpandedHigh : PRICING.rateBandStandardHigh;
+                      const sliderMinPct = Math.round((sliderMin - 1.0) * 100);
+                      const sliderMaxPct = Math.round((sliderMax - 1.0) * 100);
                       const r = {
                         ratePerPage: PRICING.ratePerPage * mult,
                         attendanceHalfDay: Math.round(PRICING.attendanceHalfDay * mult),
@@ -7448,16 +7463,38 @@ function SettingsPage() {
                         travelRatePerHour: Math.round(PRICING.travelRatePerHour * mult),
                       };
                       const pct = Math.round((mult - 1.0) * 100);
-                      const pctColor = pct > 0 ? "#92400E" : pct < 0 ? "#065F46" : "var(--text-muted, #94A3B8)";
-                      const pctBg = pct > 0 ? "#FEF3C7" : pct < 0 ? "#D1FAE5" : "var(--bg-muted, #F1F5F9)";
+                      const outsideStandard = mult < PRICING.rateBandStandardLow || mult > PRICING.rateBandStandardHigh;
+                      const pctColor = outsideStandard ? "#9A3412" : pct > 0 ? "#92400E" : pct < 0 ? "#065F46" : "var(--text-muted, #94A3B8)";
+                      const pctBg = outsideStandard ? "#FED7AA" : pct > 0 ? "#FEF3C7" : pct < 0 ? "#D1FAE5" : "var(--bg-muted, #F1F5F9)";
                       return (
                         <div>
                           <div style={{display: "flex", alignItems: "center", gap: 16, marginBottom: 12, flexWrap: "wrap"}}>
-                            <span style={{fontSize: 12, fontWeight: 700, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em"}}>−20%</span>
-                            <input type="range" min="0.80" max="1.20" step="0.01" value={mult} onChange={e => setCsrRateMultiplier(parseFloat(e.target.value))} style={{flex: 1, minWidth: 200, accentColor: "#059669"}} />
-                            <span style={{fontSize: 12, fontWeight: 700, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em"}}>+20%</span>
+                            <span style={{fontSize: 12, fontWeight: 700, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em"}}>{sliderMinPct}%</span>
+                            <input type="range" min={sliderMin} max={sliderMax} step="0.01" value={mult} onChange={e => setCsrRateMultiplier(parseFloat(e.target.value))} style={{flex: 1, minWidth: 200, accentColor: outsideStandard ? "#EA580C" : "#059669"}} />
+                            <span style={{fontSize: 12, fontWeight: 700, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em"}}>+{sliderMaxPct}%</span>
                             <span style={{fontSize: 11, padding: "4px 10px", borderRadius: 999, background: pctBg, color: pctColor, fontWeight: 700, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.06em"}}>{pct === 0 ? "BASELINE" : (pct > 0 ? "+" : "") + pct + "%"}</span>
                           </div>
+
+                          {/* Band-mode toggle */}
+                          <div style={{display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: csrExpandedBand ? "#FFF7ED" : "var(--bg-muted, #F8FAFC)", border: "1px solid " + (csrExpandedBand ? "#FED7AA" : "var(--border, #E2E8F0)"), borderRadius: 10, marginBottom: 14}}>
+                            <input type="checkbox" id="expanded-band-toggle" checked={csrExpandedBand} onChange={e => {
+                              const expanding = e.target.checked;
+                              setCsrExpandedBand(expanding);
+                              // If collapsing back to standard band, snap multiplier back into ±20% range
+                              if (!expanding && (csrRateMultiplier < PRICING.rateBandStandardLow || csrRateMultiplier > PRICING.rateBandStandardHigh)) {
+                                setCsrRateMultiplier(Math.min(PRICING.rateBandStandardHigh, Math.max(PRICING.rateBandStandardLow, csrRateMultiplier)));
+                              }
+                            }} style={{flexShrink: 0, accentColor: "#EA580C"}} />
+                            <label htmlFor="expanded-band-toggle" style={{flex: 1, fontSize: 13, color: "var(--text, #0F172A)", cursor: "pointer", lineHeight: 1.5}}>
+                              <strong>Expand to ±50% band</strong>
+                              <span style={{display: "block", fontSize: 12, color: "var(--text-secondary, #64748B)", marginTop: 2}}>
+                                {csrExpandedBand
+                                  ? "Heads up: rates outside ±20% are still allowed, but you'll get fewer auto-match offers. The matching algorithm prioritizes reporters within the standard band."
+                                  : "Lets you set rates outside the standard ±20% band. Note: rates outside the standard band get lower priority in the auto-match algorithm."}
+                              </span>
+                            </label>
+                          </div>
+
                           <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, padding: 16, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10}}>
                             <div>
                               <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Per page (original)</div>
@@ -7486,7 +7523,7 @@ function SettingsPage() {
                             </div>
                           </div>
                           <p style={{fontSize: 12, color: "var(--text-muted, #64748B)", marginTop: 12, lineHeight: 1.5}}>
-                            The 12% platform fee attorneys pay is calculated on top of your rate – it never comes out of your earnings. Need to set a rate outside the ±20% band? Email founders@deweysholes.com.
+                            The 12% platform fee attorneys pay is calculated on top of your rate – it never comes out of your earnings. Need to set a rate outside ±50%? Email founders@deweysholes.com.
                           </p>
                         </div>
                       );
@@ -8469,7 +8506,7 @@ function ReporterOnboarding() {
         <div className="form-group"><label className="form-label">Password</label><input className="form-input" type="password" placeholder="Create a password" value={form.password} onChange={e => update("password", e.target.value)} /><p className="form-helper">At least 8 characters with one number and one special character.</p></div>
         <div className="info-callout" style={{marginTop: 24}}>
           <div className="callout-icon"><Icon name="shield" size={16} /></div>
-          <p>By joining Dewey Sholes, you confirm that you are an independent professional, not an employee of Dewey Sholes or its parent company. You choose which jobs to accept, set your own schedule, set or negotiate your own rates (within the ±20% band exposed in your profile settings, or outside that band by emailing us), and control how you perform your work. You also agree to our Terms of service and Privacy policy.</p>
+          <p>By joining Dewey Sholes, you confirm that you are an independent professional, not an employee of Dewey Sholes or its parent company. You choose which jobs to accept, set your own schedule, set or negotiate your own rates (standard ±20% band via the slider; opt-in expanded ±50% band with reduced matching priority; anything beyond, email us), and control how you perform your work. You also agree to our Terms of service and Privacy policy.</p>
         </div>
       </>)}
 
@@ -10524,7 +10561,7 @@ function ReporterProfile({ reporterId }) {
                 </div>
               </div>
               <p style={{fontSize: 12, color: "var(--muted)", marginTop: 16, lineHeight: 1.5}}>
-                Reporters on Dewey Sholes set their own rates within a ±20% band of the platform baseline (${PRICING.ratePerPage.toFixed(2)}/page; ${PRICING.attendanceHalfDay.toLocaleString()} half-day; ${PRICING.attendanceFullDay.toLocaleString()} full-day). The 12% platform fee is added on top at order time.
+                Reporters on Dewey Sholes set their own rates. Standard band: ±20% of platform baseline (${PRICING.ratePerPage.toFixed(2)}/page; ${PRICING.attendanceHalfDay.toLocaleString()} half-day; ${PRICING.attendanceFullDay.toLocaleString()} full-day). Some reporters opt into an expanded ±50% band, which the auto-match algorithm deprioritizes. The 12% platform fee is added on top at order time.
               </p>
             </div>
           );
@@ -10680,7 +10717,7 @@ function FaqPage() {
   const sections = [
     { title: "For attorneys", items: [
       { id: "a1", q: "How do I place a transcript order?", a: "Click \"Order a transcript\" from the homepage, choose live attendance or post-hearing transcription, enter your case details, set your delivery deadline, and submit. Your deadline determines the turnaround tier and price automatically. We'll match you with a qualified reporter, usually within hours." },
-      { id: "a2", q: "How does pricing work?", a: "Transcript pricing starts at $5.00 per page baseline. Each reporter can set their own rate within a ±20% band of platform defaults – so the exact rate depends on who you're matched with. The platform fee is a flat 12% on top, regardless of the reporter. Your delivery deadline determines the turnaround tier: Rush (1-2 business days, 1.5x rate), Expedited (3-5 business days, baseline rate), or Standard (6+ business days, 15% savings). After you submit an order, you'll see who you've been matched with and their actual rates before the order is sent to the reporter for acceptance." },
+      { id: "a2", q: "How does pricing work?", a: "Transcript pricing starts at $5.00 per page baseline. Each reporter sets their own rate – most are within a ±20% band of platform defaults (our standard matching band), and some opt into a wider ±50% band that gets lower priority in auto-matching. The exact rate depends on who you're matched with. The platform fee is a flat 12% on top, regardless of the reporter. Your delivery deadline determines the turnaround tier: Rush (1-2 business days, 1.5x rate), Expedited (3-5 business days, baseline rate), or Standard (6+ business days, 15% savings). After you submit an order, you'll see who you've been matched with and their actual rates before the order is sent to the reporter for acceptance." },
       { id: "a3", q: "Can I split the cost with other parties?", a: "Yes. When placing an order, toggle \"Split cost with other parties\" and add co-paying attorneys by name and email. Each party receives a secure payment link. The job is only posted to reporters once all parties have paid – no chasing, no partial payments. Co-payers don't need a Dewey Sholes account." },
       { id: "a4", q: "What if I'm unhappy with a transcript?", a: "You can request corrections within 90 days of delivery. Specify the pages and describe the issue, and the reporter will be notified to upload a corrected version. No additional cost for corrections – the reporter's statutory rate covers delivering an accurate transcript." },
       { id: "a5", q: "How do I know if a reporter is any good?", a: "Every reporter has a quality rating (1-5 stars, rated by attorneys) and a timeliness score (auto-calculated from their delivery history). You can also read written feedback from other attorneys on the reporter's profile. Reporters with consistently high ratings appear first in search results." },
@@ -10808,7 +10845,7 @@ function TermsPage() {
     { title: "1. Acceptance of terms", content: "By accessing or using the Dewey Sholes platform, you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use the platform. We reserve the right to update these terms at any time, and your continued use of the platform constitutes acceptance of any changes." },
     { title: "2. Platform description", content: "Dewey Sholes is a product of Studio Crux, LLC. The platform operates as a marketplace connecting attorneys and self-represented litigants with certified shorthand reporters for live hearing attendance and post-hearing audio transcription services. Dewey Sholes facilitates the transaction but does not itself provide court reporting services." },
     { title: "3. User accounts", content: "You must create an account to use certain features of the platform. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You agree to provide accurate, current, and complete information during registration and to update such information as necessary." },
-    { title: "4. Independent contractor relationship", content: "Court reporters on the Dewey Sholes platform are independent contractors, not employees of Dewey Sholes or Studio Crux, LLC. Reporters set their own schedules, use their own equipment, maintain their own professional licenses, and set or negotiate their own rates within the rate-setting band exposed in their profile settings (currently ±20% of platform baseline). Reporters who need a rate outside that band may negotiate directly with Dewey Sholes via founders@deweysholes.com. Dewey Sholes does not control the manner or method by which reporters perform their services." },
+    { title: "4. Independent contractor relationship", content: "Court reporters on the Dewey Sholes platform are independent contractors, not employees of Dewey Sholes or Studio Crux, LLC. Reporters set their own schedules, use their own equipment, maintain their own professional licenses, and set or negotiate their own rates via the rate-setting controls in their profile settings. The standard rate-setting band is ±20% of platform baseline; reporters who want a wider range can opt into an expanded ±50% band, with the disclosed trade-off that rates outside the standard band get lower priority in the auto-match algorithm. Reporters who need a rate outside the expanded band may negotiate directly with Dewey Sholes via founders@deweysholes.com. Dewey Sholes does not control the manner or method by which reporters perform their services." },
     { title: "5. Payment terms", content: "Dewey Sholes charges a flat 12% buyer-side transaction fee on each order. Court reporters pay an annual listing fee of $99 for individual profiles or $79 per reporter for firm-tier accounts (3\u201310 reporters). All payments are processed securely through Stripe. Fees are non-refundable except as required by applicable law or as described in our refund policy." },
     { title: "6. Content and intellectual property", content: "All content on the Dewey Sholes platform, including text, graphics, logos, and software, is the property of Studio Crux, LLC or its licensors and is protected by copyright and other intellectual property laws. Transcripts produced by reporters through the platform are the work product of the certifying reporter and are delivered to the ordering party under the terms of each transaction." },
     { title: "7. Limitation of liability", content: "To the maximum extent permitted by law, Dewey Sholes and Studio Crux, LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use of the platform. Our total liability for any claim arising from your use of the platform shall not exceed the fees you paid to Dewey Sholes in the twelve months preceding the claim." },
@@ -11662,7 +11699,7 @@ function PricingPage() {
             <div className="section-eyebrow" style={{color: "var(--ochre-deep)"}}>Pricing</div>
             <h2 className="section-title">Transparent rates, <em>no hidden line items.</em></h2>
             <p className="section-lede" style={{maxWidth: 820}}>
-              Transcript pricing starts at $5.00 per page baseline – reporters can set their own rate within a ±20% band, so you'll see your matched reporter's actual rates before confirming. Live attendance rates set well below typical CSR agency fees. Court reporters keep what they earn, while firms pay a flat 12% platform fee for each job – because the platform automates the line items agencies bill as extras.
+              Transcript pricing starts at $5.00 per page baseline – reporters set their own rate (standard ±20% band of baseline, with an opt-in ±50% expanded band that gets lower priority in auto-matching). You'll see your matched reporter's actual rates before confirming. Live attendance rates set well below typical CSR agency fees. Court reporters keep what they earn, while firms pay a flat 12% platform fee for each job – because the platform automates the line items agencies bill as extras.
             </p>
           </div>
 
@@ -11696,7 +11733,7 @@ function PricingPage() {
                 <div className="pricing-approx">
                   <span className="tooltip-trigger" tabIndex="0">
                     Transcription pricing is approximate
-                    <span className="tooltip-content">Page rates shown are the platform baseline. Reporters set their own rate within a ±20% band, so the exact rate depends on who you're matched with – shown on the match-preview screen before you confirm an order. Final invoice is calculated from the certified page count delivered with the transcript, not an estimate.</span>
+                    <span className="tooltip-content">Page rates shown are the platform baseline. Reporters set their own rate – most within ±20% of baseline (our standard matching band), some in an opt-in ±50% expanded band with lower matching priority. You'll see your matched reporter's actual rates on the match-preview screen before confirming. Final invoice is calculated from the certified page count delivered with the transcript, not an estimate.</span>
                   </span>
                 </div>
               </div>

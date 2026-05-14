@@ -27,17 +27,17 @@ CSRs on Dewey Sholes are independent contractors. We score favorably on 8-9 of 1
 - No exclusivity requirements
 - Pay per job (per-page rate, not per hour)
 - No equipment or proprietary software requirements
-- **Rate-setting band exposed in CSR settings UI** (added 2026-05-14): CSRs can set or negotiate their own rate within a ±20% band of platform baseline via a self-serve slider in their profile settings. This directly addresses CA Labor Code §2778(b)(2)(B): *"The individual has the ability to set or negotiate their own rates for the services performed."* Out-of-band requests are handled via direct email negotiation with the platform team.
+- **Hybrid rate-setting bands exposed in CSR settings UI** (added 2026-05-14): CSRs set their own rate via a slider in their profile settings. Standard band ±20% of platform baseline gets full auto-match priority; CSRs can opt into an expanded ±50% band with disclosed lower matching priority; out-of-band requests beyond ±50% are handled by direct email negotiation. This directly addresses CA Labor Code §2778(b)(2)(B): *"The individual has the ability to set or negotiate their own rates for the services performed."* See [rating_and_matching_policy.md – Hybrid rate-setting bands](rating_and_matching_policy.md) for why we chose a soft cap (matching priority) over a hard cap (UI ceiling) – the soft cap removes any plausible argument that we're constraining the §2778 right.
 
 ### Onboarding language (already in prototype – updated 2026-05-14)
-"By joining Dewey Sholes, you confirm that you are an independent professional, not an employee of Dewey Sholes or its parent company. You choose which jobs to accept, set your own schedule, **set or negotiate your own rates (within the ±20% band exposed in your profile settings, or outside that band by emailing us)**, and control how you perform your work."
+"By joining Dewey Sholes, you confirm that you are an independent professional, not an employee of Dewey Sholes or its parent company. You choose which jobs to accept, set your own schedule, **set or negotiate your own rates (standard ±20% band via the slider; opt-in expanded ±50% band with reduced matching priority; anything beyond, email us)**, and control how you perform your work."
 
-The Terms of service "Independent contractor relationship" section also explicitly cites the rate-setting band as part of what makes CSRs independent contractors under §2778.
+The Terms of service "Independent contractor relationship" section also explicitly cites the hybrid rate-setting model as part of what makes CSRs independent contractors under §2778.
 
 ### Risk matrix
 | Scenario | Likelihood | Severity |
 |----------|-----------|----------|
-| ABC test Prong B challenge | Medium-Low (reduced by exposed §2778 rate-setting band) | High |
+| ABC test Prong B challenge | Low-Medium (reduced by exposed §2778 hybrid rate-setting bands – no UI cap on the right; soft cap via matching priority) | High |
 | EDD audit reclassifying reporters | Low-Medium | High |
 | Individual misclassification claim | Low | Medium |
 | Class action by reporters | Very Low (reporters benefit from IC status) | Very High |

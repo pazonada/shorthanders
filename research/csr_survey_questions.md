@@ -162,7 +162,8 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 >
 > Here's how it works for you, the reporter:
 > - You keep 100% of your rate. No agency cut. No platform commission on your earnings.
-> - The platform sets a baseline rate (specific dollar amounts in Section 5, well above statutory and close to what private-direct work pays). You can set your own rate up to 20% higher or 20% lower than baseline – your choice, your slider.
+> - The platform sets a baseline rate (specific dollar amounts in Section 5, well above statutory and close to what private-direct work pays). You set your own rate using a slider in your settings. The standard range is ±20% of baseline – set anywhere in there and you'll get the same job offers as everyone else.
+> - You can also opt into a wider ±50% range if you want to set rates further from baseline. We're upfront about the trade-off: rates outside the standard ±20% band get fewer auto-match offers, because we prioritize standard-band reporters for matching. You're not blocked from earning more or charging less; you just see fewer jobs at those rates.
 > - Attorneys pay your rate plus a flat 12% platform fee on top, so the 12% never comes out of your pocket. They see your actual rate when they get matched with you and can confirm or ask for a different reporter.
 > - The site handles scheduling, payment, and transcript delivery, so you don't pay an agency to do those things for you.
 
@@ -175,7 +176,8 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 
 **Q12.** Which parts of this idea appeal to you most? (pick up to three)
 - Keeping 100% of my rate (no agency cut)
-- Setting my own rate within a ±20% band
+- Setting my own rate within the standard ±20% band
+- Being able to opt into a wider ±50% band if I want to
 - Working with attorneys directly
 - Less admin work
 - Modern booking and scheduling tools
@@ -219,11 +221,19 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 - A little high
 - Way too high
 
-**Q18.** The site suggests a baseline rate, and you can change it up to 20% higher or 20% lower. Does that feel:
+**Q18.** The standard rate-setting band is ±20% of the platform baseline. Reporters in this band get full priority in the auto-match algorithm. Does that feel:
 - Like real control over my pricing
 - A little limiting but I could live with it
 - Too restrictive
 - Doesn't really matter to me
+
+**Q18a.** You can opt into a wider ±50% rate band, but reporters in the expanded band get fewer auto-match offers (the matching algorithm prioritizes standard-band reporters). Would you opt in?
+- Yes – I'd want the flexibility even if it meant fewer offers
+- Maybe – depends on how much fewer
+- No – I'd stay in the standard band to maximize my offer volume
+- Not sure / need to think about it
+
+**Q18b.** *(If Maybe or No above)* What would change your mind about opting into the expanded band? (1–2 sentences, optional)
 
 ---
 

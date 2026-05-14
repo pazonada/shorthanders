@@ -137,7 +137,7 @@ Between standardized specialties for matching, free-text "additional expertise" 
 | Availability windows | Weekdays 8a–6p | CSR sets weekly schedule |
 | Job-type preferences | Live + audio | Either or both |
 | After-hours / weekend opt-in | Off | On/off toggle, optionally with surcharge multiplier |
-| Rate adjustments | ±20% from default (per AB-5 §2778 rate-setting band) | Same – V1 ships with the band exposed |
+| Rate adjustments | ±20% standard band (per AB-5 §2778 rate-setting band); opt-in ±50% expanded band with lower auto-match priority | Tune the matching-priority cost of expanded-band rates based on launch data |
 
 **4. Track record** – computed from completed-job history, not declared.
 
@@ -204,6 +204,7 @@ Within the eligible pool, the algorithm boosts CSRs whose capabilities align wel
 | Past completion of similar specialty jobs | Modest boost | Computed from track-record dimension – actual experience often beats self-declared experience |
 | Low current workload | Modest boost | Already in v1 ranking logic |
 | Short travel time to courthouse (live only) | Tiebreaker | Geography already filtered hard; travel time is a finer-grained preference within radius |
+| Rate within standard ±20% band | Significant boost | Per the hybrid rate-band model (added 2026-05-14). CSRs in the standard band get full ranking; CSRs who opted into the expanded ±50% band are still eligible (no hard filter) but ranked lower so they receive fewer auto-match offers. See "Hybrid rate-setting bands" below. |
 
 ### Fairness slot is exempt from soft preferences
 
@@ -227,6 +228,51 @@ Sarah Chen
 This makes the match legible: the attorney sees *why* this CSR was selected, not just "the algorithm picked her."
 
 `[NEEDS ROSIE]` – confirm whether soft-preference boost should be visible to CSRs too ("this job matches your Medical specialty"). Aud leans toward yes – helps CSRs decide whether to accept.
+
+---
+
+## Hybrid rate-setting bands (added 2026-05-14)
+
+### Why this design exists
+
+CA Labor Code §2778(b)(2)(B) requires that ICs have "the ability to set or negotiate their own rates." The earlier draft of this doc would have launched with rates platform-set and CSRs unable to adjust via the UI (a "hard ceiling at 0%" model). The current design replaces that with a hybrid: CSRs set their own rate via a slider, with two tiers of disclosure on the matching consequences.
+
+### How the bands work
+
+**Standard band: ±20% of platform baseline.** The default slider range in CSR settings → Your rates. CSRs whose multiplier sits inside this range get full priority in the auto-match algorithm.
+
+**Expanded band: ±50% of platform baseline.** A CSR can opt into the expanded band by checking a box in their rates settings, which extends the slider range. CSRs whose multiplier sits *outside* the standard ±20% band but inside ±50% are **still eligible to be matched** (no hard filter excludes them) but get a meaningful boost-down in the soft-preference ranking. In practice they receive fewer auto-match offers per unit time.
+
+**Outside ±50%:** Manual negotiation with the platform team. We adjust the CSR's stored multiplier server-side. This pathway exists for unusual cases (court-employed CSRs with public benchmarks, niche specialists with unique pricing, etc.) and as the AB-5 §2778 safety net.
+
+### Why a soft cap, not a hard cap
+
+The earlier (hard ±20%) model could be read as constraining the §2778 right – a CSR who wants to charge more is told *no* by the platform UI, with only an email escape hatch. A court could plausibly find that "ability to set or negotiate" requires the right to be exercised at the point of the labor relationship, not via off-platform email.
+
+The soft-cap model gives every CSR the ability to set any rate they want (within a generous ±50% range, and beyond that via manual negotiation). The platform's matching algorithm is a business mechanic, not a constraint on the rate-setting right – we're entitled to match efficiently, and CSRs aren't entitled to a specific job. This puts the §2778 question squarely in the camp of "the right is exercised; the marketplace dynamics are a separate question," which is the strongest legal posture available without writing a check to outside counsel.
+
+### Trade-off the CSR sees at opt-in
+
+When a CSR checks "Expand to ±50% band" in settings, the inline copy reads:
+
+> Rates outside ±20% are still allowed, but you'll get fewer auto-match offers. The matching algorithm prioritizes reporters within the standard band.
+
+Honest disclosure of the matching cost. CSRs who want to charge a premium can do so, with eyes open on the demand consequence.
+
+### Implementation in the cascade
+
+In the soft-preferences table (above), "Rate within standard ±20% band" is a significant boost. CSRs at +25% (or −25%) sit *below* CSRs at +15% in the ranked-slot fill, all else equal. In practice they'll be selected later in the cascade (after fairness slot consumes other-priority slots), or not selected at the time the order is filled.
+
+The fairness slot, per the existing policy, is exempt from soft preferences – so expanded-band CSRs *can* still get cold-start visibility through the fairness rotation. This preserves the §2778 posture even more strongly: there's no algorithmic exclusion, just probabilistic deprioritization.
+
+### What to revisit after launch-window data
+
+- How many CSRs opt into the expanded band? If <5%, the band may be solving a hypothetical concern rather than a real one.
+- What rates do expanded-band CSRs actually set? Cluster near +25% / −25% (just outside standard) or further?
+- Do attorneys reject expanded-band matches at higher rates than standard-band matches? If yes, the matching deprioritization is doing its work; if no, the band design may not need the priority penalty at all.
+- Do CSRs perceive the standard band as restrictive enough to feel coerced? Section 4 / Section 5 of the CSR survey tests this.
+
+The current band thresholds (±20% standard, ±50% expanded) and the magnitude of the matching-priority penalty are both tunable platform settings, not hardcoded values. Adjust based on what we learn.
 
 ---
 
