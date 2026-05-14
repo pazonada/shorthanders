@@ -8,9 +8,9 @@
 
 ## Problem we're solving
 
-Dewey Sholes is supply-heavy and demand-light at the start of the pilot. We need attorneys / law firms on the platform for our growing CSR base to actually get jobs.
+Dewey Sholes is supply-heavy and demand-light at the start of the launch window. We need attorneys / law firms on the platform for our growing CSR base to actually get jobs.
 
-Every CSR who joins comes in with 5–20 existing law-firm relationships. That's our highest-leverage demand-acquisition channel — far warmer than any outbound marketing. A new CSR has direct, motivated reasons to bring their existing book of business onto the platform: more jobs flow to them, and the firms they already trust get pilot pricing.
+Every CSR who joins comes in with 5–20 existing law-firm relationships. That's our highest-leverage demand-acquisition channel — far warmer than any outbound marketing. A new CSR has direct, motivated reasons to bring their existing book of business onto the platform: more jobs flow to them, and the firms they already trust get founding-firm onboarding perks (direct founder access, first dibs on new features, a say in the roadmap).
 
 Today (2026-05-05), the CSR onboarding flow has a "Invite colleagues" step (screen 7) that asks the new CSR to invite **other CSRs**. There's no equivalent ask for the **law firms / attorneys** the CSR already works with. This program closes that gap.
 
@@ -49,7 +49,7 @@ Three tiers, scaling with the value the referral actually delivers to the platfo
 A firm getting cold-emailed about a new platform needs a reason to convert. The CSR's name + relationship is the warm hook; we add a price hook on top:
 
 - **Invited by your CSR? Your first transcript order is platform-fee-free.**
-- This is in addition to the existing pilot pricing (8% vs 12% standard platform fee).
+- This is the only fee incentive we offer firms — there's no broader pilot pricing tier. After the first order, the firm pays the standard flat 12% platform fee on every order, same as any other firm.
 - One waived fee per converted firm — bounded cost.
 
 ---
@@ -78,6 +78,6 @@ A firm getting cold-emailed about a new platform needs a reason to convert. The 
 ## Open questions for Rosie
 
 1. **Cap on quarterly payouts per CSR** — propose $500/quarter. Rosie's view?
-2. **Should we offer the colleague-invite reward (free first year for invitee) on the firm side too?** Currently both colleague-invite and firm-invite use the pilot pricing baseline. We could double down: invited firms get a *deeper* fee discount (e.g., 5% for first year) — but Aud's lean is to keep it simple and use the platform-fee-free first-job hook instead.
+2. **Should the referral incentive on the firm side go beyond a single waived first order?** We could double down — e.g., a discounted platform fee (5–8%) for the first 90 days on invited firms — but Aud's lean is to keep it simple and stick with the one-time platform-fee-free first-job hook. Layering a temporary discounted-then-bumps-up rate on referred firms re-creates the same churn cliff we just retired in the broader pricing model.
 3. **Gift card brand** — Starbucks proposed; open to Visa gift cards or merchant-of-CSR's-choice if we get pushback.
 4. **Whether to show the rewards explicitly in the onboarding UI** or keep them in the email confirmation. Aud's lean: show rewards explicitly — transparency is a feature for the marketplace-class product.

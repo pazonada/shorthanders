@@ -265,4 +265,4 @@ Target n = 30–60 completed responses. ~5–10 volunteers self-select for Stage
 - [user_testing_legal_assistant_guide.md](user_testing_legal_assistant_guide.md) — existing prototype testing guide for paralegals; can be adapted for attorney walkthroughs (Stage 2)
 - [marketing_plan_phase2_law_firms.md](marketing_plan_phase2_law_firms.md) — firm-side marketing strategy this survey supports
 - [agency_invoice_evidence.md](agency_invoice_evidence.md) — the Caldarella invoice that informs Q9 and Q18
-- [governance-and-process/pilot_pricing_and_referrals.md](../governance-and-process/pilot_pricing_and_referrals.md) — pilot pricing structure tested in Q19, Q24
+- [governance-and-process/founding_member_program.md](../governance-and-process/founding_member_program.md) — pilot pricing structure tested in Q19, Q24

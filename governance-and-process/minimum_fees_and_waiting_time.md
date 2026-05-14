@@ -76,10 +76,10 @@ When the attorney orders a transcription, the price calculator shows:
 ```
 Audio length: 15 minutes
 Estimated pages: 8 pages (auto-calculated at ~35 pages/hr)
-Statutory rate: $3.67 × 8 = $29.36
+Page rate: $5.00 × 8 = $40.00
 Minimum transcript fee: $50.00 ← applied (page rate below floor)
-Platform fee (8% pilot): $4.00
-Total: $54.00
+Platform fee (12%): $6.00
+Total: $56.00
 ```
 
 For longer audio, the minimum doesn't kick in:
@@ -87,9 +87,9 @@ For longer audio, the minimum doesn't kick in:
 ```
 Audio length: 60 minutes
 Estimated pages: 35 pages
-Statutory rate: $3.67 × 35 = $128.45
-Platform fee (8% pilot): $10.28
-Total: $138.73
+Page rate: $5.00 × 35 = $175.00
+Platform fee (12%): $21.00
+Total: $196.00
 ```
 
 A small note on the calculator clarifies: "Orders below $50 are billed at our $50 minimum to ensure your CSR is fairly compensated for their time."
@@ -154,4 +154,4 @@ This implies a small product change: the trial-day booking flow must capture tra
 
 - `billing_and_payment_policy.md` — payment timing
 - `cancellation_and_cna_policy.md` — what happens when proceedings don't happen
-- `pilot_pricing_and_referrals.md` — pilot pricing structure
+- `founding_member_program.md` — founding-cohort segmentation and referral incentives (no pricing tier)

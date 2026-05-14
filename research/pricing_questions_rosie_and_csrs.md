@@ -319,6 +319,6 @@ Open product / governance changes worth landing before pilot:
 - [csr_agency_live_attendance_rates.md](csr_agency_live_attendance_rates.md) — court statutory per-diem survey + the agency rate gap
 - [user_testing_csr_guide.md](user_testing_csr_guide.md) — full CSR user testing protocol (this doc adds pricing depth)
 - [marketing_strategy_master.md](marketing_strategy_master.md) — overall pilot strategy
-- [../governance-and-process/pilot_pricing_and_referrals.md](../governance-and-process/pilot_pricing_and_referrals.md) — current DS pricing in code
+- [../governance-and-process/founding_member_program.md](../governance-and-process/founding_member_program.md) — current DS pricing in code
 - [../governance-and-process/minimum_fees_and_waiting_time.md](../governance-and-process/minimum_fees_and_waiting_time.md) — what DS explicitly leaves out and why
 - [../governance-and-process/cancellation_and_cna_policy.md](../governance-and-process/cancellation_and_cna_policy.md) — current cancellation/CNA stance

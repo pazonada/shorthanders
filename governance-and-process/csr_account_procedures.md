@@ -156,8 +156,9 @@ Stripe's identity verification flow handles SSN collection during the bank-link 
 
 ### Listing fee
 
-- Pilot: **$0 listing fee** for the first year (per `pilot_pricing_and_referrals.md`)
-- After first year: $99/year for individual CSRs, charged annually
+- **$99/year for individual CSRs**, billed annually from signup date
+- CSR firm tier (deferred): $79/reporter/year (3–10 reporters under one account)
+- No founding-cohort waiver — see `founding_member_program.md` for what the founding-cohort tag does (non-pricing perks only)
 
 ---
 
@@ -479,7 +480,7 @@ CSRs (as CA residents) have rights under the California Consumer Privacy Act:
 - `rating_and_matching_policy.md` — rating system + matching algorithm
 - `cost_splitting_policy.md` — cost-split mechanics from CSR perspective
 - `payment_failure_policy.md` — payout failures
-- `pilot_pricing_and_referrals.md` — pilot pricing
+- `founding_member_program.md` — founding-cohort segmentation and referral incentives
 - `transcript_correction_policy.md` — correction request handling
 - `transcript_retention_and_custody_policy.md` — what CSRs can/can't do with transcripts
 - `confidentiality_and_audio_retention.md` — audio retention by CSRs

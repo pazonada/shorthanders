@@ -20,8 +20,8 @@ Attorney pays $215 via Stripe
     |
     v
 Stripe splits automatically:
-    ├── $197.80 → CSR's bank account (via Stripe Connect)
-    └── $17.20  → Studio Crux bank account (platform fee: 8% pilot / 12% standard)
+    ├── $189.20 → CSR's bank account (via Stripe Connect)
+    └── $25.80  → Studio Crux bank account (platform fee: 12%)
 ```
 
 ### Why this matters
