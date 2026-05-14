@@ -246,24 +246,46 @@ Success
   Submit button → handleSubmitOrder() (NOT setSubmitted(true) directly)
   |
   v
-[NEW: Match preview state]
-  Heading: "You've been matched with [first name]."
-  Matched CSR card: avatar, name, CSR #, rating + on-time + jobs +
-    city, certifications + specialty chips, View-full-profile link
-  Rate breakdown: attendance fee (if live) + transcript estimate at
-    THIS CSR's actual rate (not baseline) + turnaround multiplier +
-    12% platform fee + total. Pill in header marks CSR's band position
-    ("AT BASELINE" / "+10% FROM BASELINE" / "−5% FROM BASELINE").
-  Actions:
-    [Confirm and send to firstName] → handleConfirmMatch() → submitted state
-    [Request a different reporter] → handleRematch() → cycles to next CSR
-    After 3 rematches: button becomes disabled "No more rematches –
-      contact support"
-  Auto-confirm window: 30 min (Rush) / 4 hr (Standard). UX copy notes
-    this; actual setTimeout not yet wired in prototype.
-  Reassurance line: "Rejected reporters are never told. Invites only
-    go out after Confirm. Your card is charged only when you confirm."
+Phase 1: Favorites cascade (silent, parallel)
+  Production: all attorney favorites invited in parallel, first to
+    accept wins. Attorney is not shown a preview because they've
+    already chosen these reporters.
+  Prototype: skipped — always proceeds to batch-preview for demo.
+  |
+  v
+[Phase 2 batch preview state]
+  Heading: "Here are 3 reporters qualified for your job."
+  Sub: "Your estimated total is $X–$Y depending on which reporter
+    accepts. Confirm below to send invitations to all three at once."
+  Three CSR cards stacked vertically. Each card shows:
+    Avatar, name, CSR #, rating, on-time %, jobs, city
+    Certification + specialty chips
+    Estimated total at THAT CSR's rate (right-aligned)
+    Band-position pill ("BASELINE" / "+5%" / "+10%" etc.)
+    Per-page rate + attendance fee summary (bottom row)
+    View profile link (opens in new tab)
+  [Confirm and send invitations →] (single primary button, full width)
+  Sub: "All three reporters get the invite at the same time. They
+    have [2h Rush / 12h Expedited / 24h Standard] to respond. First
+    to accept gets the job; we'll notify you the moment it's claimed."
+  Reassurance footnote: "Your card is charged only after a reporter
+    accepts. If none of these three accept, we'll automatically widen
+    the search to the next batch of qualified reporters."
   Back-to-order escape: ← Back to order (returns to Step 5 review)
+  |
+  v
+Phase 2 cascade fires (silent in prototype)
+  Production: all 3 batch members invited in parallel via push/email/
+    SMS per their preferences. CSRs have the Phase 2 response window
+    to accept. First to accept wins.
+  Prototype: handleConfirmBatch deterministically picks
+    batchReporterIndices[1] (Sarah Chen) as the accepting CSR.
+  |
+  v
+Phase 3 widening (if no Phase 2 acceptance, automatic, no second preview gate)
+  Production: cascade widens to batch of 10 (Phase 3a), then all-call
+    (Phase 3b) per existing cascade policy.
+  Prototype: not simulated.
   |
   v
 Confirmation

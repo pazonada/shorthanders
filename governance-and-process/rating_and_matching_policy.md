@@ -276,103 +276,89 @@ The current band thresholds (±20% standard, ±50% expanded) and the magnitude o
 
 ---
 
-## Attorney match-preview UX (added 2026-05-14)
+## Attorney match-preview UX (added 2026-05-14, revised 2026-05-14)
 
 ### Why this exists
 
-The auto-match algorithm runs server-side and picks the best CSR for the job. But the attorney still wants to know **who** they're being matched with and **at what rate** before money changes hands and the CSR is committed. The match-preview screen is the gate between Submit and the order going live.
+The cascade (Phase 1 favorites → Phase 2 batches of 3 → Phase 3 acceleration) runs server-side and routes jobs to eligible CSRs. But the attorney still wants to know roughly what they'll pay before the cascade fires invitations on their behalf, especially since CSRs set their own rates within the hybrid band. The batch-preview screen is the gate between Submit and the cascade going live.
 
-This solves three problems at once:
-- **Rate transparency** – with the hybrid rate-band model, different CSRs charge different rates. Attorneys see exactly what they'll pay before they confirm.
-- **Quality control** – if the matched CSR isn't what the attorney expected (no medical-witness experience for a medical depo, wrong jurisdiction, etc.), they can request a rematch.
-- **Trust** – the attorney is never surprised by who shows up or what the bill looks like.
+This solves two problems at once:
+- **Rate transparency** – with the hybrid rate-band model, different CSRs charge different rates. The attorney sees the cost range across the batch they're about to invite, so the eventual final cost (whichever CSR accepts) isn't a surprise.
+- **Trust** – the attorney is never surprised by who shows up or what the bill looks like. They've already seen the candidate pool.
 
 ### Flow
 
-After the attorney clicks Submit on Step 5 of the order flow, instead of going directly to the order-submitted success screen, they land on a match-preview screen:
+The flow combines the cascade with a single pre-cascade preview gate:
+
+1. **Attorney submits order** (Step 5 of the order flow).
+2. **Phase 1 favorites cascade fires immediately**, silently, in parallel. If the attorney has favorites, they all get invited at the same time. First favorite to accept wins. (Attorney has explicitly chosen favorites in advance, so no preview is needed – we trust the attorney's prior selection.)
+3. **If Phase 1 yields no acceptance** (or the attorney has no favorites), the system identifies a **Phase 2 batch of 3 qualified CSRs** (2 best-fit + 1 fairness slot per the cascade policy).
+4. **Batch-preview screen displays** the 3 CSRs with the estimated cost at each one's actual rate, plus the cost range across the batch. Attorney confirms.
+5. **Cascade Phase 2 fires** invitations to all 3 in parallel. CSRs have the Phase 2 response window (2h Rush / 12h Expedited / 24h Standard).
+6. **First CSR to accept wins.** Attorney is notified ("Sarah Chen accepted your order"). Card is charged.
+7. **No post-acceptance attorney veto.** The accepting CSR is the assigned reporter; if the attorney has issues, they go through standard dispute/support paths.
+8. **If the entire Phase 2 batch declines**, Phase 3a fires automatically with the next batch of 10 (no second preview gate – the attorney's earlier confirmation covers the cascade widening).
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ Order received · matching now                            │
-│ You've been matched with [first name].                   │
-│ [intro paragraph]                                        │
+│ Order received · qualified reporters identified          │
+│ Here are 3 reporters qualified for your job.             │
+│ Your estimated total is $1,540–$1,720 depending on       │
+│ which reporter accepts. Confirm below to send invites.   │
 ├─────────────────────────────────────────────────────────┤
-│ MATCHED CSR CARD                                         │
-│ [avatar] [Name] [CSR #]                                  │
-│ ★ rating · on-time % · jobs · city                       │
-│ [certifications] [specialties]              [View profile→]│
+│ MICHAEL TORRES · CSR #11247                              │
+│ ★ 4.7 (31) · 97% on-time · 156 jobs · Oakland           │
+│ [CSR] [Spanish] [Civil Lit]      $1,540  [BASELINE]     │
+│ $5.00/pg · Half day $1,050         View profile →       │
 ├─────────────────────────────────────────────────────────┤
-│ [First name]'s rates    [AT BASELINE / +X% / −X%]        │
-│ Attendance fee (Half day)             $1,050            │
-│ Transcript (40–60 pages × $5.25/pg)   $263              │
-│ Rush turnaround (+50%)                +$131             │
-│ Platform fee (12%)                    $174              │
-│ Estimated total                       $1,618            │
-│ [footnote: final invoice based on certified page count] │
+│ SARAH CHEN · CSR #14892                                  │
+│ ★ 4.9 (47) · 99% on-time · 234 jobs · San Francisco     │
+│ [CSR][RMR][CRR][Mandarin]        $1,617  [+5%]          │
+│ $5.25/pg · Half day $1,103         View profile →       │
 ├─────────────────────────────────────────────────────────┤
-│ [ Confirm and send to FirstName ]  [ Request different ] │
-│ ⏱ Auto-confirms in 30 minutes (Rush) / 4 hours (Std)    │
+│ LISA NAKAMURA · CSR #13561                               │
+│ ★ 4.8 (52) · 98% on-time · 289 jobs · San Mateo         │
+│ [CSR][RMR][Japanese]             $1,694  [+10%]         │
+│ $5.50/pg · Half day $1,155         View profile →       │
 ├─────────────────────────────────────────────────────────┤
-│ Rejected reporters are never told. Your card is charged │
-│ only when you confirm.                                   │
+│ [ Confirm and send invitations →                       ] │
+│ All three reporters get the invite at the same time.    │
+│ They have 12 hours to respond. First to accept gets it. │
+├─────────────────────────────────────────────────────────┤
+│ Your card is charged only after a reporter accepts.     │
+│ If none of these three accept, we'll automatically      │
+│ widen the search to the next batch of qualified rprtrs. │
 └─────────────────────────────────────────────────────────┘
 ```
 
-### Confirm action
+### Why this design
 
-`handleConfirmMatch()`:
-1. Flips `matchState` to "confirmed" and `submitted` to true.
-2. Charges the attorney's card (real build: Stripe payment intent capture).
-3. Sends the order invite to the matched CSR.
-4. Drops attorney on the order-submitted success screen, where the matched CSR is named by full name and CSR # in the subhead.
+- **No attorney shopping.** The attorney sees a batch the algorithm chose – they don't pick from a list, sort by rate, or filter by anything beyond what's already encoded in the cascade (jurisdiction, specialty, certs). This preserves the auto-match philosophy.
+- **No post-acceptance veto.** Once a CSR accepts, the job is theirs. We're not putting attorneys in the position of vetoing a CSR who already said yes – which would be demoralizing for the CSR and would force us to either notify the rejected CSR (bad UX) or hide the rejection (bad-faith design).
+- **No drip-feed of "you weren't picked" notifications.** Because invites only go out after the attorney confirms the batch, CSRs who were considered but not in the batch never see the order. CSRs in the batch who don't accept fast enough simply see the job get claimed by someone else (normal cascade behavior).
+- **Cost transparency without commitment.** The cost range is shown as a function of the actual batch's rates, not platform baseline. The attorney commits to the range, not to a specific CSR.
 
-Until Confirm, the CSR has not been notified of the order.
+### Why favorites skip the preview
 
-### Rematch action
+Favorites are CSRs the attorney has *already chosen* in advance (in onboarding or via a prior order). The attorney has already seen their rates and committed to working with them. Adding a preview gate to favorites would create friction for the exact relationships the platform is trying to make easier. Phase 1 fires silently.
 
-`handleRematch()`:
-1. Increments rematch counter.
-2. Asks the matching algorithm for the next-best eligible CSR (in the prototype: cycles through MOCK_REPORTERS; in production: skips the previously-shown CSR and re-runs the cascade ranking, returning the next candidate).
-3. Renders the match-preview screen with the new CSR.
+### What if the attorney doesn't like the proposed batch?
 
-**Limit: 3 rematches per order.** After 3 rejections, the rematch button is replaced with a disabled "No more rematches – contact support" affordance. The attorney can still confirm whoever's currently shown, or contact us to discuss alternatives.
+They can hit "← Back to order" and revise the case details (e.g. add a specialty requirement, change the courthouse, adjust the deadline). The system will assemble a new batch the next time they submit.
 
-Why the limit:
-- Prevents pathological browsing that defeats the auto-match model.
-- Protects CSR cold-start: a single attorney can't reject 20 CSRs in a row to artificially skew matching toward established reporters.
-- Three is enough for genuine quality-control rejections (specialty mismatch, geography mismatch, prior bad experience) without becoming a directory shopping experience.
+We deliberately don't expose a "reject this batch, give me a different batch" button. That would slide back into shopping behavior and defeat the auto-match model.
 
-### Rejected CSRs never see the order
+### Real-build implementation notes
 
-Critically, **rejected CSRs are not notified of the rejection**. The order invite is only sent to a CSR after the attorney clicks Confirm. CSRs who are shown in the match-preview but rejected via rematch simply never see the order existed.
-
-Reasons:
-- Avoids the demoralizing "you weren't selected" notification stream that could push CSRs off the platform.
-- Doesn't compound the cold-start problem (a newer CSR who gets shown-and-rejected three times in a week could reasonably conclude the platform isn't working for them).
-- Removes a feedback loop where CSRs change their rates or profile in response to invisible rejections.
-
-### Auto-confirm window
-
-If the attorney doesn't act, the order auto-confirms after a window:
-- **Rush turnaround**: 30 minutes
-- **Standard / Expedited turnaround**: 4 hours
-
-This prevents Rush jobs from sitting indefinitely if the attorney walks away from their screen.
-
-Implementation note (real build): the timer starts when the match-preview screen is first shown to the attorney. We'll send a push notification when 50% of the window has elapsed if the attorney hasn't acted, then a final reminder at 90%. The countdown is shown in the match-preview UI.
-
-In the prototype, the auto-confirm copy is rendered but no actual `setTimeout` fires.
-
-### Back-to-order escape hatch
-
-The match-preview nav bar has a "← Back to order" button (not the order-flow's Cancel) that returns the attorney to Step 5 review. Use case: attorney sees the matched CSR + rate and realizes they should bump the turnaround tier, add a co-payer, or change a case detail before locking in. Resetting matchState to "editing" preserves the form so they don't re-enter anything.
+- **Batch assembly:** Production code assembles the Phase 2 batch using the existing cascade ranking (hard filters → soft preferences → fairness slot). In the prototype, the batch is hardcoded to indices [1, 0, 2] of `MOCK_REPORTERS` (Michael / Sarah / Lisa) to span the standard rate band for demo purposes.
+- **Confirm side effect:** On confirm, real code fires invites to all 3 batch members in parallel via the notification system (push + email + SMS per CSR preferences). In the prototype, `handleConfirmBatch` deterministically picks `batchReporterIndices[1]` (Sarah) as the accepting CSR.
+- **No invitations before confirm.** Until the attorney clicks Confirm, no CSR notification fires. This is the "rejected CSRs never told" property — strictly speaking, only the CSRs in the batch will ever see the order, and only after the attorney signs off on the batch.
 
 ### Open questions
 
-- **Should the matched CSR get a heads-up before the attorney confirms?** No – per the rejected-CSRs-never-see-the-order rule above. The CSR only sees the order after Confirm.
-- **What if the attorney closes their browser?** The order sits in "awaiting confirmation" state on their dashboard. Reminder emails at 50% and 90% of the auto-confirm window. After the window expires, auto-confirm fires.
-- **Does rematch reduce the eligible pool over time?** In a small launch cohort, yes – 3 rejections could exhaust the pool in some jurisdictions. The "no more rematches – contact support" affordance is the escape valve when this happens.
-- **Should the attorney see the projected savings vs. an agency for this specific CSR?** Possibly, post-launch. Adds friction at first, but reinforces the value-prop at the moment of commitment.
+- **Should the second cascade widening (Phase 3a, batch of 10) trigger a second preview gate?** Current answer: no – the attorney committed to the cascade when they confirmed the first batch. A second preview gate would be friction without value.
+- **What happens if the attorney closes their browser before confirming the batch?** The order sits in "awaiting batch confirmation" state on their dashboard. Reminder emails at 1 hour and 24 hours. After 72 hours of inactivity, the order auto-cancels and they have to resubmit.
+- **Should the attorney see a "this would cost X via an agency" comparison in the batch preview?** Possibly post-launch. Adds friction at first, but reinforces the value-prop at the moment of commitment.
 
 ---
 
