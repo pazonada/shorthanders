@@ -157,49 +157,48 @@ Worth running both – the time-cost survey feeds the marketing claim ("firms sa
 
 ---
 
-### Section 3a – How the matching flow should work (4 questions, added 2026-05-14)
+### Section 3a – How the matching flow should work (4 questions, added 2026-05-14, revised 2026-05-14)
 
 **Read this first, then answer the questions below.**
 
 > Here's the matching flow we're planning. When you submit a transcript order:
 >
-> 1. The system invites your **favorite reporters** first (if you have any). Whoever accepts first gets the job.
-> 2. If no favorite accepts (or you have no favorites), the system identifies **3 qualified reporters** based on your case details (jurisdiction, specialty if needed, certifications, availability).
-> 3. You see a screen showing **those 3 reporters' profiles + the cost range** based on each one's rate (reporters set their own rates within a band). You confirm by clicking one button to send invitations to all 3 at once.
-> 4. The **first of the 3 to accept** gets the job. You're notified, and the others never see the order.
->
-> You don't pick a specific reporter from the 3, and you don't get to reject the one who accepts. The trade-off: less work for you (one confirmation, not 3 separate decisions), but less individual control.
+> 1. **You hit submit and walk away.** The system silently invites qualified reporters in widening batches – starting with your favorites (if any), then a small batch of 2 from the general pool, then 5 more, then more if needed.
+> 2. **The moment a reporter accepts the job**, we send you a push notification + email. You're not asked to approve candidates in advance; you only get pinged when there's a real match.
+> 3. **You land on a screen showing that reporter's profile and the exact cost** (the reporter's rate × your order specs + the 12% platform fee). You have **4 hours** (1 hour for Rush jobs) to confirm or veto the match.
+> 4. **If you confirm** (or do nothing – it auto-confirms at the window's end), the match locks in and the reporter is told they're confirmed.
+> 5. **If you veto**, you pick a reason from a fixed list (price too high, specialty mismatch, scheduling concern, prior bad experience, other). The vetoed reporter is told the attorney chose another reporter, and the cascade resumes finding the next match. You can veto up to **3 reporters per order** – after that the next match auto-confirms.
 
 **Q15a.** Based on that description, does the flow feel:
-- Right – I trust the system to pick qualified reporters and just want it handled
-- Mostly right – but I'd want at least the option to review and reject individuals in some cases
-- Wrong – I want to review each candidate's profile and approve or reject individually before invitations go out
+- Right – I trust the cascade to find qualified reporters and just react when there's a match
+- Mostly right – but I'd want to see and approve candidates before invitations go out *in some cases*
+- Wrong – I want to see and approve all candidates *before* invitations go out, every order
 - Not sure – depends on the case
 
-**Q15b.** If we let you reject individuals from the batch of 3 ("not these three, find new ones" or "only Suzy, the others are too expensive"), how often would you actually use that?
-- Every order – I'd want to see profiles before invitations every time
-- Sometimes – maybe 1 in 5 orders, for specific case types
-- Rarely – only for unusual or high-stakes cases
-- Never – auto-match handles it
+**Q15b.** How often do you imagine actually using the veto button?
+- Often – I'd expect to veto at least 1 in 5 matches
+- Sometimes – only for clearly wrong matches (specialty, schedule, prior bad experience)
+- Rarely – I'd trust the cascade most of the time
+- Never – auto-match handles it; vetoing feels like extra work
 
-**Q15c.** Are there specific case types or scenarios where you'd want to pre-review reporter profiles before invitations go out? (select all that apply)
+**Q15c.** Are there specific case types or scenarios where you'd want to see and approve reporter candidates *before* invitations go out (instead of reacting after acceptance)? (select all that apply)
 - High-stakes trial proceedings
 - Sealed or confidential proceedings
 - Cases with specialized terminology (medical, technical, financial expert witnesses)
 - Cases where the reporter will work closely with my expert witness
 - Cases with VIP / public-figure parties
 - Multi-day or complex matters
-- I never want to pre-review – auto-match handles it
+- None – the post-acceptance veto pattern works for me on every order
 - Other (please describe)
 
-**Q15d.** When you see a reporter's rate is meaningfully above the platform baseline (e.g. +15% or +20%), what would help you understand why and feel OK paying it? (select all that apply, or free text)
+**Q15d.** When you see an accepting reporter's rate is meaningfully above the platform baseline (e.g. +15% or +20%), what would help you understand why and feel OK paying it instead of vetoing? (select all that apply, or free text)
 - Their specialty match to your case type
 - Their certifications (RPR, RMR, CRR)
 - Their years of experience / job count
 - Their rating + on-time delivery record
 - Past cases they've worked similar to yours
 - I don't need a justification – if they're qualified, the rate is what it is
-- I wouldn't pay above baseline – I'd want a different reporter
+- I wouldn't pay above baseline – I'd veto
 - Other (please describe)
 
 ---
@@ -287,7 +286,7 @@ Worth running both – the time-cost survey feeds the marketing claim ("firms sa
 | Process pain | Surprise line items + agency markup show up as top frustrations (Q8, Q9) – validates DS thesis | Pain is elsewhere (slow delivery, quality) – we may be solving the wrong problem |
 | Concept reaction | "Very interested" + "Somewhat interested" ≥ 50%; top concerns are operational (pool depth, reliability), not conceptual | Top concerns are conceptual ("I trust my agency"; "I don't want to learn a new tool") |
 | Featured reporter (Q14) | >40% useful – validates discovery feature | <20% – defer feature indefinitely |
-| Matching flow (Q15a–Q15d) | Majority say current batch-preview flow feels "right" or "mostly right" with veto-by-edit on rare cases; specific case-type triggers (sealed, expert witness) emerge as scenarios where per-CSR review is wanted; rate-justification preference clusters around certs + specialty + experience | Majority want per-CSR review on every order – means the auto-match philosophy is wrong for this audience and we need to rethink the order flow |
+| Matching flow (Q15a–Q15d) | Majority say the cascade + post-acceptance veto pattern feels "right" or "mostly right"; veto frequency cluster is "rarely" or "sometimes" (not "often"); specific case-type triggers (sealed, expert witness) emerge as scenarios where pre-cascade review is wanted; rate-justification preference clusters around certs + specialty + experience | Majority want pre-cascade per-CSR approval on every order – means the auto-match philosophy is wrong for this audience and we need to rethink the order flow. OR: majority say they'd veto "often" – means our soft-preferences matching or rate-band positioning is off and we need to recalibrate before scaling. |
 | Pricing (Q17–Q18) | 12% feels at-or-below current spend; line-item-frustration responses confirm DS positioning thesis | 12% feels expensive – we have a positioning problem |
 | Founding-firm perks (Q19) | At least "somewhat important" for ~30%+ – non-pricing perks are doing real work as a sign-up incentive | "Doesn't matter" majority – founding-firm framing isn't adding anything; lean harder on functional pitch (transparency, no agency markup) |
 | Depositions (Q20–Q21) | Strong "yes if you handle scheduling, fine if you don't" – validates the matching-only future path | Strong "only useful with full depo support" – confirms our depo strategy ceiling |

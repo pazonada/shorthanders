@@ -3987,39 +3987,74 @@ function OrderFlow() {
   });
   const [submitted, setSubmitted] = useState(false);
   // Match-flow state machine (per rating_and_matching_policy.md – Attorney
-  // match-preview UX). After Submit, the system runs Phase 1 (favorites
-  // cascade in parallel, silent — attorney chose these reporters and trusts
-  // them). If no favorite accepts (or the attorney has no favorites), the
-  // system identifies a Phase 2 batch of 3 qualified CSRs and shows the
-  // attorney their cost range. Attorney confirms the batch, the cascade
-  // fires invites in parallel, first CSR to accept wins. No post-acceptance
-  // attorney veto — rejected CSRs never see the order because invites only
-  // go out after the attorney confirms the batch.
-  const [matchState, setMatchState] = useState("editing"); // "editing" | "batch-preview" | "confirmed"
-  // The Phase 2 batch of 3 qualified CSRs shown to the attorney before the
-  // cascade fires. In the prototype we just pick the first 3 mock reporters
-  // spanning the rate band; in production the matching algorithm assembles
-  // this batch (2 best-fit + 1 fairness slot per Phase 2 cascade policy).
-  const [batchReporterIndices, setBatchReporterIndices] = useState([1, 0, 2]);
-  // The CSR who "won" the cascade after the attorney confirmed. Set on
-  // confirm; in the prototype we deterministically pick the middle one.
-  const [acceptingReporterIdx, setAcceptingReporterIdx] = useState(0);
+  // match-preview UX, v3 2026-05-14). After Submit, the cascade runs
+  // invisibly in the background — favorites first in parallel, then small
+  // general-pool batches widening over time. When ANY CSR accepts, the
+  // attorney lands on the veto-window screen showing that CSR's profile +
+  // actual rates + a countdown. Attorney can Confirm immediately, do
+  // nothing (auto-confirms at window close), or Veto with a structured
+  // reason (cascade resumes, vetoed CSR excluded, vetoed CSR is told the
+  // attorney chose someone else). After 3 vetoes, the next acceptance
+  // auto-confirms with no veto window — the attorney has used their veto
+  // budget on this order.
+  const [matchState, setMatchState] = useState("editing"); // "editing" | "veto-window" | "confirmed"
+  // The CSR who accepted the cascade and is awaiting attorney confirmation.
+  // In the prototype this cycles through MOCK_REPORTERS on each veto; in
+  // production it's whichever CSR claimed the job from the live cascade.
+  const [proposingReporterIdx, setProposingReporterIdx] = useState(0);
+  // Number of CSRs the attorney has vetoed on this order. After 3, the
+  // next acceptance auto-confirms with no veto window (the soft cap).
+  const [vetoCount, setVetoCount] = useState(0);
+  // Last veto reason (for analytics in the real build).
+  const [lastVetoReason, setLastVetoReason] = useState(null);
+  // Veto-reason modal visibility.
+  const [showVetoModal, setShowVetoModal] = useState(false);
+  // Form state for the veto modal.
+  const [vetoForm, setVetoForm] = useState({ reason: "", otherText: "" });
+  const maxVetoes = 3;
+
   const handleSubmitOrder = () => {
-    // Prototype: in production this is where Phase 1 favorites cascade fires.
-    // If a favorite accepts, we'd skip the batch-preview entirely and go
-    // straight to "confirmed". For the prototype we always show the batch
-    // preview so the feature is demonstrable.
-    setBatchReporterIndices([1, 0, 2]); // Michael (baseline), Sarah (+5%), Lisa (+10%) – spans the standard band
-    setMatchState("batch-preview");
+    // Prototype: the cascade runs invisibly in production. Here we jump
+    // straight to the veto-window state with the first CSR as "the
+    // accepting reporter" so the feature is demonstrable. In a real build
+    // there'd be an interstitial "Finding your reporter" state until the
+    // cascade actually returns an acceptance.
+    setProposingReporterIdx(0); // Sarah Chen (+5%) accepts first in the demo
+    setVetoCount(0);
+    setLastVetoReason(null);
+    setMatchState("veto-window");
     window.scrollTo({ top: 0, behavior: "auto" });
   };
-  const handleConfirmBatch = () => {
-    // Cascade fires; in production all 3 CSRs get invited in parallel and
-    // the first to accept wins. For the prototype we deterministically pick
-    // the middle CSR (Sarah Chen, the most-prominent demo reporter).
-    setAcceptingReporterIdx(batchReporterIndices[1]);
+  const handleConfirmMatch = () => {
     setMatchState("confirmed");
     setSubmitted(true);
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
+  const openVetoModal = () => {
+    setVetoForm({ reason: "", otherText: "" });
+    setShowVetoModal(true);
+  };
+  const submitVeto = () => {
+    // Capture the veto reason, advance to the next CSR (cycling MOCK_REPORTERS
+    // in the prototype). If this was the 3rd veto, the NEXT match auto-confirms
+    // because the attorney has used their veto budget — handled by hiding the
+    // Veto button when vetoCount >= maxVetoes.
+    const reason = vetoForm.reason === "other" ? `Other: ${vetoForm.otherText || "(no detail)"}` : vetoForm.reason;
+    setLastVetoReason(reason);
+    setShowVetoModal(false);
+    const newCount = vetoCount + 1;
+    setVetoCount(newCount);
+    const nextIdx = (proposingReporterIdx + 1) % MOCK_REPORTERS.length;
+    setProposingReporterIdx(nextIdx);
+    if (newCount >= maxVetoes) {
+      // 3 vetoes used — the next CSR to accept auto-confirms.
+      // For the prototype we lock in immediately; in production the cascade
+      // would still need to find a 4th CSR before this fires.
+      setTimeout(() => {
+        setMatchState("confirmed");
+        setSubmitted(true);
+      }, 600);
+    }
     window.scrollTo({ top: 0, behavior: "auto" });
   };
   const update = (k, v) => setForm(f => ({ ...f, [k]: v }));
@@ -4059,19 +4094,20 @@ function OrderFlow() {
   const getMinDate = () => { const d = new Date(); d.setDate(d.getDate() + 1); return d.toISOString().split("T")[0]; };
   const csrDeadline = form.needByDate ? (() => { const d = new Date(form.needByDate + "T00:00:00"); d.setDate(d.getDate() - 1); return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }); })() : null;
 
-  // Batch-preview screen: after Submit, but before the cascade fires invites.
-  // System assembles a batch of 3 qualified CSRs (in production: 2 best-fit
-  // + 1 fairness slot per Phase 2 cascade policy). Attorney sees the batch
-  // candidates + the cost range based on their rates and confirms before
-  // any invites go out. On confirm, the cascade fires invites in parallel
-  // and the first CSR to accept wins. Rejected CSRs never see the order.
-  if (matchState === "batch-preview") {
-    const batch = batchReporterIndices.map(i => MOCK_REPORTERS[i]);
+  // Veto-window screen: a CSR has accepted the order via the cascade, and the
+  // attorney has a window to either Confirm immediately, do nothing (auto-
+  // confirms), or Veto with a structured reason. After 3 vetoes the next
+  // accepting CSR auto-confirms (Veto button hidden). On veto, the rejected
+  // CSR is told the attorney chose another reporter and is offered similar
+  // open jobs — see governance-and-process/rating_and_matching_policy.md.
+  if (matchState === "veto-window") {
+    const reporter = MOCK_REPORTERS[proposingReporterIdx];
+    const rates = getCSRRates(reporter);
     const turnaroundMult = PRICING[effectiveTurnaround + "Multiplier"] || 1.0;
-    const liveAttendanceAt = (mult) => form.type === "live"
-      ? (form.duration === "trial" ? Math.round(PRICING.attendanceTrialDay * mult) * (form.trialDays || 3)
-        : parseInt(form.duration) > 180 || form.duration === "180" ? Math.round(PRICING.attendanceFullDay * mult)
-        : Math.round(PRICING.attendanceHalfDay * mult))
+    const liveAttendance = form.type === "live"
+      ? (form.duration === "trial" ? rates.attendanceTrialDay * (form.trialDays || 3)
+        : parseInt(form.duration) > 180 || form.duration === "180" ? rates.attendanceFullDay
+        : rates.attendanceHalfDay)
       : 0;
     const attendanceLabel = form.type === "live"
       ? (form.duration === "trial" ? `Trial day × ${form.trialDays || 3}`
@@ -4079,99 +4115,159 @@ function OrderFlow() {
         : "Half day")
       : "";
     const estPagesMid = (est.low + est.high) / 2;
-    // Compute total for each batch member to derive the cost range
-    const batchTotals = batch.map(r => {
-      const rates = getCSRRates(r);
-      const liveAtt = liveAttendanceAt(rates.rateMultiplier);
-      const transcript = estPagesMid * rates.ratePerPage * turnaroundMult;
-      const subtotal = liveAtt + transcript;
-      const fee = subtotal * PRICING.platformFee;
-      return Math.round(subtotal + fee);
-    });
-    const rangeLow = Math.min(...batchTotals);
-    const rangeHigh = Math.max(...batchTotals);
+    const transcriptCost = estPagesMid * rates.ratePerPage * turnaroundMult;
+    const subtotal = liveAttendance + transcriptCost;
+    const platformFee = subtotal * PRICING.platformFee;
+    const total = subtotal + platformFee;
+    const pct = Math.round((rates.rateMultiplier - 1.0) * 100);
+    const pctColor = pct > 0 ? "#92400E" : pct < 0 ? "#065F46" : "var(--text-muted, #94A3B8)";
+    const pctBg = pct > 0 ? "#FEF3C7" : pct < 0 ? "#D1FAE5" : "var(--bg-muted, #F1F5F9)";
     const isRush = effectiveTurnaround === "rush";
-    const responseWindow = isRush ? "2 hours" : effectiveTurnaround === "standard" ? "12 hours" : "24 hours";
+    const vetoWindowLabel = isRush ? "1 hour" : "4 hours";
+    const vetoesLeft = maxVetoes - vetoCount;
+    const canVeto = vetoCount < maxVetoes;
+    const vetoReasonValid = vetoForm.reason && (vetoForm.reason !== "other" || vetoForm.otherText.trim().length > 0);
 
     return (
       <div>
         <nav className="app-nav"><div className="container"><div className="app-nav-inner">
           <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
-          <button className="btn btn-secondary btn-sm" onClick={() => setMatchState("editing")}>← Back to order</button>
+          <div />
         </div></div></nav>
-        <div className="page page-enter"><div className="container" style={{maxWidth: 760, margin: "0 auto", padding: "32px 24px 80px"}}>
+        <div className="page page-enter"><div className="container" style={{maxWidth: 720, margin: "0 auto", padding: "32px 24px 80px"}}>
           <div style={{textAlign: "center", marginBottom: 28}}>
             <div style={{display: "inline-flex", alignItems: "center", gap: 10, padding: "8px 14px", background: "#D1FAE5", border: "1px solid #86EFAC", borderRadius: 999, marginBottom: 14, fontSize: 12, fontWeight: 700, color: "#065F46", letterSpacing: "0.05em", textTransform: "uppercase"}}>
-              <Icon name="checkCircle" size={14} color="#059669" /> Order received · qualified reporters identified
+              <Icon name="checkCircle" size={14} color="#059669" /> {reporter.name.split(" ")[0]} accepted your order
             </div>
-            <h1 style={{fontSize: 30, fontWeight: 800, color: "var(--text, #0F172A)", marginBottom: 6, lineHeight: 1.2}}>Here are 3 reporters qualified for your job.</h1>
+            <h1 style={{fontSize: 30, fontWeight: 800, color: "var(--text, #0F172A)", marginBottom: 6, lineHeight: 1.2}}>You have {vetoWindowLabel} to confirm or veto this match.</h1>
             <p style={{fontSize: 15, color: "var(--text-secondary, #64748B)", maxWidth: 580, margin: "0 auto", lineHeight: 1.55}}>
-              Your estimated total is <strong style={{color: "var(--text, #0F172A)"}}>${rangeLow.toLocaleString()}–${rangeHigh.toLocaleString()}</strong> depending on which reporter accepts. Confirm below to send invitations to all three at once. The first to accept gets the job.
+              {reporter.name} has been provisionally assigned to your case. Review their profile and the cost below. If you do nothing, the match auto-confirms when the window closes.
             </p>
           </div>
 
-          {/* Batch of 3 CSR cards */}
-          <div style={{display: "flex", flexDirection: "column", gap: 10, marginBottom: 18}}>
-            {batch.map((reporter, i) => {
-              const rates = getCSRRates(reporter);
-              const liveAtt = liveAttendanceAt(rates.rateMultiplier);
-              const transcript = estPagesMid * rates.ratePerPage * turnaroundMult;
-              const total = Math.round((liveAtt + transcript) * (1 + PRICING.platformFee));
-              const pct = Math.round((rates.rateMultiplier - 1.0) * 100);
-              const pctColor = pct > 0 ? "#92400E" : pct < 0 ? "#065F46" : "var(--text-muted, #94A3B8)";
-              const pctBg = pct > 0 ? "#FEF3C7" : pct < 0 ? "#D1FAE5" : "var(--bg-muted, #F1F5F9)";
-              return (
-                <div key={reporter.id} style={{padding: 18, background: "var(--bg)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 14}}>
-                  <div style={{display: "flex", gap: 14, alignItems: "flex-start", flexWrap: "wrap"}}>
-                    <div style={{width: 48, height: 48, borderRadius: "50%", background: "var(--ink, #0F172A)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontWeight: 400, fontSize: 19, flexShrink: 0}}>{reporter.initials}</div>
-                    <div style={{flex: 1, minWidth: 200}}>
-                      <div style={{display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap"}}>
-                        <span style={{fontSize: 17, fontWeight: 700, color: "var(--text, #0F172A)"}}>{reporter.name}</span>
-                        <span style={{fontSize: 10, color: "var(--text-muted, #94A3B8)", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.1em", textTransform: "uppercase"}}>CSR #{reporter.csrNumber}</span>
-                      </div>
-                      <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)", marginTop: 2}}>
-                        <Icon name="star" size={11} color="#D97706" /> {reporter.rating} ({reporter.reviewCount}) · {reporter.stats.onTimeRate}% on-time · {reporter.stats.jobsCompleted} jobs · {reporter.city}
-                      </div>
-                      <div style={{display: "flex", gap: 5, marginTop: 6, flexWrap: "wrap"}}>
-                        {reporter.certifications.slice(0, 3).map(c => <span key={c} style={{fontSize: 9, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.08em", fontWeight: 600, background: "#DBEAFE", color: "#1E40AF", padding: "2px 7px", borderRadius: 999}}>{c}</span>)}
-                        {reporter.specialties.slice(0, 2).map(s => <span key={s} style={{fontSize: 10, color: "var(--text-muted, #94A3B8)", background: "var(--bg-muted, #F1F5F9)", padding: "2px 8px", borderRadius: 999}}>{s}</span>)}
-                      </div>
-                    </div>
-                    <div style={{textAlign: "right", flexShrink: 0}}>
-                      <div style={{fontSize: 18, fontWeight: 800, color: "var(--text, #0F172A)", lineHeight: 1}}>${total.toLocaleString()}</div>
-                      <div style={{fontSize: 10, color: "var(--text-muted, #94A3B8)", marginTop: 4}}>est. total at their rate</div>
-                      <span style={{display: "inline-block", marginTop: 6, fontSize: 9, padding: "2px 7px", borderRadius: 999, background: pctBg, color: pctColor, fontWeight: 700, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.06em"}}>{pct === 0 ? "BASELINE" : (pct > 0 ? "+" : "") + pct + "%"}</span>
-                    </div>
-                  </div>
-                  <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 12, paddingTop: 10, borderTop: "1px solid var(--border-light, #F1F5F9)", fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>
-                    <span>${rates.ratePerPage.toFixed(2)}/pg{form.type === "live" ? ` · ${attendanceLabel} $${liveAtt.toLocaleString()}` : ""}</span>
-                    <a href={`#/reporters/${reporter.id}`} target="_blank" rel="noopener noreferrer" style={{color: "var(--brand, #2563EB)", textDecoration: "none", fontSize: 12, fontWeight: 500}} onClick={e => e.stopPropagation()}>View profile <Icon name="externalLink" size={10} /></a>
-                  </div>
+          {/* Accepting CSR card */}
+          <div style={{padding: 24, background: "var(--bg)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, marginBottom: 16}}>
+            <div style={{display: "flex", gap: 18, alignItems: "flex-start", flexWrap: "wrap"}}>
+              <div style={{width: 64, height: 64, borderRadius: "50%", background: "var(--ink, #0F172A)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontWeight: 400, fontSize: 24, flexShrink: 0, letterSpacing: "0.02em"}}>{reporter.initials}</div>
+              <div style={{flex: 1, minWidth: 220}}>
+                <div style={{display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap"}}>
+                  <span style={{fontSize: 20, fontWeight: 700, color: "var(--text, #0F172A)"}}>{reporter.name}</span>
+                  <span style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.12em", textTransform: "uppercase"}}>CSR #{reporter.csrNumber}</span>
                 </div>
-              );
-            })}
+                <div style={{fontSize: 13, color: "var(--text-secondary, #64748B)", marginTop: 4}}>
+                  <Icon name="star" size={12} color="#D97706" /> {reporter.rating} ({reporter.reviewCount} reviews) · {reporter.stats.onTimeRate}% on-time · {reporter.stats.jobsCompleted} jobs · {reporter.city}
+                </div>
+                <div style={{display: "flex", gap: 6, marginTop: 10, flexWrap: "wrap"}}>
+                  {reporter.certifications.map(c => <span key={c} style={{fontSize: 10, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.1em", fontWeight: 600, background: "#DBEAFE", color: "#1E40AF", padding: "3px 8px", borderRadius: 999}}>{c}</span>)}
+                  {reporter.specialties.slice(0, 3).map(s => <span key={s} style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", background: "var(--bg-muted, #F1F5F9)", padding: "3px 10px", borderRadius: 999}}>{s}</span>)}
+                </div>
+              </div>
+              <a href={`#/reporters/${reporter.id}`} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" style={{whiteSpace: "nowrap"}} onClick={e => e.stopPropagation()}>View full profile <Icon name="externalLink" size={12} /></a>
+            </div>
           </div>
 
-          {/* Confirm action */}
-          <div style={{padding: 20, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 14, marginBottom: 14}}>
-            <button className="btn btn-primary" style={{width: "100%", justifyContent: "center"}} onClick={handleConfirmBatch}>
-              Confirm and send invitations <Icon name="arrowRight" size={16} color="#fff" />
-            </button>
-            <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginTop: 12, lineHeight: 1.5, textAlign: "center", margin: "12px 0 0"}}>
-              All three reporters get the invite at the same time. They have <strong style={{color: "var(--text-secondary, #64748B)"}}>{responseWindow}</strong> to respond ({tierLabel(effectiveTurnaround)} turnaround). First to accept gets the job; we'll notify you the moment it's claimed.
+          {/* Itemized cost */}
+          <div style={{padding: 24, background: "var(--bg)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, marginBottom: 16}}>
+            <div style={{display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 14, flexWrap: "wrap", gap: 10}}>
+              <h3 style={{margin: 0, fontSize: 14, fontWeight: 700, color: "var(--text, #0F172A)", textTransform: "uppercase", letterSpacing: "0.06em"}}>Cost at {reporter.name.split(" ")[0]}'s rate</h3>
+              <span style={{fontSize: 11, padding: "4px 10px", borderRadius: 999, background: pctBg, color: pctColor, fontWeight: 700, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.06em"}}>{pct === 0 ? "AT BASELINE" : (pct > 0 ? "+" : "") + pct + "% FROM BASELINE"}</span>
+            </div>
+            {form.type === "live" && (
+              <div style={{display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)", fontSize: 14}}>
+                <span style={{color: "var(--text-secondary, #64748B)"}}>{attendanceLabel} attendance fee</span>
+                <strong>${liveAttendance.toLocaleString()}</strong>
+              </div>
+            )}
+            <div style={{display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)", fontSize: 14}}>
+              <span style={{color: "var(--text-secondary, #64748B)"}}>Transcript ({est.low}–{est.high} pages × ${rates.ratePerPage.toFixed(2)}/pg)</span>
+              <strong>${transcriptCost.toFixed(2)}</strong>
+            </div>
+            {turnaroundMult !== 1.0 && (
+              <div style={{display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)", fontSize: 14}}>
+                <span style={{color: "var(--text-secondary, #64748B)"}}>{tierLabel(effectiveTurnaround)} turnaround ({turnaroundMult > 1 ? "+" : ""}{((turnaroundMult - 1) * 100).toFixed(0)}%)</span>
+                <strong style={{color: turnaroundMult > 1 ? "#92400E" : "#065F46"}}>{turnaroundMult > 1 ? "+" : "−"}${Math.abs(transcriptCost - (estPagesMid * rates.ratePerPage)).toFixed(2)}</strong>
+              </div>
+            )}
+            <div style={{display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)", fontSize: 14}}>
+              <span style={{color: "var(--text-secondary, #64748B)"}}>Platform fee (12%)</span>
+              <strong>${platformFee.toFixed(2)}</strong>
+            </div>
+            <div style={{display: "flex", justifyContent: "space-between", padding: "16px 0 4px", fontSize: 18, fontWeight: 800, color: "var(--text, #0F172A)"}}>
+              <span>Estimated total</span>
+              <span>${total.toFixed(2)}</span>
+            </div>
+            <p style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", marginTop: 10, lineHeight: 1.5}}>
+              Final invoice is calculated from the certified page count delivered with the transcript, not this estimate. {reporter.name.split(" ")[0]} {pct === 0 ? "is at the platform baseline" : `is ${pct > 0 ? "+" : ""}${pct}% from the platform baseline`}.
             </p>
+          </div>
+
+          {/* Action buttons */}
+          <div style={{padding: 24, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, marginBottom: 14}}>
+            <div style={{display: "flex", gap: 12, flexWrap: "wrap"}}>
+              <button className="btn btn-primary" style={{flex: "1 1 240px"}} onClick={handleConfirmMatch}>
+                Confirm match · lock in {reporter.name.split(" ")[0]} <Icon name="arrowRight" size={16} color="#fff" />
+              </button>
+              {canVeto ? (
+                <button className="btn btn-secondary" style={{flex: "1 1 180px"}} onClick={openVetoModal}>
+                  Veto this match
+                </button>
+              ) : (
+                <button className="btn btn-secondary" style={{flex: "1 1 180px"}} disabled={true} title="You've used your 3-veto budget for this order. The next accepting reporter will be auto-assigned.">
+                  Veto used up – next match auto-confirms
+                </button>
+              )}
+            </div>
+            <div style={{display: "flex", alignItems: "center", gap: 8, marginTop: 14, fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>
+              <Icon name="clock" size={12} />
+              <span>Auto-confirms in <strong style={{color: "var(--text-secondary, #64748B)"}}>{vetoWindowLabel}</strong>{vetoCount > 0 && <> · You've vetoed {vetoCount} reporter{vetoCount === 1 ? "" : "s"} so far ({vetoesLeft} {vetoesLeft === 1 ? "veto" : "vetoes"} remaining{vetoCount === 2 ? " – this is your last one" : ""})</>}.</span>
+            </div>
           </div>
 
           <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", textAlign: "center", lineHeight: 1.6, maxWidth: 580, margin: "0 auto"}}>
-            Your card is charged only after a reporter accepts. If none of these three accept, we'll automatically widen the search to the next batch of qualified reporters.
+            If you veto, {reporter.name.split(" ")[0]} will be told you chose a different reporter for this case, and we'll resume matching with other qualified reporters. Your card is only charged when a match is confirmed.
           </p>
         </div></div>
+
+        {/* Veto reason modal */}
+        {showVetoModal && (
+          <div className="modal-overlay" onClick={() => setShowVetoModal(false)}>
+            <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 520, padding: 28}}>
+              <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 8}}>Why are you vetoing this match?</h3>
+              <p style={{fontSize: 13, color: "var(--text-secondary, #64748B)", marginBottom: 18, lineHeight: 1.5}}>
+                {reporter.name} will be told the attorney chose a different reporter. The reason helps us improve future matches and isn't shared with the reporter.
+              </p>
+              <div style={{display: "flex", flexDirection: "column", gap: 10, marginBottom: 18}}>
+                {[
+                  ["price", "Price is too high"],
+                  ["specialty", "Specialty / qualification mismatch"],
+                  ["scheduling", "Scheduling concern"],
+                  ["prior", "Prior bad experience with this reporter"],
+                  ["other", "Other"],
+                ].map(([val, label]) => (
+                  <label key={val} style={{display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", border: "1px solid " + (vetoForm.reason === val ? "var(--brand, #2563EB)" : "var(--border, #E2E8F0)"), borderRadius: 10, background: vetoForm.reason === val ? "#EFF6FF" : "var(--bg)", cursor: "pointer", fontSize: 14, color: "var(--text, #0F172A)"}}>
+                    <input type="radio" name="vetoReason" value={val} checked={vetoForm.reason === val} onChange={e => setVetoForm(f => ({...f, reason: e.target.value}))} style={{accentColor: "#2563EB"}} />
+                    {label}
+                  </label>
+                ))}
+                {vetoForm.reason === "other" && (
+                  <textarea className="form-input" rows={3} placeholder="Tell us briefly..." value={vetoForm.otherText} onChange={e => setVetoForm(f => ({...f, otherText: e.target.value}))} style={{fontSize: 13, resize: "vertical", marginTop: 4}} maxLength={500} />
+                )}
+              </div>
+              <div style={{display: "flex", gap: 10, justifyContent: "flex-end"}}>
+                <button className="btn btn-secondary btn-sm" onClick={() => setShowVetoModal(false)}>Cancel</button>
+                <button className="btn btn-primary btn-sm" disabled={!vetoReasonValid} onClick={submitVeto} style={{opacity: vetoReasonValid ? 1 : 0.5, cursor: vetoReasonValid ? "pointer" : "not-allowed"}}>
+                  Submit veto · find another reporter
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
 
   if (submitted) {
-    const reporter = MOCK_REPORTERS[acceptingReporterIdx];
+    const reporter = MOCK_REPORTERS[proposingReporterIdx];
     return (
       <div>
         <nav className="app-nav"><div className="container"><div className="app-nav-inner">
@@ -4604,7 +4700,7 @@ function OrderFlow() {
                       <span>${(attendanceFee + est.lowCost * (1 + PRICING.platformFee)).toLocaleString()} – ${(attendanceFee + est.highCost * (1 + PRICING.platformFee)).toLocaleString()}</span>
                     </div>
                     <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
-                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Baseline transcript rate ${PRICING.ratePerPage.toFixed(2)}/page; reporters set their own rate (standard ±20% band, with some opting into a wider band that gets lower matching priority). After you submit, you'll see the 3 qualified reporters being considered + a cost range, then confirm to send invitations. First reporter to accept gets the job.
+                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Baseline transcript rate ${PRICING.ratePerPage.toFixed(2)}/page; reporters set their own rate (standard ±20% band, with some opting into a wider band that gets lower matching priority). After you submit, we silently invite qualified reporters in widening batches. The moment one accepts, we'll show you their profile + the exact cost. You have a window to confirm or veto with a reason – up to 3 vetoes per order before the next match auto-confirms.
                     </p>
                   </>;
                 })()}
@@ -10733,7 +10829,7 @@ function FaqPage() {
   const sections = [
     { title: "For attorneys", items: [
       { id: "a1", q: "How do I place a transcript order?", a: "Click \"Order a transcript\" from the homepage, choose live attendance or post-hearing transcription, enter your case details, set your delivery deadline, and submit. Your deadline determines the turnaround tier and price automatically. We'll match you with a qualified reporter, usually within hours." },
-      { id: "a2", q: "How does pricing work?", a: "Transcript pricing starts at $5.00 per page baseline. Each reporter sets their own rate – most are within a ±20% band of platform defaults (our standard matching band), and some opt into a wider ±50% band that gets lower priority in auto-matching. The exact rate depends on which reporter accepts the job. The platform fee is a flat 12% on top, regardless of the reporter. Your delivery deadline determines the turnaround tier: Rush (1-2 business days, 1.5x rate), Expedited (3-5 business days, baseline rate), or Standard (6+ business days, 15% savings). After you submit, we'll show you the 3 qualified reporters being considered for your job plus a cost range; once you confirm, they all get the invitation at the same time and the first to accept gets the job." },
+      { id: "a2", q: "How does pricing work?", a: "Transcript pricing starts at $5.00 per page baseline. Each reporter sets their own rate – most are within a ±20% band of platform defaults (our standard matching band), and some opt into a wider ±50% band that gets lower priority in auto-matching. The exact rate depends on which reporter accepts the job. The platform fee is a flat 12% on top, regardless of the reporter. Your delivery deadline determines the turnaround tier: Rush (1-2 business days, 1.5x rate), Expedited (3-5 business days, baseline rate), or Standard (6+ business days, 15% savings). After you submit an order, the system invites qualified reporters in widening batches (starting with your favorites, then small general-pool batches). The moment one accepts, we show you their profile + exact cost – you have 4 hours (1 hour for Rush) to confirm or veto with a reason. Up to 3 vetoes per order; after that the next match auto-confirms." },
       { id: "a3", q: "Can I split the cost with other parties?", a: "Yes. When placing an order, toggle \"Split cost with other parties\" and add co-paying attorneys by name and email. Each party receives a secure payment link. The job is only posted to reporters once all parties have paid – no chasing, no partial payments. Co-payers don't need a Dewey Sholes account." },
       { id: "a4", q: "What if I'm unhappy with a transcript?", a: "You can request corrections within 90 days of delivery. Specify the pages and describe the issue, and the reporter will be notified to upload a corrected version. No additional cost for corrections – the reporter's statutory rate covers delivering an accurate transcript." },
       { id: "a5", q: "How do I know if a reporter is any good?", a: "Every reporter has a quality rating (1-5 stars, rated by attorneys) and a timeliness score (auto-calculated from their delivery history). You can also read written feedback from other attorneys on the reporter's profile. Reporters with consistently high ratings appear first in search results." },
@@ -11715,7 +11811,7 @@ function PricingPage() {
             <div className="section-eyebrow" style={{color: "var(--ochre-deep)"}}>Pricing</div>
             <h2 className="section-title">Transparent rates, <em>no hidden line items.</em></h2>
             <p className="section-lede" style={{maxWidth: 820}}>
-              Transcript pricing starts at $5.00 per page baseline – reporters set their own rate (standard ±20% band of baseline, with an opt-in ±50% expanded band that gets lower priority in auto-matching). When you place an order, we identify 3 qualified reporters and show you the cost range before sending invitations; the first to accept gets the job. Live attendance rates set well below typical CSR agency fees. Court reporters keep what they earn, while firms pay a flat 12% platform fee for each job – because the platform automates the line items agencies bill as extras.
+              Transcript pricing starts at $5.00 per page baseline – reporters set their own rate (standard ±20% band of baseline, with an opt-in ±50% expanded band that gets lower priority in auto-matching). When you place an order, the cascade invites qualified reporters in widening batches; the moment one accepts, you see their profile + exact cost and have a window to confirm or veto. Live attendance rates set well below typical CSR agency fees. Court reporters keep what they earn, while firms pay a flat 12% platform fee for each job – because the platform automates the line items agencies bill as extras.
             </p>
           </div>
 
@@ -11749,7 +11845,7 @@ function PricingPage() {
                 <div className="pricing-approx">
                   <span className="tooltip-trigger" tabIndex="0">
                     Transcription pricing is approximate
-                    <span className="tooltip-content">Page rates shown are the platform baseline. Reporters set their own rate – most within ±20% of baseline (our standard matching band), some in an opt-in ±50% expanded band with lower matching priority. When you place an order, you'll see the 3 qualified reporters being considered and a cost range before invitations go out. Final invoice is calculated from the certified page count delivered with the transcript.</span>
+                    <span className="tooltip-content">Page rates shown are the platform baseline. Reporters set their own rate – most within ±20% of baseline (our standard matching band), some in an opt-in ±50% expanded band with lower matching priority. After you submit an order, you'll see the accepting reporter's exact rate when they accept – with a confirm/veto window before the match locks in. Final invoice is calculated from the certified page count delivered with the transcript.</span>
                   </span>
                 </div>
               </div>

@@ -276,128 +276,180 @@ The current band thresholds (±20% standard, ±50% expanded) and the magnitude o
 
 ---
 
-## Attorney match-preview UX (added 2026-05-14, revised 2026-05-14)
+## Attorney match-preview UX (added 2026-05-14, revised 2026-05-14 to v3)
 
 ### Why this exists
 
-The cascade (Phase 1 favorites → Phase 2 batches of 3 → Phase 3 acceleration) runs server-side and routes jobs to eligible CSRs. But the attorney still wants to know roughly what they'll pay before the cascade fires invitations on their behalf, especially since CSRs set their own rates within the hybrid band. The batch-preview screen is the gate between Submit and the cascade going live.
+The cascade runs server-side and routes jobs to eligible CSRs. But CSRs set their own rates within the hybrid band, so the attorney doesn't know what they'll actually pay until a specific CSR accepts. We give the attorney one decision moment: after the cascade returns an acceptance, the attorney sees the accepting CSR + actual cost and has a window to confirm or veto with a reason before the match locks in.
 
-This solves two problems at once:
-- **Rate transparency** – with the hybrid rate-band model, different CSRs charge different rates. The attorney sees the cost range across the batch they're about to invite, so the eventual final cost (whichever CSR accepts) isn't a surprise.
-- **Trust** – the attorney is never surprised by who shows up or what the bill looks like. They've already seen the candidate pool.
+This solves three problems:
+- **Concrete information at the decision point.** Attorney evaluates an actual CSR + actual rate, not a hypothetical batch of candidates.
+- **Low friction at submit.** Attorney just submits and walks away. The cascade runs invisibly; we ping them when there's news.
+- **Recovery option for bad matches.** If the accepting CSR is wrong for the job (specialty mismatch, price too high, prior bad experience), the attorney has structured recourse without slowing down the auto-match philosophy.
 
 ### Flow
 
-The flow combines the cascade with a single pre-cascade preview gate:
-
 1. **Attorney submits order** (Step 5 of the order flow).
-2. **Phase 1 favorites cascade fires immediately**, silently, in parallel. If the attorney has favorites, they all get invited at the same time. First favorite to accept wins. (Attorney has explicitly chosen favorites in advance, so no preview is needed – we trust the attorney's prior selection.)
-3. **If Phase 1 yields no acceptance** (or the attorney has no favorites), the system identifies a **Phase 2 batch of 3 qualified CSRs** (2 best-fit + 1 fairness slot per the cascade policy).
-4. **Batch-preview screen displays** the 3 CSRs with the estimated cost at each one's actual rate, plus the cost range across the batch. Attorney confirms.
-5. **Cascade Phase 2 fires** invitations to all 3 in parallel. CSRs have the Phase 2 response window (2h Rush / 12h Expedited / 24h Standard).
-6. **First CSR to accept wins.** Attorney is notified ("Sarah Chen accepted your order"). Card is charged.
-7. **No post-acceptance attorney veto.** The accepting CSR is the assigned reporter; if the attorney has issues, they go through standard dispute/support paths.
-8. **If the entire Phase 2 batch declines**, Phase 3a fires automatically with the next batch of 10 (no second preview gate – the attorney's earlier confirmation covers the cascade widening).
+2. **Cascade runs invisibly in the background**, no UI gate:
+   - Phase 1: All favorites in parallel (if the job doesn't require qualifications the favorite doesn't have). Favorites stay invited throughout the cascade – they can claim at any point.
+   - Phase 2: 2 CSRs from the general pool (smaller initial batch reduces over-commit risk). Response window: 2h Rush / 12h Expedited / 24h Standard.
+   - Phase 3: +5 more CSRs if Phase 2 doesn't yield acceptance.
+   - Phase 4: +10 more (existing Phase 3a).
+   - Phase 5: all-call (existing Phase 3b).
+3. **A CSR accepts.** Attorney is notified via push + email ("Sarah Chen accepted your order – review and confirm").
+4. **Attorney lands on the veto-window screen** showing:
+   - Accepting CSR profile (avatar, name, CSR#, rating, on-time, jobs, certs, specialties, View-profile link)
+   - Itemized cost at this CSR's actual rate (attendance + transcript + turnaround multiplier + 12% platform fee + total)
+   - Band-position pill (AT BASELINE / +X% / −X%)
+   - Veto window countdown
+   - Two buttons: **Confirm match · lock in [first name]** / **Veto this match**
+5. **If attorney confirms** (button click): match locks in immediately, card is charged, CSR is told "you're confirmed for [case]." Done.
+6. **If attorney does nothing**: match auto-confirms at the end of the window. Same downstream as #5.
+7. **If attorney vetoes**: a modal asks for a structured reason (radio: price too high / specialty mismatch / scheduling concern / prior bad experience / other-with-text). On submit:
+   - Vetoed CSR is told *"The attorney chose a different reporter for this case. Here are similar open jobs that might be a fit for you."*
+   - Cascade resumes from where it left off, with the vetoed CSR excluded.
+   - When the next CSR accepts, the veto-window screen opens again.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ Order received · qualified reporters identified          │
-│ Here are 3 reporters qualified for your job.             │
-│ Your estimated total is $1,540–$1,720 depending on       │
-│ which reporter accepts. Confirm below to send invites.   │
-├─────────────────────────────────────────────────────────┤
-│ MICHAEL TORRES · CSR #11247                              │
-│ ★ 4.7 (31) · 97% on-time · 156 jobs · Oakland           │
-│ [CSR] [Spanish] [Civil Lit]      $1,540  [BASELINE]     │
-│ $5.00/pg · Half day $1,050         View profile →       │
+│ ✓ Sarah accepted your order                              │
+│ You have 4 hours to confirm or veto this match.         │
+│ Sarah has been provisionally assigned to your case.     │
 ├─────────────────────────────────────────────────────────┤
 │ SARAH CHEN · CSR #14892                                  │
 │ ★ 4.9 (47) · 99% on-time · 234 jobs · San Francisco     │
-│ [CSR][RMR][CRR][Mandarin]        $1,617  [+5%]          │
-│ $5.25/pg · Half day $1,103         View profile →       │
+│ [CSR][RMR][CRR][Mandarin] [Civil Lit][Family Law]       │
+│                              [View full profile →]      │
 ├─────────────────────────────────────────────────────────┤
-│ LISA NAKAMURA · CSR #13561                               │
-│ ★ 4.8 (52) · 98% on-time · 289 jobs · San Mateo         │
-│ [CSR][RMR][Japanese]             $1,694  [+10%]         │
-│ $5.50/pg · Half day $1,155         View profile →       │
+│ Cost at Sarah's rate              [+5% FROM BASELINE]   │
+│ Half day attendance fee                       $1,103   │
+│ Transcript (40–60 pages × $5.25/pg)             $263   │
+│ Rush turnaround (+50%)                          +$131  │
+│ Platform fee (12%)                              +$180  │
+│ Estimated total                               $1,677   │
 ├─────────────────────────────────────────────────────────┤
-│ [ Confirm and send invitations →                       ] │
-│ All three reporters get the invite at the same time.    │
-│ They have 12 hours to respond. First to accept gets it. │
+│ [ Confirm · lock in Sarah ]   [ Veto this match ]      │
+│ ⏱ Auto-confirms in 4 hours · 0 vetoes used so far      │
 ├─────────────────────────────────────────────────────────┤
-│ Your card is charged only after a reporter accepts.     │
-│ If none of these three accept, we'll automatically      │
-│ widen the search to the next batch of qualified rprtrs. │
+│ If you veto, Sarah will be told you chose a different   │
+│ reporter and we'll resume matching. Your card is only   │
+│ charged when a match is confirmed.                       │
 └─────────────────────────────────────────────────────────┘
 ```
 
-### Why this design
+### Veto window timing
 
-- **No attorney shopping.** The attorney sees a batch the algorithm chose – they don't pick from a list, sort by rate, or filter by anything beyond what's already encoded in the cascade (jurisdiction, specialty, certs). This preserves the auto-match philosophy.
-- **No post-acceptance veto.** Once a CSR accepts, the job is theirs. We're not putting attorneys in the position of vetoing a CSR who already said yes – which would be demoralizing for the CSR and would force us to either notify the rejected CSR (bad UX) or hide the rejection (bad-faith design).
-- **No drip-feed of "you weren't picked" notifications.** Because invites only go out after the attorney confirms the batch, CSRs who were considered but not in the batch never see the order. CSRs in the batch who don't accept fast enough simply see the job get claimed by someone else (normal cascade behavior).
-- **Cost transparency without commitment.** The cost range is shown as a function of the actual batch's rates, not platform baseline. The attorney commits to the range, not to a specific CSR.
+| Turnaround | Veto window |
+|---|---|
+| Rush (1–2 biz days) | **1 hour** |
+| Standard / Expedited (3–5 biz days) | **4 hours** |
+| Trial day | **4 hours** |
 
-### Why favorites skip the preview
+Push notification reminders fire at 50% and 90% of the window. After the window expires, the match auto-confirms.
 
-Favorites are CSRs the attorney has *already chosen* in advance (in onboarding or via a prior order). The attorney has already seen their rates and committed to working with them. Adding a preview gate to favorites would create friction for the exact relationships the platform is trying to make easier. Phase 1 fires silently.
+### Veto reason taxonomy
 
-### What if the attorney doesn't like the proposed batch?
+Required when vetoing. Fixed options + a free-text fallback:
 
-They can hit "← Back to order" and revise the case details (e.g. add a specialty requirement, change the courthouse, adjust the deadline). The system will assemble a new batch the next time they submit.
+| Reason | What it tells us |
+|---|---|
+| **Price is too high** | Attorney is rate-sensitive; CSR's band position may be too high for typical matching |
+| **Specialty / qualification mismatch** | Cascade soft-preferences may need tuning |
+| **Scheduling concern** | CSR availability data may be stale or the order timing is tight |
+| **Prior bad experience with this reporter** | Should be a one-time "never match me with X" flag – we should ask if the attorney wants to permanently exclude this CSR from future matching |
+| **Other** (free text required) | Catch-all; the free text is analyzed for emerging reason categories |
 
-We deliberately don't expose a "reject this batch, give me a different batch" button. That would slide back into shopping behavior and defeat the auto-match model.
+The vetoed CSR is **not** told the reason. Only the platform team sees it (for analytics + matching-algorithm tuning).
+
+### Veto limit: 3 per order
+
+After the attorney has vetoed 3 CSRs on a single order, the next acceptance **auto-confirms with no veto window**. The Veto button is hidden / disabled and replaced with the explanation: *"Veto used up – next match auto-confirms."*
+
+Why a limit:
+- Prevents pathological browsing that defeats the auto-match model.
+- Protects CSR cold-start: a single attorney can't keep vetoing in a way that exhausts the pool.
+- Three is enough for genuine quality-control rejections (specialty mismatch, geography mismatch, prior bad experience) without becoming a directory shopping experience.
+
+If the attorney genuinely has issues with the eventual 4th match, they can contact support.
+
+**Documented future option** (proposed by Aud 2026-05-14 then deferred): after 3 vetoes, surface a "browse all profiles" affordance that lets the attorney pick a specific CSR and invite only them. This requires search/filter infrastructure we don't have yet at V1; revisit when the reporter directory has real search.
+
+### What happens to the accepting CSR during the veto window
+
+The CSR is told **"You've been provisionally accepted for [case]. The attorney has [time] to confirm. We'll let you know the moment it's locked in or if they choose another reporter."**
+
+Honest framing – they don't get a fake "you've got the job!" celebration and then a rug-pull. They know it's not final yet but they have a reasonable expectation.
+
+If a CSR is provisionally accepted and decides to withdraw (e.g. they took another job that came in faster), they can; the cascade resumes without an attorney veto needing to happen.
+
+### Why we accept the "rejected CSR is told" cost
+
+The earlier v2 design (batch preview, no post-acceptance veto) had the property that rejected CSRs were never told. We're giving that up in v3, deliberately:
+
+- Veto reason data is genuinely valuable. The structured taxonomy + free-text gives us a feedback loop on matching-algorithm quality, CSR rate-band positioning, and case-type specialization gaps. v2 had no equivalent signal.
+- The cost is softened with thoughtful framing ("here are similar jobs that might be a fit") instead of a bare "you weren't picked" notification.
+- The attorney's recourse is concrete and time-bounded. v2 forced attorneys to commit to a hypothetical batch; v3 lets them react to a real proposal.
+- For high-value cases (specialized terminology, sealed proceedings, expert witnesses), v3 gives attorneys a real way out without rebuilding the order. v2 didn't.
 
 ### Real-build implementation notes
 
-- **Batch assembly:** Production code assembles the Phase 2 batch using the existing cascade ranking (hard filters → soft preferences → fairness slot). In the prototype, the batch is hardcoded to indices [1, 0, 2] of `MOCK_REPORTERS` (Michael / Sarah / Lisa) to span the standard rate band for demo purposes.
-- **Confirm side effect:** On confirm, real code fires invites to all 3 batch members in parallel via the notification system (push + email + SMS per CSR preferences). In the prototype, `handleConfirmBatch` deterministically picks `batchReporterIndices[1]` (Sarah) as the accepting CSR.
-- **No invitations before confirm.** Until the attorney clicks Confirm, no CSR notification fires. This is the "rejected CSRs never told" property — strictly speaking, only the CSRs in the batch will ever see the order, and only after the attorney signs off on the batch.
+- **Cascade runs server-side** when the order is submitted. No client polling – the server pings the attorney via push + email when a CSR accepts.
+- **Veto-window state** persists on the order record (`order.state = "awaiting_veto"`, `order.provisionally_accepted_csr_id`, `order.veto_window_expires_at`). If attorney closes the browser, the state is recoverable.
+- **Veto reasons** stored in `order.vetoes` array with reason + timestamp + vetoed CSR ID. Available for analytics and matching tuning.
+- **Notification sequence**:
+  1. CSR accepts → push to CSR ("provisional acceptance") + push/email to attorney ("[CSR] accepted, review & confirm")
+  2. Attorney confirms or window expires → push/email to CSR ("you're confirmed for [case]")
+  3. Attorney vetoes → push/email to CSR ("the attorney chose a different reporter") + cascade resumes
+- **Prototype:** `proposingReporterIdx` starts at 0 (Sarah Chen) on submit. `submitVeto` cycles to next index. `vetoCount` increments. At `vetoCount === maxVetoes` (3), the next proposal auto-confirms in ~600ms via setTimeout.
 
 ### Open questions
 
-- **Should the second cascade widening (Phase 3a, batch of 10) trigger a second preview gate?** Current answer: no – the attorney committed to the cascade when they confirmed the first batch. A second preview gate would be friction without value.
-- **What happens if the attorney closes their browser before confirming the batch?** The order sits in "awaiting batch confirmation" state on their dashboard. Reminder emails at 1 hour and 24 hours. After 72 hours of inactivity, the order auto-cancels and they have to resubmit.
-- **Should the attorney see a "this would cost X via an agency" comparison in the batch preview?** Possibly post-launch. Adds friction at first, but reinforces the value-prop at the moment of commitment.
+- **What happens if the attorney closes their browser during the veto window?** Order state persists server-side; veto window keeps counting. Push and email reminders fire at 50% and 90% of the window. If the window expires with no action, match auto-confirms (same as if the attorney clicked Confirm).
+- **Should the attorney see a "this would cost X via an agency" comparison on the veto-window screen?** Possibly post-launch. Adds context to the rate, especially for high-band CSRs, but adds visual clutter.
+- **Should "Prior bad experience with this reporter" automatically flag the CSR as a do-not-match for that firm going forward?** Likely yes – we should add a follow-up checkbox on that specific veto reason: *"Don't match me with this reporter again."* Real-build feature; not in the prototype.
+- **Should the vetoed CSR be told the reason category** (not the free text)? Currently no – only the platform sees reasons, to avoid sharpening CSR-vs-attorney friction. Revisit if CSRs start asking us *"why am I being skipped?"*
 
 ### Planned UX refinement: surface the "why" for above-baseline rates
 
 **Status:** Planned for V2, dependent on attorney research signal.
 
-When a CSR in the batch is meaningfully above baseline (e.g. +15% or +20%), the current UI just shows the percentage badge ("+15% FROM BASELINE"). That tells the attorney *what* but not *why* – which can read as "this reporter is charging extra for no reason I can see."
+When the accepting CSR sits meaningfully above baseline (e.g. +15% or +20%), the current UI just shows the percentage badge ("+15% FROM BASELINE"). That tells the attorney *what* but not *why* – which can read as "this reporter is charging extra for no reason I can see," increasing the veto rate without good cause.
 
-Aud (2026-05-14): *"I just wonder if there are edge cases – like some kind of specialized case – where an attorney would want to review profiles in advance. But I think when we show them the estimated fee range of the 3 we're going to invite to the job, we can specify (if they're particularly above baseline) the justification – specialties, certs, etc."*
+Aud (2026-05-14): *"when we show them the estimated fee range of the 3 we're going to invite to the job, we can specify (if they're particularly above baseline) the justification – specialties, certs, etc."*
 
-Proposed design: when a CSR in the batch sits above some threshold (TBD – probably +10% or +15%), surface 1-2 bullet justifications inline:
+Adapted for v3 (we show one accepting CSR, not a batch of 3): when the accepting CSR sits above some threshold (TBD – probably +10% or +15%), surface 1-2 bullet justifications inline on the veto-window screen:
 
 ```
-Lisa Nakamura · +10% from baseline
+Sarah Chen · +15% from baseline
   • Specialty match: Probate / Estate (your case type)
-  • RPR + RMR certified (the other 2 are CSR-only)
+  • RPR + RMR certified (most peers are CSR-only)
   • 23 prior probate hearings completed
-$1,694 est. total
+$1,617 est. total
 ```
 
-This addresses the rate-band model's biggest UX risk: that attorneys see "+15%" and reject the batch without understanding the rationale.
+This addresses the rate-band model's biggest UX risk: that attorneys see "+15%" and veto without understanding the rationale.
 
 **Validation:** Q15d in the attorney survey + Open Question G in the user-testing guide probe what attorneys actually want to see. Don't build the refinement until we have signal. If attorneys say "I don't need a justification – if they're qualified, the rate is what it is," then the current pill-only design is sufficient.
 
 ### Attorney-side validation needed
 
-The batch-preview model assumes attorneys are OK with not pre-approving individual reporters. That's based on Rosie's read of the market ("outside of firm favorites, they don't really care who does the job as long as someone reliable will do it") but it's not yet validated with broader attorney input.
+The v3 flow assumes attorneys are OK with the post-acceptance veto pattern (cascade fires invisibly, react when there's a match). That's based on Rosie's read of the market ("outside of firm favorites, they don't really care who does the job as long as someone reliable will do it") but isn't yet validated with broader attorney input.
 
 **Questions we need to answer before scaling beyond the founding cohort:**
 
-1. **Is one-click batch confirmation the right friction level**, or do attorneys want per-CSR review on every order?
-2. **Are there specific case types** where attorneys want to pre-review profiles (high-stakes trial, sealed proceedings, expert-witness depos, multi-day matters, VIP parties)?
-3. **If we offered per-CSR review as an option**, how often would attorneys actually use it? Every order? 1 in 5? Only for unusual cases?
-4. **What contextual information about above-baseline reporters** helps attorneys feel OK with the rate?
+1. **Is the post-acceptance veto pattern the right level of involvement**, or do attorneys want to see and approve candidates *before* invitations go out?
+2. **Are there specific case types** where attorneys want pre-cascade review (high-stakes trial, sealed proceedings, expert-witness depos, multi-day matters, VIP parties)?
+3. **How often do attorneys actually veto in practice?** Behavioral data post-launch will tell us if the 3-veto limit is too tight, too loose, or about right.
+4. **What contextual information about above-baseline reporters** helps attorneys feel OK with the rate (avoiding unnecessary vetoes)?
+5. **What veto-reason distribution emerges?** If "price too high" is the dominant category, our rate-band positioning is wrong. If "specialty mismatch" dominates, our soft-preferences matching is undertuned.
 
 These are captured for survey + interview research in:
 - `research/attorney_survey_questions.md – Section 3a: How the matching flow should work` (Q15a–Q15d)
 - `research/user_testing_legal_assistant_guide.md – Reactions to Dewey Sholes` (Open questions D–H)
 
-Post-launch we should also instrument the batch-preview screen to track: how long attorneys spend on it, how often they hit Back-to-edit, how often they abandon without confirming. Behavioral data + survey data together should tell us whether the friction level is right.
+Post-launch we should instrument the veto-window screen to track: time-to-confirm distribution, veto rate by case type, veto reason distribution, distribution of how many CSRs were proposed before lock-in. Behavioral data + survey data together tell us whether the friction level is right.
+
+**Future option deferred at V1:** Aud floated the idea (2026-05-14) of, after 3 vetoes, surfacing a "browse all profiles" affordance so the attorney can pick a specific CSR and invite only them. Sound design, but requires reporter directory search/filter infrastructure we don't have yet. Revisit when the reporter directory has real search.
 
 ---
 
