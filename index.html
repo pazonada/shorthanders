@@ -8622,8 +8622,8 @@ function AttorneyOnboarding() {
             <div className="ps-row"><span className="ps-label">Favorite reporters</span><span className="ps-value">{form.favoriteReporters.length > 0 ? form.favoriteReporters.map(csrNum => { const p = (typeof CSR_PROFILES !== "undefined" ? CSR_PROFILES : []).find(x => x.csrNumber === csrNum); return p ? p.name : "CSR #" + csrNum; }).join(", ") : "None yet"}</span></div>
           </div>
           <div className="promo-callout">
-            <strong>Your first order ships free of platform fees!</strong>
-            <span>Code ATTORNEY2026 has been applied to your account</span>
+            <strong>Welcome aboard, founding firm.</strong>
+            <span>Founder-led onboarding, direct line to the team, first dibs on new features.</span>
           </div>
           <button className="btn btn-primary" style={{width: "100%", justifyContent: "center", fontSize: 16}} onClick={() => navigate("#/dashboard")}>Go to dashboard <Icon name="arrowRight" size={16} /></button>
         </div>

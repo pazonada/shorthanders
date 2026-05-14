@@ -1,6 +1,6 @@
 # Dewey Sholes – User flows map
 
-**Last updated:** 2026-04-11
+**Last updated:** 2026-05-14
 **Status:** Prototype audit – what exists vs. what's needed for real build
 
 ---
@@ -42,7 +42,9 @@ Invite colleagues
   v
 Success
   Verification pending, what happens next, profile summary,
-  promo code PIONEER2026, PWA install instructions
+  founding-reporter welcome callout (no promo code – non-pricing perks
+    per governance-and-process/founding_member_program.md),
+  PWA install instructions
   |
   v
 [Reporter Dashboard]
@@ -83,6 +85,46 @@ Sidebar always shows:
   - Referral card (tiered rewards)
 ```
 
+### CSR rate-band settings – COMPLETE in prototype (added 2026-05-14)
+
+```
+Settings → Profile (CSR view) → Your rates panel
+  |
+  v
+Slider (default mode):
+  Range −20% to +20% of platform baseline
+  Green accent
+  Live preview tile shows actual $ values for per-page,
+    half-day, full-day, trial-day, travel-time
+  Position pill: "BASELINE" / "+5%" / "−10%" etc.
+  |
+  v
+[Checkbox: Expand to ±50% band]
+  When checked:
+    Slider range extends to −50% to +50%
+    Orange accent
+    Inline copy: "Heads up: rates outside ±20% are still allowed,
+      but you'll get fewer auto-match offers. The matching algorithm
+      prioritizes reporters within the standard band."
+    Position pill shifts to "OUTSIDE STANDARD" styling when multiplier
+      is outside ±20%
+  When unchecked while multiplier is outside ±20%:
+    Multiplier snaps back to nearest standard-band edge (0.80 or 1.20)
+  |
+  v
+Escape hatch:
+  "Need to set a rate outside ±50%? Email founders@deweysholes.com."
+  → manual server-side adjustment of rateMultiplier
+
+Status: slider works in prototype, state local to SettingsPage React
+  component. Real build needs to persist rateMultiplier and the
+  expandedBandOptIn flag to the CSR record; matching algorithm needs
+  to consult these for ranking penalty on expanded-band CSRs.
+```
+
+See `governance-and-process/rating_and_matching_policy.md – Hybrid
+rate-setting bands` for the policy describing this design.
+
 ### CSR flows: WHAT'S MISSING for real build
 
 ```
@@ -100,6 +142,14 @@ Sidebar always shows:
 !! Profile editing (post-onboarding)
    Update credentials, availability, courts, rates, bio, photo
    Status: profile completion nudge exists but no edit flow
+
+!! Matching-algorithm priority penalty for expanded-band CSRs
+   Per Hybrid rate-setting bands policy: CSRs in standard ±20% get
+   full ranking; CSRs who opted into expanded ±50% get a soft-preference
+   ranking penalty so they receive fewer auto-match offers.
+   Status: policy documented; algorithm logic not yet wired (the
+   prototype's auto-match just picks MOCK_REPORTERS[0] then cycles).
+   Same Phase 2 of the real build that wires the actual cascade.
 
 !! Payment setup / Stripe onboarding
    Real Stripe Connect identity verification, bank account linking
@@ -155,13 +205,14 @@ Welcome/pitch
   v
 Success
   Bar verification pending, what happens next, profile summary,
-  promo code ATTORNEY2026
+  founding-firm welcome callout (no promo code – non-pricing perks
+    per governance-and-process/founding_member_program.md)
   |
   v
 [Buyer Dashboard]
 ```
 
-### Order flow (5 steps) – COMPLETE in prototype
+### Order flow (5 steps + match preview) – COMPLETE in prototype
 
 ```
 [Step 1] Type selection
@@ -170,6 +221,9 @@ Success
   v                              v
 [Step 2] Case & hearing details
   Court, dept, case #, case name, case type
+  *Internal matter / client reference (optional, free text)*
+    → appears on invoice for firm-side AP reconciliation
+    → see governance-and-process/billing_and_payment_policy.md
   Live: date, time               Transcription: audio upload
   Duration, interpreter toggle
   |
@@ -180,19 +234,47 @@ Success
   v
 [Step 4] Turnaround & pricing
   Rush (24-48h, 1.5x) / Expedited (3-5d, 1x) / Standard (2+ wk, 0.85x)
-  Price estimate breakdown
+  Price estimate breakdown – uses platform baseline since CSR isn't
+    matched yet; footnote notes actual rate depends on matched CSR
   Fee waiver checkbox
   Cost split toggle → add co-payers (name, email, share %)
   |
   v
 [Step 5] Review & submit
-  Full summary, cost-split party list (if applicable)
-  Submit button
+  Full summary (incl. matter reference if filled), cost-split party
+    list (if applicable)
+  Submit button → handleSubmitOrder() (NOT setSubmitted(true) directly)
+  |
+  v
+[NEW: Match preview state]
+  Heading: "You've been matched with [first name]."
+  Matched CSR card: avatar, name, CSR #, rating + on-time + jobs +
+    city, certifications + specialty chips, View-full-profile link
+  Rate breakdown: attendance fee (if live) + transcript estimate at
+    THIS CSR's actual rate (not baseline) + turnaround multiplier +
+    12% platform fee + total. Pill in header marks CSR's band position
+    ("AT BASELINE" / "+10% FROM BASELINE" / "−5% FROM BASELINE").
+  Actions:
+    [Confirm and send to firstName] → handleConfirmMatch() → submitted state
+    [Request a different reporter] → handleRematch() → cycles to next CSR
+    After 3 rematches: button becomes disabled "No more rematches –
+      contact support"
+  Auto-confirm window: 30 min (Rush) / 4 hr (Standard). UX copy notes
+    this; actual setTimeout not yet wired in prototype.
+  Reassurance line: "Rejected reporters are never told. Invites only
+    go out after Confirm. Your card is charged only when you confirm."
+  Back-to-order escape: ← Back to order (returns to Step 5 review)
   |
   v
 Confirmation
-  Order #, what happens next (3 steps), dashboard link
+  "Order confirmed!" headline
+  Assigned reporter named in subhead (name + CSR #)
+  Order #, what-happens-next steps reference the named CSR throughout
+  Dashboard link / Back-to-home
 ```
+
+See `governance-and-process/rating_and_matching_policy.md – Attorney
+match-preview UX` for the policy describing this flow.
 
 ### Buyer dashboard – COMPLETE in prototype
 

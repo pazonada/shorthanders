@@ -276,6 +276,106 @@ The current band thresholds (±20% standard, ±50% expanded) and the magnitude o
 
 ---
 
+## Attorney match-preview UX (added 2026-05-14)
+
+### Why this exists
+
+The auto-match algorithm runs server-side and picks the best CSR for the job. But the attorney still wants to know **who** they're being matched with and **at what rate** before money changes hands and the CSR is committed. The match-preview screen is the gate between Submit and the order going live.
+
+This solves three problems at once:
+- **Rate transparency** – with the hybrid rate-band model, different CSRs charge different rates. Attorneys see exactly what they'll pay before they confirm.
+- **Quality control** – if the matched CSR isn't what the attorney expected (no medical-witness experience for a medical depo, wrong jurisdiction, etc.), they can request a rematch.
+- **Trust** – the attorney is never surprised by who shows up or what the bill looks like.
+
+### Flow
+
+After the attorney clicks Submit on Step 5 of the order flow, instead of going directly to the order-submitted success screen, they land on a match-preview screen:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ Order received · matching now                            │
+│ You've been matched with [first name].                   │
+│ [intro paragraph]                                        │
+├─────────────────────────────────────────────────────────┤
+│ MATCHED CSR CARD                                         │
+│ [avatar] [Name] [CSR #]                                  │
+│ ★ rating · on-time % · jobs · city                       │
+│ [certifications] [specialties]              [View profile→]│
+├─────────────────────────────────────────────────────────┤
+│ [First name]'s rates    [AT BASELINE / +X% / −X%]        │
+│ Attendance fee (Half day)             $1,050            │
+│ Transcript (40–60 pages × $5.25/pg)   $263              │
+│ Rush turnaround (+50%)                +$131             │
+│ Platform fee (12%)                    $174              │
+│ Estimated total                       $1,618            │
+│ [footnote: final invoice based on certified page count] │
+├─────────────────────────────────────────────────────────┤
+│ [ Confirm and send to FirstName ]  [ Request different ] │
+│ ⏱ Auto-confirms in 30 minutes (Rush) / 4 hours (Std)    │
+├─────────────────────────────────────────────────────────┤
+│ Rejected reporters are never told. Your card is charged │
+│ only when you confirm.                                   │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Confirm action
+
+`handleConfirmMatch()`:
+1. Flips `matchState` to "confirmed" and `submitted` to true.
+2. Charges the attorney's card (real build: Stripe payment intent capture).
+3. Sends the order invite to the matched CSR.
+4. Drops attorney on the order-submitted success screen, where the matched CSR is named by full name and CSR # in the subhead.
+
+Until Confirm, the CSR has not been notified of the order.
+
+### Rematch action
+
+`handleRematch()`:
+1. Increments rematch counter.
+2. Asks the matching algorithm for the next-best eligible CSR (in the prototype: cycles through MOCK_REPORTERS; in production: skips the previously-shown CSR and re-runs the cascade ranking, returning the next candidate).
+3. Renders the match-preview screen with the new CSR.
+
+**Limit: 3 rematches per order.** After 3 rejections, the rematch button is replaced with a disabled "No more rematches – contact support" affordance. The attorney can still confirm whoever's currently shown, or contact us to discuss alternatives.
+
+Why the limit:
+- Prevents pathological browsing that defeats the auto-match model.
+- Protects CSR cold-start: a single attorney can't reject 20 CSRs in a row to artificially skew matching toward established reporters.
+- Three is enough for genuine quality-control rejections (specialty mismatch, geography mismatch, prior bad experience) without becoming a directory shopping experience.
+
+### Rejected CSRs never see the order
+
+Critically, **rejected CSRs are not notified of the rejection**. The order invite is only sent to a CSR after the attorney clicks Confirm. CSRs who are shown in the match-preview but rejected via rematch simply never see the order existed.
+
+Reasons:
+- Avoids the demoralizing "you weren't selected" notification stream that could push CSRs off the platform.
+- Doesn't compound the cold-start problem (a newer CSR who gets shown-and-rejected three times in a week could reasonably conclude the platform isn't working for them).
+- Removes a feedback loop where CSRs change their rates or profile in response to invisible rejections.
+
+### Auto-confirm window
+
+If the attorney doesn't act, the order auto-confirms after a window:
+- **Rush turnaround**: 30 minutes
+- **Standard / Expedited turnaround**: 4 hours
+
+This prevents Rush jobs from sitting indefinitely if the attorney walks away from their screen.
+
+Implementation note (real build): the timer starts when the match-preview screen is first shown to the attorney. We'll send a push notification when 50% of the window has elapsed if the attorney hasn't acted, then a final reminder at 90%. The countdown is shown in the match-preview UI.
+
+In the prototype, the auto-confirm copy is rendered but no actual `setTimeout` fires.
+
+### Back-to-order escape hatch
+
+The match-preview nav bar has a "← Back to order" button (not the order-flow's Cancel) that returns the attorney to Step 5 review. Use case: attorney sees the matched CSR + rate and realizes they should bump the turnaround tier, add a co-payer, or change a case detail before locking in. Resetting matchState to "editing" preserves the form so they don't re-enter anything.
+
+### Open questions
+
+- **Should the matched CSR get a heads-up before the attorney confirms?** No – per the rejected-CSRs-never-see-the-order rule above. The CSR only sees the order after Confirm.
+- **What if the attorney closes their browser?** The order sits in "awaiting confirmation" state on their dashboard. Reminder emails at 50% and 90% of the auto-confirm window. After the window expires, auto-confirm fires.
+- **Does rematch reduce the eligible pool over time?** In a small launch cohort, yes – 3 rejections could exhaust the pool in some jurisdictions. The "no more rematches – contact support" affordance is the escape valve when this happens.
+- **Should the attorney see the projected savings vs. an agency for this specific CSR?** Possibly, post-launch. Adds friction at first, but reinforces the value-prop at the moment of commitment.
+
+---
+
 ## Matching algorithm (v2)
 
 ### Design principles
