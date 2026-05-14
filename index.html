@@ -2767,7 +2767,37 @@ const PRICING = {
   attendanceHalfDay: 1050,
   attendanceFullDay: 1650,
   attendanceTrialDay: 2310,
+  travelRatePerHour: 50,
+  // Per AB-5 §2778, CSRs set their own rate within ±20% of the platform default.
+  // V1 launches with this band exposed in the CSR settings UI. See
+  // governance-and-process/rating_and_matching_policy.md.
+  rateBandLow: 0.80,
+  rateBandHigh: 1.20,
 };
+
+// Compute the effective rates for a specific CSR. If no CSR is passed (or the
+// CSR hasn't set a multiplier yet), returns the platform baseline. Used by the
+// match preview, order summary, CSR profile pages, and the invoice line items
+// so every rate display stays consistent with what the CSR has actually set.
+function getCSRRates(reporter) {
+  const mult = (reporter && typeof reporter.rateMultiplier === "number") ? reporter.rateMultiplier : 1.0;
+  return {
+    rateMultiplier: mult,
+    ratePerPage: PRICING.ratePerPage * mult,
+    simultaneousCopy: PRICING.simultaneousCopy * mult,
+    separateCopy: PRICING.separateCopy * mult,
+    attendanceHalfDay: Math.round(PRICING.attendanceHalfDay * mult),
+    attendanceFullDay: Math.round(PRICING.attendanceFullDay * mult),
+    attendanceTrialDay: Math.round(PRICING.attendanceTrialDay * mult),
+    travelRatePerHour: Math.round(PRICING.travelRatePerHour * mult),
+  };
+}
+// Display helper: "+5%", "−10%", or "baseline" depending on multiplier.
+function rateBandLabel(mult) {
+  if (typeof mult !== "number" || mult === 1.0) return "Baseline";
+  const pct = Math.round((mult - 1.0) * 100);
+  return (pct > 0 ? "+" : "") + pct + "% from baseline";
+}
 
 // ─── Notifications Mock Data ─────────────────────────────────────
 const MOCK_NOTIFICATIONS = [
@@ -2807,6 +2837,7 @@ const MOCK_REPORTERS = [
   {
     id: "rep-1", name: "Sarah Chen", csrNumber: "14892", initials: "SC",
     rating: 4.9, reviewCount: 47, city: "San Francisco", courtAppointed: true,
+    rateMultiplier: 1.05,
     certifications: ["CSR", "RMR", "CRR"],
     specialties: ["Civil Litigation", "Family Law", "Probate"],
     languages: ["English", "Mandarin"],
@@ -2827,6 +2858,7 @@ const MOCK_REPORTERS = [
   {
     id: "rep-2", name: "Michael Torres", csrNumber: "11247", initials: "MT",
     rating: 4.7, reviewCount: 31, city: "Oakland",
+    rateMultiplier: 1.00,
     certifications: ["CSR"],
     specialties: ["Criminal", "Civil Litigation", "Personal Injury"],
     languages: ["English", "Spanish"],
@@ -2845,6 +2877,7 @@ const MOCK_REPORTERS = [
   {
     id: "rep-3", name: "Lisa Nakamura", csrNumber: "13561", initials: "LN",
     rating: 4.8, reviewCount: 52, city: "San Mateo",
+    rateMultiplier: 1.10,
     certifications: ["CSR", "RMR"],
     specialties: ["Family Law", "Probate", "Employment"],
     languages: ["English", "Japanese"],
@@ -2863,6 +2896,7 @@ const MOCK_REPORTERS = [
   {
     id: "rep-4", name: "Angela Ruiz", csrNumber: "12084", initials: "AR",
     rating: 4.6, reviewCount: 23, city: "San Jose",
+    rateMultiplier: 0.95,
     certifications: ["CSR"],
     specialties: ["Civil Litigation", "Real Estate", "Bankruptcy"],
     languages: ["English", "Spanish"],
@@ -2881,6 +2915,7 @@ const MOCK_REPORTERS = [
   {
     id: "rep-5", name: "David Okonkwo", csrNumber: "15230", initials: "DO",
     rating: 4.9, reviewCount: 38, city: "Walnut Creek",
+    rateMultiplier: 1.15,
     certifications: ["CSR", "RMR", "CRR"],
     specialties: ["Criminal", "Civil Litigation", "Immigration"],
     languages: ["English"],
@@ -2899,6 +2934,7 @@ const MOCK_REPORTERS = [
   {
     id: "rep-6", name: "Patricia Doyle", csrNumber: "10893", initials: "PD",
     rating: 4.5, reviewCount: 19, city: "Santa Rosa",
+    rateMultiplier: 0.90,
     certifications: ["CSR"],
     specialties: ["Family Law", "Personal Injury", "Civil Litigation"],
     languages: ["English"],
@@ -4409,7 +4445,7 @@ function OrderFlow() {
                       <span>${(attendanceFee + est.lowCost * (1 + PRICING.platformFee)).toLocaleString()} – ${(attendanceFee + est.highCost * (1 + PRICING.platformFee)).toLocaleString()}</span>
                     </div>
                     <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
-                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Transcript rate at launch: ${PRICING.ratePerPage.toFixed(2)}/page, the same for every reporter on the platform.
+                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Baseline transcript rate ${PRICING.ratePerPage.toFixed(2)}/page; reporters can set their own rate within a ±20% band, so the exact rate depends on who's matched to your job. You'll see your matched reporter's actual rates before the order is confirmed.
                     </p>
                   </>;
                 })()}
@@ -7110,6 +7146,7 @@ function SettingsPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState("");
   const [settingsRole, setSettingsRole] = useState("attorney"); // toggle for prototype demo
+  const [csrRateMultiplier, setCsrRateMultiplier] = useState(1.05); // CSR rate-band setting (default = Sarah Chen's mock value)
 
   const toggleNotif = (idx, channel) => {
     setNotifs(n => n.map((item, i) => i === idx ? {...item, [channel]: !item[channel]} : item));
@@ -7234,6 +7271,65 @@ function SettingsPage() {
                         ))}
                       </div>
                     </div>
+                  </div>
+                  <div className="settings-section">
+                    <h3><Icon name="dollarSign" size={14} /> Your rates</h3>
+                    <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 14, lineHeight: 1.6}}>
+                      Set your rate within ±20% of platform defaults. Your rates appear on your public profile and the order-flow match preview, so attorneys see exactly what they'll pay before they confirm. Per CA Labor Code §2778, you have the right to set or negotiate your own rates – this is how we expose that.
+                    </p>
+                    {(() => {
+                      const mult = csrRateMultiplier;
+                      const r = {
+                        ratePerPage: PRICING.ratePerPage * mult,
+                        attendanceHalfDay: Math.round(PRICING.attendanceHalfDay * mult),
+                        attendanceFullDay: Math.round(PRICING.attendanceFullDay * mult),
+                        attendanceTrialDay: Math.round(PRICING.attendanceTrialDay * mult),
+                        travelRatePerHour: Math.round(PRICING.travelRatePerHour * mult),
+                      };
+                      const pct = Math.round((mult - 1.0) * 100);
+                      const pctColor = pct > 0 ? "#92400E" : pct < 0 ? "#065F46" : "var(--text-muted, #94A3B8)";
+                      const pctBg = pct > 0 ? "#FEF3C7" : pct < 0 ? "#D1FAE5" : "var(--bg-muted, #F1F5F9)";
+                      return (
+                        <div>
+                          <div style={{display: "flex", alignItems: "center", gap: 16, marginBottom: 12, flexWrap: "wrap"}}>
+                            <span style={{fontSize: 12, fontWeight: 700, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em"}}>−20%</span>
+                            <input type="range" min="0.80" max="1.20" step="0.01" value={mult} onChange={e => setCsrRateMultiplier(parseFloat(e.target.value))} style={{flex: 1, minWidth: 200, accentColor: "#059669"}} />
+                            <span style={{fontSize: 12, fontWeight: 700, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em"}}>+20%</span>
+                            <span style={{fontSize: 11, padding: "4px 10px", borderRadius: 999, background: pctBg, color: pctColor, fontWeight: 700, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.06em"}}>{pct === 0 ? "BASELINE" : (pct > 0 ? "+" : "") + pct + "%"}</span>
+                          </div>
+                          <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, padding: 16, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10}}>
+                            <div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Per page (original)</div>
+                              <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.ratePerPage.toFixed(2)}</div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>baseline ${PRICING.ratePerPage.toFixed(2)}</div>
+                            </div>
+                            <div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Half-day live</div>
+                              <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.attendanceHalfDay.toLocaleString()}</div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>baseline ${PRICING.attendanceHalfDay.toLocaleString()}</div>
+                            </div>
+                            <div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Full-day live</div>
+                              <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.attendanceFullDay.toLocaleString()}</div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>baseline ${PRICING.attendanceFullDay.toLocaleString()}</div>
+                            </div>
+                            <div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Trial day</div>
+                              <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.attendanceTrialDay.toLocaleString()}</div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>baseline ${PRICING.attendanceTrialDay.toLocaleString()}</div>
+                            </div>
+                            <div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Travel time</div>
+                              <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.travelRatePerHour}/hr</div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>baseline ${PRICING.travelRatePerHour}/hr</div>
+                            </div>
+                          </div>
+                          <p style={{fontSize: 12, color: "var(--text-muted, #64748B)", marginTop: 12, lineHeight: 1.5}}>
+                            The 12% platform fee attorneys pay is calculated on top of your rate – it never comes out of your earnings. Need to set a rate outside the ±20% band? Email founders@deweysholes.com.
+                          </p>
+                        </div>
+                      );
+                    })()}
                   </div>
                   <div className="settings-section">
                     <h3><Icon name="mapPin" size={14} /> Courts served</h3>
@@ -10036,6 +10132,8 @@ function ReporterDirectory() {
   if (sortBy === "rating") filtered.sort((a, b) => b.rating - a.rating);
   else if (sortBy === "jobs") filtered.sort((a, b) => b.stats.jobsCompleted - a.stats.jobsCompleted);
   else if (sortBy === "turnaround") filtered.sort((a, b) => parseFloat(a.stats.avgTurnaround) - parseFloat(b.stats.avgTurnaround));
+  else if (sortBy === "rateLow") filtered.sort((a, b) => (a.rateMultiplier || 1.0) - (b.rateMultiplier || 1.0));
+  else if (sortBy === "rateHigh") filtered.sort((a, b) => (b.rateMultiplier || 1.0) - (a.rateMultiplier || 1.0));
 
   const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -10070,6 +10168,8 @@ function ReporterDirectory() {
               <option value="rating">Highest rated</option>
               <option value="jobs">Most experienced</option>
               <option value="turnaround">Fastest turnaround</option>
+              <option value="rateLow">Lowest rates</option>
+              <option value="rateHigh">Highest rates</option>
             </select>
             <button className={"btn btn-sm" + (showFavOnly ? "" : "")} onClick={() => setShowFavOnly(f => !f)} style={{background: showFavOnly ? "#FEF3C7" : "#F1F5F9", color: showFavOnly ? "#92400E" : "#64748B", border: "1px solid " + (showFavOnly ? "#FDE68A" : "#E2E8F0"), whiteSpace: "nowrap"}}>
               <Icon name="star" size={14} /> {showFavOnly ? "Showing favorites" : "Favorites only"}
@@ -10124,6 +10224,19 @@ function ReporterDirectory() {
                     <div style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 28, color: "var(--brand)", lineHeight: 1}}>{r.stats.avgTurnaround}</div>
                     <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: "var(--dim)", textTransform: "uppercase", marginTop: 4}}>Turnaround</div>
                   </div>
+                  {(() => {
+                    const rates = getCSRRates(r);
+                    const pct = Math.round((rates.rateMultiplier - 1.0) * 100);
+                    const pctColor = pct > 0 ? "var(--ochre-deep)" : pct < 0 ? "var(--sage-deep)" : "var(--muted)";
+                    const pctLabel = pct === 0 ? "Baseline" : (pct > 0 ? "+" : "") + pct + "% baseline";
+                    return (
+                      <div style={{textAlign: "center"}}>
+                        <div style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 28, color: "var(--ink)", lineHeight: 1}}>${rates.ratePerPage.toFixed(2)}</div>
+                        <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: "var(--dim)", textTransform: "uppercase", marginTop: 4}}>per page</div>
+                        <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: "0.08em", color: pctColor, marginTop: 2}}>{pctLabel}</div>
+                      </div>
+                    );
+                  })()}
                 </div>
 
                 {/* Actions */}
@@ -10217,6 +10330,44 @@ function ReporterProfile({ reporterId }) {
             </div>
           ))}
         </div>
+
+        {/* Rate card */}
+        {(() => {
+          const rates = getCSRRates(reporter);
+          const pct = Math.round((rates.rateMultiplier - 1.0) * 100);
+          const pctColor = pct > 0 ? "var(--ochre-deep)" : pct < 0 ? "var(--sage-deep)" : "var(--muted)";
+          const pctBg = pct > 0 ? "var(--ochre-soft)" : pct < 0 ? "var(--sage-soft)" : "var(--bg-soft)";
+          const pctLabel = pct === 0 ? "At platform baseline" : `${pct > 0 ? "+" : ""}${pct}% from platform baseline`;
+          return (
+            <div style={{padding: 24, marginBottom: 24, background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 16}}>
+              <div style={{display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 18, flexWrap: "wrap", gap: 12}}>
+                <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)"}}>Rates</div>
+                <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", fontWeight: 600, background: pctBg, color: pctColor, padding: "4px 10px", borderRadius: 999, textTransform: "uppercase"}}>{pctLabel}</span>
+              </div>
+              <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 18}}>
+                <div>
+                  <div style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 26, color: "var(--ink)", lineHeight: 1}}>${rates.ratePerPage.toFixed(2)}</div>
+                  <div style={{fontSize: 12, color: "var(--ink-soft)", marginTop: 6}}>per page (original transcript)</div>
+                </div>
+                <div>
+                  <div style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 26, color: "var(--ink)", lineHeight: 1}}>${rates.attendanceHalfDay.toLocaleString()}</div>
+                  <div style={{fontSize: 12, color: "var(--ink-soft)", marginTop: 6}}>half-day live attendance</div>
+                </div>
+                <div>
+                  <div style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 26, color: "var(--ink)", lineHeight: 1}}>${rates.attendanceFullDay.toLocaleString()}</div>
+                  <div style={{fontSize: 12, color: "var(--ink-soft)", marginTop: 6}}>full-day live attendance</div>
+                </div>
+                <div>
+                  <div style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 26, color: "var(--ink)", lineHeight: 1}}>${rates.attendanceTrialDay.toLocaleString()}</div>
+                  <div style={{fontSize: 12, color: "var(--ink-soft)", marginTop: 6}}>trial-day live attendance</div>
+                </div>
+              </div>
+              <p style={{fontSize: 12, color: "var(--muted)", marginTop: 16, lineHeight: 1.5}}>
+                Reporters on Dewey Sholes set their own rates within a ±20% band of the platform baseline (${PRICING.ratePerPage.toFixed(2)}/page; ${PRICING.attendanceHalfDay.toLocaleString()} half-day; ${PRICING.attendanceFullDay.toLocaleString()} full-day). The 12% platform fee is added on top at order time.
+              </p>
+            </div>
+          );
+        })()}
 
         <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20}}>
           {/* Availability */}
