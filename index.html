@@ -3976,6 +3976,32 @@ function OrderFlow() {
     costSplit: false, coPayers: [{ name: "", email: "", firm: "", share: "" }],
   });
   const [submitted, setSubmitted] = useState(false);
+  // Match-preview state: after Submit, we pick an eligible CSR and show the
+  // attorney the matched reporter + their actual rates before the order goes
+  // to the CSR for acceptance. Attorney can confirm or request a rematch.
+  // Rejected CSRs never see the order — invites only go out after Confirm.
+  const [matchState, setMatchState] = useState("editing"); // "editing" | "matched" | "confirmed"
+  const [matchedReporterIdx, setMatchedReporterIdx] = useState(0);
+  const [rematchCount, setRematchCount] = useState(0);
+  const maxRematches = 3;
+  const handleSubmitOrder = () => {
+    const presel = form.selectedReporter ? MOCK_REPORTERS.findIndex(r => r.id === form.selectedReporter) : -1;
+    setMatchedReporterIdx(presel >= 0 ? presel : 0);
+    setRematchCount(0);
+    setMatchState("matched");
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
+  const handleRematch = () => {
+    if (rematchCount >= maxRematches) return;
+    setMatchedReporterIdx((matchedReporterIdx + 1) % MOCK_REPORTERS.length);
+    setRematchCount(c => c + 1);
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
+  const handleConfirmMatch = () => {
+    setMatchState("confirmed");
+    setSubmitted(true);
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
   const update = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const accentClass = form.type === "live" ? "accent-blue" : form.type === "transcription" ? "accent-amber" : "";
 
@@ -4013,7 +4039,141 @@ function OrderFlow() {
   const getMinDate = () => { const d = new Date(); d.setDate(d.getDate() + 1); return d.toISOString().split("T")[0]; };
   const csrDeadline = form.needByDate ? (() => { const d = new Date(form.needByDate + "T00:00:00"); d.setDate(d.getDate() - 1); return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }); })() : null;
 
+  // Match preview screen: after Submit but before the order is confirmed.
+  // Attorney sees who they've been matched with, that CSR's actual rates,
+  // and can Confirm (sends invite to CSR) or Request a different reporter.
+  if (matchState === "matched") {
+    const reporter = MOCK_REPORTERS[matchedReporterIdx];
+    const rates = getCSRRates(reporter);
+    const turnaroundMult = PRICING[effectiveTurnaround + "Multiplier"] || 1.0;
+    // Compute itemized cost from form + reporter's rates
+    const liveAttendance = form.type === "live"
+      ? (form.duration === "trial" ? rates.attendanceTrialDay * (form.trialDays || 3)
+        : parseInt(form.duration) > 180 || form.duration === "180" ? rates.attendanceFullDay
+        : rates.attendanceHalfDay)
+      : 0;
+    const attendanceLabel = form.type === "live"
+      ? (form.duration === "trial" ? `Trial day × ${form.trialDays || 3}`
+        : parseInt(form.duration) > 180 || form.duration === "180" ? "Full day"
+        : "Half day")
+      : "";
+    const estPagesMid = (est.low + est.high) / 2;
+    const transcriptCost = estPagesMid * rates.ratePerPage * turnaroundMult;
+    const subtotal = liveAttendance + transcriptCost;
+    const platformFee = subtotal * PRICING.platformFee;
+    const total = subtotal + platformFee;
+    const pct = Math.round((rates.rateMultiplier - 1.0) * 100);
+    const pctColor = pct > 0 ? "#92400E" : pct < 0 ? "#065F46" : "var(--text-muted, #94A3B8)";
+    const pctBg = pct > 0 ? "#FEF3C7" : pct < 0 ? "#D1FAE5" : "var(--bg-muted, #F1F5F9)";
+    const isRush = effectiveTurnaround === "rush";
+    const autoConfirmWindow = isRush ? "30 minutes" : "4 hours";
+    const rematchesLeft = maxRematches - rematchCount;
+
+    return (
+      <div>
+        <nav className="app-nav"><div className="container"><div className="app-nav-inner">
+          <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
+          <button className="btn btn-secondary btn-sm" onClick={() => setMatchState("editing")}>← Back to order</button>
+        </div></div></nav>
+        <div className="page page-enter"><div className="container" style={{maxWidth: 720, margin: "0 auto", padding: "32px 24px 80px"}}>
+          <div style={{textAlign: "center", marginBottom: 28}}>
+            <div style={{display: "inline-flex", alignItems: "center", gap: 10, padding: "8px 14px", background: "#D1FAE5", border: "1px solid #86EFAC", borderRadius: 999, marginBottom: 14, fontSize: 12, fontWeight: 700, color: "#065F46", letterSpacing: "0.05em", textTransform: "uppercase"}}>
+              <Icon name="checkCircle" size={14} color="#059669" /> Order received · matching now
+            </div>
+            <h1 style={{fontSize: 32, fontWeight: 800, color: "var(--text, #0F172A)", marginBottom: 6, lineHeight: 1.2}}>You've been matched with {reporter.name.split(" ")[0]}.</h1>
+            <p style={{fontSize: 15, color: "var(--text-secondary, #64748B)", maxWidth: 540, margin: "0 auto", lineHeight: 1.55}}>
+              Review the assigned reporter and the cost based on their rates. Confirm to send them the invite, or request a different reporter and we'll match you again.
+            </p>
+          </div>
+
+          {/* Matched CSR card */}
+          <div style={{padding: 24, background: "var(--bg)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, marginBottom: 16}}>
+            <div style={{display: "flex", gap: 18, alignItems: "flex-start", flexWrap: "wrap"}}>
+              <div style={{width: 64, height: 64, borderRadius: "50%", background: "var(--ink, #0F172A)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontWeight: 400, fontSize: 24, flexShrink: 0, letterSpacing: "0.02em"}}>{reporter.initials}</div>
+              <div style={{flex: 1, minWidth: 220}}>
+                <div style={{display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap"}}>
+                  <span style={{fontSize: 20, fontWeight: 700, color: "var(--text, #0F172A)"}}>{reporter.name}</span>
+                  <span style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.12em", textTransform: "uppercase"}}>CSR #{reporter.csrNumber}</span>
+                </div>
+                <div style={{fontSize: 13, color: "var(--text-secondary, #64748B)", marginTop: 4}}>
+                  <Icon name="star" size={12} color="#D97706" /> {reporter.rating} ({reporter.reviewCount} reviews) · {reporter.stats.onTimeRate}% on-time · {reporter.stats.jobsCompleted} jobs · {reporter.city}
+                </div>
+                <div style={{display: "flex", gap: 6, marginTop: 10, flexWrap: "wrap"}}>
+                  {reporter.certifications.map(c => <span key={c} style={{fontSize: 10, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.1em", fontWeight: 600, background: "#DBEAFE", color: "#1E40AF", padding: "3px 8px", borderRadius: 999}}>{c}</span>)}
+                  {reporter.specialties.slice(0, 3).map(s => <span key={s} style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", background: "var(--bg-muted, #F1F5F9)", padding: "3px 10px", borderRadius: 999}}>{s}</span>)}
+                </div>
+              </div>
+              <a href={`#/reporters/${reporter.id}`} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" style={{whiteSpace: "nowrap"}} onClick={e => e.stopPropagation()}>View full profile <Icon name="externalLink" size={12} /></a>
+            </div>
+          </div>
+
+          {/* Rate breakdown */}
+          <div style={{padding: 24, background: "var(--bg)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, marginBottom: 16}}>
+            <div style={{display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 14, flexWrap: "wrap", gap: 10}}>
+              <h3 style={{margin: 0, fontSize: 14, fontWeight: 700, color: "var(--text, #0F172A)", textTransform: "uppercase", letterSpacing: "0.06em"}}>{reporter.name.split(" ")[0]}'s rates</h3>
+              <span style={{fontSize: 11, padding: "4px 10px", borderRadius: 999, background: pctBg, color: pctColor, fontWeight: 700, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.06em"}}>{pct === 0 ? "AT BASELINE" : (pct > 0 ? "+" : "") + pct + "% FROM BASELINE"}</span>
+            </div>
+            {form.type === "live" && (
+              <div style={{display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)", fontSize: 14}}>
+                <span style={{color: "var(--text-secondary, #64748B)"}}>{attendanceLabel} attendance fee</span>
+                <strong>${liveAttendance.toLocaleString()}</strong>
+              </div>
+            )}
+            <div style={{display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)", fontSize: 14}}>
+              <span style={{color: "var(--text-secondary, #64748B)"}}>Transcript ({est.low}–{est.high} pages × ${rates.ratePerPage.toFixed(2)}/pg)</span>
+              <strong>${transcriptCost.toFixed(2)}</strong>
+            </div>
+            {turnaroundMult !== 1.0 && (
+              <div style={{display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)", fontSize: 14}}>
+                <span style={{color: "var(--text-secondary, #64748B)"}}>{tierLabel(effectiveTurnaround)} turnaround ({turnaroundMult > 1 ? "+" : ""}{((turnaroundMult - 1) * 100).toFixed(0)}%)</span>
+                <strong style={{color: turnaroundMult > 1 ? "#92400E" : "#065F46"}}>{turnaroundMult > 1 ? "+" : "−"}${Math.abs(transcriptCost - (estPagesMid * rates.ratePerPage)).toFixed(2)}</strong>
+              </div>
+            )}
+            <div style={{display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)", fontSize: 14}}>
+              <span style={{color: "var(--text-secondary, #64748B)"}}>Platform fee (12%)</span>
+              <strong>${platformFee.toFixed(2)}</strong>
+            </div>
+            <div style={{display: "flex", justifyContent: "space-between", padding: "16px 0 4px", fontSize: 18, fontWeight: 800, color: "var(--text, #0F172A)"}}>
+              <span>Estimated total</span>
+              <span>${total.toFixed(2)}</span>
+            </div>
+            <p style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", marginTop: 10, lineHeight: 1.5}}>
+              Final invoice is calculated from the certified page count delivered with the transcript, not this estimate. {reporter.name.split(" ")[0]} sets their own rate within ±20% of platform baseline ({pct === 0 ? "they're at baseline" : `they're ${pct > 0 ? "+" : ""}${pct}% from baseline`}).
+            </p>
+          </div>
+
+          {/* Action buttons */}
+          <div style={{padding: 24, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, marginBottom: 16}}>
+            <div style={{display: "flex", gap: 12, flexWrap: "wrap"}}>
+              <button className="btn btn-primary" style={{flex: "1 1 240px"}} onClick={handleConfirmMatch}>
+                Confirm and send to {reporter.name.split(" ")[0]} <Icon name="arrowRight" size={16} color="#fff" />
+              </button>
+              {rematchCount < maxRematches ? (
+                <button className="btn btn-secondary" style={{flex: "1 1 200px"}} onClick={handleRematch}>
+                  Request a different reporter
+                </button>
+              ) : (
+                <button className="btn btn-secondary" style={{flex: "1 1 200px"}} disabled={true} title="Contact support to discuss alternatives">
+                  No more rematches – contact support
+                </button>
+              )}
+            </div>
+            <div style={{display: "flex", alignItems: "center", gap: 8, marginTop: 14, fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>
+              <Icon name="clock" size={12} />
+              <span>If you don't act, this order auto-confirms in <strong style={{color: "var(--text-secondary, #64748B)"}}>{autoConfirmWindow}</strong>{rematchCount > 0 && <> · You've requested {rematchCount} rematch{rematchCount === 1 ? "" : "es"} so far ({rematchesLeft} remaining)</>}.</span>
+            </div>
+          </div>
+
+          <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", textAlign: "center", lineHeight: 1.6, maxWidth: 540, margin: "0 auto"}}>
+            Rejected reporters are never told. If you request a different reporter, we'll match you with the next best fit – {reporter.name.split(" ")[0]} won't see this order. Your card is charged only when you confirm.
+          </p>
+        </div></div>
+      </div>
+    );
+  }
+
   if (submitted) {
+    const reporter = MOCK_REPORTERS[matchedReporterIdx];
     return (
       <div>
         <nav className="app-nav"><div className="container"><div className="app-nav-inner">
@@ -4023,14 +4183,15 @@ function OrderFlow() {
         <div className="page page-enter"><div className="container" style={{maxWidth: 640, margin: "0 auto"}}>
           <div className="confirm-box">
             <div className="confirm-check" style={{animation: "successPop 0.5s ease"}}><Icon name="checkCircle" size={48} color="#059669" /></div>
-            <h2 style={{fontSize: 28, marginBottom: 8}}>Order submitted!</h2>
+            <h2 style={{fontSize: 28, marginBottom: 8}}>Order confirmed!</h2>
+            <p style={{fontSize: 14, color: "var(--text-secondary, #64748B)", marginBottom: 6}}>Reporter assigned: <strong style={{color: "var(--text, #0F172A)"}}>{reporter.name}</strong> (CSR #{reporter.csrNumber})</p>
             <p className="order-num">Order number: <strong>DS-2026-0042</strong></p>
             <p style={{fontSize: 15, color: "var(--text-secondary, #64748B)", marginBottom: 32, lineHeight: 1.7}}>
               {form.costSplit && form.coPayers.some(cp => cp.email)
-                ? "We've sent payment links to your co-payers. The reporter will be assigned once all parties have paid."
+                ? `Payment links sent to your co-payers. ${reporter.name} will be notified once all parties have paid.`
                 : form.type === "live"
-                  ? "We're matching you with a licensed reporter for your hearing."
-                  : "Your audio has been received. A certified reporter will be assigned shortly."}
+                  ? `${reporter.name} has been notified and will confirm shortly.`
+                  : `Your audio has been received and sent to ${reporter.name} for transcription.`}
             </p>
             {form.costSplit && form.coPayers.some(cp => cp.email) && (
               <div style={{maxWidth: 440, margin: "0 auto 24px", textAlign: "left", padding: 16, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12}}>
@@ -4050,15 +4211,15 @@ function OrderFlow() {
               <h3 style={{fontSize: 16, marginBottom: 14}}>What happens next</h3>
               {form.costSplit && form.coPayers.some(cp => cp.email) ? (<>
                 <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">Co-payers receive a secure payment link via email</div></div>
-                <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">Once all parties pay, a reporter is matched and assigned</div></div>
+                <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">Once all parties pay, {reporter.name} gets notified and confirms</div></div>
                 <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Certified transcript delivered by {form.needByDate ? new Date(form.needByDate + "T00:00:00").toLocaleDateString("en-US", {month: "short", day: "numeric"}) : "your deadline"}</div></div>
               </>) : form.type === "live" ? (<>
-                <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">A CSR-verified reporter in {form.court ? form.court.split(" - ")[0] : "your jurisdiction"} is being matched now</div></div>
-                <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">You'll get a notification when your reporter confirms (usually within hours)</div></div>
-                <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Reporter attends your hearing. Transcript delivered by {form.needByDate ? new Date(form.needByDate + "T00:00:00").toLocaleDateString("en-US", {month: "short", day: "numeric"}) : "your deadline"}</div></div>
+                <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">{reporter.name} has been sent the job invite and will confirm (usually within hours)</div></div>
+                <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">You'll get a notification when {reporter.name.split(" ")[0]} confirms</div></div>
+                <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">{reporter.name.split(" ")[0]} attends your hearing. Transcript delivered by {form.needByDate ? new Date(form.needByDate + "T00:00:00").toLocaleDateString("en-US", {month: "short", day: "numeric"}) : "your deadline"}</div></div>
               </>) : (<>
-                <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">Your audio file is being processed and assigned to a qualified reporter</div></div>
-                <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">The reporter transcribes and certifies your proceedings</div></div>
+                <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">Your audio file has been sent to {reporter.name} for transcription</div></div>
+                <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">{reporter.name.split(" ")[0]} transcribes and certifies your proceedings</div></div>
                 <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Certified transcript delivered by {form.needByDate ? new Date(form.needByDate + "T00:00:00").toLocaleDateString("en-US", {month: "short", day: "numeric"}) : "your deadline"}</div></div>
               </>)}
             </div>
@@ -4603,7 +4764,7 @@ function OrderFlow() {
               )}
               <div style={{display: "flex", gap: 12, marginTop: 24}}>
                 <button className="btn btn-secondary btn-sm" onClick={() => setStep(4)}>Back</button>
-                <button className="btn btn-primary" onClick={() => setSubmitted(true)}>Submit order <Icon name="arrowRight" size={16} color="#fff" /></button>
+                <button className="btn btn-primary" onClick={handleSubmitOrder}>Submit order <Icon name="arrowRight" size={16} color="#fff" /></button>
               </div>
             </div>
           )}
