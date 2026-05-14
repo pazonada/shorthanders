@@ -78,6 +78,12 @@ Walk through prototype on screen-share.
   - Cost-splitting toggle – would the firm actually use this? In what scenarios?
   - Need-by date driving turnaround tier – does this match how the firm thinks about deadlines?
   - **Time savings probe:** If this saves you 10 minutes per order, how many minutes per week is that for your firm? Is that worth anything?
+- Show the **batch-preview screen** (after Submit). *Frame:* "When you submit an order, the system identifies 3 qualified reporters and shows you their profiles + the cost range. You confirm with one button to send invitations to all 3 at the same time. First to accept gets the job. You don't pick a specific reporter, and you don't reject the one who accepts." *Open questions (these are the big ones – take time):*
+  - **Open question D:** Is one click to confirm all 3 reporters the right amount of friction, or do you want to review and approve each one individually before invitations go out? *(Listen for: am I really willing to make 3 separate accept/reject decisions per order, or is the batch confirmation right?)*
+  - **Open question E:** If we let you reject specific reporters from the batch ("not these 3 – find 3 new ones" or "only Suzy – she's the right fit, the others are too expensive or wrong-specialty"), how often would you actually use that? Every order? 1 in 5? Only for unusual cases?
+  - **Open question F:** Are there *specific case types* where you'd want to pre-review reporter profiles before invitations go out? (Probe: high-stakes trials, sealed proceedings, expert witness depos, multi-day matters, VIP / public-figure parties.)
+  - **Open question G:** When you see a reporter's rate is meaningfully above the platform baseline (e.g. +15%, +20%), what would help you understand why? *(Probe: specialty match, certs, experience with similar cases. Note for facilitator: this informs whether to surface a "why" affordance next to above-baseline rates in the batch preview.)*
+  - **Open question H:** *(For attorneys, if the optional attorney interview happens):* When you walk into a hearing and don't know which agency-assigned reporter is there, how do you actually feel about it? Is that fine because you trust the agency, anxiety-producing, or something in between? Does that change your answer to D-F?
 - Show a CSR profile page. **Specific prompts:**
   - If your firm had never used this CSR before, what would convince the attorney to book them? What's missing?
   - How much does the rating matter? On-time rate? Avg turnaround?

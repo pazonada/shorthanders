@@ -360,6 +360,45 @@ We deliberately don't expose a "reject this batch, give me a different batch" bu
 - **What happens if the attorney closes their browser before confirming the batch?** The order sits in "awaiting batch confirmation" state on their dashboard. Reminder emails at 1 hour and 24 hours. After 72 hours of inactivity, the order auto-cancels and they have to resubmit.
 - **Should the attorney see a "this would cost X via an agency" comparison in the batch preview?** Possibly post-launch. Adds friction at first, but reinforces the value-prop at the moment of commitment.
 
+### Planned UX refinement: surface the "why" for above-baseline rates
+
+**Status:** Planned for V2, dependent on attorney research signal.
+
+When a CSR in the batch is meaningfully above baseline (e.g. +15% or +20%), the current UI just shows the percentage badge ("+15% FROM BASELINE"). That tells the attorney *what* but not *why* – which can read as "this reporter is charging extra for no reason I can see."
+
+Aud (2026-05-14): *"I just wonder if there are edge cases – like some kind of specialized case – where an attorney would want to review profiles in advance. But I think when we show them the estimated fee range of the 3 we're going to invite to the job, we can specify (if they're particularly above baseline) the justification – specialties, certs, etc."*
+
+Proposed design: when a CSR in the batch sits above some threshold (TBD – probably +10% or +15%), surface 1-2 bullet justifications inline:
+
+```
+Lisa Nakamura · +10% from baseline
+  • Specialty match: Probate / Estate (your case type)
+  • RPR + RMR certified (the other 2 are CSR-only)
+  • 23 prior probate hearings completed
+$1,694 est. total
+```
+
+This addresses the rate-band model's biggest UX risk: that attorneys see "+15%" and reject the batch without understanding the rationale.
+
+**Validation:** Q15d in the attorney survey + Open Question G in the user-testing guide probe what attorneys actually want to see. Don't build the refinement until we have signal. If attorneys say "I don't need a justification – if they're qualified, the rate is what it is," then the current pill-only design is sufficient.
+
+### Attorney-side validation needed
+
+The batch-preview model assumes attorneys are OK with not pre-approving individual reporters. That's based on Rosie's read of the market ("outside of firm favorites, they don't really care who does the job as long as someone reliable will do it") but it's not yet validated with broader attorney input.
+
+**Questions we need to answer before scaling beyond the founding cohort:**
+
+1. **Is one-click batch confirmation the right friction level**, or do attorneys want per-CSR review on every order?
+2. **Are there specific case types** where attorneys want to pre-review profiles (high-stakes trial, sealed proceedings, expert-witness depos, multi-day matters, VIP parties)?
+3. **If we offered per-CSR review as an option**, how often would attorneys actually use it? Every order? 1 in 5? Only for unusual cases?
+4. **What contextual information about above-baseline reporters** helps attorneys feel OK with the rate?
+
+These are captured for survey + interview research in:
+- `research/attorney_survey_questions.md – Section 3a: How the matching flow should work` (Q15a–Q15d)
+- `research/user_testing_legal_assistant_guide.md – Reactions to Dewey Sholes` (Open questions D–H)
+
+Post-launch we should also instrument the batch-preview screen to track: how long attorneys spend on it, how often they hit Back-to-edit, how often they abandon without confirming. Behavioral data + survey data together should tell us whether the friction level is right.
+
 ---
 
 ## Matching algorithm (v2)

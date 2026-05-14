@@ -157,6 +157,53 @@ Worth running both – the time-cost survey feeds the marketing claim ("firms sa
 
 ---
 
+### Section 3a – How the matching flow should work (4 questions, added 2026-05-14)
+
+**Read this first, then answer the questions below.**
+
+> Here's the matching flow we're planning. When you submit a transcript order:
+>
+> 1. The system invites your **favorite reporters** first (if you have any). Whoever accepts first gets the job.
+> 2. If no favorite accepts (or you have no favorites), the system identifies **3 qualified reporters** based on your case details (jurisdiction, specialty if needed, certifications, availability).
+> 3. You see a screen showing **those 3 reporters' profiles + the cost range** based on each one's rate (reporters set their own rates within a band). You confirm by clicking one button to send invitations to all 3 at once.
+> 4. The **first of the 3 to accept** gets the job. You're notified, and the others never see the order.
+>
+> You don't pick a specific reporter from the 3, and you don't get to reject the one who accepts. The trade-off: less work for you (one confirmation, not 3 separate decisions), but less individual control.
+
+**Q15a.** Based on that description, does the flow feel:
+- Right – I trust the system to pick qualified reporters and just want it handled
+- Mostly right – but I'd want at least the option to review and reject individuals in some cases
+- Wrong – I want to review each candidate's profile and approve or reject individually before invitations go out
+- Not sure – depends on the case
+
+**Q15b.** If we let you reject individuals from the batch of 3 ("not these three, find new ones" or "only Suzy, the others are too expensive"), how often would you actually use that?
+- Every order – I'd want to see profiles before invitations every time
+- Sometimes – maybe 1 in 5 orders, for specific case types
+- Rarely – only for unusual or high-stakes cases
+- Never – auto-match handles it
+
+**Q15c.** Are there specific case types or scenarios where you'd want to pre-review reporter profiles before invitations go out? (select all that apply)
+- High-stakes trial proceedings
+- Sealed or confidential proceedings
+- Cases with specialized terminology (medical, technical, financial expert witnesses)
+- Cases where the reporter will work closely with my expert witness
+- Cases with VIP / public-figure parties
+- Multi-day or complex matters
+- I never want to pre-review – auto-match handles it
+- Other (please describe)
+
+**Q15d.** When you see a reporter's rate is meaningfully above the platform baseline (e.g. +15% or +20%), what would help you understand why and feel OK paying it? (select all that apply, or free text)
+- Their specialty match to your case type
+- Their certifications (RPR, RMR, CRR)
+- Their years of experience / job count
+- Their rating + on-time delivery record
+- Past cases they've worked similar to yours
+- I don't need a justification – if they're qualified, the rate is what it is
+- I wouldn't pay above baseline – I'd want a different reporter
+- Other (please describe)
+
+---
+
 ### Section 4 – Pricing perception (4 questions)
 
 **Q16.** Today, what does your firm typically pay an agency for a half-day court hearing reporter appearance (no transcript ordered)?
@@ -240,6 +287,7 @@ Worth running both – the time-cost survey feeds the marketing claim ("firms sa
 | Process pain | Surprise line items + agency markup show up as top frustrations (Q8, Q9) – validates DS thesis | Pain is elsewhere (slow delivery, quality) – we may be solving the wrong problem |
 | Concept reaction | "Very interested" + "Somewhat interested" ≥ 50%; top concerns are operational (pool depth, reliability), not conceptual | Top concerns are conceptual ("I trust my agency"; "I don't want to learn a new tool") |
 | Featured reporter (Q14) | >40% useful – validates discovery feature | <20% – defer feature indefinitely |
+| Matching flow (Q15a–Q15d) | Majority say current batch-preview flow feels "right" or "mostly right" with veto-by-edit on rare cases; specific case-type triggers (sealed, expert witness) emerge as scenarios where per-CSR review is wanted; rate-justification preference clusters around certs + specialty + experience | Majority want per-CSR review on every order – means the auto-match philosophy is wrong for this audience and we need to rethink the order flow |
 | Pricing (Q17–Q18) | 12% feels at-or-below current spend; line-item-frustration responses confirm DS positioning thesis | 12% feels expensive – we have a positioning problem |
 | Founding-firm perks (Q19) | At least "somewhat important" for ~30%+ – non-pricing perks are doing real work as a sign-up incentive | "Doesn't matter" majority – founding-firm framing isn't adding anything; lean harder on functional pitch (transparency, no agency markup) |
 | Depositions (Q20–Q21) | Strong "yes if you handle scheduling, fine if you don't" – validates the matching-only future path | Strong "only useful with full depo support" – confirms our depo strategy ceiling |
