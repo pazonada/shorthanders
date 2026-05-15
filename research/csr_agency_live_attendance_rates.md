@@ -64,6 +64,40 @@ A non-WC civil deposition typically delivers Original + 1 simultaneous copy (or 
 
 4. **Tina is a credibility-grade voice in the FB group** (14 reactions, anonymous "this is incredible!!" reply). If Rosie's network has any path to her, she's a clear early-supply target – similar to Caldarella. Worth flagging for outreach.
 
+### NorCal WC rate-card data point (Kristin Johns, FB group, 2026-05-15)
+
+Source: FB thread where Erin O'Hara McLemore (SoCal, self-described "new" CSR) asked how to bill WC cases. Kristin Johns (Northern California) replied with her full rate card. Erin's question and Kristin's reply are both real-world WC pricing snapshots; capturing both for the record.
+
+**Erin O'Hara McLemore (SoCal, new):** Bills with a page rate + transcript minimum + appearance fee structure. Sees other CSRs charging hourly and is unsure whether hourly replaces page/minimum. Quick jobs hit her minimum. **$0.75/page interpreter add-on**, but she's confused about how to bill the add-on on a minimum job.
+
+**Kristin Johns (NorCal) rate card:**
+
+| Line item | Rate | Notes |
+|---|---|---|
+| Per-diem (half-day, ~3.5 hrs) | **$200** | Switched away from hourly to flat per-diem |
+| Per-diem (full-day) | **$400** | Same reasoning |
+| Minimum transcript | **$450** | Floor; quick jobs bump up to this |
+| Page rate (O&2) | **$7.50/pg** | Original + 2 certified copies per the WC structural convention (see Tina above) |
+| Interpreted jobs | **$50 flat add-on** | Replaced per-page interpreter add-on with a flat fee "since most WC cases are short" |
+| In-person attendance add-on | **$200** | On top of per-diem |
+| Extra device add-on | **$150** | Tablet / second screen / similar setup |
+
+**What this tells us about CA WC pricing in particular:**
+
+1. **WC per-diems are dramatically lower than non-WC hearing per-diems.** Kristin's $200 half / $400 full is roughly 1/5 of the $1,050 / $1,650 baseline we landed on for general live attendance. Two structural reasons: (a) WC hearings are usually short – "most WC cases are short," per Kristin's own framing – so the per-diem reflects time blocked, not "I just earned a day's wage"; (b) the page-rate revenue on the auto-O+2 transcripts is where the WC bill actually lands. The per-diem is the cover charge, the page rate is the meal.
+
+2. **WC page rates run higher than non-WC page rates.** $7.50/pg O+2 vs. our $5/pg baseline (which assumes O+1 or O-only). Roughly 50% higher on a per-page basis, and the auto-O+2 multiplier compounds the per-job revenue. Atkinson-Baker's $4.40/pg hearing rate (private agency, generic hearing) is a useful comp – it suggests WC commands a premium of $3+/pg over generic hearing work, plus the structural copy-count premium.
+
+3. **Interpreter add-on as flat vs. per-page.** Industry is split. Erin's $0.75/pg add-on is the older convention; Kristin's $50 flat is a simplification that works for the short-job WC norm. **DS implication:** when we eventually scope interpreter surcharges, the right answer is probably "flat fee added at order time, capped or scaled by job length" – not a per-page rider. Captures the CSR's time cost regardless of how many pages the job ultimately yields.
+
+4. **In-person and extra-device add-ons exist and are itemized.** Confirms a recurring theme: CA private CSRs make money on the add-ons, not just the base per-diem. Our marketplace pitch ("transparent rates, no hidden line items") will pop more if we explicitly call out which add-ons are baked in vs. which (if any) are billable line items.
+
+5. **The minimum-transcript floor is significant.** $450 minimum is much higher than our $50 floor. This is consistent with WC's O+2 multiplier (3 deliverables × any per-page rate adds up fast on short jobs) and with Kristin's "most WC cases are short" framing – the floor exists precisely to prevent CSRs from losing money on quick interpreted hearings that produce <50 pages of transcript.
+
+**Implication for DS scope:** WC is its own pricing micro-market with structural conventions (O+2, flat per-diem, higher page rate, big minimum, in-person add-on) that don't map cleanly to our current PRICING object. If we want WC supply at launch we either (a) carve out a WC-specific pricing model, or (b) recruit only WC CSRs who are willing to work on our standard model and accept the trade-offs. (a) is a real product investment; (b) means asking CSRs to take a pay cut on WC vs. their direct work. Neither is shippable as-is. Flagging for a separate decision before WC outreach.
+
+**Source:** Facebook screenshot, CSR rates discussion group, 2026-05-15. Anonymized in any public DS use; OK to cite Kristin and Erin by name in internal docs since they posted publicly.
+
 ---
 
 ## 2. Courts – statutory per-diem benchmarks (Gov. Code § 68086)
