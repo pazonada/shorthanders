@@ -1,11 +1,13 @@
 # Marketing strategy master plan
 
 **Owner:** Aud
-**Last updated:** 2026-05-02
+**Last updated:** 2026-05-18 (positioning + launch sequence updated after strategy session)
 **Status:** Living document – update as we learn what works
 
 This is the top-level strategy doc. Phase-specific tactics live in:
-- `marketing_plan_phase1_csr_supply.md`
+- `ca_court_recording_county_tiers.md` – county-by-county ER + no-reporter status; three-tier launch classification; TAM by case type
+- `CA_Pilot_Firm_Targeting.md` – firm-side targeting, anchored on Tier A pilot
+- `marketing_plan_phase1_csr_supply.md` – CSR supply, four-cohort priority
 - `marketing_plan_phase2_law_firms.md`
 - `marketing_plan_phase3_insurance_carriers.md`
 - `legal_assistant_incentive_program.md`
@@ -33,8 +35,9 @@ These are what we measure success by, in order of importance:
 
 ### Primary audience 1: CSRs (supply side)
 - **Decision-maker:** The CSR themselves
-- **Best channels:** Cold email (CRB list), Rosie's network, CSR Facebook groups, LinkedIn
-- **Best message:** Keep 100% of your stated rate, no agency cut, direct access to founders during launch
+- **Best channels:** Cold email (CRB list), Rosie's network, CSR Facebook groups, LinkedIn, partnerships with the 8 remaining CSR training programs
+- **Best message:** Open marketplace – you set your rate and keep 100% of it, no agency cut, direct access to founders during launch
+- **Priority cohorts** (per `marketing_plan_phase1_csr_supply.md`): (1) recently retired or semi-retired CSRs, (2) freelance CSRs frustrated with depo agency cuts, (3) newly-licensed CSRs locked out of established networks, (4) out-of-state CSRs and qualified transcriptionists for the audio SKU
 - **Marketing phase:** Phase 1 (Month 2)
 
 ### Primary audience 2: Legal assistants & paralegals at small-to-midsize litigation firms
@@ -123,17 +126,18 @@ Most marketplace marketing focuses on the principal buyer (in this case, attorne
 ## Brand voice & positioning
 
 ### What we are
-- A technology marketplace that connects attorneys with court reporters
-- Transparent (statutory rates, no hidden markups)
-- Fast (push notifications, 2-business-day payments)
-- Modern (built for the legal assistant who has 15 tabs open)
-- Compliant (CSR-verified, regulatory boundaries respected)
+- An **open marketplace** that connects California attorneys with licensed court reporters
+- **Transparent.** CSRs set their own rates and keep 100% of them. Attorneys see the price up front. We make money from a 12% buyer fee + a $99/yr CSR listing – no hidden markups.
+- **Fast.** Push notifications, 2-business-day CSR payments after delivery acceptance.
+- **Modern.** Built for the legal assistant who has 15 tabs open.
+- **Compliant.** CSR-verified (quarterly CRB re-verification), regulatory boundaries respected.
 
 ### What we are NOT
 - A court reporting service (regulatory landmine – we're a marketplace)
 - A staffing agency (we don't manage CSR work product)
-- A custodian of records (CSRs control their notes; we just transfer files)
-- A discount service (we don't undercut statutory rates – we just don't add agency markup)
+- A custodian of records (CSRs control their notes; we just transfer files and store the attorney's copy)
+- A rate-setter (we don't dictate what CSRs charge – they price themselves; we show a baseline as guidance only)
+- A deposition booking platform (out of scope for v1 per `governance-and-process/scope_public_court_proceedings_only.md`)
 
 ### Voice
 - **Direct.** No legal jargon when plain English works.

@@ -1,14 +1,36 @@
 # California pilot firm targeting strategy
 
 **Owner:** Aud & Rosie
-**Last updated:** 2026-04-11
-**Status:** Draft — needs Rosie input on warm contacts
+**Last updated:** 2026-05-18 (TAM + launch sequence revised after strategy session)
+**Status:** Living doc – now anchored on the Tier A pilot footprint defined in [`ca_court_recording_county_tiers.md`](ca_court_recording_county_tiers.md)
+
+> **What changed 2026-05-18.** Previous version sized the market by attorney/firm count statewide and proposed a Phase 2 regional rollout across LA / Bay Area / San Diego / OC / Sacramento simultaneously. The strategy session that day reframed both:
+> - **TAM is now expressed in court-hearing volume + dollar spend**, not just firm counts. ~$600M–$750M/year addressable.
+> - **Launch is a Bay Area trio first (Santa Clara + Contra Costa + Alameda)**, not a parallel multi-metro push. Why: that's where ER orders and no-reporter status both exist, where Rosie's network is dense, and where one CSR can serve all three.
+> - **Positioning is "open marketplace"**, not "statutory rates + 12% undercuts agency markup". CSRs set their own rates; the platform's pitch is workflow + managed services for direct-relationship attorneys, and cost savings + supply access for agency-switchers.
+>
+> The old statewide firm-count framing still has value for sizing year-2+ expansion, so it's preserved below as a reference floor – not as the pilot plan.
 
 ---
 
 ## Total addressable market in California
 
-### By the numbers (estimated from State Bar data)
+### Court-record TAM (replaces the old firm-count-driven sizing as the primary TAM)
+
+These figures come from the 2026-05-18 strategy session and need independent verification before they go in any external doc. See [`ca_court_recording_county_tiers.md`](ca_court_recording_county_tiers.md#tam-restated-using-the-new-tiering) for the citation gap.
+
+| Component | Estimate |
+|---|---|
+| CA hearing volume in family + probate + unlimited civil | ~1.8M hearings/year |
+| Of which currently have a verbatim record (the live private-CSR market) | ~510K hearings/year |
+| Gross spend on live coverage at ~$3,300/day average | ~$500M–$700M/year |
+| Audio transcription market post-ER orders | ~$20M–$40M today, growing fast |
+| **CA court-record TAM (live + audio combined)** | **~$600M–$750M/year, growing** |
+| CA deposition market (out of v1 scope, comparison only) | ~$1B–$2B/year |
+
+At our 12% attorney-only buyer fee and 5–10% market capture by year 2–3: implied revenue range of **~$3.6M–$9M ARR** at 5% capture, scaling to ~$7.2M–$18M at 10%. Venture-credible scale, intentionally narrower than the addressable opportunity because depos are explicitly out of v1 scope per `governance-and-process/scope_public_court_proceedings_only.md`.
+
+### Firm-count breakdown (used for sizing year-2 expansion, not for pilot scoping)
 
 | Segment | Est. firms | CSR usage | Priority |
 |---------|-----------|-----------|----------|
@@ -19,7 +41,7 @@
 | Large firms with lit departments (100+) | ~65 | Very high but entrenched agency relationships | Long-term |
 | Government (DA, PD, AG offices) | ~200+ offices | High but procurement-constrained | Future |
 
-**Primary addressable market: ~3,350 small-to-midsize litigation firms statewide.**
+**Primary addressable market: ~3,350 small-to-midsize litigation firms statewide.** Pilot focus is a small subset of these, concentrated in Tier A counties – see Phase 2 below.
 
 Solo litigators are a massive secondary market (~16,000-20,000) but are harder to reach at scale and lower per-firm revenue. They're better acquired through word-of-mouth and organic search once the platform has traction.
 
@@ -27,9 +49,11 @@ Solo litigators are a massive secondary market (~16,000-20,000) but are harder t
 
 - No existing agency contracts (or unhappy with current agency)
 - Decision-maker is often the managing partner (short sales cycle)
-- Price-sensitive — our 12% fee + statutory rates undercut agency markups
 - Personally feel the pain of finding reporters (no dedicated staff for it)
 - More willing to try a new platform (less institutional inertia)
+- Two-segment value prop depending on how they source today (per `project_attorney_channel_mix.md`):
+  - **Agency-switchers:** DS at 12% is a discount vs. 30–50% agency markups
+  - **Direct-relationship attorneys:** DS at 12% is a premium for the managed-platform layer (license re-verification, escrow billing, matter-ref invoicing, correction workflow, cloud storage)
 
 ---
 
@@ -102,49 +126,75 @@ Solo litigators are a massive secondary market (~16,000-20,000) but are harder t
 
 ---
 
-## Pilot targeting: statewide approach
+## Pilot targeting: Tier A first, then sequential expansion
 
-### Phase 1: Warm network (Month 1-2)
-**Source:** Rosie's professional contacts, CSR shortage action group, referrals from onboarded reporters
+The launch sequence is driven by county tiering (see [`ca_court_recording_county_tiers.md`](ca_court_recording_county_tiers.md)). We don't try to win the whole state in parallel; we lock down the Bay Area trio first, then ladder out.
+
+### Phase 1: Warm network in Tier A (Month 1-2)
+**Source:** Rosie's professional contacts, CSR shortage action group, referrals from onboarded reporters in **Santa Clara, Contra Costa, and Alameda**.
 
 | Target | Action | Owner |
 |--------|--------|-------|
-| Rosie's direct attorney contacts | Personal outreach, demo of prototype | Rosie |
-| Firms that work with reporters in Rosie's network | Warm intro from reporter → firm | Rosie + Aud |
-| CSR shortage action group contacts | Ask reporters who their regular firms are | Rosie |
+| Rosie's direct attorney contacts in the Bay Area | Personal outreach, demo of prototype | Rosie |
+| Firms that work with reporters in Rosie's Bay Area network | Warm intro from reporter → firm | Rosie + Aud |
+| CSR shortage action group contacts (Bay Area subset) | Ask reporters which Bay Area firms they regularly work with | Rosie |
 
-**Goal:** 3-5 firms actively using the platform
+**Goal:** 3-5 firms actively using the platform, all in Tier A counties.
 
-### Phase 2: Regional clusters (Month 2-4)
-**Strategy:** Target metro areas with both attorney density and CSR supply
+### Phase 2: Tier A pilot saturation (Month 2-4)
+**Strategy:** Win Santa Clara + Contra Costa + Alameda together. Geographic proximity means one CSR can serve all three, which is the cold-start supply-liquidity unlock.
 
-| Metro area | Est. litigation firms | Active CSRs (from CRB data) | Priority |
+| County | Est. litigation firms (rough) | Active CSRs (from CRB data, regional) | Pilot priority |
 |---|---|---|---|
-| Los Angeles / Long Beach | ~1,200-1,500 | ~1,800 | Highest — largest market |
-| SF Bay Area (SF/Oakland/San Jose) | ~600-800 | ~618 | High — already planned |
-| San Diego | ~300-400 | ~350 | High |
-| Orange County | ~250-350 | ~300 | High |
-| Sacramento | ~200-300 | ~250 | Medium |
-| Riverside / San Bernardino (IE) | ~150-200 | ~150 | Medium |
-| Fresno / Central Valley | ~50-100 | ~80 | Lower |
+| Santa Clara | ~250-300 | included in ~618 Bay Area total | **Tier A – live + audio active** |
+| Contra Costa | ~150-200 | included in ~618 Bay Area total | **Tier A – live + audio active** |
+| Alameda | ~250-300 | included in ~618 Bay Area total | **Tier A – live + audio active** (pending Alameda order citation) |
 
-**Outreach channels:**
-- Local bar association litigation section email lists
-- CAALA (Consumer Attorneys Association of Los Angeles) — PI plaintiff firms
-- ABOTA (American Board of Trial Advocates) — trial lawyers
-- Local family law bar associations
-- LinkedIn outreach to managing partners at 2-20 attorney litigation firms
-- Reporter referrals ("which firms do you work with?")
+**Pilot success metric (proposed):**
+- 50 confirmed bookings across 20+ distinct law firms in 90 days
+- < 48 hours average time-to-CSR-match
 
-**Goal:** 15-25 firms across 3+ metro areas
+If we hit those numbers in the Bay Area, the LA expansion case writes itself.
 
-### Phase 3: Statewide scale (Month 4-6)
-- Expand to all metro areas
+**Outreach channels for Tier A:**
+- Family law and probate bar associations in Santa Clara, Contra Costa, Alameda
+- The Bay Area Legal Aid network (they're a co-plaintiff in the FVAP / ER lawsuit and care about this problem)
+- Reporter referrals from the launch-cohort CSRs ("which firms do you work with?")
+- LinkedIn outreach to managing partners at 2-20 attorney litigation firms in the three counties
+- Local court self-help centers (for SRL channel)
+
+### Phase 3: Tier B expansion (Month 4-6)
+Tier B counties (no-reporter status, but no expanded ER): **San Diego, Sacramento, San Bernardino, Santa Barbara, Kings, Solano, Fresno, Del Norte**. Sell the live-attendance SKU; audio-transcription is constrained to § 69957 minor matters until each county issues its own order or statewide legislation moves.
+
+| Metro / county | Est. litigation firms | Active CSRs (from CRB data) | Pilot priority |
+|---|---|---|---|
+| San Diego | ~300-400 | ~350 | **Tier B – live only** |
+| Sacramento | ~200-300 | ~250 | **Tier B – live only** |
+| Riverside / San Bernardino (IE) | ~150-200 | ~150 | **Tier B – live only** (San Bernardino) |
+| Santa Barbara | ~50-100 | ~50-80 | **Tier B – live only** |
+| Solano, Kings, Fresno, Del Norte | low individual counts; meaningful in aggregate | varies | **Tier B – live only** |
+
+**Goal:** 15-25 firms across Tier A + Tier B combined by end of Month 6.
+
+### Phase 4: Los Angeles (Month 6+)
+**Why LA waits, even though it's the largest TAM:**
+- 75+ family courtrooms across multiple courthouses – operationally heavy
+- Fragmented attorney community
+- Entrenched depo vendors who will react the moment they see traction
+- Active CSR union hostility to ER; we don't want our first 100 bookings to happen in a political-war market
+- LA is Tier A on case-type coverage and we *will* sell there – just not first
+
+Approach LA from a position of demonstrated demand built in the Bay Area. The pitch becomes "here's what we've delivered across three Bay Area counties; here's what we'd do for LA family-law practitioners."
+
+### Phase 5: Tier C + statewide scale (Year 2)
+Tier C counties (Orange, Riverside, SF, plus the long tail) still have court-provided reporters in our target case types. Demand here is workflow-driven (billing reconciliation, paneling, transcript correction handling), not access-driven. The pitch differs and the conversion cycle is longer.
+
 - Add legal conference presence (CAALA annual convention, CA State Bar conference)
 - Launch referral incentive for existing firms
 - Target solo litigators through search/content marketing
+- Re-verify Orange + Riverside + SF coverage status before each push
 
-**Goal:** 50+ firms statewide
+**Goal:** 50+ firms statewide by end of Year 1; Tier C expansion in Year 2.
 
 ---
 
@@ -170,7 +220,7 @@ Per Rosie (4/11): ~70% of attorneys functionally work for insurance companies. C
 
 - **One carrier relationship could unlock dozens/hundreds of panel firms.** Carriers maintain approved vendor lists and panel firm guidelines.
 - **The platform naturally generates the cost data carriers want:** spend per matter, cost by case type, turnaround metrics, statutory rate compliance.
-- **Transparent pricing is our pitch:** statutory rates + flat 12% fee vs. opaque agency markups. Easy for carriers to verify savings.
+- **Transparent pricing is our pitch:** open marketplace where CSRs set their rates + flat 12% attorney-side fee vs. opaque agency markups. Easy for carriers to verify spend per matter against their internal benchmarks.
 - **Rosie's insight:** "If our system saves money, maybe the carriers can pressure their firms to use us."
 
 ### How to approach

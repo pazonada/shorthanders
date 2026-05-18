@@ -1,8 +1,8 @@
 # Marketing plan: Phase 1 – CSR supply acquisition
 
 **Owner:** Aud (execution) + Rosie (warm intros)
-**Last updated:** 2026-04-11
-**Status:** Draft
+**Last updated:** 2026-05-18 (cohort priority added after strategy session)
+**Status:** Living doc
 **Budget:** ~$0 (sweat equity only)
 **Timeline:** Month 2 (after site build complete, Month 1)
 **Goal:** 100 CSRs signed up before marketing to law firms
@@ -13,8 +13,8 @@
 
 Dewey Sholes is a two-sided marketplace. Law firms won't use a platform with no reporters, and reporters won't stay on a platform with no jobs. We break the chicken-and-egg problem by loading supply first:
 
-1. Sign up CSRs at $99/yr, our standard rate. The hook is non-pricing: founder access, first dibs on new features, a say in the roadmap.
-2. Once we have enough supply to reliably fill jobs → market to firms
+1. Sign up CSRs at $99/yr. The hook is non-pricing: open marketplace where they set their own rates, keep 100%, founder access, first dibs on new features, a say in the roadmap.
+2. Once we have enough supply in our Tier A counties (Santa Clara, Contra Costa, Alameda) to reliably fill jobs → market to firms
 3. Firms post jobs → reporters get work → flywheel starts
 
 ## How many CSRs do we need?
@@ -22,22 +22,64 @@ Dewey Sholes is a two-sided marketplace. Law firms won't use a platform with no 
 **Target: 100 signed up before starting firm outreach.**
 
 Why 100 is enough:
-- ~80%+ of orders will be transcription, which can be done by **any CSR in the state** regardless of location
-- Only 2 CA counties prohibit audio recording (requiring live attendance with a CSR physically present)
-- At ~40% regularly active, 100 signups = ~40 CSRs checking the platform regularly = more than enough to cover a launch volume of a few jobs per week
-- We can start firm outreach in metros where we have the deepest live-attendance coverage while transcription jobs are statewide
+- A meaningful share of orders will be audio transcription, which can be done by **any qualified CSR (or transcriptionist) in the state** regardless of location – ER orders in LA, Santa Clara, Contra Costa, and (per Rosie) Alameda unlock this lane. See [`ca_court_recording_county_tiers.md`](ca_court_recording_county_tiers.md) for the county-by-county scope.
+- Live-attendance jobs require an in-person CSR; supply needs to be concentrated in the Tier A trio for the pilot to deliver.
+- At ~40% regularly active, 100 signups = ~40 CSRs checking the platform regularly = more than enough to cover a launch volume of a few jobs per week, *provided the right ~40 are in or near the Bay Area*.
 
-## The pitch to CSRs
+## CSR cohorts to capture (priority order)
 
-**Launch-window pitch:** "$99/yr for a listing. No agency middleman taking a cut – attorneys book you directly at the rate you set. Founding reporters get direct founder support, first dibs on new features, and a say in how the platform evolves."
+These are the four supply pools, ranked by how easily we can capture them and how well their profile matches our v1 demand mix. Added 2026-05-18 after the strategy session.
+
+### Cohort 1 – Recently retired or semi-retired CSRs (the gold mine)
+
+**Why they're the priority.** Over 70% of LASC's 315 court reporters are eligible to retire today, and similar age profiles exist statewide. These are people who don't want a full-time courthouse job but absolutely will take a 2-hour family law hearing on their schedule. They have CA certification, decades of experience, and zero loyalty to depo agencies.
+
+**Reach them through.** CCRA alumni lists, retirement-transition forums and Facebook groups, word-of-mouth via Rosie's network, court-employee directories cross-referenced against retirement dates.
+
+**Pitch emphasis.** "Flexible income. Keep 100% of what you charge. No exclusivity, no minimums, no calendar lock-in."
+
+### Cohort 2 – Freelance CSRs frustrated with depo agency cuts
+
+**Why.** Veritext and US Legal Support take 30–50% off the top. Dewey Sholes charges CSRs $0 transaction fee (just the $99/yr listing) and applies a 12% attorney-side fee instead. These CSRs already have the workflow, equipment, and pro tempore experience – they'll fill scheduling gaps with our court work between depo bookings.
+
+**Reach them through.** CSR Facebook groups (specifically the "complain about agencies" threads), CRB-list cold email targeted at known freelancers, Rosie's network, conference attendee lists.
+
+**Pitch emphasis.** "No platform cut – attorneys pay 12% on top of your rate, you keep all of yours. Set your rate, pick your jobs, use us between depo bookings."
+
+### Cohort 3 – Newly-licensed CSRs locked out of established networks
+
+**Why.** Only 39 licenses were issued in 2021, down from 96 in 2015. Only 8 court reporter training programs remain in California. These new licensees exist and they struggle to break into freelance work because incumbents have closed networks. This is our long-term supply pipeline.
+
+**Reach them through.** Direct partnerships with the remaining 8 training programs – guest speakers, post-graduation onboarding offers, a "first-year reporter" cohort.
+
+**Pitch emphasis.** "An open marketplace that doesn't require you to know anybody. License-verified, profile-listed, get matched on your first month."
+
+### Cohort 4 – Out-of-state CSRs and qualified transcriptionists (for the audio SKU)
+
+**Why.** Once an ER recording exists, the transcription work doesn't require a CA-licensed CSR being physically present – it requires someone qualified to produce a certified transcript from audio. This dramatically widens our labor pool and is where Dewey Sholes can scale supply faster than any competitor stuck in the live-only model.
+
+**Reach them through.** NCRA member lists, transcript-production specialist Facebook groups, LinkedIn outreach to certified transcriptionists, partnerships with transcription bureaus that want a CA channel.
+
+**Pitch emphasis.** "Work the CA court audio market remotely. Open marketplace, fast turnaround pay (2 business days after delivery), and you set your per-page rate."
+
+**Operational note.** Cohort 4 needs a separate workflow and SKU. Audio-transcription jobs route to this pool; live-attendance jobs do not.
+
+### What NOT to do in CSR recruiting
+
+Do not pitch this as anti-CSR or pro-ER. The court reporter union has accused LA Superior Court of misspending CSR recruitment funds and actively opposes electronic recording – that hostility will extend to us if we're not careful. Position Dewey Sholes as **pro-CSR-income**: we're helping reporters monetize the same work better, including new revenue from transcribing court audio that's currently going to nobody.
+
+## The pitch to CSRs (open marketplace framing)
+
+**Launch-window pitch:** "$99/yr for a listing. We don't take a cut of your bookings – you set your rate and keep 100% of it. Attorneys pay a 12% platform fee on top. Pick the jobs you want, deliver on your terms, get paid 2 business days after delivery."
 
 **Key selling points:**
-- Keep 100% of your stated rate (no agency markup)
-- $99/yr listing fee – billed annually, the same flat rate for everyone
-- Choose which jobs to accept – no exclusivity, no minimum volume
-- Platform handles payment collection (2 business days after delivery)
-- Your CSR license is verified automatically via CRB data – instant credibility
-- Founding-reporter perks: direct line to the founders, early access to new features, real influence on the roadmap
+- **You set your rate.** No platform-imposed rate cards, no statutory anchor, no hybrid bands. The platform shows a baseline as guidance for new reporters who want it, but you charge what you charge.
+- **Keep 100% of your stated rate.** No agency markup, no platform cut.
+- **$99/yr listing fee.** Billed annually, the same flat rate for everyone.
+- **Choose which jobs to accept.** No exclusivity, no minimum volume.
+- **Platform handles payment collection.** Paid 2 business days after delivery acceptance.
+- **Your CSR license is verified automatically via CRB data.** Quarterly re-verification – not a one-time check.
+- **Founding-reporter perks:** direct line to the founders, early access to new features, real influence on the roadmap.
 
 **Note on $99/yr willingness:** We're testing CSR willingness-to-pay at $99/yr in the Stage 1 survey (Q19, Q19a). If responses show $99 is a hard "no" for most respondents, revisit either the price, the perks bundle, or both before the broader outreach push. See [csr_survey_questions.md](csr_survey_questions.md).
 
