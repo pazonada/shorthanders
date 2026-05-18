@@ -61,8 +61,8 @@ The driving constraint is reliability. We've built a lot of policy and design su
 ### CSR rate-setting UI
 
 - **Settings → Your rates** with a simple input (or slider with no hard cap). CSR types in their per-page rate, half-day, full-day, trial-day, travel rate.
-- **Platform shows the baseline as guidance** ("most reporters charge around $X"). No ±20% / ±50% bands. No matching-priority penalty. Simplified Option A from the pricing discussion.
-- **"Need help setting rates?" helper next to each rate field.** Opens a popover showing median + 25–75th percentile range for comparable reporters, with a case-type filter (WC, family law, civil, probate, criminal, etc.) and a cascade-scope label (county → adjacent counties → statewide). Cold-start uses the research baselines (`project_rate_recalibration.md` numbers) labeled as platform estimate until enough reporter data exists. Full spec: `governance-and-process/rate_guidance_helper_policy.md`.
+- **Per-field microcopy as guidance:** next to each rate input, a one-liner like "Most CA reporters charge around $X – you set your rate." Sourced from `project_rate_recalibration.md` baselines. No popover, no aggregation, no county logic – just static copy that we update by hand if the baseline shifts. No ±20% / ±50% bands. No matching-priority penalty. Simplified Option A from the pricing discussion.
+- **Interactive rate-guidance helper:** deferred to v1.1 (see "What v1 cuts" below).
 
 ### Notifications
 
@@ -106,6 +106,7 @@ The driving constraint is reliability. We've built a lot of policy and design su
 ### Pricing complexity
 
 - **Hybrid ±20% standard / ±50% opt-in expanded rate-setting band.** Cut. Simplified to "CSR sets their rate, platform shows a baseline as guidance." No matching-priority penalty for "expanded band" rates because there is no band.
+- **Interactive rate-guidance helper** ("Need help setting rates?" popover with median + 25–75th percentile range of comparable reporters in the same region, with a case-type filter and cascade scope). **Deferred to v1.1.** The full spec stays in `governance-and-process/rate_guidance_helper_policy.md`. Reason for cut: at v1 launch we have zero reporter data, and even after the Bay Area pilot (50 bookings, 20 firms in 90 days) we'd likely have ~50–100 CSRs total – mostly concentrated in Tier A counties – so the cascade would fall back to "statewide" for most signups. The build cost (daily snapshot job, per-county/rate-type/case-type aggregations, county-adjacency table, percentile computation, snapshot storage) is real (1–2 weeks of engineering) for a feature whose value doesn't kick in until N is meaningful in each county. v1 ships static per-field microcopy instead; the helper promotes when there are enough reporters in enough counties to make the regional data honest. **Prototype includes a v1.1 preview** of the helper for stakeholder demos – clearly labeled as such.
 - **WC-specific pricing model** (O+2, lower per-diem, higher page rate, big minimum, in-person/extra-device add-ons). Cut. Don't recruit WC supply at launch; or if we do, accept that some WC CSRs will take a pay cut on DS vs. their direct work. Add a WC pricing model in v2 once we know how much WC demand exists.
 - **Travel-time billing** with CSR-defined free radius + per-hour rate. Cut. Defer; CSRs negotiate travel ad hoc with attorneys for v1, or absorb into their per-diem.
 

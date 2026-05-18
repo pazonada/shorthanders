@@ -1,8 +1,10 @@
 # Rate-guidance helper policy
 
 **Owner:** Aud
-**Last updated:** 2026-05-18
-**Status:** v1 spec; the policy that governs the "Need help setting rates?" feature in the CSR signup + settings flow
+**Last updated:** 2026-05-18 (demoted from v1 to v1.1)
+**Status:** **v1.1 spec.** The interactive helper is deferred from v1 because at launch we have zero reporter data, and even after the Bay Area pilot we'd have ~50–100 CSRs total. The cascade would fall back to "statewide" for most signups and the data wouldn't be honest. v1 ships static per-field microcopy ("Most CA reporters charge around $X – you set your rate") instead; the popover helper promotes to live when there are enough reporters in enough counties to make the regional data meaningful. **Trigger for promotion (proposed):** ≥ 20 CSRs in at least 3 counties with rates filled in.
+
+This doc is the spec for v1.1. The prototype includes a preview implementation of the helper (Settings → Your rates, CSR view) labeled as a v1.1 preview – useful for stakeholder demos, not a v1 production feature.
 
 The open-marketplace positioning (`research/marketing_strategy_master.md`) says we don't dictate what CSRs charge – they set their own rates and keep 100% of them. The rate-guidance helper is how we make that pitch credible without leaving new CSRs to guess. The platform looks at what comparable reporters in the same region are charging and surfaces median + range as a reference. The CSR makes the call.
 

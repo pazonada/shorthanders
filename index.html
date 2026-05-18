@@ -7584,12 +7584,29 @@ function SettingsPage() {
                           borderRadius: 12,
                           padding: 18,
                           marginBottom: 14,
+                          position: "relative",
                         }}>
+                          <span style={{
+                            position: "absolute",
+                            top: 12,
+                            right: 12,
+                            fontSize: 10,
+                            fontWeight: 700,
+                            letterSpacing: "0.08em",
+                            textTransform: "uppercase",
+                            padding: "3px 8px",
+                            borderRadius: 999,
+                            background: "#EDE9FE",
+                            color: "#6D28D9",
+                            border: "1px solid #DDD6FE",
+                          }}>
+                            v1.1 preview
+                          </span>
                           <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 12, flexWrap: "wrap"}}>
-                            <div style={{maxWidth: 460}}>
+                            <div style={{maxWidth: 460, paddingRight: 90}}>
                               <p style={{fontSize: 14, fontWeight: 700, color: "#0F172A", marginBottom: 4}}>What other reporters are charging</p>
                               <p style={{fontSize: 12, color: "#64748B", lineHeight: 1.5, margin: 0}}>
-                                Median rate and the 25–75th percentile range for comparable reporters in your region. This is informational only – you set your own rate and keep 100% of it.
+                                Median rate and the 25–75th percentile range for comparable reporters in your region. This is informational only – you set your own rate and keep 100% of it. <strong>Coming in v1.1</strong> once enough reporters have joined the platform to make the regional data meaningful.
                               </p>
                             </div>
                             <label style={{fontSize: 12, color: "#475569", display: "flex", flexDirection: "column", gap: 4}}>
@@ -7695,31 +7712,31 @@ function SettingsPage() {
                             <div>
                               <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Per page (original)</div>
                               <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.ratePerPage.toFixed(2)}</div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>baseline ${PRICING.ratePerPage.toFixed(2)}</div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Most charge ~${PRICING.ratePerPage.toFixed(2)}</div>
                             </div>
                             <div>
                               <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Half-day live</div>
                               <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.attendanceHalfDay.toLocaleString()}</div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>baseline ${PRICING.attendanceHalfDay.toLocaleString()}</div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Most charge ~${PRICING.attendanceHalfDay.toLocaleString()}</div>
                             </div>
                             <div>
                               <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Full-day live</div>
                               <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.attendanceFullDay.toLocaleString()}</div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>baseline ${PRICING.attendanceFullDay.toLocaleString()}</div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Most charge ~${PRICING.attendanceFullDay.toLocaleString()}</div>
                             </div>
                             <div>
                               <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Trial day</div>
                               <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.attendanceTrialDay.toLocaleString()}</div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>baseline ${PRICING.attendanceTrialDay.toLocaleString()}</div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Most charge ~${PRICING.attendanceTrialDay.toLocaleString()}</div>
                             </div>
                             <div>
                               <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Travel time</div>
                               <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.travelRatePerHour}/hr</div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>baseline ${PRICING.travelRatePerHour}/hr</div>
+                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Most charge ~${PRICING.travelRatePerHour}/hr</div>
                             </div>
                           </div>
                           <p style={{fontSize: 12, color: "var(--text-muted, #64748B)", marginTop: 12, lineHeight: 1.5}}>
-                            The 12% platform fee attorneys pay is calculated on top of your rate – it never comes out of your earnings. Need to set a rate outside ±50%? Email founders@deweysholes.com.
+                            These reflect what most CA reporters charge today – you set your own rate, and you keep 100% of it. The 12% platform fee attorneys pay is calculated on top of your rate – it never comes out of your earnings.
                           </p>
                         </div>
                       );
