@@ -2768,21 +2768,15 @@ const PRICING = {
   attendanceFullDay: 1650,
   attendanceTrialDay: 2310,
   travelRatePerHour: 50,
-  // Per AB-5 §2778, CSRs set their own rate. V1 ships with a hybrid band:
-  // - Standard band (default UI slider range): ±20% of platform baseline.
-  //   CSRs in this band get standard matching-algorithm priority.
-  // - Expanded band (opt-in): ±50% of platform baseline. CSRs who explicitly
-  //   opt into the expanded band can set rates wider, but the matching
-  //   algorithm deprioritizes them (they get fewer auto-match offers).
-  // - Anything outside ±50%: handled by direct email negotiation.
-  // See governance-and-process/rating_and_matching_policy.md.
-  rateBandStandardLow: 0.80,
-  rateBandStandardHigh: 1.20,
-  rateBandExpandedLow: 0.50,
-  rateBandExpandedHigh: 1.50,
-  // Legacy names kept as aliases for backward compatibility within this file.
-  rateBandLow: 0.80,
-  rateBandHigh: 1.20,
+  // Per CA Labor Code §2778, CSRs set their own rate. V1 is an open marketplace:
+  // CSRs publish whatever rate they want per line item. The platform shows the
+  // baselines above as guidance copy ("Most CA reporters charge ~$X") so new
+  // reporters have an anchor. There is no hybrid band, no slider cap, no
+  // matching-priority penalty for "off-band" rates. Mock reporters elsewhere in
+  // this file still carry a `rateMultiplier` field which getCSRRates() uses to
+  // compute display rates against the baselines above; that's an implementation
+  // detail of the prototype's mock data and will go away when we move to a real
+  // per-rate persistence model (post-v1.1).
 };
 
 // Compute the effective rates for a specific CSR. If no CSR is passed (or the
@@ -2802,13 +2796,6 @@ function getCSRRates(reporter) {
     travelRatePerHour: Math.round(PRICING.travelRatePerHour * mult),
   };
 }
-// Display helper: "+5%", "−10%", or "baseline" depending on multiplier.
-function rateBandLabel(mult) {
-  if (typeof mult !== "number" || mult === 1.0) return "Baseline";
-  const pct = Math.round((mult - 1.0) * 100);
-  return (pct > 0 ? "+" : "") + pct + "% from baseline";
-}
-
 // ─── Notifications Mock Data ─────────────────────────────────────
 const MOCK_NOTIFICATIONS = [
   { id: "n1", type: "job", title: "Job accepted", message: "Reporter Sarah Chen accepted your job for Martinez v. Pacific Holdings.", time: "2 hours ago", read: false, route: "#/dashboard", icon: "checkCircle", color: "#059669", bg: "#D1FAE5" },
@@ -4600,7 +4587,7 @@ function OrderFlow() {
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
                 <h2 style={{fontSize: 24}}>When do you need this?</h2>
-                <p style={{color: "var(--text-secondary, #64748B)"}}>Your deadline determines the turnaround tier and pricing. All pricing is based on CA statutory rates.</p>
+                <p style={{color: "var(--text-secondary, #64748B)"}}>Your deadline determines the turnaround tier. The reporter who claims your job sets their own per-page rate; the platform shows the regional baseline as guidance.</p>
               </div>
 
               {/* Deadline selection */}
@@ -4617,7 +4604,7 @@ function OrderFlow() {
                     <div className="mc-icon"><Icon name="clock" size={18} /></div>
                     <div>
                       <div className="mc-text">No rush (up to 45 days)</div>
-                      <div className="mc-sub">Lowest price – 15% below statutory rate</div>
+                      <div className="mc-sub">Lowest price – 15% below standard rate</div>
                     </div>
                   </div>
                 </div>
@@ -4664,7 +4651,7 @@ function OrderFlow() {
                 <div style={{display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 24}}>
                   {[
                     { key: "rush", label: "Rush", time: "1-2 business days", note: "1.5x rate", color: "#DC2626" },
-                    { key: "standard", label: "Expedited", time: "3-5 business days", note: "Statutory rate", color: "#2563EB" },
+                    { key: "standard", label: "Expedited", time: "3-5 business days", note: "Standard rate", color: "#2563EB" },
                     { key: "economy", label: "Standard", time: "6+ business days", note: "15% savings", color: "#059669" },
                   ].map(t => {
                     const isActive = effectiveTurnaround === t.key;
@@ -4689,7 +4676,7 @@ function OrderFlow() {
                   return <>
                     {form.type === "live" && <div className="price-line"><span>Attendance fee ({attendanceLabel})</span><strong>${attendanceFee.toLocaleString()}</strong></div>}
                     <div className="price-line"><span>Estimated pages</span><strong>{est.low} – {est.high} pages</strong></div>
-                    <div className="price-line"><span>Statutory rate (per page)</span><strong>${PRICING.ratePerPage.toFixed(2)}</strong></div>
+                    <div className="price-line"><span>Baseline rate (per page)</span><strong>${PRICING.ratePerPage.toFixed(2)}</strong></div>
                     <div className="price-line"><span>Turnaround ({tierLabel(effectiveTurnaround)})</span><strong>{est.mult === 1 ? "No adjustment" : est.mult > 1 ? "+" + ((est.mult - 1) * 100).toFixed(0) + "%" : "-" + ((1 - est.mult) * 100).toFixed(0) + "%"}</strong></div>
                     <div className="price-line">
                       <span>Platform fee ({(PRICING.platformFee * 100).toFixed(0)}%)</span>
@@ -4700,7 +4687,7 @@ function OrderFlow() {
                       <span>${(attendanceFee + est.lowCost * (1 + PRICING.platformFee)).toLocaleString()} – ${(attendanceFee + est.highCost * (1 + PRICING.platformFee)).toLocaleString()}</span>
                     </div>
                     <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
-                      {form.type === "live" ? "Attendance fees set significantly below typical agency rates. Reporter keeps 100%. " : ""}Final cost based on certified page count. Baseline transcript rate ${PRICING.ratePerPage.toFixed(2)}/page; reporters set their own rate (standard ±20% band, with some opting into a wider band that gets lower matching priority). After you submit, we silently invite qualified reporters in widening batches. The moment one accepts, we'll show you their profile + the exact cost. You have a window to confirm or veto with a reason – up to 3 vetoes per order before the next match auto-confirms.
+                      {form.type === "live" ? "Attendance fees are set by each reporter; the platform shows the baseline ('most reporters charge around $X') as guidance. Reporter keeps 100%. " : ""}Final cost based on certified page count. Most CA reporters charge around ${PRICING.ratePerPage.toFixed(2)}/page, but every reporter sets their own number. After you submit, your order posts to the job board and qualified reporters can claim it. The moment one claims, you'll see their profile + the exact cost. You have a window to confirm or veto with a reason – up to 3 vetoes per order before the next match auto-confirms.
                     </p>
                   </>;
                 })()}
@@ -7401,8 +7388,16 @@ function SettingsPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState("");
   const [settingsRole, setSettingsRole] = useState("attorney"); // toggle for prototype demo
-  const [csrRateMultiplier, setCsrRateMultiplier] = useState(1.05); // CSR rate-band setting (default = Sarah Chen's mock value)
-  const [csrExpandedBand, setCsrExpandedBand] = useState(false); // Opt-in expanded ±50% band (with matching-priority warning)
+  // CSR's published rates. Per the open-marketplace model: each CSR sets their own number per line item.
+  // Defaults shown here are Sarah Chen's mock values (~5% above the CA baseline) so the demo doesn't look generic.
+  const [csrRates, setCsrRates] = useState({
+    perPage: 5.25,
+    halfDay: 1100,
+    fullDay: 1750,
+    trialDay: 2400,
+    travelPerHour: 55,
+  });
+  const updateCsrRate = (key, value) => setCsrRates(r => ({...r, [key]: value}));
   const [csrRateHelperOpen, setCsrRateHelperOpen] = useState(false); // "Need help setting rates?" popover visibility
   const [csrRateHelperCaseType, setCsrRateHelperCaseType] = useState("all"); // Case-type filter inside the popover
 
@@ -7533,7 +7528,7 @@ function SettingsPage() {
                   <div className="settings-section">
                     <h3><Icon name="dollarSign" size={14} /> Your rates</h3>
                     <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 8, lineHeight: 1.6}}>
-                      Set your rate using the slider below. Your rate appears on your public profile and in the attorney's match preview, so they see exactly what they'll pay before they confirm. Per CA Labor Code §2778, you have the right to set or negotiate your own rates – this is how we expose that.
+                      Set your own rate for each line item below. Your rates appear on your public profile and on the job listings attorneys see before they confirm. Per CA Labor Code §2778, you have the right to set or negotiate your own rates – this is how we expose that.
                     </p>
                     <button
                       type="button"
@@ -7663,77 +7658,38 @@ function SettingsPage() {
                       );
                     })()}
                     {(() => {
-                      const mult = csrRateMultiplier;
-                      const sliderMin = csrExpandedBand ? PRICING.rateBandExpandedLow : PRICING.rateBandStandardLow;
-                      const sliderMax = csrExpandedBand ? PRICING.rateBandExpandedHigh : PRICING.rateBandStandardHigh;
-                      const sliderMinPct = Math.round((sliderMin - 1.0) * 100);
-                      const sliderMaxPct = Math.round((sliderMax - 1.0) * 100);
-                      const r = {
-                        ratePerPage: PRICING.ratePerPage * mult,
-                        attendanceHalfDay: Math.round(PRICING.attendanceHalfDay * mult),
-                        attendanceFullDay: Math.round(PRICING.attendanceFullDay * mult),
-                        attendanceTrialDay: Math.round(PRICING.attendanceTrialDay * mult),
-                        travelRatePerHour: Math.round(PRICING.travelRatePerHour * mult),
-                      };
-                      const pct = Math.round((mult - 1.0) * 100);
-                      const outsideStandard = mult < PRICING.rateBandStandardLow || mult > PRICING.rateBandStandardHigh;
-                      const pctColor = outsideStandard ? "#9A3412" : pct > 0 ? "#92400E" : pct < 0 ? "#065F46" : "var(--text-muted, #94A3B8)";
-                      const pctBg = outsideStandard ? "#FED7AA" : pct > 0 ? "#FEF3C7" : pct < 0 ? "#D1FAE5" : "var(--bg-muted, #F1F5F9)";
+                      // Open-marketplace rate-setting: per-line-item numeric inputs.
+                      // Replaces the deprecated hybrid ±20% / ±50% band slider (cut in MVP v1).
+                      const fields = [
+                        {key: "perPage",       label: "Per page (original)",      baseline: PRICING.ratePerPage,        suffix: "",    step: "0.25", decimals: 2},
+                        {key: "halfDay",       label: "Half-day live attendance", baseline: PRICING.attendanceHalfDay,  suffix: "",    step: "25",   decimals: 0},
+                        {key: "fullDay",       label: "Full-day live attendance", baseline: PRICING.attendanceFullDay,  suffix: "",    step: "25",   decimals: 0},
+                        {key: "trialDay",      label: "Trial day",                baseline: PRICING.attendanceTrialDay, suffix: "",    step: "25",   decimals: 0},
+                        {key: "travelPerHour", label: "Travel time (per hour)",   baseline: PRICING.travelRatePerHour,  suffix: "/hr", step: "5",    decimals: 0},
+                      ];
+                      const fmtBaseline = (b, decimals) => decimals === 2 ? "$" + b.toFixed(2) : "$" + b.toLocaleString();
                       return (
                         <div>
-                          <div style={{display: "flex", alignItems: "center", gap: 16, marginBottom: 12, flexWrap: "wrap"}}>
-                            <span style={{fontSize: 12, fontWeight: 700, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em"}}>{sliderMinPct}%</span>
-                            <input type="range" min={sliderMin} max={sliderMax} step="0.01" value={mult} onChange={e => setCsrRateMultiplier(parseFloat(e.target.value))} style={{flex: 1, minWidth: 200, accentColor: outsideStandard ? "#EA580C" : "#059669"}} />
-                            <span style={{fontSize: 12, fontWeight: 700, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em"}}>+{sliderMaxPct}%</span>
-                            <span style={{fontSize: 11, padding: "4px 10px", borderRadius: 999, background: pctBg, color: pctColor, fontWeight: 700, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.06em"}}>{pct === 0 ? "BASELINE" : (pct > 0 ? "+" : "") + pct + "%"}</span>
-                          </div>
-
-                          {/* Band-mode toggle */}
-                          <div style={{display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: csrExpandedBand ? "#FFF7ED" : "var(--bg-muted, #F8FAFC)", border: "1px solid " + (csrExpandedBand ? "#FED7AA" : "var(--border, #E2E8F0)"), borderRadius: 10, marginBottom: 14}}>
-                            <input type="checkbox" id="expanded-band-toggle" checked={csrExpandedBand} onChange={e => {
-                              const expanding = e.target.checked;
-                              setCsrExpandedBand(expanding);
-                              // If collapsing back to standard band, snap multiplier back into ±20% range
-                              if (!expanding && (csrRateMultiplier < PRICING.rateBandStandardLow || csrRateMultiplier > PRICING.rateBandStandardHigh)) {
-                                setCsrRateMultiplier(Math.min(PRICING.rateBandStandardHigh, Math.max(PRICING.rateBandStandardLow, csrRateMultiplier)));
-                              }
-                            }} style={{flexShrink: 0, accentColor: "#EA580C"}} />
-                            <label htmlFor="expanded-band-toggle" style={{flex: 1, fontSize: 13, color: "var(--text, #0F172A)", cursor: "pointer", lineHeight: 1.5}}>
-                              <strong>Expand to ±50% band</strong>
-                              <span style={{display: "block", fontSize: 12, color: "var(--text-secondary, #64748B)", marginTop: 2}}>
-                                {csrExpandedBand
-                                  ? "Heads up: rates outside ±20% are still allowed, but you'll get fewer auto-match offers. The matching algorithm prioritizes reporters within the standard band."
-                                  : "Lets you set rates outside the standard ±20% band. Note: rates outside the standard band get lower priority in the auto-match algorithm."}
-                              </span>
-                            </label>
-                          </div>
-
-                          <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, padding: 16, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10}}>
-                            <div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Per page (original)</div>
-                              <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.ratePerPage.toFixed(2)}</div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Most charge ~${PRICING.ratePerPage.toFixed(2)}</div>
-                            </div>
-                            <div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Half-day live</div>
-                              <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.attendanceHalfDay.toLocaleString()}</div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Most charge ~${PRICING.attendanceHalfDay.toLocaleString()}</div>
-                            </div>
-                            <div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Full-day live</div>
-                              <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.attendanceFullDay.toLocaleString()}</div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Most charge ~${PRICING.attendanceFullDay.toLocaleString()}</div>
-                            </div>
-                            <div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Trial day</div>
-                              <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.attendanceTrialDay.toLocaleString()}</div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Most charge ~${PRICING.attendanceTrialDay.toLocaleString()}</div>
-                            </div>
-                            <div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>Travel time</div>
-                              <div style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>${r.travelRatePerHour}/hr</div>
-                              <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Most charge ~${PRICING.travelRatePerHour}/hr</div>
-                            </div>
+                          <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))", gap: 12, padding: 16, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 10}}>
+                            {fields.map(f => (
+                              <div key={f.key}>
+                                <label htmlFor={"rate-" + f.key} style={{display: "block", fontSize: 11, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6}}>{f.label}</label>
+                                <div style={{display: "flex", alignItems: "center", gap: 4, marginBottom: 4, background: "#fff", border: "1px solid var(--border, #E2E8F0)", borderRadius: 6, padding: "4px 10px"}}>
+                                  <span style={{fontSize: 16, fontWeight: 700, color: "var(--text-muted, #64748B)"}}>$</span>
+                                  <input
+                                    id={"rate-" + f.key}
+                                    type="number"
+                                    min="0"
+                                    step={f.step}
+                                    value={csrRates[f.key]}
+                                    onChange={e => updateCsrRate(f.key, e.target.value === "" ? 0 : parseFloat(e.target.value))}
+                                    style={{flex: 1, minWidth: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)", border: "none", outline: "none", background: "transparent", padding: 0, width: "100%"}}
+                                  />
+                                  {f.suffix && <span style={{fontSize: 13, color: "var(--text-muted, #64748B)"}}>{f.suffix}</span>}
+                                </div>
+                                <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)"}}>Most charge ~{fmtBaseline(f.baseline, f.decimals)}{f.suffix}</div>
+                              </div>
+                            ))}
                           </div>
                           <p style={{fontSize: 12, color: "var(--text-muted, #64748B)", marginTop: 12, lineHeight: 1.5}}>
                             These reflect what most CA reporters charge today – you set your own rate, and you keep 100% of it. The 12% platform fee attorneys pay is calculated on top of your rate – it never comes out of your earnings.
@@ -8209,7 +8165,7 @@ function ReporterOnboarding() {
       <div className="reporter-onboarding" style={{background: "var(--bg-page, #F8FAFC)"}}>
         <div className="reporter-step-header">
           <h2>Welcome aboard</h2>
-          <p>Dewey Sholes is currently a solo-CSR platform. You'll get your own listing on the marketplace and keep 100% of the statutory rate on every job.</p>
+          <p>Dewey Sholes is currently a solo-CSR platform. You'll get your own listing on the marketplace and keep 100% of your published rate on every job.</p>
         </div>
 
         <div style={{maxWidth: 520, margin: "0 auto", padding: 20, background: "var(--bg-card, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 14}}>
@@ -8226,7 +8182,7 @@ function ReporterOnboarding() {
             <li>Full profile on the marketplace</li>
             <li>Push notification job alerts</li>
             <li>2-business-day direct deposit</li>
-            <li>Keep 100% of the statutory rate on every job</li>
+            <li>Keep 100% of your stated rate on every job</li>
           </ul>
         </div>
 
@@ -8735,7 +8691,7 @@ function ReporterOnboarding() {
         <div className="form-group"><label className="form-label">Password</label><input className="form-input" type="password" placeholder="Create a password" value={form.password} onChange={e => update("password", e.target.value)} /><p className="form-helper">At least 8 characters with one number and one special character.</p></div>
         <div className="info-callout" style={{marginTop: 24}}>
           <div className="callout-icon"><Icon name="shield" size={16} /></div>
-          <p>By joining Dewey Sholes, you confirm that you are an independent professional, not an employee of Dewey Sholes or its parent company. You choose which jobs to accept, set your own schedule, set or negotiate your own rates (standard ±20% band via the slider; opt-in expanded ±50% band with reduced matching priority; anything beyond, email us), and control how you perform your work. You also agree to our Terms of service and Privacy policy.</p>
+          <p>By joining Dewey Sholes, you confirm that you are an independent professional, not an employee of Dewey Sholes or its parent company. You choose which jobs to accept, set your own schedule, set your own rates per line item with no platform-imposed cap, and control how you perform your work. The platform shows what most reporters in your region charge as guidance only – the number is yours. You also agree to our Terms of service and Privacy policy.</p>
         </div>
       </>)}
 
@@ -10039,7 +9995,7 @@ function RoleSelectorModal({ onClose }) {
               <Icon name="mic" size={20} color="#059669" />
             </div>
             <div style={{fontSize: 15, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 4}}>I'm a court reporter</div>
-            <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)", lineHeight: 1.5}}>Get matched with jobs, keep 100% of the statutory rate.</div>
+            <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)", lineHeight: 1.5}}>Browse open jobs and claim what fits. Set your own rates, keep 100%.</div>
           </button>
         </div>
         <div style={{textAlign: "center", marginTop: 20, fontSize: 13, color: "var(--text-secondary, #64748B)"}}>
@@ -10264,7 +10220,7 @@ function LandingPage() {
                 <em>finally simple.</em>
               </h1>
               <p className="lede">
-                Dewey Sholes matches attorneys with certified court reporters for <strong>public court hearings</strong> – live attendance or post-hearing audio transcription. Transparent statutory pricing, verified credentials, and delivery you can count on.
+                Dewey Sholes matches attorneys with certified court reporters for <strong>public court hearings</strong> – live attendance or post-hearing audio transcription. An open marketplace where reporters set their own rates, with verified credentials and delivery you can count on.
               </p>
               <div className="hero-actions">
                 <a href="#/order" className="btn btn-primary">
@@ -10279,7 +10235,7 @@ function LandingPage() {
               <div className="trust">
                 <span><i className="dot sage"></i> CSR LICENSE-VERIFIED</span>
                 <span><i className="dot"></i> RUSH JOBS AVAILABLE</span>
-                <span><i className="dot ochre"></i> STATUTORY TRANSCRIPTION PRICING</span>
+                <span><i className="dot ochre"></i> CSR-SET TRANSCRIPTION PRICING</span>
                 <span><i className="dot plum"></i> LOW RATES FOR LIVE ATTENDANCE</span>
               </div>
             </div>
@@ -10415,7 +10371,7 @@ function LandingPage() {
               </ul>
               <div className="usecase-pricecallout">
                 <strong>${PRICING.attendanceHalfDay}/half day · ${PRICING.attendanceFullDay}/full day · ${PRICING.attendanceTrialDay}/trial day</strong>
-                <div className="sub" style={{fontSize: 11, color: "var(--brand)", marginTop: 2}}>Below typical agency rates + statutory transcript rate</div>
+                <div className="sub" style={{fontSize: 11, color: "var(--brand)", marginTop: 2}}>Below typical agency rates + transparent CSR-set transcript pricing</div>
               </div>
             </article>
 
@@ -10960,10 +10916,10 @@ function FaqPage() {
       { id: "a1", q: "How do I place a transcript order?", a: "Click \"Order a transcript\" from the homepage, choose live attendance or post-hearing transcription, enter your case details, set your delivery deadline, and submit. Your deadline determines the turnaround tier and price automatically. We'll match you with a qualified reporter, usually within hours." },
       { id: "a2", q: "How does pricing work?", a: "Transcript pricing starts at $5.00 per page baseline. Each reporter sets their own rate – most are within a ±20% band of platform defaults (our standard matching band), and some opt into a wider ±50% band that gets lower priority in auto-matching. The exact rate depends on which reporter accepts the job. The platform fee is a flat 12% on top, regardless of the reporter. Your delivery deadline determines the turnaround tier: Rush (1-2 business days, 1.5x rate), Expedited (3-5 business days, baseline rate), or Standard (6+ business days, 15% savings). After you submit an order, the system invites qualified reporters in widening batches (starting with your favorites, then small general-pool batches). The moment one accepts, we show you their profile + exact cost – you have 4 hours (1 hour for Rush) to confirm or veto with a reason. Up to 3 vetoes per order; after that the next match auto-confirms." },
       { id: "a3", q: "Can I split the cost with other parties?", a: "Yes. When placing an order, toggle \"Split cost with other parties\" and add co-paying attorneys by name and email. Each party receives a secure payment link. The job is only posted to reporters once all parties have paid – no chasing, no partial payments. Co-payers don't need a Dewey Sholes account." },
-      { id: "a4", q: "What if I'm unhappy with a transcript?", a: "You can request corrections within 90 days of delivery. Specify the pages and describe the issue, and the reporter will be notified to upload a corrected version. No additional cost for corrections – the reporter's statutory rate covers delivering an accurate transcript." },
+      { id: "a4", q: "What if I'm unhappy with a transcript?", a: "You can request corrections within 90 days of delivery. Specify the pages and describe the issue, and the reporter will be notified to upload a corrected version. No additional cost for corrections – the reporter's published rate covers delivering an accurate transcript." },
       { id: "a5", q: "How do I know if a reporter is any good?", a: "Every reporter has a quality rating (1-5 stars, rated by attorneys) and a timeliness score (auto-calculated from their delivery history). You can also read written feedback from other attorneys on the reporter's profile. Reporters with consistently high ratings appear first in search results." },
       { id: "a6", q: "Can I choose a specific reporter?", a: "Yes. Browse reporters by jurisdiction, specialty, language, and rating. Save favorites so they appear first when you place future orders. You can also let the platform auto-match you with the best available reporter for your case type and jurisdiction." },
-      { id: "a7", q: "What turnaround options are available?", a: "We offer three tiers based on your deadline: Rush (1\u20132 business days, 1.5x rate), Expedited (3\u20135 business days, statutory rate), and Standard (6+ business days, 15% savings). You set your need-by date and the system calculates your tier and price automatically. If you don't have a specific deadline, transcripts are due within 45 calendar days." },
+      { id: "a7", q: "What turnaround options are available?", a: "We offer three tiers based on your deadline: Rush (1\u20132 business days, 1.5x rate), Expedited (3\u20135 business days, standard rate), and Standard (6+ business days, 15% savings). You set your need-by date and the system calculates your tier and price automatically. If you don't have a specific deadline, transcripts are due within 45 calendar days." },
     ]},
     { title: "For reporters", items: [
       { id: "r1", q: "How do I get started as a reporter on Dewey Sholes?", a: "Sign up through our reporter onboarding flow. You'll need to provide your CSR license number, reporting method, certifications, and preferences. We verify your credentials with the California Court Reporters Board before activating your profile." },
@@ -11336,7 +11292,7 @@ function RequestCopyPage() {
               </div>
               <div className="form-group" style={{marginBottom: 16}}>
                 <label className="form-label">Message to the reporter <span style={{fontWeight: 400, color: "#94A3B8"}}>(optional)</span></label>
-                <textarea className="form-input" rows={3} placeholder="e.g. Please send an electronic copy. Happy to pay statutory copy rate." value={requesterMessage} onChange={e => setRequesterMessage(e.target.value)} style={{resize: "vertical"}} />
+                <textarea className="form-input" rows={3} placeholder="e.g. Please send an electronic copy. Happy to pay your published copy rate." value={requesterMessage} onChange={e => setRequesterMessage(e.target.value)} style={{resize: "vertical"}} />
               </div>
 
               <div style={{padding: 14, background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: 10, marginBottom: 16, fontSize: 13, color: "#78350F", lineHeight: 1.6}}>
@@ -11420,7 +11376,7 @@ function TRFPage() {
     { label: "Maximum reimbursement", value: "$2,500 per case" },
     { label: "Processing time", value: "8-10 weeks" },
     { label: "Who qualifies", value: "Parties with a court-approved fee waiver (FW-001 / FW-003)" },
-    { label: "What's covered", value: "Original transcript at statutory rates" },
+    { label: "What's covered", value: "Original transcript at the reporter's published rate" },
     { label: "Fund source", value: "California's Trial Court Trust Fund (~$300K/year)" },
   ];
 
@@ -11486,7 +11442,7 @@ function TRFPage() {
             <div>
               <p style={{fontSize: 14, fontWeight: 700, color: "#92400E", marginBottom: 6}}>Important</p>
               <p style={{fontSize: 14, color: "#78350F", lineHeight: 1.7}}>
-                The transcript must be paid for upfront. TRF reimburses after delivery – Dewey Sholes does not float TRF costs. Your firm pays the statutory rate at checkout, and the state reimburses you directly.
+                The transcript must be paid for upfront. TRF reimburses after delivery – Dewey Sholes does not float TRF costs. Your firm pays the transcript cost at checkout, and the state reimburses you directly (up to the TRF cap).
               </p>
             </div>
           </div>
@@ -11869,7 +11825,7 @@ function ForReportersPage() {
           <div className="section-header">
             <div className="section-eyebrow" style={{color: "var(--ochre-deep)"}}>Pricing</div>
             <h2 className="section-title">Reporter <em>listing plans.</em></h2>
-            <p className="section-lede">No agency taking 50–85% of your earnings. List your practice, accept jobs directly, and keep 100% of the statutory rate on every transcript.</p>
+            <p className="section-lede">No agency taking 50–85% of your earnings. List your practice, accept jobs directly, and keep 100% of the rate you set on every transcript.</p>
           </div>
           <div className="reporter-tiers hybrid-tiers">
             <div className="reporter-tier-card featured">
@@ -11886,7 +11842,7 @@ function ForReportersPage() {
                 <li><Icon name="checkCircle" size={16} color="#4F6F4D" />Push notification job alerts</li>
                 <li><Icon name="checkCircle" size={16} color="#4F6F4D" />2-business-day direct deposit</li>
                 <li><Icon name="checkCircle" size={16} color="#4F6F4D" />CSR license auto-verification</li>
-                <li><Icon name="checkCircle" size={16} color="#4F6F4D" />Keep 100% of statutory rate – no agency cut</li>
+                <li><Icon name="checkCircle" size={16} color="#4F6F4D" />Keep 100% of the rate you set – no agency cut</li>
               </ul>
             </div>
             <div className="reporter-tier-card coming-soon">
@@ -11940,7 +11896,7 @@ function PricingPage() {
             <div className="section-eyebrow" style={{color: "var(--ochre-deep)"}}>Pricing</div>
             <h2 className="section-title">Transparent rates, <em>no hidden line items.</em></h2>
             <p className="section-lede" style={{maxWidth: 820}}>
-              Transcript pricing starts at $5.00 per page baseline – reporters set their own rate (standard ±20% band of baseline, with an opt-in ±50% expanded band that gets lower priority in auto-matching). When you place an order, the cascade invites qualified reporters in widening batches; the moment one accepts, you see their profile + exact cost and have a window to confirm or veto. Live attendance rates set well below typical CSR agency fees. Court reporters keep what they earn, while firms pay a flat 12% platform fee for each job – because the platform automates the line items agencies bill as extras.
+              Transcript pricing: most CA reporters charge around $5.00 per page, but every reporter on Dewey Sholes sets their own rate – we don't dictate. The platform shows the regional baseline as guidance only. When you place an order, it posts to the job board and qualified reporters can claim it; the moment one claims, you see their profile + exact cost and have a window to confirm or veto. Live attendance rates set well below typical CSR agency fees. Court reporters keep 100% of what they earn, while firms pay a flat 12% platform fee for each job – because the platform automates the line items agencies bill as extras.
             </p>
           </div>
 
@@ -11996,8 +11952,8 @@ function PricingPage() {
                   <div className="cc-head dewey">Dewey Sholes</div>
                   <div className="cc-stat">Reporter sees 15–50%</div>
                   <div className="cc-stat dewey">Reporter keeps 100%</div>
-                  <div className="cc-detail">Agencies mark up the statutory rate by 50–85%. The reporter who did the work may see as little as 16 cents of every dollar you paid.</div>
-                  <div className="cc-detail">You pay the statutory rate plus a flat 12% platform fee. The reporter receives the full statutory rate – no middleman cut, no markup.</div>
+                  <div className="cc-detail">Agencies mark up the reporter's rate by 50–85%. The reporter who did the work may see as little as 16 cents of every dollar you paid.</div>
+                  <div className="cc-detail">You pay the reporter's published rate plus a flat 12% platform fee. The reporter receives 100% of their published rate – no middleman cut, no markup.</div>
                 </div>
                 <div className="cc-footnote">The 12% platform fee is paid by the attorney. Reporters pay a flat annual listing fee only – no per‑job deductions.</div>
               </div>
