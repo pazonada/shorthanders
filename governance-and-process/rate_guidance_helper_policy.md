@@ -102,7 +102,9 @@ Used in stage 4 of the cascade only (when CA statewide has < 5 reporters in the 
 | Half-day live attendance | $1,050 |
 | Full-day live attendance | $1,650 |
 | Trial day | $2,310 |
-| Travel rate per hour | $85 |
+| Travel rate per hour | $50 |
+
+All five values match `project_rate_recalibration.md` memory and the `PRICING` constant in `index.html`. The travel rate specifically is grounded in `governance-and-process/minimum_fees_and_waiting_time.md` line 112 (Rosie 2026-05-12: "rate-card review showing $50/hr as the consistent industry rate"). Keep this table in sync with the canonical PRICING constant – if one changes, change both.
 
 WC-specific bootstrap baselines (per Kristin Johns FB intel, NorCal): we have one data point and shouldn't generalize. When WC is selected during cold-start, show the general baseline with a callout: "We don't have enough workers' comp reporter data yet. WC pricing typically differs from general work – ask the WC community for current ranges."
 
