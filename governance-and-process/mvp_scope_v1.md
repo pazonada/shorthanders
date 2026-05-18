@@ -62,6 +62,7 @@ The driving constraint is reliability. We've built a lot of policy and design su
 
 - **Settings → Your rates** with a simple input (or slider with no hard cap). CSR types in their per-page rate, half-day, full-day, trial-day, travel rate.
 - **Platform shows the baseline as guidance** ("most reporters charge around $X"). No ±20% / ±50% bands. No matching-priority penalty. Simplified Option A from the pricing discussion.
+- **"Need help setting rates?" helper next to each rate field.** Opens a popover showing median + 25–75th percentile range for comparable reporters, with a case-type filter (WC, family law, civil, probate, criminal, etc.) and a cascade-scope label (county → adjacent counties → statewide). Cold-start uses the research baselines (`project_rate_recalibration.md` numbers) labeled as platform estimate until enough reporter data exists. Full spec: `governance-and-process/rate_guidance_helper_policy.md`.
 
 ### Notifications
 

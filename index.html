@@ -7403,6 +7403,8 @@ function SettingsPage() {
   const [settingsRole, setSettingsRole] = useState("attorney"); // toggle for prototype demo
   const [csrRateMultiplier, setCsrRateMultiplier] = useState(1.05); // CSR rate-band setting (default = Sarah Chen's mock value)
   const [csrExpandedBand, setCsrExpandedBand] = useState(false); // Opt-in expanded ±50% band (with matching-priority warning)
+  const [csrRateHelperOpen, setCsrRateHelperOpen] = useState(false); // "Need help setting rates?" popover visibility
+  const [csrRateHelperCaseType, setCsrRateHelperCaseType] = useState("all"); // Case-type filter inside the popover
 
   const toggleNotif = (idx, channel) => {
     setNotifs(n => n.map((item, i) => i === idx ? {...item, [channel]: !item[channel]} : item));
@@ -7530,9 +7532,119 @@ function SettingsPage() {
                   </div>
                   <div className="settings-section">
                     <h3><Icon name="dollarSign" size={14} /> Your rates</h3>
-                    <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 14, lineHeight: 1.6}}>
+                    <p style={{fontSize: 13, color: "var(--text-secondary, #475569)", marginBottom: 8, lineHeight: 1.6}}>
                       Set your rate using the slider below. Your rate appears on your public profile and in the attorney's match preview, so they see exactly what they'll pay before they confirm. Per CA Labor Code §2778, you have the right to set or negotiate your own rates – this is how we expose that.
                     </p>
+                    <button
+                      type="button"
+                      onClick={() => setCsrRateHelperOpen(o => !o)}
+                      style={{
+                        background: "transparent",
+                        border: "none",
+                        padding: 0,
+                        margin: "0 0 14px 0",
+                        cursor: "pointer",
+                        fontSize: 13,
+                        fontWeight: 600,
+                        color: "#2563EB",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 6,
+                      }}
+                      aria-expanded={csrRateHelperOpen}
+                    >
+                      {csrRateHelperOpen ? "← Hide regional rate guidance" : "Need help setting rates?"}
+                    </button>
+                    {csrRateHelperOpen && (() => {
+                      // Cold-start regional guidance shown at v1 launch (no real reporter data yet).
+                      // Values come from `governance-and-process/rate_guidance_helper_policy.md#cold-start-baseline-values`.
+                      // When real data exists, the daily snapshot job swaps these for true median + 25-75th percentile.
+                      const caseTypeOptions = [
+                        {value: "all", label: "All case types"},
+                        {value: "family", label: "Family law"},
+                        {value: "civil", label: "Civil litigation"},
+                        {value: "probate", label: "Probate"},
+                        {value: "criminal", label: "Criminal"},
+                        {value: "wc", label: "Workers' compensation"},
+                        {value: "pi", label: "Personal injury"},
+                        {value: "employment", label: "Employment"},
+                      ];
+                      const rows = [
+                        {label: "Per page (original)", median: "$5.00", range: "$4.50 – $5.50/page"},
+                        {label: "Half-day live attendance", median: "$1,050", range: "$950 – $1,200"},
+                        {label: "Full-day live attendance", median: "$1,650", range: "$1,500 – $1,850"},
+                        {label: "Trial day", median: "$2,310", range: "$2,100 – $2,550"},
+                        {label: "Travel time", median: "$85/hr", range: "$75 – $100/hr"},
+                      ];
+                      const isWc = csrRateHelperCaseType === "wc";
+                      return (
+                        <div role="region" aria-label="Regional rate guidance" style={{
+                          background: "#F8FAFC",
+                          border: "1px solid #CBD5E1",
+                          borderRadius: 12,
+                          padding: 18,
+                          marginBottom: 14,
+                        }}>
+                          <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 12, flexWrap: "wrap"}}>
+                            <div style={{maxWidth: 460}}>
+                              <p style={{fontSize: 14, fontWeight: 700, color: "#0F172A", marginBottom: 4}}>What other reporters are charging</p>
+                              <p style={{fontSize: 12, color: "#64748B", lineHeight: 1.5, margin: 0}}>
+                                Median rate and the 25–75th percentile range for comparable reporters in your region. This is informational only – you set your own rate and keep 100% of it.
+                              </p>
+                            </div>
+                            <label style={{fontSize: 12, color: "#475569", display: "flex", flexDirection: "column", gap: 4}}>
+                              <span style={{fontWeight: 600}}>Filter by case type</span>
+                              <select
+                                value={csrRateHelperCaseType}
+                                onChange={e => setCsrRateHelperCaseType(e.target.value)}
+                                style={{
+                                  padding: "6px 10px",
+                                  border: "1px solid #CBD5E1",
+                                  borderRadius: 8,
+                                  background: "#fff",
+                                  fontSize: 13,
+                                  color: "#0F172A",
+                                  minWidth: 200,
+                                }}
+                              >
+                                {caseTypeOptions.map(o => (
+                                  <option key={o.value} value={o.value}>{o.label}</option>
+                                ))}
+                              </select>
+                            </label>
+                          </div>
+                          <div style={{
+                            background: "#FFFBEB",
+                            border: "1px solid #FDE68A",
+                            borderRadius: 8,
+                            padding: "8px 12px",
+                            fontSize: 12,
+                            color: "#92400E",
+                            marginBottom: 12,
+                            lineHeight: 1.5,
+                          }}>
+                            <strong>Scope:</strong> Platform estimate based on industry research. Once enough reporters join, this will switch to live data from your county (cascading to adjacent counties or statewide if your county is sparse).
+                            {isWc && (
+                              <span style={{display: "block", marginTop: 6}}>
+                                <strong>Heads up on WC:</strong> Workers' comp pricing is its own micro-market. We don't have enough WC reporter data yet, so the numbers below are general-market estimates – verify against current WC community ranges.
+                              </span>
+                            )}
+                          </div>
+                          <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 10}}>
+                            {rows.map(row => (
+                              <div key={row.label} style={{background: "#fff", border: "1px solid #E2E8F0", borderRadius: 10, padding: 12}}>
+                                <div style={{fontSize: 11, color: "#94A3B8", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4}}>{row.label}</div>
+                                <div style={{fontSize: 18, fontWeight: 700, color: "#0F172A"}}>{row.median}</div>
+                                <div style={{fontSize: 12, color: "#64748B", marginTop: 2}}>Most charge {row.range}</div>
+                              </div>
+                            ))}
+                          </div>
+                          <p style={{fontSize: 11, color: "#64748B", marginTop: 12, marginBottom: 0, lineHeight: 1.5}}>
+                            Source policy: <code style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 11}}>governance-and-process/rate_guidance_helper_policy.md</code>
+                          </p>
+                        </div>
+                      );
+                    })()}
                     {(() => {
                       const mult = csrRateMultiplier;
                       const sliderMin = csrExpandedBand ? PRICING.rateBandExpandedLow : PRICING.rateBandStandardLow;
