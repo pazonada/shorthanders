@@ -24,26 +24,34 @@ The driving constraint is reliability. We've built a lot of policy and design su
 - **Matter-reference field** on Step 2 (per Rosie's reconciliation requirement). Carries through to invoice and billing dashboard.
 - **Cost-split toggle** with co-payer flow (already designed, defer real build to v1.1 — see below).
 - **Pricing**: CSRs set their own rates (no hybrid band). Platform shows a baseline as guidance copy. 12% attorney-side fee on top. $99/yr CSR listing fee.
-- **Submit fires the job-board flow** (see Matching below).
+- **Submit fires the applicant-pool flow** (see Matching below).
 
-### Matching (job-board model)
+### Matching (applicant-pool review model)
 
-**This replaces the cascade + match-preview design from earlier prototypes.** The cascade is real future product investment; the job-board is the v1.
+**Decision history.** Two earlier matching models were considered and superseded:
+- The **cascade + match-preview + veto-window** design (documented in `rating_and_matching_policy.md`) was deferred to v2 on 2026-05-16 in favor of the simpler job-board model.
+- The **job-board first-claim-wins** model (drafted 2026-05-16) was retired on 2026-05-23 in conversation with Rosie, who pushed for a model that gives firms real choice and exposes pricing as a comparison axis at selection.
 
-- Attorney submits order. Order is **posted to the job board** with all filterable attributes (jurisdiction, case type, certs required, deadline, attendance type).
-- **Push + email notification fires to CSRs** whose alert preferences match the job's attributes. CSRs opt in to which alert categories they want.
-- All qualified CSRs (passing hard filters) can see the job in their dashboard.
-- First CSR to **claim** the job wins. Standard DB-level first-write-wins on `order.claimed_by_csr_id`. Job is removed from other CSRs' boards immediately.
-- Attorney is notified: "[Reporter] claimed your order." Card pre-authorization fires.
-- **No batch preview. No match-preview screen. No attorney veto window.** Attorney's recourse if the match is wrong is cancel-with-fee per existing cancellation policy.
-- **No cascade phases.** All eligible CSRs see the job at once. No "favorites first then widen" — favorites get an additional notification badge but don't have exclusive access.
+**v1 launch model: applicant-pool review.** Full spec at `governance-and-process/matching_applicant_pool_policy.md`. Summary:
 
-**Why this design over the cascade:**
-- No matching algorithm to build, debug, or tune in v1
-- No batch logic, no veto window, no reason taxonomy, no auto-confirm timer
-- CSRs control their own job flow (less platform paternalism)
-- No "you weren't selected" notifications because invitations are pull, not push
-- Solves WC pricing mismatch — CSRs see jobs in their dashboard, decide if their rate fits
+- Firm submits order → state `collecting_applicants`. Push + email alerts fire to CSRs whose preferences match the job's filterable attributes.
+- Qualified CSRs see the job in their "Open jobs" dashboard. Any of them can click **Apply** to express interest. Applying does not commit them; it's informational. They can withdraw before selection without penalty.
+- **Application window closes per turnaround tier:** Rush 4 hours / Expedited 24 hours / Standard 72 hours. Firm gets a "Review applicants" notification; order state moves to `review_open`.
+- **Firm reviews all applicants** on the Review Applicants screen: profile photo, name, license, rating, on-time rate, specialty tags, location, and the applicant's per-page + per-diem rate for this job. Sortable by rate / rating / completed jobs / distance / favorites-first. Pricing is a legitimate comparison axis.
+- **Firm selects one applicant** (or none, or closes the order). On selection, state moves to `selection_pending` and the selected CSR is notified to confirm availability within Rush 1h / Expedited 4h / Standard 12h.
+- **CSR confirms** → order state `confirmed`, Stripe pre-authorization fires, post-selection messaging unlocks between firm + CSR for logistics coordination.
+- **CSR declines or times out** → firm is notified immediately and re-enters the Review Applicants screen (with that CSR removed). Repeated no-responses degrade the CSR's ranking.
+- **Firm picks no one** → job stays in `review_open`. New CSRs can keep applying. Firm gets re-notified when N new applicants arrive OR 12h Rush / 24h Expedited / 48h Standard pass.
+- **No "you weren't selected" notifications** to non-selected CSRs. Their dashboard status updates silently; we don't push or email rejections.
+
+**Why this design over the alternatives:**
+- Firms get real choice with pricing visible at the moment of selection – consistent with the open-marketplace positioning.
+- CSRs apply explicitly (not racing to be first), so they only commit to jobs they actually want.
+- No batching, no veto state machine, no cascade phases, no "you weren't selected" notifications.
+- Engineering complexity is moderate (single application pool, review screen, confirmation flow, two timer types) – more than first-claim-wins, less than the cascade.
+- Time-to-fill data we collect will let us tune the windows post-launch.
+
+**Open issues** (logged in the policy doc, not blocking v1 build): tuning the application windows, ranking-degradation weights for "applied then declined" and "no-response to selection," and whether to add pre-selection messaging in v1.1.
 
 ### Payments
 
@@ -96,7 +104,7 @@ The driving constraint is reliability. We've built a lot of policy and design su
 
 ### Match flow complexity
 
-- **Cascade matching algorithm** (Phase 1 favorites parallel → Phase 2 batches of 2 → Phase 3 +5 → Phase 4 +10 → Phase 5 all-call). Defer to v1.x once we have real attorney + CSR behavior data showing the job-board model needs sophistication.
+- **Cascade matching algorithm** (Phase 1 favorites parallel → Phase 2 batches of 2 → Phase 3 +5 → Phase 4 +10 → Phase 5 all-call). Defer indefinitely. Documented in `rating_and_matching_policy.md` as the fallback design if the applicant-pool model fails to deliver acceptable time-to-fill or firm satisfaction.
 - **Match-preview / batch-preview screens** (v1 and v2 designs). Cut.
 - **Post-acceptance veto window** with structured reason taxonomy. Cut.
 - **3-veto limit** logic. Cut.
@@ -175,8 +183,8 @@ The prototype's value isn't wasted by these cuts. What persists:
 
 - All governance + policy docs (cost-split, cancellation, retention, billing, IC, etc.)
 - All rate research and competitive-analysis findings
-- The matching policy design (cascade, fairness slots, soft preferences) — becomes the spec for v2 matching when we promote from job-board to algorithmic matching
-- The match-preview / veto-window designs — become candidate designs to A/B-test post-launch
+- The matching policy design (cascade, fairness slots, soft preferences) — held in reserve as the v1.x fallback if the applicant-pool model doesn't deliver acceptable time-to-fill or firm satisfaction
+- The match-preview / veto-window designs — also held in reserve as alternative attorney-side UX patterns to A/B-test post-launch
 - The hybrid rate band design — becomes the candidate v2 pricing model
 - The matter-reference invoicing approach (built and shipping in v1)
 - The competitive-analysis system and tagline alternatives (marketing-strategist agent owns)

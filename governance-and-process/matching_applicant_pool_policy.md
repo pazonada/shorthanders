@@ -1,0 +1,203 @@
+# Matching policy: applicant-pool review (v1 launch model)
+
+**Owner:** Aud & Rosie
+**Last updated:** 2026-05-24
+**Status:** v1 spec. Confirmed by Aud and Rosie 2026-05-23 in conversation. This supersedes the job-board "first-to-claim-wins" model previously specified in `mvp_scope_v1.md` and supersedes the cascade + veto-window design in `rating_and_matching_policy.md` (which now stands as a deferred post-v1 alternative).
+
+The matching surface in Dewey Sholes is **applicant-pool review**, modeled on Care.com / dating-app applicant flows rather than on Uber-style auto-match or first-claim-wins. The model: firm posts a job → qualified CSRs apply → application window closes per turnaround tier → firm reviews applicant profiles + prices → firm selects one CSR (or none) → selected CSR confirms availability → job locks in.
+
+This puts choice in the firm's hands, makes price a comparison axis at the moment of selection, and gives CSRs visibility into what they're applying for. It also exposes Dewey Sholes as an open marketplace at the matching layer, not just at the pricing layer.
+
+---
+
+## The flow
+
+### 1. Firm submits order
+
+- Order is created with all the usual attributes (jurisdiction, case type, certs required, dates, turnaround tier, matter ref, etc.).
+- Order state: **`collecting_applicants`**.
+- Push + email notification fires to CSRs whose alert preferences match the job's filterable attributes (jurisdiction, case type, certifications, attendance type). CSRs opt in to which categories they want.
+- All CSRs who pass hard filters can see the job in their dashboard's "Open jobs" view.
+- Firm sees an order-status card on their dashboard: "Collecting applicants – [N] reporters interested so far."
+
+### 2. CSRs apply
+
+- A CSR who sees the job in their dashboard can click **Apply** to express interest.
+- Applying is informational; it does not commit the CSR to the job. Their availability is implicitly affirmed by applying.
+- A CSR can withdraw their application before selection without penalty.
+- CSRs see their open applications in a **"Your applications"** view with status: *Waiting for firm to review / Application window closing in X / Firm selected someone else / Firm selected you – confirm availability*.
+
+### 3. Application window closes
+
+The application window length depends on the firm's turnaround tier:
+
+| Turnaround tier | Application window |
+|---|---|
+| Rush (1–2 business days) | **4 hours** |
+| Expedited (3–5 business days) | **24 hours** |
+| Standard (6+ business days) | **72 hours** |
+
+These are starting defaults. We'll instrument and tune them post-launch based on observed time-to-fill, applicant counts per window, and firm satisfaction.
+
+- When the window closes, the firm gets a **"Review applicants"** notification (push + email).
+- Order state moves to **`review_open`**.
+- The job is **not removed** from CSRs' open-jobs view at this point – they can still apply if the firm hasn't selected, and the firm sees later applicants in the same review screen.
+
+### 4. Firm reviews applicants
+
+The Review Applicants screen shows:
+
+- **All applicants who've applied** (passing hard filters)
+- For each: profile photo, name, license number, rating, jobs completed, on-time rate, specialty tags, location, **their per-page rate + per-diem rate for this job's case type**, an "Apply selected" CTA
+- Sortable / filterable by: applicant rate (low to high or high to low), rating, completed jobs, distance, favorite-status (favorites get a "★ Worked with you before" badge)
+- A "Select [N]" pill if N new applicants have arrived since the firm last viewed
+
+Three outcomes:
+
+**a. Firm selects an applicant.** Order moves to `selection_pending`. See step 5.
+
+**b. Firm selects no one and walks away.** Order stays in `review_open`. Job remains visible to qualified CSRs; new applicants can still apply. When **at least one new applicant arrives OR another N hours pass** (defaults: 12h Rush / 24h Expedited / 48h Standard), the firm gets a re-notification: "M new applicants since you last checked (N total). Review now." The firm can iterate this loop as many times as they want until either (a) they select someone or (b) the job's hard deadline approaches and we auto-escalate (see step 7 / edge cases).
+
+**c. Firm closes the order without selecting.** Order moves to `closed_no_selection`. Applicant CSRs are notified silently (their application status updates in their dashboard; no email/push). Firm can resubmit the order if they change their mind.
+
+### 5. Selection → CSR confirms availability
+
+When the firm clicks "Select [CSR name]":
+
+- Order state moves to **`selection_pending`**.
+- Selected CSR is notified immediately (push + email): "[Firm name] selected you for [case name]. Confirm you're still available within [confirmation window]."
+- **Confirmation window:** 1 hour for Rush, 4 hours for Expedited, 12 hours for Standard. CSR must explicitly click Confirm or Decline.
+- The job is **paused** from showing to other CSRs while `selection_pending` is open – we don't want a CSR applying right after the firm has tentatively selected someone else.
+- Firm sees: "Waiting for [CSR] to confirm availability – we'll notify you the moment they respond, or [X hours] from now if they don't."
+
+**Three CSR responses:**
+
+**a. Confirm.** Order locks in. State moves to **`confirmed`**. Stripe pre-authorization fires on the firm's card. Both parties are notified. The job moves from "open" to "assigned" in everyone's dashboard. **Post-selection messaging unlocks** at this point so the parties can coordinate logistics (location, dial-in info, document handoff).
+
+**b. Decline.** State moves back to **`review_open`**. Firm is notified immediately (push + email): "[CSR] is no longer available – select someone else." The Review Applicants screen reopens with that CSR removed from the list. The firm picks again.
+
+**c. No response within the confirmation window (timeout).** Treated as decline. Firm notified the same way. We don't punish the CSR with a rating impact for one missed window, but we instrument it; repeated no-responses degrade their ranking in subsequent applicant reviews.
+
+### 6. Confirmed job runs normally
+
+Same delivery, certification, payment, dispute, and rating workflows as before. No change.
+
+### 7. Hard deadline / no applicants
+
+- If the application window closes with **zero applicants**, the firm is notified: "No reporters have applied yet. We've broadened the alert criteria; we'll re-notify you when applicants start arriving or when [hard deadline minus 12h] is reached."
+- If the order has no confirmed CSR by **[hard deadline minus 12h]**, ops is alerted (per existing late-delivery/CNA policy). Ops can manually escalate, contact firm to widen criteria, or trigger emergency cancel-with-fee waiver.
+
+---
+
+## Pricing visibility
+
+The applicant's rate – per-page + per-diem for the specific case type – is visible on the Review Applicants screen. This is intentional. It makes price a legitimate axis of comparison at the moment of selection, which is what the open-marketplace pitch promises.
+
+If we ever want to test hiding price ("we'll set it on selection"), do it as a deliberate experiment post-launch.
+
+---
+
+## Messaging
+
+- **Before selection:** no messaging. The firm picks based on the applicant's profile + price. This keeps the review screen low-friction and avoids the "I have to interview 6 reporters" problem.
+- **After selection (state = `confirmed`):** in-app messaging unlocks between the firm and the selected CSR for the duration of the engagement. This is logistics-coordination, not vetting.
+- Post-`confirmed` messaging is part of the v1 build (small lift since the order is already a 1:1 firm/CSR relationship at that point).
+
+---
+
+## CSR rejection comms ("you weren't selected")
+
+We deliberately do **not** send "you weren't selected" notifications. Reasoning:
+
+- Demoralization risk: applying to many jobs and getting individually rejected for each is a slog. Per the project_match_preview_ux memory and the strategy session decisions about CSR supply liquidity, we want to keep the CSR experience friction-light.
+- Visibility without push: the CSR's "Your applications" view will show the status change (the job moved to `confirmed` with someone else, or `closed_no_selection`), so a CSR who actively checks can see it. We just don't push it.
+- Honest framing if asked: in the FAQ + reporter onboarding copy, we explicitly say "if you're not selected, we won't bother you about it – check Your applications anytime for status." Transparency at signup, no push at miss.
+
+Future option: opt-in "send me application updates" toggle in CSR notification settings. Defer.
+
+---
+
+## Favorites treatment
+
+Favorites still get a perk, but it's now visual rather than algorithmic:
+
+- On the Review Applicants screen, favorite CSRs get a "★ Worked with you before" badge and float to the top of the default sort.
+- Favorites still receive the "new job in your alert categories" notification at the same priority as everyone else (we don't give them an earlier alert – that would be unfair given the applicant-pool model's stated openness).
+- Firms can filter the applicant list to "favorites only" if they want to skip the wider review.
+
+---
+
+## Edge cases
+
+| Case | What happens |
+|---|---|
+| CSR applies, then withdraws before window closes | Application removed silently. No firm notification (the firm hasn't reviewed yet). |
+| CSR applies, then withdraws after review opens but before selection | Application removed silently. If firm has the review screen open, the applicant list re-renders without that CSR. If the firm had already clicked Select on that CSR, treat the same as Decline at confirmation. |
+| CSR applies to 5 overlapping jobs, gets selected for 2 | At selection, the CSR confirms availability. They explicitly Confirm one and Decline the others. We send Decline notifications to the other firms. CSRs who routinely over-apply and then decline degrade their ranking. |
+| Firm selects, then changes mind before CSR confirms | Firm can hit "Withdraw selection" within the confirmation window. State moves back to `review_open`. Selected CSR gets a silent status update (no push). Track count of selections-withdrawn per firm for ops review. |
+| Firm closes order, then re-opens | Treat as a new submit (new application window starts; prior applicants are not auto-carried over because too much time may have passed). |
+| Application window closes with 1 applicant, firm doesn't select | Firm gets a "1 applicant available – review now" notification at window close. After [re-notification interval] passes with no action, ops is alerted. |
+| Two CSRs applying at the same moment as window closes | Race: anyone whose Apply request server-timestamp is before window-close is included. Server is the source of truth, not the client. |
+
+---
+
+## State machine summary
+
+```
+collecting_applicants
+        │
+        │ application window closes
+        ▼
+   review_open  ◄────────────────────┐
+        │                            │
+        │ firm selects a CSR         │
+        ▼                            │
+ selection_pending                   │
+        │                            │
+        ├── CSR confirms ──► confirmed
+        │
+        ├── CSR declines / times out ┘
+        │
+        └── firm withdraws selection ┘
+
+review_open
+   │ firm closes order
+   ▼
+closed_no_selection
+```
+
+---
+
+## Why this model over the alternatives
+
+| Alternative | Why we chose applicant-pool instead |
+|---|---|
+| First-to-claim-wins (the previous v1 model) | Robbed the firm of choice. Price competition was hidden (firm saw only the winning CSR's rate). Felt like an auction the firm wasn't in. |
+| Cascade + veto-window (the deferred v2 design) | Heavy engineering (batching logic, veto reasons, auto-confirm timers, 3-veto limits). Required notifying CSRs they "weren't selected" via veto, which was the part we most wanted to avoid. |
+| Manual concierge matching | Doesn't scale. Doesn't fit Studio-Crux-as-platform positioning. Punted earlier. |
+
+Applicant-pool keeps engineering tractable (no batching, no race conditions on claim, no veto state machine), keeps firm choice central, keeps CSRs in pull mode, and uses time-to-fill data we'll naturally collect to tune the windows.
+
+---
+
+## Open issues to revisit post-launch
+
+1. **Application window lengths.** 4h / 24h / 72h are guesses. Instrument time-to-fill, applicant counts, and firm-satisfaction proxies. Tune.
+2. **Re-notification interval** (when firm sits on `review_open`). 12h / 24h / 48h proposed; same caveat.
+3. **No-applicants escalation.** Today's policy is "ops alerted at hard deadline minus 12h." Once we have data on application rates, build an automated widening (e.g., "extend search to adjacent counties") rather than a manual ops call.
+4. **CSR ranking weight on application behavior.** How aggressively should "applied then declined" or "no-response to selection" degrade ranking? Start conservative; tune.
+5. **Pre-selection messaging.** Currently off. Reconsider if firms tell us they need to vet applicants before selecting. Care.com lets attorneys vet; we may need that for high-stakes legal work eventually.
+6. **Bulk apply / saved searches.** CSRs may want to apply with one click to all matching new jobs. Defer.
+7. **The cascade + veto-window design** in `rating_and_matching_policy.md` stays in the doc as a deferred alternative. If applicant-pool doesn't pan out (e.g., firms hate reviewing applicants, or time-to-fill is too slow), the cascade is the next thing to try.
+
+---
+
+## Related docs
+
+- `governance-and-process/mvp_scope_v1.md` – v1 scope; matching section references this doc as the canonical spec
+- `governance-and-process/rating_and_matching_policy.md` – the cascade + rating-system design that this supersedes for v1
+- `governance-and-process/cancellation_and_cna_policy.md` – what happens when a confirmed CSR can't make the job (separate from "selected CSR declines confirmation")
+- `governance-and-process/late_delivery_and_deplatforming_policy.md` – ranking degradation rules
+- `governance-and-process/messaging_and_notifications_plan.md` – the notification cadence assumed above (push + email + dashboard status)
+- `research/marketing_strategy_master.md` – open-marketplace positioning that this model makes credible
+- `project_match_preview_ux.md` memory – history of the matching-model decisions; this doc is the current state

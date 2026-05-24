@@ -1,8 +1,10 @@
 # Rating system & matching algorithm policy
 
 **Owner:** Aud & Rosie
-**Last updated:** 2026-05-05
-**Status:** v2 Draft – pending Rosie review of items tagged `[NEEDS ROSIE]`
+**Last updated:** 2026-05-05 (matching-algorithm sections); header amended 2026-05-24
+**Status:** **Matching algorithm sections of this doc are deferred-fallback.** The v1 launch matching model is the applicant-pool review design specified in `governance-and-process/matching_applicant_pool_policy.md` (confirmed by Aud + Rosie 2026-05-23). The cascade + match-preview + veto-window design below is held in reserve as the fallback if applicant-pool doesn't deliver acceptable time-to-fill or firm satisfaction. The **rating-system sections** of this doc are still canonical for v1 (rating dimensions, visibility, comments, anti-manipulation safeguards) – those carry forward unchanged.
+
+Treat this doc as the union of (a) the v1 rating system spec and (b) the v2/fallback matching design. The v2/fallback portions are intentionally preserved here rather than deleted; they document a non-trivial amount of design thinking that we'd want to dust off quickly if the launch model needs to change.
 
 ---
 

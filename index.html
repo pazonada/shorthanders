@@ -4521,7 +4521,7 @@ function OrderFlow() {
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
                 <h2 style={{fontSize: 24}}>Reporter preference</h2>
-                <p style={{color: "var(--text-secondary, #64748B)"}}>Choose how you'd like to be matched with a court reporter.</p>
+                <p style={{color: "var(--text-secondary, #64748B)"}}>Choose how you'd like to work with a court reporter.</p>
               </div>
               <div style={{display: "flex", flexDirection: "column", gap: 12}}>
                 {[
@@ -4587,7 +4587,7 @@ function OrderFlow() {
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
                 <h2 style={{fontSize: 24}}>When do you need this?</h2>
-                <p style={{color: "var(--text-secondary, #64748B)"}}>Your deadline determines the turnaround tier. The reporter who claims your job sets their own per-page rate; the platform shows the regional baseline as guidance.</p>
+                <p style={{color: "var(--text-secondary, #64748B)"}}>Your deadline determines the turnaround tier and the application window (rush 4h / expedited 24h / standard 72h). The reporter you select sets their own per-page rate; the platform shows the regional baseline as guidance.</p>
               </div>
 
               {/* Deadline selection */}
@@ -4687,7 +4687,7 @@ function OrderFlow() {
                       <span>${(attendanceFee + est.lowCost * (1 + PRICING.platformFee)).toLocaleString()} – ${(attendanceFee + est.highCost * (1 + PRICING.platformFee)).toLocaleString()}</span>
                     </div>
                     <p style={{marginTop: 16, fontSize: 12, color: "var(--text-muted, #64748B)", lineHeight: 1.6}}>
-                      {form.type === "live" ? "Attendance fees are set by each reporter; the platform shows the baseline ('most reporters charge around $X') as guidance. Reporter keeps 100%. " : ""}Final cost based on certified page count. Most CA reporters charge around ${PRICING.ratePerPage.toFixed(2)}/page, but every reporter sets their own number. After you submit, your order posts to the job board and qualified reporters can claim it. The moment one claims, you'll see their profile + the exact cost. You have a window to confirm or veto with a reason – up to 3 vetoes per order before the next match auto-confirms.
+                      {form.type === "live" ? "Attendance fees are set by each reporter; the platform shows the baseline ('most reporters charge around $X') as guidance. Reporter keeps 100%. " : ""}Final cost based on certified page count. Most CA reporters charge around ${PRICING.ratePerPage.toFixed(2)}/page, but every reporter sets their own number. After you submit, your order goes into an applicant pool. Qualified reporters can apply during your turnaround window (rush 4 hours, expedited 24 hours, standard 72 hours). When the window closes, we'll show you every interested reporter with their profile, rating, and rate – you pick whoever you want, and they confirm their availability before the job locks in. If they can't make it, we notify you immediately so you can pick someone else.
                     </p>
                   </>;
                 })()}
@@ -7184,7 +7184,7 @@ function AdminDashboard() {
               <div className="compliance-list">
                 {[
                   { title: "CSR license verification", desc: "All active reporters have valid California CSR licenses on file.", status: "pass", icon: "shield" },
-                  { title: "Transparent pricing", desc: "$5.00/page transcript baseline; reporters set their own rate within a ±20% band. Attorneys see the matched reporter's actual rates before confirming. No hidden line items.", status: "pass", icon: "fileText" },
+                  { title: "Transparent pricing", desc: "$5.00/page transcript baseline shown as guidance only; every reporter sets their own rate per line item. Attorneys see every applicant's rate on the Review Applicants screen before selecting. No hidden line items.", status: "pass", icon: "fileText" },
                   { title: "Transcript certification", desc: "All delivered transcripts include CSR certification page.", status: "pass", icon: "checkCircle" },
                   { title: "Record retention", desc: "Transcripts and order records retained for minimum 10 years per CA requirements.", status: "pass", icon: "clock" },
                   { title: "CCPA data privacy", desc: "User data handling compliant with California Consumer Privacy Act.", status: "pass", icon: "shield" },
@@ -8811,7 +8811,7 @@ function AttorneyOnboarding() {
             <h3>What happens next</h3>
             <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">We verify your CA Bar membership (usually within 24 hours)</div></div>
             <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">Your case library is ready – start adding cases and placing orders</div></div>
-            <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Reporters are matched automatically. Track everything from your dashboard.</div></div>
+            <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Reporters apply during your turnaround window. Review profiles + rates and pick whoever you want.</div></div>
           </div>
           <div className="profile-summary">
             <h3>Your profile</h3>
@@ -9995,7 +9995,7 @@ function RoleSelectorModal({ onClose }) {
               <Icon name="mic" size={20} color="#059669" />
             </div>
             <div style={{fontSize: 15, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 4}}>I'm a court reporter</div>
-            <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)", lineHeight: 1.5}}>Browse open jobs and claim what fits. Set your own rates, keep 100%.</div>
+            <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)", lineHeight: 1.5}}>Browse open jobs and apply to the ones that fit. Set your own rates, keep 100%.</div>
           </button>
         </div>
         <div style={{textAlign: "center", marginTop: 20, fontSize: 13, color: "var(--text-secondary, #64748B)"}}>
@@ -10758,7 +10758,7 @@ function ReporterProfile({ reporterId }) {
                 </div>
               </div>
               <p style={{fontSize: 12, color: "var(--muted)", marginTop: 16, lineHeight: 1.5}}>
-                Reporters on Dewey Sholes set their own rates. Standard band: ±20% of platform baseline (${PRICING.ratePerPage.toFixed(2)}/page; ${PRICING.attendanceHalfDay.toLocaleString()} half-day; ${PRICING.attendanceFullDay.toLocaleString()} full-day). Some reporters opt into an expanded ±50% band, which the auto-match algorithm deprioritizes. The 12% platform fee is added on top at order time.
+                Reporters on Dewey Sholes set their own rates per line item. The platform shows regional baselines as guidance only (${PRICING.ratePerPage.toFixed(2)}/page; ${PRICING.attendanceHalfDay.toLocaleString()} half-day; ${PRICING.attendanceFullDay.toLocaleString()} full-day) – the actual number is up to each reporter. You see every applicant's rate on the Review Applicants screen and pick whoever you want. The 12% platform fee is added on top at order time.
               </p>
             </div>
           );
@@ -10914,11 +10914,11 @@ function FaqPage() {
   const sections = [
     { title: "For attorneys", items: [
       { id: "a1", q: "How do I place a transcript order?", a: "Click \"Order a transcript\" from the homepage, choose live attendance or post-hearing transcription, enter your case details, set your delivery deadline, and submit. Your deadline determines the turnaround tier and price automatically. We'll match you with a qualified reporter, usually within hours." },
-      { id: "a2", q: "How does pricing work?", a: "Transcript pricing starts at $5.00 per page baseline. Each reporter sets their own rate – most are within a ±20% band of platform defaults (our standard matching band), and some opt into a wider ±50% band that gets lower priority in auto-matching. The exact rate depends on which reporter accepts the job. The platform fee is a flat 12% on top, regardless of the reporter. Your delivery deadline determines the turnaround tier: Rush (1-2 business days, 1.5x rate), Expedited (3-5 business days, baseline rate), or Standard (6+ business days, 15% savings). After you submit an order, the system invites qualified reporters in widening batches (starting with your favorites, then small general-pool batches). The moment one accepts, we show you their profile + exact cost – you have 4 hours (1 hour for Rush) to confirm or veto with a reason. Up to 3 vetoes per order; after that the next match auto-confirms." },
+      { id: "a2", q: "How does pricing work?", a: "Transcript pricing: most CA reporters charge around $5.00 per page, but every reporter on Dewey Sholes sets their own number. The exact rate depends on which reporter you select. The platform fee is a flat 12% on top, regardless of the reporter. Your delivery deadline determines the turnaround tier: Rush (1–2 business days, 1.5x rate), Expedited (3–5 business days, standard rate), or Standard (6+ business days, 15% savings). After you submit an order, it goes into an applicant pool. Qualified reporters can apply during your turnaround window (rush 4 hours, expedited 24 hours, standard 72 hours). When the window closes, we show you every interested reporter with their profile, rating, and rate – you pick whoever you want. The reporter you select confirms their availability before the job locks in; if they can't make it, we notify you immediately to pick someone else." },
       { id: "a3", q: "Can I split the cost with other parties?", a: "Yes. When placing an order, toggle \"Split cost with other parties\" and add co-paying attorneys by name and email. Each party receives a secure payment link. The job is only posted to reporters once all parties have paid – no chasing, no partial payments. Co-payers don't need a Dewey Sholes account." },
       { id: "a4", q: "What if I'm unhappy with a transcript?", a: "You can request corrections within 90 days of delivery. Specify the pages and describe the issue, and the reporter will be notified to upload a corrected version. No additional cost for corrections – the reporter's published rate covers delivering an accurate transcript." },
       { id: "a5", q: "How do I know if a reporter is any good?", a: "Every reporter has a quality rating (1-5 stars, rated by attorneys) and a timeliness score (auto-calculated from their delivery history). You can also read written feedback from other attorneys on the reporter's profile. Reporters with consistently high ratings appear first in search results." },
-      { id: "a6", q: "Can I choose a specific reporter?", a: "Yes. Browse reporters by jurisdiction, specialty, language, and rating. Save favorites so they appear first when you place future orders. You can also let the platform auto-match you with the best available reporter for your case type and jurisdiction." },
+      { id: "a6", q: "Can I choose a specific reporter?", a: "Yes – choice is built into how the platform works. When you submit an order, qualified reporters apply during your turnaround window; you then review their profiles and rates and pick whoever you want. Favorites get a 'Worked with you before' badge and float to the top of the applicant list. You can also browse the reporter directory by jurisdiction, specialty, language, and rating before placing an order." },
       { id: "a7", q: "What turnaround options are available?", a: "We offer three tiers based on your deadline: Rush (1\u20132 business days, 1.5x rate), Expedited (3\u20135 business days, standard rate), and Standard (6+ business days, 15% savings). You set your need-by date and the system calculates your tier and price automatically. If you don't have a specific deadline, transcripts are due within 45 calendar days." },
     ]},
     { title: "For reporters", items: [
@@ -11042,7 +11042,7 @@ function TermsPage() {
     { title: "1. Acceptance of terms", content: "By accessing or using the Dewey Sholes platform, you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use the platform. We reserve the right to update these terms at any time, and your continued use of the platform constitutes acceptance of any changes." },
     { title: "2. Platform description", content: "Dewey Sholes is a product of Studio Crux, LLC. The platform operates as a marketplace connecting attorneys and self-represented litigants with certified shorthand reporters for live hearing attendance and post-hearing audio transcription services. Dewey Sholes facilitates the transaction but does not itself provide court reporting services." },
     { title: "3. User accounts", content: "You must create an account to use certain features of the platform. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You agree to provide accurate, current, and complete information during registration and to update such information as necessary." },
-    { title: "4. Independent contractor relationship", content: "Court reporters on the Dewey Sholes platform are independent contractors, not employees of Dewey Sholes or Studio Crux, LLC. Reporters set their own schedules, use their own equipment, maintain their own professional licenses, and set or negotiate their own rates via the rate-setting controls in their profile settings. The standard rate-setting band is ±20% of platform baseline; reporters who want a wider range can opt into an expanded ±50% band, with the disclosed trade-off that rates outside the standard band get lower priority in the auto-match algorithm. Reporters who need a rate outside the expanded band may negotiate directly with Dewey Sholes via founders@deweysholes.com. Dewey Sholes does not control the manner or method by which reporters perform their services." },
+    { title: "4. Independent contractor relationship", content: "Court reporters on the Dewey Sholes platform are independent contractors, not employees of Dewey Sholes or Studio Crux, LLC. Reporters set their own schedules, use their own equipment, maintain their own professional licenses, and set their own rates per line item via the rate-setting controls in their profile settings. The platform shows regional baselines as guidance only; reporters are free to charge above or below them, and there is no platform-imposed cap. Dewey Sholes does not control the manner or method by which reporters perform their services." },
     { title: "5. Payment terms", content: "Dewey Sholes charges a flat 12% buyer-side transaction fee on each order. Court reporters pay an annual listing fee of $99 for individual profiles or $79 per reporter for firm-tier accounts (3\u201310 reporters). All payments are processed securely through Stripe. Fees are non-refundable except as required by applicable law or as described in our refund policy." },
     { title: "6. Content and intellectual property", content: "All content on the Dewey Sholes platform, including text, graphics, logos, and software, is the property of Studio Crux, LLC or its licensors and is protected by copyright and other intellectual property laws. Transcripts produced by reporters through the platform are the work product of the certifying reporter and are delivered to the ordering party under the terms of each transaction." },
     { title: "7. Limitation of liability", content: "To the maximum extent permitted by law, Dewey Sholes and Studio Crux, LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use of the platform. Our total liability for any claim arising from your use of the platform shall not exceed the fees you paid to Dewey Sholes in the twelve months preceding the claim." },
@@ -11896,7 +11896,7 @@ function PricingPage() {
             <div className="section-eyebrow" style={{color: "var(--ochre-deep)"}}>Pricing</div>
             <h2 className="section-title">Transparent rates, <em>no hidden line items.</em></h2>
             <p className="section-lede" style={{maxWidth: 820}}>
-              Transcript pricing: most CA reporters charge around $5.00 per page, but every reporter on Dewey Sholes sets their own rate – we don't dictate. The platform shows the regional baseline as guidance only. When you place an order, it posts to the job board and qualified reporters can claim it; the moment one claims, you see their profile + exact cost and have a window to confirm or veto. Live attendance rates set well below typical CSR agency fees. Court reporters keep 100% of what they earn, while firms pay a flat 12% platform fee for each job – because the platform automates the line items agencies bill as extras.
+              Transcript pricing: most CA reporters charge around $5.00 per page, but every reporter on Dewey Sholes sets their own rate – we don't dictate. The platform shows the regional baseline as guidance only. When you place an order, it goes into an applicant pool. Qualified reporters apply during your turnaround window (rush 4 hours, expedited 24 hours, standard 72 hours); you review every interested reporter's profile + rate and pick whoever you want. Live attendance rates set well below typical CSR agency fees. Court reporters keep 100% of what they earn, while firms pay a flat 12% platform fee for each job – because the platform automates the line items agencies bill as extras.
             </p>
           </div>
 
@@ -11930,7 +11930,7 @@ function PricingPage() {
                 <div className="pricing-approx">
                   <span className="tooltip-trigger" tabIndex="0">
                     Transcription pricing is approximate
-                    <span className="tooltip-content">Page rates shown are the platform baseline. Reporters set their own rate – most within ±20% of baseline (our standard matching band), some in an opt-in ±50% expanded band with lower matching priority. After you submit an order, you'll see the accepting reporter's exact rate when they accept – with a confirm/veto window before the match locks in. Final invoice is calculated from the certified page count delivered with the transcript.</span>
+                    <span className="tooltip-content">Page rates shown are the platform baseline (guidance only). Every reporter sets their own rate per line item. After you submit an order, qualified reporters apply during your turnaround window; you review every applicant's profile + exact rate on the Review Applicants screen and pick whoever you want. Final invoice is calculated from the certified page count delivered with the transcript.</span>
                   </span>
                 </div>
               </div>
