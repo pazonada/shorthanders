@@ -3840,7 +3840,7 @@ function AppNav({ variant, activeTab, onTabChange }) {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
   const tabMap = {
-    reporter: [["jobs", "Available jobs"], ["active", "My jobs"], ["calendar", "Calendar"], ["earnings", "Earnings"]],
+    reporter: [["jobs", "Available jobs"], ["applications", "Your applications"], ["active", "My jobs"], ["calendar", "Calendar"], ["earnings", "Earnings"]],
     buyer: [["cases", "My cases"], ["reporters", "Find reporters"], ["messages", "Messages"], ["billing", "Billing"], ["calendar", "Calendar"], ["analytics", "Analytics"], ["team", "Team"]],
     admin: [["overview", "Overview"], ["verifications", "Verifications"], ["disputes", "Disputes"], ["users", "Users"], ["csr-database", "CSR database"], ["compliance", "Compliance"]],
   };
@@ -3957,6 +3957,246 @@ function OrderTimeline({ step, dates }) {
   );
 }
 
+// ─── Review Applicants (firm-side) ─────────────────────────────
+// Per governance-and-process/matching_applicant_pool_policy.md.
+// Live applicant list for an open order: CSRs see the order in their dashboard
+// and apply; the firm reviews each profile + rate here and selects one. Live
+// viewing (not gated by window close). Favorites get ★ badge + float-to-top.
+// Selection moves the order to selection_pending; CSR has to confirm availability.
+function ReviewApplicantsPage() {
+  // For the prototype, derive the order ID from the route and mock the order details.
+  const orderIdMatch = window.location.hash.match(/#\/order\/applicants\/([^/?]+)/);
+  const orderId = orderIdMatch ? orderIdMatch[1] : "DS-2026-0042";
+  // Mock order metadata. In the real build this comes from the orders table.
+  const mockOrder = {
+    id: orderId,
+    caseName: "Estate of Martinez",
+    caseNumber: "PR-2026-1142",
+    matterRef: "WLG-EM-2026-08",
+    jurisdiction: "Alameda County Superior Court",
+    caseType: "Probate",
+    turnaroundTier: "standard", // standard / rush / economy
+    type: "live", // "live" or "transcription"
+    hearingDate: "2026-06-12",
+    duration: "180",
+    windowHoursTotal: 24,
+    windowHoursRemaining: 17,
+  };
+  // Mock favorites set (the firm has previously favorited these CSR IDs).
+  const favoriteIds = new Set(["rep-1"]);
+  // Mock applicant list: which of MOCK_REPORTERS have applied so far.
+  // In the real build this is a join on order_applications.
+  const applicantIds = ["rep-1", "rep-2", "rep-3"];
+  // Sort + filter state.
+  const [sortBy, setSortBy] = useState("favorites"); // favorites / rate-low / rate-high / rating / jobs
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  // Selection modal state.
+  const [selectingReporter, setSelectingReporter] = useState(null); // the reporter object the firm is about to select
+  const [selectionConfirmed, setSelectionConfirmed] = useState(false);
+
+  // Build the applicant rows. Each row carries the reporter object + computed rate.
+  const applicants = applicantIds.map(id => {
+    const r = MOCK_REPORTERS.find(rep => rep.id === id);
+    if (!r) return null;
+    const rates = getCSRRates(r);
+    const isFavorite = favoriteIds.has(id);
+    return {
+      reporter: r,
+      isFavorite,
+      perPage: rates.ratePerPage,
+      halfDay: rates.attendanceHalfDay,
+      fullDay: rates.attendanceFullDay,
+      trialDay: rates.attendanceTrialDay,
+    };
+  }).filter(Boolean);
+
+  // Filter
+  const visibleApplicants = favoritesOnly ? applicants.filter(a => a.isFavorite) : applicants;
+  // Sort
+  const sortedApplicants = [...visibleApplicants].sort((a, b) => {
+    if (sortBy === "favorites") {
+      if (a.isFavorite !== b.isFavorite) return a.isFavorite ? -1 : 1;
+      return b.reporter.rating - a.reporter.rating;
+    }
+    if (sortBy === "rate-low") return a.perPage - b.perPage;
+    if (sortBy === "rate-high") return b.perPage - a.perPage;
+    if (sortBy === "rating") return b.reporter.rating - a.reporter.rating;
+    if (sortBy === "jobs") return b.reporter.stats.jobsCompleted - a.reporter.stats.jobsCompleted;
+    return 0;
+  });
+
+  // Selection-confirmed screen
+  if (selectionConfirmed && selectingReporter) {
+    return (
+      <div>
+        <nav className="app-nav"><div className="container"><div className="app-nav-inner">
+          <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
+          <div />
+        </div></div></nav>
+        <div className="page page-enter"><div className="container" style={{maxWidth: 640, margin: "0 auto"}}>
+          <div className="confirm-box">
+            <div className="confirm-check" style={{animation: "successPop 0.5s ease"}}><Icon name="clock" size={48} color="#2563EB" /></div>
+            <h2 style={{fontSize: 28, marginBottom: 8}}>Selection sent.</h2>
+            <p className="order-num">Order: <strong>{orderId}</strong></p>
+            <p style={{fontSize: 15, color: "var(--text-secondary, #64748B)", marginBottom: 32, lineHeight: 1.7, maxWidth: 480, margin: "0 auto 32px"}}>
+              <strong style={{color: "var(--text, #0F172A)"}}>{selectingReporter.name}</strong> has been notified and has <strong>{mockOrder.turnaroundTier === "rush" ? "1 hour" : mockOrder.turnaroundTier === "standard" ? "4 hours" : "12 hours"}</strong> to confirm their availability. We'll alert you the moment they respond. If they decline or time out, the Review Applicants screen reopens with that reporter removed.
+            </p>
+            <div style={{display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap"}}>
+              <button className="btn btn-primary btn-sm" onClick={() => navigate("/dashboard")}>View dashboard <Icon name="arrowRight" size={14} color="#fff" /></button>
+              <button className="btn btn-secondary btn-sm" onClick={() => { setSelectingReporter(null); setSelectionConfirmed(false); }}>Back to applicants</button>
+            </div>
+          </div>
+        </div></div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <nav className="app-nav"><div className="container"><div className="app-nav-inner">
+        <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
+        <button className="btn btn-secondary btn-sm" onClick={() => navigate("/dashboard")}>Dashboard</button>
+      </div></div></nav>
+      <div className="page page-enter">
+        <div className="container" style={{maxWidth: 880, margin: "0 auto", padding: "32px 24px 80px"}}>
+          {/* Header */}
+          <div style={{marginBottom: 24}}>
+            <div style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 6}}>Order {orderId}</div>
+            <h1 style={{fontSize: 32, fontWeight: 800, color: "var(--text, #0F172A)", lineHeight: 1.15, marginBottom: 8}}>Review applicants</h1>
+            <p style={{fontSize: 15, color: "var(--text-secondary, #64748B)", lineHeight: 1.55, maxWidth: 580, margin: 0}}>
+              {mockOrder.caseName} · {mockOrder.jurisdiction} · {mockOrder.caseType}. Reporters can keep applying until you select one – review live as they come in.
+            </p>
+          </div>
+
+          {/* Status banner */}
+          <div style={{display: "flex", gap: 12, padding: "14px 18px", background: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: 12, marginBottom: 20, alignItems: "center", flexWrap: "wrap"}}>
+            <div style={{display: "flex", alignItems: "center", gap: 8, flex: 1, minWidth: 220}}>
+              <Icon name="users" size={16} color="#2563EB" />
+              <div style={{fontSize: 14, color: "var(--text, #0F172A)"}}>
+                <strong>{applicants.length} {applicants.length === 1 ? "reporter has" : "reporters have"} applied</strong>
+                <span style={{color: "var(--text-secondary, #64748B)"}}> · {applicants.filter(a => a.isFavorite).length > 0 ? `${applicants.filter(a => a.isFavorite).length} from your favorites` : "none from your favorites yet"}</span>
+              </div>
+            </div>
+            <div style={{display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "var(--text-secondary, #64748B)"}}>
+              <Icon name="clock" size={12} />
+              <span>Application window: <strong>{mockOrder.windowHoursRemaining}h remaining</strong> of {mockOrder.windowHoursTotal}h. You can select any time – before or after window close.</span>
+            </div>
+          </div>
+
+          {/* Sort + filter */}
+          <div style={{display: "flex", gap: 14, marginBottom: 16, alignItems: "center", flexWrap: "wrap"}}>
+            <label style={{fontSize: 12, fontWeight: 600, color: "var(--text-secondary, #64748B)", display: "flex", alignItems: "center", gap: 6, textTransform: "uppercase", letterSpacing: "0.06em"}}>
+              <span>Sort by</span>
+              <select value={sortBy} onChange={e => setSortBy(e.target.value)} style={{padding: "6px 10px", border: "1px solid var(--border, #E2E8F0)", borderRadius: 8, background: "#fff", fontSize: 13, color: "var(--text, #0F172A)", textTransform: "none", fontWeight: 500, letterSpacing: 0}}>
+                <option value="favorites">Favorites first</option>
+                <option value="rate-low">Rate (low to high)</option>
+                <option value="rate-high">Rate (high to low)</option>
+                <option value="rating">Rating</option>
+                <option value="jobs">Completed jobs</option>
+              </select>
+            </label>
+            <label style={{display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--text, #0F172A)", cursor: "pointer"}}>
+              <input type="checkbox" checked={favoritesOnly} onChange={e => setFavoritesOnly(e.target.checked)} style={{accentColor: "#D97706"}} />
+              Favorites only
+            </label>
+          </div>
+
+          {/* Applicant list */}
+          {sortedApplicants.length === 0 ? (
+            <div style={{padding: 40, textAlign: "center", background: "var(--bg-muted, #F8FAFC)", border: "1px dashed var(--border, #E2E8F0)", borderRadius: 12}}>
+              <Icon name="users" size={28} color="#94A3B8" />
+              <p style={{fontSize: 14, color: "var(--text-secondary, #64748B)", marginTop: 10, marginBottom: 0}}>{favoritesOnly ? "None of your favorites have applied yet." : "No applicants yet. We'll alert you when the first reporter applies."}</p>
+            </div>
+          ) : (
+            <div style={{display: "flex", flexDirection: "column", gap: 14}}>
+              {sortedApplicants.map(a => {
+                const r = a.reporter;
+                return (
+                  <div key={r.id} style={{padding: 20, background: "var(--bg)", border: "1px solid " + (a.isFavorite ? "#FCD34D" : "var(--border, #E2E8F0)"), borderRadius: 14, position: "relative"}}>
+                    {a.isFavorite && (
+                      <div style={{position: "absolute", top: 12, right: 12, display: "flex", alignItems: "center", gap: 4, padding: "3px 10px", borderRadius: 999, background: "#FEF3C7", color: "#92400E", fontSize: 11, fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase"}}>
+                        <Icon name="star" size={11} color="#D97706" /> Favorite
+                      </div>
+                    )}
+                    <div style={{display: "flex", gap: 16, alignItems: "flex-start", flexWrap: "wrap"}}>
+                      <div style={{width: 56, height: 56, borderRadius: "50%", background: a.isFavorite ? "#D97706" : "var(--ink, #0F172A)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontWeight: 400, fontSize: 22, flexShrink: 0, letterSpacing: "0.02em"}}>{r.initials}</div>
+                      <div style={{flex: 1, minWidth: 240}}>
+                        <div style={{display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap", paddingRight: a.isFavorite ? 90 : 0}}>
+                          <span style={{fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)"}}>{r.name}</span>
+                          <span style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.12em", textTransform: "uppercase"}}>CSR #{r.csrNumber}</span>
+                        </div>
+                        <div style={{fontSize: 13, color: "var(--text-secondary, #64748B)", marginTop: 4, display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap"}}>
+                          <Icon name="star" size={12} color="#D97706" />
+                          <span>{r.rating} ({r.reviewCount} reviews)</span>
+                          <span>·</span>
+                          <span>{r.stats.onTimeRate}% on-time</span>
+                          <span>·</span>
+                          <span>{r.stats.jobsCompleted} jobs</span>
+                          <span>·</span>
+                          <span>{r.city}</span>
+                        </div>
+                        <div style={{display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap"}}>
+                          {r.certifications.map(c => <span key={c} style={{fontSize: 10, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.1em", fontWeight: 600, background: "#DBEAFE", color: "#1E40AF", padding: "2px 7px", borderRadius: 999}}>{c}</span>)}
+                          {r.specialties.slice(0, 3).map(s => <span key={s} style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", background: "var(--bg-muted, #F1F5F9)", padding: "2px 9px", borderRadius: 999}}>{s}</span>)}
+                        </div>
+                      </div>
+                    </div>
+                    {/* Rate row */}
+                    <div style={{marginTop: 16, padding: "12px 14px", background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border-light, #F1F5F9)", borderRadius: 10, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))", gap: 12}}>
+                      <div>
+                        <div style={{fontSize: 10, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 2}}>Per page</div>
+                        <div style={{fontSize: 15, fontWeight: 700, color: "var(--text, #0F172A)"}}>${a.perPage.toFixed(2)}</div>
+                      </div>
+                      <div>
+                        <div style={{fontSize: 10, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 2}}>Half day</div>
+                        <div style={{fontSize: 15, fontWeight: 700, color: "var(--text, #0F172A)"}}>${a.halfDay.toLocaleString()}</div>
+                      </div>
+                      <div>
+                        <div style={{fontSize: 10, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 2}}>Full day</div>
+                        <div style={{fontSize: 15, fontWeight: 700, color: "var(--text, #0F172A)"}}>${a.fullDay.toLocaleString()}</div>
+                      </div>
+                      <div>
+                        <div style={{fontSize: 10, color: "var(--text-muted, #94A3B8)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 2}}>Trial day</div>
+                        <div style={{fontSize: 15, fontWeight: 700, color: "var(--text, #0F172A)"}}>${a.trialDay.toLocaleString()}</div>
+                      </div>
+                    </div>
+                    {/* Actions */}
+                    <div style={{marginTop: 14, display: "flex", gap: 10, flexWrap: "wrap"}}>
+                      <button className="btn btn-primary btn-sm" onClick={() => setSelectingReporter(r)}>Select {r.name.split(" ")[0]} <Icon name="arrowRight" size={12} color="#fff" /></button>
+                      <a href={`#/reporters/${r.id}`} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" onClick={e => e.stopPropagation()}>View full profile</a>
+                      <a href={`#/messages?with=${r.id}&order=${orderId}`} className="btn btn-secondary btn-sm" onClick={e => e.stopPropagation()}>Message</a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", textAlign: "center", lineHeight: 1.6, maxWidth: 580, margin: "20px auto 0"}}>
+            Want to ask a reporter a question before selecting? Use the Message button to open a 1:1 thread. The reporter sees your firm name and the message in their dashboard + via push/email.
+          </p>
+        </div>
+      </div>
+
+      {/* Selection confirmation modal */}
+      {selectingReporter && !selectionConfirmed && (
+        <div className="modal-overlay" onClick={() => setSelectingReporter(null)}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 480, padding: 28}}>
+            <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 8}}>Select {selectingReporter.name}?</h3>
+            <p style={{fontSize: 13, color: "var(--text-secondary, #64748B)", marginBottom: 18, lineHeight: 1.5}}>
+              They'll be notified immediately and have {mockOrder.turnaroundTier === "rush" ? "1 hour" : mockOrder.turnaroundTier === "standard" ? "4 hours" : "12 hours"} to confirm availability. If they decline or time out, you'll be notified to pick someone else from the remaining applicants. Your card is only authorized after they confirm.
+            </p>
+            <div style={{display: "flex", gap: 10, justifyContent: "flex-end"}}>
+              <button className="btn btn-secondary btn-sm" onClick={() => setSelectingReporter(null)}>Cancel</button>
+              <button className="btn btn-primary btn-sm" onClick={() => setSelectionConfirmed(true)}>Confirm selection</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Order Flow ─────────────────────────────────────────────────
 function OrderFlow() {
   const [step, setStep] = useState(1);
@@ -3973,75 +4213,18 @@ function OrderFlow() {
     costSplit: false, coPayers: [{ name: "", email: "", firm: "", share: "" }],
   });
   const [submitted, setSubmitted] = useState(false);
-  // Match-flow state machine (per rating_and_matching_policy.md – Attorney
-  // match-preview UX, v3 2026-05-14). After Submit, the cascade runs
-  // invisibly in the background — favorites first in parallel, then small
-  // general-pool batches widening over time. When ANY CSR accepts, the
-  // attorney lands on the veto-window screen showing that CSR's profile +
-  // actual rates + a countdown. Attorney can Confirm immediately, do
-  // nothing (auto-confirms at window close), or Veto with a structured
-  // reason (cascade resumes, vetoed CSR excluded, vetoed CSR is told the
-  // attorney chose someone else). After 3 vetoes, the next acceptance
-  // auto-confirms with no veto window — the attorney has used their veto
-  // budget on this order.
-  const [matchState, setMatchState] = useState("editing"); // "editing" | "veto-window" | "confirmed"
-  // The CSR who accepted the cascade and is awaiting attorney confirmation.
-  // In the prototype this cycles through MOCK_REPORTERS on each veto; in
-  // production it's whichever CSR claimed the job from the live cascade.
-  const [proposingReporterIdx, setProposingReporterIdx] = useState(0);
-  // Number of CSRs the attorney has vetoed on this order. After 3, the
-  // next acceptance auto-confirms with no veto window (the soft cap).
-  const [vetoCount, setVetoCount] = useState(0);
-  // Last veto reason (for analytics in the real build).
-  const [lastVetoReason, setLastVetoReason] = useState(null);
-  // Veto-reason modal visibility.
-  const [showVetoModal, setShowVetoModal] = useState(false);
-  // Form state for the veto modal.
-  const [vetoForm, setVetoForm] = useState({ reason: "", otherText: "" });
-  const maxVetoes = 3;
+  // Applicant-pool model (per governance-and-process/matching_applicant_pool_policy.md).
+  // After Submit, the order enters the `open` state. The order is visible to qualified
+  // CSRs immediately; favorites get a louder push + email alert. CSRs apply, the firm
+  // reviews live as applicants arrive, the firm selects one when ready, the selected
+  // CSR confirms availability. No cascade, no veto window. Submitted state just routes
+  // to the post-submit confirmation; the live "Review Applicants" screen is rendered
+  // separately at #/order/applicants/:id.
+  // Mock order ID used for the demo (real build uses the row ID from the order insert).
+  const submittedOrderId = "DS-2026-0042";
 
   const handleSubmitOrder = () => {
-    // Prototype: the cascade runs invisibly in production. Here we jump
-    // straight to the veto-window state with the first CSR as "the
-    // accepting reporter" so the feature is demonstrable. In a real build
-    // there'd be an interstitial "Finding your reporter" state until the
-    // cascade actually returns an acceptance.
-    setProposingReporterIdx(0); // Sarah Chen (+5%) accepts first in the demo
-    setVetoCount(0);
-    setLastVetoReason(null);
-    setMatchState("veto-window");
-    window.scrollTo({ top: 0, behavior: "auto" });
-  };
-  const handleConfirmMatch = () => {
-    setMatchState("confirmed");
     setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "auto" });
-  };
-  const openVetoModal = () => {
-    setVetoForm({ reason: "", otherText: "" });
-    setShowVetoModal(true);
-  };
-  const submitVeto = () => {
-    // Capture the veto reason, advance to the next CSR (cycling MOCK_REPORTERS
-    // in the prototype). If this was the 3rd veto, the NEXT match auto-confirms
-    // because the attorney has used their veto budget — handled by hiding the
-    // Veto button when vetoCount >= maxVetoes.
-    const reason = vetoForm.reason === "other" ? `Other: ${vetoForm.otherText || "(no detail)"}` : vetoForm.reason;
-    setLastVetoReason(reason);
-    setShowVetoModal(false);
-    const newCount = vetoCount + 1;
-    setVetoCount(newCount);
-    const nextIdx = (proposingReporterIdx + 1) % MOCK_REPORTERS.length;
-    setProposingReporterIdx(nextIdx);
-    if (newCount >= maxVetoes) {
-      // 3 vetoes used — the next CSR to accept auto-confirms.
-      // For the prototype we lock in immediately; in production the cascade
-      // would still need to find a 4th CSR before this fires.
-      setTimeout(() => {
-        setMatchState("confirmed");
-        setSubmitted(true);
-      }, 600);
-    }
     window.scrollTo({ top: 0, behavior: "auto" });
   };
   const update = (k, v) => setForm(f => ({ ...f, [k]: v }));
@@ -4081,180 +4264,9 @@ function OrderFlow() {
   const getMinDate = () => { const d = new Date(); d.setDate(d.getDate() + 1); return d.toISOString().split("T")[0]; };
   const csrDeadline = form.needByDate ? (() => { const d = new Date(form.needByDate + "T00:00:00"); d.setDate(d.getDate() - 1); return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }); })() : null;
 
-  // Veto-window screen: a CSR has accepted the order via the cascade, and the
-  // attorney has a window to either Confirm immediately, do nothing (auto-
-  // confirms), or Veto with a structured reason. After 3 vetoes the next
-  // accepting CSR auto-confirms (Veto button hidden). On veto, the rejected
-  // CSR is told the attorney chose another reporter and is offered similar
-  // open jobs — see governance-and-process/rating_and_matching_policy.md.
-  if (matchState === "veto-window") {
-    const reporter = MOCK_REPORTERS[proposingReporterIdx];
-    const rates = getCSRRates(reporter);
-    const turnaroundMult = PRICING[effectiveTurnaround + "Multiplier"] || 1.0;
-    const liveAttendance = form.type === "live"
-      ? (form.duration === "trial" ? rates.attendanceTrialDay * (form.trialDays || 3)
-        : parseInt(form.duration) > 180 || form.duration === "180" ? rates.attendanceFullDay
-        : rates.attendanceHalfDay)
-      : 0;
-    const attendanceLabel = form.type === "live"
-      ? (form.duration === "trial" ? `Trial day × ${form.trialDays || 3}`
-        : parseInt(form.duration) > 180 || form.duration === "180" ? "Full day"
-        : "Half day")
-      : "";
-    const estPagesMid = (est.low + est.high) / 2;
-    const transcriptCost = estPagesMid * rates.ratePerPage * turnaroundMult;
-    const subtotal = liveAttendance + transcriptCost;
-    const platformFee = subtotal * PRICING.platformFee;
-    const total = subtotal + platformFee;
-    const pct = Math.round((rates.rateMultiplier - 1.0) * 100);
-    const pctColor = pct > 0 ? "#92400E" : pct < 0 ? "#065F46" : "var(--text-muted, #94A3B8)";
-    const pctBg = pct > 0 ? "#FEF3C7" : pct < 0 ? "#D1FAE5" : "var(--bg-muted, #F1F5F9)";
-    const isRush = effectiveTurnaround === "rush";
-    const vetoWindowLabel = isRush ? "1 hour" : "4 hours";
-    const vetoesLeft = maxVetoes - vetoCount;
-    const canVeto = vetoCount < maxVetoes;
-    const vetoReasonValid = vetoForm.reason && (vetoForm.reason !== "other" || vetoForm.otherText.trim().length > 0);
-
-    return (
-      <div>
-        <nav className="app-nav"><div className="container"><div className="app-nav-inner">
-          <a href="#/" style={{display: "flex"}}><DeweyFullLogo height={32} theme="light" /></a>
-          <div />
-        </div></div></nav>
-        <div className="page page-enter"><div className="container" style={{maxWidth: 720, margin: "0 auto", padding: "32px 24px 80px"}}>
-          <div style={{textAlign: "center", marginBottom: 28}}>
-            <div style={{display: "inline-flex", alignItems: "center", gap: 10, padding: "8px 14px", background: "#D1FAE5", border: "1px solid #86EFAC", borderRadius: 999, marginBottom: 14, fontSize: 12, fontWeight: 700, color: "#065F46", letterSpacing: "0.05em", textTransform: "uppercase"}}>
-              <Icon name="checkCircle" size={14} color="#059669" /> {reporter.name.split(" ")[0]} accepted your order
-            </div>
-            <h1 style={{fontSize: 30, fontWeight: 800, color: "var(--text, #0F172A)", marginBottom: 6, lineHeight: 1.2}}>You have {vetoWindowLabel} to confirm or veto this match.</h1>
-            <p style={{fontSize: 15, color: "var(--text-secondary, #64748B)", maxWidth: 580, margin: "0 auto", lineHeight: 1.55}}>
-              {reporter.name} has been provisionally assigned to your case. Review their profile and the cost below. If you do nothing, the match auto-confirms when the window closes.
-            </p>
-          </div>
-
-          {/* Accepting CSR card */}
-          <div style={{padding: 24, background: "var(--bg)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, marginBottom: 16}}>
-            <div style={{display: "flex", gap: 18, alignItems: "flex-start", flexWrap: "wrap"}}>
-              <div style={{width: 64, height: 64, borderRadius: "50%", background: "var(--ink, #0F172A)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontWeight: 400, fontSize: 24, flexShrink: 0, letterSpacing: "0.02em"}}>{reporter.initials}</div>
-              <div style={{flex: 1, minWidth: 220}}>
-                <div style={{display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap"}}>
-                  <span style={{fontSize: 20, fontWeight: 700, color: "var(--text, #0F172A)"}}>{reporter.name}</span>
-                  <span style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.12em", textTransform: "uppercase"}}>CSR #{reporter.csrNumber}</span>
-                </div>
-                <div style={{fontSize: 13, color: "var(--text-secondary, #64748B)", marginTop: 4}}>
-                  <Icon name="star" size={12} color="#D97706" /> {reporter.rating} ({reporter.reviewCount} reviews) · {reporter.stats.onTimeRate}% on-time · {reporter.stats.jobsCompleted} jobs · {reporter.city}
-                </div>
-                <div style={{display: "flex", gap: 6, marginTop: 10, flexWrap: "wrap"}}>
-                  {reporter.certifications.map(c => <span key={c} style={{fontSize: 10, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.1em", fontWeight: 600, background: "#DBEAFE", color: "#1E40AF", padding: "3px 8px", borderRadius: 999}}>{c}</span>)}
-                  {reporter.specialties.slice(0, 3).map(s => <span key={s} style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", background: "var(--bg-muted, #F1F5F9)", padding: "3px 10px", borderRadius: 999}}>{s}</span>)}
-                </div>
-              </div>
-              <a href={`#/reporters/${reporter.id}`} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" style={{whiteSpace: "nowrap"}} onClick={e => e.stopPropagation()}>View full profile <Icon name="externalLink" size={12} /></a>
-            </div>
-          </div>
-
-          {/* Itemized cost */}
-          <div style={{padding: 24, background: "var(--bg)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, marginBottom: 16}}>
-            <div style={{display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 14, flexWrap: "wrap", gap: 10}}>
-              <h3 style={{margin: 0, fontSize: 14, fontWeight: 700, color: "var(--text, #0F172A)", textTransform: "uppercase", letterSpacing: "0.06em"}}>Cost at {reporter.name.split(" ")[0]}'s rate</h3>
-              <span style={{fontSize: 11, padding: "4px 10px", borderRadius: 999, background: pctBg, color: pctColor, fontWeight: 700, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.06em"}}>{pct === 0 ? "AT BASELINE" : (pct > 0 ? "+" : "") + pct + "% FROM BASELINE"}</span>
-            </div>
-            {form.type === "live" && (
-              <div style={{display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)", fontSize: 14}}>
-                <span style={{color: "var(--text-secondary, #64748B)"}}>{attendanceLabel} attendance fee</span>
-                <strong>${liveAttendance.toLocaleString()}</strong>
-              </div>
-            )}
-            <div style={{display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)", fontSize: 14}}>
-              <span style={{color: "var(--text-secondary, #64748B)"}}>Transcript ({est.low}–{est.high} pages × ${rates.ratePerPage.toFixed(2)}/pg)</span>
-              <strong>${transcriptCost.toFixed(2)}</strong>
-            </div>
-            {turnaroundMult !== 1.0 && (
-              <div style={{display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)", fontSize: 14}}>
-                <span style={{color: "var(--text-secondary, #64748B)"}}>{tierLabel(effectiveTurnaround)} turnaround ({turnaroundMult > 1 ? "+" : ""}{((turnaroundMult - 1) * 100).toFixed(0)}%)</span>
-                <strong style={{color: turnaroundMult > 1 ? "#92400E" : "#065F46"}}>{turnaroundMult > 1 ? "+" : "−"}${Math.abs(transcriptCost - (estPagesMid * rates.ratePerPage)).toFixed(2)}</strong>
-              </div>
-            )}
-            <div style={{display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid var(--border-light, #F1F5F9)", fontSize: 14}}>
-              <span style={{color: "var(--text-secondary, #64748B)"}}>Platform fee (12%)</span>
-              <strong>${platformFee.toFixed(2)}</strong>
-            </div>
-            <div style={{display: "flex", justifyContent: "space-between", padding: "16px 0 4px", fontSize: 18, fontWeight: 800, color: "var(--text, #0F172A)"}}>
-              <span>Estimated total</span>
-              <span>${total.toFixed(2)}</span>
-            </div>
-            <p style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", marginTop: 10, lineHeight: 1.5}}>
-              Final invoice is calculated from the certified page count delivered with the transcript, not this estimate. {reporter.name.split(" ")[0]} {pct === 0 ? "is at the platform baseline" : `is ${pct > 0 ? "+" : ""}${pct}% from the platform baseline`}.
-            </p>
-          </div>
-
-          {/* Action buttons */}
-          <div style={{padding: 24, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 16, marginBottom: 14}}>
-            <div style={{display: "flex", gap: 12, flexWrap: "wrap"}}>
-              <button className="btn btn-primary" style={{flex: "1 1 240px"}} onClick={handleConfirmMatch}>
-                Confirm match · lock in {reporter.name.split(" ")[0]} <Icon name="arrowRight" size={16} color="#fff" />
-              </button>
-              {canVeto ? (
-                <button className="btn btn-secondary" style={{flex: "1 1 180px"}} onClick={openVetoModal}>
-                  Veto this match
-                </button>
-              ) : (
-                <button className="btn btn-secondary" style={{flex: "1 1 180px"}} disabled={true} title="You've used your 3-veto budget for this order. The next accepting reporter will be auto-assigned.">
-                  Veto used up – next match auto-confirms
-                </button>
-              )}
-            </div>
-            <div style={{display: "flex", alignItems: "center", gap: 8, marginTop: 14, fontSize: 12, color: "var(--text-muted, #94A3B8)"}}>
-              <Icon name="clock" size={12} />
-              <span>Auto-confirms in <strong style={{color: "var(--text-secondary, #64748B)"}}>{vetoWindowLabel}</strong>{vetoCount > 0 && <> · You've vetoed {vetoCount} reporter{vetoCount === 1 ? "" : "s"} so far ({vetoesLeft} {vetoesLeft === 1 ? "veto" : "vetoes"} remaining{vetoCount === 2 ? " – this is your last one" : ""})</>}.</span>
-            </div>
-          </div>
-
-          <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", textAlign: "center", lineHeight: 1.6, maxWidth: 580, margin: "0 auto"}}>
-            If you veto, {reporter.name.split(" ")[0]} will be told you chose a different reporter for this case, and we'll resume matching with other qualified reporters. Your card is only charged when a match is confirmed.
-          </p>
-        </div></div>
-
-        {/* Veto reason modal */}
-        {showVetoModal && (
-          <div className="modal-overlay" onClick={() => setShowVetoModal(false)}>
-            <div className="modal" onClick={e => e.stopPropagation()} style={{maxWidth: 520, padding: 28}}>
-              <h3 style={{margin: 0, fontSize: 18, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 8}}>Why are you vetoing this match?</h3>
-              <p style={{fontSize: 13, color: "var(--text-secondary, #64748B)", marginBottom: 18, lineHeight: 1.5}}>
-                {reporter.name} will be told the attorney chose a different reporter. The reason helps us improve future matches and isn't shared with the reporter.
-              </p>
-              <div style={{display: "flex", flexDirection: "column", gap: 10, marginBottom: 18}}>
-                {[
-                  ["price", "Price is too high"],
-                  ["specialty", "Specialty / qualification mismatch"],
-                  ["scheduling", "Scheduling concern"],
-                  ["prior", "Prior bad experience with this reporter"],
-                  ["other", "Other"],
-                ].map(([val, label]) => (
-                  <label key={val} style={{display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", border: "1px solid " + (vetoForm.reason === val ? "var(--brand, #2563EB)" : "var(--border, #E2E8F0)"), borderRadius: 10, background: vetoForm.reason === val ? "#EFF6FF" : "var(--bg)", cursor: "pointer", fontSize: 14, color: "var(--text, #0F172A)"}}>
-                    <input type="radio" name="vetoReason" value={val} checked={vetoForm.reason === val} onChange={e => setVetoForm(f => ({...f, reason: e.target.value}))} style={{accentColor: "#2563EB"}} />
-                    {label}
-                  </label>
-                ))}
-                {vetoForm.reason === "other" && (
-                  <textarea className="form-input" rows={3} placeholder="Tell us briefly..." value={vetoForm.otherText} onChange={e => setVetoForm(f => ({...f, otherText: e.target.value}))} style={{fontSize: 13, resize: "vertical", marginTop: 4}} maxLength={500} />
-                )}
-              </div>
-              <div style={{display: "flex", gap: 10, justifyContent: "flex-end"}}>
-                <button className="btn btn-secondary btn-sm" onClick={() => setShowVetoModal(false)}>Cancel</button>
-                <button className="btn btn-primary btn-sm" disabled={!vetoReasonValid} onClick={submitVeto} style={{opacity: vetoReasonValid ? 1 : 0.5, cursor: vetoReasonValid ? "pointer" : "not-allowed"}}>
-                  Submit veto · find another reporter
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  }
 
   if (submitted) {
-    const reporter = MOCK_REPORTERS[proposingReporterIdx];
+    const applicationWindow = effectiveTurnaround === "rush" ? "4 hours" : effectiveTurnaround === "standard" ? "24 hours" : "72 hours";
     return (
       <div>
         <nav className="app-nav"><div className="container"><div className="app-nav-inner">
@@ -4264,15 +4276,13 @@ function OrderFlow() {
         <div className="page page-enter"><div className="container" style={{maxWidth: 640, margin: "0 auto"}}>
           <div className="confirm-box">
             <div className="confirm-check" style={{animation: "successPop 0.5s ease"}}><Icon name="checkCircle" size={48} color="#059669" /></div>
-            <h2 style={{fontSize: 28, marginBottom: 8}}>Order confirmed!</h2>
-            <p style={{fontSize: 14, color: "var(--text-secondary, #64748B)", marginBottom: 6}}>Reporter assigned: <strong style={{color: "var(--text, #0F172A)"}}>{reporter.name}</strong> (CSR #{reporter.csrNumber})</p>
-            <p className="order-num">Order number: <strong>DS-2026-0042</strong></p>
+            <h2 style={{fontSize: 28, marginBottom: 8}}>Order posted!</h2>
+            <p style={{fontSize: 14, color: "var(--text-secondary, #64748B)", marginBottom: 6}}>Your order is now open for applications.</p>
+            <p className="order-num">Order number: <strong>{submittedOrderId}</strong></p>
             <p style={{fontSize: 15, color: "var(--text-secondary, #64748B)", marginBottom: 32, lineHeight: 1.7}}>
               {form.costSplit && form.coPayers.some(cp => cp.email)
-                ? `Payment links sent to your co-payers. ${reporter.name} will be notified once all parties have paid.`
-                : form.type === "live"
-                  ? `${reporter.name} has been notified and will confirm shortly.`
-                  : `Your audio has been received and sent to ${reporter.name} for transcription.`}
+                ? `Payment links sent to your co-payers. Qualified reporters can start applying now; your card will be authorized once you select a reporter and they confirm.`
+                : `Qualified reporters in your jurisdiction can see your order and apply now. You'll get a notification when the first reporter applies, and you can review applicants live as they come in – no need to wait for the window to close.`}
             </p>
             {form.costSplit && form.coPayers.some(cp => cp.email) && (
               <div style={{maxWidth: 440, margin: "0 auto 24px", textAlign: "left", padding: 16, background: "var(--bg-muted, #F8FAFC)", border: "1px solid var(--border, #E2E8F0)", borderRadius: 12}}>
@@ -4288,25 +4298,15 @@ function OrderFlow() {
                 ))}
               </div>
             )}
-            <div className="what-next" style={{maxWidth: 440, margin: "0 auto 32px", textAlign: "left"}}>
+            <div className="what-next" style={{maxWidth: 480, margin: "0 auto 32px", textAlign: "left"}}>
               <h3 style={{fontSize: 16, marginBottom: 14}}>What happens next</h3>
-              {form.costSplit && form.coPayers.some(cp => cp.email) ? (<>
-                <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">Co-payers receive a secure payment link via email</div></div>
-                <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">Once all parties pay, {reporter.name} gets notified and confirms</div></div>
-                <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Certified transcript delivered by {form.needByDate ? new Date(form.needByDate + "T00:00:00").toLocaleDateString("en-US", {month: "short", day: "numeric"}) : "your deadline"}</div></div>
-              </>) : form.type === "live" ? (<>
-                <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">{reporter.name} has been sent the job invite and will confirm (usually within hours)</div></div>
-                <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">You'll get a notification when {reporter.name.split(" ")[0]} confirms</div></div>
-                <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">{reporter.name.split(" ")[0]} attends your hearing. Transcript delivered by {form.needByDate ? new Date(form.needByDate + "T00:00:00").toLocaleDateString("en-US", {month: "short", day: "numeric"}) : "your deadline"}</div></div>
-              </>) : (<>
-                <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">Your audio file has been sent to {reporter.name} for transcription</div></div>
-                <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">{reporter.name.split(" ")[0]} transcribes and certifies your proceedings</div></div>
-                <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Certified transcript delivered by {form.needByDate ? new Date(form.needByDate + "T00:00:00").toLocaleDateString("en-US", {month: "short", day: "numeric"}) : "your deadline"}</div></div>
-              </>)}
+              <div className="what-next-step"><div className="wn-num">1</div><div className="wn-text">Qualified reporters apply during your <strong>{applicationWindow}</strong> application window. Reporters you've favorited get a louder alert.</div></div>
+              <div className="what-next-step"><div className="wn-num">2</div><div className="wn-text">Review applicants live on your dashboard – profile, rating, and rate for each. Select whoever you want at any time.</div></div>
+              <div className="what-next-step"><div className="wn-num">3</div><div className="wn-text">Your selected reporter confirms availability, and the job locks in. {form.type === "live" ? "They attend your hearing" : "Your audio is sent to them for transcription"}; transcript delivered by {form.needByDate ? new Date(form.needByDate + "T00:00:00").toLocaleDateString("en-US", {month: "short", day: "numeric"}) : "your deadline"}.</div></div>
             </div>
-            <div style={{display: "flex", gap: 12, justifyContent: "center"}}>
-              <button className="btn btn-primary btn-sm" onClick={() => navigate("/dashboard")}>View dashboard <Icon name="arrowRight" size={14} color="#fff" /></button>
-              <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>Back to home</button>
+            <div style={{display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap"}}>
+              <button className="btn btn-primary btn-sm" onClick={() => navigate("/order/applicants/" + submittedOrderId)}>Review applicants <Icon name="arrowRight" size={14} color="#fff" /></button>
+              <button className="btn btn-secondary btn-sm" onClick={() => navigate("/dashboard")}>View dashboard</button>
             </div>
           </div>
         </div></div>
@@ -5999,6 +5999,18 @@ function ReporterDashboard() {
                   <p>Jobs matching your jurisdiction and preferences.</p>
                 </div>
               </div>
+              {/* Favorited-by-firms panel: gives the CSR visibility into how many firms have them on speed-dial */}
+              <div style={{display: "flex", gap: 14, padding: "14px 18px", background: "#FFFBEB", border: "1px solid #FCD34D", borderRadius: 12, marginBottom: 16, alignItems: "center", flexWrap: "wrap"}}>
+                <div style={{width: 36, height: 36, borderRadius: "50%", background: "#FEF3C7", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
+                  <Icon name="star" size={18} color="#D97706" />
+                </div>
+                <div style={{flex: 1, minWidth: 220}}>
+                  <div style={{fontSize: 14, fontWeight: 700, color: "var(--text, #0F172A)", marginBottom: 2}}>You're a favorite at 4 firms</div>
+                  <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)", lineHeight: 1.5}}>
+                    Walsh Family Law Group, Davis & Partners, Park Law Group, Meridian Litigation. You'll get a louder push + email when any of them posts a new job. <a href="#/settings" style={{color: "#2563EB", fontWeight: 600}}>Manage alerts</a>
+                  </div>
+                </div>
+              </div>
               <div className="filter-bar">
                 <select className="filter-select" value={countyFilter} onChange={e => setCountyFilter(e.target.value)}>
                   <option value="all">All counties</option>
@@ -6071,6 +6083,134 @@ function ReporterDashboard() {
               </div>
             </div>
           )}
+
+          {tab === "applications" && (() => {
+            // Mock CSR applications. In the real build this comes from order_applications
+            // joined with orders + selection state per matching_applicant_pool_policy.md.
+            const mockApplications = [
+              {
+                id: "app-1",
+                orderId: "DS-2026-0042",
+                caseName: "Estate of Martinez",
+                jurisdiction: "Alameda County Superior Court",
+                caseType: "Probate",
+                hearingDate: "2026-06-12",
+                tier: "Standard",
+                appliedAt: "2 hours ago",
+                status: "waiting", // waiting | reviewing | selected | filled | withdrawn
+                statusLabel: "Waiting for firm to review",
+                statusDetail: "Window closes in 17h · firm can review live, no need to wait",
+                statusColor: "#92400E",
+                statusBg: "#FEF3C7",
+                firmName: "Walsh Family Law Group",
+                isFavoriteFrom: true,
+              },
+              {
+                id: "app-2",
+                orderId: "DS-2026-0089",
+                caseName: "Martinez v. Pacific Holdings",
+                jurisdiction: "SF Superior Court – Civic Center",
+                caseType: "Civil Litigation",
+                hearingDate: "2026-06-18",
+                tier: "Expedited",
+                appliedAt: "Yesterday",
+                status: "selected",
+                statusLabel: "Selected – confirm availability",
+                statusDetail: "Respond within 3h 42m or the firm picks someone else",
+                statusColor: "#065F46",
+                statusBg: "#D1FAE5",
+                firmName: "Davis & Partners LLP",
+                isFavoriteFrom: false,
+              },
+              {
+                id: "app-3",
+                orderId: "DS-2026-0076",
+                caseName: "In re Marriage of Johnson",
+                jurisdiction: "Contra Costa Superior Court",
+                caseType: "Family Law",
+                hearingDate: "2026-06-15",
+                tier: "Standard",
+                appliedAt: "3 days ago",
+                status: "filled",
+                statusLabel: "Job filled (another reporter)",
+                statusDetail: "Firm selected another reporter on Mar 21",
+                statusColor: "#475569",
+                statusBg: "#F1F5F9",
+                firmName: "Park Law Group",
+                isFavoriteFrom: false,
+              },
+            ];
+            const active = mockApplications.filter(a => a.status !== "filled" && a.status !== "withdrawn");
+            const closed = mockApplications.filter(a => a.status === "filled" || a.status === "withdrawn");
+            const renderCard = (app) => (
+              <div key={app.id} style={{padding: 18, background: "var(--bg)", border: "1px solid " + (app.status === "selected" ? "#86EFAC" : "var(--border, #E2E8F0)"), borderRadius: 12, marginBottom: 12}}>
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, flexWrap: "wrap", marginBottom: 10}}>
+                  <div style={{flex: 1, minWidth: 220}}>
+                    <div style={{display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap"}}>
+                      <span style={{fontSize: 16, fontWeight: 700, color: "var(--text, #0F172A)"}}>{app.caseName}</span>
+                      <span style={{fontSize: 11, color: "var(--text-muted, #94A3B8)", fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.1em", textTransform: "uppercase"}}>{app.orderId}</span>
+                      {app.isFavoriteFrom && (
+                        <span style={{display: "inline-flex", alignItems: "center", gap: 4, padding: "2px 8px", borderRadius: 999, background: "#FEF3C7", color: "#92400E", fontSize: 10, fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase"}}>
+                          <Icon name="star" size={10} color="#D97706" /> Favorited you
+                        </span>
+                      )}
+                    </div>
+                    <div style={{fontSize: 13, color: "var(--text-secondary, #64748B)", marginTop: 4}}>
+                      {app.firmName} · {app.jurisdiction} · {app.caseType} · {app.tier}
+                    </div>
+                    <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginTop: 2}}>
+                      Hearing: {new Date(app.hearingDate + "T00:00:00").toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"})} · Applied {app.appliedAt}
+                    </div>
+                  </div>
+                  <span style={{fontSize: 11, padding: "4px 10px", borderRadius: 999, background: app.statusBg, color: app.statusColor, fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap"}}>{app.statusLabel}</span>
+                </div>
+                <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)", marginBottom: app.status === "filled" ? 0 : 12, lineHeight: 1.5}}>
+                  {app.statusDetail}
+                </div>
+                {app.status !== "filled" && app.status !== "withdrawn" && (
+                  <div style={{display: "flex", gap: 8, flexWrap: "wrap"}}>
+                    {app.status === "selected" ? (
+                      <>
+                        <button className="btn btn-primary btn-sm" onClick={() => addToast("Availability confirmed", "Firm notified. Job will lock in.", "success")}>Confirm availability <Icon name="checkCircle" size={12} color="#fff" /></button>
+                        <button className="btn btn-secondary btn-sm" onClick={() => addToast("Selection declined", "Firm notified to pick someone else.", "info")}>Decline</button>
+                      </>
+                    ) : (
+                      <button className="btn btn-secondary btn-sm" onClick={() => addToast("Application withdrawn", "Your application has been removed from this order.", "info")}>Withdraw application</button>
+                    )}
+                    <a href={`#/messages?with=firm-${app.id}&order=${app.orderId}`} className="btn btn-secondary btn-sm">Message firm</a>
+                  </div>
+                )}
+              </div>
+            );
+            return (
+              <div>
+                <div className="page-header">
+                  <div>
+                    <h1>Your applications</h1>
+                    <p>Jobs you've applied to and where they stand. Selected ones need a quick confirmation.</p>
+                  </div>
+                </div>
+                {active.length > 0 ? (
+                  <>
+                    <h3 style={{fontSize: 13, fontWeight: 700, color: "var(--text-secondary, #64748B)", textTransform: "uppercase", letterSpacing: "0.06em", marginTop: 16, marginBottom: 10}}>Active ({active.length})</h3>
+                    {active.map(renderCard)}
+                  </>
+                ) : (
+                  <div className="empty-state" style={{padding: 32}}>
+                    <div className="empty-icon"><Icon name="users" size={36} color="#94A3B8" /></div>
+                    <h3>No active applications</h3>
+                    <p>Browse open jobs and apply to ones that fit. We'll show your application status here.</p>
+                  </div>
+                )}
+                {closed.length > 0 && (
+                  <>
+                    <h3 style={{fontSize: 13, fontWeight: 700, color: "var(--text-secondary, #64748B)", textTransform: "uppercase", letterSpacing: "0.06em", marginTop: 24, marginBottom: 10}}>Closed ({closed.length})</h3>
+                    {closed.map(renderCard)}
+                  </>
+                )}
+              </div>
+            );
+          })()}
 
           {tab === "active" && (
             <div>
@@ -7755,6 +7895,30 @@ function SettingsPage() {
                     ))}
                   </div>
                 ))}
+                {settingsRole === "csr" && (
+                  <div className="toggle-row" style={{background: "#FFFBEB", borderLeft: "3px solid #FCD34D", paddingLeft: 12, marginLeft: -12}}>
+                    <div style={{flex: 1}}>
+                      <div className="toggle-label" style={{display: "flex", alignItems: "center", gap: 6}}>
+                        <Icon name="star" size={12} color="#D97706" />
+                        Favorite-from job alerts
+                        <span style={{fontSize: 9, padding: "1px 6px", borderRadius: 999, background: "#FEF3C7", color: "#92400E", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase"}}>Sticky-on</span>
+                      </div>
+                      <div className="toggle-sub">When a firm that has favorited you posts a new job. Defaults push + email both on – opt-out only. SMS not available.</div>
+                    </div>
+                    <label className="toggle-switch" style={{margin: "0 8px"}} title="Email alerts">
+                      <input type="checkbox" defaultChecked />
+                      <span className="slider"></span>
+                    </label>
+                    <label className="toggle-switch" style={{margin: "0 8px", opacity: 0.4}} title="SMS not available (push + email only)">
+                      <input type="checkbox" disabled />
+                      <span className="slider"></span>
+                    </label>
+                    <label className="toggle-switch" style={{margin: "0 8px"}} title="Push alerts">
+                      <input type="checkbox" defaultChecked />
+                      <span className="slider"></span>
+                    </label>
+                  </div>
+                )}
               </div>
               <button className="btn btn-primary btn-sm" onClick={() => addToast("Saved", "Notification preferences updated", "success")}>Save preferences</button>
             </div>
@@ -11978,6 +12142,7 @@ function AppRouter() {
   const m = route.match(/^#\/order\/(.+)$/);
   if (m) return <OrderDetailPage orderId={m[1]} />;
   if (route.startsWith("#/request-copy")) return <RequestCopyPage />;
+  if (route.startsWith("#/order/applicants")) return <ReviewApplicantsPage />;
   if (route.startsWith("#/order")) return <OrderFlow />;
   if (route.startsWith("#/messages")) return <MessagingPage />;
   if (route.startsWith("#/dashboard")) return <BuyerDashboard />;

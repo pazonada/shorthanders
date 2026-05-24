@@ -36,12 +36,12 @@ The driving constraint is reliability. We've built a lot of policy and design su
 
 - Firm submits order → state `collecting_applicants`. Push + email alerts fire to CSRs whose preferences match the job's filterable attributes.
 - Qualified CSRs see the job in their "Open jobs" dashboard. Any of them can click **Apply** to express interest. Applying does not commit them; it's informational. They can withdraw before selection without penalty.
-- **Application window closes per turnaround tier:** Rush 4 hours / Expedited 24 hours / Standard 72 hours. Firm gets a "Review applicants" notification; order state moves to `review_open`.
+- **Application window is a notification trigger, not a gate.** Firm can view applicants and select any time – before, at, or after window close. Window lengths per turnaround tier: Rush 4 hours / Expedited 24 hours / Standard 72 hours. Firm gets a "First reporter applied" push when the first application arrives and a "Window closed – N applicants" push at window close if they haven't already selected. Order state is `open` throughout.
 - **Firm reviews all applicants** on the Review Applicants screen: profile photo, name, license, rating, on-time rate, specialty tags, location, and the applicant's per-page + per-diem rate for this job. Sortable by rate / rating / completed jobs / distance / favorites-first. Pricing is a legitimate comparison axis.
 - **Firm selects one applicant** (or none, or closes the order). On selection, state moves to `selection_pending` and the selected CSR is notified to confirm availability within Rush 1h / Expedited 4h / Standard 12h.
 - **CSR confirms** → order state `confirmed`, Stripe pre-authorization fires, post-selection messaging unlocks between firm + CSR for logistics coordination.
 - **CSR declines or times out** → firm is notified immediately and re-enters the Review Applicants screen (with that CSR removed). Repeated no-responses degrade the CSR's ranking.
-- **Firm picks no one** → job stays in `review_open`. New CSRs can keep applying. Firm gets re-notified when N new applicants arrive OR 12h Rush / 24h Expedited / 48h Standard pass.
+- **Firm picks no one** → job stays `open`. New CSRs can keep applying. Firm gets re-notified when N new applicants arrive OR 12h Rush / 24h Expedited / 48h Standard pass.
 - **No "you weren't selected" notifications** to non-selected CSRs. Their dashboard status updates silently; we don't push or email rejections.
 
 **Why this design over the alternatives:**
@@ -74,7 +74,7 @@ The driving constraint is reliability. We've built a lot of policy and design su
 
 ### Notifications
 
-- **Push (Web Push API, served by the PWA)** for: job alerts matching CSR preferences, applicants applied / window-closed / firm-selected-you events, delivery accepted, payment received, license renewal warnings, new in-platform messages.
+- **Push (Web Push API, served by the PWA)** for: regular job alerts matching CSR preferences, **favorite-from job alerts (louder, push + email both defaulted on, opt-out only) when a firm that has favorited the CSR posts a new job**, applicants applied / window-closed / firm-selected-you events, delivery accepted, payment received, license renewal warnings, new in-platform messages.
 - **Email (Postmark for transactional, Resend for digest/marketing)** for: order confirmations, password resets, payment receipts, transcript-ready notices, weekly digest of relevant new jobs (CSR-side), and the always-on fallback for any push that didn't deliver.
 - **No SMS provider.** PWA push is the immediacy channel; email is the durable record.
 

@@ -27,9 +27,11 @@ This puts choice in the firm's hands, makes price a comparison axis at the momen
 - A CSR can withdraw their application before selection without penalty.
 - CSRs see their open applications in a **"Your applications"** view with status: *Waiting for firm to review / Application window closing in X / Firm selected someone else / Firm selected you – confirm availability*.
 
-### 3. Application window closes
+### 3. Application window (notification trigger, not a gate)
 
-The application window length depends on the firm's turnaround tier:
+The application window is a **notification timer**, not a gate on the firm's ability to review or select. The firm can view applicants as they arrive and select any time – before, at, or after window close. We chose this on 2026-05-24 over the gated alternative because (a) it mirrors Care.com faithfully, (b) it lets firms with favorites fill jobs fast without forcing them off-platform to text "are you available?", and (c) it's honest about how the marketplace actually behaves rather than pretending applicants get a guaranteed runway.
+
+The window length depends on the firm's turnaround tier:
 
 | Turnaround tier | Application window |
 |---|---|
@@ -39,9 +41,10 @@ The application window length depends on the firm's turnaround tier:
 
 These are starting defaults. We'll instrument and tune them post-launch based on observed time-to-fill, applicant counts per window, and firm satisfaction.
 
-- When the window closes, the firm gets a **"Review applicants"** notification (push + email).
-- Order state moves to **`review_open`**.
-- The job is **not removed** from CSRs' open-jobs view at this point – they can still apply if the firm hasn't selected, and the firm sees later applicants in the same review screen.
+- **First applicant arrives** → firm gets a "First reporter applied" push + email. Optional; firm can mute this notification type.
+- **Window closes** → firm gets a "Window closed – N applicants" push + email if they haven't already selected.
+- **The job is never removed from CSRs' open-jobs view** during `open` (the merged `collecting_applicants` / `review_open` state). CSRs can keep applying right up to selection. The firm sees later applicants in the same live review screen.
+- **State naming:** for simplicity, we collapse `collecting_applicants` and `review_open` into a single state called `open` since the firm can act in both. The state machine becomes: `open` → `selection_pending` → `confirmed` (with `closed_no_selection` as a terminal alt from `open`).
 
 ### 4. Firm reviews applicants
 
@@ -56,7 +59,7 @@ Three outcomes:
 
 **a. Firm selects an applicant.** Order moves to `selection_pending`. See step 5.
 
-**b. Firm selects no one and walks away.** Order stays in `review_open`. Job remains visible to qualified CSRs; new applicants can still apply. When **at least one new applicant arrives OR another N hours pass** (defaults: 12h Rush / 24h Expedited / 48h Standard), the firm gets a re-notification: "M new applicants since you last checked (N total). Review now." The firm can iterate this loop as many times as they want until either (a) they select someone or (b) the job's hard deadline approaches and we auto-escalate (see step 7 / edge cases).
+**b. Firm selects no one and walks away.** Order stays in `open`. Job remains visible to qualified CSRs; new applicants can still apply. When **at least one new applicant arrives OR another N hours pass** (defaults: 12h Rush / 24h Expedited / 48h Standard), the firm gets a re-notification: "M new applicants since you last checked (N total). Review now." The firm can iterate this loop as many times as they want until either (a) they select someone or (b) the job's hard deadline approaches and we auto-escalate (see step 7 / edge cases).
 
 **c. Firm closes the order without selecting.** Order moves to `closed_no_selection`. Applicant CSRs are notified silently (their application status updates in their dashboard; no email/push). Firm can resubmit the order if they change their mind.
 
@@ -74,7 +77,7 @@ When the firm clicks "Select [CSR name]":
 
 **a. Confirm.** Order locks in. State moves to **`confirmed`**. Stripe pre-authorization fires on the firm's card. Both parties are notified. The job moves from "open" to "assigned" in everyone's dashboard. **Post-selection messaging unlocks** at this point so the parties can coordinate logistics (location, dial-in info, document handoff).
 
-**b. Decline.** State moves back to **`review_open`**. Firm is notified immediately (push + email): "[CSR] is no longer available – select someone else." The Review Applicants screen reopens with that CSR removed from the list. The firm picks again.
+**b. Decline.** State moves back to **`open`**. Firm is notified immediately (push + email): "[CSR] is no longer available – select someone else." The Review Applicants screen reopens with that CSR removed from the list. The firm picks again.
 
 **c. No response within the confirmation window (timeout).** Treated as decline. Firm notified the same way. We don't punish the CSR with a rating impact for one missed window, but we instrument it; repeated no-responses degrade their ranking in subsequent applicant reviews.
 
@@ -140,11 +143,26 @@ Future option: opt-in "send me application updates" toggle in CSR notification s
 
 ## Favorites treatment
 
-Favorites still get a perk, but it's now visual rather than algorithmic:
+Favorites get an advantage in **notification visibility**, not in selection standing. The model is: every qualified CSR can see and apply to the job at the same moment, but the firms a CSR has worked with get a louder ping so they don't miss it.
 
-- On the Review Applicants screen, favorite CSRs get a "★ Worked with you before" badge and float to the top of the default sort.
-- Favorites still receive the "new job in your alert categories" notification at the same priority as everyone else (we don't give them an earlier alert – that would be unfair given the applicant-pool model's stated openness).
-- Firms can filter the applicant list to "favorites only" if they want to skip the wider review.
+**On the firm side (Review Applicants screen):**
+
+- Favorite CSRs get a **★ "Worked with you before" badge** on their applicant card.
+- Favorites **float to the top of the default sort**.
+- Firms can **filter to "favorites only"** if they want to skip the wider review.
+- Favorites have no priority in *selection logic* – the firm picks whoever they want, the same way they'd pick a non-favorite.
+
+**On the CSR side (notifications) – revised 2026-05-24:**
+
+- A CSR who has been favorited by Firm X gets a distinct **"favorite-from job alert"** notification type when Firm X posts a new job. Different from the regular "new job in your alert categories" alert.
+- **Defaults for favorite-from alerts: push + email, both on, opt-out only.** The CSR has to explicitly turn each channel off in Settings → Notifications. Compared to regular new-job alerts which are user-controlled and may be off, favorite-from alerts are sticky-on so a favorite doesn't miss a job from a firm they've built a relationship with.
+- The CSR's "Favorited by X firms" panel on their dashboard shows the count and surfaces the "Priority alerts on" indicator + a link to notification settings.
+- **No SMS.** Push + email is the channel mix per `project_phone_is_comms_only.md` and the messaging-and-notifications plan. We are not adding Twilio for this feature.
+- **Anti-firehose consideration:** a CSR favorited by many firms could be alerted often. We don't rate-limit in v1 – instrument volume per CSR and reply rate; if CSRs ask for a per-firm mute or a "digest mode" later, we'll add it.
+
+**Why this revision over the earlier "same priority as everyone else" policy:**
+
+The openness promise was about *access* to apply, not about *visibility*. A CSR who has built trust with a firm and may already be on the firm's mind shouldn't lose a job because their phone was face-down. Louder notifications honor the relationship without giving favorites exclusive access. Non-favorites still see the same job in the same dashboard at the same moment; they just don't get the extra-prominent ping.
 
 ---
 

@@ -62,10 +62,13 @@ User preferences live in Settings → Notifications. Email is verified at signup
 
 | Event | Default channel(s) | User can change to |
 |---|---|---|
-| New job offered (CSR) | Push (if installed) + email backup | Email only, or off (off shows a warning that they may miss tier windows) |
+| New job offered – regular (CSR) | Push (if installed) + email backup | Email only, or off (off shows a warning that they may miss tier windows) |
+| **New job offered – favorite-from (CSR has been favorited by the posting firm)** | **Push + email, both on, opt-out only** | Either channel can be turned off in Settings → Notifications, but the default is sticky-on. No SMS. |
 | Tier deadline approaching | Push + email – both required | Both required, cannot disable |
 | Job confirmed / canceled (firm) | Email | Push if installed, both, off |
 | New in-platform message | Push (if installed), else email | Email only, off |
+| First applicant arrived (firm) | Push (if installed), else email | Off |
+| Application window closed (firm) | Push + email | Either channel can be turned off |
 | Transcript ready, payment receipts | Email | Email only |
 | Marketing / digests | Email | Off |
 
