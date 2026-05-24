@@ -99,9 +99,30 @@ If we ever want to test hiding price ("we'll set it on selection"), do it as a d
 
 ## Messaging
 
-- **Before selection:** no messaging. The firm picks based on the applicant's profile + price. This keeps the review screen low-friction and avoids the "I have to interview 6 reporters" problem.
-- **After selection (state = `confirmed`):** in-app messaging unlocks between the firm and the selected CSR for the duration of the engagement. This is logistics-coordination, not vetting.
-- Post-`confirmed` messaging is part of the v1 build (small lift since the order is already a 1:1 firm/CSR relationship at that point).
+**In v1.** Decided 2026-05-24 (revising the earlier "post-selection only" position). Firms need to vet applicants for high-stakes hearings, and CSRs need to ask clarifying questions about scope before applying or after applying. We've expanded messaging into v1 in both windows.
+
+| Phase | Who can message | Direction | Purpose |
+|---|---|---|---|
+| Before applying (job is in `collecting_applicants`) | No one | – | The job board is read-only at this stage; CSRs see the public order details, no thread exists yet. |
+| After applying, before selection (`review_open`) | Firm ↔ each CSR who applied | Either direction | Firm vets applicants; applicants ask clarifying questions. 1:1 thread per applicant. |
+| After selection (`confirmed`) | Firm ↔ selected CSR | Either direction | Logistics coordination (location, dial-in info, document handoff). |
+
+**Shape of the feature in v1** (full detail in `governance-and-process/messaging_and_notifications_plan.md`):
+
+- **1:1 threads per order.** No group threads. No firm-to-applicants broadcast.
+- **Async, text-only.** No real-time chat (no typing indicators, no presence). No attachments – defer to v1.1. Parties can email PDFs out-of-band if they need to.
+- **Notifications:** push (Web Push via the PWA) for immediacy, email digest as fallback. Per the existing notifications plan.
+- **Anti-spam: trust-first.** No hard rate limits in v1. Either party can mute a thread (no future notifications). We instrument per-firm message volume + reply rate; if abuse patterns emerge post-launch, we add limits.
+- **Non-privileged disclaimer.** First message in any thread is preceded by a system notice: "Messages on Dewey Sholes are not a privileged channel. Do not send privileged attorney-client communications here." This is shown once per thread, not on every message.
+- **Admin visibility.** Admin can read threads for dispute resolution. Disclosed in the TOS. Threads are not visible to attorneys outside the originating firm or to other CSRs.
+- **Retention.** Threads archived 90 days after the order moves to `delivered` or `closed_no_selection`. After that, they're soft-deleted from the user-facing view (admin retains for the legal-hold period defined in `transcript_retention_and_custody_policy.md`).
+- **Identity disclosure on first message.** When a firm opens a thread with an applicant, the applicant sees the firm name + initiating attorney's name (already visible to applicants on the job posting; this is informational consistency, not new disclosure).
+
+**Why we changed the earlier "post-selection only" call:**
+- Real firm need: vetting a CSR before committing to a custody-trial or contested-probate hearing matters more than vetting a Care.com nanny.
+- Real CSR need: clarifying things like "is this all-day or am I covering just the motion?" before applying or after applying.
+- Cost is manageable: 1:1 async text-only threads are bounded engineering work, especially with the inbox / notification infrastructure already planned in the messaging-and-notifications doc.
+- Spam risk exists but is bounded by the small CA legal/CSR community (people know each other); we'll instrument and tighten if it breaks.
 
 ---
 
@@ -186,7 +207,7 @@ Applicant-pool keeps engineering tractable (no batching, no race conditions on c
 2. **Re-notification interval** (when firm sits on `review_open`). 12h / 24h / 48h proposed; same caveat.
 3. **No-applicants escalation.** Today's policy is "ops alerted at hard deadline minus 12h." Once we have data on application rates, build an automated widening (e.g., "extend search to adjacent counties") rather than a manual ops call.
 4. **CSR ranking weight on application behavior.** How aggressively should "applied then declined" or "no-response to selection" degrade ranking? Start conservative; tune.
-5. **Pre-selection messaging.** Currently off. Reconsider if firms tell us they need to vet applicants before selecting. Care.com lets attorneys vet; we may need that for high-stakes legal work eventually.
+5. ~~**Pre-selection messaging.** Currently off.~~ **Resolved 2026-05-24:** pre-selection messaging is in v1. See the Messaging section above. Open follow-ups: (a) what counts as an abuse pattern that triggers rate limiting, (b) whether to add an applicant-side "ask a question about the job before applying" UX in v1.1.
 6. **Bulk apply / saved searches.** CSRs may want to apply with one click to all matching new jobs. Defer.
 7. **The cascade + veto-window design** in `rating_and_matching_policy.md` stays in the doc as a deferred alternative. If applicant-pool doesn't pan out (e.g., firms hate reviewing applicants, or time-to-fill is too slow), the cascade is the next thing to try.
 

@@ -76,6 +76,58 @@ User preferences live in Settings → Notifications. Email is verified at signup
 - iOS does not show notifications from a PWA on the lock screen as prominently as native apps. The install pitch should set expectations honestly.
 - If a user removes the PWA from their home screen, the push subscription dies silently. See failure-mode handling above.
 
+## Firm ↔ CSR messaging in the applicant-pool flow
+
+Added 2026-05-24. Pairs with `governance-and-process/matching_applicant_pool_policy.md`.
+
+The v1 matching model lets firms message CSRs both before selection (to vet applicants) and after selection (for logistics coordination). The rules below pin down what's allowed, how it's scoped, and how we keep CSRs from getting spammed.
+
+### Who can message whom, and when
+
+| Order state | Allowed threads | Notes |
+|---|---|---|
+| `collecting_applicants` | None | Job is read-only; CSRs see the public posting but no thread yet exists. |
+| `review_open` | Firm ↔ each applicant who has applied | Either party can open the thread; either can send / reply. 1:1 thread per applicant per order. |
+| `selection_pending` | Existing threads continue; no new ones | Selected CSR is in confirmation window; non-selected applicants can still send messages they'd already started, but firm typically doesn't reply at this stage. |
+| `confirmed` | Firm ↔ selected CSR only | Other applicants' threads are archived (read-only on both sides; no new messages allowed in those threads). Selected-CSR thread stays open for the engagement. |
+| `delivered` / `closed_no_selection` | Thread is read-only | Archive starts; 90-day retention before soft-delete from user-facing view. |
+
+### Format
+
+- **1:1 threads.** No group threads. No firm-to-applicants broadcast (a firm cannot send the same message to multiple applicants in one click; they have to open each thread individually). The friction is deliberate and is the v1 spam control.
+- **Async, text-only.** No real-time chat affordances – no typing indicators, no presence, no read receipts. Send a message, the other party gets a notification, they read + reply when they get to it.
+- **No attachments in v1.** Defer to v1.1 (file storage, virus scanning, MIME handling, size limits). Parties can send PDFs via email out-of-band if they need to.
+- **Plain text only.** No rich formatting, no inline images, no links rendered as embeds (raw URLs are fine).
+- **Message length cap:** 4,000 characters per message. Long enough for real questions, short enough that abuse looks like abuse.
+
+### Notifications
+
+- **Push (Web Push via PWA)** when a new message arrives, if the recipient has the PWA installed and push enabled.
+- **Email digest** as the always-on fallback: if a message hasn't been read within 30 minutes (during business hours) or by the next business day (after hours), an email goes out with the message contents inline.
+- Both channels are user-toggleable in Settings → Notifications under "New in-platform message" – see the "Channels and defaults" table above.
+
+### Anti-spam (v1 = trust-first)
+
+- **No hard rate limits.** A firm can open one thread per applicant per order. There's no daily/weekly cap on messages sent across all threads.
+- **Mute thread.** Either party can mute a thread, which stops notifications without closing the thread (replies are still accepted but go to the recipient's inbox quietly).
+- **Block from future jobs.** Either party can block the other from messaging on future orders (separate from mute). CSRs blocking a firm: that firm's future orders will not be visible to that CSR (we'll filter at the open-jobs query). Firms blocking a CSR: that CSR can't apply to future orders from that firm.
+- **Instrumentation:** track per-firm message volume, reply rate by applicants, applicant-block rate by firm. If patterns emerge that look like abuse (e.g., a firm with 50 messages sent and 5% reply rate, or a 20% applicant-block rate against one firm), ops reviews. Add hard limits only if we see actual abuse.
+
+### Compliance + safety
+
+- **Non-privileged disclaimer.** First message in any thread is preceded by a system notice: *"Messages on Dewey Sholes are not a privileged channel. Do not send privileged attorney-client communications here. If you need to share privileged material, use a secure channel outside the platform."* Shown once per thread, not on every message.
+- **Admin visibility.** Admin can read thread contents for dispute resolution. Disclosed in the TOS. Threads are not visible to attorneys outside the originating firm, to other CSRs, or to anyone else.
+- **Reportable content.** Either party can flag a message as abusive (harassment, threats, off-platform-job solicitation, etc.). Reports route to admin; admin reviews within a service-level commitment to be defined in the moderation policy.
+- **Retention.** Threads archived 90 days after the order moves to `delivered` or `closed_no_selection`. After archival, the user-facing view soft-deletes them; admin retention follows the legal-hold period in `transcript_retention_and_custody_policy.md`.
+
+### Out of scope for v1 (here, in addition to the doc-wide out-of-scope below)
+
+- **Attachments** (files, images, PDFs). v1.1.
+- **Pre-application questions from CSR-side** ("I see this job is in Alameda; is the courthouse the Hayward branch?"). Today they have to apply first to open a thread. v1.1 candidate.
+- **Group threads** (firm + multiple applicants in one thread).
+- **Off-platform export** (downloading a thread as PDF). Possible v1.1 if firms ask for it.
+- **AI-assisted reply drafting / smart compose.** No.
+
 ## Components to integrate
 
 - **PWA wrapper** – `manifest.json` (app name, icon, theme colors, fullscreen display mode), service worker (push event handling, offline shell), install prompt UX with platform-specific instructions.

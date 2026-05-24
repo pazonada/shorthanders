@@ -74,9 +74,21 @@ The driving constraint is reliability. We've built a lot of policy and design su
 
 ### Notifications
 
-- **Push (Web Push API, served by the PWA)** for: job alerts matching CSR preferences, job claimed notifications, delivery accepted, payment received, license renewal warnings.
-- **Email (Postmark for transactional, Resend for digest/marketing)** for: order confirmations, password resets, payment receipts, transcript-ready notices, weekly digest of relevant new jobs (CSR-side).
+- **Push (Web Push API, served by the PWA)** for: job alerts matching CSR preferences, applicants applied / window-closed / firm-selected-you events, delivery accepted, payment received, license renewal warnings, new in-platform messages.
+- **Email (Postmark for transactional, Resend for digest/marketing)** for: order confirmations, password resets, payment receipts, transcript-ready notices, weekly digest of relevant new jobs (CSR-side), and the always-on fallback for any push that didn't deliver.
 - **No SMS provider.** PWA push is the immediacy channel; email is the durable record.
+
+### Messaging (in-app, async)
+
+Added 2026-05-24. Full spec in `governance-and-process/messaging_and_notifications_plan.md#firm--csr-messaging-in-the-applicant-pool-flow`.
+
+- **1:1 firm ↔ CSR threads, scoped per order.** Pre-selection: a firm can open a thread with any applicant (CSR who has applied to that order); the applicant can reply. Post-selection: existing thread with the selected CSR continues for the engagement.
+- **Async, text-only.** No real-time chat (no typing indicators, no presence, no read receipts). No attachments in v1 – text up to 4,000 characters per message.
+- **Notifications:** push for immediacy, email digest as the fallback (per the notifications row above).
+- **Anti-spam:** trust-first in v1. No hard rate limits. Either party can mute a thread or block the other from future orders. We instrument volume + reply rate + block rate and add limits only if abuse patterns emerge.
+- **Compliance:** non-privileged-channel disclaimer shown once per thread. Admin can read threads for dispute resolution (disclosed in TOS). Threads archive 90 days after the order completes; legal-hold retention per the transcript-retention policy.
+
+**Not in v1 messaging:** attachments, group threads, pre-application "ask a question about the job" UX, off-platform export, AI-assisted reply drafting.
 
 ### Admin dashboards
 
@@ -160,20 +172,21 @@ This is an honest guess; ranges reflect uncertainty.
 | CSR signup + license verification | 30–50 | 1.5–2.5 |
 | Attorney signup + bar verification | 30–50 | 1.5–2.5 |
 | Order flow (5 steps + matter ref) | 50–70 | 2.5–3.5 |
-| Job-board matching | 30–40 | 1.5–2 |
-| CSR dashboard (open jobs + active jobs + earnings) | 40–60 | 2–3 |
-| Attorney dashboard (cases + billing + invoices) | 40–60 | 2–3 |
+| Applicant-pool matching (apply, review screen, select, confirm) | 50–70 | 2.5–3.5 |
+| CSR dashboard (open jobs + your applications + active jobs + earnings) | 50–70 | 2.5–3.5 |
+| Attorney dashboard (cases + review applicants + billing + invoices) | 50–70 | 2.5–3.5 |
 | Stripe Connect (auth + capture + payouts + webhooks + retries) | 60–100 | 3–5 |
-| Notifications (Web Push + Postmark + Resend) | 30–50 | 1.5–2.5 |
+| Notifications (Web Push + Postmark + Resend + dispatcher) | 30–50 | 1.5–2.5 |
+| In-app messaging (threads, inbox, mute/block, non-priv. disclaimer) | 40–60 | 2–3 |
 | Transcript upload + certification + delivery | 40–60 | 2–3 |
-| Admin dashboard (users, orders, verifications, financials) | 40–60 | 2–3 |
+| Admin dashboard (users, orders, verifications, financials, message viewer) | 50–70 | 2.5–3.5 |
 | Pre-launch code review (engineer-friend) | 1 week of his time | 1 week (parallel) |
 | Bug fixes, polish, deployment, monitoring setup | 40–60 | 2–3 |
-| **Total** | **470–720** | **24–35 weeks part-time** |
+| **Total** | **570–840** | **29–42 weeks part-time** |
 
-So: **3–6 months part-time** to v1 launch. **Could be 6–10 weeks full-time** if you went all-in.
+So: **3.5–7 months part-time** to v1 launch. **Could be 7–12 weeks full-time** if you went all-in. The estimate moved up from the prior version because (a) applicant-pool matching is meaningfully more than the original first-claim-wins job-board, (b) in-app messaging was promoted into v1, and (c) the attorney + CSR dashboards both grew a new view (Review Applicants and Your Applications respectively).
 
-This is dramatically less than the 9-12 months the all-features prototype implied. The cuts above are the difference.
+Still meaningfully less than the 9–12 months the all-features prototype implied. The cuts noted in "What v1 cuts" below are the difference.
 
 ---
 
