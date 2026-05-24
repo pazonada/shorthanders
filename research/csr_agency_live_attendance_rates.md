@@ -204,11 +204,11 @@ The right pricing anchors for the Bay Area private market are the CA-specific da
 | DS launch – conservative (~70% below agency) | $700 | $1,200 | Still well above court statutory ($596 Bay Area mean); safer if CSRs balk |
 | Floor I wouldn't go below | $500 | $900 | Anything lower undersells the work; CSRs do this rate through agencies today |
 
-Note: this revises the earlier "$600 half / $1,100 full" guess upward. The earlier number was anchored too heavily on FL rate cards and Bay Area court statutory; with CA-specific evidence properly weighted, the recommended landing zone is **$1,050 / $1,650** – between the two original tiers. The ±20% CSR rate-setting band means premium CSRs can position at $1,260/$1,980 (top of band) and cold-start CSRs can sit at $840/$1,320 (bottom of band), giving the platform a published *middle* rate rather than a ceiling or floor.
+Note: this revises the earlier "$600 half / $1,100 full" guess upward. The earlier number was anchored too heavily on FL rate cards and Bay Area court statutory; with CA-specific evidence properly weighted, the recommended landing zone is **$1,050 / $1,650** as the platform's *baseline guidance* number. Per the open-marketplace model (added 2026-05-24), CSRs set their own published rates per line item with no platform-imposed cap; the baseline is shown as guidance copy ("most CA reporters charge around $X"), not as a constrained band. Premium CSRs may position above the baseline; new or low-volume CSRs may sit below; firms see every applicant's rate when reviewing applications.
 
-**Survey is the validator.** Final landing should be confirmed by Stage 1 CSR survey results (Q7/Q8 ask CSRs their own private-direct rates). If 30-60 CSR responses cluster materially above or below $1,650 full-day, adjust before launch launch.
+**Survey is the validator.** Final landing should be confirmed by Stage 1 CSR survey results (Q7/Q8 ask CSRs their own private-direct rates). If 30-60 CSR responses cluster materially above or below $1,650 full-day, adjust the baseline before launch.
 
-The ±20% CSR rate-setting band (per AB-5 prong 3) means individual CSRs can adjust their published rate up to $1,080/$1,800 (top of band) or down to $720/$1,200 (bottom of band). Premium CSRs (Denise Paddock-tier) can position at the top; cold-start CSRs can use the bottom of the band for visibility.
+The earlier ±20% CSR rate-setting band design (per AB-5 prong 3) was retired 2026-05-24 in favor of the open marketplace. The §2778 right-to-set-rates compliance argument is stronger under open marketplace – no soft cap, no algorithmic priority penalty, no constraint at all – than under the prior band design. See `governance-and-process/legal_signoffs_tracker.md` for the updated compliance posture.
 
 ### Trial-day implications
 

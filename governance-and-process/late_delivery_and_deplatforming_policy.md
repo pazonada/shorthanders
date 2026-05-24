@@ -51,9 +51,9 @@ When a CSR needs to give up an accepted job:
 1. CSR initiates release from their dashboard
 2. CSR selects reason: court appointment, illness, scheduling conflict, personal emergency, other
 3. CSR indicates when they knew about the conflict (just now, within 24 hours, more than 24 hours ago)
-4. Job re-enters the matching algorithm:
-   - If original deadline is 5+ days out → normal matching cascade
-   - If deadline is < 5 days → rush/expedited flow
+4. Job re-enters the applicant pool:
+   - If original deadline is 5+ days out → normal applicant-pool window per turnaround tier (rush 4h / expedited 24h / standard 72h)
+   - If deadline is < 5 days → shortened rush/expedited window; ops can manually escalate alerts if no applicants land
 5. Release reason and timing logged for admin review
 
 **Release frequency tracking:** Releases don't directly affect ratings, but admin monitors release frequency. A CSR who releases 30%+ of accepted jobs triggers an admin review conversation — not automated punishment.

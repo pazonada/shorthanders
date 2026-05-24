@@ -85,45 +85,54 @@ Sidebar always shows:
   - Referral card (tiered rewards)
 ```
 
-### CSR rate-band settings – COMPLETE in prototype (added 2026-05-14)
+### CSR rate-setting (open marketplace) – COMPLETE in prototype (revised 2026-05-24)
 
 ```
 Settings → Profile (CSR view) → Your rates panel
   |
   v
-Slider (default mode):
-  Range −20% to +20% of platform baseline
-  Green accent
-  Live preview tile shows actual $ values for per-page,
-    half-day, full-day, trial-day, travel-time
-  Position pill: "BASELINE" / "+5%" / "−10%" etc.
+Per-rate numeric inputs:
+  - Per page (original)
+  - Half-day live attendance
+  - Full-day live attendance
+  - Trial day
+  - Travel time (per hour)
+  |
+  Each input shows:
+    "Most charge ~$X" sub-label sourced from PRICING baseline
+    No platform-imposed cap, no slider, no band
   |
   v
-[Checkbox: Expand to ±50% band]
-  When checked:
-    Slider range extends to −50% to +50%
-    Orange accent
-    Inline copy: "Heads up: rates outside ±20% are still allowed,
-      but you'll get fewer auto-match offers. The matching algorithm
-      prioritizes reporters within the standard band."
-    Position pill shifts to "OUTSIDE STANDARD" styling when multiplier
-      is outside ±20%
-  When unchecked while multiplier is outside ±20%:
-    Multiplier snaps back to nearest standard-band edge (0.80 or 1.20)
+"Need help setting rates?" link (v1.1 PREVIEW in prototype)
+  Click to expand inline popover showing:
+    - Median + 25–75th percentile range for comparable reporters
+    - Case-type filter (general / family / civil / probate /
+      criminal / WC / PI / employment)
+    - Scope label (county → adjacent counties → statewide)
+    - "v1.1 preview" badge + "Coming in v1.1 once enough
+      reporters have joined" note
+  Cold-start baselines used until real data exists (see
+  governance-and-process/rate_guidance_helper_policy.md)
   |
   v
-Escape hatch:
-  "Need to set a rate outside ±50%? Email founders@deweysholes.com."
-  → manual server-side adjustment of rateMultiplier
+Per-card sub-label below the rates grid:
+  "These reflect what most CA reporters charge today – you set
+   your own rate, and you keep 100% of it. The 12% platform fee
+   attorneys pay is calculated on top of your rate – it never
+   comes out of your earnings."
 
-Status: slider works in prototype, state local to SettingsPage React
-  component. Real build needs to persist rateMultiplier and the
-  expandedBandOptIn flag to the CSR record; matching algorithm needs
-  to consult these for ranking penalty on expanded-band CSRs.
+Status: input grid works in prototype. State local to SettingsPage.
+  Real build persists per-rate fields on the CSR record. Helper
+  popover ships as v1.1 once we have aggregation infrastructure
+  (daily snapshot job, county-adjacency table, percentile compute).
 ```
 
-See `governance-and-process/rating_and_matching_policy.md – Hybrid
-rate-setting bands` for the policy describing this design.
+See `governance-and-process/matching_applicant_pool_policy.md` for
+the matching model this rate-setting plugs into. Old hybrid ±20% /
+±50% rate-band design retired 2026-05-24 in favor of the open
+marketplace. `governance-and-process/rating_and_matching_policy.md`
+preserves the band design as a deferred-fallback if open marketplace
+doesn't pan out.
 
 ### CSR flows: WHAT'S MISSING for real build
 
@@ -134,22 +143,24 @@ rate-setting bands` for the policy describing this design.
    submit for delivery
    Status: NOT in prototype – critical path
 
-!! Job matching notification → acceptance
-   CSR gets notified (push/SMS/email), reviews job details,
-   accepts or declines with reason
-   Status: acceptance exists but no notification trigger flow
+!! Job alerts → apply flow → applicant pool
+   CSR gets notified (push / email; favorites get louder push + email
+   defaulted on), reviews job details on Available jobs view, clicks
+   Apply if interested. Application sits in firm's review pool.
+   Status: Available jobs + Apply UI exists in prototype. Server-side
+   application persistence + notification trigger pipeline not wired.
+
+!! Selection notification → confirm availability
+   When firm selects a CSR, CSR gets push + email: "[Firm] selected
+   you for [case]. Confirm within [1h Rush / 4h Expedited /
+   12h Standard]."
+   Status: Your Applications tab in prototype shows the selected
+   state with Confirm + Decline buttons (mock). Real timer + state
+   machine not wired.
 
 !! Profile editing (post-onboarding)
    Update credentials, availability, courts, rates, bio, photo
    Status: profile completion nudge exists but no edit flow
-
-!! Matching-algorithm priority penalty for expanded-band CSRs
-   Per Hybrid rate-setting bands policy: CSRs in standard ±20% get
-   full ranking; CSRs who opted into expanded ±50% get a soft-preference
-   ranking penalty so they receive fewer auto-match offers.
-   Status: policy documented; algorithm logic not yet wired (the
-   prototype's auto-match just picks MOCK_REPORTERS[0] then cycles).
-   Same Phase 2 of the real build that wires the actual cascade.
 
 !! Payment setup / Stripe onboarding
    Real Stripe Connect identity verification, bank account linking
@@ -212,7 +223,7 @@ Success
 [Buyer Dashboard]
 ```
 
-### Order flow (5 steps + post-submit cascade + veto window) – COMPLETE in prototype
+### Order flow (5 steps + applicant-pool review) – COMPLETE in prototype (revised 2026-05-24)
 
 ```
 [Step 1] Type selection
@@ -229,13 +240,16 @@ Success
   |
   v
 [Step 3] Reporter preference
-  Auto-match (recommended) / From favorites / Top rated
+  Open marketplace (default) / From favorites first / Top rated
   |
   v
 [Step 4] Turnaround & pricing
-  Rush (24-48h, 1.5x) / Expedited (3-5d, 1x) / Standard (2+ wk, 0.85x)
-  Price estimate breakdown – uses platform baseline since CSR isn't
-    matched yet; footnote notes actual rate depends on matched CSR
+  Rush (1-2 business days, 1.5x) / Expedited (3-5d, 1x) / Standard (6+ d, 0.85x)
+  Price estimate breakdown – uses platform baseline since CSR
+    hasn't been selected yet; footnote notes actual cost depends on
+    the reporter you select
+  Application window per turnaround tier shown:
+    Rush 4h · Expedited 24h · Standard 72h
   Fee waiver checkbox
   Cost split toggle → add co-payers (name, email, share %)
   |
@@ -243,66 +257,54 @@ Success
 [Step 5] Review & submit
   Full summary (incl. matter reference if filled), cost-split party
     list (if applicable)
-  Submit button → handleSubmitOrder()
-  |
-  v
-Cascade runs invisibly (no UI gate)
-  Production sequence:
-    Phase 1: All favorites in parallel (if job doesn't require quals
-      the favorite lacks). Favorites stay invited throughout.
-    Phase 2: 2 CSRs from general pool. Response window 2h Rush /
-      12h Expedited / 24h Standard.
-    Phase 3: +5 more CSRs if Phase 2 doesn't yield acceptance.
-    Phase 4: +10 more (existing Phase 3a policy).
-    Phase 5: all-call (existing Phase 3b policy).
-  Prototype: skipped — handleSubmitOrder jumps directly to
-    veto-window with Sarah Chen as the simulated accepter.
-  |
-  v
-[Veto-window state]
-  Triggers: a CSR has accepted the cascade.
-  Heading: "✓ [first name] accepted your order"
-  Sub: "You have [4 hours / 1 hour Rush] to confirm or veto this match."
-  Accepting CSR card: avatar, name, CSR #, rating, on-time %, jobs,
-    city, certifications + specialty chips, [View full profile →]
-  Itemized cost at the accepting CSR's actual rate:
-    Attendance fee (if live) · Transcript estimate · Turnaround
-    multiplier · 12% platform fee · Estimated total
-    Band-position pill ("AT BASELINE" / "+5%" / etc.)
-  Actions:
-    [Confirm match · lock in firstName] → handleConfirmMatch
-       → match locks in, card charged, CSR told "you're confirmed"
-    [Veto this match] → openVetoModal
-       → modal with structured reason picker
-       → on submit: vetoed CSR told "attorney chose a different
-         reporter, here are similar open jobs", cascade resumes
-         from where it left off (vetoed CSR excluded), next CSR's
-         acceptance shows new veto-window screen
-  Auto-confirm: window expires → match auto-confirms (same as Confirm)
-  Reminders: push + email at 50% and 90% of window
-  Veto limit: 3 per order; after 3 vetoes the next acceptance
-    auto-confirms with no veto window (Veto button disabled)
+  Submit button → handleSubmitOrder() → setSubmitted(true)
   |
   v
 Confirmation
-  "Order confirmed!" headline
-  Assigned reporter named in subhead (name + CSR #)
-  Order #, what-happens-next steps reference the named CSR throughout
-  Dashboard link / Back-to-home
+  "Order posted!" headline (not "Order confirmed!" – the order is
+    open for applications, no reporter assigned yet)
+  Order #, "Qualified reporters can apply during your [4h / 24h / 72h]
+    application window"
+  What-happens-next steps reference the applicant-pool flow:
+    1. Qualified reporters apply during the window.
+       Reporters you've favorited get a louder alert.
+    2. Review applicants live on your dashboard – profile, rating,
+       and rate for each. Select whoever you want at any time.
+    3. Your selected reporter confirms availability, and the job
+       locks in.
+  Primary CTA: [Review applicants →] → #/order/applicants/:orderId
+  Secondary CTA: [View dashboard]
+  |
+  v
+[Review Applicants screen] (#/order/applicants/:orderId)
+  Order metadata header: case name, jurisdiction, case type
+  Status banner: "X reporters have applied · Y from your favorites ·
+    Application window: Zh remaining of Wh. You can select any time."
+  Sort: favorites first / rate low-high / rate high-low / rating /
+    completed jobs
+  Filter: favorites-only checkbox
+  Per-applicant card:
+    Avatar + name + CSR # + rating + on-time + jobs + city
+    Certifications + specialty chips
+    Per-page · half-day · full-day · trial-day rates
+    [Select firstName →] [View full profile] [Message]
+    Favorite badge + yellow border + gold avatar background
+      if applicant is in firm's favorites set
+  Select → confirmation modal → "Selected" screen
+    Selected CSR notified to confirm within
+      1h Rush / 4h Expedited / 12h Standard
+  Live: firm can view + select any time, no gate.
+    More applicants can keep arriving until firm selects.
 ```
 
-**Veto reason modal (taxonomy + free-text fallback):**
-- Price is too high
-- Specialty / qualification mismatch
-- Scheduling concern
-- Prior bad experience with this reporter
-- Other (free text required)
+**No veto window.** No "you have N hours to confirm or veto" screen.
+No "the firm chose another reporter" message to applicants. No 3-veto
+budget. The firm reviews the actual applicant pool and picks; the
+selected CSR confirms; non-selected CSRs see the status change
+silently in their Your Applications view (no push, no email).
 
-Vetoed CSR is NOT told the reason. Platform team uses it for
-analytics + matching-algorithm tuning.
-
-See `governance-and-process/rating_and_matching_policy.md – Attorney
-match-preview UX` for the policy describing this flow.
+See `governance-and-process/matching_applicant_pool_policy.md` for
+the canonical policy describing this flow.
 
 ### Buyer dashboard – COMPLETE in prototype
 
