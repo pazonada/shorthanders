@@ -2772,28 +2772,30 @@ const PRICING = {
   // CSRs publish whatever rate they want per line item. The platform shows the
   // baselines above as guidance copy ("Most CA reporters charge ~$X") so new
   // reporters have an anchor. There is no hybrid band, no slider cap, no
-  // matching-priority penalty for "off-band" rates. Mock reporters elsewhere in
-  // this file still carry a `rateMultiplier` field which getCSRRates() uses to
-  // compute display rates against the baselines above; that's an implementation
-  // detail of the prototype's mock data and will go away when we move to a real
-  // per-rate persistence model (post-v1.1).
+  // matching-priority penalty for "off-band" rates. Mock reporters below carry
+  // per-rate fields (ratePerPage, attendanceHalfDay, etc.) directly; getCSRRates
+  // returns those fields with fallback to the baselines above for anything a
+  // given mock reporter doesn't override.
 };
 
-// Compute the effective rates for a specific CSR. If no CSR is passed (or the
-// CSR hasn't set a multiplier yet), returns the platform baseline. Used by the
-// match preview, order summary, CSR profile pages, and the invoice line items
-// so every rate display stays consistent with what the CSR has actually set.
+// Return the published rates for a given CSR. Reporter objects may carry any of
+// `ratePerPage`, `simultaneousCopy`, `separateCopy`, `attendanceHalfDay`,
+// `attendanceFullDay`, `attendanceTrialDay`, `travelRatePerHour` directly; any
+// field that's missing falls back to the platform baseline in PRICING. Used by
+// the Review Applicants screen, CSR profile pages, reporter directory cards,
+// the order summary, and invoice line items so every rate display stays
+// consistent with what the CSR has actually published.
 function getCSRRates(reporter) {
-  const mult = (reporter && typeof reporter.rateMultiplier === "number") ? reporter.rateMultiplier : 1.0;
+  const r = reporter || {};
+  const pick = (key) => (typeof r[key] === "number") ? r[key] : PRICING[key];
   return {
-    rateMultiplier: mult,
-    ratePerPage: PRICING.ratePerPage * mult,
-    simultaneousCopy: PRICING.simultaneousCopy * mult,
-    separateCopy: PRICING.separateCopy * mult,
-    attendanceHalfDay: Math.round(PRICING.attendanceHalfDay * mult),
-    attendanceFullDay: Math.round(PRICING.attendanceFullDay * mult),
-    attendanceTrialDay: Math.round(PRICING.attendanceTrialDay * mult),
-    travelRatePerHour: Math.round(PRICING.travelRatePerHour * mult),
+    ratePerPage: pick("ratePerPage"),
+    simultaneousCopy: pick("simultaneousCopy"),
+    separateCopy: pick("separateCopy"),
+    attendanceHalfDay: pick("attendanceHalfDay"),
+    attendanceFullDay: pick("attendanceFullDay"),
+    attendanceTrialDay: pick("attendanceTrialDay"),
+    travelRatePerHour: pick("travelRatePerHour"),
   };
 }
 // ─── Notifications Mock Data ─────────────────────────────────────
@@ -2834,7 +2836,7 @@ const MOCK_REPORTERS = [
   {
     id: "rep-1", name: "Sarah Chen", csrNumber: "14892", initials: "SC",
     rating: 4.9, reviewCount: 47, city: "San Francisco", courtAppointed: true,
-    rateMultiplier: 1.05,
+    ratePerPage: 5.25, attendanceHalfDay: 1100, attendanceFullDay: 1750, attendanceTrialDay: 2400, travelRatePerHour: 55,
     certifications: ["CSR", "RMR", "CRR"],
     specialties: ["Civil Litigation", "Family Law", "Probate"],
     languages: ["English", "Mandarin"],
@@ -2855,7 +2857,7 @@ const MOCK_REPORTERS = [
   {
     id: "rep-2", name: "Michael Torres", csrNumber: "11247", initials: "MT",
     rating: 4.7, reviewCount: 31, city: "Oakland",
-    rateMultiplier: 1.00,
+    ratePerPage: 5.00, attendanceHalfDay: 1050, attendanceFullDay: 1650, attendanceTrialDay: 2310, travelRatePerHour: 50,
     certifications: ["CSR"],
     specialties: ["Criminal", "Civil Litigation", "Personal Injury"],
     languages: ["English", "Spanish"],
@@ -2874,7 +2876,7 @@ const MOCK_REPORTERS = [
   {
     id: "rep-3", name: "Lisa Nakamura", csrNumber: "13561", initials: "LN",
     rating: 4.8, reviewCount: 52, city: "San Mateo",
-    rateMultiplier: 1.10,
+    ratePerPage: 5.50, attendanceHalfDay: 1150, attendanceFullDay: 1800, attendanceTrialDay: 2550, travelRatePerHour: 55,
     certifications: ["CSR", "RMR"],
     specialties: ["Family Law", "Probate", "Employment"],
     languages: ["English", "Japanese"],
@@ -2893,7 +2895,7 @@ const MOCK_REPORTERS = [
   {
     id: "rep-4", name: "Angela Ruiz", csrNumber: "12084", initials: "AR",
     rating: 4.6, reviewCount: 23, city: "San Jose",
-    rateMultiplier: 0.95,
+    ratePerPage: 4.75, attendanceHalfDay: 1000, attendanceFullDay: 1575, attendanceTrialDay: 2200, travelRatePerHour: 50,
     certifications: ["CSR"],
     specialties: ["Civil Litigation", "Real Estate", "Bankruptcy"],
     languages: ["English", "Spanish"],
@@ -2912,7 +2914,7 @@ const MOCK_REPORTERS = [
   {
     id: "rep-5", name: "David Okonkwo", csrNumber: "15230", initials: "DO",
     rating: 4.9, reviewCount: 38, city: "Walnut Creek",
-    rateMultiplier: 1.15,
+    ratePerPage: 5.75, attendanceHalfDay: 1200, attendanceFullDay: 1900, attendanceTrialDay: 2650, travelRatePerHour: 60,
     certifications: ["CSR", "RMR", "CRR"],
     specialties: ["Criminal", "Civil Litigation", "Immigration"],
     languages: ["English"],
@@ -2931,7 +2933,7 @@ const MOCK_REPORTERS = [
   {
     id: "rep-6", name: "Patricia Doyle", csrNumber: "10893", initials: "PD",
     rating: 4.5, reviewCount: 19, city: "Santa Rosa",
-    rateMultiplier: 0.90,
+    ratePerPage: 4.50, attendanceHalfDay: 950, attendanceFullDay: 1500, attendanceTrialDay: 2100, travelRatePerHour: 45,
     certifications: ["CSR"],
     specialties: ["Family Law", "Personal Injury", "Civil Litigation"],
     languages: ["English"],
@@ -10785,14 +10787,10 @@ function ReporterDirectory() {
                   </div>
                   {(() => {
                     const rates = getCSRRates(r);
-                    const pct = Math.round((rates.rateMultiplier - 1.0) * 100);
-                    const pctColor = pct > 0 ? "var(--ochre-deep)" : pct < 0 ? "var(--sage-deep)" : "var(--muted)";
-                    const pctLabel = pct === 0 ? "Baseline" : (pct > 0 ? "+" : "") + pct + "% baseline";
                     return (
                       <div style={{textAlign: "center"}}>
                         <div style={{fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 28, color: "var(--ink)", lineHeight: 1}}>${rates.ratePerPage.toFixed(2)}</div>
                         <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: "var(--dim)", textTransform: "uppercase", marginTop: 4}}>per page</div>
-                        <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: "0.08em", color: pctColor, marginTop: 2}}>{pctLabel}</div>
                       </div>
                     );
                   })()}
@@ -10893,15 +10891,11 @@ function ReporterProfile({ reporterId }) {
         {/* Rate card */}
         {(() => {
           const rates = getCSRRates(reporter);
-          const pct = Math.round((rates.rateMultiplier - 1.0) * 100);
-          const pctColor = pct > 0 ? "var(--ochre-deep)" : pct < 0 ? "var(--sage-deep)" : "var(--muted)";
-          const pctBg = pct > 0 ? "var(--ochre-soft)" : pct < 0 ? "var(--sage-soft)" : "var(--bg-soft)";
-          const pctLabel = pct === 0 ? "At platform baseline" : `${pct > 0 ? "+" : ""}${pct}% from platform baseline`;
           return (
             <div style={{padding: 24, marginBottom: 24, background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 16}}>
               <div style={{display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 18, flexWrap: "wrap", gap: 12}}>
                 <div style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)"}}>Rates</div>
-                <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", fontWeight: 600, background: pctBg, color: pctColor, padding: "4px 10px", borderRadius: 999, textTransform: "uppercase"}}>{pctLabel}</span>
+                <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", fontWeight: 600, background: "var(--bg-soft)", color: "var(--muted)", padding: "4px 10px", borderRadius: 999, textTransform: "uppercase"}}>Reporter-set</span>
               </div>
               <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 18}}>
                 <div>
