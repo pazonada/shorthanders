@@ -12139,10 +12139,12 @@ function PricingPage() {
 
 function AppRouter() {
   const route = useRoute();
+  // Applicant-pool review screen has to come before the generic /order/:id detail
+  // match below, otherwise the regex below swallows /order/applicants/:id.
+  if (route.startsWith("#/order/applicants")) return <ReviewApplicantsPage />;
   const m = route.match(/^#\/order\/(.+)$/);
   if (m) return <OrderDetailPage orderId={m[1]} />;
   if (route.startsWith("#/request-copy")) return <RequestCopyPage />;
-  if (route.startsWith("#/order/applicants")) return <ReviewApplicantsPage />;
   if (route.startsWith("#/order")) return <OrderFlow />;
   if (route.startsWith("#/messages")) return <MessagingPage />;
   if (route.startsWith("#/dashboard")) return <BuyerDashboard />;
