@@ -1,8 +1,8 @@
 # Attorney Survey – Stage 1 of attorney research
 
 **Owner:** Aud
-**Last updated:** 2026-05-13
-**Status:** Draft – ready for Rosie review before sending
+**Last updated:** 2026-05-24 – revised for applicant-pool matching model. Section 3a fully rewritten (old cascade + veto-window questions retired); new questions on live viewing, pre-selection messaging, and applicant-pool flow added.
+**Status:** Draft. **DO NOT send at scale until the legal-assistant interviews include the Stage 0 model-validation conversation** (see `research/user_testing_legal_assistant_guide.md`). The matching model changed twice in May 2026; the survey questions assume the current applicant-pool model lands with firm-side users. If the interview conversations reveal the model doesn't resonate or specific concepts confuse firms, this survey needs another pass before going out.
 
 ---
 
@@ -157,48 +157,55 @@ Worth running both – the time-cost survey feeds the marketing claim ("firms sa
 
 ---
 
-### Section 3a – How the matching flow should work (4 questions, added 2026-05-14, revised 2026-05-14)
+### Section 3a – How the matching flow should work (5 questions, rewritten 2026-05-24 for applicant-pool model)
 
 **Read this first, then answer the questions below.**
 
 > Here's the matching flow we're planning. When you submit a transcript order:
 >
-> 1. **You hit submit and walk away.** The system silently invites qualified reporters in widening batches – starting with your favorites (if any), then a small batch of 2 from the general pool, then 5 more, then more if needed.
-> 2. **The moment a reporter accepts the job**, we send you a push notification + email. You're not asked to approve candidates in advance; you only get pinged when there's a real match.
-> 3. **You land on a screen showing that reporter's profile and the exact cost** (the reporter's rate × your order specs + the 12% platform fee). You have **4 hours** (1 hour for Rush jobs) to confirm or veto the match.
-> 4. **If you confirm** (or do nothing – it auto-confirms at the window's end), the match locks in and the reporter is told they're confirmed.
-> 5. **If you veto**, you pick a reason from a fixed list (price too high, specialty mismatch, scheduling concern, prior bad experience, other). The vetoed reporter is told the attorney chose another reporter, and the cascade resumes finding the next match. You can veto up to **3 reporters per order** – after that the next match auto-confirms.
+> 1. **Your order is posted to qualified reporters.** Reporters who match your jurisdiction + case type + certs get notified. Reporters you've favorited get a louder push + email alert.
+> 2. **Reporters apply.** Each interested reporter clicks Apply. They're not racing to be first – they're putting their profile and rate in front of you. Applications come in over a turnaround-tier window: 4 hours for rush, 24 hours for expedited, 72 hours for standard.
+> 3. **You review applicants live.** You don't have to wait for the window to close. Open the Review Applicants screen any time and you'll see everyone who's applied so far – their profile, rating, on-time rate, specialty tags, and the rate they're charging for this job. Favorites get a ★ badge and float to the top.
+> 4. **You pick one applicant** (or pick no one and wait for more, or close the order if nothing's right). You can also message any applicant before selecting if you want to ask a clarifying question.
+> 5. **The reporter confirms availability.** Once they confirm, the job locks in and your card is authorized. If they decline or time out (rush: 1 hour to confirm; expedited: 4 hours; standard: 12 hours), we notify you immediately and you pick someone else from the remaining applicants.
 
 **Q15a.** Based on that description, does the flow feel:
-- Right – I trust the cascade to find qualified reporters and just react when there's a match
-- Mostly right – but I'd want to see and approve candidates before invitations go out *in some cases*
-- Wrong – I want to see and approve all candidates *before* invitations go out, every order
+- Right – I want to see who applied and pick from real applicants
+- Mostly right – but I'd want the platform to pre-filter or rank applicants for me, especially for routine matters
+- Burdensome – I don't want to review applicants for every order; I'd prefer an auto-match where the platform picks
 - Not sure – depends on the case
 
-**Q15b.** How often do you imagine actually using the veto button?
-- Often – I'd expect to veto at least 1 in 5 matches
-- Sometimes – only for clearly wrong matches (specialty, schedule, prior bad experience)
-- Rarely – I'd trust the cascade most of the time
-- Never – auto-match handles it; vetoing feels like extra work
+**Q15b.** When reviewing applicants, what information would you actually look at to decide? (rank your top 3)
+- Reporter's rate for this job
+- Reporter's overall rating
+- On-time delivery rate
+- Number of completed jobs on the platform
+- Specialty match to my case type
+- Whether I (or my firm) have worked with them before
+- Their certifications (RPR, RMR, CRR)
+- Their location relative to the courthouse
+- Something else (please describe)
 
-**Q15c.** Are there specific case types or scenarios where you'd want to see and approve reporter candidates *before* invitations go out (instead of reacting after acceptance)? (select all that apply)
-- High-stakes trial proceedings
-- Sealed or confidential proceedings
-- Cases with specialized terminology (medical, technical, financial expert witnesses)
-- Cases where the reporter will work closely with my expert witness
-- Cases with VIP / public-figure parties
-- Multi-day or complex matters
-- None – the post-acceptance veto pattern works for me on every order
+**Q15c.** The firm can pick an applicant any time – even minutes after posting. So if a favorite applies fast, you can pick them in 5 minutes without waiting for other applicants. Reactions?
+- Fine – that's how this work has always operated
+- Fine for favorites, fair enough
+- Uncomfortable – I'd want a guaranteed application window before I can pick, so the field is fair
 - Other (please describe)
 
-**Q15d.** When you see an accepting reporter's rate is meaningfully above the platform baseline (e.g. +15% or +20%), what would help you understand why and feel OK paying it instead of vetoing? (select all that apply, or free text)
-- Their specialty match to your case type
-- Their certifications (RPR, RMR, CRR)
-- Their years of experience / job count
-- Their rating + on-time delivery record
-- Past cases they've worked similar to yours
-- I don't need a justification – if they're qualified, the rate is what it is
-- I wouldn't pay above baseline – I'd veto
+**Q15d.** *(New, 2026-05-24)* Pre-selection messaging: while reviewing applicants, you can message any of them about scheduling, case context, or anything else. How likely are you to actually use this?
+- Often – I'd message most applicants to vet before picking
+- Sometimes – only for high-stakes matters or unusual cases
+- Rarely – the profile + rate is usually enough
+- Never – I just want to pick and move on
+- Not sure
+
+**Q15e.** *(New, 2026-05-24)* Are there specific case types or scenarios where the applicant-pool model would *not* work for you, and you'd want a different flow (e.g., auto-match)? (select all that apply)
+- High-volume routine matters where reviewing applicants is too much overhead
+- Last-minute rush jobs where I don't have time to review
+- Sealed or confidential proceedings where I need to vet applicants more carefully than the platform shows
+- Specialized matters (medical/technical/financial) where I want the platform to filter for specialty
+- Cases where I always want my favorite and don't want to bother reviewing other applicants
+- None – applicant-pool works for me on every order
 - Other (please describe)
 
 ---
@@ -286,7 +293,7 @@ Worth running both – the time-cost survey feeds the marketing claim ("firms sa
 | Process pain | Surprise line items + agency markup show up as top frustrations (Q8, Q9) – validates DS thesis | Pain is elsewhere (slow delivery, quality) – we may be solving the wrong problem |
 | Concept reaction | "Very interested" + "Somewhat interested" ≥ 50%; top concerns are operational (pool depth, reliability), not conceptual | Top concerns are conceptual ("I trust my agency"; "I don't want to learn a new tool") |
 | Featured reporter (Q14) | >40% useful – validates discovery feature | <20% – defer feature indefinitely |
-| Matching flow (Q15a–Q15d) | Majority say the cascade + post-acceptance veto pattern feels "right" or "mostly right"; veto frequency cluster is "rarely" or "sometimes" (not "often"); specific case-type triggers (sealed, expert witness) emerge as scenarios where pre-cascade review is wanted; rate-justification preference clusters around certs + specialty + experience | Majority want pre-cascade per-CSR approval on every order – means the auto-match philosophy is wrong for this audience and we need to rethink the order flow. OR: majority say they'd veto "often" – means our soft-preferences matching or rate-band positioning is off and we need to recalibrate before scaling. |
+| Matching flow (Q15a–Q15e) | Majority say applicant-pool feels "right" or "mostly right" (Q15a); Q15b clusters around rating + on-time + specialty + prior relationship (validates what the Review Applicants screen surfaces); Q15c "Fine for favorites" or "Fine" is at least 50% (validates the live-viewing design); Q15d pre-selection messaging usage clusters around "Sometimes" (justifies v1 build); Q15e identifies a clear set of case types where auto-match is wanted (informs whether to build an auto-match fallback in v1.x). | Majority say applicant-pool is burdensome (Q15a) – the model doesn't land with firms and we need an auto-match alternative. OR: Q15c discomfort >50% – we need a guaranteed-window-before-select feature. OR: Q15d "Never" majority – pre-selection messaging is unjustified v1 build cost, defer to v1.1. |
 | Pricing (Q17–Q18) | 12% feels at-or-below current spend; line-item-frustration responses confirm DS positioning thesis | 12% feels expensive – we have a positioning problem |
 | Founding-firm perks (Q19) | At least "somewhat important" for ~30%+ – non-pricing perks are doing real work as a sign-up incentive | "Doesn't matter" majority – founding-firm framing isn't adding anything; lean harder on functional pitch (transparency, no agency markup) |
 | Depositions (Q20–Q21) | Strong "yes if you handle scheduling, fine if you don't" – validates the matching-only future path | Strong "only useful with full depo support" – confirms our depo strategy ceiling |

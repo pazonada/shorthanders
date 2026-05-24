@@ -1,8 +1,8 @@
 # User testing guide – paralegals / legal assistants (+ optional 1 attorney)
 
-**Status:** Draft. Targeted for use once Rosie's network surfaces enough warm legal-assistant contacts.
+**Status:** Draft. Updated 2026-05-24 to reflect the applicant-pool review model and to lead with a model-validation conversation before any prototype walkthrough.
 **Owner:** Aud (drafting); Rosie (recruitment, co-facilitation – most launch-cohort firms are her network).
-**Last updated:** 2026-05-08
+**Last updated:** 2026-05-24
 
 ---
 
@@ -18,13 +18,15 @@ If we can also fit in **one attorney interview** (likely a friend of Rosie's), g
 
 This is **discovery and validation**, not usability testing of a polished product. Specific questions:
 
-1. **Is the post-hearing transcript-tracking pain real?** When the firm needs a transcript from a hearing weeks ago, how do they find the CSR today, and is that actually painful enough to motivate a new platform?
-2. **What does the assistant's workflow actually look like** – order frequency, where the order info comes from, how it gets billed back to the case?
-3. **What signals do they use to evaluate an unfamiliar CSR?** Specifically: rating, on-time rate, recent cases, courts covered, prior firm relationship. Which actually matter?
-4. **What kills trust in a new transcript marketplace?** Pricing transparency, certification authenticity, dispute handling, data security.
-5. **Will firms actually use Dewey Sholes** if it works as designed, given their existing CSR relationships? What would make them switch?
-6. **Is the cost-splitting feature a real win?** Or a feature that sounds good but doesn't get used?
-7. **Does the legal-assistant incentive program** (points-for-redemption catalog) actually motivate them?
+1. **Does the applicant-pool model land with the firm side?** Does "we collect applications and you pick" feel like a real upgrade vs. how they currently book reporters, or like extra work?
+2. **Is the post-hearing transcript-tracking pain real?** When the firm needs a transcript from a hearing weeks ago, how do they find the CSR today, and is that actually painful enough to motivate a new platform?
+3. **What does the assistant's workflow actually look like** – order frequency, where the order info comes from, how it gets billed back to the case?
+4. **What signals do they use to evaluate an unfamiliar CSR?** Specifically: rating, on-time rate, recent cases, courts covered, prior firm relationship. Which actually matter at the moment of *selecting an applicant*?
+5. **What kills trust in a new transcript marketplace?** Pricing transparency, certification authenticity, dispute handling, data security.
+6. **Will firms actually use Dewey Sholes** if it works as designed, given their existing CSR relationships? What would make them switch?
+7. **Is pre-selection messaging actually useful?** When would they message an applicant before picking? What would they ask?
+8. **Is the cost-splitting feature a real win?** Or a feature that sounds good but doesn't get used?
+9. **Does the legal-assistant incentive program** (points-for-redemption catalog) actually motivate them?
 
 ---
 
@@ -58,7 +60,7 @@ Total target: ~45 minutes. Time budgets are guidance.
 - How often do you order court transcripts? Roughly how many per month?
 - Do you place the orders yourself, or does an attorney handle it?
 
-### Current workflow (12-15 min)
+### Current workflow (10-12 min)
 
 - Walk me through ordering a transcript today. Start from "we just finished a hearing" or "I need a transcript from a hearing two weeks ago." Where do the friction points show up?
 - **Specific pain point probe:** Imagine it's been 3 weeks since a hearing and the attorney decides we need the transcript. How do you figure out who the CSR was? Walk me through that. *(Looking for honest sense of how painful this is.)*
@@ -68,9 +70,30 @@ Total target: ~45 minutes. Time budgets are guidance.
 - How much does the firm pay per page today? Do you know? *(Most assistants don't – they just file the invoice.)*
 - How does the cost flow back to the client / case? Pass-through, marked up, billed at firm rate?
 
-### Reactions to Dewey Sholes (18-22 min)
+### Validate the business model (10-12 min) – BEFORE showing the prototype
 
-Walk through prototype on screen-share.
+This section is new (2026-05-24). We've changed the matching model twice in a month and need to ground-truth that the current direction makes sense to people who'd actually use it. Describe the model in plain language, pausing for reactions. Don't sell. The goal is to surface concerns, confusions, and "I would never do that" reactions, not to get agreement.
+
+- *"We're building a marketplace where the firm posts a transcript order and qualified court reporters apply. We don't pick for you – you see everyone who applied, with their profile, rating, and the rate they're charging, and you pick whoever you want. Or you pick no one and wait for more applicants. Reactions?"*
+  - Listen for: do they understand "review applicants" as a feature or as work they don't want to do? Do they expect the platform to pre-filter or rank for them?
+- *"Reporters can set whatever rate they want – per page, half day, full day, etc. We show what most reporters in the region charge as guidance, but the actual number is theirs. So when you review applicants, you'll see varying rates. Reactions?"*
+  - Listen for: are they comfortable making a price-vs-quality tradeoff? Or do they want everyone at the same rate? Do they care about price at all (if firm's pass-through), or only quality?
+- *"You can review applicants live as they come in – not gated by a window closing. So if you have a favorite reporter and they apply at minute 5, you can pick them immediately. The window we show (4 hours for rush, 24 for expedited, 72 for standard) is when we keep notifying reporters, not when you have to wait. Reactions?"*
+  - Listen for: do they like the speed, or feel pressure to act fast? Would they always pick the favorite, defeating the marketplace?
+- *"While reviewing, you can message any applicant – ask scheduling questions, share case context, anything. Selected reporter messaging continues for logistics coordination after you pick them. Reactions?"*
+  - Listen for: would they actually message? About what? Would they message every applicant or just one? Worried about reporters not responding fast?
+- *"If you pick a reporter and they say they're no longer available, we notify you immediately and you pick from the remaining applicants. No deposit lost. Reactions?"*
+  - Listen for: how much of a hassle is that? Does it make them more or less likely to pick a favorite quickly?
+
+**Facilitator listening notes (model validation):**
+- **The "review and pick" framing.** Some firms may want this; others may want auto-match because "we don't have time to review applicants for every hearing." If the latter is loud, we have a real problem.
+- **Price as a comparison axis.** If firms say "I don't care about price, just give me the best one," the open-marketplace pitch lands weak. If they say "I care about price for routine matters but not for trials," that's a healthy signal.
+- **Pre-selection messaging.** If they say they'd never use it ("I don't have time"), it's worth questioning whether messaging deserves v1 build cost or should defer.
+- **What's missing.** Anything they expected to hear that we didn't describe? That's a hint about what their mental model is.
+
+### Reactions to Dewey Sholes (15-18 min)
+
+Walk through prototype on screen-share. Now they've validated (or pushed back on) the model in plain language; the prototype walkthrough lets them see whether the actual UX delivers on the description.
 
 - Show landing page. *Reactions: who is this for, would you try it?*
 - Show the order flow. **Specific prompts:**
@@ -78,21 +101,23 @@ Walk through prototype on screen-share.
   - Cost-splitting toggle – would the firm actually use this? In what scenarios?
   - Need-by date driving turnaround tier – does this match how the firm thinks about deadlines?
   - **Time savings probe:** If this saves you 10 minutes per order, how many minutes per week is that for your firm? Is that worth anything?
-- Show the **post-submit veto-window screen**. *Frame:* "When you submit an order, the system silently invites qualified reporters in widening batches – starting with your favorites if any, then small general-pool batches. You walk away. The moment ONE reporter accepts, you get a push notification + email. You land on a screen showing that reporter's profile and the exact cost. You have 4 hours (1 hour for Rush) to confirm or veto with a reason – up to 3 vetoes before the next match auto-confirms." *Open questions (these are the big ones – take time):*
-  - **Open question D:** Does the post-acceptance veto pattern feel right, or do you want to see and approve candidates *before* invitations go out? *(Listen for: am I OK reacting to one match at a time, or do I want a hand on the wheel earlier?)*
-  - **Open question E:** How often do you imagine actually vetoing in practice? Often (1 in 5)? Sometimes? Rarely? Never? *(Listen for: does the veto feel like a safety net or a routine step? Frequent vetoing suggests our matching or rate-band positioning is off.)*
-  - **Open question F:** Are there *specific case types* where you'd want to see and approve candidates BEFORE invitations go out (instead of just reacting after acceptance)? (Probe: high-stakes trials, sealed proceedings, expert witness depos, multi-day matters, VIP / public-figure parties.)
-  - **Open question G:** When you see the accepting reporter's rate is meaningfully above the platform baseline (e.g. +15%, +20%), what would help you understand why and feel OK paying it instead of vetoing? *(Probe: specialty match, certs, experience with similar cases. Note for facilitator: this informs whether to surface a "why" affordance on the veto-window screen.)*
-  - **Open question H:** Is the 4-hour veto window (1 hour for Rush) the right length, or too short / too long? Think about how you check email and respond to urgent things. Would you find yourself missing the window often?
-  - **Open question I:** *(For attorneys, if the optional attorney interview happens):* When you walk into a hearing and don't know which agency-assigned reporter is there, how do you actually feel about it? Is that fine because you trust the agency, anxiety-producing, or something in between? Does that change your answer to D-F?
-- Show a CSR profile page. **Specific prompts:**
+- Show the **post-submit confirmation + Review Applicants screen**. *Frame:* "When you submit an order, qualified reporters get notified and start applying. You can review them live as they come in – no need to wait for the window to close. The screen shows everyone who's applied, their profile, rating, on-time rate, and the rate they're charging for this job. Favorites get a star and float to the top. Sort by rate, rating, completed jobs, or favorites-first. Pick when you're ready – the reporter then confirms availability and the job locks in." *Open questions (these are the big ones – take time):*
+  - **Open question D (live vs. gated):** "You can pick an applicant any time – before, at, or after window close. Some firms will pick a favorite within 5 minutes of posting. Other reporters might not get to apply before you've already chosen. Does that feel right, or would you want us to make you wait, so the field is fairer?" *(Listen for: do they intuitively get that "fairness to applicants" trades off against "speed for the firm"?)*
+  - **Open question E (review-screen content):** "Looking at this applicant card, what's missing that would help you decide? What's extra that you'd never look at?" *(Probe: would they want to see specialty match indicators, "this CSR has worked your firm's cases X times before", a sample transcript link, anything else.)*
+  - **Open question F (application window length):** "The window is 4h for rush, 24h for expedited, 72h for standard. Do those feel right? Too long? Too short? Especially: if you're not in a rush, would you actually wait 72 hours to see more applicants, or pick the first qualified one and move on?"
+  - **Open question G (messaging an applicant before selecting):** "You can message any applicant before picking. What would you actually ask? Or would you skip messaging and just pick from the profile + rate?" *(Probe: scheduling confirmation, case-specific questions, vetting for sensitive matters.)*
+  - **Open question H (rate visibility):** "Every applicant's rate is visible right on the card. So you're picking partly on price. Is that fine for routine matters but uncomfortable for high-stakes ones? Or does price-visibility feel right across the board?" *(Probe: if uncomfortable, why – worried about explaining to attorney, worried about reporter feeling judged on rate, etc.)*
+  - **Open question I (no-one-applies edge case):** "If the window closes and no one applied – or only one applied and you don't love them – what would you want us to do? Auto-widen criteria? Notify ops? Just let it sit?"
+  - **Open question J (CSR backs out):** "If you pick a reporter and they say they're not available after all, we notify you to pick someone else. How does that feel? Frustrating? Acceptable as long as we're fast about it?"
+  - **Open question K** *(For attorneys, if the optional attorney interview happens):* "When you walk into a hearing and don't know which agency-assigned reporter is there, how do you actually feel about it? Trust the agency, or anxiety-producing? Does picking from applicants yourself feel like a win, or like extra work that wasn't your job before?"
+- Show a CSR profile page (from the directory or by clicking through from Review Applicants). **Specific prompts:**
   - If your firm had never used this CSR before, what would convince the attorney to book them? What's missing?
   - How much does the rating matter? On-time rate? Avg turnaround?
-  - **Open question A:** Would you want to see recent cases this CSR has worked on? Would that change the booking decision?
-  - **Open question B:** Would you want to see a count of jobs they've completed on the platform? Would a low number turn you off?
+  - **Open question L:** Would you want to see recent cases this CSR has worked on? Would that change the booking decision?
+  - **Open question M:** Would you want to see a count of jobs they've completed on the platform? Would a low number turn you off?
   - The profile has two CTAs: "Book this reporter" (for an upcoming hearing) and "Request a transcript copy" (for a hearing already done). Does that distinction make sense?
 - Show the business-card scenario. *Frame:* "Imagine the CSR who reported your firm's hearing hands the attorney this card on the way out. The QR code goes directly to that CSR's Dewey Sholes profile, where you can request a transcript with one click."
-  - **Open question C:** Would the attorney actually keep this card? Would it land on your desk? Would you scan it?
+  - **Open question N:** Would the attorney actually keep this card? Would it land on your desk? Would you scan it?
   - Would you prefer the card link to go to the CSR's profile, or to a homepage where you search?
   - Would your firm take this seriously, or would it feel like marketing spam?
 - Show the legal-assistant incentive program (`research/legal_assistant_incentive_program.md`).
@@ -121,6 +146,7 @@ If Rosie can land 1 attorney interview, run the same overall structure but adjus
 - **Lean harder on the strategic questions:** which CSR to use and why, when does the firm need transcripts vs. notes, how does the firm bill clients for transcripts.
 - **Skip the assistant incentive program** (not their concern) and instead probe the firm's **vendor-relationship model**: would the firm switch from a known CSR/agency to a marketplace? What would the firm's existing CSRs say if they found out?
 - **Add fee-waiver / TRF questions** if the attorney does any pro-bono or legal-aid work.
+- **Lean on Open Question K** (above): how does it feel to have to pick from applicants yourself vs. delegating to an agency?
 
 Same length (45 min), same comp ($25 Starbucks).
 
@@ -130,7 +156,11 @@ Same length (45 min), same comp ($25 Starbucks).
 
 | Question | Hypothesis to test | Decision it informs |
 |---|---|---|
-| Is the post-hearing CSR-tracking pain real and acute? | Yes – assistants will spontaneously cite it before we prompt. | Whether the cards strategy is solving a real problem. If we have to lead them to the pain, the pain isn't acute. |
+| Does the firm side actually want to review applicants and pick, or do they want auto-match? | Mixed – small firms with strong CSR relationships will love it; mid-size firms with high volume may want auto-match. | Whether to keep applicant-pool as v1, or build an "auto-match-from-this-firm's-favorites" shortcut in v1.1. |
+| Is the post-hearing CSR-tracking pain real and acute? | Yes – assistants will spontaneously cite it before we prompt. | Whether the cards strategy is solving a real problem. |
+| Do firms care about price when reviewing applicants? | Mixed – yes for routine matters, no for high-stakes. | Whether to surface "expected total cost" prominently, or keep price as a secondary signal. |
+| Are the per-tier application windows the right length? | 4h Rush is tight; 24h Expedited works; 72h Standard may be too long (firms will pick the first qualified). | Whether to shorten Standard window, or add a "pick now, I have enough" affordance. |
+| Will firms actually message applicants before selecting? | Mixed – they'll say they would, but actually won't most of the time. | Whether pre-selection messaging is v1 critical or v1.1 deferrable. If firms say they'd message frequently, keep it. If they say "I'd never bother", consider deferring. |
 | Does cases-on-profile change booking decisions? | Mostly no. Rating and on-time rate carry more weight. | Whether to build the cases-display feature for v1.1. |
 | Does job-count-on-profile change booking decisions? | Yes – high count signals confidence, low or zero discourages. | Strong argument NOT to show job-count during the launch window when most CSRs are at zero. |
 | Will the firm actually scan a card-QR after a hearing? | Yes if professional and the link is direct. | Settles the link-target question (already leaning direct profile). |
@@ -175,8 +205,8 @@ Add new round-2 topics here as they come up. Each should follow the same shape: 
 After up to 5 interviews (plus optional attorney), synthesize into:
 
 - A 1-page memo of the top 5 findings, with direct quotes.
-- A revised list of v1 vs v1.1 product decisions.
-- Validation (or rejection) of the cards strategy and the assistant incentive program.
+- A revised list of v1 vs v1.1 product decisions, especially around applicant-pool review vs. auto-match for firm experience.
+- Validation (or rejection) of the cards strategy, the assistant incentive program, and pre-selection messaging.
 - A revised firm-side pitch / messaging hierarchy.
 
 Findings circulated to: Aud, Rosie, the marketing agent.

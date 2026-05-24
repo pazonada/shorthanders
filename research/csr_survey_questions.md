@@ -1,8 +1,8 @@
 # CSR Survey – Stage 1 of CSR research
 
 **Owner:** Aud
-**Last updated:** 2026-05-14
-**Status:** Draft – plain-English pass complete; Q19/Q20 rewritten to test $99/yr willingness directly with a free-text follow-up. Ready for Rosie review before sending.
+**Last updated:** 2026-05-24 – revised for open-marketplace + applicant-pool model. Section 4 intro rewritten; Q12 options updated; Section 5 rebuilt (old ±20%/±50% band questions retired); Q15 SMS option removed; new applicant-pool + favorite-from notification questions added.
+**Status:** Draft. **DO NOT send at scale until the Stage 0 model-validation conversations (3–5 calls per the user-testing CSR guide) have run.** The business model changed multiple times in May 2026; the survey questions assume the current model lands with working CSRs. If Stage 0 conversations reveal the model doesn't resonate or specific concepts confuse CSRs, this survey needs another pass before going out.
 
 ---
 
@@ -162,10 +162,12 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 >
 > Here's how it works for you, the reporter:
 > - You keep 100% of your rate. No agency cut. No platform commission on your earnings.
-> - The platform sets a baseline rate (specific dollar amounts in Section 5, well above statutory and close to what private-direct work pays). You set your own rate using a slider in your settings. The standard range is ±20% of baseline – set anywhere in there and you'll get the same job offers as everyone else.
-> - You can also opt into a wider ±50% range if you want to set rates further from baseline. We're upfront about the trade-off: rates outside the standard ±20% band get fewer auto-match offers, because we prioritize standard-band reporters for matching. You're not blocked from earning more or charging less; you just see fewer jobs at those rates.
-> - Attorneys pay your rate plus a flat 12% platform fee on top, so the 12% never comes out of your pocket. They see your actual rate when they get matched with you and can confirm or ask for a different reporter.
-> - The site handles scheduling, payment, and transcript delivery, so you don't pay an agency to do those things for you.
+> - **You set your own rates per line item** – per-page, half-day, full-day, trial-day, travel per hour. The platform shows what most reporters in your region charge as guidance ("most reporters charge around $X"), but the actual number is yours. No cap, no band, no penalty for charging more or less.
+> - **Open marketplace, applicant-pool model:** when a firm posts a transcript order, qualified reporters get notified. You decide whether you want it – if you do, you click Apply. We don't pick for you. The firm sees everyone who applied (with profile, rating, and your rate) and chooses one. So you're not racing to be first – you're applying to jobs you want and putting your best profile + rate forward.
+> - **Application windows by turnaround:** 4 hours for rush, 24 hours for expedited, 72 hours for standard. The firm can review applicants and pick any time – they don't have to wait for the window to close.
+> - **Favorite-from notifications:** if a firm has favorited you and they post a job, you get a louder push + email alert. You won't miss a job from a firm you've built a relationship with. Both channels default to on; you can turn either off in settings.
+> - Attorneys pay your rate plus a flat 12% platform fee on top, so the 12% never comes out of your pocket.
+> - The site handles scheduling, payment, transcript delivery, and lets the firm and you message in-app about logistics, so you don't pay an agency to do those things for you.
 
 **Q11.** Based on that description, how interested would you be in trying this site?
 - Very interested
@@ -176,8 +178,9 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 
 **Q12.** Which parts of this idea appeal to you most? (pick up to three)
 - Keeping 100% of my rate (no agency cut)
-- Setting my own rate within the standard ±20% band
-- Being able to opt into a wider ±50% band if I want to
+- Setting my own rates per line item with no platform-imposed cap
+- Choosing which jobs to apply to (no auto-match deciding for me)
+- Getting a louder alert when a firm I've worked with before posts a new job
 - Working with attorneys directly
 - Less admin work
 - Modern booking and scheduling tools
@@ -188,6 +191,8 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 **Q13.** Which parts of this idea worry you most? (pick up to three)
 - Whether the site will have enough firms to keep me busy
 - Whether attorneys will accept the 12% added fee
+- Whether I'll apply to jobs and get passed over for cheaper reporters or favorites
+- Whether my rates will be visible to other reporters and create price pressure
 - Trust and data security
 - Whether my license will be properly verified
 - When and how I'll get paid
@@ -202,38 +207,58 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 - I'd skip it either way
 
 **Q15.** How would you most like to be told about jobs that are available? (rank your top 3)
-- Push notification on my phone
+- Push notification on my phone (we install on your home screen; no native app, no text messages)
 - Email
-- Text message
 - Web dashboard only (I check when I want)
 - Daily or weekly digest of available work
+- Other (please describe)
+
+> **Note on text messages:** Dewey Sholes is push + email only. We don't send SMS – it adds carrier fees, paperwork, and phone-number requirements without making the notification any faster than push. If your gut answer was "text me," we'd love to hear why in Q16 below.
+
+**Q15a.** *(New, 2026-05-24)* If a firm you've worked with before favorites you, we send a louder notification (push + email both on by default) when they post a new job. Other firms' jobs send the regular alert. How does that sound?
+- Great – I want to make sure I don't miss jobs from firms I have a relationship with
+- Fine – I'd leave it on
+- Too aggressive – I'd want to turn it down somehow
+- Doesn't matter to me
+
+**Q15b.** *(New, 2026-05-24)* On the platform, you set your own rate per line item (per-page, half-day, full-day, trial day, travel/hr). The platform shows what most reporters in your region charge as guidance. How does this approach compare to how you set rates today?
+- Better – I like setting per line item with no cap
+- Similar – this is basically what I do today
+- Worse – I'd prefer a simpler single-rate model
+- Confusing – walk me through this more (please describe)
+
+**Q15c.** *(New, 2026-05-24)* Firms see every applicant's rate when they review applications. Your rate is one factor in their decision (along with rating, on-time, specialty match, prior relationship). How do you feel about that?
+- Comfortable – it's an open marketplace, fine to compete on rate
+- Comfortable for routine matters, uncomfortable for specialized work where rate shouldn't be the deciding factor
+- Uncomfortable – I worry rates will race to the bottom
+- Other (please describe)
 
 **Q16.** What's the single most important thing the site has to get right for you to keep using it? (free text)
 
 ---
 
-### Section 5 – What you think of our pricing (2 questions)
+### Section 5 – What you think of the pricing + matching model (3 questions)
 
-**Q17.** The site pays you 100% of the published rate. The attorney pays a 12% platform fee on top. Does the 12% feel:
+The old Section 5 (band-positioning questions) was retired 2026-05-24 when the rate-band model was dropped. New questions focus on the applicant-pool model and the 12% buyer-side fee.
+
+**Q17.** The site pays you 100% of your published rate. The attorney pays a flat 12% platform fee on top. Does the 12% feel:
 - Way too low – they'll go out of business
 - A little low
 - About right
 - A little high
 - Way too high
 
-**Q18.** The standard rate-setting band is ±20% of the platform baseline. Reporters in this band get full priority in the auto-match algorithm. Does that feel:
-- Like real control over my pricing
-- A little limiting but I could live with it
-- Too restrictive
+**Q18.** *(Replaces the old band-positioning Q18.)* When a firm posts a job, qualified reporters apply during a turnaround-tier window (4h rush / 24h expedited / 72h standard). The firm reviews everyone's profile + rate and picks. You're not auto-matched; you have to actively apply to jobs you want. Does that feel:
+- Right – I want control over which jobs I apply to
+- Mostly right but I worry I'll miss jobs because I'm not checking the dashboard constantly
+- Burdensome – I'd prefer the platform pre-filter and offer me jobs (cascade-style auto-match)
 - Doesn't really matter to me
 
-**Q18a.** You can opt into a wider ±50% rate band, but reporters in the expanded band get fewer auto-match offers (the matching algorithm prioritizes standard-band reporters). Would you opt in?
-- Yes – I'd want the flexibility even if it meant fewer offers
-- Maybe – depends on how much fewer
-- No – I'd stay in the standard band to maximize my offer volume
-- Not sure / need to think about it
-
-**Q18b.** *(If Maybe or No above)* What would change your mind about opting into the expanded band? (1–2 sentences, optional)
+**Q18a.** *(New, 2026-05-24)* The firm can pick an applicant any time – even minutes after posting. So if a firm has a favorite who applies quickly, they may pick before other reporters see the job. Reactions?
+- Fine – that's how this work has always operated
+- Fine for favorites; fair enough
+- Uncomfortable – I'd want a guaranteed application window before the firm can pick
+- Other (please describe in 1–2 sentences)
 
 ---
 
@@ -274,7 +299,7 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 | 3 – Current economics | Real data on agency splits + direct rates – fills the [pricing_questions_rosie_and_csrs.md](pricing_questions_rosie_and_csrs.md) Q6/Q7 gap that Rosie couldn't answer | Most respondents say "I don't know" – we still need user testing to learn |
 | 4 – Concept reaction | Top concerns are addressable (volume, trust, payment) and excitement is real (no agency cut, direct relationships) | Top concerns are existential (concept itself rejected, "agencies are fine") |
 | 4 – Featured reporter (Q14) | Meaningful interest (>40% say "yes") – validates Rosie's idea | Low interest (<20%) – defer indefinitely |
-| 5 – Pricing perception | 12% feels reasonable; 20% rate-setting band feels like meaningful control | Either rejected – needs rethinking before sending firms |
+| 5 – Pricing + model perception | 12% feels reasonable; applicant-pool feels right (Q18: "Right" or "Mostly right" >60%); favorite-priority pick-fast (Q18a) is at least tolerated | 12% rejected → revisit fee; majority finds applicant-pool burdensome → reconsider auto-match for v1.x; Q18a discomfort >50% → add a guaranteed application window |
 | 6 – Signup + referrals (Q19, Q19a, Q20) | Majority say Yes or Maybe at $99/yr; Q19a free text identifies a handful of high-leverage perks that move Maybe/No to Yes; strong referral willingness | <30% Yes at $99/yr – supply acquisition harder than projected at this price, or perks aren't compelling enough |
 
 ---
