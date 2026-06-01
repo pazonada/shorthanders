@@ -10773,7 +10773,7 @@ function ReporterDirectory() {
             <button onClick={() => setWorkType("audio")} style={{padding: "6px 14px", borderRadius: 999, border: "none", background: workType === "audio" ? "#fff" : "transparent", color: workType === "audio" ? "var(--text, #0F172A)" : "var(--text-secondary, #64748B)", fontSize: 13, fontWeight: 600, cursor: "pointer", boxShadow: workType === "audio" ? "0 1px 3px rgba(0,0,0,0.08)" : "none"}}>Audio transcription</button>
           </div>
           <span style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", lineHeight: 1.5}}>
-            {workType === "live" ? `Showing reporters in or near ${homeCounty} first.` : "Shuffled – every qualified reporter gets equal visibility."}
+            {workType === "live" ? ("Showing reporters in or near " + homeCounty + " first.") : "Shuffled – every qualified reporter gets equal visibility."}
           </span>
         </div>
         {/* Filters */}
