@@ -8,6 +8,32 @@ Treat this doc as the union of (a) the v1 rating system spec and (b) the v2/fall
 
 ---
 
+## How v1 uses rating (added 2026-05-24)
+
+In v1, rating is **a sort option, not an algorithmic ranking factor.** This is a deliberate cold-start choice. Earlier prototype copy implied that "reporters with consistently high ratings appear first in search results" — that was retired 2026-05-24 because at launch no CSR has any ratings yet, so the claim would have been misleading and the implementation (default-sort by rating) would have buried every new CSR for months.
+
+**What v1 actually does:**
+
+- **Reporter directory** default sort is **work-type-aware**, not rating-driven:
+  - **Live attendance** browsing → favorites first, then CSRs in/near the attorney's home county, then by completed jobs as a tiebreaker. Proximity matters when the CSR needs to physically show up.
+  - **Audio transcription** browsing → favorites first, then a **stable random shuffle**. Audio work is location-independent, so we deliberately don't bias by geography or by experience — every qualified CSR gets equal visibility.
+  - Attorneys can manually switch to "Highest rated," "Most experienced," or "Fastest turnaround" if they want. Those are sort options, not the default.
+- **Review Applicants screen** (Care.com-style applicant review): firms see every qualified applicant and can sort by any column (favorites first / rate / rating / completed jobs / distance). Rating is one sortable column among several.
+- **No algorithmic gate.** Rating does not influence whether a CSR is shown a job alert, whether their application appears in the firm's review pool, or anything other than the sort the firm picks.
+- **"New on Dewey Sholes" badge:** CSRs with fewer than 5 completed jobs on the platform get a small "New on Dewey Sholes" badge on their profile, directory card, and Review Applicants card. This is an honest signal of newness (the badge tells firms their stats are still building, not that they're inexperienced reporters) and avoids the cold-start visibility penalty of pure rating-sorted ranking.
+
+### Why this matters
+
+Defaulting to rating-sorted browsing creates a winner-takes-all dynamic where the first 3–5 CSRs to get rated get all the attention, and newer CSRs are silently buried. The applicant-pool model already gives firms full choice at the moment of selection; the directory shouldn't be doing algorithmic ranking before the firm has even started an order. Open marketplace, fair visibility, honest cold-start signaling.
+
+### What to revisit post-launch
+
+- **Threshold for the "New" badge** is set at <5 completed jobs as a guess. Once we have data on how quickly CSRs accumulate jobs, tune. Could become <10 or <3.
+- **Default-sort tuning.** If attorneys consistently flip to "Highest rated" on the first browse, that's a signal the default isn't right. If they stick with the default, leave it.
+- **Promote rating to an algorithmic factor only if firms ask for it.** Defaulting to rating-sorted ranking is a v1.x or v2 candidate; it should NOT be added in v1 patch releases because the cold-start dynamic doesn't actually go away that quickly.
+
+---
+
 ## Changelog
 
 - **v2.5 (2026-05-13):** Added specialty taxonomy detail to the "Self-declared with optional proof" capability bucket. Standardized controlled vocabulary of ~15 specialties drives matching; a separate free-text "Additional expertise" field on the profile handles niche / unusual expertise informationally without polluting the matching surface; a "Request a new specialty" pathway lets the controlled vocabulary evolve (5+ requests within 90 days → added to standard list). Documents why standardization is necessary given the auto-match design and how attorney-side niche needs are covered via "Notes for the reporter" and favorites.

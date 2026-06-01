@@ -2932,15 +2932,17 @@ const MOCK_REPORTERS = [
   },
   {
     id: "rep-6", name: "Patricia Doyle", csrNumber: "10893", initials: "PD",
-    rating: 4.5, reviewCount: 19, city: "Santa Rosa",
+    rating: 5.0, reviewCount: 3, city: "Santa Rosa",
     ratePerPage: 4.50, attendanceHalfDay: 950, attendanceFullDay: 1500, attendanceTrialDay: 2100, travelRatePerHour: 45,
     certifications: ["CSR"],
     specialties: ["Family Law", "Personal Injury", "Civil Litigation"],
     languages: ["English"],
     courts: ["Sonoma County Superior Court", "Marin County Superior Court", "Napa County Superior Court"],
     counties: ["Sonoma", "Marin", "Napa"],
-    stats: { jobsCompleted: 127, onTimeRate: 95, avgTurnaround: "4.8 days", memberSince: "2017" },
-    bio: "Serving the North Bay for over 20 years. Covers Sonoma, Marin, and Napa counties. Deep experience in family law and personal injury depositions.",
+    // jobsCompleted < 5 triggers the "New on Dewey Sholes" badge on profile + directory + applicant cards.
+    // Patricia is the demo CSR for the cold-start affordance.
+    stats: { jobsCompleted: 3, onTimeRate: 100, avgTurnaround: "3.5 days", memberSince: "2026" },
+    bio: "Recently joined Dewey Sholes after 20 years of court reporting in the North Bay. Covers Sonoma, Marin, and Napa counties. Deep experience in family law and personal injury depositions.",
     availability: [
       [1,1,0],[1,1,0],[0,0,0],[1,1,1],[1,1,0],[1,0,0],[0,0,0]
     ],
@@ -3988,7 +3990,9 @@ function ReviewApplicantsPage() {
   const favoriteIds = new Set(["rep-1"]);
   // Mock applicant list: which of MOCK_REPORTERS have applied so far.
   // In the real build this is a join on order_applications.
-  const applicantIds = ["rep-1", "rep-2", "rep-3"];
+  // rep-6 (Patricia Doyle) has jobsCompleted < 5 so the "New on Dewey Sholes"
+  // badge demos on her card – cold-start affordance for visibility.
+  const applicantIds = ["rep-1", "rep-2", "rep-3", "rep-6"];
   // Sort + filter state.
   const [sortBy, setSortBy] = useState("favorites"); // favorites / rate-low / rate-high / rating / jobs
   const [favoritesOnly, setFavoritesOnly] = useState(false);
@@ -4118,6 +4122,11 @@ function ReviewApplicantsPage() {
                     {a.isFavorite && (
                       <div style={{position: "absolute", top: 12, right: 12, display: "flex", alignItems: "center", gap: 4, padding: "3px 10px", borderRadius: 999, background: "#FEF3C7", color: "#92400E", fontSize: 11, fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase"}}>
                         <Icon name="star" size={11} color="#D97706" /> Favorite
+                      </div>
+                    )}
+                    {!a.isFavorite && r.stats.jobsCompleted < 5 && (
+                      <div title={`Joined ${r.stats.memberSince}. ${r.stats.jobsCompleted} jobs completed on the platform so far.`} style={{position: "absolute", top: 12, right: 12, display: "inline-flex", alignItems: "center", padding: "3px 10px", borderRadius: 999, background: "#DBEAFE", color: "#1E40AF", fontSize: 11, fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase"}}>
+                        New on Dewey Sholes
                       </div>
                     )}
                     <div style={{display: "flex", gap: 16, alignItems: "flex-start", flexWrap: "wrap"}}>
@@ -10672,7 +10681,18 @@ function ReporterDirectory() {
   const [search, setSearch] = useState("");
   const [county, setCounty] = useState("all");
   const [specialty, setSpecialty] = useState("all");
-  const [sortBy, setSortBy] = useState("rating");
+  // Default sort is work-type-aware "recommended": favorites first, then proximity
+  // (for live attendance) or stable random shuffle (for audio transcription).
+  // Avoids ranking by rating at cold-start when few CSRs have any ratings yet.
+  // See governance-and-process/rating_and_matching_policy.md – ranking section.
+  const [sortBy, setSortBy] = useState("recommended");
+  // Work-type toggle scopes the "recommended" sort. Live = location matters
+  // (proximity), audio = location-independent (shuffle). Default to live as
+  // the more common discovery use case.
+  const [workType, setWorkType] = useState("live"); // "live" or "audio"
+  // For live work, surface CSRs in the same county as the firm. Hardcoded for
+  // the prototype; real build pulls this from the attorney's profile.
+  const homeCounty = "San Francisco";
   const [favorites, setFavorites] = useState(["rep-1", "rep-3"]);
   const [showFavOnly, setShowFavOnly] = useState(false);
   const { toasts, addToast, removeToast } = useToasts();
@@ -10694,7 +10714,37 @@ function ReporterDirectory() {
     return true;
   });
 
-  if (sortBy === "rating") filtered.sort((a, b) => b.rating - a.rating);
+  // Stable pseudo-random for the shuffle mode: hash from reporter id so the
+  // order doesn't reshuffle on every render but does vary between sessions
+  // (different CSRs get top placement at different visits).
+  const stableShuffleKey = (r) => {
+    let h = 0;
+    const s = r.id + (typeof window !== "undefined" ? window.location.hash : "");
+    for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+    return h;
+  };
+
+  if (sortBy === "recommended") {
+    // Two-tier: favorites first, then work-type-specific ordering.
+    filtered.sort((a, b) => {
+      const aFav = favorites.includes(a.id) ? 0 : 1;
+      const bFav = favorites.includes(b.id) ? 0 : 1;
+      if (aFav !== bFav) return aFav - bFav;
+      if (workType === "live") {
+        // Proximity: prefer CSRs whose counties include the firm's homeCounty.
+        const aLocal = a.counties.includes(homeCounty) ? 0 : 1;
+        const bLocal = b.counties.includes(homeCounty) ? 0 : 1;
+        if (aLocal !== bLocal) return aLocal - bLocal;
+        // Tiebreaker: completed jobs descending (more experienced first within
+        // the same locality tier – doesn't punish new CSRs because the New
+        // badge gives them a separate signal).
+        return b.stats.jobsCompleted - a.stats.jobsCompleted;
+      }
+      // Audio: stable random shuffle so location doesn't bias visibility.
+      return stableShuffleKey(a) - stableShuffleKey(b);
+    });
+  }
+  else if (sortBy === "rating") filtered.sort((a, b) => b.rating - a.rating);
   else if (sortBy === "jobs") filtered.sort((a, b) => b.stats.jobsCompleted - a.stats.jobsCompleted);
   else if (sortBy === "turnaround") filtered.sort((a, b) => parseFloat(a.stats.avgTurnaround) - parseFloat(b.stats.avgTurnaround));
 
@@ -10712,6 +10762,20 @@ function ReporterDirectory() {
         </div>
       </section>
       <div className="container" style={{maxWidth: 1100, paddingBottom: 80}}>
+        {/* Work-type toggle: changes what "recommended" sort means.
+            Live = local CSRs first (proximity matters). Audio = location-
+            independent so we shuffle to give every qualified CSR equal
+            visibility (no cold-start penalty for new reporters). */}
+        <div style={{display: "flex", gap: 12, alignItems: "center", marginBottom: 16, flexWrap: "wrap"}}>
+          <span style={{fontSize: 12, fontWeight: 700, color: "var(--text-muted, #64748B)", textTransform: "uppercase", letterSpacing: "0.06em"}}>I'm browsing for</span>
+          <div style={{display: "inline-flex", background: "var(--bg-muted, #F1F5F9)", borderRadius: 999, padding: 4, gap: 2}}>
+            <button onClick={() => setWorkType("live")} style={{padding: "6px 14px", borderRadius: 999, border: "none", background: workType === "live" ? "#fff" : "transparent", color: workType === "live" ? "var(--text, #0F172A)" : "var(--text-secondary, #64748B)", fontSize: 13, fontWeight: 600, cursor: "pointer", boxShadow: workType === "live" ? "0 1px 3px rgba(0,0,0,0.08)" : "none"}}>Live attendance</button>
+            <button onClick={() => setWorkType("audio")} style={{padding: "6px 14px", borderRadius: 999, border: "none", background: workType === "audio" ? "#fff" : "transparent", color: workType === "audio" ? "var(--text, #0F172A)" : "var(--text-secondary, #64748B)", fontSize: 13, fontWeight: 600, cursor: "pointer", boxShadow: workType === "audio" ? "0 1px 3px rgba(0,0,0,0.08)" : "none"}}>Audio transcription</button>
+          </div>
+          <span style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", lineHeight: 1.5}}>
+            {workType === "live" ? `Showing reporters in or near ${homeCounty} first.` : "Shuffled – every qualified reporter gets equal visibility."}
+          </span>
+        </div>
         {/* Filters */}
         <div className="card" style={{padding: 16, marginBottom: 24, background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 16}}>
           <div style={{display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center"}}>
@@ -10727,7 +10791,8 @@ function ReporterDirectory() {
               <option value="all">All specialties</option>
               {allSpecialties.map(s => <option key={s} value={s}>{s}</option>)}
             </select>
-            <select className="form-input form-select" value={sortBy} onChange={e => setSortBy(e.target.value)} style={{flex: "0 1 160px"}}>
+            <select className="form-input form-select" value={sortBy} onChange={e => setSortBy(e.target.value)} style={{flex: "0 1 200px"}}>
+              <option value="recommended">{workType === "live" ? "Recommended (local first)" : "Recommended (shuffled)"}</option>
               <option value="rating">Highest rated</option>
               <option value="jobs">Most experienced</option>
               <option value="turnaround">Fastest turnaround</option>
@@ -10753,6 +10818,7 @@ function ReporterDirectory() {
                       <span style={{fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: 24, color: "var(--ink)", letterSpacing: "-0.01em"}}>{r.name}</span>
                       <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.12em", color: "var(--muted)", textTransform: "uppercase"}}>CSR #{r.csrNumber}</span>
                       {favorites.includes(r.id) && <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ochre-deep)", background: "var(--ochre-soft)", padding: "3px 10px", borderRadius: 999, fontWeight: 600}}>Favorite</span>}
+                      {r.stats.jobsCompleted < 5 && <span title={`Joined ${r.stats.memberSince}. ${r.stats.jobsCompleted} job${r.stats.jobsCompleted === 1 ? "" : "s"} completed on the platform so far.`} style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "#1E40AF", background: "#DBEAFE", padding: "3px 10px", borderRadius: 999, fontWeight: 600}}>New on Dewey Sholes</span>}
                     </div>
                     <div style={{fontSize: 13, color: "var(--ink-soft)", marginTop: 4}}><Icon name="mapPin" size={12} /> {r.city} · {r.counties.join(", ")}</div>
                     <div style={{display: "flex", gap: 6, marginTop: 10, flexWrap: "wrap"}}>
@@ -10855,6 +10921,7 @@ function ReporterProfile({ reporterId }) {
                 <h1 style={{fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: 40, color: "var(--ink)", margin: 0, letterSpacing: "-0.02em", lineHeight: 1.05}}>{reporter.name}</h1>
                 <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.14em", color: "var(--muted)", textTransform: "uppercase"}}>CSR #{reporter.csrNumber}</span>
                 {isFav && <span style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ochre-deep)", background: "var(--ochre-soft)", padding: "3px 10px", borderRadius: 999, fontWeight: 600}}>Favorite</span>}
+                {reporter.stats.jobsCompleted < 5 && <span title={`Joined ${reporter.stats.memberSince}. ${reporter.stats.jobsCompleted} job${reporter.stats.jobsCompleted === 1 ? "" : "s"} completed on the platform so far.`} style={{fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "#1E40AF", background: "#DBEAFE", padding: "3px 10px", borderRadius: 999, fontWeight: 600}}>New on Dewey Sholes</span>}
               </div>
               <div style={{fontSize: 14, color: "var(--ink-soft)", marginTop: 6}}><Icon name="mapPin" size={13} /> {reporter.city} · {reporter.counties.join(", ")}</div>
               <div style={{display: "flex", gap: 6, marginTop: 14, flexWrap: "wrap"}}>
@@ -11075,7 +11142,7 @@ function FaqPage() {
       { id: "a2", q: "How does pricing work?", a: "Transcript pricing: most CA reporters charge around $5.00 per page, but every reporter on Dewey Sholes sets their own number. The exact rate depends on which reporter you select. The platform fee is a flat 12% on top, regardless of the reporter. Your delivery deadline determines the turnaround tier: Rush (1–2 business days, 1.5x rate), Expedited (3–5 business days, standard rate), or Standard (6+ business days, 15% savings). After you submit an order, it goes into an applicant pool. Qualified reporters can apply during your turnaround window (rush 4 hours, expedited 24 hours, standard 72 hours). When the window closes, we show you every interested reporter with their profile, rating, and rate – you pick whoever you want. The reporter you select confirms their availability before the job locks in; if they can't make it, we notify you immediately to pick someone else." },
       { id: "a3", q: "Can I split the cost with other parties?", a: "Yes. When placing an order, toggle \"Split cost with other parties\" and add co-paying attorneys by name and email. Each party receives a secure payment link. The job is only posted to reporters once all parties have paid – no chasing, no partial payments. Co-payers don't need a Dewey Sholes account." },
       { id: "a4", q: "What if I'm unhappy with a transcript?", a: "You can request corrections within 90 days of delivery. Specify the pages and describe the issue, and the reporter will be notified to upload a corrected version. No additional cost for corrections – the reporter's published rate covers delivering an accurate transcript." },
-      { id: "a5", q: "How do I know if a reporter is any good?", a: "Every reporter has a quality rating (1-5 stars, rated by attorneys) and a timeliness score (auto-calculated from their delivery history). You can also read written feedback from other attorneys on the reporter's profile. Reporters with consistently high ratings appear first in search results." },
+      { id: "a5", q: "How do I know if a reporter is any good?", a: "Every reporter on Dewey Sholes is a CSR verified through the California Court Reporters Board – we check before they go live. Beyond that: as reporters complete jobs on the platform, their profiles accrue a Quality rating (1–5 stars, rated by attorneys after delivery), a Timeliness score (auto-calculated from their delivery dates vs. deadlines), and written feedback from attorneys who worked with them. On the Review Applicants screen you can sort by rating, on-time rate, completed jobs, or rate, and filter to your favorites. Reporters who are brand new get a 'New on Dewey Sholes' badge so you know their stats are still building – many of them are experienced CSRs who just joined the platform." },
       { id: "a6", q: "Can I choose a specific reporter?", a: "Yes – choice is built into how the platform works. When you submit an order, qualified reporters apply during your turnaround window; you then review their profiles and rates and pick whoever you want. Favorites get a 'Worked with you before' badge and float to the top of the applicant list. You can also browse the reporter directory by jurisdiction, specialty, language, and rating before placing an order." },
       { id: "a7", q: "What turnaround options are available?", a: "We offer three tiers based on your deadline: Rush (1\u20132 business days, 1.5x rate), Expedited (3\u20135 business days, standard rate), and Standard (6+ business days, 15% savings). You set your need-by date and the system calculates your tier and price automatically. If you don't have a specific deadline, transcripts are due within 45 calendar days." },
     ]},
@@ -11085,7 +11152,7 @@ function FaqPage() {
       { id: "r3", q: "How does job matching work?", a: "You'll receive push notifications for new jobs matching your case type preferences and turnaround capabilities. Each job shows the court, deadline, estimated pages, and your potential earnings. Accept with one tap, or decline – no penalty for declining." },
       { id: "r4", q: "What are the listing fees?", a: "Individual reporter listing is $99 per year, billed annually. CSR firm accounts (3-10 reporters under one account with centralized billing) are deferred to a future release – you can express interest at signup and we'll notify you when they're available." },
       { id: "r5", q: "How does the check-in system work?", a: "After you accept a job, the platform checks in at the midpoint of the delivery window to confirm you're on track. You can respond \"On track,\" request a deadline extension, or release the job for reassignment. Rush jobs are automatically reassigned if you report you're not on track." },
-      { id: "r6", q: "How are ratings calculated?", a: "Your profile shows two scores: Timeliness (auto-calculated from your delivery dates vs. deadlines) and Quality (rated 1-5 by attorneys after each delivery, with optional written feedback). Higher ratings mean you appear first in search results and get more job offers." },
+      { id: "r6", q: "How are ratings calculated?", a: "Your profile shows two scores: Timeliness (auto-calculated from your delivery dates vs. deadlines) and Quality (rated 1–5 by attorneys after each delivery, with optional written feedback). Until you've completed at least 5 jobs on the platform you'll wear a 'New on Dewey Sholes' badge – it tells firms your stats are still building, not that you're inexperienced. Ratings are a sort option for firms when they review applicants on a job, alongside on-time rate, completed jobs, rate, and proximity. There is no algorithmic priority based on rating – firms see every qualified applicant and choose." },
     ]},
     { title: "General", items: [
       { id: "g1", q: "Is my data secure?", a: "Yes. All data is encrypted in transit (TLS 1.3) and at rest (AES-256). Transcripts are accessible only to the ordering attorney and the assigned reporter via time-limited signed URLs. We use Stripe for payment processing and are building toward SOC 2 compliance. We never send transcripts via email – only secure download links." },
@@ -11796,7 +11863,7 @@ function ForAttorneysPage() {
   const features = [
     { icon: "fileText", title: "Case library that remembers", desc: "Create a case once. Every future order auto-fills from your case record: court, parties, judge, department. No more re-typing the same details every hearing." },
     { icon: "dollarSign", title: "Split costs in two clicks", desc: "Multi-party case? Add co-counsel and split the transcript cost. Each party pays their share through a secure link. The reporter is only assigned once everyone's paid – no chasing payments after the fact." },
-    { icon: "star", title: "Quality you can trust", desc: "Every reporter is rated on quality by other attorneys and tracked on timeliness automatically. Read real feedback before you book. Mark CSRs as preferred vendors so they appear first when you order." },
+    { icon: "star", title: "Quality you can trust", desc: "Every reporter is CSR-Board verified. As they complete jobs on the platform, you'll see Quality ratings from attorneys, Timeliness scores, and written feedback. Mark CSRs as favorites so they get a ★ badge and float to the top when you review applicants on future jobs." },
     { icon: "clock", title: "Deadline-driven pricing", desc: "Set your need-by date and the price calculates automatically – no negotiation, no hidden fees. The closer your deadline, the higher the rate. Want to save money? Order earlier." },
     { icon: "users", title: "Firm-wide visibility", desc: "Multiple attorneys and staff under one account. Role-based access for paralegals, legal assistants, and partners. Consolidated billing itemized by case and matter number." },
     { icon: "shield", title: "TRF reimbursement, made simple", desc: "When your client has a fee waiver, we send the Transcript Reimbursement Fund forms and instructions after delivery. Submit to the court – reimbursement typically arrives in 8-10 weeks, up to $2,500 per case." },
@@ -11895,7 +11962,7 @@ function ForReportersPage() {
   const benefits = [
     { icon: "zap", title: "Jobs that find you", desc: "Get push notifications for jobs matching your preferences. See the deadline and your earnings upfront. Accept with one tap – decline with no penalty." },
     { icon: "dollarSign", title: "Keep 100% of your rate", desc: "No agency taking 50-85% of your earnings. You keep the full published rate on every job. Payment within 2 business days of delivery, every time." },
-    { icon: "star", title: "Build your reputation", desc: "Attorneys rate your quality after every delivery and can mark you as a preferred vendor – giving you first right of refusal on their future jobs. Great ratings mean you appear first in search and get more offers." },
+    { icon: "star", title: "Build your reputation", desc: "Attorneys rate your quality after every delivery, with optional written feedback. They can also favorite you – which sends you a louder push + email alert (defaulted on) every time they post a new job. Ratings are a sort option firms can use when reviewing applicants; we don't algorithmically gate access to jobs by rating, so new CSRs get a fair shot." },
     { icon: "clock", title: "Real-time check-ins", desc: "The platform pings you mid-job to keep delivery on track. If you need more time, request an extension. If you can't finish, release the job – early releases don't count against you." },
     { icon: "shield", title: "Credentials handled", desc: "Your CSR license is auto-verified at signup and re-checked quarterly. W-9 collected at first payout – no paperwork upfront. We file your 1099 at year-end." },
     { icon: "users", title: "No exclusivity, ever", desc: "Use Dewey Sholes for some jobs and other channels for others. We don't dictate how much you work, when, or for whom. You're an independent professional and we treat you like one." },
