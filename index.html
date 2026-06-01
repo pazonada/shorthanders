@@ -4527,14 +4527,7 @@ function OrderFlow() {
             </div>
           )}
 
-          {/* Step 3 (was Step 4 before the applicant-pool refactor): Turnaround & Pricing.
-              The old "Reporter preference" Step 3 (auto-match / favorite-first / top-rated) was
-              removed 2026-05-24. Under the applicant-pool model there's no auto-match, no
-              exclusive favorite window, and no rating-based pre-filter – all orders post to
-              the public pool and the firm reviews applicants live. If the firm arrived from
-              a "Book this reporter" link on a CSR profile, form.selectedReporter holds that
-              reporter's id and they get flagged as the firm's preferred applicant on submit
-              (louder alert + ★ float-to-top on Review Applicants); they still have to apply. */}
+          {/* Step 3: Turnaround and pricing. Was Step 4 before the applicant-pool refactor 2026-05-24. */}
           {step === 3 && (
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
@@ -4720,7 +4713,7 @@ function OrderFlow() {
             </div>
           )}
 
-          {/* Step 4 (was Step 5 before the applicant-pool refactor): Review & submit. */}
+          {/* Step 4: Review and submit. Was Step 5 before the applicant-pool refactor 2026-05-24. */}
           {step === 4 && (
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
