@@ -20,7 +20,7 @@ The driving constraint is reliability. We've built a lot of policy and design su
 
 ### Order flow
 
-- **5-step order** as currently built: type selection, case details + matter reference, reporter preference, turnaround + pricing, review + submit.
+- **4-step order** (revised 2026-05-24 – the old Step 3 "Reporter preference" was removed because under the applicant-pool model there's no auto-match, no exclusive favorite window, and no rating-based pre-filter). The flow is now: type selection → case details + matter reference → turnaround + pricing → review + submit.
 - **Matter-reference field** on Step 2 (per Rosie's reconciliation requirement). Carries through to invoice and billing dashboard.
 - **Cost-split toggle** with co-payer flow (already designed, defer real build to v1.1 — see below).
 - **Pricing**: CSRs set their own rates (no hybrid band). Platform shows a baseline as guidance copy. 12% attorney-side fee on top. $99/yr CSR listing fee.
@@ -171,7 +171,7 @@ This is an honest guess; ranges reflect uncertainty.
 | Real-build scaffolding (Supabase schema, Vercel deploy, auth) | 40–60 | 2–3 |
 | CSR signup + license verification | 30–50 | 1.5–2.5 |
 | Attorney signup + bar verification | 30–50 | 1.5–2.5 |
-| Order flow (5 steps + matter ref) | 50–70 | 2.5–3.5 |
+| Order flow (4 steps + matter ref) | 40–60 | 2–3 |
 | Applicant-pool matching (apply, review screen, select, confirm) | 50–70 | 2.5–3.5 |
 | CSR dashboard (open jobs + your applications + active jobs + earnings) | 50–70 | 2.5–3.5 |
 | Attorney dashboard (cases + review applicants + billing + invoices) | 50–70 | 2.5–3.5 |

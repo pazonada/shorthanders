@@ -223,7 +223,7 @@ Success
 [Buyer Dashboard]
 ```
 
-### Order flow (5 steps + applicant-pool review) – COMPLETE in prototype (revised 2026-05-24)
+### Order flow (4 steps + applicant-pool review) – COMPLETE in prototype (revised 2026-05-24 again to drop Step 3 "Reporter preference")
 
 ```
 [Step 1] Type selection
@@ -239,22 +239,19 @@ Success
   Duration, interpreter toggle
   |
   v
-[Step 3] Reporter preference
-  Open marketplace (default) / From favorites first / Top rated
-  |
-  v
-[Step 4] Turnaround & pricing
+[Step 3] Turnaround & pricing
+  (was Step 4 before the applicant-pool refactor)
   Rush (1-2 business days, 1.5x) / Expedited (3-5d, 1x) / Standard (6+ d, 0.85x)
-  Price estimate breakdown – uses platform baseline since CSR
-    hasn't been selected yet; footnote notes actual cost depends on
-    the reporter you select
+  Price estimate breakdown – uses platform baseline since the firm
+    hasn't selected an applicant yet; footnote notes actual cost
+    depends on the reporter you pick from the applicant pool
   Application window per turnaround tier shown:
     Rush 4h · Expedited 24h · Standard 72h
   Fee waiver checkbox
   Cost split toggle → add co-payers (name, email, share %)
   |
   v
-[Step 5] Review & submit
+[Step 4] Review & submit
   Full summary (incl. matter reference if filled), cost-split party
     list (if applicable)
   Submit button → handleSubmitOrder() → setSubmitted(true)

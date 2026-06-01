@@ -4336,7 +4336,7 @@ function OrderFlow() {
           <div className="page-header" style={{justifyContent: "center", textAlign: "center", display: "block"}}>
             <h1>New transcript order</h1>
           </div>
-          <StepIndicator current={step} total={5} />
+          <StepIndicator current={step} total={4} />
 
           {/* Step 1: Type */}
           {step === 1 && (
@@ -4517,7 +4517,7 @@ function OrderFlow() {
                   <textarea className="form-input" style={{minHeight: 80, resize: "vertical"}} placeholder="e.g. Multiple witnesses expected, realtime feed needed, specific formatting requirements..." value={form.notes} onChange={e => update("notes", e.target.value)} />
                 </div>
 
-                {/* Deadline moved to Step 4 – now date-driven with auto tier calculation */}
+                {/* Deadline moved to Step 3 (Pricing) – now date-driven with auto tier calculation */}
 
                 <div style={{display: "flex", gap: 12, marginTop: 8}}>
                   <button className="btn btn-secondary btn-sm" onClick={() => setStep(1)}>Back</button>
@@ -4527,74 +4527,15 @@ function OrderFlow() {
             </div>
           )}
 
-          {/* Step 3: Reporter preference */}
+          {/* Step 3 (was Step 4 before the applicant-pool refactor): Turnaround & Pricing.
+              The old "Reporter preference" Step 3 (auto-match / favorite-first / top-rated) was
+              removed 2026-05-24. Under the applicant-pool model there's no auto-match, no
+              exclusive favorite window, and no rating-based pre-filter – all orders post to
+              the public pool and the firm reviews applicants live. If the firm arrived from
+              a "Book this reporter" link on a CSR profile, form.selectedReporter holds that
+              reporter's id and they get flagged as the firm's preferred applicant on submit
+              (louder alert + ★ float-to-top on Review Applicants); they still have to apply. */}
           {step === 3 && (
-            <div>
-              <div className="section-header" style={{marginBottom: 32}}>
-                <h2 style={{fontSize: 24}}>Reporter preference</h2>
-                <p style={{color: "var(--text-secondary, #64748B)"}}>Choose how you'd like to work with a court reporter.</p>
-              </div>
-              <div style={{display: "flex", flexDirection: "column", gap: 12}}>
-                {[
-                  { val: "auto", icon: "zap", label: "Match me with the best available", desc: "Platform assigns the highest-rated, available reporter for your jurisdiction and case type.", badge: "Fastest" },
-                  { val: "favorite", icon: "star", label: "Choose from my favorites", desc: "Select from reporters you've worked with before. They get an exclusive window to accept.", badge: "Preferred" },
-                  { val: "top", icon: "award", label: "Choose from top rated", desc: "Browse the highest-rated reporters available for this job, including ones you haven't worked with yet.", badge: null },
-                ].map(opt => (
-                  <div key={opt.val} style={{display: "flex", alignItems: "flex-start", gap: 16, padding: 20, background: form.reporterPref === opt.val ? "var(--bg-card, #EFF6FF)" : "var(--bg-card, #fff)", border: form.reporterPref === opt.val ? "2px solid #3B82F6" : "1px solid var(--border, #E2E8F0)", borderRadius: 12, cursor: "pointer", transition: "all 0.15s"}} onClick={() => { update("reporterPref", opt.val); update("selectedReporter", null); }}>
-                    <div style={{width: 44, height: 44, borderRadius: 12, background: form.reporterPref === opt.val ? "#2563EB" : "var(--bg-muted, #F1F5F9)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0}}>
-                      <Icon name={opt.icon} size={20} color={form.reporterPref === opt.val ? "#fff" : "#64748B"} />
-                    </div>
-                    <div style={{flex: 1}}>
-                      <div style={{display: "flex", alignItems: "center", gap: 8}}>
-                        <span style={{fontWeight: 600, fontSize: 15, color: "var(--text, #0F172A)"}}>{opt.label}</span>
-                        {opt.badge && <span style={{fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 100, background: opt.val === "auto" ? "#DBEAFE" : "#FEF3C7", color: opt.val === "auto" ? "#1D4ED8" : "#92400E", textTransform: "uppercase", letterSpacing: "0.03em"}}>{opt.badge}</span>}
-                      </div>
-                      <div style={{fontSize: 13, color: "var(--text-secondary, #64748B)", marginTop: 4, lineHeight: 1.5}}>{opt.desc}</div>
-                    </div>
-                    <div style={{flexShrink: 0, marginTop: 4}}>
-                      <div style={{width: 20, height: 20, borderRadius: "50%", border: form.reporterPref === opt.val ? "6px solid #2563EB" : "2px solid #CBD5E1", background: "#fff"}} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {(form.reporterPref === "favorite" || form.reporterPref === "top") && (
-                <div style={{marginTop: 24}}>
-                  <label className="form-label" style={{marginBottom: 12}}>{form.reporterPref === "favorite" ? "Your favorite reporters" : "Top-rated reporters for this job"}</label>
-                  <div style={{display: "flex", flexDirection: "column", gap: 8}}>
-                    {MOCK_REPORTERS.map(r => {
-                      const isSelected = form.selectedReporter === r.id;
-                      return (
-                        <div key={r.id} style={{display: "flex", alignItems: "center", gap: 12, padding: 16, background: isSelected ? "var(--bg-card, #EFF6FF)" : "var(--bg-card, #fff)", border: isSelected ? "2px solid #3B82F6" : "1px solid var(--border, #E2E8F0)", borderRadius: 12, cursor: "pointer", transition: "all 0.15s"}} onClick={() => update("selectedReporter", r.id)}>
-                          <div style={{width: 44, height: 44, borderRadius: "50%", background: isSelected ? "#2563EB" : "#E2E8F0", display: "flex", alignItems: "center", justifyContent: "center", color: isSelected ? "#fff" : "#64748B", fontWeight: 700, fontSize: 14, flexShrink: 0}}>{r.initials}</div>
-                          <div style={{flex: 1, minWidth: 0}}>
-                            <div style={{fontWeight: 600, fontSize: 14, color: "var(--text, #0F172A)"}}>{r.name}</div>
-                            <div style={{fontSize: 12, color: "var(--text-secondary, #64748B)"}}>CSR #{r.csrNumber} · {r.rating} <span style={{color: "#F59E0B"}}>{'*'.repeat(Math.round(r.rating))}</span> · {r.reviewCount} reviews</div>
-                            <div style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginTop: 2}}>{r.stats.onTimeRate}% on time · {r.counties.join(", ")}</div>
-                          </div>
-                          <div style={{flexShrink: 0, textAlign: "right"}}>
-                            {form.reporterPref === "favorite" && <div style={{fontSize: 10, fontWeight: 600, color: "#D97706", marginBottom: 4}}>Favorited</div>}
-                            <div style={{display: "flex", alignItems: "center", gap: 4}}>
-                              <span style={{fontSize: 12, color: r.availability[0][0] ? "#059669" : "#DC2626", fontWeight: 600}}>{r.availability[0][0] ? "Available" : "Busy"}</span>
-                              <div style={{width: 8, height: 8, borderRadius: "50%", background: r.availability[0][0] ? "#059669" : "#DC2626"}} />
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-
-              <div style={{display: "flex", gap: 12, marginTop: 24}}>
-                <button className="btn btn-secondary btn-sm" onClick={() => setStep(2)}>Back</button>
-                <button className="btn btn-primary btn-sm" onClick={() => setStep(4)} disabled={!form.reporterPref}>Continue <Icon name="arrowRight" size={14} color="#fff" /></button>
-              </div>
-            </div>
-          )}
-
-          {/* Step 4: Turnaround & Pricing */}
-          {step === 4 && (
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
                 <h2 style={{fontSize: 24}}>When do you need this?</h2>
@@ -4773,14 +4714,14 @@ function OrderFlow() {
               </div>
 
               <div style={{display: "flex", gap: 12, marginTop: 24}}>
-                <button className="btn btn-secondary btn-sm" onClick={() => setStep(3)}>Back</button>
-                <button className="btn btn-primary btn-sm" onClick={() => setStep(5)} disabled={!form.needByType}>Review order <Icon name="arrowRight" size={14} color="#fff" /></button>
+                <button className="btn btn-secondary btn-sm" onClick={() => setStep(2)}>Back</button>
+                <button className="btn btn-primary btn-sm" onClick={() => setStep(4)} disabled={!form.needByType}>Review order <Icon name="arrowRight" size={14} color="#fff" /></button>
               </div>
             </div>
           )}
 
-          {/* Step 5: Review */}
-          {step === 5 && (
+          {/* Step 4 (was Step 5 before the applicant-pool refactor): Review & submit. */}
+          {step === 4 && (
             <div>
               <div className="section-header" style={{marginBottom: 32}}>
                 <h2 style={{fontSize: 24}}>Review your order</h2>
@@ -4829,9 +4770,14 @@ function OrderFlow() {
                 </div>
               </div>
               <div className="review-section-card">
-                <h3><Icon name="users" size={14} /> Reporter preference</h3>
-                <div className="price-line"><span>Matching</span><strong>{form.reporterPref === "auto" ? "Best available" : form.reporterPref === "favorite" ? "From favorites" : "Top rated"}</strong></div>
-                {form.selectedReporter && <div className="price-line"><span>Selected</span><strong>{(MOCK_REPORTERS.find(r => r.id === form.selectedReporter) || {}).name || "–"}</strong></div>}
+                <h3><Icon name="users" size={14} /> Reporter matching</h3>
+                <div className="price-line"><span>Model</span><strong>Open applicant pool</strong></div>
+                {form.selectedReporter && <div className="price-line"><span>Preferred applicant</span><strong>{(MOCK_REPORTERS.find(r => r.id === form.selectedReporter) || {}).name || "–"}</strong></div>}
+                <p style={{fontSize: 12, color: "var(--text-muted, #94A3B8)", marginTop: 8, lineHeight: 1.5}}>
+                  {form.selectedReporter
+                    ? `${(MOCK_REPORTERS.find(r => r.id === form.selectedReporter) || {}).name || "Your preferred reporter"} gets a louder alert and a ★ badge at the top of your applicant list, but they still have to apply – and other qualified reporters can apply too.`
+                    : "Qualified reporters will apply during your application window. You'll review every applicant on a single screen and pick whoever you want."}
+                </p>
               </div>
               {form.costSplit && form.coPayers.some(cp => cp.name || cp.email) && (
                 <div className="review-section-card">
@@ -4855,7 +4801,7 @@ function OrderFlow() {
                 </div>
               )}
               <div style={{display: "flex", gap: 12, marginTop: 24}}>
-                <button className="btn btn-secondary btn-sm" onClick={() => setStep(4)}>Back</button>
+                <button className="btn btn-secondary btn-sm" onClick={() => setStep(3)}>Back</button>
                 <button className="btn btn-primary" onClick={handleSubmitOrder}>Submit order <Icon name="arrowRight" size={16} color="#fff" /></button>
               </div>
             </div>
@@ -4973,7 +4919,7 @@ function BuyerDashboard() {
                     <p style={{fontSize:13, color:"#3B82F6", marginTop:4}}>Add billing details and team preferences to streamline ordering.</p>
                     <div className="nudge-progress" style={{marginTop:10}}>
                       <div className="nudge-bar"><div className="nudge-fill" style={{width:"40%"}} /></div>
-                      <span style={{fontSize:12, color:"#64748B", whiteSpace:"nowrap"}}>2 of 5 steps</span>
+                      <span style={{fontSize:12, color:"#64748B", whiteSpace:"nowrap"}}>2 of 4 steps</span>
                     </div>
                   </div>
                   <button className="btn btn-primary btn-sm" onClick={() => setShowNudge(false)}>Complete profile</button>
@@ -5910,7 +5856,7 @@ function ReporterDashboard() {
                 <p>Add your availability and payment info to start receiving more jobs.</p>
                 <div className="nudge-progress">
                   <div className="nudge-bar"><div className="nudge-fill" style={{width: "60%"}} /></div>
-                  <span>3 of 5 steps complete</span>
+                  <span>3 of 4 steps complete</span>
                 </div>
               </div>
               <button className="btn btn-primary btn-sm" onClick={() => setProfileComplete(true)}>Complete profile</button>
