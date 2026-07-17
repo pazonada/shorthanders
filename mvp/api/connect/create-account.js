@@ -5,6 +5,7 @@
 // Body: { licenseNumber, name, email }
 // Returns: { accountId, url }
 const Stripe = require("stripe");
+const { getSupabase } = require("../_supabase");
 
 module.exports = async (req, res) => {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
@@ -31,6 +32,16 @@ module.exports = async (req, res) => {
       },
       metadata: { csr_license: String(licenseNumber || "") },
     });
+
+    // Persist the reporter <-> Stripe account link so we remember who onboarded.
+    // No-ops when Supabase isn't configured yet.
+    const supabase = getSupabase();
+    if (supabase && licenseNumber) {
+      await supabase.from("reporters").upsert(
+        { csr_license: String(licenseNumber), name: name || null, email: email || null, stripe_account_id: account.id, updated_at: new Date().toISOString() },
+        { onConflict: "csr_license" }
+      );
+    }
 
     const link = await stripe.accountLinks.create({
       account: account.id,

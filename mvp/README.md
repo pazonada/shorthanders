@@ -122,11 +122,38 @@ when the backend isn't present**, so the local `npx serve` demo still works.
    `4242 4242 4242 4242`).
 5. Flip to live keys only when you're ready to take real money.
 
-### ⚠️ Before production — this scaffold is demo-grade
+## Supabase (Phase 1: persistence for the money path)
 
-It has **no database or auth yet**. It passes the Stripe account id back through
-the return URL rather than persisting it, and invoices/claims live in in-memory
-mock state. For production you need: a datastore mapping each reporter to their
-Stripe account + invoices, real sign-in, and a Stripe **webhook**
-(`account.updated`, `checkout.session.completed`, add `STRIPE_WEBHOOK_SECRET`).
-This is the "bring in an engineer" milestone.
+The 5,705 **unclaimed** CSR records stay static in `csr_profiles.js`. Supabase
+only holds what users create: claimed profiles, Stripe accounts, invoices, and
+messages. `supabase/schema.sql` defines it.
+
+The serverless functions use the **service role** key and degrade gracefully —
+without Supabase env set, Stripe still works, it just doesn't persist.
+
+| File | Uses Supabase for |
+|---|---|
+| `api/connect/create-account.js` | Upsert reporter ↔ Stripe account on onboarding |
+| `api/pay/create-payment-link.js` | Record the invoice as "sent" with its payment link |
+| `api/stripe-webhook.js` | `account.updated` → payout flags; payment success → mark invoice paid |
+
+### Setup
+
+1. In Supabase: create a project → SQL editor → paste and run `supabase/schema.sql`.
+2. Project Settings → API: copy the **Project URL** and the **service_role** key.
+3. In Vercel env vars, set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
+   (plus the Stripe vars above).
+4. In Stripe → Developers → Webhooks, add an endpoint pointing at
+   `https://<your-vercel-url>/api/stripe-webhook`, subscribe to
+   `account.updated`, `payment_intent.succeeded`, `checkout.session.completed`,
+   and set `STRIPE_WEBHOOK_SECRET`.
+5. Redeploy. The webhook needs a live test (the raw-body signature check can't be
+   exercised locally) — fire a test event from the Stripe dashboard to confirm.
+
+### Phase 2 (next) — frontend auth + real data
+
+Still to do to make the app fully real: add the `@supabase/supabase-js` browser
+client (anon key) for **sign-in** (reporters + firms via Supabase Auth), and swap
+the in-memory mock store for real reads/writes (claimed profiles, invoices,
+messages, saved reporters). The RLS policies in the schema are written for that
+client. This is the larger build and the natural "bring in an engineer" point.

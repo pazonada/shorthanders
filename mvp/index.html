@@ -3946,7 +3946,7 @@ function InvoiceDetail({ inv, onBack, onSend }) {
       const resp = await fetch("api/pay/create-payment-link", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: inv.amount, description: inv.desc, matter: inv.matter }),
+        body: JSON.stringify({ invoiceId: inv.id, client: inv.client, amount: inv.amount, description: inv.desc, matter: inv.matter }),
       });
       if (resp.ok) { const d = await resp.json(); if (d && d.url) setPayLink(d.url); }
     } catch (e) { /* keep demo link */ }

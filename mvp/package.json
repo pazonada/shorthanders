@@ -4,6 +4,7 @@
   "private": true,
   "description": "Dewey Sholes reduced-scope MVP — static directory + Stripe serverless functions",
   "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
     "stripe": "^16.12.0"
   }
 }

@@ -4,6 +4,7 @@
 // Body: { amount, description, matter, connectedAccountId? }
 // Returns: { url }
 const Stripe = require("stripe");
+const { getSupabase } = require("../_supabase");
 
 module.exports = async (req, res) => {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
@@ -12,7 +13,7 @@ module.exports = async (req, res) => {
   const stripe = Stripe(key);
 
   try {
-    const { amount, description, matter, connectedAccountId } = req.body || {};
+    const { amount, description, matter, client, invoiceId, connectedAccountId } = req.body || {};
     const cents = Math.round(Number(amount) * 100);
     if (!cents || cents < 50) return res.status(400).json({ error: "invalid amount" });
 
@@ -25,6 +26,9 @@ module.exports = async (req, res) => {
     const params = {
       line_items: [{ price: price.id, quantity: 1 }],
       payment_method_types: ["card", "us_bank_account"],
+      // The webhook uses this to mark the invoice paid.
+      metadata: { invoice_id: invoiceId || "" },
+      payment_intent_data: { metadata: { invoice_id: invoiceId || "" } },
     };
     // If we know the reporter's connected account, route the funds to them
     // (destination charge). Requires the account to have completed onboarding.
@@ -34,6 +38,17 @@ module.exports = async (req, res) => {
     }
 
     const link = await stripe.paymentLinks.create(params);
+
+    // Record the invoice as "sent" with its payment link (no-op without Supabase).
+    const supabase = getSupabase();
+    if (supabase && invoiceId) {
+      await supabase.from("invoices").upsert(
+        { id: invoiceId, client: client || null, matter: matter || null, description: description || null,
+          amount_cents: cents, status: "sent", stripe_payment_link_id: link.id, stripe_payment_link_url: link.url },
+        { onConflict: "id" }
+      );
+    }
+
     res.status(200).json({ url: link.url });
   } catch (e) {
     res.status(500).json({ error: e.message });
