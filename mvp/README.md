@@ -58,19 +58,75 @@ Keep JSX comments single-line ASCII, and use string concatenation (not template
 literals) inside JSX ternaries — the in-browser Babel transformer mishandles both.
 Use en-dashes (–), never em-dashes (—), in all copy.
 
-## Deploying to a NEW Vercel URL
+## Per-reporter claim deep links (for outreach)
 
-The goal is a separate URL from the live site, so both prototypes stay reachable.
-Because Vercel can't be configured from here, do this once in the Vercel dashboard:
+Every active CSR gets a one-click claim link:
+
+```
+<base>/#/claim/<licenseNumber>
+```
+
+e.g. `https://deweysholes-mvp.vercel.app/#/claim/11964` drops that reporter
+straight onto their "Is this you?" confirmation, skipping the lookup. The
+`csr_active_directory.csv` already has a **Claim URL** column for mail merge —
+regenerate it with your real domain:
+
+```bash
+DS_CLAIM_BASE=https://your-real-url.vercel.app python3 data/build_spreadsheet.py
+```
+
+Links to already-claimed profiles show a "already claimed / sign in" screen;
+unknown license numbers show a "find my profile" fallback.
+
+## Deploying to a NEW Vercel URL (clean link)
+
+A separate Vercel project keeps this MVP on its own URL while the original
+full-vision prototype (root `index.html`) stays on its current URL. One-time
+setup in the Vercel dashboard:
 
 1. **New Project** → import the same GitHub repo (`pazonada/dewey-sholes`).
-2. Set **Root Directory** to `mvp`.
-3. Framework preset: **Other** (no build step — it's static). Leave build/output empty.
-4. Deploy. Vercel serves `mvp/index.html` at the new project's URL, with
-   `mvp/csr_profiles.js` resolved alongside it.
+2. **Root Directory** → `mvp`.
+3. Framework preset: **Other**. No build command; Vercel serves `index.html`
+   statically and auto-detects the `api/` folder as serverless functions.
+4. Add environment variables (see Stripe below) — start with **test** keys.
+5. Deploy. The app is served at the project root (a clean `…/` URL, no `/mvp/`
+   path and no trailing-slash issue), with the `api/*` endpoints live.
 
-The existing project (root `index.html`) is unaffected and keeps its current URL.
+`vercel.json` sets `index.html` to revalidate on every load, so a redeploy is
+never masked by a stale cache. `node_modules`, `.env*`, and `crb_all_raw.json`
+are git-ignored.
 
-> Tip: `src/`, `build.sh`, and `prd-v1.rtf` will also be uploaded but are never
-> linked from the page. If you'd rather not serve them, add a `.vercelignore`
-> in `mvp/` listing `src`, `build.sh`, and `prd-v1.rtf`.
+## Stripe integration (test-mode scaffold)
+
+Real Stripe Connect can't run purely client-side — secret keys must live on a
+server. This repo adds Vercel **serverless functions** (`api/`) for it:
+
+| Endpoint | Purpose |
+|---|---|
+| `POST /api/connect/create-account` | Create a reporter's Stripe Connect Express account + hosted onboarding link |
+| `GET /api/connect/status` | Check whether onboarding is complete |
+| `POST /api/pay/create-payment-link` | Create a card + ACH payment link for an invoice |
+| `GET /api/health` | Reports whether a Stripe key is configured |
+
+The frontend calls these when deployed and **falls back to the simulated flow
+when the backend isn't present**, so the local `npx serve` demo still works.
+
+### Go-live checklist (test mode)
+
+1. Create a Stripe account; grab your **test** secret key (`sk_test_…`).
+2. In Vercel → Project → Settings → Environment Variables, set
+   `STRIPE_SECRET_KEY`. (See `.env.example`.)
+3. In Stripe → Connect settings, enable **Express** accounts.
+4. Redeploy. Now "Continue to Stripe" in the claim flow does real onboarding,
+   and "Send invoice" creates a real test payment link (pay with test card
+   `4242 4242 4242 4242`).
+5. Flip to live keys only when you're ready to take real money.
+
+### ⚠️ Before production — this scaffold is demo-grade
+
+It has **no database or auth yet**. It passes the Stripe account id back through
+the return URL rather than persisting it, and invoices/claims live in in-memory
+mock state. For production you need: a datastore mapping each reporter to their
+Stripe account + invoices, real sign-in, and a Stripe **webhook**
+(`account.updated`, `checkout.session.completed`, add `STRIPE_WEBHOOK_SECRET`).
+This is the "bring in an engineer" milestone.

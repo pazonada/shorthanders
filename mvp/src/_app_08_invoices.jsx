@@ -84,7 +84,21 @@ function InvoiceCreator({ onCancel, onCreated }) {
 function InvoiceDetail({ inv, onBack, onSend }) {
   const [sent, setSent] = useState(inv.status !== "draft");
   const [copied, setCopied] = useState(false);
-  const payLink = "https://pay.deweysholes.com/i/" + inv.id.toLowerCase();
+  const [payLink, setPayLink] = useState("https://pay.deweysholes.com/i/" + inv.id.toLowerCase());
+
+  // Real Stripe payment link when the backend is deployed; otherwise keep the
+  // demo link so the local prototype still works.
+  const sendInvoice = async () => {
+    try {
+      const resp = await fetch("api/pay/create-payment-link", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: inv.amount, description: inv.desc, matter: inv.matter }),
+      });
+      if (resp.ok) { const d = await resp.json(); if (d && d.url) setPayLink(d.url); }
+    } catch (e) { /* keep demo link */ }
+    setSent(true); if (onSend) onSend();
+  };
   return (
     <div style={{ maxWidth: 680 }}>
       <button onClick={onBack} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 18 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
@@ -112,7 +126,7 @@ function InvoiceDetail({ inv, onBack, onSend }) {
           </div>
         ) : (
           <div style={{ display: "flex", gap: 12 }}>
-            <button className="btn btn-primary" onClick={() => { setSent(true); onSend && onSend(); }}><Icon name="mail" size={16} /> Send invoice by email</button>
+            <button className="btn btn-primary" onClick={sendInvoice}><Icon name="mail" size={16} /> Send invoice by email</button>
             <button className="btn btn-secondary" onClick={onBack}>Save as draft</button>
           </div>
         )}

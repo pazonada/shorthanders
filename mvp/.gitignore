@@ -1,0 +1,5 @@
+node_modules/
+.vercel
+.env
+.env.local
+crb_all_raw.json

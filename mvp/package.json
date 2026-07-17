@@ -1,0 +1,9 @@
+{
+  "name": "dewey-sholes-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Dewey Sholes reduced-scope MVP — static directory + Stripe serverless functions",
+  "dependencies": {
+    "stripe": "^16.12.0"
+  }
+}

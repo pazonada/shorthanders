@@ -7,6 +7,8 @@ REPO = "/Users/audubondougherty/Desktop/AI_experiments/dewey-sholes"
 rows = json.load(open(os.path.join(HERE, "crb_all_raw.json")))
 
 ACTIVE = {"Active", "Active (Pending Renewal)"}
+# Base URL of the deployed MVP. Override with:  DS_CLAIM_BASE=https://your-url.vercel.app python3 build_spreadsheet.py
+CLAIM_BASE = os.environ.get("DS_CLAIM_BASE", "https://deweysholes-mvp.vercel.app").rstrip("/")
 
 def titlecase(s):
     if not s:
@@ -50,6 +52,7 @@ COLS = [
     ("Certification Method", lambda r: r.get("CertificationMethod") or ""),
     ("Original License Date", lambda r: only_date(r.get("OriginalLicenseDate"))),
     ("Expiration Date", lambda r: only_date(r.get("LicenseExpirationDate"))),
+    ("Claim URL", lambda r: CLAIM_BASE + "/#/claim/" + str(r.get("LicenseNumber") or "")),
 ]
 
 with open(out_csv, "w", newline="") as f:

@@ -18,6 +18,8 @@ function DashLayout({ title, subtitle, tabs, active, onTab, children }) {
 function ReporterDashboard() {
   const store = useStore();
   const [tab, setTab] = useState("overview");
+  // Returning from real Stripe onboarding lands here — treat the reporter as signed in.
+  useEffect(() => { if (window.location.hash.indexOf("stripe=connected") !== -1 && store.role !== "reporter") store.enterAsReporter(); }, []);
   const me = useMemo(() => { const all = buildDirectory(); return all.find((x) => x.id === store.myCsr) || all.find((x) => x.claimed); }, [store.myCsr]);
   const invoices = store.invoices;
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);

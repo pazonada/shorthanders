@@ -92,6 +92,23 @@ function ClaimMatch({ r }) {
   );
 }
 
+function AlreadyClaimed({ r }) {
+  const store = useStore();
+  return (
+    <Page>
+      <div className="ds-card" style={{ maxWidth: 520, margin: "20px auto", textAlign: "center" }}>
+        <Avatar name={r.name} size={64} />
+        <h1 style={{ fontSize: 28, marginTop: 16 }}>This profile is already claimed</h1>
+        <p style={{ color: "var(--ink-soft)", marginTop: 10, lineHeight: 1.6 }}>{r.name} (CSR #{r.csrNumber}) has already been claimed. If this is you, sign in to manage it. If you think someone claimed your profile in error, contact support.</p>
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 22, flexWrap: "wrap" }}>
+          <button className="btn btn-primary" onClick={() => { store.enterAsReporter(); navigate("/reporter"); }}>Sign in</button>
+          <button className="btn btn-secondary" onClick={() => navigate("/reporters/" + r.id)}>View the profile</button>
+        </div>
+      </div>
+    </Page>
+  );
+}
+
 // ═══ Profile claiming flow ═════════════════════════════════════════
 function ClaimFlow({ reporterId }) {
   const store = useStore();
@@ -101,12 +118,39 @@ function ClaimFlow({ reporterId }) {
   const [stripeState, setStripeState] = useState("idle"); // idle | connecting | done
   const [form, setForm] = useState({ bio: "", yearsExp: "", rate: "", rush: false, work: [], languages: [], coverage: "" });
 
-  if (!r) return <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60 }}><h2>Profile not found</h2></div></Page>;
+  if (!r) return (
+    <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60, maxWidth: 520, margin: "0 auto" }}>
+      <h2 style={{ fontSize: 26 }}>We couldn't find that license</h2>
+      <p style={{ color: "var(--muted)", marginTop: 10 }}>This link may be for a license number that isn't in our active directory. Look yourself up instead.</p>
+      <button className="btn btn-primary" style={{ marginTop: 20 }} onClick={() => navigate("/claim")}><Icon name="search" size={16} /> Find my profile</button>
+    </div></Page>
+  );
+  if (r.claimed) return <AlreadyClaimed r={r} />;
 
   const steps = ["Confirm identity", "Create account", "Verify via Stripe", "Build your profile"];
   const toggle = (key, val) => setForm((f) => ({ ...f, [key]: f[key].includes(val) ? f[key].filter((x) => x !== val) : [...f[key], val] }));
 
   const finish = () => { store.enterAsReporter(); navigate("/reporter"); };
+
+  // Real Stripe Connect onboarding when the backend is deployed; otherwise the
+  // prototype simulates it so the local demo keeps working.
+  const beginStripe = async () => {
+    setStripeState("connecting");
+    try {
+      const resp = await fetch("api/connect/create-account", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ licenseNumber: r.csrNumber, name: r.name, email: r.email }),
+      });
+      if (resp.ok) {
+        const d = await resp.json();
+        if (d && d.url) { window.location.href = d.url; return; }
+      }
+      throw new Error("no stripe backend");
+    } catch (e) {
+      setTimeout(() => setStripeState("done"), 1200); // demo fallback
+    }
+  };
 
   return (
     <Page>
@@ -175,7 +219,7 @@ function ClaimFlow({ reporterId }) {
                 <div className="banner banner-ok"><Icon name="check" size={18} style={{ flexShrink: 0 }} /><div><strong>Identity verified.</strong> Your payout account is connected. You can start invoicing right away.</div></div>
               ) : (
                 <button className="btn btn-primary" style={{ justifyContent: "center", background: "#635BFF" }} disabled={stripeState === "connecting"}
-                  onClick={() => { setStripeState("connecting"); setTimeout(() => setStripeState("done"), 1400); }}>
+                  onClick={beginStripe}>
                   {stripeState === "connecting" ? "Redirecting to Stripe…" : <>Continue to Stripe <Icon name="arrow" size={16} /></>}
                 </button>
               )}
