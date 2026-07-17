@@ -7,7 +7,8 @@ function LandingPage() {
     <>
       <Nav />
       {/* hero */}
-      <section style={{ background: "linear-gradient(180deg, var(--periwinkle-soft) 0%, var(--bg) 70%)" }}>
+      <section className="mvp-hero" style={{ background: "linear-gradient(180deg, var(--periwinkle-soft) 0%, var(--bg) 70%)" }}>
+        <img src="graphics/hp-text-grey.png" alt="" aria-hidden="true" className="mvp-hero-shorthand" />
         <div className="container" style={{ padding: "72px 24px 60px", textAlign: "center", maxWidth: 880 }}>
           <span className="pill pill-tag" style={{ marginBottom: 20, display: "inline-flex" }}>{total.toLocaleString()} California court reporters, one directory</span>
           <h1 style={{ fontSize: "clamp(38px, 6vw, 66px)", lineHeight: 1.04 }}>Find an independent court reporter. <em>Skip the agency.</em></h1>

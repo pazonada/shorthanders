@@ -2630,6 +2630,18 @@
   .banner-info { background: var(--brand-soft); border: 1px solid var(--brand-pale); color: var(--ink-soft); }
   .banner-warn { background: var(--ochre-soft); border: 1px solid #E8D3A8; color: var(--ochre-deep); }
   .banner-ok { background: var(--sage-soft); border: 1px solid #C5D8C2; color: var(--sage-deep); }
+
+  /* decorative shorthand that blends into the hero background (ported from the original site) */
+  .mvp-hero { position: relative; overflow: hidden; }
+  .mvp-hero > .container { position: relative; z-index: 1; }
+  .mvp-hero-shorthand {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 150%; max-width: 1120px; height: auto; opacity: 0.11;
+    pointer-events: none; z-index: 0; user-select: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 82%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 82%, transparent 100%);
+  }
+  @media (max-width: 720px) { .mvp-hero-shorthand { opacity: 0.08; width: 210%; } }
 </style>
 </head>
 <body>
@@ -2930,7 +2942,8 @@ function LandingPage() {
     <>
       <Nav />
       {/* hero */}
-      <section style={{ background: "linear-gradient(180deg, var(--periwinkle-soft) 0%, var(--bg) 70%)" }}>
+      <section className="mvp-hero" style={{ background: "linear-gradient(180deg, var(--periwinkle-soft) 0%, var(--bg) 70%)" }}>
+        <img src="graphics/hp-text-grey.png" alt="" aria-hidden="true" className="mvp-hero-shorthand" />
         <div className="container" style={{ padding: "72px 24px 60px", textAlign: "center", maxWidth: 880 }}>
           <span className="pill pill-tag" style={{ marginBottom: 20, display: "inline-flex" }}>{total.toLocaleString()} California court reporters, one directory</span>
           <h1 style={{ fontSize: "clamp(38px, 6vw, 66px)", lineHeight: 1.04 }}>Find an independent court reporter. <em>Skip the agency.</em></h1>
