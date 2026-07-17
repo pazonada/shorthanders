@@ -11,7 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
-<script src="csr_profiles.js"></script>
+<script src="csr_profiles.js?v=2-active"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -2777,13 +2777,17 @@ function buildDirectory() {
   const roll = (typeof CSR_PROFILES !== "undefined") ? CSR_PROFILES : [];
   return roll.map((r) => {
     const overlay = CLAIMED[r.csrNumber];
-    const county = countyFor(r.city);
+    // County now comes straight from the CRB data; fall back to the city map
+    // only for the handful of records with a blank/unmapped county.
+    const county = r.county || countyFor(r.city) || null;
     return {
       id: r.csrNumber,
       csrNumber: r.csrNumber,
       name: r.name,
       city: r.city,
       county: county,
+      zip: r.zip || "",
+      email: r.email || "",
       expiration: r.expiration,
       claimed: !!overlay,
       ...(overlay || {}),
@@ -3418,9 +3422,10 @@ function UnclaimedProfile({ r }) {
           <dl style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "10px 20px", fontSize: 15 }}>
             <dt style={{ color: "var(--muted)" }}>License</dt><dd style={{ color: "var(--ink)" }}>CSR #{r.csrNumber}</dd>
             <dt style={{ color: "var(--muted)" }}>Location</dt><dd style={{ color: "var(--ink)" }}>{r.city}{r.county ? ", " + r.county + " County" : ""}, CA</dd>
+            {r.email ? <><dt style={{ color: "var(--muted)" }}>Public email</dt><dd><a href={"mailto:" + r.email} style={{ color: "var(--brand-dark)", textDecoration: "none" }}>{r.email}</a></dd></> : null}
             <dt style={{ color: "var(--muted)" }}>License status</dt><dd style={{ color: "var(--ink)" }}>Active · expires {r.expiration}</dd>
           </dl>
-          <p style={{ fontSize: 13.5, color: "var(--dim)", marginTop: 16, lineHeight: 1.5 }}>This is a public record imported from California's CSR licensing data. Specialties, coverage, and contact details appear once the reporter claims and completes their profile.</p>
+          <p style={{ fontSize: 13.5, color: "var(--dim)", marginTop: 16, lineHeight: 1.5 }}>Name, license, county, and any public email are from California's CSR licensing records. A bio, specialties, coverage, and rates appear once the reporter claims and completes their profile.</p>
         </div>
 
         <div className="banner banner-ok" style={{ marginTop: 20 }}>

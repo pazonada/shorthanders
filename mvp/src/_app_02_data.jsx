@@ -27,13 +27,17 @@ function buildDirectory() {
   const roll = (typeof CSR_PROFILES !== "undefined") ? CSR_PROFILES : [];
   return roll.map((r) => {
     const overlay = CLAIMED[r.csrNumber];
-    const county = countyFor(r.city);
+    // County now comes straight from the CRB data; fall back to the city map
+    // only for the handful of records with a blank/unmapped county.
+    const county = r.county || countyFor(r.city) || null;
     return {
       id: r.csrNumber,
       csrNumber: r.csrNumber,
       name: r.name,
       city: r.city,
       county: county,
+      zip: r.zip || "",
+      email: r.email || "",
       expiration: r.expiration,
       claimed: !!overlay,
       ...(overlay || {}),

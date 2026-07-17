@@ -35,8 +35,15 @@ Revenue model shown is **Option A**: firms pay a monthly subscription; reporters
 
 ## Try it locally
 
-The repo dev server (`npx serve`) serves the repo root, so open:
-`http://localhost:8080/mvp/index.html`
+The repo dev server (`npx serve`) serves the repo root, so open (note the
+**trailing slash** — without it, `csr_profiles.js` resolves against the repo root
+and loads the wrong file; on Vercel with root `mvp/` this isn't an issue):
+`http://localhost:8080/mvp/`
+
+The directory runs on `csr_profiles.js` — 5,705 active CSRs with county + public
+email, generated from the CRB pull (see `data/generate_profiles.py`). The script
+tag is versioned (`csr_profiles.js?v=…`); bump the version when you regenerate to
+bust browser caches.
 
 Use the **Log in** menu (top right) to jump in as a demo reporter (Adam Elwailly,
 CSR #14585) or a demo firm (Morgan & Reyes LLP). All state is in-memory mock data.
