@@ -69,7 +69,7 @@ function Footer() {
           </div>
           <div style={{ display: "flex", gap: 56, flexWrap: "wrap" }}>
             {col("Find reporters", [["/directory", "Search directory"], ["/for-firms", "For law firms"], ["/pricing", "Pricing"]])}
-            {col("For reporters", [["/for-reporters", "Claim your profile"], ["/for-reporters", "Invoicing & payments"], ["/pricing", "Always free"]])}
+            {col("For reporters", [["/claim", "Claim your profile"], ["/for-reporters", "Invoicing & payments"], ["/pricing", "Always free"]])}
             {col("Company", [["/about", "About"], ["/terms", "Terms of service"], ["/privacy", "Privacy"], ["/contact", "Contact"]])}
           </div>
         </div>

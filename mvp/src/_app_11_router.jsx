@@ -100,6 +100,7 @@ function StoreProvider({ children }) {
 // ═══ Router ════════════════════════════════════════════════════════
 function AppRouter() {
   const route = useRoute();
+  if (route === "#/claim" || route === "#/claim/") return <ClaimStart />;
   const claim = route.match(/^#\/claim\/(.+)$/);
   if (claim) return <ClaimFlow reporterId={decodeURIComponent(claim[1])} />;
   const rp = route.match(/^#\/reporters\/(.+)$/);

@@ -1,3 +1,97 @@
+// ═══ Claim front door: a reporter shows up and finds their record ══
+const claimLinkBtn = { background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, cursor: "pointer", padding: 0, fontSize: "inherit" };
+
+function ClaimStart() {
+  const all = useMemo(() => buildDirectory(), []);
+  const [mode, setMode] = useState("license");  // license | name
+  const [q, setQ] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const results = useMemo(() => {
+    if (!submitted) return null;
+    const needle = q.trim().toLowerCase();
+    if (!needle) return [];
+    if (mode === "license") {
+      const digits = needle.replace(/\D/g, "");
+      return digits ? all.filter((r) => r.csrNumber === digits) : [];
+    }
+    return all.filter((r) => r.name.toLowerCase().includes(needle)).slice(0, 15);
+  }, [submitted, q, mode, all]);
+
+  const run = () => setSubmitted(true);
+
+  return (
+    <Page>
+      <div style={{ maxWidth: 640, margin: "0 auto" }}>
+        <div style={{ textAlign: "center" }}>
+          <span className="pill pill-tag" style={{ marginBottom: 14, display: "inline-flex" }}>Free for reporters, forever</span>
+          <h1 style={{ fontSize: "clamp(30px, 4vw, 46px)" }}>Claim your profile</h1>
+          <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 14, lineHeight: 1.6 }}>
+            You're already listed – every licensed California CSR is. Find your record to control how firms see you, then start invoicing and getting paid. It takes about three minutes.
+          </p>
+        </div>
+
+        <div className="ds-card" style={{ marginTop: 26 }}>
+          <div className="ds-tabs" style={{ marginBottom: 18 }}>
+            <button className={"ds-tab" + (mode === "license" ? " on" : "")} onClick={() => { setMode("license"); setSubmitted(false); }}>By license number</button>
+            <button className={"ds-tab" + (mode === "name" ? " on" : "")} onClick={() => { setMode("name"); setSubmitted(false); }}>By name</button>
+          </div>
+          <label className="ds-label">{mode === "license" ? "Your CSR license number" : "Your name"}</label>
+          <div style={{ display: "flex", gap: 10 }}>
+            <input className="ds-input" placeholder={mode === "license" ? "e.g. 14585" : "e.g. Adam Elwailly"} value={q}
+              onChange={(e) => { setQ(e.target.value); setSubmitted(false); }}
+              onKeyDown={(e) => { if (e.key === "Enter") run(); }} />
+            <button className="btn btn-primary" style={{ whiteSpace: "nowrap" }} onClick={run}><Icon name="search" size={16} /> Find me</button>
+          </div>
+          <p style={{ fontSize: 12.5, color: "var(--dim)", marginTop: 10 }}>Don't know your number? <button onClick={() => navigate("/directory")} style={claimLinkBtn}>Browse the full directory</button> instead.</p>
+        </div>
+
+        {results && (
+          <div style={{ marginTop: 22 }}>
+            {results.length === 0 ? (
+              <div className="ds-panel" style={{ textAlign: "center", padding: 32 }}>
+                <p style={{ color: "var(--muted)" }}>No active CSR found for that {mode === "license" ? "license number" : "name"}. Double-check it, or <button onClick={() => navigate("/directory")} style={claimLinkBtn}>browse the directory</button>.</p>
+              </div>
+            ) : (
+              <>
+                <div style={{ fontSize: 13, color: "var(--muted)", marginBottom: 12 }}>{results.length === 1 ? "Is this you?" : "Pick your record:"}</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>{results.map((r) => <ClaimMatch key={r.id} r={r} />)}</div>
+              </>
+            )}
+          </div>
+        )}
+
+        <div style={{ display: "flex", gap: 22, justifyContent: "center", marginTop: 30, flexWrap: "wrap", fontSize: 13, color: "var(--muted)" }}>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="dollar" size={14} /> Free forever</span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="shield" size={14} /> Verify once with Stripe</span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="eye" size={14} /> You control your listing</span>
+        </div>
+      </div>
+    </Page>
+  );
+}
+
+function ClaimMatch({ r }) {
+  const store = useStore();
+  return (
+    <div className="ds-card" style={{ display: "flex", alignItems: "center", gap: 16, padding: 18 }}>
+      <Avatar name={r.name} size={48} claimed={r.claimed} />
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 20, lineHeight: 1.1 }}>{r.name}</div>
+        <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>CSR #{r.csrNumber} · {r.city}{r.county ? ", " + r.county + " County" : ""}</div>
+      </div>
+      {r.claimed ? (
+        <div style={{ textAlign: "right", display: "flex", flexDirection: "column", gap: 6, alignItems: "flex-end" }}>
+          <span className="pill pill-claimed"><Icon name="check" size={13} /> Already claimed</span>
+          <button onClick={() => { store.enterAsReporter(); navigate("/reporter"); }} style={claimLinkBtn}>Is this you? Sign in</button>
+        </div>
+      ) : (
+        <button className="btn btn-primary" style={{ whiteSpace: "nowrap" }} onClick={() => navigate("/claim/" + r.id)}>This is me <Icon name="arrow" size={16} /></button>
+      )}
+    </div>
+  );
+}
+
 // ═══ Profile claiming flow ═════════════════════════════════════════
 function ClaimFlow({ reporterId }) {
   const store = useStore();

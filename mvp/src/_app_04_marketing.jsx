@@ -17,7 +17,7 @@ function LandingPage() {
           </p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", marginTop: 34, flexWrap: "wrap" }}>
             <button className="btn btn-primary" onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
-            <button className="btn btn-secondary" onClick={() => navigate("/for-reporters")}>Claim your profile</button>
+            <button className="btn btn-secondary" onClick={() => navigate("/claim")}>Claim your profile</button>
           </div>
           <div style={{ marginTop: 22, fontSize: 13, color: "var(--muted)", display: "flex", gap: 20, justifyContent: "center", flexWrap: "wrap" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="shield" size={14} /> Verified via Stripe identity</span>
@@ -35,7 +35,7 @@ function LandingPage() {
             cta={["Browse the directory", "/directory"]} />
           <ValueCard icon="user" tone="sage" eyebrow="For court reporters" title="Run your business from one place"
             points={["Claim a professional profile firms can actually find", "Send invoices and collect card or ACH payments via Stripe", "Track what's paid, sent, and overdue – no agency cut, ever"]}
-            cta={["Claim your free profile", "/for-reporters"]} />
+            cta={["Claim your free profile", "/claim"]} />
         </div>
       </section>
 
@@ -154,9 +154,9 @@ function ForReportersPage() {
       </div>
       <div style={{ background: "var(--sage-soft)", border: "1px solid #C5D8C2", borderRadius: 18, padding: 32, marginTop: 40, textAlign: "center" }}>
         <h3 style={{ fontSize: 26, color: "var(--sage-deep)" }}>Find your profile and claim it</h3>
-        <p style={{ color: "var(--ink-soft)", marginTop: 10, maxWidth: 560, margin: "10px auto 0" }}>Search your name or license number in the directory. If it's not claimed yet, you'll see a “Claim this profile” button.</p>
+        <p style={{ color: "var(--ink-soft)", marginTop: 10, maxWidth: 560, margin: "10px auto 0" }}>Look yourself up by license number or name, confirm it's you, and create your account. Three minutes, start to finish.</p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 22, flexWrap: "wrap" }}>
-          <button className="btn btn-primary" onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Find my profile</button>
+          <button className="btn btn-primary" onClick={() => navigate("/claim")}><Icon name="user" size={16} /> Claim my profile</button>
           {store.role !== "reporter" && <button className="btn btn-secondary" onClick={() => { store.enterAsReporter(); navigate("/reporter"); }}>See a demo dashboard</button>}
         </div>
       </div>
@@ -203,7 +203,7 @@ function PricingPage() {
         <PriceCard tone="sage" name="Court reporters" price="$0" unit="always free"
           blurb="Claim your profile, get discovered, invoice clients, and collect payments."
           features={["Claimed public profile", "Stripe identity verification", "Unlimited invoices & payments", "Direct messages from firms", "Payment tracking dashboard"]}
-          cta={["Claim your profile", "/for-reporters"]} note="Standard Stripe processing fees apply to payments you collect." />
+          cta={["Claim your profile", "/claim"]} note="Standard Stripe processing fees apply to payments you collect." />
         <PriceCard tone="brand" featured name="Law firms" price="$149" unit="/ month"
           blurb="Full search, verified profiles, and unlimited direct messaging for your whole team."
           features={["Advanced directory search & filters", "Unlimited direct messaging", "Saved reporters & shared lists", "Matter references on every invoice", "Pay invoices by card or ACH"]}
