@@ -109,6 +109,29 @@ Defer to **v1.1** (needs UI thought or data we don't have at launch):
    design carefully; today's free-text "rates" field is a fine placeholder.
 7. Affiliations, E&O, sample transcript, travel radius.
 
+## G. Payment regimes — work category determines *how you get paid*  ★ key insight
+
+A reporter's mix of work isn't just a specialty; it maps to distinct **payment models**.
+For a "get-paid" product this drives both a profile field *and* the invoicing tool's
+line-item structure. Roughly by how regulated:
+
+| Work category | Payment model | Regulated? |
+|---|---|---|
+| **Workers' comp depositions** | State DWC fee schedule (fixed per-page + appearance) | **Yes — regulated.** Standout case. |
+| Standard civil depositions | Market per-page, original + copies (O&1), + appearance | No — negotiated |
+| Court-audio / electronic transcription (no reporter on record) | Per page or per audio-hour; certified vs. uncertified differ | Partly |
+| Federal court transcripts | Judicial Conference fee schedule (ordinary/expedited/daily/realtime tiers) | Yes |
+| State official / appeal transcripts | Statutory per-page (Gov. Code) | Yes |
+| Realtime / daily / rough draft | Surcharge layered on any of the above | No |
+
+**Implications**
+- **Profile:** capture which regimes a reporter works in — especially a "does workers' comp"
+  flag — so firms self-select and reporters signal it.
+- **Invoicing:** the invoice builder's line items should differ by regime (WC follows its
+  schedule; standard depo is O&1 + appearance; audio transcription is per-page/per-audio-hour).
+  This is a real requirement for the money path, not a cosmetic tag.
+- Exact fee-schedule numbers (WC per-page cap, federal tiers) need **Rosie** to confirm current values.
+
 ## F. Open questions to validate (with Rosie + user testing)
 - Which *national* certs do CA firms actually recognize/care about vs. noise?
 - Is a structured rate builder worth the friction, or does free-text + "contact for quote"
