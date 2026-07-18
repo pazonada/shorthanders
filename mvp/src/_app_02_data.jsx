@@ -1,6 +1,6 @@
 // ─── Canonical work-type vocabulary ────────────────────────────────
 // "Workers' comp" is a payment-affecting category (own fee schedule / O&2 / minimum),
-// not just a specialty — see mvp/docs/csr_profile_field_taxonomy.md.
+// not just a specialty – see mvp/docs/csr_profile_field_taxonomy.md.
 const WORK_TYPES = ["Depositions", "Trial work", "Realtime", "Transcription", "Workers' comp", "Live appearances"];
 const LANGUAGES = ["Spanish", "Mandarin", "Cantonese", "Korean", "Vietnamese", "Tagalog", "ASL", "Russian", "Armenian", "Farsi"];
 
