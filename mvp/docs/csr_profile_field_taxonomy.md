@@ -132,7 +132,23 @@ line-item structure. Roughly by how regulated:
   This is a real requirement for the money path, not a cosmetic tag.
 - Exact fee-schedule numbers (WC per-page cap, federal tiers) need **Rosie** to confirm current values.
 
-## F. Open questions to validate (with Rosie + user testing)
+## H. Field notes from the Facebook dig (2026-07-17, "Rates Discussion" search)
+
+Real language reporters use (themes, not individuals) — validates the payment-regime idea:
+- **Workers' comp bills its own way:** reporters cite a WC **minimum transcript fee**, **O&2**
+  (original + 2 copies) as the default WC deliverable, and a distinct **"statement on the
+  record"** rate. So "does workers' comp" is a genuine payment-affecting flag, not a specialty.
+- **Standard rate shape confirmed:** `$X original / $Y copy per page + half-day / full-day
+  per diem`, with **copy upcharges** negotiated and capped by agencies.
+- **Agency cut ≈ 30%:** "their rates, and I keep 70%," and agencies bill clients different
+  hourly rates ($65 vs $85) for the same reporter — the exact markup DS removes. Good marketing proof.
+- **Method is identity-level and touchy:** a heated machine-vs-voice legitimacy thread.
+  Reinforces reporting **method** as a first-class, prefillable-from-license field.
+
+> Note: Rosie can't validate the CSR side — she's a family-law *buyer*, not a reporting-craft
+> expert. CSR-side taxonomy must come from reporters (user testing) + sources like these groups.
+
+## F. Open questions to validate (with reporters, via user testing)
 - Which *national* certs do CA firms actually recognize/care about vs. noise?
 - Is a structured rate builder worth the friction, or does free-text + "contact for quote"
   convert better? (The rates group's antitrust caution suggests reporters are wary of

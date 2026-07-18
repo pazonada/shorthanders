@@ -111,7 +111,7 @@ function ReporterDirectory() {
           <option value="15">15+ years</option>
           <option value="20">20+ years</option>
         </select>
-        {WORK_TYPES.slice(0, 4).map((w) => <button key={w} className={"chip-filter" + (work.includes(w) ? " on" : "")} onClick={() => toggleWork(w)}>{w}</button>)}
+        {WORK_TYPES.slice(0, 5).map((w) => <button key={w} className={"chip-filter" + (work.includes(w) ? " on" : "")} onClick={() => toggleWork(w)}>{w}</button>)}
         <button className={"chip-filter" + (rushOnly ? " on" : "")} onClick={() => { setRushOnly((v) => !v); setLimit(PAGE_SIZE); }}><Icon name="clock" size={13} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />Rush</button>
         <button className={"chip-filter" + (claimedOnly ? " on" : "")} onClick={() => { setClaimedOnly((v) => !v); setLimit(PAGE_SIZE); }}>Claimed only</button>
         {anyFilter ? <button className="chip-filter" style={{ color: "var(--brand-dark)", borderColor: "var(--brand-pale)" }} onClick={clearAll}>Clear all</button> : null}
