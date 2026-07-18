@@ -3868,11 +3868,13 @@ const INV_STATUS = { draft: ["inv-draft", "Draft"], sent: ["inv-sent", "Sent"], 
 function InvStatus({ status }) { const [cls, label] = INV_STATUS[status]; return <span className={"inv-status " + cls}>{label}</span>; }
 
 // Regime-aware starter templates (see mvp/docs/csr_profile_field_taxonomy.md).
+// Line-item STRUCTURE only – no prefilled rates. Dewey Sholes doesn't set rates;
+// reporters fill in their own.
 const INVOICE_TEMPLATES = [
   { id: "depo", name: "Standard deposition", hint: "Original + copies + appearance", lines: [
-    { desc: "Certified transcript, original (per page)", qty: "", rate: "4.75" },
-    { desc: "Copy (per page)", qty: "", rate: "2.00" },
-    { desc: "Appearance (half day)", qty: "1", rate: "250" },
+    { desc: "Certified transcript, original (per page)", qty: "", rate: "" },
+    { desc: "Copy (per page)", qty: "", rate: "" },
+    { desc: "Appearance (half day)", qty: "1", rate: "" },
   ] },
   { id: "wc", name: "Workers' comp", hint: "O&2, minimum, statement on the record", lines: [
     { desc: "Original + 2 copies (O&2), per page", qty: "", rate: "" },
@@ -3883,13 +3885,18 @@ const INVOICE_TEMPLATES = [
     { desc: "Transcription (per page)", qty: "", rate: "" },
     { desc: "Certification", qty: "1", rate: "" },
   ] },
-  { id: "realtime", name: "Realtime + rough", hint: "Realtime hourly + rough draft", lines: [
-    { desc: "Realtime hookup (hourly)", qty: "", rate: "" },
-    { desc: "Rough draft / ASCII", qty: "1", rate: "" },
-  ] },
   { id: "blank", name: "Blank invoice", hint: "Build your own from scratch", lines: [
     { desc: "", qty: "1", rate: "" },
   ] },
+];
+
+// Surcharges a reporter can layer onto ANY invoice with one tap.
+const INVOICE_ADDONS = [
+  "Realtime hookup (hourly)",
+  "Expedited / daily turnaround",
+  "Rough draft / ASCII",
+  "Travel",
+  "Waiting time",
 ];
 
 function ReporterInvoices() {
@@ -3972,12 +3979,15 @@ function TemplatePicker({ onCancel, onPick }) {
 let INV_SEQ = 1045;
 function InvoiceBuilder({ template, onCancel, onCreated }) {
   const store = useStore();
+  const me = useMemo(() => { const all = buildDirectory(); return all.find((x) => x.id === store.myCsr) || all.find((x) => x.claimed); }, [store.myCsr]);
   const [f, setF] = useState({ client: "", matter: "", date: "2026-07-17", due: "2026-07-31", notes: "" });
   const [lines, setLines] = useState((template.lines || [{ desc: "", qty: "1", rate: "" }]).map((l) => ({ ...l })));
+  const [preview, setPreview] = useState(false);
   const [toast, setToast] = useState("");
 
   const setLine = (i, k, v) => setLines((xs) => xs.map((l, j) => j === i ? { ...l, [k]: v } : l));
   const addLine = () => setLines((xs) => [...xs, { desc: "", qty: "1", rate: "" }]);
+  const addAddon = (desc) => setLines((xs) => [...xs, { desc, qty: "1", rate: "" }]);
   const removeLine = (i) => setLines((xs) => xs.length > 1 ? xs.filter((_, j) => j !== i) : xs);
   const lineAmt = (l) => (Number(l.qty) || 0) * (Number(l.rate) || 0);
   const total = lines.reduce((s, l) => s + lineAmt(l), 0);
@@ -3993,6 +4003,18 @@ function InvoiceBuilder({ template, onCancel, onCreated }) {
     date: f.date, due: f.due, amount: total, status: "draft", notes: f.notes,
     lineItems: lines.filter((l) => l.desc || lineAmt(l) > 0).map((l) => ({ desc: l.desc, qty: Number(l.qty) || 0, rate: Number(l.rate) || 0 })),
   });
+
+  if (preview) return (
+    <div style={{ maxWidth: 680 }}>
+      <button onClick={() => setPreview(false)} style={backLink}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to edit</button>
+      <div className="banner banner-info" style={{ marginBottom: 16 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div>This is how {f.client || "the firm"} will see your invoice.</div></div>
+      <InvoicePreviewCard me={me} f={f} lines={lines} total={total} />
+      <div style={{ display: "flex", gap: 12, marginTop: 18, flexWrap: "wrap" }}>
+        <button className="btn btn-primary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={create}><Icon name="check" size={16} /> Create draft</button>
+        <button className="btn btn-secondary" onClick={() => setPreview(false)}>Back to edit</button>
+      </div>
+    </div>
+  );
 
   return (
     <div style={{ maxWidth: 760 }}>
@@ -4031,17 +4053,68 @@ function InvoiceBuilder({ template, onCancel, onCreated }) {
           <button onClick={addLine} style={{ background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, cursor: "pointer", fontSize: 13.5, marginTop: 10, display: "inline-flex", alignItems: "center", gap: 5, padding: 0 }}><Icon name="plus" size={14} /> Add line</button>
         </div>
 
+        {/* surcharge add-ons */}
+        <div>
+          <label className="ds-label">Add a surcharge</label>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {INVOICE_ADDONS.map((a) => <button key={a} type="button" className="chip-filter" onClick={() => addAddon(a)}><Icon name="plus" size={13} style={{ display: "inline", verticalAlign: "-2px", marginRight: 3 }} />{a}</button>)}
+          </div>
+        </div>
+
         <div className="ds-panel" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span style={{ color: "var(--muted)", fontSize: 14 }}>Total due</span>
           <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)" }}>${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
         </div>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <button className="btn btn-primary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={create}>Create draft <Icon name="arrow" size={16} /></button>
+          <button className="btn btn-primary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={() => setPreview(true)}><Icon name="eye" size={16} /> Preview</button>
+          <button className="btn btn-secondary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={create}>Create draft</button>
           <button className="btn btn-secondary" onClick={saveTemplate}><Icon name="star" size={16} /> Save as my template</button>
           <button className="btn btn-secondary" onClick={onCancel}>Cancel</button>
         </div>
       </div>
       <Toast msg={toast} onClose={() => setToast("")} />
+    </div>
+  );
+}
+
+// The invoice as the firm receives it (approximates the Stripe hosted invoice / PDF).
+function InvoicePreviewCard({ me, f, lines, total }) {
+  const items = lines.filter((l) => l.desc || (Number(l.qty) || 0) * (Number(l.rate) || 0) > 0);
+  return (
+    <div className="ds-card" style={{ padding: 0, overflow: "hidden" }}>
+      <div style={{ padding: "26px 28px", borderBottom: "1px solid var(--rule)", display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 14 }}>
+        <div>
+          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)" }}>{me ? me.name : "Your name"}</div>
+          <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>Certified Shorthand Reporter{me ? " · CSR #" + me.csrNumber : ""}{me && me.city ? " · " + me.city + ", CA" : ""}</div>
+        </div>
+        <div style={{ textAlign: "right" }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".08em" }}>Invoice</div>
+          <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>Issued {f.date}</div>
+          <div style={{ fontSize: 13, color: "var(--muted)" }}>Due {f.due}</div>
+        </div>
+      </div>
+      <div style={{ padding: "20px 28px", borderBottom: "1px solid var(--rule)" }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 4 }}>Bill to</div>
+        <div style={{ fontSize: 15, color: "var(--ink)" }}>{f.client || "–"}</div>
+        {f.matter ? <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 2 }}>Matter: {f.matter}</div> : null}
+      </div>
+      <div style={{ overflowX: "auto" }}>
+        <table className="ds-table">
+          <thead><tr><th>Description</th><th style={{ textAlign: "right" }}>Qty</th><th style={{ textAlign: "right" }}>Rate</th><th style={{ textAlign: "right" }}>Amount</th></tr></thead>
+          <tbody>{items.map((l, i) => {
+            const amt = (Number(l.qty) || 0) * (Number(l.rate) || 0);
+            return <tr key={i}><td style={{ color: "var(--ink)" }}>{l.desc || "–"}</td><td style={{ textAlign: "right" }}>{Number(l.qty) || 0}</td><td style={{ textAlign: "right" }}>${(Number(l.rate) || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}</td><td style={{ textAlign: "right", fontWeight: 600, color: "var(--ink)" }}>${amt.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td></tr>;
+          })}</tbody>
+        </table>
+      </div>
+      <div style={{ padding: "18px 28px", display: "flex", justifyContent: "space-between", alignItems: "center", background: "var(--bg-soft)", borderTop: "1px solid var(--rule)" }}>
+        <span style={{ color: "var(--muted)", fontSize: 14 }}>Total due</span>
+        <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 28, color: "var(--ink)" }}>${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+      </div>
+      <div style={{ padding: "18px 28px 24px" }}>
+        <div className="btn btn-primary" style={{ width: "100%", justifyContent: "center", cursor: "default", pointerEvents: "none" }}><Icon name="lock" size={15} /> Pay by card or ACH</div>
+        <div style={{ fontSize: 11.5, color: "var(--dim)", textAlign: "center", marginTop: 10 }}>Secure payment via Stripe · powered by Dewey Sholes</div>
+      </div>
     </div>
   );
 }
