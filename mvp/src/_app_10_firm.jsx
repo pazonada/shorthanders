@@ -43,7 +43,7 @@ function FirmSubscription() {
         <div style={{ width: 48, height: 48, borderRadius: 12, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="building" size={24} /></div>
         <div style={{ flex: 1, minWidth: 220 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}><h3 style={{ fontSize: 20 }}>Firm plan</h3><span className="pill pill-claimed"><Icon name="check" size={13} /> Active</span></div>
-          <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>$149 / month · renews Aug 1, 2026 · Visa •••• 6411</div>
+          <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>Firm pricing announced before launch · billing set up at signup</div>
         </div>
         <button className="btn btn-secondary">Manage billing</button>
       </div>

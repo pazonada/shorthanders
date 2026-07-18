@@ -204,10 +204,10 @@ function PricingPage() {
           blurb="Claim your profile, get discovered, invoice clients, and collect payments."
           features={["Claimed public profile", "Stripe identity verification", "Unlimited invoices & payments", "Direct messages from firms", "Payment tracking dashboard"]}
           cta={["Claim your profile", "/claim"]} note="Standard Stripe processing fees apply to payments you collect." />
-        <PriceCard tone="brand" featured name="Law firms" price="$149" unit="/ month"
+        <PriceCard tone="brand" featured name="Law firms" price="Pricing coming soon" unit=""
           blurb="Full search, verified profiles, and unlimited direct messaging for your whole team."
           features={["Advanced directory search & filters", "Unlimited direct messaging", "Saved reporters & shared lists", "Matter references on every invoice", "Pay invoices by card or ACH"]}
-          cta={["Start a firm account", "/firm"]} note="Browsing the directory is always free. Subscription unlocks messaging & advanced search." />
+          cta={["Start a firm account", "/firm"]} note="Browsing the directory is always free. We'll set firm pricing before launch." />
       </div>
       <div className="ds-panel" style={{ maxWidth: 860, margin: "32px auto 0", textAlign: "center" }}>
         <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.6 }}>
@@ -225,7 +225,7 @@ function PriceCard({ tone, featured, name, price, unit, blurb, features, cta, no
       <div>
         <div style={{ fontSize: 14, fontWeight: 700, color: fg, textTransform: "uppercase", letterSpacing: ".04em" }}>{name}</div>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 10 }}>
-          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 48, color: "var(--ink)" }}>{price}</span>
+          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: price[0] === "$" ? 48 : 30, color: "var(--ink)" }}>{price}</span>
           <span style={{ color: "var(--muted)", fontSize: 15 }}>{unit}</span>
         </div>
         <p style={{ color: "var(--muted)", fontSize: 14.5, marginTop: 8, lineHeight: 1.5 }}>{blurb}</p>

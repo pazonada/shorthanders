@@ -8,6 +8,7 @@ function RepCard({ r }) {
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
             <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 21, color: "var(--ink)", lineHeight: 1.1 }}>{r.name}</span>
+            {r.claimed && <span className="pill" style={{ background: "var(--ochre-soft)", color: "var(--ochre-deep)" }}>Sample</span>}
             {isNew && <span className="pill pill-new">New</span>}
           </div>
           <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 3 }}>CSR #{r.csrNumber} · {r.city}{r.county ? " · " + r.county + " County" : ""}</div>
@@ -82,6 +83,9 @@ function ReporterDirectory() {
 
   const anyFilter = q || county || language || minYears || method || work.length || rushOnly || claimedOnly;
   const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setMethod(""); setWork([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
+  const featured = filtered.filter((r) => r.claimed).slice(0, 3);
+  const featuredIds = new Set(featured.map((r) => r.id));
+  const rest = filtered.filter((r) => !featuredIds.has(r.id));
 
   return (
     <Page wide>
@@ -135,15 +139,63 @@ function ReporterDirectory() {
         </div>
       ) : (
         <>
-          <div className="ds-grid ds-dir-grid">{filtered.slice(0, limit).map((r) => <RepCard key={r.id} r={r} />)}</div>
-          {limit < filtered.length && (
-            <div style={{ textAlign: "center", marginTop: 32 }}>
-              <button className="btn btn-secondary" onClick={() => setLimit((l) => l + PAGE_SIZE * 2)}>Show more ({(filtered.length - limit).toLocaleString()} more)</button>
+          {featured.length > 0 && (
+            <div style={{ marginBottom: 30 }}>
+              <div className="dir-section-label">Featured reporters</div>
+              <div className="ds-grid ds-dir-grid">{featured.map((r) => <RepCard key={r.id} r={r} />)}</div>
             </div>
+          )}
+          {rest.length > 0 && (
+            <>
+              {featured.length > 0 && <div className="dir-section-label">All reporters</div>}
+              <div className="dir-list">{rest.slice(0, limit).map((r) => <RepRow key={r.id} r={r} />)}</div>
+              {limit < rest.length && (
+                <div style={{ textAlign: "center", marginTop: 26 }}>
+                  <button className="btn btn-secondary" onClick={() => setLimit((l) => l + PAGE_SIZE * 2)}>Show more ({(rest.length - limit).toLocaleString()} more)</button>
+                </div>
+              )}
+            </>
           )}
         </>
       )}
     </Page>
+  );
+}
+
+// One reporter as a compact directory list row.
+function RepRow({ r }) {
+  const langs = (r.languages || []).filter(Boolean);
+  const specs = (r.specialties || []).slice(0, 3);
+  return (
+    <div className="dir-row" onClick={() => navigate("/reporters/" + r.id)}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
+        <Avatar name={r.name} size={40} claimed={r.claimed} />
+        <div style={{ minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+            <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.name}</span>
+            {r.claimed ? <span className="pill" style={{ fontSize: 10, padding: "1px 7px", background: "var(--ochre-soft)", color: "var(--ochre-deep)" }}>Sample</span> : null}
+          </div>
+          <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber} · {r.city}{r.county && r.county !== r.city ? ", " + r.county + " County" : ""}{r.method ? " · " + r.method : ""}</div>
+        </div>
+      </div>
+      <div style={{ minWidth: 0, fontSize: 13 }}>
+        {r.claimed ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+              {(r.workTypes || []).slice(0, 4).map((w) => <span key={w} className="pill pill-tag" style={{ fontSize: 11, padding: "2px 8px" }}>{w}</span>)}
+              {r.rush ? <span className="pill pill-rush" style={{ fontSize: 11, padding: "2px 8px" }}>Rush</span> : null}
+            </div>
+            <div style={{ color: "var(--muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {specs.join(" · ")}{langs.length ? "  ·  " + langs.join(", ") : ""}
+            </div>
+          </div>
+        ) : <span style={{ color: "var(--dim)" }}>Public license record · unclaimed</span>}
+      </div>
+      <div className="dir-rate" style={{ fontSize: 13, color: r.claimed ? "var(--ink-soft)" : "var(--dim)", textAlign: "right" }}>
+        {r.claimed ? (r.rate || "Rate on request") : "–"}
+      </div>
+      <div className="dir-chevron" style={{ color: "var(--dim)", display: "flex", justifyContent: "flex-end" }}><Icon name="arrow" size={16} /></div>
+    </div>
   );
 }
 
@@ -163,7 +215,8 @@ function ReporterProfile({ reporterId }) {
   };
   return (
     <Page>
-      <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 20 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to directory</button>
+      <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 16 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to directory</button>
+      <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This reporter's bio, specialties, and testimonials are illustrative placeholders for the prototype, not real. The name, license, county, and method are real public data.</div></div>
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 32, alignItems: "start" }} className="profile-grid">
         {/* main */}
         <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>

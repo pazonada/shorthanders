@@ -104,6 +104,17 @@
             mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 82%, transparent 100%);
   }
   @media (max-width: 720px) { .mvp-hero-shorthand { opacity: 0.08; width: 210%; } }
+
+  /* directory list rows */
+  .dir-section-label { font-size: 12px; font-weight: 700; color: var(--dim); text-transform: uppercase; letter-spacing: .05em; margin: 4px 0 12px; }
+  .dir-list { border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; background: var(--bg); }
+  .dir-row { display: grid; grid-template-columns: minmax(180px, 1.1fr) minmax(0, 1.9fr) 132px 34px; gap: 16px; align-items: center; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid var(--rule); padding: 13px 18px; cursor: pointer; transition: background .12s ease; font-family: 'Inter', sans-serif; }
+  .dir-row:last-child { border-bottom: none; }
+  .dir-row:hover { background: var(--bg-soft); }
+  @media (max-width: 760px) {
+    .dir-row { grid-template-columns: 1fr; gap: 8px; padding: 14px 16px; }
+    .dir-row .dir-rate, .dir-row .dir-chevron { display: none; }
+  }
 </style>
 </head>
 <body>

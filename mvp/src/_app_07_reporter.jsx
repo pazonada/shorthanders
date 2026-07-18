@@ -37,6 +37,7 @@ function ReporterDashboard() {
 
   return (
     <DashLayout title={"Welcome back, " + me.name.split(" ")[0]} subtitle={"CSR #" + me.csrNumber + " · " + me.city + ", CA"} tabs={tabs} active={tab} onTab={setTab}>
+      <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample data.</strong> The invoices, payments, stats, and messages shown here are illustrative placeholders for the prototype.</div></div>
       {tab === "overview" && (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 18 }}>
           <StatCard icon="dollar" label="Paid this month" value={"$" + paidThisMonth.toLocaleString(undefined, { minimumFractionDigits: 2 })} tone="sage" />
