@@ -24,7 +24,7 @@ function ClaimStart() {
     <Page>
       <div style={{ maxWidth: 640, margin: "0 auto" }}>
         <div style={{ textAlign: "center" }}>
-          <span className="pill pill-tag" style={{ marginBottom: 14, display: "inline-flex" }}>Free for reporters, forever</span>
+          <span className="pill pill-tag" style={{ marginBottom: 14, display: "inline-flex" }}>Free to claim & get listed</span>
           <h1 style={{ fontSize: "clamp(30px, 4vw, 46px)" }}>Claim your profile</h1>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 14, lineHeight: 1.6 }}>
             You're already listed – every licensed California CSR is. Find your record to control how firms see you, then start invoicing and getting paid. It takes about three minutes.

@@ -11,7 +11,8 @@ function RepCard({ r }) {
             {r.claimed && <span className="pill" style={{ background: "var(--ochre-soft)", color: "var(--ochre-deep)" }}>Sample</span>}
             {isNew && <span className="pill pill-new">New</span>}
           </div>
-          <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 3 }}>CSR #{r.csrNumber} · {r.city}{r.county ? " · " + r.county + " County" : ""}</div>
+          <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 3 }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}</div>
+          <div style={{ fontSize: 14, color: "var(--ink-soft)", fontWeight: 600, marginTop: 6, display: "flex", alignItems: "center", gap: 5 }}><Icon name="pin" size={14} style={{ color: "var(--brand)", flexShrink: 0 }} />{r.city}{r.county && r.county !== r.city ? ", " + r.county + " County" : ""}</div>
           <div style={{ marginTop: 8 }}>
             {r.claimed
               ? <span className="pill pill-claimed"><Icon name="check" size={13} /> Claimed{r.verified ? " · Verified" : ""}</span>
@@ -175,8 +176,12 @@ function RepRow({ r }) {
             <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.name}</span>
             {r.claimed ? <span className="pill" style={{ fontSize: 10, padding: "1px 7px", background: "var(--ochre-soft)", color: "var(--ochre-deep)" }}>Sample</span> : null}
           </div>
-          <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber} · {r.city}{r.county && r.county !== r.city ? ", " + r.county + " County" : ""}{r.method ? " · " + r.method : ""}</div>
+          <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}</div>
         </div>
+      </div>
+      <div style={{ minWidth: 0, display: "flex", alignItems: "center", gap: 6, fontSize: 13.5, fontWeight: 600, color: "var(--ink-soft)" }}>
+        <Icon name="pin" size={14} style={{ color: "var(--brand)", flexShrink: 0 }} />
+        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.county && r.county !== r.city ? r.county + " Co." : r.city}<span style={{ fontWeight: 400, color: "var(--muted)" }}>{r.county && r.county !== r.city ? " · " + r.city : ""}</span></span>
       </div>
       <div style={{ minWidth: 0, fontSize: 13 }}>
         {r.claimed ? (

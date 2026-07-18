@@ -13,7 +13,7 @@ function LandingPage() {
           <span className="pill pill-tag" style={{ marginBottom: 20, display: "inline-flex" }}>{total.toLocaleString()} California court reporters, one directory</span>
           <h1 style={{ fontSize: "clamp(38px, 6vw, 66px)", lineHeight: 1.04 }}>Find an independent court reporter. <em>Skip the agency.</em></h1>
           <p style={{ fontSize: 19, color: "var(--ink-soft)", margin: "22px auto 0", maxWidth: 620, lineHeight: 1.6 }}>
-            Search every licensed CSR in California by county, specialty, language, and turnaround – then message them directly. Reporters claim a free profile, send invoices, and get paid without an agency taking a cut.
+            Search every licensed CSR in California by county, specialty, language, and turnaround – then message them directly. Reporters claim a free profile and get discovered, with optional tools to invoice and get paid – no agency taking a cut.
           </p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", marginTop: 34, flexWrap: "wrap" }}>
             <button className="btn btn-primary" onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
@@ -21,7 +21,7 @@ function LandingPage() {
           </div>
           <div style={{ marginTop: 22, fontSize: 13, color: "var(--muted)", display: "flex", gap: 20, justifyContent: "center", flexWrap: "wrap" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="shield" size={14} /> Verified via Stripe identity</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="dollar" size={14} /> Free for reporters</span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="dollar" size={14} /> Free to get listed</span>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="check" size={14} /> No booking fees, no markup</span>
           </div>
         </div>
@@ -143,14 +143,14 @@ function ForReportersPage() {
   return (
     <Page>
       <MarketingHero eyebrow="For court reporters" title="Your whole business, minus the agency."
-        sub="You're already in our directory – every licensed California CSR is. Claim your profile to control how firms see you, then use Dewey Sholes to invoice clients and get paid. Free, forever, for reporters." />
+        sub="You're already in our directory – every licensed California CSR is. Claiming your profile and getting listed is free, forever. Go Pro when you want to receive messages from firms and get paid through Dewey Sholes." />
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 8 }}>
         <FeatureBlock icon="user" title="Claim your profile" body="Add your bio, specialties, coverage area, languages, certifications, and rates. A claimed profile ranks above unclaimed ones." />
         <FeatureBlock icon="shield" title="Verify once, via Stripe" body="Confirm your identity through Stripe Connect. Firms trust a verified badge – and it's what powers your payouts." />
         <FeatureBlock icon="message" title="Hear from firms directly" body="Firms message you through the platform. You decide who to work with and on what terms." />
         <FeatureBlock icon="invoice" title="Invoice in seconds" body="Create an invoice with the client, matter, and line items. Send it as a payment link by email." />
         <FeatureBlock icon="bank" title="Get paid by card or ACH" body="Stripe deposits straight to your bank. Track draft, sent, paid, and overdue at a glance." />
-        <FeatureBlock icon="dollar" title="Keep 100% of your rate" body="No agency cut on the work you find here. Dewey Sholes is free for reporters." />
+        <FeatureBlock icon="dollar" title="Keep 100% of your rate" body="No agency cut on the work you find here – you keep your full rate. Getting listed is free; Pro tools are a flat subscription, never a commission." />
       </div>
       <div style={{ background: "var(--sage-soft)", border: "1px solid #C5D8C2", borderRadius: 18, padding: 32, marginTop: 40, textAlign: "center" }}>
         <h3 style={{ fontSize: 26, color: "var(--sage-deep)" }}>Find your profile and claim it</h3>
@@ -191,27 +191,31 @@ function CtaStrip({ title, button }) {
   );
 }
 
-// ═══ PRICING (Option A) ════════════════════════════════════════════
+// ═══ PRICING (reporter freemium) ═══════════════════════════════════
 function PricingPage() {
   return (
-    <Page>
-      <div style={{ textAlign: "center", maxWidth: 680, margin: "12px auto 44px" }}>
+    <Page wide>
+      <div style={{ textAlign: "center", maxWidth: 700, margin: "12px auto 44px" }}>
         <h1 style={{ fontSize: "clamp(34px, 5vw, 52px)" }}>Simple, honest pricing</h1>
-        <p style={{ fontSize: 18, color: "var(--ink-soft)", marginTop: 16, lineHeight: 1.6 }}>Reporters use Dewey Sholes free. Law firms pay a flat monthly subscription for advanced search and direct messaging. No booking fees, no commission on your work.</p>
+        <p style={{ fontSize: 18, color: "var(--ink-soft)", marginTop: 16, lineHeight: 1.6 }}>Claim your profile and get listed for free. Upgrade to Pro when you want to receive messages from firms and get paid through Dewey Sholes. No booking fees, no commission on your work.</p>
       </div>
-      <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", maxWidth: 860, margin: "0 auto" }}>
-        <PriceCard tone="sage" name="Court reporters" price="$0" unit="always free"
-          blurb="Claim your profile, get discovered, invoice clients, and collect payments."
-          features={["Claimed public profile", "Stripe identity verification", "Unlimited invoices & payments", "Direct messages from firms", "Payment tracking dashboard"]}
-          cta={["Claim your profile", "/claim"]} note="Standard Stripe processing fees apply to payments you collect." />
-        <PriceCard tone="brand" featured name="Law firms" price="Pricing coming soon" unit=""
-          blurb="Full search, verified profiles, and unlimited direct messaging for your whole team."
-          features={["Advanced directory search & filters", "Unlimited direct messaging", "Saved reporters & shared lists", "Matter references on every invoice", "Pay invoices by card or ACH"]}
-          cta={["Start a firm account", "/firm"]} note="Browsing the directory is always free. We'll set firm pricing before launch." />
+      <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", maxWidth: 1040, margin: "0 auto" }}>
+        <PriceCard tone="sage" name="Reporters · Free" price="$0" unit="forever"
+          blurb="Get listed and control how firms see you."
+          features={["Claim your public profile", "Verify your identity via Stripe", "Appear in the directory & search", "Add specialties, coverage, rates", "Firms can find you"]}
+          cta={["Claim your profile", "/claim"]} note="Free forever. No card required to claim and list." />
+        <PriceCard tone="brand" featured name="Reporters · Pro" price="Pricing coming soon" unit=""
+          blurb="Everything in Free, plus the tools to actually get paid."
+          features={["Receive & reply to firm messages", "Create & send invoices", "Collect card & ACH payments", "Payment tracking dashboard", "Stripe payouts to your bank"]}
+          cta={["Claim your profile", "/claim"]} note="We'll set Pro pricing before launch. Standard Stripe fees apply to payments you collect." />
+        <PriceCard tone="sage" name="Law firms" price="Pricing coming soon" unit=""
+          blurb="Search the directory and reach reporters directly."
+          features={["Browse the full directory free", "Advanced search & filters", "Message reporters", "Saved reporters & shared lists", "Pay invoices by card or ACH"]}
+          cta={["Explore the directory", "/directory"]} note="Firm pricing is still being decided." />
       </div>
-      <div className="ds-panel" style={{ maxWidth: 860, margin: "32px auto 0", textAlign: "center" }}>
+      <div className="ds-panel" style={{ maxWidth: 1040, margin: "32px auto 0", textAlign: "center" }}>
         <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.6 }}>
-          <strong style={{ color: "var(--ink-soft)" }}>Where we're headed:</strong> long term, we expect a hybrid – firms subscribe, reporters stay free, and a small optional transaction fee funds new business tools. We'll never surprise you with a change to how you get paid.
+          <strong style={{ color: "var(--ink-soft)" }}>The idea:</strong> being found should always be free, so every reporter can get listed. You only pay when Dewey Sholes is actively helping you win and get paid for work.
         </p>
       </div>
     </Page>
