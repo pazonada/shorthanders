@@ -3867,13 +3867,40 @@ function ReporterPayments({ invoices, paidThisMonth }) {
 const INV_STATUS = { draft: ["inv-draft", "Draft"], sent: ["inv-sent", "Sent"], paid: ["inv-paid", "Paid"], overdue: ["inv-overdue", "Overdue"] };
 function InvStatus({ status }) { const [cls, label] = INV_STATUS[status]; return <span className={"inv-status " + cls}>{label}</span>; }
 
+// Regime-aware starter templates (see mvp/docs/csr_profile_field_taxonomy.md).
+const INVOICE_TEMPLATES = [
+  { id: "depo", name: "Standard deposition", hint: "Original + copies + appearance", lines: [
+    { desc: "Certified transcript, original (per page)", qty: "", rate: "4.75" },
+    { desc: "Copy (per page)", qty: "", rate: "2.00" },
+    { desc: "Appearance (half day)", qty: "1", rate: "250" },
+  ] },
+  { id: "wc", name: "Workers' comp", hint: "O&2, minimum, statement on the record", lines: [
+    { desc: "Original + 2 copies (O&2), per page", qty: "", rate: "" },
+    { desc: "Minimum transcript fee", qty: "1", rate: "" },
+    { desc: "Statement on the record / appearance", qty: "1", rate: "" },
+  ] },
+  { id: "audio", name: "Court-audio transcription", hint: "Per page or per audio hour", lines: [
+    { desc: "Transcription (per page)", qty: "", rate: "" },
+    { desc: "Certification", qty: "1", rate: "" },
+  ] },
+  { id: "realtime", name: "Realtime + rough", hint: "Realtime hourly + rough draft", lines: [
+    { desc: "Realtime hookup (hourly)", qty: "", rate: "" },
+    { desc: "Rough draft / ASCII", qty: "1", rate: "" },
+  ] },
+  { id: "blank", name: "Blank invoice", hint: "Build your own from scratch", lines: [
+    { desc: "", qty: "1", rate: "" },
+  ] },
+];
+
 function ReporterInvoices() {
   const store = useStore();
-  const [view, setView] = useState("list");   // list | create | detail
+  const [view, setView] = useState("list");   // list | template | build | detail
+  const [tmpl, setTmpl] = useState(null);
   const [current, setCurrent] = useState(null);
   const invoices = store.invoices;
 
-  if (view === "create") return <InvoiceCreator onCancel={() => setView("list")} onCreated={(inv) => { store.addInvoice(inv); setCurrent(inv); setView("detail"); }} />;
+  if (view === "template") return <TemplatePicker onCancel={() => setView("list")} onPick={(t) => { setTmpl(t); setView("build"); }} />;
+  if (view === "build") return <InvoiceBuilder template={tmpl} onCancel={() => setView("list")} onCreated={(inv) => { store.addInvoice(inv); setCurrent(inv); setView("detail"); }} />;
   if (view === "detail" && current) return <InvoiceDetail inv={store.invoices.find((i) => i.id === current.id) || current} onBack={() => setView("list")} onSend={() => store.updateInvoice(current.id, { status: "sent" })} />;
 
   return (
@@ -3885,7 +3912,7 @@ function ReporterInvoices() {
           <span><strong style={{ color: "var(--ink)" }}>{invoices.filter((i) => i.status === "overdue").length}</strong> overdue</span>
           <span><strong style={{ color: "var(--ink)" }}>{invoices.filter((i) => i.status === "paid").length}</strong> paid</span>
         </div>
-        <button className="btn btn-primary" onClick={() => setView("create")}><Icon name="plus" size={16} /> New invoice</button>
+        <button className="btn btn-primary" onClick={() => setView("template")}><Icon name="plus" size={16} /> New invoice</button>
       </div>
       <div className="ds-card" style={{ padding: 0, overflow: "hidden" }}>
         <div style={{ overflowX: "auto" }}>
@@ -3908,40 +3935,113 @@ function ReporterInvoices() {
   );
 }
 
-let INV_SEQ = 1045;
-function InvoiceCreator({ onCancel, onCreated }) {
-  const [f, setF] = useState({ client: "", matter: "", desc: "", date: "2026-07-16", units: "", rate: "", due: "2026-07-30", notes: "" });
-  const amount = (Number(f.units) || 0) * (Number(f.rate) || 0);
-  const valid = f.client && amount > 0;
-  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
+function TemplatePicker({ onCancel, onPick }) {
+  const store = useStore();
+  const custom = store.customTemplates || [];
   return (
-    <div style={{ maxWidth: 680 }}>
-      <button onClick={onCancel} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 18 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
-      <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-        <h2 style={{ fontSize: 26 }}>New invoice</h2>
+    <div style={{ maxWidth: 760 }}>
+      <button onClick={onCancel} style={backLink}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
+      <h2 style={{ fontSize: 26, marginBottom: 6 }}>Start a new invoice</h2>
+      <p style={{ color: "var(--muted)", marginBottom: 20 }}>Pick a starter for the kind of work you're billing. You can edit every line, or start blank.</p>
+      <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
+        {INVOICE_TEMPLATES.map((t) => (
+          <button key={t.id} className="rep-card" style={{ cursor: "pointer" }} onClick={() => onPick(t)}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="invoice" size={19} /></div>
+              <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 19 }}>{t.name}</span>
+            </div>
+            <div style={{ fontSize: 13, color: "var(--muted)" }}>{t.hint}</div>
+            <div style={{ fontSize: 12.5, color: "var(--brand-dark)", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4 }}>Use template <Icon name="arrow" size={13} /></div>
+          </button>
+        ))}
+        {custom.map((t, i) => (
+          <button key={"c" + i} className="rep-card" style={{ cursor: "pointer" }} onClick={() => onPick(t)}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--sage-soft)", color: "var(--sage-deep)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="star" size={19} /></div>
+              <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 19 }}>{t.name}</span>
+            </div>
+            <div style={{ fontSize: 13, color: "var(--muted)" }}>Your saved template</div>
+            <div style={{ fontSize: 12.5, color: "var(--brand-dark)", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4 }}>Use template <Icon name="arrow" size={13} /></div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+let INV_SEQ = 1045;
+function InvoiceBuilder({ template, onCancel, onCreated }) {
+  const store = useStore();
+  const [f, setF] = useState({ client: "", matter: "", date: "2026-07-17", due: "2026-07-31", notes: "" });
+  const [lines, setLines] = useState((template.lines || [{ desc: "", qty: "1", rate: "" }]).map((l) => ({ ...l })));
+  const [toast, setToast] = useState("");
+
+  const setLine = (i, k, v) => setLines((xs) => xs.map((l, j) => j === i ? { ...l, [k]: v } : l));
+  const addLine = () => setLines((xs) => [...xs, { desc: "", qty: "1", rate: "" }]);
+  const removeLine = (i) => setLines((xs) => xs.length > 1 ? xs.filter((_, j) => j !== i) : xs);
+  const lineAmt = (l) => (Number(l.qty) || 0) * (Number(l.rate) || 0);
+  const total = lines.reduce((s, l) => s + lineAmt(l), 0);
+  const valid = f.client && total > 0;
+  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
+
+  const saveTemplate = () => {
+    const name = (window.prompt && window.prompt("Name this template", template.name + " (mine)")) || null;
+    if (name) { store.addTemplate({ id: "custom", name, lines: lines.map((l) => ({ ...l })) }); setToast("Template saved"); }
+  };
+  const create = () => onCreated({
+    id: "INV-" + (++INV_SEQ), client: f.client, matter: f.matter || "–", desc: lines[0] && lines[0].desc ? lines[0].desc : "Court reporting services",
+    date: f.date, due: f.due, amount: total, status: "draft", notes: f.notes,
+    lineItems: lines.filter((l) => l.desc || lineAmt(l) > 0).map((l) => ({ desc: l.desc, qty: Number(l.qty) || 0, rate: Number(l.rate) || 0 })),
+  });
+
+  return (
+    <div style={{ maxWidth: 760 }}>
+      <button onClick={onCancel} style={backLink}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
+      <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
+          <h2 style={{ fontSize: 26 }}>New invoice</h2>
+          <span className="pill pill-tag">{template.name}</span>
+        </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
           <div><label className="ds-label">Client / firm *</label><input className="ds-input" placeholder="Morgan & Reyes LLP" value={f.client} onChange={set("client")} /></div>
           <div><label className="ds-label">Matter reference</label><input className="ds-input" placeholder="Ramos v. Delta Freight (24CV01188)" value={f.matter} onChange={set("matter")} /></div>
         </div>
-        <div><label className="ds-label">Service description</label><input className="ds-input" placeholder="Certified deposition transcript" value={f.desc} onChange={set("desc")} /></div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
-          <div><label className="ds-label">Date of service</label><input className="ds-input" type="date" value={f.date} onChange={set("date")} /></div>
-          <div><label className="ds-label">Units (pages/hrs)</label><input className="ds-input" type="number" placeholder="118" value={f.units} onChange={set("units")} /></div>
-          <div><label className="ds-label">Rate per unit</label><input className="ds-input" type="number" placeholder="4.75" value={f.rate} onChange={set("rate")} /></div>
-        </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+          <div><label className="ds-label">Service date</label><input className="ds-input" type="date" value={f.date} onChange={set("date")} /></div>
           <div><label className="ds-label">Due date</label><input className="ds-input" type="date" value={f.due} onChange={set("due")} /></div>
-          <div><label className="ds-label">Notes (optional)</label><input className="ds-input" placeholder="Thank you!" value={f.notes} onChange={set("notes")} /></div>
         </div>
+
+        {/* line items */}
+        <div>
+          <label className="ds-label">Line items</label>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 74px 90px 90px 28px", gap: 8, fontSize: 11, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".03em", padding: "0 2px" }}>
+              <span>Description</span><span style={{ textAlign: "right" }}>Qty</span><span style={{ textAlign: "right" }}>Rate</span><span style={{ textAlign: "right" }}>Amount</span><span />
+            </div>
+            {lines.map((l, i) => (
+              <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 74px 90px 90px 28px", gap: 8, alignItems: "center" }}>
+                <input className="ds-input" style={{ padding: "9px 11px", fontSize: 13.5 }} placeholder="Description" value={l.desc} onChange={(e) => setLine(i, "desc", e.target.value)} />
+                <input className="ds-input" style={{ padding: "9px 8px", fontSize: 13.5, textAlign: "right" }} type="number" placeholder="0" value={l.qty} onChange={(e) => setLine(i, "qty", e.target.value)} />
+                <input className="ds-input" style={{ padding: "9px 8px", fontSize: 13.5, textAlign: "right" }} type="number" placeholder="0.00" value={l.rate} onChange={(e) => setLine(i, "rate", e.target.value)} />
+                <span style={{ textAlign: "right", fontSize: 13.5, color: "var(--ink)", fontWeight: 600 }}>${lineAmt(l).toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+                <button onClick={() => removeLine(i)} title="Remove" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", display: "flex", justifyContent: "center" }}><Icon name="x" size={15} /></button>
+              </div>
+            ))}
+          </div>
+          <button onClick={addLine} style={{ background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, cursor: "pointer", fontSize: 13.5, marginTop: 10, display: "inline-flex", alignItems: "center", gap: 5, padding: 0 }}><Icon name="plus" size={14} /> Add line</button>
+        </div>
+
         <div className="ds-panel" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ color: "var(--muted)", fontSize: 14 }}>Amount due</span>
-          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)" }}>${amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+          <span style={{ color: "var(--muted)", fontSize: 14 }}>Total due</span>
+          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)" }}>${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
         </div>
-        <div style={{ display: "flex", gap: 12 }}>
-          <button className="btn btn-primary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={() => onCreated({ id: "INV-" + (++INV_SEQ), client: f.client, matter: f.matter || "–", desc: f.desc || "Court reporting services", date: f.date, amount, due: f.due, status: "draft", notes: f.notes })}>Create draft <Icon name="arrow" size={16} /></button>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <button className="btn btn-primary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={create}>Create draft <Icon name="arrow" size={16} /></button>
+          <button className="btn btn-secondary" onClick={saveTemplate}><Icon name="star" size={16} /> Save as my template</button>
           <button className="btn btn-secondary" onClick={onCancel}>Cancel</button>
         </div>
       </div>
+      <Toast msg={toast} onClose={() => setToast("")} />
     </div>
   );
 }
@@ -3951,22 +4051,20 @@ function InvoiceDetail({ inv, onBack, onSend }) {
   const [copied, setCopied] = useState(false);
   const [payLink, setPayLink] = useState("https://pay.deweysholes.com/i/" + inv.id.toLowerCase());
 
-  // Real Stripe payment link when the backend is deployed; otherwise keep the
-  // demo link so the local prototype still works.
   const sendInvoice = async () => {
     try {
       const resp = await fetch("api/pay/create-payment-link", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ invoiceId: inv.id, client: inv.client, amount: inv.amount, description: inv.desc, matter: inv.matter }),
       });
       if (resp.ok) { const d = await resp.json(); if (d && d.url) setPayLink(d.url); }
     } catch (e) { /* keep demo link */ }
     setSent(true); if (onSend) onSend();
   };
+
   return (
     <div style={{ maxWidth: 680 }}>
-      <button onClick={onBack} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 18 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
+      <button onClick={onBack} style={backLink}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
       <div className="ds-card">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
           <div><div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30 }}>{inv.id}</div><InvStatus status={sent ? (inv.status === "draft" ? "sent" : inv.status) : "draft"} /></div>
@@ -3976,10 +4074,21 @@ function InvoiceDetail({ inv, onBack, onSend }) {
         <dl style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "12px 22px", fontSize: 15 }}>
           <dt style={{ color: "var(--muted)" }}>Client</dt><dd style={{ color: "var(--ink)" }}>{inv.client}</dd>
           <dt style={{ color: "var(--muted)" }}>Matter</dt><dd style={{ color: "var(--ink)" }}>{inv.matter}</dd>
-          <dt style={{ color: "var(--muted)" }}>Service</dt><dd style={{ color: "var(--ink)" }}>{inv.desc}</dd>
           <dt style={{ color: "var(--muted)" }}>Service date</dt><dd style={{ color: "var(--ink)" }}>{inv.date}</dd>
           <dt style={{ color: "var(--muted)" }}>Due</dt><dd style={{ color: "var(--ink)" }}>{inv.due}</dd>
         </dl>
+        {inv.lineItems && inv.lineItems.length ? (
+          <div style={{ marginTop: 18, overflowX: "auto" }}>
+            <table className="ds-table">
+              <thead><tr><th>Description</th><th style={{ textAlign: "right" }}>Qty</th><th style={{ textAlign: "right" }}>Rate</th><th style={{ textAlign: "right" }}>Amount</th></tr></thead>
+              <tbody>{inv.lineItems.map((l, i) => (
+                <tr key={i}><td style={{ color: "var(--ink)" }}>{l.desc}</td><td style={{ textAlign: "right" }}>{l.qty}</td><td style={{ textAlign: "right" }}>${l.rate.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td><td style={{ textAlign: "right", fontWeight: 600, color: "var(--ink)" }}>${(l.qty * l.rate).toLocaleString(undefined, { minimumFractionDigits: 2 })}</td></tr>
+              ))}</tbody>
+            </table>
+          </div>
+        ) : (
+          <><div style={{ height: 1, background: "var(--rule)", margin: "20px 0" }} /><div style={{ fontSize: 15, color: "var(--ink-soft)" }}>{inv.desc}</div></>
+        )}
         <div style={{ height: 1, background: "var(--rule)", margin: "20px 0" }} />
         {sent ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -3999,6 +4108,8 @@ function InvoiceDetail({ inv, onBack, onSend }) {
     </div>
   );
 }
+
+const backLink = { background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 18 };
 // ═══ Messaging (text + pass-through secure links; no file storage) ══
 function MessagesPanel({ embedded }) {
   const store = useStore();
@@ -4238,9 +4349,11 @@ function StoreProvider({ children }) {
   const [saved, setSaved] = useState(["10518", "8239", "13445"]);
   const [convos, setConvos] = useState(SEED_CONVOS);
   const [invoices, setInvoices] = useState(SEED_INVOICES);
+  const [customTemplates, setCustomTemplates] = useState([]);
 
   const store = {
-    role, myCsr, saved, convos, invoices,
+    role, myCsr, saved, convos, invoices, customTemplates,
+    addTemplate: (t) => setCustomTemplates((xs) => [...xs, t]),
     enterAsReporter: () => setRole("reporter"),
     enterAsFirm: () => setRole("firm"),
     logout: () => setRole(null),

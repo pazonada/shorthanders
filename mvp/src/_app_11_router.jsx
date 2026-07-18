@@ -80,9 +80,11 @@ function StoreProvider({ children }) {
   const [saved, setSaved] = useState(["10518", "8239", "13445"]);
   const [convos, setConvos] = useState(SEED_CONVOS);
   const [invoices, setInvoices] = useState(SEED_INVOICES);
+  const [customTemplates, setCustomTemplates] = useState([]);
 
   const store = {
-    role, myCsr, saved, convos, invoices,
+    role, myCsr, saved, convos, invoices, customTemplates,
+    addTemplate: (t) => setCustomTemplates((xs) => [...xs, t]),
     enterAsReporter: () => setRole("reporter"),
     enterAsFirm: () => setRole("firm"),
     logout: () => setRole(null),
