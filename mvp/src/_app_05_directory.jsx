@@ -47,6 +47,7 @@ function ReporterDirectory() {
   const [county, setCounty] = useState("");
   const [language, setLanguage] = useState("");
   const [minYears, setMinYears] = useState("");
+  const [method, setMethod] = useState("");   // reporting method (from license)
   const [work, setWork] = useState([]);       // selected work types
   const [rushOnly, setRushOnly] = useState(false);
   const [claimedOnly, setClaimedOnly] = useState(false);
@@ -65,6 +66,7 @@ function ReporterDirectory() {
       if (rushOnly && !r.rush) return false;
       if (language && !(r.languages || []).includes(language)) return false;
       if (minYears && (!(r.yearsExp) || r.yearsExp < Number(minYears))) return false;
+      if (method && !(r.method || "").includes(method)) return false;
       if (work.length && !work.every((w) => (r.workTypes || []).includes(w))) return false;
       return true;
     });
@@ -76,10 +78,10 @@ function ReporterDirectory() {
       return (b.claimedAt || "").localeCompare(a.claimedAt || "");
     });
     return list;
-  }, [all, q, county, language, minYears, work, rushOnly, claimedOnly]);
+  }, [all, q, county, language, minYears, method, work, rushOnly, claimedOnly]);
 
-  const anyFilter = q || county || language || minYears || work.length || rushOnly || claimedOnly;
-  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setWork([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
+  const anyFilter = q || county || language || minYears || method || work.length || rushOnly || claimedOnly;
+  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setMethod(""); setWork([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
 
   return (
     <Page wide>
@@ -111,7 +113,12 @@ function ReporterDirectory() {
           <option value="15">15+ years</option>
           <option value="20">20+ years</option>
         </select>
-        {WORK_TYPES.slice(0, 5).map((w) => <button key={w} className={"chip-filter" + (work.includes(w) ? " on" : "")} onClick={() => toggleWork(w)}>{w}</button>)}
+        <select className="ds-input" style={{ width: "auto", padding: "9px 14px" }} value={method} onChange={(e) => { setMethod(e.target.value); setLimit(PAGE_SIZE); }}>
+          <option value="">Any method</option>
+          <option value="Machine">Machine (steno)</option>
+          <option value="Voice">Voice writing</option>
+        </select>
+        {WORK_TYPES.slice(0, 5).map((w) =><button key={w} className={"chip-filter" + (work.includes(w) ? " on" : "")} onClick={() => toggleWork(w)}>{w}</button>)}
         <button className={"chip-filter" + (rushOnly ? " on" : "")} onClick={() => { setRushOnly((v) => !v); setLimit(PAGE_SIZE); }}><Icon name="clock" size={13} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />Rush</button>
         <button className={"chip-filter" + (claimedOnly ? " on" : "")} onClick={() => { setClaimedOnly((v) => !v); setLimit(PAGE_SIZE); }}>Claimed only</button>
         {anyFilter ? <button className="chip-filter" style={{ color: "var(--brand-dark)", borderColor: "var(--brand-pale)" }} onClick={clearAll}>Clear all</button> : null}
@@ -171,6 +178,7 @@ function ReporterProfile({ reporterId }) {
                 <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />CSR #{r.csrNumber}</span>
                 <span><Icon name="pin" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.city}{r.county ? ", " + r.county + " County" : ""}</span>
                 <span><Icon name="clock" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.yearsExp} years</span>
+                {r.method ? <span><Icon name="doc" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.method}</span> : null}
               </div>
               <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
                 {(r.workTypes || []).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
@@ -243,6 +251,7 @@ function UnclaimedProfile({ r }) {
           <dl style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "10px 20px", fontSize: 15 }}>
             <dt style={{ color: "var(--muted)" }}>License</dt><dd style={{ color: "var(--ink)" }}>CSR #{r.csrNumber}</dd>
             <dt style={{ color: "var(--muted)" }}>Location</dt><dd style={{ color: "var(--ink)" }}>{r.city}{r.county ? ", " + r.county + " County" : ""}, CA</dd>
+            {r.method ? <><dt style={{ color: "var(--muted)" }}>Reporting method</dt><dd style={{ color: "var(--ink)" }}>{r.method}</dd></> : null}
             {r.email ? <><dt style={{ color: "var(--muted)" }}>Public email</dt><dd><a href={"mailto:" + r.email} style={{ color: "var(--brand-dark)", textDecoration: "none" }}>{r.email}</a></dd></> : null}
             <dt style={{ color: "var(--muted)" }}>License status</dt><dd style={{ color: "var(--ink)" }}>Active · expires {r.expiration}</dd>
           </dl>

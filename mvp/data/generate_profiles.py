@@ -45,11 +45,17 @@ for r in rows:
     county = county_clean(r.get("CountyName"))
     if state and state != "CA":
         county = "Out of State"      # collapse all non-CA counties into one bucket
+    method = {
+        "Steno Machine Writer": "Machine (steno)",
+        "Voice Writer": "Voice",
+        "Steno Machine Writer, Voice Writer": "Machine & Voice",
+    }.get((r.get("CertificationMethod") or "").strip(), "")
     recs.append({
         "csrNumber": str(r.get("LicenseNumber") or ""),
         "name": tc(r.get("Name")),
         "city": tc(r.get("City")),
         "county": county,
+        "method": method,
         "zip": (r.get("Zip") or "").strip(),
         "email": (r.get("PublicEmail") or "").strip(),
         "expiration": (r.get("LicenseExpirationDate") or "")[:10],

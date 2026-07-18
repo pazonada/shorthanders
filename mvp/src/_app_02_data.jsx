@@ -38,6 +38,7 @@ function buildDirectory() {
       name: r.name,
       city: r.city,
       county: county,
+      method: r.method || "",
       zip: r.zip || "",
       email: r.email || "",
       expiration: r.expiration,
