@@ -110,6 +110,9 @@ deposition-reporter neutrality/incentive rules **before** actively facilitating 
 payments. Consider a terms line stating DS doesn't arrange depositions or act as a
 deposition officer.
 
+**Shareable brief for the lawyer (and Rosie):** `mvp/docs/legal_question_deposition_neutrality.md`
+— plain-English explanation + the exact question(s) to ask.
+
 ---
 
 ## 4. Messaging & notifications — DECIDED (async threads) + engineering guidance
@@ -133,6 +136,26 @@ The prototype already does this.
   transactional deliverability. Fix the fundamentals first or any provider inherits the mess.
 
 ---
+
+## 5. Compliance posture — keep it light (LEANING)
+
+Aud is a solo founder and wants to avoid heavy compliance overhead (SOC 2, etc.). Good news:
+the way this is built already keeps the burden small.
+
+- **SOC 2 is not required.** It's a voluntary security audit that big enterprise buyers
+  sometimes demand. A directory for solo reporters and small firms doesn't need it. Revisit
+  only if a large customer ever makes it a condition of signing.
+- **The risky data is outsourced, on purpose:**
+  - Payments + card data → **Stripe** (card security / PCI is Stripe's job; we never see card numbers).
+  - Reporter identity + bank/tax info for payouts → **Stripe Connect** (we don't store SSNs or bank details).
+  - Sign-in + passwords → **Supabase Auth** (we don't store raw passwords).
+- **We store no files** — audio/deliverables are pass-through links only. This is the single
+  biggest thing keeping sensitive-document handling off our plate. Keep it that way.
+- **What we still owe (light):** a plain privacy policy, honoring reasonable data
+  access/deletion requests, and basic security hygiene. California's consumer-privacy law
+  (CCPA/CPRA) has size thresholds a tiny startup is under at first, but a privacy policy +
+  deletion process is good practice regardless.
+- Not legal advice — confirm specifics with the same lawyer during the terms-of-service review.
 
 ## Decisions still needed from Aud
 - [x] **Monetization shape (§1) — DECIDED 2026-07-17.** Firms pay a subscription for full
