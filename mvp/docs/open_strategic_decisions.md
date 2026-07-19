@@ -157,6 +157,31 @@ the way this is built already keeps the burden small.
   deletion process is good practice regardless.
 - Not legal advice — confirm specifics with the same lawyer during the terms-of-service review.
 
+## 6. Shared files & insecure links — DECIDED (stay hands-off)
+
+**Question:** what if a reporter shares a transcript (depo or hearing) through messaging via
+an insecure link (a public Google Doc, a personal server)?
+
+**Position:** low legal exposure, because DS is the **message pipe, not the file host** —
+we don't store, secure, host, or vet files or links; we hold only the URL text in a message,
+like email or Slack. The person who chose the insecure link is responsible for it. The
+"store no files" rule is what keeps us out of custody — protect it.
+
+Two real risks to manage anyway: **reputation** (a leak "through Dewey Sholes" looks bad even
+if not our fault) and the fact that **deposition transcripts are more sensitive** than
+hearing transcripts (hearings are usually public record; depos can be confidential/sealed).
+
+**How we handle it (cheap, keeps us out of custody):**
+- Terms clause spelling out that DS doesn't store/secure/vet files or links and that users are
+  solely responsible for how they share materials and for confidentiality/protective orders.
+  *(Added to the prototype Terms page.)*
+- A nudge in the messaging composer when a link is pasted: "only share links you control;
+  we don't store or secure files." *(Added.)*
+- Do **not** scan/vet/"secure" links — the more we police them, the more we look responsible.
+  Hands-off + clear user responsibility + a helpful nudge is the safest posture.
+- Confirm the terms wording in the one-time terms-of-service review (same lawyer as the depo
+  question). Not legal advice.
+
 ## Decisions still needed from Aud
 - [x] **Monetization shape (§1) — DECIDED 2026-07-17.** Firms pay a subscription for full
   profiles + messaging; reporters free to list, pay only to get paid (per-payment fee for

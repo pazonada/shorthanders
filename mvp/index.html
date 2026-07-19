@@ -4314,9 +4314,17 @@ function MessagesPanel({ embedded }) {
           {/* composer */}
           <div style={{ borderTop: "1px solid var(--rule)", padding: 14, background: "var(--bg)" }}>
             {linkOpen && (
-              <div style={{ display: "flex", gap: 8, marginBottom: 10, flexWrap: "wrap" }}>
-                <input className="ds-input" style={{ flex: 2, minWidth: 180, padding: "9px 12px", fontSize: 13 }} placeholder="Paste a secure link (your Dropbox, Box, etc.)" value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)} />
-                <input className="ds-input" style={{ flex: 1, minWidth: 120, padding: "9px 12px", fontSize: 13 }} placeholder="Label (optional)" value={linkLabel} onChange={(e) => setLinkLabel(e.target.value)} />
+              <div style={{ marginBottom: 10 }}>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                  <input className="ds-input" style={{ flex: 2, minWidth: 180, padding: "9px 12px", fontSize: 13 }} placeholder="Paste a secure link (your Dropbox, Box, etc.)" value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)} />
+                  <input className="ds-input" style={{ flex: 1, minWidth: 120, padding: "9px 12px", fontSize: 13 }} placeholder="Label (optional)" value={linkLabel} onChange={(e) => setLinkLabel(e.target.value)} />
+                </div>
+                {linkUrl.trim() ? (
+                  <div style={{ display: "flex", gap: 7, alignItems: "flex-start", marginTop: 8, fontSize: 12, color: "var(--ochre-deep)", background: "var(--ochre-soft)", border: "1px solid #E8D3A8", borderRadius: 9, padding: "8px 11px" }}>
+                    <Icon name="shield" size={14} style={{ flexShrink: 0, marginTop: 1 }} />
+                    <span>Only share links you control access to (private, access-controlled, or expiring). Dewey Sholes doesn't store, secure, or check your files or links. You're responsible for how sensitive material is shared.</span>
+                  </div>
+                ) : null}
               </div>
             )}
             <div style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
@@ -4434,7 +4442,11 @@ function TermsPage() {
       { h: "What Dewey Sholes is", p: ["Dewey Sholes plays exactly three roles, and no others:"], list: ["A directory provider – a searchable listing of independent California court reporters, built from public licensing data.", "A communication platform – a channel for law firms and reporters to message each other.", "A payment facilitator – a way for reporters to invoice firms and collect payment through Stripe."] },
       { h: "What Dewey Sholes is not", p: ["Dewey Sholes does not, and will not:"], list: ["Employ reporters or treat them as agents of the platform.", "Guarantee the quality, accuracy, or completeness of any reporter's work.", "Guarantee that any invoice will be paid.", "Negotiate, set, or influence rates between the parties.", "Mediate, arbitrate, or resolve disputes between a firm and a reporter.", "Store, host, or take custody of audio files, transcripts, or other work product.", "Become a party to any agreement between a firm and a reporter."] },
       { h: "The agreement is between you", p: ["Any service agreement exists solely between the law firm and the court reporter. Scope, deadlines, rates, confidentiality, and delivery are agreed directly between those two parties. Dewey Sholes is not a signatory and assumes no obligations under that agreement."] },
-      { h: "Files and confidential material", p: ["Dewey Sholes does not store your files. When you need to exchange audio or deliverables, share a link to your own secure storage through messaging. Because sensitive proceedings and personal information may be involved, keeping custody with the parties – not the platform – protects everyone."] },
+      { h: "Files and confidential material", p: [
+        "Dewey Sholes does not store, host, secure, or review any files. When you exchange audio, transcripts, or other deliverables, you share a link to your own storage through messaging. The file stays with you, never on our servers.",
+        "You are solely responsible for how you share materials, including choosing links that are private, access-controlled, or expiring, and for complying with any confidentiality obligations or protective orders that apply. Dewey Sholes does not vet the links you share and is not responsible for how you or the other party store or secure files.",
+        "Because depositions and other proceedings can involve confidential or personal information, keeping custody of files with the parties, not the platform, protects everyone.",
+      ] },
       { h: "Identity verification & payments", p: ["Reporter identity verification and all payment processing are handled by Stripe, including KYC, identity, tax, and banking. Dewey Sholes stores only the status Stripe returns, never your bank details or ID documents."] },
     ]} />;
 }

@@ -63,9 +63,17 @@ function MessagesPanel({ embedded }) {
           {/* composer */}
           <div style={{ borderTop: "1px solid var(--rule)", padding: 14, background: "var(--bg)" }}>
             {linkOpen && (
-              <div style={{ display: "flex", gap: 8, marginBottom: 10, flexWrap: "wrap" }}>
-                <input className="ds-input" style={{ flex: 2, minWidth: 180, padding: "9px 12px", fontSize: 13 }} placeholder="Paste a secure link (your Dropbox, Box, etc.)" value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)} />
-                <input className="ds-input" style={{ flex: 1, minWidth: 120, padding: "9px 12px", fontSize: 13 }} placeholder="Label (optional)" value={linkLabel} onChange={(e) => setLinkLabel(e.target.value)} />
+              <div style={{ marginBottom: 10 }}>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                  <input className="ds-input" style={{ flex: 2, minWidth: 180, padding: "9px 12px", fontSize: 13 }} placeholder="Paste a secure link (your Dropbox, Box, etc.)" value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)} />
+                  <input className="ds-input" style={{ flex: 1, minWidth: 120, padding: "9px 12px", fontSize: 13 }} placeholder="Label (optional)" value={linkLabel} onChange={(e) => setLinkLabel(e.target.value)} />
+                </div>
+                {linkUrl.trim() ? (
+                  <div style={{ display: "flex", gap: 7, alignItems: "flex-start", marginTop: 8, fontSize: 12, color: "var(--ochre-deep)", background: "var(--ochre-soft)", border: "1px solid #E8D3A8", borderRadius: 9, padding: "8px 11px" }}>
+                    <Icon name="shield" size={14} style={{ flexShrink: 0, marginTop: 1 }} />
+                    <span>Only share links you control access to (private, access-controlled, or expiring). Dewey Sholes doesn't store, secure, or check your files or links. You're responsible for how sensitive material is shared.</span>
+                  </div>
+                ) : null}
               </div>
             )}
             <div style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
