@@ -5,22 +5,23 @@ Not a marketing list — a single send, from a real person, that people can repl
 
 ## The list
 `mvp/data/email_campaign.csv` — 5,701 valid emails with per-reporter merge fields
-(`first_name`, `claim_url`, `city`, `county`, `license`, `segment`).
+(`greeting`, `first_name`, `claim_url`, `city`, `county`, `license`, `segment`).
 - **Send to the 5,145 `independent`.**
 - **Hold the 556 `court_gov`** (court-employed reporters at `.gov`/court addresses — wrong
   audience for a "get found by firms" note, and riskier for deliverability).
-- Heads-up: 7 recipients have a single-letter first name (e.g. "M Dowling" → "Hi M,"). Clean
-  those 7 by hand or set a "Hi there," fallback before sending.
+- The email opens with `{{greeting}},` — the `greeting` column is already "Hi <First>" for
+  everyone, and just "Hello" for the 7 reporters whose license lists only a first initial (e.g.
+  "M Dowling"). So nothing to clean by hand; the merge handles it.
 
-## Subject (pick/tweak)
-`your court reporter listing, {{first_name}}`
+## Subject
+`Invitation to edit your court reporter listing`
 
 ## The email (final)
 
 ```
-Hi {{first_name}},
+{{greeting}},
 
-I'm Audubon, and I'm building Dewey Sholes, a more robust directory of independent California court reporters. The idea is to help law firms find and hire you directly, so you keep your full rate instead of handing a cut to an agency, and run your practice on your own terms as an independent professional.
+I'm Aud Dougherty, and I'm building Dewey Sholes, a more robust directory of independent California court reporters. The idea is to help law firms find and hire you directly, so you keep your full rate instead of handing a cut to an agency, and run your practice on your own terms as an independent professional.
 
 Your public license info is already listed (every active CSR is in the state's database), and you can claim your profile for free to add your specialties, coverage, languages, and rates so firms can find and reach you. Claiming is free, always. If it's ever useful, you can also send invoices, collect card or ACH payments, and pull tax-ready records right from your profile –  those are all optional features as part of the Pro account.
 
@@ -30,7 +31,7 @@ That's really the whole reason I'm writing; this is a one-time note, and I won't
 
 Thank you!
 
-Audubon Dougherty & Rosie Reith
+Aud Dougherty & Rosie Reith
 Founders, Dewey Sholes
 
 Studio Crux, LLC • 70 W 35th St. Bayonne, NJ 07002
