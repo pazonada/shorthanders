@@ -43,8 +43,11 @@ attorney can find them later to order the transcript.
 2. We generate a card in a DS-branded template using **only their real profile info** — name,
    "Certified Shorthand Reporter, CSR #___," method, city/county, maybe top specialties and
    coverage — plus a **QR code + short link** to their public profile.
-3. Output: a printable PDF (standard card size); later, maybe a digital/shareable version.
-4. The reporter prints it (themselves or a print shop) and hands it out.
+3. Output: a print-ready PDF (standard card size), **plus a button to order physical cards
+   through a print-on-demand service** (Vistaprint, Moo, GotPrint, Amazon, etc.) — the
+   reporter clicks, the design is handed off, they order a batch and it ships to them. Later,
+   maybe a digital/shareable version too (a mobile card page or a vCard).
+4. The reporter hands the cards out at hearings.
 5. An attorney scans/opens it → the reporter's Dewey Sholes profile → they can reach out. To
    message or hire through the platform they'd sign up; if the reporter lists direct contact,
    the attorney can also just email them. (This lines up with the access model: basic info is
@@ -57,8 +60,11 @@ attorney can find them later to order the transcript.
   (to encourage sign-ups), or show the reporter's direct email too? Likely the profile link is
   primary, and the profile itself offers "email directly" (if the reporter opts in) or "message
   on Dewey Sholes (sign up)."
-- **Print:** MVP of the feature is a printable PDF the reporter prints themselves. Later:
-  order printed cards through a print-on-demand service.
+- **Print:** two paths — download a print-ready PDF, and/or a button that hands the design to
+  a print-on-demand service (Vistaprint / Moo / GotPrint / Amazon) to order physical cards.
+  Which vendor(s) is a to-do; each has a slightly different hand-off (some take an uploaded
+  print-ready file, some have a design API). A vendor **affiliate/referral link** could earn
+  Dewey Sholes a small cut when a reporter orders — a tiny bonus revenue line, worth noting.
 - **Design:** needs a DS-branded card template (logo + shorthand motif). Keep it clean and
   professional — attorneys are the audience.
 - **Never invent** — every field comes from the reporter's real profile; blank if they haven't
