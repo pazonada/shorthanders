@@ -34,30 +34,35 @@ already public, and (b) firms default to agencies unless they hire direct?
   is the CSR's (standard merchant), passed through via Stripe Connect.
 
 **Why this shape:**
-- The **directory isn't the moat** (the data is public). Discovery/messaging must stay
-  free enough to build liquidity; the paid value is the enriched profile, the messaging
-  convenience, and the get-paid tools — none of which the state site offers.
-- **No transaction cut = no disputes.** Aud's key catch: a per-invoice platform fee makes
-  firms balk after the fact. Removing it eliminates that failure mode entirely.
-- **Leak-resistant:** charging for access (not the deal) means off-platform hiring doesn't
-  cost DS revenue the way a transaction fee would.
-- **Predictable recurring revenue** covers fixed costs; success-based fees are lumpy and
-  zero until volume.
-- Firms are the side with money → primary revenue. CSR Pro is secondary, but getting paid
-  is a real CSR pain point today, so Pro can still earn even when a firm bypasses.
+- **You can't charge for the directory itself** — the contact data is already public. So
+  browsing and messaging have to stay free enough that enough reporters and firms actually
+  show up and use the site. What people *will* pay for is the enriched profile, the
+  messaging convenience, and the get-paid tools — none of which the state site offers.
+- **No cut of the transaction = no disputes.** Aud's key catch: a fee added to the invoice
+  makes firms balk after the fact. Removing it kills that problem entirely.
+- **It doesn't matter if a deal happens off the site.** Because you charge for access, not
+  for the deal, a firm and reporter working together off-platform doesn't cost you revenue —
+  you already got paid for the subscription. A per-transaction fee would lose that money.
+- **Steady monthly revenue** covers fixed costs. A per-transaction fee earns nothing until
+  lots of jobs flow through and swings up and down month to month.
+- Firms have the money, so they're the main revenue. CSR Pro is a bonus — but getting paid
+  is a real headache for reporters today, so Pro can still earn even when a firm goes around it.
 
-**Cost-anxiety reality check:** at low volume, infra is ~free (Vercel/Supabase/Resend/
-Stripe free tiers; Stripe's per-transaction fee is passed to the CSR). Not trying to be
-profitable at launch — proving usage. Monetization is a switch flipped after liquidity.
+**On the cost worry:** at low usage, the tools are basically free (Vercel/Supabase/Resend/
+Stripe all have free tiers; Stripe's per-transaction fee is passed to the CSR). You're not
+trying to turn a profit at launch — you're trying to prove people use it. You turn on
+serious monetization once there's real usage.
 
 **Open sub-questions:**
-- **Firm access gate** (leaning yes): basic public info free; full profiles + messaging
-  behind the paywall, shown as a blurred teaser (the Care.com/LinkedIn conversion mechanic).
-- **If a transaction fee is ever added later:** make it **CSR-absorbed** (invisible to the
-  firm) so it can't trigger the dispute. Not at launch.
+- **Firm gate** (leaning yes): basic public info is free; full profiles + messaging sit
+  behind the paywall, shown as a blurred preview (the same trick Care.com and LinkedIn use).
+- **If you ever add a transaction fee later:** take it out of the CSR's payout (invisible to
+  the firm) so it can never trigger the dispute. Not at launch.
 - **Actual prices:** unset — do not invent. Aud sets them when ready.
-- Firm subscriptions are a **slow build** (chicken-and-egg + agency default). Beachhead:
-  direct-hire / transcription-leaning firms.
+- Firm subscriptions will be slow to grow — a catch-22 (firms won't pay until lots of
+  reporters have rich profiles; reporters won't fill profiles until firms are there), plus
+  the habit of just calling an agency. Start with the firms most likely to say yes: ones
+  that already hire reporters directly, and transcription work (where agencies are weakest).
 
 ---
 
