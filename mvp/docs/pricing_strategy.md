@@ -90,18 +90,30 @@ per-payment fee would depend on how many jobs flow through, which we can't estim
 
 ## What the numbers tell you
 
-1. **Firms are ~65–85% of the revenue in every scenario.** The reporter side barely moves the
-   total. So spend your energy on firm sign-ups, and price reporters to *join*, not to milk.
-2. **Break-even is low; income needs scale.** Your costs at low usage are tiny (free tiers on
-   Vercel/Supabase/Resend; the card fee is the reporter's). Even Scenario 1 (50 firms) at
-   ~$2,200/month more than covers running the site. But a real salary needs **hundreds** of
-   paying firms — that's the honest bar, and it's a firm-acquisition problem, not a pricing one.
-3. **So launch cheap on the firm side.** At ~$29/mo with a free trial, a firm that hires even one
-   reporter a month and skips the agency markup comes out way ahead — an easy "yes." Raise the
-   price later, once you've proven it and have reviews to back it up.
-4. **The reporter side is a rounding error on revenue but the foundation of the product.** Keep
-   it free to list; make Pro cheap or purely pay-as-you-go. Reporters filling out rich profiles
-   is what makes the firm subscription worth buying.
+> Correction (2026-07-17): an earlier version of this doc counted only the flat Pro
+> subscription on the reporter side and called reporters a "rounding error." That was wrong.
+> Once you include the **transaction fee on payments collected**, the reporter side is a real
+> chunk of revenue, because that fee scales with the dollars flowing through you. See the
+> adjustable model in `revenue_model.xlsx` — the figures below now include it.
+
+1. **Firms are the biggest single source (~55–65%), but reporters are ~35–45%, not a rounding
+   error.** The reporter transaction fee grows with payment volume, so as more real jobs flow
+   through you, the reporter side climbs. Firms are still the thing to chase hardest, but the
+   reporter money is meaningful.
+2. **The transaction fee is the reporter side's engine, not the flat Pro plan.** Flat Pro
+   subscriptions stay small; the fee on payments is where the reporter dollars come from. Two
+   caveats: those numbers swing the most on your guesses (how much volume actually flows
+   through you), and reporters can dodge the fee by paying off-platform — so making in-platform
+   payment genuinely convenient matters for this line to hold up.
+3. **Break-even is low; income needs scale.** Costs at low usage are tiny (free tiers; the card
+   fee is the reporter's). A handful of firms covers running the site. A real salary needs
+   **hundreds** of paying firms and real payment volume — a sales problem, not a pricing one.
+4. **Launch cheap on the firm side.** At ~$29/mo with a free trial, a firm that skips one agency
+   markup a month is already ahead — an easy "yes." Raise it later, once you've proven it and
+   have reviews.
+5. **Keep the reporter side light to *join*, but don't give away the transaction fee.** Free to
+   list; the small fee only kicks in when a reporter actually gets paid, and it's still far
+   below the agency cut.
 
 ## Still yours to decide
 - The actual prices (these are ranges to react to — don't treat them as set).
