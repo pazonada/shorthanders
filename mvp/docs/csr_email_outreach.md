@@ -21,7 +21,7 @@ Not a marketing list — a single send, from a real person, that people can repl
 ```
 {{greeting}},
 
-I'm Aud Dougherty, and I'm building Dewey Sholes, a more robust directory of independent California court reporters. The idea is to help law firms find and hire you directly, so you keep your full rate instead of handing a cut to an agency, and run your practice on your own terms as an independent professional.
+I'm Aud, and I'm building Dewey Sholes with my co-founder Rosie – a more robust directory of independent California court reporters. The idea is to help law firms find and hire you directly, so you keep your full rate instead of handing a cut to an agency, and run your practice on your own terms as an independent professional.
 
 Your public license info is already listed (every active CSR is in the state's database), and you can claim your profile for free to add your specialties, coverage, languages, and rates so firms can find and reach you. Claiming is free, always. If it's ever useful, you can also send invoices, collect card or ACH payments, and pull tax-ready records right from your profile –  those are all optional features as part of the Pro account.
 
@@ -31,7 +31,7 @@ That's really the whole reason I'm writing; this is a one-time note, and I won't
 
 Thank you!
 
-Aud Dougherty & Rosie Reith
+Aud and Rosie
 Founders, Dewey Sholes
 
 Studio Crux, LLC • 70 W 35th St. Bayonne, NJ 07002
