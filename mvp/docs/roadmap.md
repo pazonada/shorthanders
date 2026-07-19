@@ -72,7 +72,47 @@ attorney can find them later to order the transcript.
 
 ---
 
+## Reviews — collect early, display later — ROADMAP
+
+**What it is:** firms rate a reporter on **quality** and **timeliness** (like the full version
+of Dewey Sholes), plus an optional written comment. Prompted **right after the firm pays an
+invoice.**
+
+**The sequencing (this is the smart part):** start **collecting** as soon as real payments are
+live, but **don't display** anything until each reporter has a decent number of reviews and
+we've thought through moderation. You can't backfill reviews for past jobs, so collecting
+early is uniquely valuable — but showing them early backfires.
+
+**Why not display from the start:**
+- One or two reviews are noisy and unfair.
+- A reporter with zero reviews looks bad next to one with a few — punishes newcomers.
+- Before it's public you need enough data per reporter, a way to handle bad/abusive reviews,
+  and a way for reporters to respond. All display-time work.
+
+**Trigger — the payment-success moment:**
+- Fresh impressions right after the firm paid.
+- **Payment-gated = trustworthy:** only a firm that actually paid a reporter can review them
+  (like an Amazon "verified purchase"). Quietly solves fake reviews.
+- **Nuance:** only works for firms who pay *through* the platform. Reviews build up for the
+  reporters who use invoicing/payments (Pro reporters) — a nice bonus reason to go Pro.
+
+**Timing note:** the prompt hangs off the *real* payment-success screen, which isn't live yet
+(payments are mocked in the prototype). So this is **not** for the current demo — it's a small
+addition to the "payment received → rate your reporter?" screen **when Stripe goes live.**
+
+**Keep the collection simple:** two quick ratings (quality, timeliness) + one optional comment,
+skippable, one screen. Firm rates reporter only (a reporter-rates-firm direction can come later).
+
+**Bank for display-time (later):**
+- A per-reporter threshold before any reviews show.
+- Moderation / abuse handling; a reporter's right to respond.
+- Be transparent with reporters up front that reviews are being collected and will eventually
+  show (put it in their onboarding/terms).
+- Reviews are user-generated content we host, not author — standard platform posture; confirm
+  wording in the terms-of-service review.
+
 ## Parking lot (mentioned, not yet scoped)
-- **Reviews / reputation** — honest per-reporter reviews would be the strongest reason a firm
-  prefers Dewey Sholes over calling an agency. Needs volume first; revisit post-launch.
 - **Featured / promoted listings** — Rosie's earlier idea; a discovery surface, decided post-launch.
+- **Enterprise account options** (SSO, multi-seat/admin roles, custom contracts, SLAs) —
+  deferred. Build only when a large customer asks and will pay. Light team-sharing for a firm
+  is the earliest piece, if firms ask.
