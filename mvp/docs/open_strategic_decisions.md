@@ -18,47 +18,56 @@ OPEN · TO-DO (an action, often needing an outside expert).
 
 ---
 
-## 1. Monetization model — OPEN (leaning: two-sided subscription, no transaction cut)
+## 1. Monetization model — DECIDED (shape; prices still TBD)
 
 **Question:** how does DS make money and recoup costs, given (a) CSR contact info is
 already public, and (b) firms default to agencies unless they hire direct?
 
-**Leaning / recommendation:**
-- **Charge for access and tools, not for the transaction.** No per-job or per-payment cut.
-- **Firms:** free to search + see basic (public) info; a **paid subscription** unlocks
-  full enriched profiles + messaging + a consolidated invoice/receipt archive. Free trial.
-- **CSRs:** free to claim, build a full profile, appear in search, and receive/reply to
-  messages; **Pro** subscription for invoicing, card/ACH payments, payout tracking, and a
-  1099/tax-ready archive + a "Pays on Dewey Sholes" badge.
-- **Payments carry no DS fee** — the firm pays the exact invoice; Stripe's processing fee
-  is the CSR's (standard merchant), passed through via Stripe Connect.
+**The model:**
+- **Firms:** free to search + see basic (public) info; a **paid monthly subscription**
+  unlocks full claimed profiles + messaging + a tidy history of invoices/receipts for any
+  reporter who bills them through the platform. Free trial. **This is the main revenue.**
+- **Reporters:** free to claim, build a full profile, appear in search, and receive/reply
+  to messages. To actually get *paid* through the site, one of two ways:
+  - **"Pay only when you get paid"** — a small fee taken out of the reporter's side of each
+    payment (invisible to the firm). Best for part-time / occasional reporters, who pay
+    nothing in the months they don't use it.
+  - **Optional flat monthly plan** — better value for heavy users who'd rather not count.
+- **The firm never sees a Dewey Sholes fee on an invoice.** They pay the exact amount the
+  reporter billed. Any DS fee comes out of the reporter's side. **This is what prevents the
+  firm-balks-at-a-surprise-fee dispute Aud was worried about.**
 
-**Why this shape:**
-- **You can't charge for the directory itself** — the contact data is already public. So
-  browsing and messaging have to stay free enough that enough reporters and firms actually
-  show up and use the site. What people *will* pay for is the enriched profile, the
-  messaging convenience, and the get-paid tools — none of which the state site offers.
-- **No cut of the transaction = no disputes.** Aud's key catch: a fee added to the invoice
-  makes firms balk after the fact. Removing it kills that problem entirely.
-- **It doesn't matter if a deal happens off the site.** Because you charge for access, not
-  for the deal, a firm and reporter working together off-platform doesn't cost you revenue —
-  you already got paid for the subscription. A per-transaction fee would lose that money.
-- **Steady monthly revenue** covers fixed costs. A per-transaction fee earns nothing until
-  lots of jobs flow through and swings up and down month to month.
-- Firms have the money, so they're the main revenue. CSR Pro is a bonus — but getting paid
-  is a real headache for reporters today, so Pro can still earn even when a firm goes around it.
+**What Stripe actually costs us (this is the key correction):**
+- The **processing fee** — cards 2.9% + $0.30; ACH ~0.8% capped at $5 — is the **reporter's**
+  cost, deducted from their payment, exactly like they'd pay Square/PayPal/QuickBooks to
+  accept a card anywhere. We pass it through; it never touches our books. **We do not eat
+  the 2.9%.**
+- **Our** real Stripe cost is only the Connect overhead: roughly **$2/month per active
+  reporter account** (only in months they actually get paid) + a small payout fee
+  (~0.25% + $0.25). A reporter who doesn't invoice that month costs us ~nothing.
+- *(Stripe's published rates as of this writing — verify on stripe.com/pricing; they change.)*
 
-**On the cost worry:** at low usage, the tools are basically free (Vercel/Supabase/Resend/
-Stripe all have free tiers; Stripe's per-transaction fee is passed to the CSR). You're not
-trying to turn a profit at launch — you're trying to prove people use it. You turn on
-serious monetization once there's real usage.
+**Why this works:**
+- **You can't charge for the directory itself** — the contact data is public. So browsing
+  and messaging stay cheap/free so people actually use the site. What people pay for is the
+  enriched profile, the messaging, and the get-paid tools — none on the state site.
+- **A subscription easily covers our real Stripe cost** (~$2/active reporter/month), because
+  we're *not* trying to claw back the 2.9% — that was never ours. Firm subscriptions are
+  almost pure profit (firms generate no processing cost at all).
+- **The reporter "pay only when you get paid" option earns something from the part-timers**
+  who'd never buy a monthly plan — without any firm-facing fee, so no disputes.
+- **Off-platform deals don't cost us.** We charge for access, not the job, so a firm and
+  reporter working together off-site doesn't lose us revenue — we already got the subscription.
 
-**Open sub-questions:**
-- **Firm gate** (leaning yes): basic public info is free; full profiles + messaging sit
-  behind the paywall, shown as a blurred preview (the same trick Care.com and LinkedIn use).
-- **If you ever add a transaction fee later:** take it out of the CSR's payout (invisible to
-  the firm) so it can never trigger the dispute. Not at launch.
-- **Actual prices:** unset — do not invent. Aud sets them when ready.
+**On the cost worry:** at low usage the tools are basically free (Vercel/Supabase/Resend/
+Stripe free tiers; the processing fee is the reporter's). Not trying to turn a profit at
+launch — trying to prove people use it. Turn on serious pricing once there's real usage.
+
+**Still open:**
+- **Actual prices** (firm subscription, reporter flat plan, and the reporter per-payment %):
+  unset — do not invent. Aud sets them.
+- **Firm gate** (leaning yes): basic public info free; full profiles + messaging behind the
+  paywall, shown as a blurred preview (the trick Care.com and LinkedIn use).
 - Firm subscriptions will be slow to grow — a catch-22 (firms won't pay until lots of
   reporters have rich profiles; reporters won't fill profiles until firms are there), plus
   the habit of just calling an agency. Start with the firms most likely to say yes: ones
@@ -126,8 +135,10 @@ The prototype already does this.
 ---
 
 ## Decisions still needed from Aud
-- [ ] Confirm monetization shape (§1): two-sided subscription, no transaction cut.
+- [x] **Monetization shape (§1) — DECIDED 2026-07-17.** Firms pay a subscription for full
+  profiles + messaging; reporters free to list, pay only to get paid (per-payment fee for
+  occasional users OR flat plan for heavy users); no firm-facing transaction fee.
 - [ ] Confirm the firm access gate (§1): full profiles + messaging behind the firm paywall.
-- [ ] Set prices when ready — don't invent them.
+- [ ] Set prices when ready — don't invent them (firm sub, reporter flat plan, reporter per-payment %).
 - [ ] Engage a reporting-industry attorney on the deposition-neutrality question (§3).
 - [ ] Confirm positioning: lead with transcription/direct-hire; directory still shows depos (§2).
