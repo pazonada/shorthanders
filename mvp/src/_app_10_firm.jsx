@@ -11,7 +11,7 @@ function FirmDashboard() {
     { id: "subscription", label: "Subscription" },
   ];
   return (
-    <DashLayout title="Morgan & Reyes LLP" subtitle="Firm account · Legal Operations" tabs={tabs} active={tab} onTab={setTab}>
+    <DashLayout title={store.firmName} subtitle="Firm account · Legal Operations" tabs={tabs} active={tab} onTab={setTab}>
       {tab === "saved" && (
         saved.length ? (
           <>

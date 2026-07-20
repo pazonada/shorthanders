@@ -87,14 +87,15 @@ function StoreProvider({ children }) {
   const [customTemplates, setCustomTemplates] = useState([]);
   const [invitedFirms, setInvitedFirms] = useState([]);
   const [firmPlan, setFirmPlan] = useState("free");   // 'free' | 'pro'
+  const [firmName, setFirmName] = useState("Morgan & Reyes LLP"); // demo default; set from signup
   // Reporters a free firm may fully view/message: the ones who invited or are connected to them.
   const [unlockedReporters, setUnlockedReporters] = useState(["10518", "8239", "4360"]);
 
   const store = {
-    role, myCsr, saved, convos, invoices, customTemplates, invitedFirms, firmPlan, unlockedReporters,
+    role, myCsr, saved, convos, invoices, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters,
     addTemplate: (t) => setCustomTemplates((xs) => [...xs, t]),
     enterAsReporter: () => setRole("reporter"),
-    enterAsFirm: () => setRole("firm"),
+    enterAsFirm: (name) => { setRole("firm"); if (name && name.trim()) setFirmName(name.trim()); },
     logout: () => setRole(null),
     upgradeFirm: () => setFirmPlan("pro"),
     toggleSaved: (id) => setSaved((s) => s.includes(id) ? s.filter((x) => x !== id) : [...s, id]),

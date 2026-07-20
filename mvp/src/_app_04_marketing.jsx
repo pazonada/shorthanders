@@ -90,7 +90,7 @@ function ValueCard({ icon, tone, eyebrow, title, points, cta }) {
   const bg = tone === "ochre" ? "var(--ochre-soft)" : tone === "sage" ? "var(--sage-soft)" : "var(--brand-soft)";
   const fg = tone === "ochre" ? "var(--ochre-deep)" : tone === "sage" ? "var(--sage-deep)" : "var(--brand-dark)";
   return (
-    <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 16, height: "100%" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <div style={{ width: 44, height: 44, borderRadius: 12, background: bg, color: fg, display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name={icon} size={22} /></div>
         <span style={{ fontSize: 13, fontWeight: 700, color: fg, textTransform: "uppercase", letterSpacing: ".04em" }}>{eyebrow}</span>
@@ -99,7 +99,9 @@ function ValueCard({ icon, tone, eyebrow, title, points, cta }) {
       <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 11 }}>
         {points.map((p, i) => <li key={i} style={{ display: "flex", gap: 10, fontSize: 15, color: "var(--ink-soft)", lineHeight: 1.5 }}><Icon name="check" size={18} style={{ color: fg, flexShrink: 0, marginTop: 2 }} />{p}</li>)}
       </ul>
-      <button className="btn btn-primary" style={{ alignSelf: "flex-start", marginTop: "auto" }} onClick={() => navigate(cta[1])}>{cta[0]} <Icon name="arrow" size={16} /></button>
+      <div style={{ marginTop: "auto", paddingTop: 15, display: "flex" }}>
+        <button className="btn btn-primary" onClick={() => navigate(cta[1])}>{cta[0]} <Icon name="arrow" size={16} /></button>
+      </div>
     </div>
   );
 }

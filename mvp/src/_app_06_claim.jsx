@@ -281,7 +281,7 @@ function FirmSignup() {
   const PRACTICE = ["Insurance defense", "Personal injury", "Family law", "Employment", "Medical malpractice", "Civil / commercial", "Probate / trust"];
   const step0Valid = form.firm.trim().length > 1 && form.name.trim().length > 1;
   const step1Valid = /.+@.+\..+/.test(form.email) && form.pw.length >= 1;
-  const finish = () => { store.enterAsFirm(); navigate("/firm"); };
+  const finish = () => { store.enterAsFirm(form.firm); navigate("/firm"); };
   return (
     <Page>
       <div style={{ maxWidth: 640, margin: "0 auto" }}>
