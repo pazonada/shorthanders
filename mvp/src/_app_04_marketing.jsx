@@ -17,7 +17,7 @@ function LandingPage() {
           </p>
           <div style={{ display: "flex", gap: 14, marginTop: 34, flexWrap: "wrap" }}>
             <button className="btn btn-primary" onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
-            <button className="btn btn-secondary" onClick={() => navigate("/claim")}>Claim your profile</button>
+            <button className="btn btn-secondary" onClick={() => navigate("/claim")}>Claim your reporter profile</button>
           </div>
           <div style={{ marginTop: 26, fontSize: 13, color: "var(--muted)", display: "flex", gap: 20, flexWrap: "wrap" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="shield" size={14} /> Verified via Stripe identity</span>
@@ -74,24 +74,13 @@ function LandingPage() {
       {/* liability / trust */}
       <section className="container" style={{ padding: "56px 24px", maxWidth: 820, textAlign: "center" }}>
         <Icon name="shield" size={30} style={{ margin: "0 auto", color: "var(--brand)" }} />
-        <h2 style={{ fontSize: 30, marginTop: 14 }}>A directory and a payment tool – nothing you have to sign over</h2>
+        <h2 style={{ fontSize: 30, marginTop: 14 }}>A directory and a payment tool</h2>
         <p style={{ color: "var(--ink-soft)", marginTop: 14, fontSize: 16, lineHeight: 1.7 }}>
           Dewey Sholes helps a firm find a reporter and helps a reporter get paid. We don't employ reporters, guarantee work, negotiate rates, or hold your files. Your service agreement is strictly between the firm and the reporter.
         </p>
         <button className="btn btn-secondary" style={{ marginTop: 22 }} onClick={() => navigate("/terms")}>Read how this works</button>
       </section>
 
-      {/* final CTA */}
-      <section style={{ background: "var(--ink)", color: "#fff" }}>
-        <div className="container" style={{ padding: "64px 24px", textAlign: "center", maxWidth: 720 }}>
-          <h2 className="h-section" style={{ color: "#fff" }}>Ready when you are.</h2>
-          <p style={{ color: "rgba(255,255,255,.75)", marginTop: 14, fontSize: 17 }}>Search for a reporter, or claim the profile that's already waiting for you.</p>
-          <div style={{ display: "flex", gap: 14, justifyContent: "center", marginTop: 30, flexWrap: "wrap" }}>
-            <button className="btn btn-white" onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
-            <button className="btn" style={{ background: "transparent", color: "#fff", border: "1px solid rgba(255,255,255,.3)" }} onClick={() => navigate("/for-reporters")}>I'm a reporter</button>
-          </div>
-        </div>
-      </section>
       <Footer />
     </>
   );

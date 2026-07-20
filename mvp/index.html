@@ -2852,7 +2852,7 @@ const SEED_CONVOS = [
 function Nav() {
   const store = useStore();
   const [open, setOpen] = useState(false);      // mobile menu
-  const [demoOpen, setDemoOpen] = useState(false); // persona switch
+  const [loginOpen, setLoginOpen] = useState(false); // login modal
   const route = useRoute();
   const link = (to, label) => (
     <button onClick={() => { navigate(to); setOpen(false); }}
@@ -2860,6 +2860,7 @@ function Nav() {
         color: route.startsWith("#" + to) && to !== "/" ? "var(--ink)" : "var(--muted)", padding: "8px 0" }}>{label}</button>
   );
   return (
+    <>
     <header style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(255,255,255,0.85)", backdropFilter: "blur(12px)", borderBottom: "1px solid var(--rule)" }}>
       <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 66 }}>
         <Logo onClick={() => navigate("/")} />
@@ -2873,49 +2874,67 @@ function Nav() {
           {store.role === "reporter" && <button className="btn btn-primary" style={{ padding: "10px 18px", fontSize: 14 }} onClick={() => navigate("/reporter")}>My dashboard</button>}
           {store.role === "firm" && <button className="btn btn-primary" style={{ padding: "10px 18px", fontSize: 14 }} onClick={() => navigate("/firm")}>My firm</button>}
           {!store.role && (
-            <>
-              <button className="chip-filter" onClick={() => setDemoOpen((v) => !v)} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                Log in <Icon name="chevron" size={14} />
-              </button>
-              {demoOpen && (
-                <div style={{ position: "absolute", top: 46, right: 0, width: 260, background: "#fff", border: "1px solid var(--rule)", borderRadius: 14, boxShadow: "var(--shadow-lg)", padding: 8, zIndex: 60 }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", padding: "8px 10px 4px" }}>Prototype – jump in as</div>
-                  <button onClick={() => { store.enterAsReporter(); setDemoOpen(false); navigate("/reporter"); }} style={demoItem}>
-                    <Icon name="user" size={16} /> A court reporter
-                    <span style={demoHint}>Adam Elwailly, CSR #14585</span>
-                  </button>
-                  <button onClick={() => { store.enterAsFirm(); setDemoOpen(false); navigate("/firm"); }} style={demoItem}>
-                    <Icon name="building" size={16} /> A law firm
-                    <span style={demoHint}>Morgan &amp; Reyes LLP</span>
-                  </button>
-                </div>
-              )}
-            </>
+            <button className="btn btn-secondary" style={{ padding: "10px 20px", fontSize: 14 }} onClick={() => setLoginOpen(true)}>Log in</button>
           )}
           {store.role && <button title="Log out" onClick={() => { store.logout(); navigate("/"); }} style={{ background: "none", border: "1px solid var(--rule)", borderRadius: 999, width: 38, height: 38, cursor: "pointer", color: "var(--muted)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="logout" size={16} /></button>}
         </div>
       </div>
     </header>
+    {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
+    </>
   );
 }
-const demoItem = { display: "flex", alignItems: "center", gap: 10, width: "100%", textAlign: "left", background: "none", border: "none", cursor: "pointer", padding: "11px 10px", borderRadius: 10, fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: 14, color: "var(--ink)", position: "relative" };
-const demoHint = { position: "absolute", right: 10, fontSize: 11, fontWeight: 500, color: "var(--dim)" };
+
+// One login for both reporters and firms + a sign-up link. The prototype shortcuts
+// stand in for real accounts (no auth in the demo).
+function LoginModal({ onClose }) {
+  const store = useStore();
+  const [email, setEmail] = useState("");
+  const [pw, setPw] = useState("");
+  const goReporter = () => { store.enterAsReporter(); onClose(); navigate("/reporter"); };
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="ds-card" style={{ maxWidth: 420, width: "92%" }} onClick={(e) => e.stopPropagation()}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+          <div>
+            <h3 style={{ fontSize: 24 }}>Log in</h3>
+            <p style={{ color: "var(--muted)", fontSize: 14, marginTop: 4 }}>Reporters and firms sign in here.</p>
+          </div>
+          <button onClick={onClose} title="Close" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", padding: 4, flexShrink: 0 }}><Icon name="x" size={20} /></button>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 18 }}>
+          <div><label className="ds-label">Email</label><input className="ds-input" type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
+          <div><label className="ds-label">Password</label><input className="ds-input" type="password" placeholder="••••••••" value={pw} onChange={(e) => setPw(e.target.value)} /></div>
+          <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 4 }} onClick={goReporter}>Log in</button>
+        </div>
+        <p style={{ fontSize: 13.5, color: "var(--muted)", textAlign: "center", marginTop: 16 }}>New to Dewey Sholes? <button onClick={() => { onClose(); navigate("/claim"); }} style={{ background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, cursor: "pointer", padding: 0, fontSize: 13.5 }}>Create an account</button></p>
+        <div style={{ marginTop: 16, paddingTop: 14, borderTop: "1px solid var(--rule)" }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 10, textAlign: "center" }}>Prototype – jump straight in as</div>
+          <div style={{ display: "flex", gap: 10 }}>
+            <button className="btn btn-secondary" style={{ flex: 1, justifyContent: "center" }} onClick={goReporter}><Icon name="user" size={15} /> A reporter</button>
+            <button className="btn btn-secondary" style={{ flex: 1, justifyContent: "center" }} onClick={() => { store.enterAsFirm(); onClose(); navigate("/firm"); }}><Icon name="building" size={15} /> A law firm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ─── Footer ────────────────────────────────────────────────────────
 function Footer() {
   const col = (title, links) => (
     <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
-      <div style={{ fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em" }}>{title}</div>
-      {links.map(([to, label]) => <button key={label} onClick={() => navigate(to)} style={{ background: "none", border: "none", textAlign: "left", cursor: "pointer", fontFamily: "'Inter', sans-serif", fontSize: 14, color: "var(--muted)", padding: 0 }}>{label}</button>)}
+      <div style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,.5)", textTransform: "uppercase", letterSpacing: ".05em" }}>{title}</div>
+      {links.map(([to, label]) => <button key={label} onClick={() => navigate(to)} style={{ background: "none", border: "none", textAlign: "left", cursor: "pointer", fontFamily: "'Inter', sans-serif", fontSize: 14, color: "rgba(255,255,255,.72)", padding: 0 }}>{label}</button>)}
     </div>
   );
   return (
-    <footer style={{ borderTop: "1px solid var(--rule)", background: "var(--bg-soft)", marginTop: 80 }}>
+    <footer style={{ background: "var(--ink)", marginTop: 80 }}>
       <div className="container" style={{ padding: "56px 24px 40px" }}>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 48, justifyContent: "space-between" }}>
           <div style={{ maxWidth: 300 }}>
-            <Logo onClick={() => navigate("/")} />
-            <p style={{ marginTop: 14, fontSize: 14, color: "var(--muted)", lineHeight: 1.6 }}>The directory of independent California court reporters. Find a reporter, or run your reporting business from one place.</p>
+            <Logo onClick={() => navigate("/")} light />
+            <p style={{ marginTop: 14, fontSize: 14, color: "rgba(255,255,255,.6)", lineHeight: 1.6 }}>The directory of independent California court reporters. Find a reporter, or run your reporting business from one place.</p>
           </div>
           <div style={{ display: "flex", gap: 56, flexWrap: "wrap" }}>
             {col("Find reporters", [["/directory", "Search directory"], ["/for-firms", "For law firms"], ["/pricing", "Pricing"]])}
@@ -2923,7 +2942,7 @@ function Footer() {
             {col("Company", [["/about", "About"], ["/terms", "Terms of service"], ["/privacy", "Privacy"], ["/contact", "Contact"]])}
           </div>
         </div>
-        <div style={{ marginTop: 44, paddingTop: 24, borderTop: "1px solid var(--rule)", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12, fontSize: 13, color: "var(--dim)" }}>
+        <div style={{ marginTop: 44, paddingTop: 24, borderTop: "1px solid rgba(255,255,255,.13)", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12, fontSize: 13, color: "rgba(255,255,255,.5)" }}>
           <span>© 2026 Studio Crux, LLC. Dewey Sholes is a directory and payment facilitator, not a court reporting agency.</span>
           <span>Certified license data sourced from public California CSR records.</span>
         </div>
@@ -2987,7 +3006,7 @@ function LandingPage() {
           </p>
           <div style={{ display: "flex", gap: 14, marginTop: 34, flexWrap: "wrap" }}>
             <button className="btn btn-primary" onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
-            <button className="btn btn-secondary" onClick={() => navigate("/claim")}>Claim your profile</button>
+            <button className="btn btn-secondary" onClick={() => navigate("/claim")}>Claim your reporter profile</button>
           </div>
           <div style={{ marginTop: 26, fontSize: 13, color: "var(--muted)", display: "flex", gap: 20, flexWrap: "wrap" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="shield" size={14} /> Verified via Stripe identity</span>
@@ -3044,24 +3063,13 @@ function LandingPage() {
       {/* liability / trust */}
       <section className="container" style={{ padding: "56px 24px", maxWidth: 820, textAlign: "center" }}>
         <Icon name="shield" size={30} style={{ margin: "0 auto", color: "var(--brand)" }} />
-        <h2 style={{ fontSize: 30, marginTop: 14 }}>A directory and a payment tool – nothing you have to sign over</h2>
+        <h2 style={{ fontSize: 30, marginTop: 14 }}>A directory and a payment tool</h2>
         <p style={{ color: "var(--ink-soft)", marginTop: 14, fontSize: 16, lineHeight: 1.7 }}>
           Dewey Sholes helps a firm find a reporter and helps a reporter get paid. We don't employ reporters, guarantee work, negotiate rates, or hold your files. Your service agreement is strictly between the firm and the reporter.
         </p>
         <button className="btn btn-secondary" style={{ marginTop: 22 }} onClick={() => navigate("/terms")}>Read how this works</button>
       </section>
 
-      {/* final CTA */}
-      <section style={{ background: "var(--ink)", color: "#fff" }}>
-        <div className="container" style={{ padding: "64px 24px", textAlign: "center", maxWidth: 720 }}>
-          <h2 className="h-section" style={{ color: "#fff" }}>Ready when you are.</h2>
-          <p style={{ color: "rgba(255,255,255,.75)", marginTop: 14, fontSize: 17 }}>Search for a reporter, or claim the profile that's already waiting for you.</p>
-          <div style={{ display: "flex", gap: 14, justifyContent: "center", marginTop: 30, flexWrap: "wrap" }}>
-            <button className="btn btn-white" onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
-            <button className="btn" style={{ background: "transparent", color: "#fff", border: "1px solid rgba(255,255,255,.3)" }} onClick={() => navigate("/for-reporters")}>I'm a reporter</button>
-          </div>
-        </div>
-      </section>
       <Footer />
     </>
   );
