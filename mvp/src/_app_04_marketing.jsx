@@ -31,10 +31,10 @@ function LandingPage() {
       <section className="container" style={{ padding: "16px 24px 8px" }}>
         <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}>
           <ValueCard icon="building" tone="brand" eyebrow="For law firms" title="Find and hire reporters quickly"
-            points={["Search 4,700+ CSRs by county, city, language, specialty, and rush availability", "Rich, verified profiles – no more cold-calling agencies", "Message reporters directly and agree terms yourselves"]}
+            points={["Search every CA reporter by county, specialty, language, and turnaround", "See full profiles and message reporters directly – you choose who to hire", "Pay invoices online by card or ACH – no agency markup"]}
             cta={["Browse the directory", "/directory"]} />
           <ValueCard icon="user" tone="sage" eyebrow="For court reporters" title="Run your business from one place"
-            points={["Claim a professional profile firms can actually find", "Send invoices and collect card or ACH payments via Stripe", "Track what's paid, sent, and overdue – no agency cut, ever"]}
+            points={["A professional profile firms find when they search – no website of your own to build", "Invoice in seconds, get paid by card or ACH, and get year-end 1099s and clean records", "No agency taking 30–50% – you keep your rate, minus only a small platform fee"]}
             cta={["Claim your free profile", "/claim"]} />
         </div>
       </section>
@@ -125,7 +125,7 @@ function ForFirmsPage() {
       <MarketingHero eyebrow="For law firms" title="Stop calling agencies. Find the reporter yourself."
         sub="Every licensed CSR in California, searchable by the things that actually matter – county, specialty, language, and whether they take rush work. Message them directly and agree terms without a middleman marking up the rate." />
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 8 }}>
-        <FeatureBlock icon="search" title="Real search" body="Filter 4,700+ reporters by county, city, language, years of experience, specialty, work type, and rush availability." />
+        <FeatureBlock icon="search" title="Detailed search" body="Filter every licensed California reporter by county, city, language, years of experience, specialty, proceedings, services, and rush availability." />
         <FeatureBlock icon="badge" title="Verified profiles" body="Claimed reporters verify their identity through Stripe. You see who you're hiring before you reach out." />
         <FeatureBlock icon="message" title="Direct messaging" body="Contact reporters through the platform. Scope, dates, and rates are agreed directly between you." />
         <FeatureBlock icon="dollar" title="No markup" body="You're not paying an agency's cut. The rate you agree with the reporter is the rate you pay." />
@@ -143,14 +143,14 @@ function ForReportersPage() {
   return (
     <Page>
       <MarketingHero eyebrow="For court reporters" title="Your whole business, minus the agency."
-        sub="You're already in our directory – every licensed California CSR is. Claiming your profile and getting listed is free, forever. Go Pro when you want to receive messages from firms and get paid through Dewey Sholes." />
+        sub="You're already in our directory – every licensed California CSR is. Claiming your profile is free, forever, and firms can find and message you at no cost. Use the site to invoice and get paid, and you keep far more than any agency leaves you." />
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 8 }}>
-        <FeatureBlock icon="user" title="Claim your profile" body="Add your bio, specialties, coverage area, languages, certifications, and rates. A claimed profile ranks above unclaimed ones." />
-        <FeatureBlock icon="shield" title="Verify once, via Stripe" body="Confirm your identity through Stripe Connect. Firms trust a verified badge – and it's what powers your payouts." />
-        <FeatureBlock icon="message" title="Hear from firms directly" body="Firms message you through the platform. You decide who to work with and on what terms." />
-        <FeatureBlock icon="invoice" title="Invoice in seconds" body="Create an invoice with the client, matter, and line items. Send it as a payment link by email." />
-        <FeatureBlock icon="bank" title="Get paid by card or ACH" body="Stripe deposits straight to your bank. Track draft, sent, paid, and overdue at a glance." />
-        <FeatureBlock icon="dollar" title="Keep 100% of your rate" body="No agency cut on the work you find here – you keep your full rate. Getting listed is free; Pro tools are a flat subscription, never a commission." />
+        <FeatureBlock icon="user" title="Get discovered" body="A professional profile firms find when they search by county, specialty, language, and turnaround – without building a website of your own." />
+        <FeatureBlock icon="message" title="Firms come to you" body="Firms message you directly through the platform. You choose who to work with, and on what terms – no agency deciding for you." />
+        <FeatureBlock icon="dollar" title="No agency cut" body="Agencies take 30–50% off the top. Here there's none – just a small fee when you collect payment through the site, so you keep the rest. Your practice, your rate, your call." />
+        <FeatureBlock icon="invoice" title="Invoicing in seconds" body="Create an invoice with the client, matter, and line items, and send it as a payment link. Every invoice is saved – a clean record of your whole book." />
+        <FeatureBlock icon="bank" title="Get paid, and your tax forms" body="Collect by card or ACH straight to your bank, and get tidy income records plus the year-end 1099 Stripe issues for what you collect." />
+        <FeatureBlock icon="shield" title="Verified once, via Stripe" body="Confirm your identity through Stripe Connect. It powers your payouts and shows firms you're the real, licensed reporter." />
       </div>
       <div style={{ background: "var(--sage-soft)", border: "1px solid #C5D8C2", borderRadius: 18, padding: 32, marginTop: 40, textAlign: "center" }}>
         <h3 style={{ fontSize: 26, color: "var(--sage-deep)" }}>Find your profile and claim it</h3>
