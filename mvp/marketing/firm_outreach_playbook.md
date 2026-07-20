@@ -1,5 +1,11 @@
 # Firm outreach playbook – getting the first ~50 firms
 
+> This is the **concentrated, hands-on firm-selling** engine within a **statewide** supply
+> strategy – see [growth_strategy.md](growth_strategy.md). The directory + reporter claiming run
+> statewide; the manual outreach below concentrates in the Bay Area first (then LA), because two
+> people can't sell firms in 40 metros at once. Reporters bringing their own firms seeds every
+> other metro for free.
+
 The firm side of the plan, at ~$0 and two people. Built on the v1 research (target list,
 practice areas, the paralegal-as-buyer insight) re-based for the reduced-scope MVP: a
 directory + messaging + invoicing, sold as a **monthly firm subscription** – no matching,

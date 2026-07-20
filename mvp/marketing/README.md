@@ -57,6 +57,9 @@ so these are out:
 
 ## In this folder
 
+- **[growth_strategy.md](growth_strategy.md)** – the one-page direction: statewide supply,
+  reporter-pulled demand, concentrated firm-selling, transcription-goes-wide / live-is-local,
+  and when to expand (Texas first). **Read this first.**
 - **[firm_outreach_playbook.md](firm_outreach_playbook.md)** – the firm side: who to
   target, the 26-firm Bay Area starter list, channels, the postcard campaign, the
   founding-firm discount code, and onboarding. (Supersedes the old
@@ -79,6 +82,7 @@ so these are out:
 ## Guardrails
 
 - Two people, ~$0. If a tactic needs money or staff, it's out or it waits.
-- Bay Area first: Santa Clara, Contra Costa, Alameda, SF. Concentrate, don't spread.
+- **Supply and reporter-driven demand run statewide; only our manual firm-selling concentrates**
+  – Bay Area first, then LA. Don't spread the hands-on selling thin. (See [growth_strategy.md](growth_strategy.md).)
 - Pro-reporter-income positioning; never anti-reporter.
 - Plain language, sentence case, en-dashes.
