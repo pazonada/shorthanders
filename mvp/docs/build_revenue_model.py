@@ -29,10 +29,10 @@ PCT = '0.0%'
 INT = '#,##0'
 
 # ---- title ----
-ws["A1"] = "Dewey Sholes — revenue model"
+ws["A1"] = "Dewey Sholes – revenue model"
 ws["A1"].font = TITLE
 ws.merge_cells("A1:F1")
-ws["A2"] = "Illustrative, to frame the decision — not a forecast. Change the blue and yellow cells; everything recalculates. Prices are yours to set."
+ws["A2"] = "Illustrative, to frame the decision – not a forecast. Change the blue and yellow cells; everything recalculates. Prices are yours to set."
 ws["A2"].font = SUB
 ws.merge_cells("A2:F2")
 ws["A3"] = "Blue = inputs you can change.   Yellow (“Your custom” column) = edit these to model your own scenario.   Black = calculated."
@@ -135,6 +135,89 @@ for col in "BCDE":
     ws.column_dimensions[col].width = 13
 ws.column_dimensions["F"].width = 52
 ws.freeze_panes = "B6"
+
+# ============ Sheet 2: CSR email → Pro conversion funnel ============
+ws2 = wb.create_sheet("CSR conversion")
+
+ws2["A1"] = "Dewey Sholes – CSR email to Pro conversion"
+ws2["A1"].font = TITLE
+ws2.merge_cells("A1:C1")
+ws2["A2"] = ("Illustrative and adjustable. Change the blue cells. The last step (claim to paid Pro) is the "
+             "softest – free-to-paid is often 5-15%, so keep it conservative. Prices/rates are yours to set.")
+ws2["A2"].font = SUB
+ws2.merge_cells("A2:C2")
+
+def section2(row, text):
+    ws2.cell(row, 1, text).font = BOLD
+    for col in range(1, 4):
+        ws2.cell(row, col).fill = SECTIONFILL
+
+hr = 4
+ws2.cell(hr, 1, "").fill = HDRFILL
+c = ws2.cell(hr, 2, "Value"); c.font = HDR; c.fill = HDRFILL; c.alignment = center
+c = ws2.cell(hr, 3, "Notes"); c.font = HDR; c.fill = HDRFILL
+
+section2(5, "INPUTS  (blue = change these)")
+cinputs = [
+    ("CSRs emailed", 5145, INT, "Independent CSRs on the send list (the ~556 court-employed are held back)."),
+    ("Open the email (%)", 0.30, PCT, "Share who open a one-time personal note. ~30% is reasonable for a warm, personal email."),
+    ("Claim a free profile (% of openers)", 0.30, PCT, "Openers who claim their free profile."),
+    ("Upgrade to Pro (% of claimers)", 0.30, PCT, "Claimers who take the paid Pro plan (with the discount code). Softest assumption."),
+    ("Reporter Pro price ($/mo)", 29, CUR, "Your figure to set – illustrative, not a decided price."),
+    ("Year-1 discount code (%)", 0.0, PCT, "Percent off in year one via the founding code. Set your own."),
+]
+r2 = 6
+crow = {}
+for label, val, fmt, note in cinputs:
+    ws2.cell(r2, 1, label).font = LBL
+    c = ws2.cell(r2, 2, val); c.font = BLUE; c.number_format = fmt; c.alignment = right
+    ws2.cell(r2, 3, note).font = SUB
+    crow[label] = r2
+    r2 += 1
+
+R_EMAIL = crow["CSRs emailed"]
+R_OPEN = crow["Open the email (%)"]
+R_CLAIMR = crow["Claim a free profile (% of openers)"]
+R_PROR = crow["Upgrade to Pro (% of claimers)"]
+R_PPRICE = crow["Reporter Pro price ($/mo)"]
+R_DISC = crow["Year-1 discount code (%)"]
+
+section2(r2 + 1, "RESULTS  (black = calculated)")
+r2 += 2
+
+def result2(label, formula, fmt, note="", total=False):
+    global r2
+    ws2.cell(r2, 1, label).font = BOLD if total else LBL
+    c = ws2.cell(r2, 2); c.value = formula; c.font = BOLD if total else BLACK
+    c.number_format = fmt; c.alignment = right
+    if total:
+        ws2.cell(r2, 1).fill = TOTALFILL
+        ws2.cell(r2, 2).fill = TOTALFILL
+        ws2.cell(r2, 3).fill = TOTALFILL
+    if note:
+        ws2.cell(r2, 3, note).font = SUB
+    rr = r2
+    r2 += 1
+    return rr
+
+R_OPENERS = result2("Openers", f"=B{R_EMAIL}*B{R_OPEN}", INT)
+R_CLAIMERS = result2("Claimers (free profiles)", f"=B{R_OPENERS}*B{R_CLAIMR}", INT)
+R_PRO = result2("Pro reporters (paid)", f"=B{R_CLAIMERS}*B{R_PROR}", INT, "The paying reporter count.")
+result2("On pay-per-invoice (claimed, not Pro)", f"=B{R_CLAIMERS}-B{R_PRO}", INT,
+        "Not $0 – they pay a small fee when they get paid (see the Revenue model sheet).")
+result2("Overall email-to-Pro rate", f"=IFERROR(B{R_PRO}/B{R_EMAIL},0)", PCT)
+result2("Monthly Pro revenue (full price)", f"=B{R_PRO}*B{R_PPRICE}", CUR)
+R_MO1 = result2("Monthly Pro revenue (year 1, after discount)", f"=B{R_PRO}*B{R_PPRICE}*(1-B{R_DISC})", CUR, total=True)
+result2("Annual Pro revenue (year 1)", f"=B{R_MO1}*12", CUR, total=True)
+
+foot = r2 + 1
+ws2.cell(foot, 1, "This is the reporter-Pro slice only. Pay-per-invoice fees and firm subscriptions are on the 'Revenue model' sheet.").font = SUB
+ws2.merge_cells(start_row=foot, start_column=1, end_row=foot, end_column=3)
+
+ws2.column_dimensions["A"].width = 42
+ws2.column_dimensions["B"].width = 14
+ws2.column_dimensions["C"].width = 62
+ws2.freeze_panes = "A5"
 
 wb.save(OUT)
 print("saved", OUT)

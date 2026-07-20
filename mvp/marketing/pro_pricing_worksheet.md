@@ -4,6 +4,12 @@ How to set the reporter-side prices (the pay-per-invoice fee and the flat Pro pl
 real data instead of guesses. **No invented averages here** – every number is either a
 sourced real data point or a clearly-labelled input you set.
 
+> **Adjustable funnel:** the "CSR conversion" sheet in
+> [`mvp/docs/revenue_model.xlsx`](../docs/revenue_model.xlsx) turns the email → claim → Pro
+> dials (open % / claim % / Pro % / price / year-1 discount) into a Pro-reporter count and
+> monthly revenue. Default 30% / 30% / 30% on ~5,145 emailed reporters ≈ **139 Pro, ~$4,000/mo
+> at $29** (softer paid-upgrade step ≈ 46 Pro, ~$1,300/mo). Change the blue cells; it recalcs.
+
 ## The model (recap)
 
 - **Default on claim: pay-per-invoice.** A small Dewey Sholes fee per payment, no monthly
