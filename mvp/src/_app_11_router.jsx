@@ -86,17 +86,21 @@ function StoreProvider({ children }) {
   const [invoices, setInvoices] = useState(SEED_INVOICES);
   const [customTemplates, setCustomTemplates] = useState([]);
   const [invitedFirms, setInvitedFirms] = useState([]);
+  const [firmPlan, setFirmPlan] = useState("free");   // 'free' | 'pro'
+  // Reporters a free firm may fully view/message: the ones who invited or are connected to them.
+  const [unlockedReporters, setUnlockedReporters] = useState(["10518", "8239", "4360"]);
 
   const store = {
-    role, myCsr, saved, convos, invoices, customTemplates, invitedFirms,
+    role, myCsr, saved, convos, invoices, customTemplates, invitedFirms, firmPlan, unlockedReporters,
     addTemplate: (t) => setCustomTemplates((xs) => [...xs, t]),
     enterAsReporter: () => setRole("reporter"),
     enterAsFirm: () => setRole("firm"),
     logout: () => setRole(null),
+    upgradeFirm: () => setFirmPlan("pro"),
     toggleSaved: (id) => setSaved((s) => s.includes(id) ? s.filter((x) => x !== id) : [...s, id]),
     inviteFirm: (firm) => setInvitedFirms((xs) => [firm, ...xs]),
-    // A firm arriving on a reporter's invite link: create their free account and save the inviter.
-    acceptInvite: (reporterId) => { setRole("firm"); setSaved((s) => s.includes(reporterId) ? s : [...s, reporterId]); },
+    // A firm arriving on a reporter's invite link: create their free account, save + unlock the inviter.
+    acceptInvite: (reporterId) => { setRole("firm"); setSaved((s) => s.includes(reporterId) ? s : [...s, reporterId]); setUnlockedReporters((u) => u.includes(reporterId) ? u : [...u, reporterId]); },
     startConvoWith: (name) => setConvos((cs) => cs.some((c) => c.with === name) ? cs
       : [{ id: "new-" + name, with: name, role: "reporter", subtitle: "New conversation", unread: 0, msgs: [{ from: "me", t: "", at: "Just now" }].filter((m) => m.t) }, ...cs]),
     pushMessage: (cid, msg) => setConvos((cs) => cs.map((c) => c.id === cid ? { ...c, msgs: [...c.msgs, msg], unread: 0 } : c)),

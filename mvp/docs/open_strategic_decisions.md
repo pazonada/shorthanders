@@ -27,6 +27,14 @@ already public, and (b) firms default to agencies unless they hire direct?
 - **Firms:** free to search + see basic (public) info; a **paid monthly subscription**
   unlocks full claimed profiles + messaging + a tidy history of invoices/receipts for any
   reporter who bills them through the platform. Free trial. **This is the main revenue.**
+  - **The gate, DECIDED 2026-07-19:** a **free** firm can fully view (and message/pay/save)
+    two kinds of reporter only — **unclaimed** profiles (they're just public license data)
+    and reporters who **invited or are connected to** the firm. **Every other claimed
+    profile is gated:** shown as a **blurred preview behind an "Upgrade to Pro" overlay**
+    (Care.com / LinkedIn pattern), and locked reporters show a lock cue in the directory.
+    Pro unlocks full profiles + messaging + advanced search for *everyone*. Implemented in
+    the prototype (`firmLocked()` in `_app_05_directory.jsx`; a `firmPlan` free/pro toggle
+    lets you demo the gate lifting).
 - **Reporters:** free to claim, build a full profile, appear in search, and receive/reply
   to messages. To actually get *paid* through the site, one of two ways:
   - **"Pay only when you get paid"** — a small fee taken out of the reporter's side of each
@@ -66,8 +74,6 @@ launch — trying to prove people use it. Turn on serious pricing once there's r
 **Still open:**
 - **Actual prices** (firm subscription, reporter flat plan, and the reporter per-payment %):
   unset — do not invent. Aud sets them.
-- **Firm gate** (leaning yes): basic public info free; full profiles + messaging behind the
-  paywall, shown as a blurred preview (the trick Care.com and LinkedIn use).
 - Firm subscriptions will be slow to grow — a catch-22 (firms won't pay until lots of
   reporters have rich profiles; reporters won't fill profiles until firms are there), plus
   the habit of just calling an agency. Start with the firms most likely to say yes: ones
@@ -186,7 +192,9 @@ hearing transcripts (hearings are usually public record; depos can be confidenti
 - [x] **Monetization shape (§1) — DECIDED 2026-07-17.** Firms pay a subscription for full
   profiles + messaging; reporters free to list, pay only to get paid (per-payment fee for
   occasional users OR flat plan for heavy users); no firm-facing transaction fee.
-- [ ] Confirm the firm access gate (§1): full profiles + messaging behind the firm paywall.
+- [x] **Firm access gate (§1) — DECIDED 2026-07-19.** Free firms fully view only unclaimed
+  profiles + reporters who invited/are connected to them; every other claimed profile is a
+  blurred "Upgrade to Pro" preview. Pro unlocks everyone. Implemented in the prototype.
 - [ ] Set prices when ready — don't invent them (firm sub, reporter flat plan, reporter per-payment %).
 - [ ] Engage a reporting-industry attorney on the deposition-neutrality question (§3).
 - [ ] Confirm positioning: lead with transcription/direct-hire; directory still shows depos (§2).

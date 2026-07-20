@@ -1,6 +1,8 @@
 // ═══ Directory card ════════════════════════════════════════════════
 function RepCard({ r }) {
+  const store = useStore();
   const isNew = r.claimed && r.claimedAt >= RECENT_CLAIM_CUTOFF;
+  const locked = firmLocked(store, r);
   return (
     <button className={"rep-card" + (r.claimed ? "" : " unclaimed")} onClick={() => navigate("/reporters/" + r.id)}>
       <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
@@ -21,6 +23,11 @@ function RepCard({ r }) {
         </div>
       </div>
       {r.claimed ? (
+        locked ? (
+          <div style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 13.5, color: "var(--brand-dark)", fontWeight: 600, marginTop: 2 }}>
+            <Icon name="lock" size={14} style={{ flexShrink: 0 }} /> View full profile with Pro
+          </div>
+        ) : (
         <>
           <p style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.55, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{r.bio}</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
@@ -32,6 +39,7 @@ function RepCard({ r }) {
             <span style={{ color: "var(--brand-dark)", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4 }}>View profile <Icon name="arrow" size={14} /></span>
           </div>
         </>
+        )
       ) : (
         <div style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.5 }}>
           Public license record. <span style={{ color: "var(--brand-dark)", fontWeight: 600 }}>Is this you? Claim it →</span>
@@ -205,6 +213,53 @@ function RepRow({ r }) {
 }
 
 // ═══ Reporter profile ══════════════════════════════════════════════
+// A free firm may fully view only unclaimed profiles + reporters connected to / who invited
+// them (store.unlockedReporters). Every other claimed profile is gated behind Pro.
+function firmLocked(store, r) {
+  return store.role === "firm" && store.firmPlan !== "pro" && r.claimed && !store.unlockedReporters.includes(r.id);
+}
+
+function GatedProfile({ r }) {
+  const store = useStore();
+  const first = r.name.split(" ")[0];
+  return (
+    <Page>
+      <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 16 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to directory</button>
+      <div style={{ display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap", marginBottom: 8 }}>
+        <Avatar name={r.name} size={84} />
+        <div style={{ flex: 1, minWidth: 200 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            <h1 style={{ fontSize: 40, lineHeight: 1 }}>{r.name}</h1>
+            {r.verified && <span className="pill pill-verified"><Icon name="shield" size={13} /> Verified</span>}
+          </div>
+          <div style={{ color: "var(--muted)", marginTop: 8, fontSize: 15, display: "flex", gap: 14, flexWrap: "wrap" }}>
+            <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />CSR #{r.csrNumber}</span>
+            <span><Icon name="pin" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.city}{r.county ? ", " + r.county + " County" : ""}</span>
+            {r.method ? <span><Icon name="doc" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.method}</span> : null}
+          </div>
+        </div>
+      </div>
+      <div style={{ position: "relative", marginTop: 18, borderRadius: 16, overflow: "hidden" }}>
+        <div aria-hidden="true" style={{ filter: "blur(7px)", userSelect: "none", pointerEvents: "none", opacity: 0.5, display: "flex", flexDirection: "column", gap: 22, padding: 4 }}>
+          <ProfileSection title="About"><p style={{ fontSize: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>{r.bio}</p></ProfileSection>
+          <ProfileSection title="Specialties"><TagList items={r.specialties} tone="brand" /></ProfileSection>
+          <ProfileSection title="Rates"><p style={{ fontSize: 16, color: "var(--ink-soft)" }}>{r.rate || "Provided on request"}</p></ProfileSection>
+          <ProfileSection title="Geographic coverage"><TagList items={(r.coverage || []).map((c) => c + " County")} tone="brand" /></ProfileSection>
+        </div>
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, background: "linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0.78))" }}>
+          <div className="ds-card" style={{ maxWidth: 440, textAlign: "center", boxShadow: "var(--shadow-lg)" }}>
+            <div style={{ width: 48, height: 48, borderRadius: 12, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px" }}><Icon name="lock" size={22} /></div>
+            <h3 style={{ fontSize: 21 }}>See {first}'s full profile with Pro</h3>
+            <p style={{ fontSize: 14.5, color: "var(--muted)", marginTop: 10, lineHeight: 1.6 }}>Full bio, specialties, rates, coverage, and certifications for every reporter, plus direct messaging and advanced search to find new reporters.</p>
+            <button className="btn btn-primary" style={{ marginTop: 16 }} onClick={() => store.upgradeFirm()}><Icon name="arrow" size={16} /> Upgrade to Pro</button>
+            <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 12, lineHeight: 1.5 }}>Pro pricing announced before launch. Reporters who invite your firm are always free to view.</p>
+          </div>
+        </div>
+      </div>
+    </Page>
+  );
+}
+
 function ReporterProfile({ reporterId, invited }) {
   const store = useStore();
   const [inviteOpen, setInviteOpen] = useState(false);
@@ -213,6 +268,7 @@ function ReporterProfile({ reporterId, invited }) {
   if (!r) return <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60 }}><h2>Reporter not found</h2><button className="btn btn-secondary" style={{ marginTop: 16 }} onClick={() => navigate("/directory")}>Back to directory</button></div></Page>;
 
   if (!r.claimed) return <UnclaimedProfile r={r} />;
+  if (!invited && firmLocked(store, r)) return <GatedProfile r={r} />;
 
   const pct = completeness(r);
   const isOwner = store.role === "reporter" && r.id === store.myCsr;
