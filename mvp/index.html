@@ -2959,17 +2959,17 @@ function LandingPage() {
       {/* hero */}
       <section className="mvp-hero" style={{ background: "linear-gradient(180deg, var(--periwinkle-soft) 0%, var(--bg) 70%)" }}>
         <img src="graphics/hp-text-grey.png" alt="" aria-hidden="true" className="mvp-hero-shorthand" />
-        <div className="container" style={{ padding: "72px 24px 60px", textAlign: "center", maxWidth: 880 }}>
-          <span className="pill pill-tag" style={{ marginBottom: 20, display: "inline-flex" }}>{total.toLocaleString()} California court reporters, one directory</span>
-          <h1 style={{ fontSize: "clamp(38px, 6vw, 66px)", lineHeight: 1.04 }}>Find an independent court reporter. <em>Skip the agency.</em></h1>
-          <p style={{ fontSize: 19, color: "var(--ink-soft)", margin: "22px auto 0", maxWidth: 620, lineHeight: 1.6 }}>
+        <div className="container" style={{ padding: "80px 24px 64px", maxWidth: 900 }}>
+          <span className="kicker">{total.toLocaleString()} California court reporters, one directory</span>
+          <h1 className="h-display">Find an independent court reporter. <em>Skip the agency.</em></h1>
+          <p style={{ fontSize: 19, color: "var(--ink-soft)", margin: "26px 0 0", maxWidth: 640, lineHeight: 1.6 }}>
             Search every licensed CSR in California by county, specialty, language, and turnaround – then message them directly. Reporters claim a free profile and get discovered, with optional tools to invoice and get paid – no agency taking a cut.
           </p>
-          <div style={{ display: "flex", gap: 14, justifyContent: "center", marginTop: 34, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 14, marginTop: 34, flexWrap: "wrap" }}>
             <button className="btn btn-primary" onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
             <button className="btn btn-secondary" onClick={() => navigate("/claim")}>Claim your profile</button>
           </div>
-          <div style={{ marginTop: 22, fontSize: 13, color: "var(--muted)", display: "flex", gap: 20, justifyContent: "center", flexWrap: "wrap" }}>
+          <div style={{ marginTop: 26, fontSize: 13, color: "var(--muted)", display: "flex", gap: 20, flexWrap: "wrap" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="shield" size={14} /> Verified via Stripe identity</span>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="dollar" size={14} /> Free to get listed</span>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="check" size={14} /> No booking fees, no markup</span>
@@ -2991,7 +2991,7 @@ function LandingPage() {
 
       {/* how it works */}
       <section className="container" style={{ padding: "56px 24px" }}>
-        <h2 style={{ fontSize: 34, textAlign: "center", marginBottom: 8 }}>How it works</h2>
+        <h2 className="h-section" style={{ textAlign: "center", marginBottom: 8 }}>How it works</h2>
         <p style={{ textAlign: "center", color: "var(--muted)", marginBottom: 40 }}>We connect the two sides. The working relationship stays between you.</p>
         <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))" }}>
           <Step n="1" title="Search or get found" body="Firms search the directory. Reporters claim their profile so they show up." />
@@ -3006,7 +3006,7 @@ function LandingPage() {
         <div className="container" style={{ padding: "56px 24px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 26, flexWrap: "wrap", gap: 12 }}>
             <div>
-              <h2 style={{ fontSize: 32 }}>Reporters on Dewey Sholes</h2>
+              <h2 className="h-section">Reporters on Dewey Sholes</h2>
               <p style={{ color: "var(--muted)", marginTop: 6 }}>A few of the independent CSRs who've claimed their profile.</p>
             </div>
             <button className="btn btn-secondary" onClick={() => navigate("/directory")}>See all <Icon name="arrow" size={16} /></button>
@@ -3028,7 +3028,7 @@ function LandingPage() {
       {/* final CTA */}
       <section style={{ background: "var(--ink)", color: "#fff" }}>
         <div className="container" style={{ padding: "64px 24px", textAlign: "center", maxWidth: 720 }}>
-          <h2 style={{ fontSize: 38, color: "#fff" }}>Ready when you are.</h2>
+          <h2 className="h-section" style={{ color: "#fff" }}>Ready when you are.</h2>
           <p style={{ color: "rgba(255,255,255,.75)", marginTop: 14, fontSize: 17 }}>Search for a reporter, or claim the profile that's already waiting for you.</p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", marginTop: 30, flexWrap: "wrap" }}>
             <button className="btn btn-white" onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
@@ -3116,10 +3116,10 @@ function ForReportersPage() {
 
 function MarketingHero({ eyebrow, title, sub }) {
   return (
-    <div style={{ maxWidth: 760, margin: "12px 0 40px" }}>
-      <span style={{ fontSize: 13, fontWeight: 700, color: "var(--brand)", textTransform: "uppercase", letterSpacing: ".05em" }}>{eyebrow}</span>
-      <h1 style={{ fontSize: "clamp(34px, 5vw, 52px)", lineHeight: 1.08, marginTop: 12 }}>{title}</h1>
-      <p style={{ fontSize: 18, color: "var(--ink-soft)", marginTop: 18, lineHeight: 1.65 }}>{sub}</p>
+    <div style={{ maxWidth: 780, margin: "12px 0 40px" }}>
+      <span className="kicker">{eyebrow}</span>
+      <h1 className="h-section">{title}</h1>
+      <p style={{ fontSize: 18, color: "var(--ink-soft)", marginTop: 20, lineHeight: 1.65 }}>{sub}</p>
     </div>
   );
 }
@@ -3146,7 +3146,7 @@ function PricingPage() {
   return (
     <Page wide>
       <div style={{ textAlign: "center", maxWidth: 700, margin: "12px auto 44px" }}>
-        <h1 style={{ fontSize: "clamp(34px, 5vw, 52px)" }}>Simple, honest pricing</h1>
+        <h1 className="h-section">Simple, honest pricing</h1>
         <p style={{ fontSize: 18, color: "var(--ink-soft)", marginTop: 16, lineHeight: 1.6 }}>Claim your profile and get listed for free. Upgrade to Pro when you want to receive messages from firms and get paid through Dewey Sholes. No booking fees, no commission on your work.</p>
       </div>
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", maxWidth: 1040, margin: "0 auto" }}>
