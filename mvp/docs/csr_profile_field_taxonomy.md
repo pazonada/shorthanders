@@ -23,9 +23,15 @@ beyond the starting list in the PRD. Feeds the reduced-scope MVP directory + cla
 ## A. Already in the prototype
 
 Name · CSR license # · city/county · license status + expiration · public email ·
-bio · years of experience · practice-area specialties · types of proceedings ·
+bio · years of experience · practice-area specialties ·
 languages · geographic coverage · certifications · rates (free text) · accepts rush ·
-testimonials · work types (Depositions / Trial / Realtime / Transcription / Live).
+testimonials · **two separate taxonomy axes** (implemented 2026-07-19):
+- **Proceedings covered** (the *setting*): Depositions / Trials / Hearings / Arbitrations / Workers' comp.
+- **Services offered** (the *capability*): Realtime / Rough draft / ASCII / Court-audio transcription / Expedited turnaround.
+
+Rationale: realtime and transcription are *services/skills a reporter offers*, not kinds of
+proceeding — so they live on their own axis (a firm may want "does depositions" AND "offers
+realtime" as independent filters). This replaced the old single mixed "work types" list.
 
 These are a good base. The additions below are the ones the research says actually
 differentiate reporters to a hiring firm.

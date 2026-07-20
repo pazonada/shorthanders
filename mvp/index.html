@@ -2764,21 +2764,23 @@ function avatarColor(seed) {
   let h = 0; for (let i = 0; i < (seed || "").length; i++) h = (h * 31 + seed.charCodeAt(i)) % 997;
   return AVATAR_COLORS[h % AVATAR_COLORS.length];
 }
-// ─── Canonical work-type vocabulary ────────────────────────────────
-// "Workers' comp" is a payment-affecting category (own fee schedule / O&2 / minimum),
-// not just a specialty – see mvp/docs/csr_profile_field_taxonomy.md.
-const WORK_TYPES = ["Depositions", "Trial work", "Realtime", "Transcription", "Workers' comp", "Live appearances"];
+// ─── Reporter taxonomy: two separate axes ──────────────────────────
+// PROCEEDINGS = the setting a reporter covers; SERVICES = the capability they offer.
+// (Realtime is a service/skill, not a proceeding – see mvp/docs/csr_profile_field_taxonomy.md.)
+// "Workers' comp" is a payment-affecting proceeding (own fee schedule / O&2 / minimum).
+const PROCEEDING_TYPES = ["Depositions", "Trials", "Hearings", "Arbitrations", "Workers' comp"];
+const SERVICE_TYPES = ["Realtime", "Rough draft / ASCII", "Court-audio transcription", "Expedited turnaround"];
 const LANGUAGES = ["Spanish", "Mandarin", "Cantonese", "Korean", "Vietnamese", "Tagalog", "ASL", "Russian", "Armenian", "Farsi"];
 
 // ─── Claimed-profile overlay (keyed by real CSR license number) ─────
 // The rest of the ~4,700 imported records render as unclaimed public stubs.
 const CLAIMED = {
-  "14585": { bio: "Fifteen years reporting complex civil and IP litigation across the South Bay. Realtime feeds for trial teams, same-day rough drafts, and secure delivery. I run my whole practice solo – no agency markup.", yearsExp: 15, workTypes: ["Depositions", "Trial work", "Realtime"], specialties: ["Intellectual property", "Complex civil", "Technical/engineering"], proceedings: ["Depositions", "Arbitrations", "Trials"], languages: ["Spanish"], coverage: ["Santa Clara", "San Mateo", "Alameda"], certifications: ["CSR #14585", "CRR", "RPR"], rate: null, rush: true, testimonials: [{ quote: "Adam's realtime feed kept our trial team in sync every day. Flawless.", author: "Partner, Morgan & Reyes LLP" }], verified: true, claimedAt: "2026-07-11", views: 214 },
-  "7716": { bio: "Concord-based, 20+ years. Insurance defense and PI depositions throughout the I-680 corridor. Rush drafts available same evening.", yearsExp: 22, workTypes: ["Depositions", "Trial work", "Workers' comp"], specialties: ["Insurance defense", "Personal injury", "Construction defect", "Workers' comp"], proceedings: ["Depositions", "Trials", "Arbitrations"], languages: [], coverage: ["Contra Costa", "Alameda", "Solano"], certifications: ["CSR #7716", "CRR", "RMR"], rate: null, rush: true, testimonials: [{ quote: "Allison is my first call in Contra Costa, every time.", author: "Sr. Associate, Delaney Defense" }], verified: true, claimedAt: "2026-06-28", views: 301 },
-  "8239": { bio: "Fremont reporter, bilingual (English/Spanish). Two decades of depositions and a growing transcription practice for court-audio overflow.", yearsExp: 19, workTypes: ["Depositions", "Transcription", "Workers' comp"], specialties: ["Immigration-adjacent civil", "Personal injury", "Family law", "Workers' comp"], proceedings: ["Depositions", "Hearings"], languages: ["Spanish", "Tagalog"], coverage: ["Alameda", "Santa Clara"], certifications: ["CSR #8239"], rate: null, rush: true, testimonials: [{ quote: "Catherine's Spanish-language depos are impeccable.", author: "Solo practitioner, Fremont" }], verified: true, claimedAt: "2026-07-02", views: 143 },
-  "10518": { bio: "Sunnyvale realtime reporter for the tech-litigation bar. Trade-secret and patent cases, tight security protocols, encrypted delivery.", yearsExp: 14, workTypes: ["Depositions", "Realtime", "Trial work"], specialties: ["Patent", "Trade secret", "Antitrust"], proceedings: ["Depositions", "Trials", "Arbitrations"], languages: ["Mandarin"], coverage: ["Santa Clara", "San Mateo", "Alameda"], certifications: ["CSR #10518", "CRR", "RMR"], rate: null, rush: true, testimonials: [{ quote: "The only reporter we trust with sealed trade-secret depos.", author: "IP Group, Kessler Tang LLP" }], verified: true, claimedAt: "2026-07-13", views: 256 },
-  "4360": { bio: "Downtown LA. Thirty years on the record. Business and entertainment litigation, and expert-witness depositions with dense exhibits.", yearsExp: 30, workTypes: ["Depositions", "Trial work", "Realtime"], specialties: ["Entertainment", "Business litigation", "Expert witness"], proceedings: ["Depositions", "Trials", "Arbitrations"], languages: [], coverage: ["Los Angeles", "Orange"], certifications: ["CSR #4360", "CRR", "RMR", "RPR"], rate: null, rush: true, testimonials: [{ quote: "Adrienne has reported half my career's biggest cases.", author: "Name partner, Century City" }], verified: true, claimedAt: "2026-06-30", views: 412 },
-  "14273": { bio: "San Diego reporter focused on cross-border and maritime civil matters. Bilingual, tech-forward, encrypted delivery standard.", yearsExp: 11, workTypes: ["Depositions", "Realtime", "Transcription"], specialties: ["Maritime", "Cross-border commercial", "Insurance defense"], proceedings: ["Depositions", "Arbitrations"], languages: ["Spanish"], coverage: ["San Diego", "Imperial"], certifications: ["CSR #14273", "CRR"], rate: null, rush: false, testimonials: [], verified: true, claimedAt: "2026-07-08", views: 118 },
+  "14585": { bio: "Fifteen years reporting complex civil and IP litigation across the South Bay. Realtime feeds for trial teams, same-day rough drafts, and secure delivery. I run my whole practice solo – no agency markup.", yearsExp: 15, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime", "Rough draft / ASCII"], specialties: ["Intellectual property", "Complex civil", "Technical/engineering"], languages: ["Spanish"], coverage: ["Santa Clara", "San Mateo", "Alameda"], certifications: ["CSR #14585", "CRR", "RPR"], rate: null, rush: true, testimonials: [{ quote: "Adam's realtime feed kept our trial team in sync every day. Flawless.", author: "Partner, Morgan & Reyes LLP" }], verified: true, claimedAt: "2026-07-11", views: 214 },
+  "7716": { bio: "Concord-based, 20+ years. Insurance defense and PI depositions throughout the I-680 corridor. Rush drafts available same evening.", yearsExp: 22, proceedings: ["Depositions", "Trials", "Arbitrations", "Workers' comp"], services: ["Realtime", "Expedited turnaround"], specialties: ["Insurance defense", "Personal injury", "Construction defect", "Workers' comp"], languages: [], coverage: ["Contra Costa", "Alameda", "Solano"], certifications: ["CSR #7716", "CRR", "RMR"], rate: null, rush: true, testimonials: [{ quote: "Allison is my first call in Contra Costa, every time.", author: "Sr. Associate, Delaney Defense" }], verified: true, claimedAt: "2026-06-28", views: 301 },
+  "8239": { bio: "Fremont reporter, bilingual (English/Spanish). Two decades of depositions and a growing transcription practice for court-audio overflow.", yearsExp: 19, proceedings: ["Depositions", "Hearings", "Workers' comp"], services: ["Court-audio transcription"], specialties: ["Immigration-adjacent civil", "Personal injury", "Family law", "Workers' comp"], languages: ["Spanish", "Tagalog"], coverage: ["Alameda", "Santa Clara"], certifications: ["CSR #8239"], rate: null, rush: true, testimonials: [{ quote: "Catherine's Spanish-language depos are impeccable.", author: "Solo practitioner, Fremont" }], verified: true, claimedAt: "2026-07-02", views: 143 },
+  "10518": { bio: "Sunnyvale realtime reporter for the tech-litigation bar. Trade-secret and patent cases, tight security protocols, encrypted delivery.", yearsExp: 14, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime", "Rough draft / ASCII"], specialties: ["Patent", "Trade secret", "Antitrust"], languages: ["Mandarin"], coverage: ["Santa Clara", "San Mateo", "Alameda"], certifications: ["CSR #10518", "CRR", "RMR"], rate: null, rush: true, testimonials: [{ quote: "The only reporter we trust with sealed trade-secret depos.", author: "IP Group, Kessler Tang LLP" }], verified: true, claimedAt: "2026-07-13", views: 256 },
+  "4360": { bio: "Downtown LA. Thirty years on the record. Business and entertainment litigation, and expert-witness depositions with dense exhibits.", yearsExp: 30, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime"], specialties: ["Entertainment", "Business litigation", "Expert witness"], languages: [], coverage: ["Los Angeles", "Orange"], certifications: ["CSR #4360", "CRR", "RMR", "RPR"], rate: null, rush: true, testimonials: [{ quote: "Adrienne has reported half my career's biggest cases.", author: "Name partner, Century City" }], verified: true, claimedAt: "2026-06-30", views: 412 },
+  "14273": { bio: "San Diego reporter focused on cross-border and maritime civil matters. Bilingual, tech-forward, encrypted delivery standard.", yearsExp: 11, proceedings: ["Depositions", "Arbitrations"], services: ["Realtime", "Court-audio transcription"], specialties: ["Maritime", "Cross-border commercial", "Insurance defense"], languages: ["Spanish"], coverage: ["San Diego", "Imperial"], certifications: ["CSR #14273", "CRR"], rate: null, rush: false, testimonials: [], verified: true, claimedAt: "2026-07-08", views: 118 },
 };
 const RECENT_CLAIM_CUTOFF = "2026-07-10"; // claimed on/after this date shows "New" badge
 
@@ -2809,7 +2811,7 @@ function buildDirectory() {
 // Profile completeness (0–100) for ranking + reporter dashboard meter.
 function completeness(p) {
   if (!p.claimed) return 0;
-  const checks = [p.bio, p.yearsExp, (p.workTypes || []).length, (p.specialties || []).length, (p.coverage || []).length, (p.certifications || []).length, p.rate, (p.testimonials || []).length];
+  const checks = [p.bio, p.yearsExp, (p.proceedings || []).length, (p.services || []).length, (p.specialties || []).length, (p.coverage || []).length, (p.certifications || []).length, p.rate, (p.testimonials || []).length];
   const got = checks.filter(Boolean).length;
   return Math.round((got / checks.length) * 100);
 }
@@ -3225,7 +3227,7 @@ function RepCard({ r }) {
         <>
           <p style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.55, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{r.bio}</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-            {(r.workTypes || []).slice(0, 3).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
+            {(r.proceedings || []).slice(0, 3).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
             {r.rush && <span className="pill pill-rush"><Icon name="clock" size={12} /> Rush OK</span>}
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 2, fontSize: 13, color: "var(--muted)" }}>
@@ -3252,14 +3254,14 @@ function ReporterDirectory() {
   const [language, setLanguage] = useState("");
   const [minYears, setMinYears] = useState("");
   const [method, setMethod] = useState("");   // reporting method (from license)
-  const [work, setWork] = useState([]);       // selected work types
+  const [tags, setTags] = useState([]);       // selected proceeding / service tags
   const [rushOnly, setRushOnly] = useState(false);
   const [claimedOnly, setClaimedOnly] = useState(false);
   const [limit, setLimit] = useState(PAGE_SIZE);
 
   const counties = useMemo(() => Array.from(new Set(all.map((r) => r.county).filter(Boolean))).sort(), [all]);
 
-  const toggleWork = (w) => { setWork((cur) => cur.includes(w) ? cur.filter((x) => x !== w) : [...cur, w]); setLimit(PAGE_SIZE); };
+  const toggleTag = (t) => { setTags((cur) => cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]); setLimit(PAGE_SIZE); };
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -3271,7 +3273,7 @@ function ReporterDirectory() {
       if (language && !(r.languages || []).includes(language)) return false;
       if (minYears && (!(r.yearsExp) || r.yearsExp < Number(minYears))) return false;
       if (method && !(r.method || "").includes(method)) return false;
-      if (work.length && !work.every((w) => (r.workTypes || []).includes(w))) return false;
+      if (tags.length && !tags.every((t) => (r.proceedings || []).includes(t) || (r.services || []).includes(t))) return false;
       return true;
     });
     // PRD ranking: claimed first, then completeness, then recent claim.
@@ -3282,10 +3284,10 @@ function ReporterDirectory() {
       return (b.claimedAt || "").localeCompare(a.claimedAt || "");
     });
     return list;
-  }, [all, q, county, language, minYears, method, work, rushOnly, claimedOnly]);
+  }, [all, q, county, language, minYears, method, tags, rushOnly, claimedOnly]);
 
-  const anyFilter = q || county || language || minYears || method || work.length || rushOnly || claimedOnly;
-  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setMethod(""); setWork([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
+  const anyFilter = q || county || language || minYears || method || tags.length || rushOnly || claimedOnly;
+  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setMethod(""); setTags([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
   const featured = filtered.filter((r) => r.claimed).slice(0, 3);
   const featuredIds = new Set(featured.map((r) => r.id));
   const rest = filtered.filter((r) => !featuredIds.has(r.id));
@@ -3294,7 +3296,7 @@ function ReporterDirectory() {
     <Page wide>
       <div style={{ marginBottom: 22 }}>
         <h1 style={{ fontSize: "clamp(30px, 4vw, 44px)" }}>California court reporter directory</h1>
-        <p style={{ color: "var(--muted)", marginTop: 8, fontSize: 16 }}>{all.length.toLocaleString()} licensed CSRs. Search, filter, and message reporters directly.</p>
+        <p style={{ color: "var(--muted)", marginTop: 8, fontSize: 16 }}>{all.length.toLocaleString()} licensed CSRs. Search and filter, then open a profile to message the reporter.</p>
       </div>
 
       {/* search */}
@@ -3325,7 +3327,7 @@ function ReporterDirectory() {
           <option value="Machine">Machine (steno)</option>
           <option value="Voice">Voice writing</option>
         </select>
-        {WORK_TYPES.slice(0, 5).map((w) =><button key={w} className={"chip-filter" + (work.includes(w) ? " on" : "")} onClick={() => toggleWork(w)}>{w}</button>)}
+        {[...PROCEEDING_TYPES, ...SERVICE_TYPES].map((t) => <button key={t} className={"chip-filter" + (tags.includes(t) ? " on" : "")} onClick={() => toggleTag(t)}>{t}</button>)}
         <button className={"chip-filter" + (rushOnly ? " on" : "")} onClick={() => { setRushOnly((v) => !v); setLimit(PAGE_SIZE); }}><Icon name="clock" size={13} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />Rush</button>
         <button className={"chip-filter" + (claimedOnly ? " on" : "")} onClick={() => { setClaimedOnly((v) => !v); setLimit(PAGE_SIZE); }}>Claimed only</button>
         {anyFilter ? <button className="chip-filter" style={{ color: "var(--brand-dark)", borderColor: "var(--brand-pale)" }} onClick={clearAll}>Clear all</button> : null}
@@ -3389,7 +3391,7 @@ function RepRow({ r }) {
         {r.claimed ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-              {(r.workTypes || []).slice(0, 4).map((w) => <span key={w} className="pill pill-tag" style={{ fontSize: 11, padding: "2px 8px" }}>{w}</span>)}
+              {[...(r.proceedings || []), ...(r.services || [])].slice(0, 4).map((w) => <span key={w} className="pill pill-tag" style={{ fontSize: 11, padding: "2px 8px" }}>{w}</span>)}
               {r.rush ? <span className="pill pill-rush" style={{ fontSize: 11, padding: "2px 8px" }}>Rush</span> : null}
             </div>
             <div style={{ color: "var(--muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
@@ -3494,7 +3496,7 @@ function ReporterProfile({ reporterId, invited }) {
                 {r.method ? <span><Icon name="doc" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.method}</span> : null}
               </div>
               <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
-                {(r.workTypes || []).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
+                {(r.proceedings || []).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
                 {r.rush && <span className="pill pill-rush"><Icon name="clock" size={12} /> Rush available</span>}
               </div>
             </div>
@@ -3502,7 +3504,8 @@ function ReporterProfile({ reporterId, invited }) {
 
           <ProfileSection title="About"><p style={{ fontSize: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>{r.bio}</p></ProfileSection>
           <ProfileSection title="Specialties"><TagList items={r.specialties} tone="brand" /></ProfileSection>
-          <ProfileSection title="Proceedings handled"><TagList items={r.proceedings} tone="sage" /></ProfileSection>
+          <ProfileSection title="Proceedings covered"><TagList items={r.proceedings} tone="sage" /></ProfileSection>
+          {(r.services || []).length > 0 && <ProfileSection title="Services offered"><TagList items={r.services} tone="brand" /></ProfileSection>}
           {(r.languages || []).length > 0 && <ProfileSection title="Languages"><TagList items={r.languages} tone="plum" /></ProfileSection>}
           <ProfileSection title="Geographic coverage"><TagList items={(r.coverage || []).map((c) => c + " County")} tone="brand" /></ProfileSection>
           <ProfileSection title="Certifications"><TagList items={r.certifications} tone="sage" /></ProfileSection>
@@ -3716,7 +3719,7 @@ function ClaimFlow({ reporterId }) {
   const r = all.find((x) => x.id === reporterId);
   const [step, setStep] = useState(0);
   const [stripeState, setStripeState] = useState("idle"); // idle | connecting | done
-  const [form, setForm] = useState({ bio: "", yearsExp: "", rate: "", rush: false, work: [], languages: [], coverage: "" });
+  const [form, setForm] = useState({ bio: "", yearsExp: "", rate: "", rush: false, proceedings: [], services: [], languages: [], coverage: "" });
 
   if (!r) return (
     <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60, maxWidth: 520, margin: "0 auto" }}>
@@ -3840,8 +3843,12 @@ function ClaimFlow({ reporterId }) {
                 <div><label className="ds-label">Rates (optional)</label><input className="ds-input" placeholder="e.g. From $4.50/pg" value={form.rate} onChange={(e) => setForm({ ...form, rate: e.target.value })} /></div>
               </div>
               <div>
-                <label className="ds-label">Types of work you accept</label>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{WORK_TYPES.map((w) => <button key={w} type="button" className={"chip-filter" + (form.work.includes(w) ? " on" : "")} onClick={() => toggle("work", w)}>{w}</button>)}</div>
+                <label className="ds-label">Proceedings covered</label>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{PROCEEDING_TYPES.map((w) => <button key={w} type="button" className={"chip-filter" + (form.proceedings.includes(w) ? " on" : "")} onClick={() => toggle("proceedings", w)}>{w}</button>)}</div>
+              </div>
+              <div>
+                <label className="ds-label">Services offered</label>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{SERVICE_TYPES.map((w) => <button key={w} type="button" className={"chip-filter" + (form.services.includes(w) ? " on" : "")} onClick={() => toggle("services", w)}>{w}</button>)}</div>
               </div>
               <div>
                 <label className="ds-label">Languages (beyond English)</label>
@@ -3981,7 +3988,8 @@ function ReporterProfileEditor({ me }) {
         {field("Years of experience", me.yearsExp + " years")}
         {field("Rates", me.rate)}
       </div>
-      {field("Work types", (me.workTypes || []).join(" · "))}
+      {field("Proceedings covered", (me.proceedings || []).join(" · "))}
+      {field("Services offered", (me.services || []).join(" · "))}
       {field("Specialties", (me.specialties || []).join(" · "))}
       {field("Languages", (me.languages || []).join(" · ") || "English only")}
       {field("Coverage", (me.coverage || []).map((c) => c + " County").join(" · "))}

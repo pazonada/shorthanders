@@ -116,7 +116,7 @@ function ClaimFlow({ reporterId }) {
   const r = all.find((x) => x.id === reporterId);
   const [step, setStep] = useState(0);
   const [stripeState, setStripeState] = useState("idle"); // idle | connecting | done
-  const [form, setForm] = useState({ bio: "", yearsExp: "", rate: "", rush: false, work: [], languages: [], coverage: "" });
+  const [form, setForm] = useState({ bio: "", yearsExp: "", rate: "", rush: false, proceedings: [], services: [], languages: [], coverage: "" });
 
   if (!r) return (
     <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60, maxWidth: 520, margin: "0 auto" }}>
@@ -240,8 +240,12 @@ function ClaimFlow({ reporterId }) {
                 <div><label className="ds-label">Rates (optional)</label><input className="ds-input" placeholder="e.g. From $4.50/pg" value={form.rate} onChange={(e) => setForm({ ...form, rate: e.target.value })} /></div>
               </div>
               <div>
-                <label className="ds-label">Types of work you accept</label>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{WORK_TYPES.map((w) => <button key={w} type="button" className={"chip-filter" + (form.work.includes(w) ? " on" : "")} onClick={() => toggle("work", w)}>{w}</button>)}</div>
+                <label className="ds-label">Proceedings covered</label>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{PROCEEDING_TYPES.map((w) => <button key={w} type="button" className={"chip-filter" + (form.proceedings.includes(w) ? " on" : "")} onClick={() => toggle("proceedings", w)}>{w}</button>)}</div>
+              </div>
+              <div>
+                <label className="ds-label">Services offered</label>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{SERVICE_TYPES.map((w) => <button key={w} type="button" className={"chip-filter" + (form.services.includes(w) ? " on" : "")} onClick={() => toggle("services", w)}>{w}</button>)}</div>
               </div>
               <div>
                 <label className="ds-label">Languages (beyond English)</label>

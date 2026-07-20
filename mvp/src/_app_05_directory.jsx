@@ -31,7 +31,7 @@ function RepCard({ r }) {
         <>
           <p style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.55, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{r.bio}</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-            {(r.workTypes || []).slice(0, 3).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
+            {(r.proceedings || []).slice(0, 3).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
             {r.rush && <span className="pill pill-rush"><Icon name="clock" size={12} /> Rush OK</span>}
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 2, fontSize: 13, color: "var(--muted)" }}>
@@ -58,14 +58,14 @@ function ReporterDirectory() {
   const [language, setLanguage] = useState("");
   const [minYears, setMinYears] = useState("");
   const [method, setMethod] = useState("");   // reporting method (from license)
-  const [work, setWork] = useState([]);       // selected work types
+  const [tags, setTags] = useState([]);       // selected proceeding / service tags
   const [rushOnly, setRushOnly] = useState(false);
   const [claimedOnly, setClaimedOnly] = useState(false);
   const [limit, setLimit] = useState(PAGE_SIZE);
 
   const counties = useMemo(() => Array.from(new Set(all.map((r) => r.county).filter(Boolean))).sort(), [all]);
 
-  const toggleWork = (w) => { setWork((cur) => cur.includes(w) ? cur.filter((x) => x !== w) : [...cur, w]); setLimit(PAGE_SIZE); };
+  const toggleTag = (t) => { setTags((cur) => cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]); setLimit(PAGE_SIZE); };
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -77,7 +77,7 @@ function ReporterDirectory() {
       if (language && !(r.languages || []).includes(language)) return false;
       if (minYears && (!(r.yearsExp) || r.yearsExp < Number(minYears))) return false;
       if (method && !(r.method || "").includes(method)) return false;
-      if (work.length && !work.every((w) => (r.workTypes || []).includes(w))) return false;
+      if (tags.length && !tags.every((t) => (r.proceedings || []).includes(t) || (r.services || []).includes(t))) return false;
       return true;
     });
     // PRD ranking: claimed first, then completeness, then recent claim.
@@ -88,10 +88,10 @@ function ReporterDirectory() {
       return (b.claimedAt || "").localeCompare(a.claimedAt || "");
     });
     return list;
-  }, [all, q, county, language, minYears, method, work, rushOnly, claimedOnly]);
+  }, [all, q, county, language, minYears, method, tags, rushOnly, claimedOnly]);
 
-  const anyFilter = q || county || language || minYears || method || work.length || rushOnly || claimedOnly;
-  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setMethod(""); setWork([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
+  const anyFilter = q || county || language || minYears || method || tags.length || rushOnly || claimedOnly;
+  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setMethod(""); setTags([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
   const featured = filtered.filter((r) => r.claimed).slice(0, 3);
   const featuredIds = new Set(featured.map((r) => r.id));
   const rest = filtered.filter((r) => !featuredIds.has(r.id));
@@ -100,7 +100,7 @@ function ReporterDirectory() {
     <Page wide>
       <div style={{ marginBottom: 22 }}>
         <h1 style={{ fontSize: "clamp(30px, 4vw, 44px)" }}>California court reporter directory</h1>
-        <p style={{ color: "var(--muted)", marginTop: 8, fontSize: 16 }}>{all.length.toLocaleString()} licensed CSRs. Search, filter, and message reporters directly.</p>
+        <p style={{ color: "var(--muted)", marginTop: 8, fontSize: 16 }}>{all.length.toLocaleString()} licensed CSRs. Search and filter, then open a profile to message the reporter.</p>
       </div>
 
       {/* search */}
@@ -131,7 +131,7 @@ function ReporterDirectory() {
           <option value="Machine">Machine (steno)</option>
           <option value="Voice">Voice writing</option>
         </select>
-        {WORK_TYPES.slice(0, 5).map((w) =><button key={w} className={"chip-filter" + (work.includes(w) ? " on" : "")} onClick={() => toggleWork(w)}>{w}</button>)}
+        {[...PROCEEDING_TYPES, ...SERVICE_TYPES].map((t) => <button key={t} className={"chip-filter" + (tags.includes(t) ? " on" : "")} onClick={() => toggleTag(t)}>{t}</button>)}
         <button className={"chip-filter" + (rushOnly ? " on" : "")} onClick={() => { setRushOnly((v) => !v); setLimit(PAGE_SIZE); }}><Icon name="clock" size={13} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />Rush</button>
         <button className={"chip-filter" + (claimedOnly ? " on" : "")} onClick={() => { setClaimedOnly((v) => !v); setLimit(PAGE_SIZE); }}>Claimed only</button>
         {anyFilter ? <button className="chip-filter" style={{ color: "var(--brand-dark)", borderColor: "var(--brand-pale)" }} onClick={clearAll}>Clear all</button> : null}
@@ -195,7 +195,7 @@ function RepRow({ r }) {
         {r.claimed ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-              {(r.workTypes || []).slice(0, 4).map((w) => <span key={w} className="pill pill-tag" style={{ fontSize: 11, padding: "2px 8px" }}>{w}</span>)}
+              {[...(r.proceedings || []), ...(r.services || [])].slice(0, 4).map((w) => <span key={w} className="pill pill-tag" style={{ fontSize: 11, padding: "2px 8px" }}>{w}</span>)}
               {r.rush ? <span className="pill pill-rush" style={{ fontSize: 11, padding: "2px 8px" }}>Rush</span> : null}
             </div>
             <div style={{ color: "var(--muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
@@ -300,7 +300,7 @@ function ReporterProfile({ reporterId, invited }) {
                 {r.method ? <span><Icon name="doc" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.method}</span> : null}
               </div>
               <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
-                {(r.workTypes || []).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
+                {(r.proceedings || []).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
                 {r.rush && <span className="pill pill-rush"><Icon name="clock" size={12} /> Rush available</span>}
               </div>
             </div>
@@ -308,7 +308,8 @@ function ReporterProfile({ reporterId, invited }) {
 
           <ProfileSection title="About"><p style={{ fontSize: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>{r.bio}</p></ProfileSection>
           <ProfileSection title="Specialties"><TagList items={r.specialties} tone="brand" /></ProfileSection>
-          <ProfileSection title="Proceedings handled"><TagList items={r.proceedings} tone="sage" /></ProfileSection>
+          <ProfileSection title="Proceedings covered"><TagList items={r.proceedings} tone="sage" /></ProfileSection>
+          {(r.services || []).length > 0 && <ProfileSection title="Services offered"><TagList items={r.services} tone="brand" /></ProfileSection>}
           {(r.languages || []).length > 0 && <ProfileSection title="Languages"><TagList items={r.languages} tone="plum" /></ProfileSection>}
           <ProfileSection title="Geographic coverage"><TagList items={(r.coverage || []).map((c) => c + " County")} tone="brand" /></ProfileSection>
           <ProfileSection title="Certifications"><TagList items={r.certifications} tone="sage" /></ProfileSection>

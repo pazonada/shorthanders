@@ -114,7 +114,8 @@ function ReporterProfileEditor({ me }) {
         {field("Years of experience", me.yearsExp + " years")}
         {field("Rates", me.rate)}
       </div>
-      {field("Work types", (me.workTypes || []).join(" · "))}
+      {field("Proceedings covered", (me.proceedings || []).join(" · "))}
+      {field("Services offered", (me.services || []).join(" · "))}
       {field("Specialties", (me.specialties || []).join(" · "))}
       {field("Languages", (me.languages || []).join(" · ") || "English only")}
       {field("Coverage", (me.coverage || []).map((c) => c + " County").join(" · "))}
