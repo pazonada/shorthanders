@@ -207,7 +207,7 @@ function ForFirmsPage() {
         <FeatureBlock icon="doc" title="Clean invoices" body="Reporters invoice you through the platform with your matter reference on every line, ready for AP." />
         <FeatureBlock icon="lock" title="Pay online, not by check" body="No more cutting paper checks to reporters who won't take anything else. Pay any invoice by card or ACH in a click – receipts automatic, nothing to chase." />
       </div>
-      <CtaStrip title="Search the directory now – no account needed to browse." button={["Open the directory", "/directory"]} />
+      <CtaStrip title="Create a free firm account – search, message, and pay reporters in one place." button={["Create a firm account", "/firm-signup"]} />
     </Page>
   );
 }

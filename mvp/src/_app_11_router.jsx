@@ -124,6 +124,7 @@ function AppRouter() {
   if (route === "#/reporters" || route === "#/reporters/") return <ReporterDirectory />;
   if (route.startsWith("#/directory")) return <ReporterDirectory />;
   if (route.startsWith("#/reporter")) return <ReporterDashboard />;
+  if (route.startsWith("#/firm-signup")) return <FirmSignup />;
   if (route.startsWith("#/firm")) return <FirmDashboard />;
   if (route.startsWith("#/messages")) return <MessagingPage />;
   if (route.startsWith("#/for-firms")) return <ForFirmsPage />;

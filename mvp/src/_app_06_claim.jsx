@@ -269,3 +269,75 @@ function ClaimFlow({ reporterId }) {
 function StripeCheck({ label }) {
   return <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 14.5, color: "var(--ink-soft)" }}><span style={{ width: 20, height: 20, borderRadius: 6, background: "#635BFF", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="check" size={13} /></span>{label}</div>;
 }
+
+// ═══ Firm signup (free account) ════════════════════════════════════
+function FirmSignup() {
+  const store = useStore();
+  const [step, setStep] = useState(0);
+  const [form, setForm] = useState({ firm: "", name: "", role: "", location: "", size: "", practices: [], email: "", pw: "" });
+  const steps = ["About your firm", "Create your login"];
+  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+  const togglePractice = (p) => setForm((f) => ({ ...f, practices: f.practices.includes(p) ? f.practices.filter((x) => x !== p) : [...f.practices, p] }));
+  const PRACTICE = ["Insurance defense", "Personal injury", "Family law", "Employment", "Medical malpractice", "Civil / commercial", "Probate / trust"];
+  const step0Valid = form.firm.trim().length > 1 && form.name.trim().length > 1;
+  const step1Valid = /.+@.+\..+/.test(form.email) && form.pw.length >= 1;
+  const finish = () => { store.enterAsFirm(); navigate("/firm"); };
+  return (
+    <Page>
+      <div style={{ maxWidth: 640, margin: "0 auto" }}>
+        <button onClick={() => navigate("/for-firms")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 22 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Cancel</button>
+        <div style={{ textAlign: "center" }}>
+          <span className="pill pill-tag" style={{ marginBottom: 14, display: "inline-flex" }}>Free for firms</span>
+          <h1 style={{ fontSize: "clamp(30px, 4vw, 46px)" }}>Create your firm account</h1>
+          <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 14, lineHeight: 1.6 }}>Search the directory, message reporters, and pay their invoices in one place. Free to start – you only pay when you want to search for new reporters.</p>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 6, margin: "28px 0 26px" }}>
+          {steps.map((s, i) => (
+            <React.Fragment key={s}>
+              <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                <div className={"step-dot " + (i < step ? "done" : i === step ? "active" : "todo")}>{i < step ? <Icon name="check" size={15} /> : i + 1}</div>
+                <span style={{ fontSize: 13, fontWeight: 600, color: i === step ? "var(--ink)" : "var(--dim)" }}>{s}</span>
+              </div>
+              {i < steps.length - 1 && <div style={{ flex: 1, height: 1, background: "var(--rule)" }} />}
+            </React.Fragment>
+          ))}
+        </div>
+        <div className="ds-card">
+          {step === 0 && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <div><label className="ds-label">Firm name *</label><input className="ds-input" placeholder="Morgan & Reyes LLP" value={form.firm} onChange={set("firm")} /></div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                <div><label className="ds-label">Your name *</label><input className="ds-input" placeholder="Your full name" value={form.name} onChange={set("name")} /></div>
+                <div><label className="ds-label">Your role</label><select className="ds-input" value={form.role} onChange={set("role")}><option value="">Select…</option><option>Paralegal</option><option>Legal secretary</option><option>Office manager</option><option>Attorney</option><option>Other</option></select></div>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                <div><label className="ds-label">City or county</label><input className="ds-input" placeholder="e.g. San Jose, Santa Clara" value={form.location} onChange={set("location")} /></div>
+                <div><label className="ds-label">Firm size</label><select className="ds-input" value={form.size} onChange={set("size")}><option value="">Select…</option><option>Solo</option><option>2–10 attorneys</option><option>11–50 attorneys</option><option>51+ attorneys</option></select></div>
+              </div>
+              <div>
+                <label className="ds-label">Practice areas (optional)</label>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{PRACTICE.map((p) => <button key={p} type="button" className={"chip-filter" + (form.practices.includes(p) ? " on" : "")} onClick={() => togglePractice(p)}>{p}</button>)}</div>
+              </div>
+              <div style={{ marginTop: 4 }}>
+                <button className="btn btn-primary" disabled={!step0Valid} style={{ opacity: step0Valid ? 1 : 0.4 }} onClick={() => setStep(1)}>Continue <Icon name="arrow" size={16} /></button>
+              </div>
+            </div>
+          )}
+          {step === 1 && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <div className="banner banner-info"><Icon name="lock" size={18} style={{ flexShrink: 0 }} /><div>Prototype – this is a demo. No real account is created and nothing you type is stored or sent.</div></div>
+              <div><label className="ds-label">Work email *</label><input className="ds-input" type="email" placeholder="you@firm.com" value={form.email} onChange={set("email")} /></div>
+              <div><label className="ds-label">Create a password *</label><input className="ds-input" type="password" placeholder="••••••••" value={form.pw} onChange={set("pw")} /></div>
+              <p style={{ fontSize: 12.5, color: "var(--dim)", lineHeight: 1.5 }}>By creating an account you agree to the <button onClick={() => navigate("/terms")} style={claimLinkBtn}>Terms</button> and <button onClick={() => navigate("/privacy")} style={claimLinkBtn}>Privacy</button>.</p>
+              <div style={{ display: "flex", gap: 12, marginTop: 4 }}>
+                <button className="btn btn-primary" disabled={!step1Valid} style={{ opacity: step1Valid ? 1 : 0.4 }} onClick={finish}><Icon name="check" size={16} /> Create account</button>
+                <button className="btn btn-secondary" onClick={() => setStep(0)}>Back</button>
+              </div>
+            </div>
+          )}
+        </div>
+        <div style={{ textAlign: "center", marginTop: 20, fontSize: 13.5, color: "var(--muted)" }}>Already have an account? <button onClick={() => navigate("/")} style={claimLinkBtn}>Log in</button></div>
+      </div>
+    </Page>
+  );
+}
