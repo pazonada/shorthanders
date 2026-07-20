@@ -8,21 +8,25 @@ sourced real data point or a clearly-labelled input you set.
 > - **CSR conversion** – email → claim → Pro dials → Pro count + revenue. Default 30/30/30 on
 >   ~5,145 emailed ≈ **139 Pro, ~$4,000/mo at $29** (softer paid-upgrade step ≈ 46 Pro, ~$1,300/mo).
 > - **Net target** – how many *paying users* (Path A: subscriptions) **or** how many *reporters
->   collecting on-platform* (Path B: the per-invoice fee) it takes to net a target after NJ tax +
->   tech. Default $150k net ≈ **~680 paying users** at $29, **or ~245 reporters** running $4k/mo
->   each through a 2% fee. Note: today's "Pro waives the fee" design caps Path B.
+>   collecting on-platform* (Path B: the per-payment fee) it takes to net a target after NJ tax +
+>   tech. Default $150k net ≈ **~680 paying users** at $29, **or ~165 reporters** running $4k/mo
+>   each through a ~3% blended fee (Pro 2% / base 5%).
 
 Change the blue cells; everything recalcs on open.
 
 ## The model (recap)
 
-- **Default on claim: pay-per-invoice.** A small Dewey Sholes fee per payment, no monthly
-  cost. Fits occasional reporters.
-- **Upgrade to Pro: flat monthly, per-invoice fee waived.** Worth it once a reporter
-  invoices enough (or in large enough amounts) that the flat fee beats the per-payment cut.
+**Two-tier per-payment fee (revised 2026-07-20 – Pro *reduces* the fee, doesn't waive it):**
 
-The reporter self-selects into whichever is cheaper for them, so **you make money either
-way** – a cut on every payment, or a subscription.
+- **Default on claim: pay-per-invoice at the base fee** (working number ~5%), no monthly cost.
+  Fits occasional reporters.
+- **Upgrade to Pro: flat monthly *plus* a reduced fee** (~2%). Pro users pay both. Worth it once
+  a reporter bills enough that the fee saving (base − Pro) beats the subscription – upgrade point
+  = Pro price ÷ (base − Pro fee), ≈ **$967/mo of billing** at $29 / 5% / 2%.
+
+Everyone pays a fee, so the **fee scales with total volume instead of being capped** – which is
+why it can be the biggest revenue line (often ~70% in the model). The reporter self-selects into
+whichever tier is cheaper for their volume, and you make money either way.
 
 ## The three "fees" – keep them straight
 

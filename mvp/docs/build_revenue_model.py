@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import openpyxl
-from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
-from openpyxl.comments import Comment
+from openpyxl.styles import Font, PatternFill, Alignment
 
 OUT = "/Users/audubondougherty/Desktop/AI_experiments/dewey-sholes/mvp/docs/revenue_model.xlsx"
 
@@ -28,18 +27,18 @@ CUR = '$#,##0'
 PCT = '0.0%'
 INT = '#,##0'
 
-# ---- title ----
+# ============ Sheet 1: revenue model (two-tier per-payment fee) ============
 ws["A1"] = "Dewey Sholes – revenue model"
 ws["A1"].font = TITLE
 ws.merge_cells("A1:F1")
-ws["A2"] = "Illustrative, to frame the decision – not a forecast. Change the blue and yellow cells; everything recalculates. Prices are yours to set."
+ws["A2"] = ("Illustrative, to frame the decision – not a forecast. Change the blue and yellow cells; everything "
+            "recalculates. Reporters pay a per-payment fee, lower on Pro. Prices are yours to set.")
 ws["A2"].font = SUB
 ws.merge_cells("A2:F2")
-ws["A3"] = "Blue = inputs you can change.   Yellow (“Your custom” column) = edit these to model your own scenario.   Black = calculated."
+ws["A3"] = "Blue = inputs you can change.   Yellow ('Your custom' column) = model your own scenario.   Black = calculated."
 ws["A3"].font = SUB
 ws.merge_cells("A3:F3")
 
-# ---- column headers ----
 r = 5
 ws.cell(r, 1, "").fill = HDRFILL
 for col, name in zip("BCDE", ["Launch", "Growth", "Scaled", "Your custom"]):
@@ -48,7 +47,6 @@ ws.cell(r, 6, "Notes").font = HDR
 ws.cell(r, 6).fill = HDRFILL
 ws.cell(r, 1).fill = HDRFILL
 
-# ---- INPUTS ----
 def section(row, text):
     ws.cell(row, 1, text).font = BOLD
     for col in range(1, 7):
@@ -59,15 +57,16 @@ section(6, "INPUTS")
 # (label, [Launch, Growth, Scaled, Custom], numfmt, note)
 inputs = [
     ("Active CSRs (real, from the CRB scrape)", [5705, 5705, 5705, 5705], INT, "Total active California CSRs in our data."),
-    ("% of CSRs who claim a free profile",      [0.05, 0.10, 0.20, 0.05], PCT, "Of all active CSRs, how many sign up (free)."),
-    ("Reporters on flat Pro (% of those who claim)", [0.15, 0.18, 0.20, 0.15], PCT, "Heavy users who buy the flat monthly plan."),
-    ("Reporters on pay-as-you-go (% of those who claim)", [0.25, 0.30, 0.35, 0.25], PCT, "Occasional users who pay a fee only when they get paid."),
-    ("Reporter Pro price ($/mo)",               [9, 15, 25, 9], CUR, "The flat monthly plan price."),
-    ("Avg invoices per pay-as-you-go reporter (/mo)", [4, 5, 6, 4], INT, "How many invoices an occasional reporter sends per month."),
-    ("Avg invoice amount ($)",                  [400, 450, 500, 400], CUR, "Typical invoice size."),
-    ("Dewey Sholes fee on payments collected (%)", [0.01, 0.02, 0.03, 0.01], PCT, "Our cut of each payment (on top of Stripe's, which the reporter pays)."),
-    ("Paying firms (#)",                        [100, 200, 500, 100], INT, "Firms on the paid subscription. This is the main lever."),
-    ("Firm subscription ($/mo)",                [29, 59, 99, 29], CUR, "Monthly firm price."),
+    ("% of CSRs who claim a free profile", [0.05, 0.10, 0.20, 0.10], PCT, "Of all active CSRs, how many claim (free)."),
+    ("Pro reporters (% of claimers)", [0.20, 0.25, 0.30, 0.25], PCT, "Claimers who upgrade to Pro: flat monthly PLUS the reduced fee."),
+    ("Pay-per-invoice reporters (% of claimers)", [0.30, 0.35, 0.40, 0.35], PCT, "Claimers who collect on-platform on the base fee (the rest just list, no volume)."),
+    ("Reporter Pro price ($/mo)", [29, 29, 29, 29], CUR, "Flat monthly Pro plan."),
+    ("Base fee – pay-per-invoice (%)", [0.05, 0.05, 0.05, 0.05], PCT, "Our cut per payment for non-Pro reporters."),
+    ("Pro fee (%)", [0.02, 0.02, 0.02, 0.02], PCT, "Reduced cut per payment for Pro reporters (who ALSO pay the sub)."),
+    ("Avg billed per Pro reporter ($/mo)", [4000, 5000, 6000, 5000], CUR, "Dollars a Pro reporter runs THROUGH the platform monthly."),
+    ("Avg billed per pay-per-invoice reporter ($/mo)", [700, 800, 1000, 800], CUR, "Dollars an occasional reporter runs through monthly."),
+    ("Paying firms (#)", [50, 200, 500, 200], INT, "Firms on the paid subscription. Grow this."),
+    ("Firm subscription ($/mo)", [29, 29, 29, 29], CUR, "Set to Pro price per your 'for kicks' – firms can bear more; raise later."),
 ]
 row = 7
 input_rows = {}
@@ -81,19 +80,18 @@ for label, vals, fmt, note in inputs:
     input_rows[label] = row
     row += 1
 
-# convenience row refs
 R_CSR = input_rows["Active CSRs (real, from the CRB scrape)"]
 R_CLAIM = input_rows["% of CSRs who claim a free profile"]
-R_FLAT = input_rows["Reporters on flat Pro (% of those who claim)"]
-R_PAYGO = input_rows["Reporters on pay-as-you-go (% of those who claim)"]
+R_PROP = input_rows["Pro reporters (% of claimers)"]
+R_PPIP = input_rows["Pay-per-invoice reporters (% of claimers)"]
 R_PRICE = input_rows["Reporter Pro price ($/mo)"]
-R_INV = input_rows["Avg invoices per pay-as-you-go reporter (/mo)"]
-R_AMT = input_rows["Avg invoice amount ($)"]
-R_FEE = input_rows["Dewey Sholes fee on payments collected (%)"]
+R_BASEF = input_rows["Base fee – pay-per-invoice (%)"]
+R_PROF = input_rows["Pro fee (%)"]
+R_PROBILL = input_rows["Avg billed per Pro reporter ($/mo)"]
+R_PPIBILL = input_rows["Avg billed per pay-per-invoice reporter ($/mo)"]
 R_FIRMS = input_rows["Paying firms (#)"]
 R_FPRICE = input_rows["Firm subscription ($/mo)"]
 
-# ---- RESULTS ----
 res_start = row + 1
 section(res_start, "RESULTS")
 row = res_start + 1
@@ -111,32 +109,35 @@ def result(label, formula_fn, fmt, note="", total=False):
         ws.cell(row, 6).fill = TOTALFILL
     if note:
         ws.cell(row, 6, note).font = SUB
-    r_now = row
+    rr = row
     row += 1
-    return r_now
+    return rr
 
-R_claimers = result("Reporters who claim (free)", lambda c: f"={c}{R_CSR}*{c}{R_CLAIM}", INT)
-R_flatN = result("Reporters on flat Pro", lambda c: f"={c}{R_claimers}*{c}{R_FLAT}", INT)
-R_pgN = result("Reporters on pay-as-you-go", lambda c: f"={c}{R_claimers}*{c}{R_PAYGO}", INT)
-R_flatRev = result("Flat Pro revenue (/mo)", lambda c: f"={c}{R_flatN}*{c}{R_PRICE}", CUR)
-R_vol = result("Payment volume through us (/mo)", lambda c: f"={c}{R_pgN}*{c}{R_INV}*{c}{R_AMT}", CUR, "Dollars flowing through pay-as-you-go reporters.")
-R_txnRev = result("Transaction-fee revenue (/mo)", lambda c: f"={c}{R_vol}*{c}{R_FEE}", CUR, "Our cut of that volume.")
-R_repRev = result("Reporter revenue (/mo)", lambda c: f"={c}{R_flatRev}+{c}{R_txnRev}", CUR, "Flat Pro + transaction fees.")
+R_claim = result("Reporters who claim (free)", lambda c: f"={c}{R_CSR}*{c}{R_CLAIM}", INT)
+R_proN = result("Pro reporters", lambda c: f"={c}{R_claim}*{c}{R_PROP}", INT)
+R_ppiN = result("Pay-per-invoice reporters", lambda c: f"={c}{R_claim}*{c}{R_PPIP}", INT)
+R_proVol = result("Pro billing volume (/mo)", lambda c: f"={c}{R_proN}*{c}{R_PROBILL}", CUR)
+R_ppiVol = result("Pay-per-invoice billing volume (/mo)", lambda c: f"={c}{R_ppiN}*{c}{R_PPIBILL}", CUR)
+R_totVol = result("Total payment volume through us (/mo)", lambda c: f"={c}{R_proVol}+{c}{R_ppiVol}", CUR, "All dollars flowing through Stripe on the platform.")
+R_proSub = result("Pro subscription revenue (/mo)", lambda c: f"={c}{R_proN}*{c}{R_PRICE}", CUR)
+R_proFee = result("Pro fee revenue (/mo)", lambda c: f"={c}{R_proVol}*{c}{R_PROF}", CUR, "The Pro fee on Pro reporters' volume.")
+R_ppiFee = result("Pay-per-invoice fee revenue (/mo)", lambda c: f"={c}{R_ppiVol}*{c}{R_BASEF}", CUR, "The base fee on everyone else's volume.")
+R_repRev = result("Reporter revenue (/mo)", lambda c: f"={c}{R_proSub}+{c}{R_proFee}+{c}{R_ppiFee}", CUR, "Pro subs + both fee tiers.")
 R_firmRev = result("Firm revenue (/mo)", lambda c: f"={c}{R_FIRMS}*{c}{R_FPRICE}", CUR)
 R_totMo = result("TOTAL revenue (/mo)", lambda c: f"={c}{R_repRev}+{c}{R_firmRev}", CUR, total=True)
 R_totYr = result("TOTAL revenue (/year)", lambda c: f"={c}{R_totMo}*12", CUR, total=True)
 row += 1
-R_firmShare = result("Firm share of revenue", lambda c: f"=IFERROR({c}{R_firmRev}/{c}{R_totMo},0)", PCT)
+R_feeShare = result("Fee revenue as % of total", lambda c: f"=IFERROR(({c}{R_proFee}+{c}{R_ppiFee})/{c}{R_totMo},0)", PCT, "How much of everything is the per-payment fee.")
 R_repShare = result("Reporter share of revenue", lambda c: f"=IFERROR({c}{R_repRev}/{c}{R_totMo},0)", PCT)
+R_firmShare = result("Firm share of revenue", lambda c: f"=IFERROR({c}{R_firmRev}/{c}{R_totMo},0)", PCT)
 
-# column widths
-ws.column_dimensions["A"].width = 44
+ws.column_dimensions["A"].width = 46
 for col in "BCDE":
     ws.column_dimensions[col].width = 13
-ws.column_dimensions["F"].width = 52
+ws.column_dimensions["F"].width = 56
 ws.freeze_panes = "B6"
 
-# ============ Sheet 2: CSR email → Pro conversion funnel ============
+# ============ Sheet 2: CSR email -> Pro conversion funnel ============
 ws2 = wb.create_sheet("CSR conversion")
 
 ws2["A1"] = "Dewey Sholes – CSR email to Pro conversion"
@@ -204,14 +205,14 @@ R_OPENERS = result2("Openers", f"=B{R_EMAIL}*B{R_OPEN}", INT)
 R_CLAIMERS = result2("Claimers (free profiles)", f"=B{R_OPENERS}*B{R_CLAIMR}", INT)
 R_PRO = result2("Pro reporters (paid)", f"=B{R_CLAIMERS}*B{R_PROR}", INT, "The paying reporter count.")
 result2("On pay-per-invoice (claimed, not Pro)", f"=B{R_CLAIMERS}-B{R_PRO}", INT,
-        "Not $0 – they pay a small fee when they get paid (see the Revenue model sheet).")
+        "Not $0 – they pay the base fee when they get paid (see the Revenue model sheet).")
 result2("Overall email-to-Pro rate", f"=IFERROR(B{R_PRO}/B{R_EMAIL},0)", PCT)
 result2("Monthly Pro revenue (full price)", f"=B{R_PRO}*B{R_PPRICE}", CUR)
 R_MO1 = result2("Monthly Pro revenue (year 1, after discount)", f"=B{R_PRO}*B{R_PPRICE}*(1-B{R_DISC})", CUR, total=True)
 result2("Annual Pro revenue (year 1)", f"=B{R_MO1}*12", CUR, total=True)
 
 foot = r2 + 1
-ws2.cell(foot, 1, "This is the reporter-Pro slice only. Pay-per-invoice fees and firm subscriptions are on the 'Revenue model' sheet.").font = SUB
+ws2.cell(foot, 1, "This is the Pro-subscription slice only. Per-payment fees and firm subscriptions are on the 'Revenue model' sheet.").font = SUB
 ws2.merge_cells(start_row=foot, start_column=1, end_row=foot, end_column=3)
 
 ws2.column_dimensions["A"].width = 42
@@ -281,8 +282,9 @@ res3("Paying users needed", f"=B{R_GYR}/(B{R_SPRICE}*12)", INT,
      "Mostly firms – CSR Pro realistically tops out ~50-140.", total=True)
 
 r3 += 1
-section3(r3, "PATH B – per-invoice fee (reporters collecting on-platform)"); r3 += 1
-R_FEE = inp3("Dewey Sholes fee per payment (%)", 0.02, PCT, "Reporter-side only; firms never see it.")
+section3(r3, "PATH B – per-payment fee (reporters collecting on-platform)"); r3 += 1
+R_FEE = inp3("Effective (blended) fee per payment (%)", 0.03, PCT,
+             "Pro reporters pay ~2%, others ~5%; ~3% is a middle blend. The Revenue model tab has the full split.")
 R_BILL = inp3("Avg billed per active reporter ($/mo)", 4000, CUR, "Dollars a paying reporter runs THROUGH the platform per month.")
 R_VOL = res3("Monthly payment volume needed ($/mo)", f"=B{R_GMO}/B{R_FEE}", CUR, "Total $ that must flow through Stripe on the platform.")
 res3("Reporters actively collecting needed", f"=B{R_VOL}/B{R_BILL}", INT,
@@ -290,8 +292,8 @@ res3("Reporters actively collecting needed", f"=B{R_VOL}/B{R_BILL}", INT,
 
 r3 += 1
 ws3.cell(r3, 1, ("Same take-home, two different asks: a pile of paying FIRMS (Path A) vs. reporters routing real "
-                 "PAYMENT through you (Path B). Path B usually needs fewer people, but more behavior change. "
-                 "Note: today's design (Pro waives the per-invoice fee) caps Path B – heavy billers switch to flat Pro.")).font = SUB
+                 "PAYMENT through you (Path B). Path B usually needs fewer people, but more behavior change – "
+                 "the whole fee line only exists on money collected through the platform.")).font = SUB
 ws3.merge_cells(start_row=r3, start_column=1, end_row=r3, end_column=3)
 
 ws3.column_dimensions["A"].width = 44

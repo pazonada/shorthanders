@@ -145,7 +145,7 @@ function ReporterPayments({ invoices, paidThisMonth }) {
           </div>
           <div className="ds-panel">
             <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pro</div>
-            <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 6, lineHeight: 1.55 }}>Flat monthly, and the per-invoice fee is waived. Best once you invoice often or in large amounts.</p>
+            <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 6, lineHeight: 1.55 }}>Flat monthly plus a lower per-invoice fee. Best once you invoice often or in large amounts.</p>
             <div style={{ fontSize: 12.5, color: "var(--dim)", marginTop: 8 }}>Pricing announced before launch.</div>
           </div>
         </div>
