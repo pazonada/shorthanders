@@ -1,12 +1,20 @@
-# Pricing strategy — competitor benchmarks + revenue scenarios
+# Pricing strategy – competitor benchmarks + revenue scenarios
+
+> **Note (2026-07-20): partly superseded.** The reporter side is now a **two-tier per-payment
+> fee** (base ~5% / Pro ~2%; Pro *reduces* the fee, doesn't waive it), which can make the **fee
+> the biggest revenue line (~70% in the model)** – so the "revenue is almost entirely firms /
+> reporters are small money" takeaway below no longer holds. Current model:
+> [open_strategic_decisions.md](open_strategic_decisions.md) §1,
+> [../marketing/pro_pricing_worksheet.md](../marketing/pro_pricing_worksheet.md), and
+> `revenue_model.xlsx`. Keep this doc for the competitor benchmarks and the general "chase firms" logic.
 
 **Read this first (the one big takeaway):** the revenue is almost entirely **paying firms**
 (number of firms × the firm price). The reporter side is small money but essential supply. So
-the whole game is **getting firms to sign up** — which, as you said, is also the hardest part.
+the whole game is **getting firms to sign up** – which, as you said, is also the hardest part.
 That points to one clear move: **price the firm side low at launch to reduce friction, with a
 free trial, and raise it later once the value is proven.**
 
-Everything below is **illustrative, to frame the decision** — not a forecast. The sign-up and
+Everything below is **illustrative, to frame the decision** – not a forecast. The sign-up and
 pay rates are guesses until you test them, and the prices are yours to set. Competitor prices
 are real as of this writing; **verify current rates** (they change).
 
@@ -25,12 +33,12 @@ are real as of this writing; **verify current rates** (they change).
 
 **What this tells us:**
 - Charging the **demand side** a subscription for access (Care.com, LinkedIn) lands roughly
-  **$30–$100/month.** Firms fit right in this band — and they're businesses, not consumers, so
+  **$30–$100/month.** Firms fit right in this band – and they're businesses, not consumers, so
   the top of that range is defensible **if** they use it.
 - **Supply-side** money (Fiverr's cut, Thumbtack's leads, legal-directory listings) is all over
   the place; the lesson is to keep the **reporter** side **light** so reporters actually join.
 - Your value story is strong: agencies take ~30–40%, so **any** Dewey Sholes fee looks cheap.
-  The hard part isn't justifying the price — it's getting firms to change their habit.
+  The hard part isn't justifying the price – it's getting firms to change their habit.
 
 ---
 
@@ -48,8 +56,8 @@ Notes:
 - **Annual option:** offer ~2 months free (pay for 10, get 12) to pull firms onto yearly plans.
 - **Reporters:** free to claim and list. The flat Pro plan is for heavy users; the per-payment
   fee is for occasional/part-time reporters (they pay nothing in months they don't use it).
-  Both come out of the reporter's side — the firm never sees a Dewey Sholes fee.
-- **Free trial for firms** (e.g., 14 days) is important — it lets them feel the value before paying.
+  Both come out of the reporter's side – the firm never sees a Dewey Sholes fee.
+- **Free trial for firms** (e.g., 14 days) is important – it lets them feel the value before paying.
 
 ---
 
@@ -59,7 +67,7 @@ Notes:
 Assume **~30% of reporters who claim end up paying** (flat Pro, used here as a stand-in; the
 per-payment fee would depend on how many jobs flow through, which we can't estimate yet).
 
-### Scenario 1 — Launch (Conservative pricing)
+### Scenario 1 – Launch (Conservative pricing)
 | | 50 firms | 100 firms |
 |---|---|---|
 | Firms (× $29/mo) | $1,450/mo | $2,900/mo |
@@ -68,7 +76,7 @@ per-payment fee would depend on how many jobs flow through, which we can't estim
 | **Yearly total** | **~$26,600** | **~$44,000** |
 | Share from firms | ~65% | ~79% |
 
-### Scenario 2 — Growth (Moderate pricing)
+### Scenario 2 – Growth (Moderate pricing)
 | | 200 firms |
 |---|---|
 | Firms (× $59/mo) | $11,800/mo |
@@ -77,7 +85,7 @@ per-payment fee would depend on how many jobs flow through, which we can't estim
 | **Yearly total** | **~$172,000** |
 | Share from firms | ~82% |
 
-### Scenario 3 — Scaled (Premium pricing)
+### Scenario 3 – Scaled (Premium pricing)
 | | 500 firms |
 |---|---|
 | Firms (× $99/mo) | $49,500/mo |
@@ -94,7 +102,7 @@ per-payment fee would depend on how many jobs flow through, which we can't estim
 > subscription on the reporter side and called reporters a "rounding error." That was wrong.
 > Once you include the **transaction fee on payments collected**, the reporter side is a real
 > chunk of revenue, because that fee scales with the dollars flowing through you. See the
-> adjustable model in `revenue_model.xlsx` — the figures below now include it.
+> adjustable model in `revenue_model.xlsx` – the figures below now include it.
 
 1. **Firms are the biggest single source (~55–65%), but reporters are ~35–45%, not a rounding
    error.** The reporter transaction fee grows with payment volume, so as more real jobs flow
@@ -103,19 +111,19 @@ per-payment fee would depend on how many jobs flow through, which we can't estim
 2. **The transaction fee is the reporter side's engine, not the flat Pro plan.** Flat Pro
    subscriptions stay small; the fee on payments is where the reporter dollars come from. Two
    caveats: those numbers swing the most on your guesses (how much volume actually flows
-   through you), and reporters can dodge the fee by paying off-platform — so making in-platform
+   through you), and reporters can dodge the fee by paying off-platform – so making in-platform
    payment genuinely convenient matters for this line to hold up.
 3. **Break-even is low; income needs scale.** Costs at low usage are tiny (free tiers; the card
    fee is the reporter's). A handful of firms covers running the site. A real salary needs
-   **hundreds** of paying firms and real payment volume — a sales problem, not a pricing one.
+   **hundreds** of paying firms and real payment volume – a sales problem, not a pricing one.
 4. **Launch cheap on the firm side.** At ~$29/mo with a free trial, a firm that skips one agency
-   markup a month is already ahead — an easy "yes." Raise it later, once you've proven it and
+   markup a month is already ahead – an easy "yes." Raise it later, once you've proven it and
    have reviews.
 5. **Keep the reporter side light to *join*, but don't give away the transaction fee.** Free to
    list; the small fee only kicks in when a reporter actually gets paid, and it's still far
    below the agency cut.
 
 ## Still yours to decide
-- The actual prices (these are ranges to react to — don't treat them as set).
+- The actual prices (these are ranges to react to – don't treat them as set).
 - Monthly vs. annual emphasis, and the free-trial length.
 - Reporter side: flat Pro, per-payment, or offer both.

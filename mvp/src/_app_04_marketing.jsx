@@ -63,7 +63,7 @@ function LandingPage() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 26, flexWrap: "wrap", gap: 12 }}>
             <div>
               <h2 className="h-section">Robust reporter profiles</h2>
-              <p style={{ color: "var(--muted)", marginTop: 6, maxWidth: 540 }}>The state publishes basic contact information for CSRs, but there's never been a comprehensive directory – until now.</p>
+              <p style={{ color: "var(--muted)", marginTop: 6, maxWidth: 540 }}>The state publishes basic contact information for CSRs, but there's never been a comprehensive directory where independent reporters can advertise their services – until now.</p>
             </div>
             <button className="btn btn-secondary" onClick={() => navigate("/directory")}>See all <Icon name="arrow" size={16} /></button>
           </div>
