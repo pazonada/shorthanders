@@ -205,8 +205,9 @@ function RepRow({ r }) {
 }
 
 // ═══ Reporter profile ══════════════════════════════════════════════
-function ReporterProfile({ reporterId }) {
+function ReporterProfile({ reporterId, invited }) {
   const store = useStore();
+  const [inviteOpen, setInviteOpen] = useState(false);
   const all = useMemo(() => buildDirectory(), []);
   const r = all.find((x) => x.id === reporterId);
   if (!r) return <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60 }}><h2>Reporter not found</h2><button className="btn btn-secondary" style={{ marginTop: 16 }} onClick={() => navigate("/directory")}>Back to directory</button></div></Page>;
@@ -214,6 +215,9 @@ function ReporterProfile({ reporterId }) {
   if (!r.claimed) return <UnclaimedProfile r={r} />;
 
   const pct = completeness(r);
+  const isOwner = store.role === "reporter" && r.id === store.myCsr;
+  const first = r.name.split(" ")[0];
+  const acceptInvite = () => { store.acceptInvite(r.id); navigate("/firm"); };
   const messageReporter = () => {
     if (store.role === "firm") { store.startConvoWith(r.name); navigate("/messages"); }
     else { store.enterAsFirm(); store.startConvoWith(r.name); navigate("/messages"); }
@@ -221,6 +225,7 @@ function ReporterProfile({ reporterId }) {
   return (
     <Page>
       <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 16 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to directory</button>
+      {invited && <div className="banner banner-ok" style={{ marginBottom: 14 }}><Icon name="heart" size={18} style={{ flexShrink: 0 }} /><div><strong>{first} invited you to Dewey Sholes.</strong> Create a free account to message {first}, pay their invoices, and save them to your firm. Joining is free for your firm.</div></div>}
       <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This reporter's bio, specialties, and testimonials are illustrative placeholders for the prototype, not real. The name, license, county, and method are real public data.</div></div>
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 32, alignItems: "start" }} className="profile-grid">
         {/* main */}
@@ -268,17 +273,33 @@ function ReporterProfile({ reporterId }) {
           <div className="ds-card">
             {r.rate ? <div style={{ marginBottom: 16 }}><div style={{ fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".04em" }}>Rates</div><div style={{ fontSize: 17, color: "var(--ink)", fontWeight: 600, marginTop: 4 }}>{r.rate}</div></div>
               : <div style={{ marginBottom: 16, fontSize: 14, color: "var(--muted)" }}>Rates provided on request.</div>}
-            <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={messageReporter}><Icon name="message" size={16} /> Message {r.name.split(" ")[0]}</button>
-            <button className="btn btn-secondary" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} onClick={() => { store.toggleSaved(r.id); }}>
-              <Icon name="heart" size={16} /> {store.saved.includes(r.id) ? "Saved" : "Save reporter"}
-            </button>
-            <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>Terms are agreed directly between you and the reporter. Dewey Sholes is a communication channel only.</p>
+            {invited ? (
+              <>
+                <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={acceptInvite}><Icon name="heart" size={16} /> Create free account and save {first}</button>
+                <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>Free for your firm. Message {first} and pay their invoices right away; upgrade only when you want to search the full directory.</p>
+              </>
+            ) : isOwner ? (
+              <>
+                <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={() => setInviteOpen(true)}><Icon name="mail" size={16} /> Invite a law firm</button>
+                <button className="btn btn-secondary" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} onClick={() => navigate("/reporter")}><Icon name="user" size={16} /> Back to dashboard</button>
+                <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>This is how firms see your profile. Invite the firms you already work with, so they join and save you.</p>
+              </>
+            ) : (
+              <>
+                <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={messageReporter}><Icon name="message" size={16} /> Message {first}</button>
+                <button className="btn btn-secondary" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} onClick={() => { store.toggleSaved(r.id); }}>
+                  <Icon name="heart" size={16} /> {store.saved.includes(r.id) ? "Saved" : "Save reporter"}
+                </button>
+                <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>Terms are agreed directly between you and the reporter. Dewey Sholes is a communication channel only.</p>
+              </>
+            )}
           </div>
           <div className="ds-panel" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: "var(--muted)" }}>
             <Icon name="eye" size={16} /> {r.views} profile views this month
           </div>
         </aside>
       </div>
+      {isOwner && inviteOpen && <InviteFirmModal me={r} onClose={() => setInviteOpen(false)} />}
     </Page>
   );
 }

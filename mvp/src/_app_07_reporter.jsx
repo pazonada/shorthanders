@@ -18,6 +18,7 @@ function DashLayout({ title, subtitle, tabs, active, onTab, children }) {
 function ReporterDashboard() {
   const store = useStore();
   const [tab, setTab] = useState("overview");
+  const [inviteOpen, setInviteOpen] = useState(false);
   // Returning from real Stripe onboarding lands here – treat the reporter as signed in.
   useEffect(() => { if (window.location.hash.indexOf("stripe=connected") !== -1 && store.role !== "reporter") store.enterAsReporter(); }, []);
   const me = useMemo(() => { const all = buildDirectory(); return all.find((x) => x.id === store.myCsr) || all.find((x) => x.claimed); }, [store.myCsr]);
@@ -39,6 +40,7 @@ function ReporterDashboard() {
     <DashLayout title={"Welcome back, " + me.name.split(" ")[0]} subtitle={"CSR #" + me.csrNumber + " · " + me.city + ", CA"} tabs={tabs} active={tab} onTab={setTab}>
       <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample data.</strong> The invoices, payments, stats, and messages shown here are illustrative placeholders for the prototype.</div></div>
       {tab === "overview" && (
+        <>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 18 }}>
           <StatCard icon="dollar" label="Paid this month" value={"$" + paidThisMonth.toLocaleString(undefined, { minimumFractionDigits: 2 })} tone="sage" />
           <StatCard icon="clock" label="Outstanding" value={"$" + outstanding.toLocaleString(undefined, { minimumFractionDigits: 2 })} tone="ochre" />
@@ -66,7 +68,18 @@ function ReporterDashboard() {
             </div>
             <button className="btn btn-primary" onClick={() => setTab("invoices")}><Icon name="plus" size={16} /> New invoice</button>
           </div>
+
+          <div className="ds-card" style={{ gridColumn: "1 / -1", display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+            <div style={{ width: 46, height: 46, borderRadius: 12, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="mail" size={22} /></div>
+            <div style={{ flex: 1, minWidth: 220 }}>
+              <div style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Invite the firms you already work with</div>
+              <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 2 }}>They join free and save you as a favorite, so you are first in mind next time they need a reporter{store.invitedFirms.length ? " · " + store.invitedFirms.length + " invited" : ""}.</div>
+            </div>
+            <button className="btn btn-primary" onClick={() => setInviteOpen(true)}><Icon name="mail" size={16} /> Invite a law firm</button>
+          </div>
         </div>
+        {inviteOpen && <InviteFirmModal me={me} onClose={() => setInviteOpen(false)} />}
+        </>
       )}
 
       {tab === "profile" && <ReporterProfileEditor me={me} />}
@@ -119,6 +132,23 @@ function ReporterPayments({ invoices, paidThisMonth }) {
   const paid = invoices.filter((i) => i.status === "paid");
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
+          <h3 style={{ fontSize: 20 }}>Your plan</h3>
+          <span className="pill pill-claimed"><Icon name="check" size={13} /> Pay per invoice</span>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 14 }}>
+          <div className="ds-panel" style={{ borderColor: "var(--brand-pale)" }}>
+            <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span></div>
+            <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 6, lineHeight: 1.55 }}>A small fee per payment, no monthly cost. Best if you invoice occasionally.</p>
+          </div>
+          <div className="ds-panel">
+            <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pro</div>
+            <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 6, lineHeight: 1.55 }}>Flat monthly, and the per-invoice fee is waived. Best once you invoice often or in large amounts.</p>
+            <div style={{ fontSize: 12.5, color: "var(--dim)", marginTop: 8 }}>Pricing announced before launch.</div>
+          </div>
+        </div>
+      </div>
       <div className="ds-card" style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
         <div style={{ width: 48, height: 48, borderRadius: 12, background: "#635BFF", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="bank" size={24} /></div>
         <div style={{ flex: 1, minWidth: 220 }}>
@@ -140,6 +170,58 @@ function ReporterPayments({ invoices, paidThisMonth }) {
             <tbody>{paid.length ? paid.map((i) => <tr key={i.id}><td style={{ fontWeight: 600, color: "var(--ink)" }}>{i.id}</td><td>{i.client}</td><td>{i.method || "Card"}</td><td>{i.date}</td><td style={{ textAlign: "right", fontWeight: 600, color: "var(--ink)" }}>${i.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td></tr>) : <tr><td colSpan={5} style={{ textAlign: "center", color: "var(--muted)", padding: 30 }}>No payments yet.</td></tr>}</tbody>
           </table>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══ Invite a firm (reporter brings their own clients) ═════════════
+function InviteFirmModal({ me, onClose }) {
+  const store = useStore();
+  const first = me.name.split(" ")[0];
+  const link = "https://dsmvp.vercel.app/#/invite/" + me.id;
+  const [firm, setFirm] = useState("");
+  const [email, setEmail] = useState("");
+  const [msg, setMsg] = useState("Hi there,\n\nI'm now on Dewey Sholes, where you can hire me, message me, and pay my invoices in one place. It's free for your firm to join, and you can pay me by card or ACH right from your account.\n\nCreate your free account and save my profile here:\n" + link + "\n\nThanks,\n" + first);
+  const [sent, setSent] = useState(false);
+  const valid = firm.trim().length > 1 && /.+@.+\..+/.test(email);
+  const send = () => { store.inviteFirm({ name: firm.trim(), email: email.trim(), at: "Just now" }); setSent(true); };
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="ds-card" style={{ maxWidth: 540, width: "92%", maxHeight: "88vh", overflowY: "auto" }} onClick={(e) => e.stopPropagation()}>
+        {sent ? (
+          <div style={{ textAlign: "center", padding: "8px 4px" }}>
+            <div style={{ width: 52, height: 52, borderRadius: 14, background: "var(--sage-soft)", color: "var(--sage-deep)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 14px" }}><Icon name="mail" size={26} /></div>
+            <h3 style={{ fontSize: 22 }}>Invite sent to {firm}</h3>
+            <p style={{ color: "var(--muted)", marginTop: 10, lineHeight: 1.6, fontSize: 14.5 }}>When they join, {firm} is saved to your firm list automatically and can pay your invoices here, so you stay first in mind for their next job.</p>
+            <p style={{ color: "var(--dim)", marginTop: 10, fontSize: 12.5 }}>Prototype: no email is actually sent.</p>
+            <button className="btn btn-primary" style={{ marginTop: 18 }} onClick={onClose}><Icon name="check" size={16} /> Done</button>
+          </div>
+        ) : (
+          <>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+              <div>
+                <h3 style={{ fontSize: 24 }}>Invite a law firm</h3>
+                <p style={{ color: "var(--muted)", marginTop: 6, fontSize: 14, lineHeight: 1.55 }}>Bring a firm you already work with. They join free, save you as a favorite, and can pay your invoices here.</p>
+              </div>
+              <button onClick={onClose} title="Close" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", padding: 4, flexShrink: 0 }}><Icon name="x" size={20} /></button>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 18 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                <div><label className="ds-label">Firm name</label><input className="ds-input" placeholder="Morgan & Reyes LLP" value={firm} onChange={(e) => setFirm(e.target.value)} /></div>
+                <div><label className="ds-label">Contact email</label><input className="ds-input" type="email" placeholder="office@firm.com" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
+              </div>
+              <div><label className="ds-label">Message</label><textarea className="ds-input" rows={8} value={msg} onChange={(e) => setMsg(e.target.value)} style={{ resize: "vertical", lineHeight: 1.5 }} /></div>
+              <div className="ds-panel" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 12.5, color: "var(--muted)" }}>
+                <Icon name="link" size={15} style={{ flexShrink: 0 }} /> <span style={{ fontFamily: "'JetBrains Mono', monospace", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{link}</span>
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: 12, marginTop: 18, flexWrap: "wrap" }}>
+              <button className="btn btn-primary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={send}><Icon name="mail" size={16} /> Send invite</button>
+              <button className="btn btn-secondary" onClick={onClose}>Cancel</button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

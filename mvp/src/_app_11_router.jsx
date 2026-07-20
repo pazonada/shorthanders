@@ -85,14 +85,18 @@ function StoreProvider({ children }) {
   const [convos, setConvos] = useState(SEED_CONVOS);
   const [invoices, setInvoices] = useState(SEED_INVOICES);
   const [customTemplates, setCustomTemplates] = useState([]);
+  const [invitedFirms, setInvitedFirms] = useState([]);
 
   const store = {
-    role, myCsr, saved, convos, invoices, customTemplates,
+    role, myCsr, saved, convos, invoices, customTemplates, invitedFirms,
     addTemplate: (t) => setCustomTemplates((xs) => [...xs, t]),
     enterAsReporter: () => setRole("reporter"),
     enterAsFirm: () => setRole("firm"),
     logout: () => setRole(null),
     toggleSaved: (id) => setSaved((s) => s.includes(id) ? s.filter((x) => x !== id) : [...s, id]),
+    inviteFirm: (firm) => setInvitedFirms((xs) => [firm, ...xs]),
+    // A firm arriving on a reporter's invite link: create their free account and save the inviter.
+    acceptInvite: (reporterId) => { setRole("firm"); setSaved((s) => s.includes(reporterId) ? s : [...s, reporterId]); },
     startConvoWith: (name) => setConvos((cs) => cs.some((c) => c.with === name) ? cs
       : [{ id: "new-" + name, with: name, role: "reporter", subtitle: "New conversation", unread: 0, msgs: [{ from: "me", t: "", at: "Just now" }].filter((m) => m.t) }, ...cs]),
     pushMessage: (cid, msg) => setConvos((cs) => cs.map((c) => c.id === cid ? { ...c, msgs: [...c.msgs, msg], unread: 0 } : c)),
@@ -109,6 +113,8 @@ function AppRouter() {
   if (route === "#/claim" || route === "#/claim/") return <ClaimStart />;
   const claim = route.match(/^#\/claim\/(.+)$/);
   if (claim) return <ClaimFlow reporterId={decodeURIComponent(claim[1])} />;
+  const invited = route.match(/^#\/invite\/(.+)$/);
+  if (invited) return <ReporterProfile reporterId={decodeURIComponent(invited[1])} invited />;
   const rp = route.match(/^#\/reporters\/(.+)$/);
   if (rp) return <ReporterProfile reporterId={decodeURIComponent(rp[1])} />;
   if (route === "#/reporters" || route === "#/reporters/") return <ReporterDirectory />;

@@ -160,7 +160,7 @@ function InvoiceBuilder({ template, onCancel, onCreated }) {
           <span className="pill pill-tag">{template.name}</span>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-          <div><label className="ds-label">Client / firm *</label><input className="ds-input" placeholder="Morgan & Reyes LLP" value={f.client} onChange={set("client")} /></div>
+          <div><label className="ds-label">Client / firm *</label><input className="ds-input" placeholder="Morgan & Reyes LLP" value={f.client} onChange={set("client")} /><div style={{ fontSize: 12, color: "var(--dim)", marginTop: 5, lineHeight: 1.45 }}>New to Dewey Sholes? They get a free account to view and pay, and you're saved to their firm.</div></div>
           <div><label className="ds-label">Matter reference</label><input className="ds-input" placeholder="Ramos v. Delta Freight (24CV01188)" value={f.matter} onChange={set("matter")} /></div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
@@ -300,7 +300,7 @@ function InvoiceDetail({ inv, onBack, onSend }) {
         <div style={{ height: 1, background: "var(--rule)", margin: "20px 0" }} />
         {sent ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <div className="banner banner-ok"><Icon name="mail" size={18} style={{ flexShrink: 0 }} /><div>Invoice sent to {inv.client}. They can pay by card or ACH from the link below.</div></div>
+            <div className="banner banner-ok"><Icon name="mail" size={18} style={{ flexShrink: 0 }} /><div>Invoice sent to {inv.client}. They can pay by card or ACH from the link below. If they're new to Dewey Sholes, the email invites them to create a free account to view and pay, which also saves you to their firm.</div></div>
             <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
               <div className="ds-panel" style={{ flex: 1, minWidth: 220, padding: "12px 14px", fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: "var(--ink-soft)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{payLink}</div>
               <button className="btn btn-secondary" onClick={() => { setCopied(true); setTimeout(() => setCopied(false), 1800); }}><Icon name="link" size={16} /> {copied ? "Copied!" : "Copy link"}</button>
