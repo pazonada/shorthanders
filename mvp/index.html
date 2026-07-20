@@ -43,9 +43,9 @@
     --periwinkle: #9DB4FF;
     --periwinkle-soft: #E6ECFF;
     --periwinkle-deep: #5C7BE3;
-    --ochre: #C49B5B;
-    --ochre-soft: #F8EFDB;
-    --ochre-deep: #8B6B33;
+    --ochre: #7A7F3F;
+    --ochre-soft: #ECEEDD;
+    --ochre-deep: #565A2B;
     --sage: #7E9B7C;
     --sage-soft: #E8EFE5;
     --sage-deep: #4F6F4D;
@@ -3020,10 +3020,10 @@ function LandingPage() {
       <section className="container" style={{ padding: "16px 24px 8px" }}>
         <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}>
           <ValueCard icon="building" tone="brand" eyebrow="For law firms" title="Find and hire reporters quickly"
-            points={["Search every CA reporter by county, specialty, language, and turnaround", "See full profiles and message reporters directly – you choose who to hire", "Pay invoices online by card or ACH – no paper checks, no agency markup"]}
+            points={["Search every CA reporter by location, specialties, language, rates, turnaround, and more", "See full profiles and message reporters directly to negotiate work", "Pay invoices online by card or ACH – no paper checks, no agency markup"]}
             cta={["Browse the directory", "/directory"]} />
           <ValueCard icon="user" tone="ochre" eyebrow="For court reporters" title="Run your business from one place"
-            points={["A professional profile firms find when they search – no website of your own to build", "Invoice in seconds, get paid by card or ACH, and get year-end 1099s and clean records", "No agency taking 30–50% – you keep your rate, minus only a small platform fee"]}
+            points={["Free promotion; your claimed, professional profile will be prioritized for firms to find", "Invoice in seconds, get paid by card or ACH, and get year-end 1099s and clean records", "No agency taking massive cuts – you keep your rate, minus only a small platform fee"]}
             cta={["Claim your free profile", "/claim"]} />
         </div>
       </section>
@@ -3088,7 +3088,7 @@ function ValueCard({ icon, tone, eyebrow, title, points, cta }) {
       <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 11 }}>
         {points.map((p, i) => <li key={i} style={{ display: "flex", gap: 10, fontSize: 15, color: "var(--ink-soft)", lineHeight: 1.5 }}><Icon name="check" size={18} style={{ color: fg, flexShrink: 0, marginTop: 2 }} />{p}</li>)}
       </ul>
-      <button className="btn btn-primary" style={{ alignSelf: "flex-start", marginTop: 4 }} onClick={() => navigate(cta[1])}>{cta[0]} <Icon name="arrow" size={16} /></button>
+      <button className="btn btn-primary" style={{ alignSelf: "flex-start", marginTop: "auto" }} onClick={() => navigate(cta[1])}>{cta[0]} <Icon name="arrow" size={16} /></button>
     </div>
   );
 }
@@ -3162,7 +3162,7 @@ function MoneyComparison() {
     <section className="container" style={{ padding: "56px 24px", maxWidth: 820 }}>
       <div style={{ textAlign: "center", marginBottom: 32 }}>
         <span className="kicker" style={{ justifyContent: "center" }}>Where your money goes</span>
-        <h2 className="h-section">For the same job, agencies keep 30–50%.</h2>
+        <h2 style={{ fontSize: "clamp(24px, 3.4vw, 38px)", lineHeight: 1.12 }}>For the same job, agencies keep 30–50%</h2>
         <p style={{ color: "var(--muted)", fontSize: 16, lineHeight: 1.6, maxWidth: 620, margin: "12px auto 0" }}>On a real $2,311 California deposition invoice, <strong style={{ color: "var(--ink)" }}>$908 went to the agency</strong> – admin, production, and delivery line items the reporter never touched.</p>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>
@@ -3174,7 +3174,7 @@ function MoneyComparison() {
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8, flexWrap: "wrap", gap: 4 }}><span style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Through Dewey Sholes</span><span style={{ color: "var(--muted)" }}>Firm pays the reporter's rate</span></div>
           <Bar segments={[{ w: "95%", bg: "var(--ochre)", label: "Reporter" }, { w: "5%", bg: "var(--brand)", label: "Dewey Sholes" }]} />
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter keeps their rate</span><span style={{ color: "var(--brand-dark)", fontWeight: 600 }}>Dewey Sholes fee: 2% (Pro) or 5% (Free)</span></div>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter keeps their rate</span><span style={{ color: "var(--brand-dark)", fontWeight: 600 }}>Dewey Sholes takes 2% (Pro) or 5% (Free)</span></div>
         </div>
       </div>
       <p style={{ textAlign: "center", color: "var(--dim)", fontSize: 12.5, marginTop: 26, lineHeight: 1.5 }}>Agency figures from a real anonymized California invoice (a 319-page arbitration transcript). On Dewey Sholes the reporter sets their own rate, and our small fee comes from their side – the firm never pays a platform fee. Illustrative.</p>
