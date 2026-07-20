@@ -31,7 +31,7 @@ function LandingPage() {
       <section className="container" style={{ padding: "16px 24px 8px" }}>
         <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}>
           <ValueCard icon="building" tone="brand" eyebrow="For law firms" title="Find and hire reporters quickly"
-            points={["Search every CA reporter by county, specialty, language, and turnaround", "See full profiles and message reporters directly – you choose who to hire", "Pay invoices online by card or ACH – no agency markup"]}
+            points={["Search every CA reporter by county, specialty, language, and turnaround", "See full profiles and message reporters directly – you choose who to hire", "Pay invoices online by card or ACH – no paper checks, no agency markup"]}
             cta={["Browse the directory", "/directory"]} />
           <ValueCard icon="user" tone="sage" eyebrow="For court reporters" title="Run your business from one place"
             points={["A professional profile firms find when they search – no website of your own to build", "Invoice in seconds, get paid by card or ACH, and get year-end 1099s and clean records", "No agency taking 30–50% – you keep your rate, minus only a small platform fee"]}
@@ -130,7 +130,7 @@ function ForFirmsPage() {
         <FeatureBlock icon="message" title="Direct messaging" body="Contact reporters through the platform. Scope, dates, and rates are agreed directly between you." />
         <FeatureBlock icon="dollar" title="No markup" body="You're not paying an agency's cut. The rate you agree with the reporter is the rate you pay." />
         <FeatureBlock icon="doc" title="Clean invoices" body="Reporters invoice you through the platform with your matter reference on every line, ready for AP." />
-        <FeatureBlock icon="lock" title="Pay securely" body="Pay any invoice by credit card or ACH. Receipts are automatic; nothing to chase." />
+        <FeatureBlock icon="lock" title="Pay online, not by check" body="No more cutting paper checks to reporters who won't take anything else. Pay any invoice by card or ACH in a click – receipts automatic, nothing to chase." />
       </div>
       <CtaStrip title="Search the directory now – no account needed to browse." button={["Open the directory", "/directory"]} />
     </Page>
