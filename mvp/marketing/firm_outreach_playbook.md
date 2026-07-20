@@ -11,14 +11,15 @@ practice areas, the paralegal-as-buyer insight) re-based for the reduced-scope M
 directory + messaging + invoicing, sold as a **monthly firm subscription** – no matching,
 no transaction fee. Supersedes the old `mvp/docs/first_50_firms_plan.md`.
 
-## Step 0: supply before demand
+## Step 0: claimed reporters in the metros you're selling
 
-**You can't sell a firm a subscription to an empty directory.** A firm paying to search
-needs to see real reporters, with filled-out profiles, in their county. So before chasing
-firms, get reporters to claim profiles in the launch counties (free + easy for them – see
-[`csr_email_outreach.md`](../docs/csr_email_outreach.md) and the in-app "Invite a firm"
-flow). Aim for enough claimed reporters in the Bay Area counties that the directory looks
-alive there.
+The directory is **statewide** already (public data), and claiming runs statewide on its own via
+the CSR email + in-app claim flow – see [growth_strategy.md](growth_strategy.md). But a firm
+paying to search wants to see *filled-out* profiles of reporters in **their** county, and a
+claimed profile is far more convincing than a bare license stub. So in the metros where we're
+actively selling firms – **Bay Area first** – make sure local reporters have claimed and filled
+out their profiles before (or as) we pitch firms there. Everywhere else, reporters bringing their
+own firms seeds the market for us (see [`csr_email_outreach.md`](../docs/csr_email_outreach.md)).
 
 ## Who to sell to
 
@@ -120,7 +121,7 @@ order/escrow flow:
 4. After a few weeks of real use → ask for a referral to another firm ("know another firm
    that would benefit?").
 
-## North-star metrics (subscription model)
+## What to track (subscription model)
 
 Not orders/matches (retired). Track: firms subscribed + actively searching/messaging;
 reporters listed + invoicing; **reporter→firm referral conversion** (invites sent → firms

@@ -1,7 +1,8 @@
 # Marketing & outreach – Dewey Sholes (reduced-scope MVP)
 
-The whole strategy on one page, plus what's in this folder. Built for the reality
-we're actually in: **two people, ~$0 budget, no staff, Bay Area first.**
+The tactical folder index. The one-page *direction* is [growth_strategy.md](growth_strategy.md);
+read it first. Built for the reality we're in: **two people, ~$0 budget, no staff. Supply runs
+statewide; only our hands-on firm-selling concentrates (Bay Area first, then LA).**
 
 ## What we're selling, and to whom
 
@@ -13,22 +14,28 @@ side is free to list (pay-per-invoice to get paid, or a flat Pro plan for heavy 
 manager** who actually finds and books reporters. At a small firm that person picks
 the vendor without committee sign-off. Every tactic below aims at that person.
 
-## The sequence (order matters)
+## The sequence (how growth actually happens)
 
-1. **Seed reporter supply first.** You can't sell a firm a subscription to an empty
-   directory. Get reporters to claim profiles in the launch counties – it's free for
-   them, and it's what makes the firm subscription worth buying. (Reporter side lives
-   in [`mvp/docs/csr_email_outreach.md`](../docs/csr_email_outreach.md) + the in-app
-   "Invite a firm" feature.)
-2. **Turn reporters into referrals.** Every reporter who claims already works with a
-   handful of firms. The in-app invite flow lets them bring those firms on directly –
-   this is the #1 channel, and it's free.
-3. **Go direct to firms** where you have reporter density – postcards + warm intros.
+1. **Statewide supply, free and automatic.** The directory already lists every licensed CA
+   reporter (public data), and the CSR email invites all of them to claim. Claiming is free;
+   it's what makes the directory look alive and what powers the next step. Reporter side:
+   [`mvp/docs/csr_email_outreach.md`](../docs/csr_email_outreach.md) + the in-app claim flow.
+2. **Reporters pull in their own firms – statewide.** Every reporter who claims already works
+   with a handful of firms. The in-app "invite a firm" flow lets them bring those firms on
+   directly, seeding a market in *their* metro without us selling there. This is the #1 channel
+   and our real statewide engine – so the "invite the firms you already work with" ask has to
+   be loud and central at claim time.
+3. **We sell firms by hand – concentrated.** Postcards, Rosie's network, paralegal events. Two
+   people can't do this in 40 metros, so it points where reporter density and our reach overlap:
+   Bay Area first, then LA. This is what [firm_outreach_playbook.md](firm_outreach_playbook.md) covers.
 
 ## The $0 channel stack (best first)
 
-1. **Reporter-to-firm referrals** – warmest and most on-model. A reporter vouching to
-   their own attorney client beats any cold outreach. Built into the product.
+The first is statewide; the rest (2–6) are our concentrated hands-on selling, Bay Area first.
+
+1. **Reporter-to-firm referrals** – warmest and most on-model, and the only channel not limited
+   by where we can personally reach (built into the product, runs everywhere). A reporter
+   vouching to their own attorney client beats any cold outreach.
 2. **Rosie's warm network** – her family-law and paralegal contacts, personal intros.
 3. **Handwritten postcards** to boutique Bay Area firms – lands on the buyer's desk,
    near-zero cost, doable by two people. See the playbook.
