@@ -2539,7 +2539,7 @@
 <style>
   /* ─── MVP-specific supplements (reduced-scope directory + business tools) ─── */
   .ds-grid { display: grid; gap: 20px; }
-  .ds-dir-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .ds-dir-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
   @media (max-width: 640px) { .ds-dir-grid { grid-template-columns: 1fr; } }
 
   .rep-card {
@@ -2642,6 +2642,15 @@
             mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 82%, transparent 100%);
   }
   @media (max-width: 720px) { .mvp-hero-shorthand { opacity: 0.08; width: 210%; } }
+
+  /* directory: sidebar filters + results */
+  .dir-layout { display: grid; grid-template-columns: 232px minmax(0, 1fr); gap: 40px; align-items: start; }
+  .dir-sidebar { position: sticky; top: 86px; }
+  .dir-main { min-width: 0; }
+  @media (max-width: 900px) {
+    .dir-layout { grid-template-columns: 1fr; gap: 20px; }
+    .dir-sidebar { position: static; }
+  }
 
   /* directory list rows */
   .dir-section-label { font-size: 12px; font-weight: 700; color: var(--dim); text-transform: uppercase; letter-spacing: .05em; margin: 4px 0 12px; }
@@ -2935,8 +2944,17 @@ function Page({ children, wide }) {
 }
 
 // ─── Small shared bits ─────────────────────────────────────────────
-function Avatar({ name, size = 52, claimed = true }) {
-  return <div className={"rep-avatar" + (claimed ? "" : " gray")} style={{ width: size, height: size, fontSize: size * 0.36, background: claimed ? avatarColor(name) : undefined }}>{initials(name).toUpperCase()}</div>;
+// Default avatar = the Dewey Sholes mark (brand-blue when claimed, grey when not).
+// A claimed reporter can override it with their own photo.
+function Avatar({ name, size = 52, claimed = true, photo }) {
+  if (photo) return <img src={photo} alt={name} style={{ width: size, height: size, borderRadius: Math.round(size * 0.26), objectFit: "cover", flexShrink: 0, display: "block" }} />;
+  const bg = claimed ? "#4361EE" : "#CBD5E1";
+  return (
+    <svg width={size} height={size} viewBox="0 0 60 60" style={{ flexShrink: 0, display: "block" }} role="img" aria-label={name}>
+      <rect width="60" height="60" rx="15" fill={bg} />
+      <path d="M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50" fill="none" stroke="#fff" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
 }
 function Meter({ value }) {
   return (
@@ -3197,25 +3215,16 @@ function PriceCard({ tone, featured, name, price, unit, blurb, features, cta, no
 // ═══ Directory card ════════════════════════════════════════════════
 function RepCard({ r }) {
   const store = useStore();
-  const isNew = r.claimed && r.claimedAt >= RECENT_CLAIM_CUTOFF;
   const locked = firmLocked(store, r);
+  const scope = [...(r.proceedings || []), ...(r.services || [])];
   return (
     <button className={"rep-card" + (r.claimed ? "" : " unclaimed")} onClick={() => navigate("/reporters/" + r.id)}>
       <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
-        <Avatar name={r.name} claimed={r.claimed} />
+        <Avatar name={r.name} claimed={r.claimed} photo={r.photo} />
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-            <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 21, color: "var(--ink)", lineHeight: 1.1 }}>{r.name}</span>
-            {r.claimed && <span className="pill" style={{ background: "var(--ochre-soft)", color: "var(--ochre-deep)" }}>Sample</span>}
-            {isNew && <span className="pill pill-new">New</span>}
-          </div>
+          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)", lineHeight: 1.15, display: "block" }}>{r.name}</span>
           <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 3 }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}</div>
-          <div style={{ fontSize: 14, color: "var(--ink-soft)", fontWeight: 600, marginTop: 6, display: "flex", alignItems: "center", gap: 5 }}><Icon name="pin" size={14} style={{ color: "var(--brand)", flexShrink: 0 }} />{r.city}{r.county && r.county !== r.city ? ", " + r.county + " County" : ""}</div>
-          <div style={{ marginTop: 8 }}>
-            {r.claimed
-              ? <span className="pill pill-claimed"><Icon name="check" size={13} /> Claimed{r.verified ? " · Verified" : ""}</span>
-              : <span className="pill pill-unclaimed">Unclaimed</span>}
-          </div>
+          <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon name="pin" size={13} style={{ color: "var(--dim)", flexShrink: 0 }} />{r.city}{r.county && r.county !== r.city ? ", " + r.county + " County" : ""}</div>
         </div>
       </div>
       {r.claimed ? (
@@ -3225,20 +3234,17 @@ function RepCard({ r }) {
           </div>
         ) : (
         <>
-          <p style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.55, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{r.bio}</p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-            {(r.proceedings || []).slice(0, 3).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
-            {r.rush && <span className="pill pill-rush"><Icon name="clock" size={12} /> Rush OK</span>}
-          </div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 2, fontSize: 13, color: "var(--muted)" }}>
-            <span>{r.yearsExp} yrs experience</span>
-            <span style={{ color: "var(--brand-dark)", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4 }}>View profile <Icon name="arrow" size={14} /></span>
+          <p style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.55, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{r.bio}</p>
+          {scope.length > 0 && <div style={{ fontSize: 12.5, color: "var(--muted)", lineHeight: 1.5 }}>{scope.slice(0, 4).join(" · ")}{r.rush ? " · Rush OK" : ""}</div>}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8, flexWrap: "wrap", marginTop: "auto", paddingTop: 4, fontSize: 13, color: "var(--muted)" }}>
+            <span style={{ whiteSpace: "nowrap" }}>{r.yearsExp} yrs experience</span>
+            <span style={{ color: "var(--ink)", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4, whiteSpace: "nowrap", marginLeft: "auto" }}>View profile <Icon name="arrow" size={14} /></span>
           </div>
         </>
         )
       ) : (
         <div style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.5 }}>
-          Public license record. <span style={{ color: "var(--brand-dark)", fontWeight: 600 }}>Is this you? Claim it →</span>
+          Public license record. <span style={{ color: "var(--ink)", fontWeight: 600 }}>Is this you? Claim it →</span>
         </div>
       )}
     </button>
@@ -3246,6 +3252,22 @@ function RepCard({ r }) {
 }
 
 // ═══ Directory ═════════════════════════════════════════════════════
+function FilterGroup({ label, children }) {
+  return (
+    <div style={{ padding: "16px 0", borderTop: "1px solid var(--rule)" }}>
+      <div style={{ fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 10 }}>{label}</div>
+      {children}
+    </div>
+  );
+}
+function FilterCheck({ label, checked, onChange }) {
+  return (
+    <label style={{ display: "flex", alignItems: "center", gap: 9, padding: "4px 0", fontSize: 14, color: "var(--ink-soft)", cursor: "pointer" }}>
+      <input type="checkbox" checked={checked} onChange={onChange} style={{ width: 16, height: 16, accentColor: "var(--brand)", flexShrink: 0, cursor: "pointer" }} />
+      {label}
+    </label>
+  );
+}
 const PAGE_SIZE = 24;
 function ReporterDirectory() {
   const all = useMemo(() => buildDirectory(), []);
@@ -3299,70 +3321,90 @@ function ReporterDirectory() {
         <p style={{ color: "var(--muted)", marginTop: 8, fontSize: 16 }}>{all.length.toLocaleString()} licensed CSRs. Search and filter, then open a profile to message the reporter.</p>
       </div>
 
-      {/* search */}
-      <div style={{ position: "relative", marginBottom: 16 }}>
-        <span style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", color: "var(--dim)" }}><Icon name="search" size={18} /></span>
-        <input className="ds-input" style={{ paddingLeft: 46, fontSize: 16, height: 52 }} placeholder="Search by name, city, or license number…" value={q} onChange={(e) => { setQ(e.target.value); setLimit(PAGE_SIZE); }} />
-      </div>
+      <div className="dir-layout">
+        {/* filter sidebar */}
+        <aside className="dir-sidebar">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 2 }}>
+            <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)" }}>Filters</span>
+            {anyFilter ? <button onClick={clearAll} style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 13, cursor: "pointer", textDecoration: "underline" }}>Clear all</button> : null}
+          </div>
+          <FilterGroup label="County">
+            <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={county} onChange={(e) => { setCounty(e.target.value); setLimit(PAGE_SIZE); }}>
+              <option value="">All counties</option>
+              {counties.map((c) => <option key={c} value={c}>{c}{TIER_A_COUNTIES.includes(c) ? " ★" : ""}</option>)}
+            </select>
+          </FilterGroup>
+          <FilterGroup label="Proceedings">
+            {PROCEEDING_TYPES.map((t) => <FilterCheck key={t} label={t} checked={tags.includes(t)} onChange={() => toggleTag(t)} />)}
+          </FilterGroup>
+          <FilterGroup label="Services">
+            {SERVICE_TYPES.map((t) => <FilterCheck key={t} label={t} checked={tags.includes(t)} onChange={() => toggleTag(t)} />)}
+          </FilterGroup>
+          <FilterGroup label="Experience">
+            <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={minYears} onChange={(e) => { setMinYears(e.target.value); setLimit(PAGE_SIZE); }}>
+              <option value="">Any experience</option>
+              <option value="5">5+ years</option>
+              <option value="10">10+ years</option>
+              <option value="15">15+ years</option>
+              <option value="20">20+ years</option>
+            </select>
+          </FilterGroup>
+          <FilterGroup label="Language">
+            <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={language} onChange={(e) => { setLanguage(e.target.value); setLimit(PAGE_SIZE); }}>
+              <option value="">Any language</option>
+              {LANGUAGES.map((l) => <option key={l} value={l}>{l}</option>)}
+            </select>
+          </FilterGroup>
+          <FilterGroup label="Method">
+            <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={method} onChange={(e) => { setMethod(e.target.value); setLimit(PAGE_SIZE); }}>
+              <option value="">Any method</option>
+              <option value="Machine">Machine (steno)</option>
+              <option value="Voice">Voice writing</option>
+            </select>
+          </FilterGroup>
+          <FilterGroup label="Options">
+            <FilterCheck label="Takes rush / expedited" checked={rushOnly} onChange={() => { setRushOnly((v) => !v); setLimit(PAGE_SIZE); }} />
+            <FilterCheck label="Claimed profiles only" checked={claimedOnly} onChange={() => { setClaimedOnly((v) => !v); setLimit(PAGE_SIZE); }} />
+          </FilterGroup>
+        </aside>
 
-      {/* filter row */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center", marginBottom: 10 }}>
-        <select className="ds-input" style={{ width: "auto", padding: "9px 14px" }} value={county} onChange={(e) => { setCounty(e.target.value); setLimit(PAGE_SIZE); }}>
-          <option value="">All counties</option>
-          {counties.map((c) => <option key={c} value={c}>{c}{TIER_A_COUNTIES.includes(c) ? " ★" : ""}</option>)}
-        </select>
-        <select className="ds-input" style={{ width: "auto", padding: "9px 14px" }} value={language} onChange={(e) => { setLanguage(e.target.value); setLimit(PAGE_SIZE); }}>
-          <option value="">Any language</option>
-          {LANGUAGES.map((l) => <option key={l} value={l}>{l}</option>)}
-        </select>
-        <select className="ds-input" style={{ width: "auto", padding: "9px 14px" }} value={minYears} onChange={(e) => { setMinYears(e.target.value); setLimit(PAGE_SIZE); }}>
-          <option value="">Any experience</option>
-          <option value="5">5+ years</option>
-          <option value="10">10+ years</option>
-          <option value="15">15+ years</option>
-          <option value="20">20+ years</option>
-        </select>
-        <select className="ds-input" style={{ width: "auto", padding: "9px 14px" }} value={method} onChange={(e) => { setMethod(e.target.value); setLimit(PAGE_SIZE); }}>
-          <option value="">Any method</option>
-          <option value="Machine">Machine (steno)</option>
-          <option value="Voice">Voice writing</option>
-        </select>
-        {[...PROCEEDING_TYPES, ...SERVICE_TYPES].map((t) => <button key={t} className={"chip-filter" + (tags.includes(t) ? " on" : "")} onClick={() => toggleTag(t)}>{t}</button>)}
-        <button className={"chip-filter" + (rushOnly ? " on" : "")} onClick={() => { setRushOnly((v) => !v); setLimit(PAGE_SIZE); }}><Icon name="clock" size={13} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />Rush</button>
-        <button className={"chip-filter" + (claimedOnly ? " on" : "")} onClick={() => { setClaimedOnly((v) => !v); setLimit(PAGE_SIZE); }}>Claimed only</button>
-        {anyFilter ? <button className="chip-filter" style={{ color: "var(--brand-dark)", borderColor: "var(--brand-pale)" }} onClick={clearAll}>Clear all</button> : null}
-      </div>
-
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "18px 0 16px", flexWrap: "wrap", gap: 8 }}>
-        <span style={{ fontSize: 14, color: "var(--muted)" }}>{filtered.length.toLocaleString()} {filtered.length === 1 ? "reporter" : "reporters"}{anyFilter ? " match" : ""}</span>
-        <span style={{ fontSize: 13, color: "var(--dim)", display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="star" size={13} /> Claimed & verified profiles shown first</span>
-      </div>
-
-      {filtered.length === 0 ? (
-        <div className="ds-panel" style={{ textAlign: "center", padding: 48 }}>
-          <p style={{ color: "var(--muted)" }}>No reporters match those filters. <button onClick={clearAll} style={{ background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, cursor: "pointer" }}>Clear all filters</button></p>
-        </div>
-      ) : (
-        <>
-          {featured.length > 0 && (
-            <div style={{ marginBottom: 30 }}>
-              <div className="dir-section-label">Featured reporters</div>
-              <div className="ds-grid ds-dir-grid">{featured.map((r) => <RepCard key={r.id} r={r} />)}</div>
+        {/* results */}
+        <div className="dir-main">
+          <div style={{ position: "relative", marginBottom: 16 }}>
+            <span style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", color: "var(--dim)" }}><Icon name="search" size={18} /></span>
+            <input className="ds-input" style={{ paddingLeft: 46, fontSize: 16, height: 52 }} placeholder="Search by name, city, or license number…" value={q} onChange={(e) => { setQ(e.target.value); setLimit(PAGE_SIZE); }} />
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "4px 0 16px", flexWrap: "wrap", gap: 8 }}>
+            <span style={{ fontSize: 14, color: "var(--muted)" }}>{filtered.length.toLocaleString()} {filtered.length === 1 ? "reporter" : "reporters"}{anyFilter ? " match" : ""}</span>
+            <span style={{ fontSize: 13, color: "var(--dim)" }}>Claimed profiles shown first</span>
+          </div>
+          {filtered.length === 0 ? (
+            <div className="ds-panel" style={{ textAlign: "center", padding: 48 }}>
+              <p style={{ color: "var(--muted)" }}>No reporters match those filters. <button onClick={clearAll} style={{ background: "none", border: "none", color: "var(--ink)", fontWeight: 600, cursor: "pointer" }}>Clear all filters</button></p>
             </div>
-          )}
-          {rest.length > 0 && (
+          ) : (
             <>
-              {featured.length > 0 && <div className="dir-section-label">All reporters</div>}
-              <div className="dir-list">{rest.slice(0, limit).map((r) => <RepRow key={r.id} r={r} />)}</div>
-              {limit < rest.length && (
-                <div style={{ textAlign: "center", marginTop: 26 }}>
-                  <button className="btn btn-secondary" onClick={() => setLimit((l) => l + PAGE_SIZE * 2)}>Show more ({(rest.length - limit).toLocaleString()} more)</button>
+              {featured.length > 0 && (
+                <div style={{ marginBottom: 30 }}>
+                  <div className="dir-section-label">Featured reporters</div>
+                  <div className="ds-grid ds-dir-grid">{featured.map((r) => <RepCard key={r.id} r={r} />)}</div>
                 </div>
+              )}
+              {rest.length > 0 && (
+                <>
+                  {featured.length > 0 && <div className="dir-section-label">All reporters</div>}
+                  <div className="dir-list">{rest.slice(0, limit).map((r) => <RepRow key={r.id} r={r} />)}</div>
+                  {limit < rest.length && (
+                    <div style={{ textAlign: "center", marginTop: 26 }}>
+                      <button className="btn btn-secondary" onClick={() => setLimit((l) => l + PAGE_SIZE * 2)}>Show more ({(rest.length - limit).toLocaleString()} more)</button>
+                    </div>
+                  )}
+                </>
               )}
             </>
           )}
-        </>
-      )}
+        </div>
+      </div>
     </Page>
   );
 }
@@ -3376,10 +3418,7 @@ function RepRow({ r }) {
       <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
         <Avatar name={r.name} size={40} claimed={r.claimed} />
         <div style={{ minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-            <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.name}</span>
-            {r.claimed ? <span className="pill" style={{ fontSize: 10, padding: "1px 7px", background: "var(--ochre-soft)", color: "var(--ochre-deep)" }}>Sample</span> : null}
-          </div>
+          <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "block" }}>{r.name}</span>
           <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}</div>
         </div>
       </div>
@@ -3389,10 +3428,9 @@ function RepRow({ r }) {
       </div>
       <div style={{ minWidth: 0, fontSize: 13 }}>
         {r.claimed ? (
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-              {[...(r.proceedings || []), ...(r.services || [])].slice(0, 4).map((w) => <span key={w} className="pill pill-tag" style={{ fontSize: 11, padding: "2px 8px" }}>{w}</span>)}
-              {r.rush ? <span className="pill pill-rush" style={{ fontSize: 11, padding: "2px 8px" }}>Rush</span> : null}
+          <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            <div style={{ color: "var(--ink-soft)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {[...(r.proceedings || []), ...(r.services || [])].slice(0, 3).join(" · ")}{r.rush ? "  ·  Rush" : ""}
             </div>
             <div style={{ color: "var(--muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {specs.join(" · ")}{langs.length ? "  ·  " + langs.join(", ") : ""}
@@ -3422,11 +3460,10 @@ function GatedProfile({ r }) {
     <Page>
       <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 16 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to directory</button>
       <div style={{ display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap", marginBottom: 8 }}>
-        <Avatar name={r.name} size={84} />
+        <Avatar name={r.name} size={84} photo={r.photo} />
         <div style={{ flex: 1, minWidth: 200 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
             <h1 style={{ fontSize: 40, lineHeight: 1 }}>{r.name}</h1>
-            {r.verified && <span className="pill pill-verified"><Icon name="shield" size={13} /> Verified</span>}
           </div>
           <div style={{ color: "var(--muted)", marginTop: 8, fontSize: 15, display: "flex", gap: 14, flexWrap: "wrap" }}>
             <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />CSR #{r.csrNumber}</span>
@@ -3483,11 +3520,10 @@ function ReporterProfile({ reporterId, invited }) {
         {/* main */}
         <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>
           <div style={{ display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap" }}>
-            <Avatar name={r.name} size={84} />
+            <Avatar name={r.name} size={84} photo={r.photo} />
             <div style={{ flex: 1, minWidth: 200 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                 <h1 style={{ fontSize: 40, lineHeight: 1 }}>{r.name}</h1>
-                {r.verified && <span className="pill pill-verified"><Icon name="shield" size={13} /> Verified</span>}
               </div>
               <div style={{ color: "var(--muted)", marginTop: 8, fontSize: 15, display: "flex", gap: 14, flexWrap: "wrap" }}>
                 <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />CSR #{r.csrNumber}</span>

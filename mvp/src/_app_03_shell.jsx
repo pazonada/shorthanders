@@ -94,8 +94,17 @@ function Page({ children, wide }) {
 }
 
 // ─── Small shared bits ─────────────────────────────────────────────
-function Avatar({ name, size = 52, claimed = true }) {
-  return <div className={"rep-avatar" + (claimed ? "" : " gray")} style={{ width: size, height: size, fontSize: size * 0.36, background: claimed ? avatarColor(name) : undefined }}>{initials(name).toUpperCase()}</div>;
+// Default avatar = the Dewey Sholes mark (brand-blue when claimed, grey when not).
+// A claimed reporter can override it with their own photo.
+function Avatar({ name, size = 52, claimed = true, photo }) {
+  if (photo) return <img src={photo} alt={name} style={{ width: size, height: size, borderRadius: Math.round(size * 0.26), objectFit: "cover", flexShrink: 0, display: "block" }} />;
+  const bg = claimed ? "#4361EE" : "#CBD5E1";
+  return (
+    <svg width={size} height={size} viewBox="0 0 60 60" style={{ flexShrink: 0, display: "block" }} role="img" aria-label={name}>
+      <rect width="60" height="60" rx="15" fill={bg} />
+      <path d="M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50" fill="none" stroke="#fff" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
 }
 function Meter({ value }) {
   return (

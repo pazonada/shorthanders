@@ -1,7 +1,7 @@
 <style>
   /* ─── MVP-specific supplements (reduced-scope directory + business tools) ─── */
   .ds-grid { display: grid; gap: 20px; }
-  .ds-dir-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .ds-dir-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
   @media (max-width: 640px) { .ds-dir-grid { grid-template-columns: 1fr; } }
 
   .rep-card {
@@ -104,6 +104,15 @@
             mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 82%, transparent 100%);
   }
   @media (max-width: 720px) { .mvp-hero-shorthand { opacity: 0.08; width: 210%; } }
+
+  /* directory: sidebar filters + results */
+  .dir-layout { display: grid; grid-template-columns: 232px minmax(0, 1fr); gap: 40px; align-items: start; }
+  .dir-sidebar { position: sticky; top: 86px; }
+  .dir-main { min-width: 0; }
+  @media (max-width: 900px) {
+    .dir-layout { grid-template-columns: 1fr; gap: 20px; }
+    .dir-sidebar { position: static; }
+  }
 
   /* directory list rows */
   .dir-section-label { font-size: 12px; font-weight: 700; color: var(--dim); text-transform: uppercase; letter-spacing: .05em; margin: 4px 0 12px; }
