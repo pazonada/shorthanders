@@ -1,30 +1,30 @@
-# Roadmap — features beyond the current build
+# Roadmap – features beyond the current build
 
 Ideas we want on record but aren't building right now (or have a basic version and want to
-extend). Not commitments — a parking lot with enough detail to pick up later.
+extend). Not commitments – a parking lot with enough detail to pick up later.
 
 ---
 
-## Favorite / save a reporter (firms) — ALREADY IN MVP, room to grow
+## Favorite / save a reporter (firms) – ALREADY IN MVP, room to grow
 
 **What it is:** a firm marks a reporter to come back to later.
 
 **Status:** already built. Every profile has a "Save reporter" button, and the firm dashboard
 has a "Saved reporters" tab. Signed-in firms get this today.
 
-**Should it be MVP?** Yes — it already is. It's cheap, and it's a good reason for a firm to
+**Should it be MVP?** Yes – it already is. It's cheap, and it's a good reason for a firm to
 create an account (their saves only persist if they're signed in). For someone browsing
 without an account, a plain browser bookmark is the natural fallback.
 
 **Later extensions:**
 - Notify a firm when a saved reporter updates their profile or notes new availability.
-- Shared team lists (multiple people at a firm see the same saved reporters) — fits the paid
+- Shared team lists (multiple people at a firm see the same saved reporters) – fits the paid
   firm plan.
 - Notes/tags on a saved reporter ("used for the Ramos depo," "great on medical terminology").
 
 ---
 
-## Reporter business card generator — ROADMAP
+## Reporter business card generator – ROADMAP
 
 **What it is:** a link on a reporter's profile/dashboard that generates a printable,
 Dewey-Sholes-branded business card pulled from their profile, with a QR code / short link
@@ -32,19 +32,19 @@ back to their profile. The reporter prints it and hands it to attorneys at heari
 attorney can find them later to order the transcript.
 
 **Why it's worth building:**
-- **Free, professional marketing for the reporter** — a real reason to claim and keep their
+- **Free, professional marketing for the reporter** – a real reason to claim and keep their
   profile current.
-- **Brings firms in at the exact moment of need** — an attorney at a hearing who needs a
+- **Brings firms in at the exact moment of need** – an attorney at a hearing who needs a
   transcript gets a card, scans it, and lands on Dewey Sholes. That's a warm way to get firms
   signing up, driven by the reporters themselves.
 
 **How it would work:**
 1. Reporter clicks "Create my business card" (dashboard or profile).
-2. We generate a card in a DS-branded template using **only their real profile info** — name,
+2. We generate a card in a DS-branded template using **only their real profile info** – name,
    "Certified Shorthand Reporter, CSR #___," method, city/county, maybe top specialties and
-   coverage — plus a **QR code + short link** to their public profile.
+   coverage – plus a **QR code + short link** to their public profile.
 3. Output: a print-ready PDF (standard card size), **plus a button to order physical cards
-   through a print-on-demand service** (Vistaprint, Moo, GotPrint, Amazon, etc.) — the
+   through a print-on-demand service** (Vistaprint, Moo, GotPrint, Amazon, etc.) – the
    reporter clicks, the design is handed off, they order a batch and it ships to them. Later,
    maybe a digital/shareable version too (a mobile card page or a vCard).
 4. The reporter hands the cards out at hearings.
@@ -54,25 +54,25 @@ attorney can find them later to order the transcript.
    free; messaging sits behind sign-up/subscription.)
 
 **Open questions:**
-- **What contact goes on the card / profile** — the reporter's choice, per their contact
+- **What contact goes on the card / profile** – the reporter's choice, per their contact
   preferences. Don't force a channel.
-- **Direct contact vs. drive-to-platform** — does the card push everything through the profile
+- **Direct contact vs. drive-to-platform** – does the card push everything through the profile
   (to encourage sign-ups), or show the reporter's direct email too? Likely the profile link is
   primary, and the profile itself offers "email directly" (if the reporter opts in) or "message
   on Dewey Sholes (sign up)."
-- **Print:** two paths — download a print-ready PDF, and/or a button that hands the design to
+- **Print:** two paths – download a print-ready PDF, and/or a button that hands the design to
   a print-on-demand service (Vistaprint / Moo / GotPrint / Amazon) to order physical cards.
   Which vendor(s) is a to-do; each has a slightly different hand-off (some take an uploaded
   print-ready file, some have a design API). A vendor **affiliate/referral link** could earn
-  Dewey Sholes a small cut when a reporter orders — a tiny bonus revenue line, worth noting.
+  Dewey Sholes a small cut when a reporter orders – a tiny bonus revenue line, worth noting.
 - **Design:** needs a DS-branded card template (logo + shorthand motif). Keep it clean and
-  professional — attorneys are the audience.
-- **Never invent** — every field comes from the reporter's real profile; blank if they haven't
+  professional – attorneys are the audience.
+- **Never invent** – every field comes from the reporter's real profile; blank if they haven't
   filled it in.
 
 ---
 
-## Reviews — collect early, display later — ROADMAP
+## Reviews – collect early, display later – ROADMAP
 
 **What it is:** firms rate a reporter on **quality** and **timeliness** (like the full version
 of Dewey Sholes), plus an optional written comment. Prompted **right after the firm pays an
@@ -81,23 +81,23 @@ invoice.**
 **The sequencing (this is the smart part):** start **collecting** as soon as real payments are
 live, but **don't display** anything until each reporter has a decent number of reviews and
 we've thought through moderation. You can't backfill reviews for past jobs, so collecting
-early is uniquely valuable — but showing them early backfires.
+early is uniquely valuable – but showing them early backfires.
 
 **Why not display from the start:**
 - One or two reviews are noisy and unfair.
-- A reporter with zero reviews looks bad next to one with a few — punishes newcomers.
+- A reporter with zero reviews looks bad next to one with a few – punishes newcomers.
 - Before it's public you need enough data per reporter, a way to handle bad/abusive reviews,
   and a way for reporters to respond. All display-time work.
 
-**Trigger — the payment-success moment:**
+**Trigger – the payment-success moment:**
 - Fresh impressions right after the firm paid.
 - **Payment-gated = trustworthy:** only a firm that actually paid a reporter can review them
   (like an Amazon "verified purchase"). Quietly solves fake reviews.
 - **Nuance:** only works for firms who pay *through* the platform. Reviews build up for the
-  reporters who use invoicing/payments (Pro reporters) — a nice bonus reason to go Pro.
+  reporters who use invoicing/payments (Pro reporters) – a nice bonus reason to go Pro.
 
 **Timing note:** the prompt hangs off the *real* payment-success screen, which isn't live yet
-(payments are mocked in the prototype). So this is **not** for the current demo — it's a small
+(payments are mocked in the prototype). So this is **not** for the current demo – it's a small
 addition to the "payment received → rate your reporter?" screen **when Stripe goes live.**
 
 **Keep the collection simple:** two quick ratings (quality, timeliness) + one optional comment,
@@ -108,11 +108,11 @@ skippable, one screen. Firm rates reporter only (a reporter-rates-firm direction
 - Moderation / abuse handling; a reporter's right to respond.
 - Be transparent with reporters up front that reviews are being collected and will eventually
   show (put it in their onboarding/terms).
-- Reviews are user-generated content we host, not author — standard platform posture; confirm
+- Reviews are user-generated content we host, not author – standard platform posture; confirm
   wording in the terms-of-service review.
 
 ## Parking lot (mentioned, not yet scoped)
-- **Featured / promoted listings** — Rosie's earlier idea; a discovery surface, decided post-launch.
-- **Enterprise account options** (SSO, multi-seat/admin roles, custom contracts, SLAs) —
+- **Featured / promoted listings** – Rosie's earlier idea; a discovery surface, decided post-launch.
+- **Enterprise account options** (SSO, multi-seat/admin roles, custom contracts, SLAs) –
   deferred. Build only when a large customer asks and will pay. Light team-sharing for a firm
   is the earliest piece, if firms ask.
