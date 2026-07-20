@@ -219,5 +219,85 @@ ws2.column_dimensions["B"].width = 14
 ws2.column_dimensions["C"].width = 62
 ws2.freeze_panes = "A5"
 
+# ============ Sheet 3: what it takes to net a target ============
+ws3 = wb.create_sheet("Net target")
+
+ws3["A1"] = "Dewey Sholes – what it takes to net a target"
+ws3["A1"].font = TITLE
+ws3.merge_cells("A1:C1")
+ws3["A2"] = ("Two paths to the same take-home, side by side. Change the blue cells. "
+             "Not tax advice – confirm the rate with an accountant.")
+ws3["A2"].font = SUB
+ws3.merge_cells("A2:C2")
+
+def section3(row, text):
+    ws3.cell(row, 1, text).font = BOLD
+    for col in range(1, 4):
+        ws3.cell(row, col).fill = SECTIONFILL
+
+hr = 4
+ws3.cell(hr, 1, "").fill = HDRFILL
+c = ws3.cell(hr, 2, "Value"); c.font = HDR; c.fill = HDRFILL; c.alignment = center
+c = ws3.cell(hr, 3, "Notes"); c.font = HDR; c.fill = HDRFILL
+
+r3 = 5
+def inp3(label, val, fmt, note):
+    global r3
+    ws3.cell(r3, 1, label).font = LBL
+    c = ws3.cell(r3, 2, val); c.font = BLUE; c.number_format = fmt; c.alignment = right
+    ws3.cell(r3, 3, note).font = SUB
+    rr = r3; r3 += 1
+    return rr
+
+def res3(label, formula, fmt, note="", total=False):
+    global r3
+    ws3.cell(r3, 1, label).font = BOLD if total else LBL
+    c = ws3.cell(r3, 2); c.value = formula; c.font = BOLD if total else BLACK
+    c.number_format = fmt; c.alignment = right
+    if total:
+        ws3.cell(r3, 1).fill = TOTALFILL
+        ws3.cell(r3, 2).fill = TOTALFILL
+        ws3.cell(r3, 3).fill = TOTALFILL
+    if note:
+        ws3.cell(r3, 3, note).font = SUB
+    rr = r3; r3 += 1
+    return rr
+
+section3(r3, "SHARED INPUTS  (blue = change these)"); r3 += 1
+R_NET = inp3("Net take-home target ($/yr)", 150000, CUR, "What you want to keep after taxes and expenses.")
+R_TAX = inp3("Tax rate (%)", 0.33, PCT, "All-in: federal + self-employment + NJ. Rough – confirm with an accountant.")
+R_TECH = inp3("Tech + tools ($/yr)", 12000, CUR, "Hosting, email, Stripe account fees, SaaS. Small at this scale.")
+R_ENG = inp3("Engineer / dev help ($/yr, optional)", 0, CUR, "On-call engineering, if you pay for it. 0 if not.")
+
+r3 += 1
+section3(r3, "WHAT YOU NEED TO GROSS"); r3 += 1
+R_GYR = res3("Gross revenue needed ($/yr)", f"=B{R_NET}/(1-B{R_TAX})+B{R_TECH}+B{R_ENG}", CUR)
+R_GMO = res3("Gross needed ($/mo)", f"=B{R_GYR}/12", CUR)
+
+r3 += 1
+section3(r3, "PATH A – subscriptions (firms + CSR Pro)"); r3 += 1
+R_SPRICE = inp3("Price per paying user ($/mo)", 29, CUR, "Same for firms and CSRs, per your 'for kicks'.")
+res3("Paying users needed", f"=B{R_GYR}/(B{R_SPRICE}*12)", INT,
+     "Mostly firms – CSR Pro realistically tops out ~50-140.", total=True)
+
+r3 += 1
+section3(r3, "PATH B – per-invoice fee (reporters collecting on-platform)"); r3 += 1
+R_FEE = inp3("Dewey Sholes fee per payment (%)", 0.02, PCT, "Reporter-side only; firms never see it.")
+R_BILL = inp3("Avg billed per active reporter ($/mo)", 4000, CUR, "Dollars a paying reporter runs THROUGH the platform per month.")
+R_VOL = res3("Monthly payment volume needed ($/mo)", f"=B{R_GMO}/B{R_FEE}", CUR, "Total $ that must flow through Stripe on the platform.")
+res3("Reporters actively collecting needed", f"=B{R_VOL}/B{R_BILL}", INT,
+     "Only money actually collected on-platform counts – off-platform checks earn $0.", total=True)
+
+r3 += 1
+ws3.cell(r3, 1, ("Same take-home, two different asks: a pile of paying FIRMS (Path A) vs. reporters routing real "
+                 "PAYMENT through you (Path B). Path B usually needs fewer people, but more behavior change. "
+                 "Note: today's design (Pro waives the per-invoice fee) caps Path B – heavy billers switch to flat Pro.")).font = SUB
+ws3.merge_cells(start_row=r3, start_column=1, end_row=r3, end_column=3)
+
+ws3.column_dimensions["A"].width = 44
+ws3.column_dimensions["B"].width = 14
+ws3.column_dimensions["C"].width = 66
+ws3.freeze_panes = "A5"
+
 wb.save(OUT)
 print("saved", OUT)

@@ -4,11 +4,15 @@ How to set the reporter-side prices (the pay-per-invoice fee and the flat Pro pl
 real data instead of guesses. **No invented averages here** – every number is either a
 sourced real data point or a clearly-labelled input you set.
 
-> **Adjustable funnel:** the "CSR conversion" sheet in
-> [`mvp/docs/revenue_model.xlsx`](../docs/revenue_model.xlsx) turns the email → claim → Pro
-> dials (open % / claim % / Pro % / price / year-1 discount) into a Pro-reporter count and
-> monthly revenue. Default 30% / 30% / 30% on ~5,145 emailed reporters ≈ **139 Pro, ~$4,000/mo
-> at $29** (softer paid-upgrade step ≈ 46 Pro, ~$1,300/mo). Change the blue cells; it recalcs.
+> **Adjustable calcs in [`mvp/docs/revenue_model.xlsx`](../docs/revenue_model.xlsx)** (three tabs):
+> - **CSR conversion** – email → claim → Pro dials → Pro count + revenue. Default 30/30/30 on
+>   ~5,145 emailed ≈ **139 Pro, ~$4,000/mo at $29** (softer paid-upgrade step ≈ 46 Pro, ~$1,300/mo).
+> - **Net target** – how many *paying users* (Path A: subscriptions) **or** how many *reporters
+>   collecting on-platform* (Path B: the per-invoice fee) it takes to net a target after NJ tax +
+>   tech. Default $150k net ≈ **~680 paying users** at $29, **or ~245 reporters** running $4k/mo
+>   each through a 2% fee. Note: today's "Pro waives the fee" design caps Path B.
+
+Change the blue cells; everything recalcs on open.
 
 ## The model (recap)
 
