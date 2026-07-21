@@ -118,50 +118,10 @@ function Step({ n, title, body, art }) {
   );
 }
 
-// First-pass pen-and-ink step illustrations (ink line art + a purple accent). Iterate later.
+// Pen-and-ink step illustrations. Files live in mvp/graphics/ at 800x400.
 function StepArt({ kind }) {
-  const c = { fill: "none", stroke: "var(--ink)", strokeWidth: 2.3, strokeLinecap: "round", strokeLinejoin: "round" };
-  const a = { fill: "none", stroke: "var(--brand)", strokeWidth: 2.6, strokeLinecap: "round", strokeLinejoin: "round" };
-  const frame = (kids) => <svg viewBox="0 0 200 120" width="188" height="112" style={{ display: "block" }}>{kids}</svg>;
-  if (kind === "search") return frame(<>
-    <rect x="38" y="28" width="92" height="66" rx="8" {...c} />
-    <circle cx="60" cy="50" r="9" {...c} />
-    <line x1="78" y1="46" x2="116" y2="46" {...c} />
-    <line x1="78" y1="56" x2="108" y2="56" {...c} />
-    <line x1="50" y1="72" x2="118" y2="72" {...c} />
-    <line x1="50" y1="82" x2="100" y2="82" {...c} />
-    <circle cx="132" cy="80" r="17" {...a} />
-    <line x1="144" y1="92" x2="160" y2="108" {...a} strokeWidth={3.2} />
-  </>);
-  if (kind === "message") return frame(<>
-    <rect x="30" y="24" width="86" height="44" rx="11" {...c} />
-    <path d="M50 68 v14 l17 -14" {...c} />
-    <line x1="44" y1="40" x2="102" y2="40" {...c} />
-    <line x1="44" y1="52" x2="86" y2="52" {...c} />
-    <rect x="98" y="58" width="72" height="40" rx="11" {...a} />
-    <path d="M152 98 v12 l-15 -12" {...a} />
-    <line x1="110" y1="72" x2="158" y2="72" {...a} />
-    <line x1="110" y1="83" x2="142" y2="83" {...a} />
-  </>);
-  if (kind === "work") return frame(<>
-    <rect x="44" y="16" width="70" height="88" rx="7" {...c} />
-    <line x1="56" y1="34" x2="102" y2="34" {...c} />
-    <line x1="56" y1="46" x2="102" y2="46" {...c} />
-    <line x1="56" y1="58" x2="102" y2="58" {...c} />
-    <line x1="56" y1="70" x2="88" y2="70" {...c} />
-    <path d="M128 102 l32 -44" {...a} strokeWidth={7} stroke="var(--brand-pale)" />
-    <path d="M128 102 l32 -44" {...a} />
-    <path d="M124 106 l7 -9 l4 3 z" fill="var(--brand)" stroke="var(--brand)" strokeLinejoin="round" />
-  </>);
-  return frame(<>
-    <rect x="42" y="14" width="72" height="92" rx="7" {...c} />
-    <line x1="54" y1="32" x2="102" y2="32" {...c} />
-    <line x1="54" y1="44" x2="102" y2="44" {...c} />
-    <line x1="54" y1="56" x2="86" y2="56" {...c} />
-    <line x1="54" y1="82" x2="84" y2="82" {...c} strokeWidth={3} />
-    <circle cx="136" cy="82" r="20" {...a} strokeWidth={2.8} />
-    <text x="136" y="90" textAnchor="middle" fontSize="24" fontFamily="'Instrument Serif', serif" fill="var(--brand)">$</text>
-  </>);
+  const files = { search: "step-1-search.png", message: "step-2-message.png", work: "step-3-work.png", invoice: "step-4-invoice.png" };
+  return <img src={"graphics/" + files[kind]} alt="" aria-hidden="true" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />;
 }
 
 // Real agency invoice (research/agency_invoice_evidence.md) vs the same job on DS.
