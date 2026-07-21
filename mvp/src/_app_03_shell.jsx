@@ -94,7 +94,7 @@ function Footer() {
         </div>
         <div style={{ marginTop: 44, paddingTop: 24, borderTop: "1px solid rgba(255,255,255,.13)", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12, fontSize: 13, color: "rgba(255,255,255,.5)" }}>
           <span>© 2026 Studio Crux, LLC. Dewey Sholes is a directory and payment facilitator, not a court reporting agency.</span>
-          <span>Certified license data sourced from public California CSR records.</span>
+          <span>Now serving California. Certified license data sourced from public CSR records.</span>
         </div>
       </div>
     </footer>

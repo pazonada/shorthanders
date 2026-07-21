@@ -75,13 +75,21 @@ This is the big one, and it's real engineering. Everything here is spelled out i
       old v1 model (12% fee, matching, scheduling). **YOU**
 - [ ] **Confirm every number on the site is real** – rates, fees, the 5,705 count, the invoice
       figures in the money comparison. **YOU**
-- [ ] **Decide how to signal who is actually available for direct work.** The CRB roster is every
-      licensed CSR and carries no employment field, so full-time freelancers, agency-only
-      reporters, and court officials picking up side transcription all look identical in the
-      data. Only the reporter knows, which is why a *claimed* profile is the real signal - but an
-      unclaimed listing is a lead, not confirmed availability, and a firm emailing one may hear
-      nothing back. Worth deciding whether unclaimed profiles should say so more plainly.
-      (Copy that called the directory "independent" was corrected 2026-07-21 for this reason.) **YOU**
+- [ ] **Design how a reporter states what work they want.** The CRB roster is every licensed CSR
+      and carries no employment field - full-time freelancers, agency-only reporters, and court
+      officials picking up side transcription look identical in it. Only the reporter knows.
+
+      The insight worth building on (Aud, 2026-07-21): **anyone filling out a profile here wants
+      direct work** - possibly alongside a court-appointed role, possibly alongside agency work,
+      possibly instead of both. So the profile field is not "what kind of reporter are you," it's
+      closer to "what work are you open to." Claiming is already the availability signal; the
+      field just sharpens it.
+
+      The directory already labels the gap - unclaimed rows read "Public license record ·
+      unclaimed", there's an "Unclaimed profile" pill and a separate `UnclaimedProfile` page, and
+      firms can filter to claimed profiles only. What's undecided is whether that language should
+      say more plainly that an unclaimed listing is a lead rather than confirmed availability,
+      and what the claimed-profile field should ask. **YOU**
 
 ## Phase 5 – Legal, before any money moves
 
