@@ -10,10 +10,5 @@ cat \
   src/_app_09_messaging.jsx src/_app_10_firm.jsx src/_app_11_router.jsx src/_tail.html \
   > index.html
 echo "Built index.html ($(wc -l < index.html | tr -d ' ') lines)"
-
-# The repo root serves the same site, so mirror the build and its assets there.
-# Without this the root copy silently drifts from mvp/.
-cp index.html ../index.html
-cp csr_profiles.js ../csr_profiles.js
-cp graphics/hp-text-grey.png graphics/step-*.png ../graphics/
-echo "Mirrored to repo root"
+# Note: do NOT mirror to the repo root. The root serves the v1 prototype
+# at dewey-sholes.vercel.app; this build only serves dsmvp.vercel.app.
