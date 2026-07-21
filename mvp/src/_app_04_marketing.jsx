@@ -108,7 +108,7 @@ function ValueCard({ icon, tone, eyebrow, title, points, cta }) {
 function Step({ n, title, body, art }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      {art && <div style={{ background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 14, height: 124, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>{art}</div>}
+      {art && <div style={{ background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 14, aspectRatio: "3 / 2", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>{art}</div>}
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <div className="step-dot active" style={{ width: 30, height: 30, fontSize: 14, background: "var(--brand)" }}>{n}</div>
         <h3 style={{ fontSize: 20 }}>{title}</h3>
