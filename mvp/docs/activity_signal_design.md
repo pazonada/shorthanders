@@ -32,18 +32,21 @@ metric, and it costs the reporter nothing to produce.
 **Display rule: activity is shown only when it's good news.** Present = a positive signal.
 Absent = no signal, not a negative one. We never show staleness, a date, or a comparison.
 
-Consequence worth knowing: this makes "recently active" a marker of *transaction adoption*.
-The reporters who look most alive will be the ones already messaging and invoicing – which is
-the behaviour we want to reward, but it means directory liveness is downstream of the payments
-product rather than something the directory generates by itself.
+Consequence worth knowing: the signal tracks *engagement*, not revenue. Because messaging
+counts, a reporter who answers firms and never invoices through the site still reads as active.
+That is deliberate - it keeps the directory looking alive on the strength of conversations
+alone, rather than making liveness a side effect of payment adoption.
+
+## Settled
+
+- **The window is 30 days** (decided 2026-07-21).
+- **Any sign-in counts, and messaging counts equally with payments** (decided 2026-07-21).
+  Many reporters are expected to use the messaging side and never touch invoicing, and they are
+  no less active for it. Do not weight payment activity higher, and do not make payments a
+  precondition for the signal.
 
 ## Open parameters
 
-- **The window.** The prototype uses 30 days, which is a guess with no data behind it. Revisit
-  once real sign-in data exists – don't defend the number, it isn't a decision yet.
-- **What counts as activity.** Currently "signed in." Fairer is the last *meaningful* action –
-  replied to a message, sent an invoice, edited a profile – so that opening the page doesn't
-  count the same as doing something. Worth doing when the backend lands.
 - **Where it appears.** Profile page only, for now. Directory cards and search ranking are the
   obvious next questions, and ranking is the consequential one: sorting by activity would
   compound the cold-start problem, where the few active reporters absorb all the early demand.

@@ -51,7 +51,8 @@ function buildDirectory() {
 // Activity is shown only when it's good news. We never display a stale "last active 6 months
 // ago" - a reporter who set up a profile and got on with their life is using the product
 // correctly, and shaming that would make the whole directory look abandoned.
-// The 30-day window is a provisional guess; revisit once there is real login data.
+// Window is 30 days (decided 2026-07-21). Any sign-in counts: a reporter who only ever uses
+// messaging is as active as one who invoices - do not weight payments higher.
 const ACTIVE_WINDOW_DAYS = 30;
 function recentlyActive(p) {
   return !!p.claimed && p.activeDaysAgo != null && p.activeDaysAgo <= ACTIVE_WINDOW_DAYS;
