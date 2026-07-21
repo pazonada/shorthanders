@@ -15,7 +15,10 @@ Nothing is really authenticated today; the UI just flips `store.role` and picks 
 
 - [ ] **Login** (`LoginModal` in `_app_03_shell.jsx`) – real email/password sign-in; derive the
   account's role (reporter vs firm) from the account, not a hardcoded default. Remove the
-  "Prototype – jump straight in as" shortcut buttons.
+  "Prototype – jump straight in as" shortcut buttons. Note the current form is inert: the email
+  and password fields go nowhere and the "Log in" button always calls `enterAsReporter`, so a
+  firm signing in would land in the wrong dashboard. Real sign-in must route by the account's
+  actual role.
 - [ ] **Reporter signup** (`ClaimFlow` step 1, `_app_06_claim.jsx`) – real account creation tied
   to the claimed CSR record. (Currently email/password/mobile fields go nowhere.)
 - [ ] **Firm signup** (`FirmSignup`, `_app_06_claim.jsx`) – real account creation; persist the

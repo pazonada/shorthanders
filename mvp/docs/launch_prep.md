@@ -67,8 +67,16 @@ This is the big one, and it's real engineering. Everything here is spelled out i
 
 ## Phase 4 – Cleaning out the prototype
 
-- [ ] **Remove the fake login shortcuts.** The login box has one-click buttons for pretend
-      users. Those cannot be there on a real site. **CLAUDE**
+- [ ] **Make login actually work, and remove the fake shortcuts.** Today the login box is a
+      placeholder: the email and password fields do nothing, the "Log in" button ignores them
+      and always drops you into the *reporter* dashboard, and the only real way to pick a side is
+      the two "Prototype - jump straight in as" buttons. None of that can ship.
+
+      The real behavior (decided 2026-07-21, deferred to integration): a person enters email and
+      password, the backend looks up the account, sees whether it's a reporter or a firm, and
+      routes them to the right dashboard - no role buttons, one form. This is a backend job (it
+      needs real accounts to look up), so it lands with auth in Phase 3, not before. Mechanics
+      are spelled out under "Login" in `integration_checklist.md`. **ENGINEER + CLAUDE** 
 - [ ] **Remove the demo toggles**, like the free/Pro switch that exists to show off the firm
       gate. **CLAUDE**
 - [ ] **Read every page start to finish** with fresh eyes, checking that nothing describes the
