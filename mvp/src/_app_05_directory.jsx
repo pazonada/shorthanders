@@ -83,7 +83,8 @@ function ReporterDirectory() {
     for (const r of all) {
       m.set(r.id, [r.name, r.city, r.county, r.csrNumber, r.method, r.bio,
         ...(r.specialties || []), ...(r.proceedings || []), ...(r.services || []),
-        ...(r.languages || []), ...(r.certifications || []), ...(r.coverage || [])]
+        ...(r.languages || []), ...(r.certifications || []), ...(r.coverage || []),
+        ...(r.testimonials || []).flatMap((t) => [t.quote, t.author])]
         .filter(Boolean).join(" ").toLowerCase());
     }
     return m;
