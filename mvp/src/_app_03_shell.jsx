@@ -102,11 +102,13 @@ function Footer() {
 }
 
 // ─── Page wrapper ──────────────────────────────────────────────────
-function Page({ children, wide }) {
+// roomy = the marketing-page rhythm (matches the homepage section bands). App screens stay tight.
+function Page({ children, wide, roomy }) {
+  const padY = roomy ? "clamp(56px, 6.5vw, 88px)" : 40;
   return (
     <>
       <Nav />
-      <main className="container" style={{ maxWidth: wide ? 1280 : 1080, minHeight: "60vh", paddingTop: 40, paddingBottom: 40 }}>{children}</main>
+      <main className="container" style={{ maxWidth: wide ? 1280 : 1080, minHeight: "60vh", paddingTop: padY, paddingBottom: padY }}>{children}</main>
       <Footer />
     </>
   );

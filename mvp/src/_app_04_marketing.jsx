@@ -158,7 +158,7 @@ function MoneyComparison() {
 // ═══ FOR FIRMS ═════════════════════════════════════════════════════
 function ForFirmsPage() {
   return (
-    <Page>
+    <Page roomy>
       <MarketingHero eyebrow="For law firms" title="Stop calling agencies. Find the reporter yourself."
         sub="Every licensed CSR in California, searchable by the things that actually matter – county, specialty, language, and whether they take rush work. Message them directly and agree terms without a middleman marking up the rate." />
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 8 }}>
@@ -178,7 +178,7 @@ function ForFirmsPage() {
 function ForReportersPage() {
   const store = useStore();
   return (
-    <Page>
+    <Page roomy>
       <MarketingHero eyebrow="For court reporters" title="Your whole business, minus the agency."
         sub="You're already in our directory – every licensed California CSR is. Claiming your profile is free, forever, and firms can find and message you at no cost. Use the site to invoice and get paid, and you keep far more than any agency leaves you." />
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 8 }}>
@@ -231,7 +231,7 @@ function CtaStrip({ title, button }) {
 // ═══ PRICING (reporter freemium) ═══════════════════════════════════
 function PricingPage() {
   return (
-    <Page wide>
+    <Page wide roomy>
       <div style={{ textAlign: "center", maxWidth: 700, margin: "12px auto 44px" }}>
         <h1 className="h-section">Simple, honest pricing</h1>
         <p style={{ fontSize: 18, color: "var(--ink-soft)", marginTop: 16, lineHeight: 1.6 }}>Claim your profile and get listed for free. Upgrade to Pro when you want to receive messages from firms and get paid through Dewey Sholes. No booking fees, no commission on your work.</p>

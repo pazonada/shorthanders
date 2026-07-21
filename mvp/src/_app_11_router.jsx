@@ -1,7 +1,7 @@
 // ═══ Legal / info pages ════════════════════════════════════════════
 function LegalPage({ title, intro, sections }) {
   return (
-    <Page>
+    <Page roomy>
       <div style={{ maxWidth: 760 }}>
         <h1 style={{ fontSize: "clamp(30px, 4vw, 46px)" }}>{title}</h1>
         {intro && <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 16, lineHeight: 1.7 }}>{intro}</p>}
@@ -53,7 +53,7 @@ function AboutPage() {
 }
 function ContactPage() {
   return (
-    <Page>
+    <Page roomy>
       <div style={{ maxWidth: 560 }}>
         <h1 style={{ fontSize: "clamp(30px, 4vw, 46px)" }}>Get in touch</h1>
         <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 14, lineHeight: 1.6 }}>Questions, feedback, or want to be part of the pilot? We'd love to hear from you.</p>
