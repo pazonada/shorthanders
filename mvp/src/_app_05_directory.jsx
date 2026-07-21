@@ -102,7 +102,8 @@ function ReporterDirectory() {
 
   const anyFilter = q || county || language || minYears || method || tags.length || rushOnly || claimedOnly;
   const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setMethod(""); setTags([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
-  const featured = filtered.filter((r) => r.claimed).slice(0, 3);
+  // Rotates weekly, and rotates within whatever the firm has filtered to.
+  const featured = weeklyFeatured(filtered.filter((r) => r.claimed), 3);
   const featuredIds = new Set(featured.map((r) => r.id));
   const rest = filtered.filter((r) => !featuredIds.has(r.id));
 

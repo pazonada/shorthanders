@@ -67,3 +67,24 @@ alone, rather than making liveness a side effect of payment adoption.
   nobody behind it.
 - Rendered in `ReporterProfile` (`_app_05_directory.jsx`) as italic dim metadata under the
   license/location line.
+
+## Related: how featured slots are chosen
+
+Before 2026-07-21 "Featured reporters" was `claimed.slice(0, 3)` off a list sorted by
+completeness - i.e. the same three most-complete profiles forever, on both the directory and
+the homepage. It now **rotates weekly** (`weeklyFeatured` in `_app_02_data.jsx`).
+
+Weekly rotation rather than random, because random re-rolls on every React render (the strip
+would reshuffle while a firm types in the search box) and random sampling is uneven over time -
+some reporters featured repeatedly, others never. The round-robin gives everyone an equal turn:
+verified over 12 simulated weeks with the seeded pool, all six claimed reporters appeared
+exactly six times each.
+
+Profiles under 60% complete are skipped, falling back to the whole pool if too few qualify - a
+featured slot spent on a bare profile helps nobody. On the directory it rotates within whatever
+the firm has filtered to, so a county filter still features reporters from that county.
+
+**Open, and worth deciding before launch:** whether featured placement is ever *sold*. There is
+a promoted-listing idea on the books (a Rosie suggestion, post-launch). Establishing "featured
+is a free, fair rotation" sets an expectation that is awkward to walk back later, and any paid
+version has to stay a discovery surface only.

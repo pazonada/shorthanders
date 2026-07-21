@@ -58,6 +58,24 @@ function recentlyActive(p) {
   return !!p.claimed && p.activeDaysAgo != null && p.activeDaysAgo <= ACTIVE_WINDOW_DAYS;
 }
 
+// ─── Featured slots ────────────────────────────────────────────────
+// Rotates weekly rather than picking at random. Random re-rolls on every React render (the
+// strip would reshuffle while someone types in the search box), and random sampling is uneven
+// over time - some reporters would be featured repeatedly and others never. A round-robin
+// gives everyone a turn in a predictable order, and lets us tell a reporter they are featured
+// this week and have it be true. Everyone in the pool sees the same set on the same day.
+function currentWeek() { return Math.floor(Date.now() / 604800000); }
+function weeklyFeatured(pool, n) {
+  // Don't spend a slot on a bare profile; fall back to the whole pool if too few qualify.
+  const good = pool.filter((p) => completeness(p) >= 60);
+  const eligible = (good.length >= n ? good : pool).slice().sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  if (eligible.length <= n) return eligible;
+  const start = (currentWeek() * n) % eligible.length;
+  const out = [];
+  for (let i = 0; i < n; i++) out.push(eligible[(start + i) % eligible.length]);
+  return out;
+}
+
 // Profile completeness (0–100) for ranking + reporter dashboard meter.
 function completeness(p) {
   if (!p.claimed) return 0;

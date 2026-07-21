@@ -1,7 +1,7 @@
 // ═══ LANDING ═══════════════════════════════════════════════════════
 function LandingPage() {
   const dir = useMemo(() => buildDirectory(), []);
-  const preview = useMemo(() => dir.filter((r) => r.claimed).sort((a, b) => completeness(b) - completeness(a)).slice(0, 3), [dir]);
+  const preview = useMemo(() => weeklyFeatured(dir.filter((r) => r.claimed), 3), [dir]);
   const total = dir.length;
   return (
     <>
