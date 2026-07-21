@@ -6,7 +6,7 @@ This repo holds the landing page, the interactive prototype, and the governance 
 
 ## What's where
 
-- **`index.html`** – single-file React-via-Babel prototype. Hosts every route the prototype exposes: marketing pages, attorney + reporter onboarding, order flow, dashboards, admin, reporter directory, pricing page, FAQ, terms of service.
+- **`index.html`** – a build artifact, not a source file. It is a copy of `mvp/index.html`, mirrored to the root by `mvp/build.sh` so the root serves the same site as `mvp/`. Don't edit it directly – edit `mvp/src/` and run `bash mvp/build.sh`. The previous v1 marketplace prototype that lived here (attorney onboarding, order flow, 12% fee, admin) was replaced on 2026-07-21 and remains in git history and `deploy-archive-2026-05-12/`.
 - **`governance-and-process/`** – the authoritative policy docs. Pricing model, payment flow, cost-splitting, ratings + matching algorithm, IC classification, transcript custody, etc. These are the source of truth. Site copy should always agree with these.
 - **`research/`** – research notes, survey drafts, rate-card analysis, agency-invoice teardowns, target lists, user-testing guides, and the master marketing strategy.
 - **`marketing/`** – outbound marketing collateral: video spec sheet, competitive-analysis system, swag strategy, phase-1 (CSR) / phase-2 (firm) / phase-3 (insurance carrier) plans, and the founding-member program description.
@@ -28,7 +28,7 @@ Every invoice carries the firm's case + matter reference so AP teams can reconci
 
 ## How to make changes
 
-- **Site copy and prototype UX**: edit `index.html`. The live preview serves the repo's main branch.
+- **Site copy and prototype UX**: edit the parts in `mvp/src/`, then run `bash mvp/build.sh` – it rebuilds `mvp/index.html` and mirrors it to the repo root. Never edit either `index.html` by hand. The live preview serves the repo's main branch.
 - **Policy**: edit the relevant doc in `governance-and-process/`. If a change in policy implies a change in site copy, update both in the same commit.
 - **Research and strategy**: edit the relevant doc in `research/` or `marketing/`.
 - **Style preference**: use en-dashes (the slightly shorter `–` character), never the longer em-dash. The repo has been swept consistently.
