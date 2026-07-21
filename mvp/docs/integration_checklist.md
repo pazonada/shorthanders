@@ -84,6 +84,18 @@ Two serverless stubs already exist and fall back to demo behavior:
   delivery webhooks, retries; Postmark as a Resend fallback. (See
   `governance-and-process/messaging_and_notifications_plan.md`.)
 - [ ] **Transactional email** – welcome, verification, password reset, receipts.
+- [ ] **"You're featured this week" email** (Aud, 2026-07-21). Featured slots rotate weekly
+      (`weeklyFeatured`, `_app_02_data.jsx`), so the three reporters up that week can be emailed
+      on the same schedule. Cheap to run - three recipients a week - and it's genuinely good
+      news, which makes it one of the few emails a reporter will be pleased to get.
+
+      Design notes: the rotation is deterministic from the week number, so a scheduled job can
+      compute the same set the site shows without extra state. Include something concrete
+      (profile views that week) so it isn't an empty congratulation, and use the moment for the
+      "invite the firms you already work with" ask, which is the growth engine. Needs the usual
+      unsubscribe/preferences handling. Note it also feeds the activity signal: an email that
+      brings a reporter back is a sign-in, which is what "Recently active" measures - a real
+      loop, but one to keep honest rather than to farm.
 
 ## 5. Search & the firm gate (server-side)
 

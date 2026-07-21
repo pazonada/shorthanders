@@ -2856,9 +2856,13 @@ function recentlyActive(p) {
 // this week and have it be true. Everyone in the pool sees the same set on the same day.
 function currentWeek() { return Math.floor(Date.now() / 604800000); }
 function weeklyFeatured(pool, n) {
+  // Claimed only, enforced here and not left to the caller: an unclaimed record is a public
+  // license stub with nobody behind it, so featuring one would promote a page that can't
+  // respond and would hand the slot to someone who never opted in.
+  const claimedOnly = pool.filter((p) => p.claimed);
   // Don't spend a slot on a bare profile; fall back to the whole pool if too few qualify.
-  const good = pool.filter((p) => completeness(p) >= 60);
-  const eligible = (good.length >= n ? good : pool).slice().sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  const good = claimedOnly.filter((p) => completeness(p) >= 60);
+  const eligible = (good.length >= n ? good : claimedOnly).slice().sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   if (eligible.length <= n) return eligible;
   const start = (currentWeek() * n) % eligible.length;
   const out = [];

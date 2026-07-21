@@ -84,6 +84,12 @@ Profiles under 60% complete are skipped, falling back to the whole pool if too f
 featured slot spent on a bare profile helps nobody. On the directory it rotates within whatever
 the firm has filtered to, so a county filter still features reporters from that county.
 
+Only claimed profiles are ever featured, enforced inside `weeklyFeatured` rather than left to
+the caller - an unclaimed record is a public license stub with nobody behind it, so featuring
+one would promote a page that can't respond and hand the slot to someone who never opted in.
+
+**Planned:** email the week's featured reporters to tell them (see `integration_checklist.md`).
+
 **Open, and worth deciding before launch:** whether featured placement is ever *sold*. There is
 a promoted-listing idea on the books (a Rosie suggestion, post-launch). Establishing "featured
 is a free, fair rotation" sets an expectation that is awkward to walk back later, and any paid
