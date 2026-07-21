@@ -11,6 +11,9 @@ function RepCard({ r }) {
           <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)", lineHeight: 1.15, display: "block" }}>{r.name}</span>
           <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 3 }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}</div>
           <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon name="pin" size={13} style={{ color: "var(--dim)", flexShrink: 0 }} />{r.city}{r.county && r.county !== r.city ? ", " + r.county + " County" : ""}</div>
+          {recentlyActive(r) && (
+            <div style={{ fontSize: 12.5, fontStyle: "italic", color: "var(--dim)", marginTop: 4 }}>Recently active</div>
+          )}
         </div>
       </div>
       {r.claimed ? (
@@ -85,6 +88,9 @@ function ReporterDirectory() {
       return true;
     });
     // PRD ranking: claimed first, then completeness, then recent claim.
+    // Activity is deliberately NOT a ranking input (decided 2026-07-21). It shows on cards and
+    // profiles only. Sorting by it would compound the cold start: the few active reporters would
+    // absorb the early demand and everyone else would stay invisible. See activity_signal_design.md.
     list.sort((a, b) => {
       if (a.claimed !== b.claimed) return a.claimed ? -1 : 1;
       const c = completeness(b) - completeness(a);
@@ -205,7 +211,7 @@ function RepRow({ r }) {
         <Avatar name={r.name} size={40} claimed={r.claimed} />
         <div style={{ minWidth: 0 }}>
           <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "block" }}>{r.name}</span>
-          <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}</div>
+          <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}{recentlyActive(r) ? <span style={{ fontStyle: "italic", color: "var(--dim)" }}> · Recently active</span> : null}</div>
         </div>
       </div>
       <div style={{ minWidth: 0, display: "flex", alignItems: "center", gap: 6, fontSize: 13.5, fontWeight: 600, color: "var(--ink-soft)" }}>

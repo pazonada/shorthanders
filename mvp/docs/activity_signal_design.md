@@ -44,12 +44,16 @@ alone, rather than making liveness a side effect of payment adoption.
   Many reporters are expected to use the messaging side and never touch invoicing, and they are
   no less active for it. Do not weight payment activity higher, and do not make payments a
   precondition for the signal.
+- **It shows on directory listings, and it does not affect ranking** (decided 2026-07-21).
+  Displayed on the profile page, on the featured cards, and in the list rows - the list is the
+  directory's default view, so cards alone would hide it from most firms. Ranking stays
+  `claimed -> completeness -> recent claim`. Sorting by activity would compound the cold start:
+  the few active reporters would absorb the early demand and everyone else would stay
+  invisible, which is the opposite of what a statewide directory is for. There is a comment to
+  this effect on the sort in `_app_05_directory.jsx` so it doesn't get added by accident.
 
 ## Open parameters
 
-- **Where it appears.** Profile page only, for now. Directory cards and search ranking are the
-  obvious next questions, and ranking is the consequential one: sorting by activity would
-  compound the cold-start problem, where the few active reporters absorb all the early demand.
 - **Responsiveness, later.** The signal a firm actually wants is "will this person reply to
   me." Time-to-first-response measures that directly, can't be farmed by logging in, and needs
   no self-reporting. It's the better long-run version of this feature.
