@@ -84,7 +84,7 @@ function Footer() {
         <div style={{ display: "flex", flexWrap: "wrap", gap: 48, justifyContent: "space-between" }}>
           <div style={{ maxWidth: 300 }}>
             <Logo onClick={() => navigate("/")} light />
-            <p style={{ marginTop: 14, fontSize: 14, color: "rgba(255,255,255,.6)", lineHeight: 1.6 }}>The directory of independent California court reporters. Find a reporter, or run your reporting business from one place.</p>
+            <p style={{ marginTop: 14, fontSize: 14, color: "rgba(255,255,255,.6)", lineHeight: 1.6 }}>The directory of every licensed California court reporter. Find a reporter, or run your reporting business from one place.</p>
           </div>
           <div style={{ display: "flex", gap: 56, flexWrap: "wrap" }}>
             {col("Find reporters", [["/directory", "Search directory"], ["/for-firms", "For law firms"], ["/pricing", "Pricing"]])}
