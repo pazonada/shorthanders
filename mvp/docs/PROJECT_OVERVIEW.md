@@ -112,6 +112,9 @@ a terms-of-service review (`legal_question_deposition_neutrality.md`, `open_stra
 - `PROJECT_OVERVIEW.md` – this file.
 - `open_strategic_decisions.md` – the living decisions log (monetization, firm gate, depo scope).
 - `integration_checklist.md` – prototype fakes → real wiring.
+- `launch_prep.md` – **the launch to-do list** (plain language, phased, marked YOU / CLAUDE /
+  ENGINEER / LAWYER). Pairs with `scripts/preflight.py`, which checks the built page's
+  metadata, share tags, and leftovers before any public deploy. **NEW 2026-07-21.**
 - `pricing_strategy.md` – older pricing analysis (partly superseded by the two-tier fee decision;
   see `pro_pricing_worksheet.md` for current).
 - `csr_profile_field_taxonomy.md` – the two-axis reporter taxonomy.

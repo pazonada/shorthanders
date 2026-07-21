@@ -45,7 +45,7 @@ Every invoice carries the firm's case + matter reference so AP teams can reconci
 
 ## How to make changes
 
-- **MVP site copy and UX** (the current product): edit the parts in `mvp/src/`, then run `bash mvp/build.sh`. Never hand-edit `mvp/index.html`. Before making it public, run `python3 mvp/scripts/preflight.py` and work `mvp/docs/launch_checklist.md`.
+- **MVP site copy and UX** (the current product): edit the parts in `mvp/src/`, then run `bash mvp/build.sh`. Never hand-edit `mvp/index.html`. Before making it public, work through `mvp/docs/launch_prep.md` - the plain-language launch to-do list.
 - **v1 prototype** (archived, still deployed at dewey-sholes.vercel.app): edit the root `index.html`. `mvp/build.sh` deliberately does not write here.
 - **Policy**: edit the relevant doc in `governance-and-process/`. If a change in policy implies a change in site copy, update both in the same commit.
 - **Research and strategy**: edit the relevant doc in `research/` or `marketing/`.
