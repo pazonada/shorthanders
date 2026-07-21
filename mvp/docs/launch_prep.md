@@ -30,12 +30,18 @@ confirm it** – the site currently shows working numbers, not decisions.
 
 ## Phase 2 – Design work you owe
 
-- [x] **A share image, 1200 x 630 pixels.** ~~This is the picture in the preview box when your
-      link is pasted into Slack, iMessage, or LinkedIn.~~ **Done 2026-07-21** – logo lockup over
-      the shorthand pattern, with "Where California law firms and certified court reporters
-      connect" on navy. Lives at `mvp/graphics/DS-share-image.png` (editable source alongside it
-      as `.psd`). Note the wording on the image differs slightly from the site tagline, which is
-      fine – but if the tagline changes, the image has to be re-exported to match. **YOU**
+- [x] **A share image, 1200 x 630 pixels.** The picture in the preview box when your link is
+      pasted into Slack, iMessage, or LinkedIn. **Done 2026-07-21** – logo lockup over the
+      shorthand pattern on navy. Lives at `mvp/graphics/DS-share-image.png`, editable source
+      beside it as `.psd`, and it's wired into the page.
+- [ ] **Re-export the share image with the corrected line.** The card currently reads "Where
+      California law firms and certified court reporters connect." It should match the site
+      tagline exactly:
+
+      > Where law firms and court reporters connect.
+
+      **Save over the same filename** (`mvp/graphics/DS-share-image.png`, still 1200 x 630) so
+      nothing in the page has to change – then hand it to me and I'll deploy it. **YOU**
 - [ ] **Check the site on a real phone**, not a resized browser window. **YOU**
 
 ## Phase 3 – Making it actually work
