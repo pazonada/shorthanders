@@ -46,7 +46,7 @@ function LandingPage() {
             <span className="kicker" style={{ justifyContent: "center" }}>The working relationship stays between you.</span>
           </div>
           <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))" }}>
-            <Step n="1" title="Search or get found" body="Firms search the directory. Reporters claim their profile so they show up." art={<StepArt kind="search" />} />
+            <Step n="1" title="Search or get found" body="Firms search the directory. Reporters claim their profile and add more details so they show up in search results." art={<StepArt kind="search" />} />
             <Step n="2" title="Message directly" body="Reach out through Dewey Sholes. Discuss scope, dates, and rates yourselves." art={<StepArt kind="message" />} />
             <Step n="3" title="Do the work" body="You agree terms and handle the deposition or transcript directly – off-platform." art={<StepArt kind="work" />} />
             <Step n="4" title="Invoice & get paid" body="The reporter sends an invoice; the firm pays by card or ACH. Status tracked automatically." art={<StepArt kind="invoice" />} />
