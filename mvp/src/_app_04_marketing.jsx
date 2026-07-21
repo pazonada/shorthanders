@@ -108,7 +108,7 @@ function ValueCard({ icon, tone, eyebrow, title, points, cta }) {
 function Step({ n, title, body, art }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      {art && <div style={{ background: "var(--bg)", border: "2px solid var(--ink)", borderRadius: 14, aspectRatio: "3 / 2", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>{art}</div>}
+      {art && <div style={{ background: "var(--bg)", border: "1px solid var(--ink)", borderRadius: 14, aspectRatio: "3 / 2", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>{art}</div>}
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <div className="step-dot active" style={{ width: 30, height: 30, fontSize: 14, background: "var(--brand)" }}>{n}</div>
         <h3 style={{ fontSize: 20 }}>{title}</h3>
@@ -121,7 +121,7 @@ function Step({ n, title, body, art }) {
 // Pen-and-ink step illustrations. Files live in mvp/graphics/ at 800x400.
 function StepArt({ kind }) {
   const files = { search: "step-1-search.png", message: "step-2-message.png", work: "step-3-work.png", invoice: "step-4-invoice.png" };
-  return <img src={"graphics/" + files[kind]} alt="" aria-hidden="true" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", borderRadius: 12 }} />;
+  return <img src={"graphics/" + files[kind]} alt="" aria-hidden="true" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", borderRadius: 13 }} />;
 }
 
 // Real agency invoice (research/agency_invoice_evidence.md) vs the same job on DS.
