@@ -142,7 +142,7 @@ function MoneyComparison() {
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8, flexWrap: "wrap", gap: 4 }}><span style={{ fontWeight: 700, color: "var(--ink)" }}>Through an agency</span><span style={{ color: "var(--muted)" }}>Firm pays $2,311</span></div>
           <Bar segments={[{ w: "61%", bg: "var(--ink)", label: "Reporter" }, { w: "39%", bg: "#C6D949", label: "Agency" }]} />
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter earns $1,404 (61%)</span><span style={{ color: "#6F7D12", fontWeight: 600 }}>Agency takes $908 (39%)</span></div>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter earns $1,404 (61%)</span><span style={{ color: "var(--ink)", fontWeight: 600 }}>Agency takes $908 (39%)</span></div>
         </div>
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8, flexWrap: "wrap", gap: 4 }}><span style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Through Dewey Sholes</span><span style={{ color: "var(--muted)" }}>Firm pays the reporter's rate</span></div>
