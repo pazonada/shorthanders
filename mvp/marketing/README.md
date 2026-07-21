@@ -29,9 +29,21 @@ the vendor without committee sign-off. Every tactic below aims at that person.
    people can't do this in 40 metros, so it points where reporter density and our reach overlap:
    Bay Area first, then LA. This is what [firm_outreach_playbook.md](firm_outreach_playbook.md) covers.
 
-## The $0 channel stack (best first)
+## Reaching reporters (the supply side)
 
-The first is statewide; the rest (2–6) are our concentrated hands-on selling, Bay Area first.
+Two channels, both free and both statewide:
+
+1. **The one-time claim-invite email** – [`mvp/docs/csr_email_outreach.md`](../docs/csr_email_outreach.md).
+2. **Facebook groups** – CA court reporters congregate there professionally; it's where our own
+   WC rate-card research came from. Read each group's rules first: many restrict promotion, and
+   a cold link drop reads as spam. Participating and answering questions is what earns the link.
+   Note Facebook caches link previews hard – use its Sharing Debugger to force a re-scrape after
+   the share image or page metadata changes, or early posts will show a stale card.
+
+## The $0 channel stack for firms (best first)
+
+Everything below is the *demand* side. The first is statewide; the rest (2–6) are our
+concentrated hands-on selling, Bay Area first.
 
 1. **Reporter-to-firm referrals** – warmest and most on-model, and the only channel not limited
    by where we can personally reach (built into the product, runs everywhere). A reporter

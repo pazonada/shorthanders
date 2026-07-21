@@ -24,7 +24,11 @@ and lean on **live work** in the metros where reporters and firms both show up.
 ## Three engines
 
 1. **Directory + reporter claiming – statewide, free.** Every CA reporter is invited to claim.
-   Already running.
+   Already running. Two ways to reach them: the one-time claim-invite email, and **Facebook,
+   which is where CA reporters actually congregate professionally** – our own WC rate-card
+   intel came out of a CSR group there. Check each group's rules before posting; many
+   professional groups restrict promotion, and a cold link drop from a stranger reads as spam.
+   Showing up, answering questions, and being a known name earns the link.
 2. **Reporter-brought firms – statewide, free.** A reporter who claims invites the firms she
    already works with, and a small local market seeds itself in her metro without us selling
    there. This is our real statewide engine. The *"invite the firms you already work with"* ask
@@ -52,6 +56,8 @@ subscription. Prices are unset – dollars live in [pro_pricing_worksheet.md](pr
 ## What to do now
 
 1. Run the statewide CSR claim invite; make **"invite your firms"** the central ask, not a footnote.
+   Work the CSR **Facebook groups** in parallel – it's the one place reporters are already
+   gathered, and it costs nothing but time.
 2. Concentrate firm outreach in the **Bay Area** (postcards + Rosie + paralegal events); add **LA**
    once there's reporter density there.
 3. **Prove one metro pays.** A handful of paying firms + a working referral loop is the thing that
