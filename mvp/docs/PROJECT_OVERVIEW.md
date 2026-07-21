@@ -118,6 +118,9 @@ a terms-of-service review (`legal_question_deposition_neutrality.md`, `open_stra
 - `pricing_strategy.md` – older pricing analysis (partly superseded by the two-tier fee decision;
   see `pro_pricing_worksheet.md` for current).
 - `csr_profile_field_taxonomy.md` – the two-axis reporter taxonomy.
+- `activity_signal_design.md` – why reporter activity is computed from sign-ins and shown
+  only when positive, instead of a self-set availability status or a Care.com-style
+  "last active" timestamp. **NEW 2026-07-21.**
 - `csr_email_outreach.md` – the one-time CSR claim-invite email + send plan.
 - `legal_question_deposition_neutrality.md` – brief for a reporting-industry attorney.
 - `roadmap.md` – deferred product ideas.

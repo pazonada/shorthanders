@@ -2829,7 +2829,22 @@ function buildDirectory() {
       claimed: !!overlay,
       ...(overlay || {}),
     };
+  }).map((p) => {
+    // Prototype stand-in for "last signed in", which the real product reads from auth.
+    // Derived from the license number so it stays the same between renders. Claimed only:
+    // an unclaimed record has nobody behind it, so it can never be active.
+    if (p.claimed && p.activeDaysAgo == null) p.activeDaysAgo = (Number(p.csrNumber) * 7) % 75;
+    return p;
   });
+}
+
+// Activity is shown only when it's good news. We never display a stale "last active 6 months
+// ago" - a reporter who set up a profile and got on with their life is using the product
+// correctly, and shaming that would make the whole directory look abandoned.
+// The 30-day window is a provisional guess; revisit once there is real login data.
+const ACTIVE_WINDOW_DAYS = 30;
+function recentlyActive(p) {
+  return !!p.claimed && p.activeDaysAgo != null && p.activeDaysAgo <= ACTIVE_WINDOW_DAYS;
 }
 
 // Profile completeness (0–100) for ranking + reporter dashboard meter.
@@ -3604,6 +3619,10 @@ function ReporterProfile({ reporterId, invited }) {
                 <span><Icon name="clock" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.yearsExp} years</span>
                 {r.method ? <span><Icon name="doc" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.method}</span> : null}
               </div>
+              {/* Shown only when true - absence is not a negative signal. */}
+              {recentlyActive(r) && (
+                <div style={{ marginTop: 7, fontSize: 13.5, fontStyle: "italic", color: "var(--dim)" }}>Recently active on Dewey Sholes</div>
+              )}
               <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
                 {(r.proceedings || []).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
                 {r.rush && <span className="pill pill-rush"><Icon name="clock" size={12} /> Rush available</span>}

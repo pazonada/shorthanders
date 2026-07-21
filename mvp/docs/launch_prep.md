@@ -87,9 +87,13 @@ This is the big one, and it's real engineering. Everything here is spelled out i
 
       The directory already labels the gap - unclaimed rows read "Public license record ·
       unclaimed", there's an "Unclaimed profile" pill and a separate `UnclaimedProfile` page, and
-      firms can filter to claimed profiles only. What's undecided is whether that language should
-      say more plainly that an unclaimed listing is a lead rather than confirmed availability,
-      and what the claimed-profile field should ask. **YOU**
+      firms can filter to claimed profiles only.
+
+      **Resolved 2026-07-21:** rather than asking reporters to maintain a status, activity is
+      computed from their sign-ins and shown as "Recently active on Dewey Sholes" when true, and
+      not shown otherwise. Reasoning and open parameters: `activity_signal_design.md`. Still open
+      is whether unclaimed listings should say more plainly that nobody has confirmed
+      availability. **YOU**
 
 ## Phase 5 – Legal, before any money moves
 

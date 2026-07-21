@@ -317,6 +317,10 @@ function ReporterProfile({ reporterId, invited }) {
                 <span><Icon name="clock" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.yearsExp} years</span>
                 {r.method ? <span><Icon name="doc" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.method}</span> : null}
               </div>
+              {/* Shown only when true - absence is not a negative signal. */}
+              {recentlyActive(r) && (
+                <div style={{ marginTop: 7, fontSize: 13.5, fontStyle: "italic", color: "var(--dim)" }}>Recently active on Dewey Sholes</div>
+              )}
               <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
                 {(r.proceedings || []).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
                 {r.rush && <span className="pill pill-rush"><Icon name="clock" size={12} /> Rush available</span>}

@@ -39,7 +39,22 @@ function buildDirectory() {
       claimed: !!overlay,
       ...(overlay || {}),
     };
+  }).map((p) => {
+    // Prototype stand-in for "last signed in", which the real product reads from auth.
+    // Derived from the license number so it stays the same between renders. Claimed only:
+    // an unclaimed record has nobody behind it, so it can never be active.
+    if (p.claimed && p.activeDaysAgo == null) p.activeDaysAgo = (Number(p.csrNumber) * 7) % 75;
+    return p;
   });
+}
+
+// Activity is shown only when it's good news. We never display a stale "last active 6 months
+// ago" - a reporter who set up a profile and got on with their life is using the product
+// correctly, and shaming that would make the whole directory look abandoned.
+// The 30-day window is a provisional guess; revisit once there is real login data.
+const ACTIVE_WINDOW_DAYS = 30;
+function recentlyActive(p) {
+  return !!p.claimed && p.activeDaysAgo != null && p.activeDaysAgo <= ACTIVE_WINDOW_DAYS;
 }
 
 // Profile completeness (0–100) for ranking + reporter dashboard meter.
