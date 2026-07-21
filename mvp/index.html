@@ -2963,7 +2963,7 @@ function LoginModal({ onClose }) {
           <div><label className="ds-label">Password</label><input className="ds-input" type="password" placeholder="••••••••" value={pw} onChange={(e) => setPw(e.target.value)} /></div>
           <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 4 }} onClick={goReporter}>Log in</button>
         </div>
-        <p style={{ fontSize: 13.5, color: "var(--muted)", textAlign: "center", marginTop: 16 }}>New here? Sign up as a <button onClick={() => { onClose(); navigate("/claim"); }} style={{ background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, cursor: "pointer", padding: 0, fontSize: 13.5 }}>reporter</button> or a <button onClick={() => { onClose(); navigate("/firm-signup"); }} style={{ background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, cursor: "pointer", padding: 0, fontSize: 13.5 }}>law firm</button>.</p>
+        <p style={{ fontSize: 13.5, color: "var(--muted)", textAlign: "center", marginTop: 16 }}>New here? <button onClick={() => { onClose(); navigate("/signup"); }} style={{ background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, cursor: "pointer", padding: 0, fontSize: 13.5 }}>Sign up</button>.</p>
         <div style={{ marginTop: 16, paddingTop: 14, borderTop: "1px solid var(--rule)" }}>
           <div style={{ fontSize: 11, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 10, textAlign: "center" }}>Prototype – jump straight in as</div>
           <div style={{ display: "flex", gap: 10 }}>
@@ -3764,6 +3764,42 @@ function UnclaimedProfile({ r }) {
 }
 // ═══ Claim front door: a reporter shows up and finds their record ══
 const claimLinkBtn = { background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, cursor: "pointer", padding: 0, fontSize: "inherit" };
+
+// One "Sign up" entry that asks which side you're on, instead of making the visitor
+// self-classify from a link. The two flows genuinely differ (a reporter claims an existing
+// license record; a firm creates a new account), so the fork has to happen somewhere - this
+// makes it an explicit, explained choice rather than a guess at a link.
+function SignupChooser() {
+  const Choice = ({ icon, eyebrow, title, body, cta, to }) => (
+    <button onClick={() => navigate(to)} className="ds-card"
+      style={{ textAlign: "left", cursor: "pointer", display: "flex", flexDirection: "column", gap: 12, border: "1px solid var(--rule)", background: "var(--bg)" }}>
+      <div style={{ width: 46, height: 46, borderRadius: 12, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name={icon} size={23} /></div>
+      <span style={{ fontSize: 12.5, fontWeight: 700, color: "var(--brand-dark)", textTransform: "uppercase", letterSpacing: ".04em" }}>{eyebrow}</span>
+      <h3 style={{ fontSize: 22 }}>{title}</h3>
+      <p style={{ color: "var(--muted)", fontSize: 14.5, lineHeight: 1.6, flex: 1 }}>{body}</p>
+      <span style={{ display: "inline-flex", alignItems: "center", gap: 7, color: "var(--brand-dark)", fontWeight: 600, fontSize: 15, marginTop: 2 }}>{cta} <Icon name="arrow" size={16} /></span>
+    </button>
+  );
+  return (
+    <Page>
+      <div style={{ maxWidth: 720, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 30 }}>
+          <h1 style={{ fontSize: "clamp(30px, 4vw, 46px)" }}>Sign up</h1>
+          <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 14, lineHeight: 1.6 }}>Which describes you? This just points you to the right first step.</p>
+        </div>
+        <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
+          <Choice icon="user" eyebrow="I'm a court reporter" title="Claim your profile"
+            body="You're already listed – every licensed California CSR is. Find your record, control how firms see you, and start invoicing. Free to claim."
+            cta="Claim your profile" to="/claim" />
+          <Choice icon="building" eyebrow="I'm a law firm" title="Create a firm account"
+            body="Search every licensed reporter in California, message them directly, and pay invoices online. Free to sign up."
+            cta="Create a firm account" to="/firm-signup" />
+        </div>
+        <p style={{ textAlign: "center", color: "var(--muted)", fontSize: 14, marginTop: 26 }}>Already have an account? <button onClick={() => navigate("/")} style={claimLinkBtn}>Log in</button></p>
+      </div>
+    </Page>
+  );
+}
 
 function ClaimStart() {
   const all = useMemo(() => buildDirectory(), []);
@@ -4962,6 +4998,7 @@ function StoreProvider({ children }) {
 // ═══ Router ════════════════════════════════════════════════════════
 function AppRouter() {
   const route = useRoute();
+  if (route === "#/signup" || route === "#/signup/") return <SignupChooser />;
   if (route === "#/claim" || route === "#/claim/") return <ClaimStart />;
   const claim = route.match(/^#\/claim\/(.+)$/);
   if (claim) return <ClaimFlow reporterId={decodeURIComponent(claim[1])} />;

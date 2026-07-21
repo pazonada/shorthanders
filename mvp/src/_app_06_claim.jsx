@@ -1,6 +1,42 @@
 // ═══ Claim front door: a reporter shows up and finds their record ══
 const claimLinkBtn = { background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, cursor: "pointer", padding: 0, fontSize: "inherit" };
 
+// One "Sign up" entry that asks which side you're on, instead of making the visitor
+// self-classify from a link. The two flows genuinely differ (a reporter claims an existing
+// license record; a firm creates a new account), so the fork has to happen somewhere - this
+// makes it an explicit, explained choice rather than a guess at a link.
+function SignupChooser() {
+  const Choice = ({ icon, eyebrow, title, body, cta, to }) => (
+    <button onClick={() => navigate(to)} className="ds-card"
+      style={{ textAlign: "left", cursor: "pointer", display: "flex", flexDirection: "column", gap: 12, border: "1px solid var(--rule)", background: "var(--bg)" }}>
+      <div style={{ width: 46, height: 46, borderRadius: 12, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name={icon} size={23} /></div>
+      <span style={{ fontSize: 12.5, fontWeight: 700, color: "var(--brand-dark)", textTransform: "uppercase", letterSpacing: ".04em" }}>{eyebrow}</span>
+      <h3 style={{ fontSize: 22 }}>{title}</h3>
+      <p style={{ color: "var(--muted)", fontSize: 14.5, lineHeight: 1.6, flex: 1 }}>{body}</p>
+      <span style={{ display: "inline-flex", alignItems: "center", gap: 7, color: "var(--brand-dark)", fontWeight: 600, fontSize: 15, marginTop: 2 }}>{cta} <Icon name="arrow" size={16} /></span>
+    </button>
+  );
+  return (
+    <Page>
+      <div style={{ maxWidth: 720, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 30 }}>
+          <h1 style={{ fontSize: "clamp(30px, 4vw, 46px)" }}>Sign up</h1>
+          <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 14, lineHeight: 1.6 }}>Which describes you? This just points you to the right first step.</p>
+        </div>
+        <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
+          <Choice icon="user" eyebrow="I'm a court reporter" title="Claim your profile"
+            body="You're already listed – every licensed California CSR is. Find your record, control how firms see you, and start invoicing. Free to claim."
+            cta="Claim your profile" to="/claim" />
+          <Choice icon="building" eyebrow="I'm a law firm" title="Create a firm account"
+            body="Search every licensed reporter in California, message them directly, and pay invoices online. Free to sign up."
+            cta="Create a firm account" to="/firm-signup" />
+        </div>
+        <p style={{ textAlign: "center", color: "var(--muted)", fontSize: 14, marginTop: 26 }}>Already have an account? <button onClick={() => navigate("/")} style={claimLinkBtn}>Log in</button></p>
+      </div>
+    </Page>
+  );
+}
+
 function ClaimStart() {
   const all = useMemo(() => buildDirectory(), []);
   const [mode, setMode] = useState("license");  // license | name

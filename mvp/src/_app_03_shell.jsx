@@ -57,7 +57,7 @@ function LoginModal({ onClose }) {
           <div><label className="ds-label">Password</label><input className="ds-input" type="password" placeholder="••••••••" value={pw} onChange={(e) => setPw(e.target.value)} /></div>
           <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 4 }} onClick={goReporter}>Log in</button>
         </div>
-        <p style={{ fontSize: 13.5, color: "var(--muted)", textAlign: "center", marginTop: 16 }}>New here? Sign up as a <button onClick={() => { onClose(); navigate("/claim"); }} style={{ background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, cursor: "pointer", padding: 0, fontSize: 13.5 }}>reporter</button> or a <button onClick={() => { onClose(); navigate("/firm-signup"); }} style={{ background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, cursor: "pointer", padding: 0, fontSize: 13.5 }}>law firm</button>.</p>
+        <p style={{ fontSize: 13.5, color: "var(--muted)", textAlign: "center", marginTop: 16 }}>New here? <button onClick={() => { onClose(); navigate("/signup"); }} style={{ background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, cursor: "pointer", padding: 0, fontSize: 13.5 }}>Sign up</button>.</p>
         <div style={{ marginTop: 16, paddingTop: 14, borderTop: "1px solid var(--rule)" }}>
           <div style={{ fontSize: 11, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 10, textAlign: "center" }}>Prototype – jump straight in as</div>
           <div style={{ display: "flex", gap: 10 }}>
