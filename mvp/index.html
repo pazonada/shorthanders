@@ -2642,6 +2642,8 @@
             mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 82%, transparent 100%);
   }
   @media (max-width: 720px) { .mvp-hero-shorthand { opacity: 0.08; width: 210%; } }
+  /* wider screens: run nearly edge to edge; the native width caps any upscaling */
+  @media (min-width: 721px) { .mvp-hero-shorthand { width: 96vw; max-width: 2346px; } }
 
   /* directory: sidebar filters + results */
   .dir-layout { display: grid; grid-template-columns: 232px minmax(0, 1fr); gap: 40px; align-items: start; }
