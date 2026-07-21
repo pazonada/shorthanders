@@ -88,6 +88,40 @@ Only claimed profiles are ever featured, enforced inside `weeklyFeatured` rather
 the caller - an unclaimed record is a public license stub with nobody behind it, so featuring
 one would promote a page that can't respond and hand the slot to someone who never opted in.
 
+### Rejected: gating featured on recent activity (2026-07-21)
+
+Considered limiting the rotation to reporters who are recently active. Decided against it, and
+the reasoning is worth keeping because the idea will come back.
+
+**It inverts what the slot is for.** A recently active reporter is by definition already getting
+messages or sending invoices. Gating on activity hands the slot to the people who least need it
+and locks out the reporter who claimed a profile, filled it in properly, and has heard from
+nobody - precisely the person a featured slot could rescue.
+
+**It closes a loop that should stay open.** Featured drives visits, visits drive messages,
+messages drive sign-ins, sign-ins make you "recently active", which would make you eligible for
+featured. At six claimed profiles that is invisible; at six hundred it means a stable in-group
+holds the slot permanently and everyone else is structurally excluded. It is the cold-start
+problem we kept out of ranking, arriving through a side door.
+
+**It weakens the supply-side promise.** Growth depends on reporters claiming profiles and then
+inviting their own firms. "Finish your profile and you get a turn" is clean. "Finish your
+profile, and if you are already busy here you might get a turn" is not, and the reporters with
+no activity yet are exactly the ones whose behaviour we are trying to change.
+
+**The gate we already have is the right one.** 60% completeness filters for *effort* - something
+the reporter controls, and the thing that determines whether the slot converts. Activity is not
+in their control; it depends on whether a firm happened to message them.
+
+If the pool ever grows large enough that a turn comes around only twice a year, the version to
+consider is a **tiebreaker, not a gate** - and weighted toward recently *claimed* or recently
+*completed* profiles, which have no track record and the most to gain, rather than toward
+recently active ones.
+
+Activity belongs where it already is: on the card and the profile, as information for a firm
+deciding who to contact. Featuring is distribution. Mixing the two makes the directory quietly
+less fair without making it more useful.
+
 **Planned:** email the week's featured reporters to tell them (see `integration_checklist.md`).
 
 **Open, and worth deciding before launch:** whether featured placement is ever *sold*. There is

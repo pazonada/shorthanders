@@ -2860,6 +2860,9 @@ function weeklyFeatured(pool, n) {
   // license stub with nobody behind it, so featuring one would promote a page that can't
   // respond and would hand the slot to someone who never opted in.
   const claimedOnly = pool.filter((p) => p.claimed);
+  // Deliberately NOT gated on recentlyActive(): that would hand the slot to reporters who are
+  // already getting work and lock out the ones a featured slot could actually help. See the
+  // "Rejected: gating featured on recent activity" section in docs/activity_signal_design.md.
   // Don't spend a slot on a bare profile; fall back to the whole pool if too few qualify.
   const good = claimedOnly.filter((p) => completeness(p) >= 60);
   const eligible = (good.length >= n ? good : claimedOnly).slice().sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
