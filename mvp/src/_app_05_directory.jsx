@@ -74,10 +74,25 @@ function ReporterDirectory() {
 
   const toggleTag = (t) => { setTags((cur) => cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]); setLimit(PAGE_SIZE); };
 
+  // One lowercased haystack per reporter so keyword search reaches expertise, not just name/
+  // city/license. A firm searching "maritime" or "realtime" should find the reporters who list
+  // it. Built once; the claimed fields are only present on claimed profiles, which is fine -
+  // unclaimed stubs have nothing but the public record to match on anyway.
+  const haystacks = useMemo(() => {
+    const m = new Map();
+    for (const r of all) {
+      m.set(r.id, [r.name, r.city, r.county, r.csrNumber, r.method, r.bio,
+        ...(r.specialties || []), ...(r.proceedings || []), ...(r.services || []),
+        ...(r.languages || []), ...(r.certifications || []), ...(r.coverage || [])]
+        .filter(Boolean).join(" ").toLowerCase());
+    }
+    return m;
+  }, [all]);
+
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
     let list = all.filter((r) => {
-      if (needle && !(r.name.toLowerCase().includes(needle) || (r.city || "").toLowerCase().includes(needle) || r.csrNumber.includes(needle))) return false;
+      if (needle && !(haystacks.get(r.id) || "").includes(needle)) return false;
       if (county && r.county !== county) return false;
       if (claimedOnly && !r.claimed) return false;
       if (rushOnly && !r.rush) return false;
@@ -98,7 +113,7 @@ function ReporterDirectory() {
       return (b.claimedAt || "").localeCompare(a.claimedAt || "");
     });
     return list;
-  }, [all, q, county, language, minYears, method, tags, rushOnly, claimedOnly]);
+  }, [all, haystacks, q, county, language, minYears, method, tags, rushOnly, claimedOnly]);
 
   const anyFilter = q || county || language || minYears || method || tags.length || rushOnly || claimedOnly;
   const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setMethod(""); setTags([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
@@ -165,7 +180,7 @@ function ReporterDirectory() {
         <div className="dir-main">
           <div style={{ position: "relative", marginBottom: 16 }}>
             <span style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", color: "var(--dim)" }}><Icon name="search" size={18} /></span>
-            <input className="ds-input" style={{ paddingLeft: 46, fontSize: 16, height: 52 }} placeholder="Search by name, city, or license number…" value={q} onChange={(e) => { setQ(e.target.value); setLimit(PAGE_SIZE); }} />
+            <input className="ds-input" style={{ paddingLeft: 46, fontSize: 16, height: 52 }} placeholder="Search by name, city, specialty, or license number…" value={q} onChange={(e) => { setQ(e.target.value); setLimit(PAGE_SIZE); }} />
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "4px 0 16px", flexWrap: "wrap", gap: 8 }}>
             <span style={{ fontSize: 14, color: "var(--muted)" }}>{filtered.length.toLocaleString()} {filtered.length === 1 ? "reporter" : "reporters"}{anyFilter ? " match" : ""}</span>

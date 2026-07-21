@@ -58,7 +58,11 @@ This is the big one, and it's real engineering. Everything here is spelled out i
 - [ ] **Email** – invites, invoice notifications, the reporter outreach campaign. (Resend.) **ENGINEER**
 - [ ] **Messaging that actually delivers**, rather than only existing in one browser. **ENGINEER**
 - [ ] **Server-side search** – the directory currently searches 5,705 records in the visitor's
-      browser, which will get slow. **ENGINEER**
+      browser, which will get slow. Keyword search already covers name, city, county, license,
+      method, specialties, proceedings, services, languages, certifications, and bio (a firm can
+      search "maritime" and find the reporters who list it). The server version needs to keep
+      that same reach, and should add stemming / partial matching so "deposition" also finds
+      "depositions". **ENGINEER**
 - [ ] **Lock the firm gate properly.** Today the "upgrade to see this profile" blur is
       cosmetic – the data is still in the page and a determined person can read it. It has to be
       enforced on the server before it's protecting anything real. **ENGINEER**
