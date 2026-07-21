@@ -28,7 +28,7 @@ function LandingPage() {
       </section>
 
       {/* two-sided value */}
-      <section className="container" style={{ padding: "16px 24px 8px" }}>
+      <section className="container" style={{ padding: "clamp(36px, 4vw, 52px) 24px clamp(56px, 6.5vw, 88px)" }}>
         <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}>
           <ValueCard icon="building" tone="brand" eyebrow="For law firms" title="Find and hire reporters quickly"
             points={["Search every CA reporter by location, specialties, language, rates, turnaround, and more", "See full profiles and message reporters directly to negotiate work", "Pay invoices online by card or ACH – no paper checks, no agency markup"]}
@@ -41,7 +41,7 @@ function LandingPage() {
 
       {/* how it works */}
       <section style={{ background: "var(--periwinkle-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
-        <div className="container" style={{ padding: "56px 24px" }}>
+        <div className="container" style={{ padding: "clamp(56px, 6.5vw, 88px) 24px" }}>
           <div style={{ textAlign: "center", marginBottom: 38 }}>
             <span className="kicker" style={{ justifyContent: "center" }}>The working relationship stays between you.</span>
           </div>
@@ -59,7 +59,7 @@ function LandingPage() {
 
       {/* directory preview */}
       <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
-        <div className="container" style={{ padding: "56px 24px" }}>
+        <div className="container" style={{ padding: "clamp(56px, 6.5vw, 88px) 24px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 26, flexWrap: "wrap", gap: 12 }}>
             <div>
               <h2 className="h-section">Robust reporter profiles</h2>
@@ -72,7 +72,7 @@ function LandingPage() {
       </section>
 
       {/* liability / trust */}
-      <section className="container" style={{ padding: "56px 24px", maxWidth: 820, textAlign: "center" }}>
+      <section className="container" style={{ padding: "clamp(56px, 6.5vw, 88px) 24px", maxWidth: 820, textAlign: "center" }}>
         <Icon name="shield" size={30} style={{ margin: "0 auto", color: "var(--brand)" }} />
         <h2 style={{ fontSize: 30, marginTop: 14 }}>A directory and a payment tool</h2>
         <p style={{ color: "var(--ink-soft)", marginTop: 14, fontSize: 16, lineHeight: 1.7 }}>
@@ -132,7 +132,7 @@ function MoneyComparison() {
     </div>
   );
   return (
-    <section className="container" style={{ padding: "56px 24px", maxWidth: 820 }}>
+    <section className="container" style={{ padding: "clamp(56px, 6.5vw, 88px) 24px", maxWidth: 820 }}>
       <div style={{ textAlign: "center", marginBottom: 32 }}>
         <span className="kicker" style={{ justifyContent: "center" }}>Where your money goes</span>
         <h2 style={{ fontSize: "clamp(24px, 3.4vw, 38px)", lineHeight: 1.12 }}>For the same job, agencies keep 30–50%</h2>
