@@ -34,11 +34,18 @@ confirm it** – the site currently shows working numbers, not decisions.
       pasted into Slack, iMessage, or LinkedIn. **Done 2026-07-21** – logo lockup over the
       shorthand pattern on navy. Lives at `mvp/graphics/DS-share-image.png`, editable source
       beside it as `.psd`, and it's wired into the page.
-- [ ] **Re-export the share image with the corrected line.** The card currently reads "Where
-      California law firms and certified court reporters connect." It should match the site
-      tagline exactly:
+- [ ] **Re-export the share image with no text except the logo.** Decided 2026-07-21: the card
+      carries the logo lockup only.
 
-      > Where law firms and court reporters connect.
+      Why: the title is rendered as text on every platform that shows a link preview, and the
+      title already contains the tagline. Any sentence on the card is the viewer reading the
+      same words twice – once in the picture, once in the text beside it.
+
+      Layout notes: removing the line leaves the navy band empty, so re-compose rather than just
+      deleting – either the lockup centered on the shorthand pattern full-bleed, or navy edge to
+      edge with a white lockup. Keep the lockup inside the central 1000 x 500 so the placements
+      that crop toward square don't clip the wordmark; roughly 55-65% of the width reads well as
+      a thumbnail, which is the size most people see.
 
       **Save over the same filename** (`mvp/graphics/DS-share-image.png`, still 1200 x 630) so
       nothing in the page has to change – then hand it to me and I'll deploy it. **YOU**
