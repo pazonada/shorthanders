@@ -30,25 +30,18 @@ confirm it** – the site currently shows working numbers, not decisions.
 
 ## Phase 2 – Design work you owe
 
-- [x] **A share image, 1200 x 630 pixels.** The picture in the preview box when your link is
-      pasted into Slack, iMessage, or LinkedIn. **Done 2026-07-21** – logo lockup over the
-      shorthand pattern on navy. Lives at `mvp/graphics/DS-share-image.png`, editable source
-      beside it as `.psd`, and it's wired into the page.
-- [ ] **Re-export the share image with no text except the logo.** Decided 2026-07-21: the card
-      carries the logo lockup only.
+- [x] **Share image, 1200 x 630.** Done 2026-07-21. The card people see when the link is
+      pasted into Facebook, Slack, iMessage, or LinkedIn: the logo lockup plus one line -
+      "A directory of over 5,700 California court reporters."
 
-      Why: the title is rendered as text on every platform that shows a link preview, and the
-      title already contains the tagline. Any sentence on the card is the viewer reading the
-      same words twice – once in the picture, once in the text beside it.
+      That line does a job the title can't. The title has to carry the brand name, so the card
+      adds the scale and the state instead, and it repeats neither the title nor the description
+      verbatim - which was the thing to avoid, since platforms render those as text right beside
+      the image.
 
-      Layout notes: removing the line leaves the navy band empty, so re-compose rather than just
-      deleting – either the lockup centered on the shorthand pattern full-bleed, or navy edge to
-      edge with a white lockup. Keep the lockup inside the central 1000 x 500 so the placements
-      that crop toward square don't clip the wordmark; roughly 55-65% of the width reads well as
-      a thumbnail, which is the size most people see.
-
-      **Save over the same filename** (`mvp/graphics/DS-share-image.png`, still 1200 x 630) so
-      nothing in the page has to change – then hand it to me and I'll deploy it. **YOU**
+      Files: `mvp/graphics/DS-share-image.png` and the `.psd` beside it. Wired into the page and
+      live. **If the 5,700 figure ever changes, this image has to be re-exported** - it is the
+      one place a number is baked into a picture instead of read from the data.
 - [ ] **Check the site on a real phone**, not a resized browser window. **YOU**
 
 ## Phase 3 – Making it actually work
