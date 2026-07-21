@@ -3016,7 +3016,7 @@ function LandingPage() {
       <section className="mvp-hero" style={{ background: "linear-gradient(180deg, var(--periwinkle-soft) 0%, var(--bg) 70%)" }}>
         <img src="graphics/hp-text-grey.png" alt="" aria-hidden="true" className="mvp-hero-shorthand" />
         <div className="container" style={{ padding: "80px 24px 64px", maxWidth: 900 }}>
-          <span className="kicker">Over 5,700 California court reporters in one directory</span>
+          <span className="kicker">Over {(Math.floor(total / 100) * 100).toLocaleString()} California court reporters in one directory</span>
           <h1 className="h-display">Find an independent court reporter. <em>Skip the agency.</em></h1>
           <p style={{ fontSize: 19, color: "var(--ink-soft)", margin: "26px 0 0", maxWidth: 640, lineHeight: 1.6 }}>
             Firms can browse detailed profiles of every licensed CSR in California and message them directly. CSRs can get discovered and get paid with no agency taking a cut.
