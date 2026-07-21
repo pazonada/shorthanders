@@ -30,9 +30,12 @@ confirm it** – the site currently shows working numbers, not decisions.
 
 ## Phase 2 – Design work you owe
 
-- [ ] **A share image, 1200 x 630 pixels.** This is the picture in the preview box when your
-      link is pasted into Slack, iMessage, or LinkedIn. There isn't one, so previews are
-      currently a bare box of text. Hand me the file and I'll install it. **YOU**
+- [x] **A share image, 1200 x 630 pixels.** ~~This is the picture in the preview box when your
+      link is pasted into Slack, iMessage, or LinkedIn.~~ **Done 2026-07-21** – logo lockup over
+      the shorthand pattern, with "Where California law firms and certified court reporters
+      connect" on navy. Lives at `mvp/graphics/DS-share-image.png` (editable source alongside it
+      as `.psd`). Note the wording on the image differs slightly from the site tagline, which is
+      fine – but if the tagline changes, the image has to be re-exported to match. **YOU**
 - [ ] **Check the site on a real phone**, not a resized browser window. **YOU**
 
 ## Phase 3 – Making it actually work
