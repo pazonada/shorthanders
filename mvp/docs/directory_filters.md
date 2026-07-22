@@ -26,6 +26,19 @@ Decisions and open work for the directory sidebar. Last updated 2026-07-21.
   naming what it covers (names, locations, specialties, proceedings, services, bios) and an
   example. It reaches every write-in field on a profile.
 
+## Fields added 2026-07-21 (grounded)
+
+- **Services gained "Remote / videoconference" and "Legal video."** Remote is the top post-2020
+  hiring axis (Veritext/Lexitas/NNRC lead with it); legal video is a distinct service from the
+  CLVS certification (offers-the-service vs. is-certified). Both filter via the existing services
+  checkboxes and show as profile pills.
+- **Notary public** - a profile field (header meta) and an Options filter toggle. Matters for
+  administering the oath in remote / out-of-state depositions. Also a "notary" keyword token.
+- **Zip is in the keyword haystack** so a firm can paste a zip for an exact match. City was
+  already covered by keyword search. Decided NOT to add a city/zip filter facet: county is the
+  right geographic facet, and true proximity ("reporters near 90210", radius) is a backend/geo
+  feature, not exact-zip matching.
+
 ## Search interaction (decided 2026-07-21)
 
 - **Deferred search, not live filtering.** The sidebar controls and keyword box are a *draft*;
