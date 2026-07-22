@@ -93,7 +93,6 @@ function ReporterDirectory() {
   const [notaryOnly, setNotaryOnly] = useState(false);
   const [claimedOnly, setClaimedOnly] = useState(false);
   const [limit, setLimit] = useState(PAGE_SIZE);
-  const [showAllAreas, setShowAllAreas] = useState(false);   // area-of-law list: collapsed by default
   // Deferred search: the controls above are a DRAFT. Nothing filters the list until "Search" is
   // pressed, which snapshots the draft into `searched`. null (or an empty snapshot) = browse mode
   // (featured cards + everyone); a real snapshot = search mode (pure ranked list, no featured).
@@ -192,15 +191,12 @@ function ReporterDirectory() {
             {SERVICE_TYPES.map((t) => <FilterCheck key={t} label={t} checked={tags.includes(t)} onChange={() => toggleTag(t)} />)}
           </FilterGroup>
           <FilterGroup label="Area of law">
-            {/* Multi-select (match any). Collapsed to 6 with a "show all" expander rather than an
-                inner scroll box - a nested scroll hid the rest of the list on mobile. Sourced
-                list pending CSR user testing (and Rosie's State Bar "area of law" list). */}
-            {(showAllAreas ? SPECIALTY_TYPES : SPECIALTY_TYPES.slice(0, 6)).map((t) => <FilterCheck key={t} label={t} checked={specTags.includes(t)} onChange={() => toggleSpec(t)} />)}
-            {SPECIALTY_TYPES.length > 6 && (
-              <button type="button" onClick={() => setShowAllAreas((v) => !v)} style={{ background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, fontSize: 13.5, cursor: "pointer", padding: "6px 0 0" }}>
-                {showAllAreas ? "Show fewer" : "Show all " + SPECIALTY_TYPES.length + " areas of law"}
-              </button>
-            )}
+            {/* Long list (63). Scroll box, sized to show ~10 with a bottom fade so it's clearly
+                cut off - a bare short box with no "more below" cue is why only ~7 showed on mobile
+                (iOS hides the scrollbar). Multi-select, match any. */}
+            <div style={{ maxHeight: 300, overflowY: "auto", paddingRight: 6, WebkitMaskImage: "linear-gradient(to bottom, #000 calc(100% - 20px), transparent)", maskImage: "linear-gradient(to bottom, #000 calc(100% - 20px), transparent)" }}>
+              {SPECIALTY_TYPES.map((t) => <FilterCheck key={t} label={t} checked={specTags.includes(t)} onChange={() => toggleSpec(t)} />)}
+            </div>
           </FilterGroup>
           <FilterGroup label="Certifications">
             {/* NCRA credentials - a separate skills axis from case-subject specialties. */}
