@@ -152,7 +152,7 @@ function ClaimFlow({ reporterId }) {
   const r = all.find((x) => x.id === reporterId);
   const [step, setStep] = useState(0);
   const [stripeState, setStripeState] = useState("idle"); // idle | connecting | done
-  const [form, setForm] = useState({ bio: "", yearsExp: "", rate: "", rush: false, proceedings: [], services: [], languages: [], coverage: "" });
+  const [form, setForm] = useState({ bio: "", yearsExp: "", rate: "", rush: false, notary: false, proceedings: [], services: [], specialties: [], certifications: [], languages: [], coverage: "" });
 
   if (!r) return (
     <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60, maxWidth: 520, margin: "0 auto" }}>
@@ -284,12 +284,23 @@ function ClaimFlow({ reporterId }) {
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{SERVICE_TYPES.map((w) => <button key={w} type="button" className={"chip-filter" + (form.services.includes(w) ? " on" : "")} onClick={() => toggle("services", w)}>{w}</button>)}</div>
               </div>
               <div>
+                <label className="ds-label">Specialties (case types you've covered)</label>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{SPECIALTY_TYPES.map((w) => <button key={w} type="button" className={"chip-filter" + (form.specialties.includes(w) ? " on" : "")} onClick={() => toggle("specialties", w)}>{w}</button>)}</div>
+              </div>
+              <div>
+                <label className="ds-label">Certifications</label>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{CREDENTIAL_TYPES.map((c) => <button key={c.code} type="button" className={"chip-filter" + (form.certifications.includes(c.code) ? " on" : "")} onClick={() => toggle("certifications", c.code)}>{c.label}</button>)}</div>
+              </div>
+              <div>
                 <label className="ds-label">Languages (beyond English)</label>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{LANGUAGES.slice(0, 6).map((l) => <button key={l} type="button" className={"chip-filter" + (form.languages.includes(l) ? " on" : "")} onClick={() => toggle("languages", l)}>{l}</button>)}</div>
               </div>
               <div><label className="ds-label">Counties you cover</label><input className="ds-input" placeholder="e.g. Santa Clara, Alameda, San Mateo" value={form.coverage} onChange={(e) => setForm({ ...form, coverage: e.target.value })} /></div>
               <label style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 15, color: "var(--ink-soft)", cursor: "pointer" }}>
                 <input type="checkbox" checked={form.rush} onChange={(e) => setForm({ ...form, rush: e.target.checked })} style={{ width: 18, height: 18 }} /> I accept rush / expedited turnaround jobs
+              </label>
+              <label style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 15, color: "var(--ink-soft)", cursor: "pointer" }}>
+                <input type="checkbox" checked={form.notary} onChange={(e) => setForm({ ...form, notary: e.target.checked })} style={{ width: 18, height: 18 }} /> I am a notary public
               </label>
               <div style={{ display: "flex", gap: 12, marginTop: 4 }}>
                 <button className="btn btn-primary" onClick={finish}><Icon name="check" size={16} /> Claim & go to my dashboard</button>

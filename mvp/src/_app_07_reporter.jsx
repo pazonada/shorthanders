@@ -117,9 +117,11 @@ function ReporterProfileEditor({ me }) {
       {field("Proceedings covered", (me.proceedings || []).join(" · "))}
       {field("Services offered", (me.services || []).join(" · "))}
       {field("Specialties", (me.specialties || []).join(" · "))}
+      {field("Certifications", (me.certifications || []).join(" · "))}
       {field("Languages", (me.languages || []).join(" · ") || "English only")}
       {field("Coverage", (me.coverage || []).map((c) => c + " County").join(" · "))}
       {field("Rush jobs", me.rush ? "Yes – accepts rush / expedited" : "No")}
+      {field("Notary public", me.notary ? "Yes" : "No")}
       <div style={{ display: "flex", gap: 12 }}>
         <button className="btn btn-primary" onClick={() => setToast("Profile saved")}><Icon name="check" size={16} /> Save changes</button>
         <button className="btn btn-secondary" onClick={() => navigate("/reporters/" + me.id)}><Icon name="eye" size={16} /> Preview public profile</button>
