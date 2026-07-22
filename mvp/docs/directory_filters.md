@@ -28,13 +28,14 @@ Decisions and open work for the directory sidebar. Last updated 2026-07-21.
 
 ## Open
 
-### The specialty taxonomy is unknown - take it to user testing (decided 2026-07-21)
+### The specialty taxonomy - researched 2026-07-21, filter pulled pending a decision
 
-We do not actually know what specialties reporters would list or how they'd name them. The 16
-values in the app are fabricated. So the specialty taxonomy is an **open question for CSR user
-testing**, the same call Aud made for rates: ask reporters, don't invent it. Do not ship a fixed
-specialty list built from the fake seed. The filter mechanism can stay (it self-derives and
-demonstrates the feature), but the taxonomy behind it is unvalidated.
+The fabricated specialty filter was **removed** on 2026-07-21. A cited research pass then produced
+a grounded ~18-item shortlist from real sources (court-reporting agency expertise pages, the CA
+State Bar, Martindale) - see `specialty_taxonomy_research.md`. That list is sourced, not invented,
+but the research itself flags that no source is a CA CSR describing their own work, so **user
+testing is still the final gate**, the same call Aud made for rates. Decision pending: ship the
+researched core list as the dropdown now, or hold the whole feature until CSR testing.
 
 ### Grow the specialty list from real demand (needs a backend)
 
