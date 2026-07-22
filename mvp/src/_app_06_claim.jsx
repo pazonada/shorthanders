@@ -284,7 +284,7 @@ function ClaimFlow({ reporterId }) {
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{SERVICE_TYPES.map((w) => <button key={w} type="button" className={"chip-filter" + (form.services.includes(w) ? " on" : "")} onClick={() => toggle("services", w)}>{w}</button>)}</div>
               </div>
               <div>
-                <label className="ds-label">Practice areas (case types you've covered)</label>
+                <label className="ds-label">Areas of law (case types you've covered)</label>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{SPECIALTY_TYPES.map((w) => <button key={w} type="button" className={"chip-filter" + (form.specialties.includes(w) ? " on" : "")} onClick={() => toggle("specialties", w)}>{w}</button>)}</div>
               </div>
               <div>
@@ -362,7 +362,7 @@ function FirmSignup() {
                 <div><label className="ds-label">Firm size</label><select className="ds-input" value={form.size} onChange={set("size")}><option value="">Select…</option><option>Solo</option><option>2–10 attorneys</option><option>11–50 attorneys</option><option>51+ attorneys</option></select></div>
               </div>
               <div>
-                <label className="ds-label">Practice areas (optional)</label>
+                <label className="ds-label">Areas of law (optional)</label>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{PRACTICE.map((p) => <button key={p} type="button" className={"chip-filter" + (form.practices.includes(p) ? " on" : "")} onClick={() => togglePractice(p)}>{p}</button>)}</div>
               </div>
               <div style={{ marginTop: 4 }}>

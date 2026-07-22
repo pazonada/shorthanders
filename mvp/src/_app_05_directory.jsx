@@ -93,6 +93,7 @@ function ReporterDirectory() {
   const [notaryOnly, setNotaryOnly] = useState(false);
   const [claimedOnly, setClaimedOnly] = useState(false);
   const [limit, setLimit] = useState(PAGE_SIZE);
+  const [showAllAreas, setShowAllAreas] = useState(false);   // area-of-law list: collapsed by default
   // Deferred search: the controls above are a DRAFT. Nothing filters the list until "Search" is
   // pressed, which snapshots the draft into `searched`. null (or an empty snapshot) = browse mode
   // (featured cards + everyone); a real snapshot = search mode (pure ranked list, no featured).
@@ -190,12 +191,16 @@ function ReporterDirectory() {
           <FilterGroup label="Services">
             {SERVICE_TYPES.map((t) => <FilterCheck key={t} label={t} checked={tags.includes(t)} onChange={() => toggleTag(t)} />)}
           </FilterGroup>
-          <FilterGroup label="Practice area">
-            {/* Litigation subject matter. Multi-select (match any). Sourced list, pending CSR
-                user testing - see docs/specialty_taxonomy_research.md. */}
-            <div style={{ maxHeight: 208, overflowY: "auto", paddingRight: 4 }}>
-              {SPECIALTY_TYPES.map((t) => <FilterCheck key={t} label={t} checked={specTags.includes(t)} onChange={() => toggleSpec(t)} />)}
-            </div>
+          <FilterGroup label="Area of law">
+            {/* Multi-select (match any). Collapsed to 6 with a "show all" expander rather than an
+                inner scroll box - a nested scroll hid the rest of the list on mobile. Sourced
+                list pending CSR user testing (and Rosie's State Bar "area of law" list). */}
+            {(showAllAreas ? SPECIALTY_TYPES : SPECIALTY_TYPES.slice(0, 6)).map((t) => <FilterCheck key={t} label={t} checked={specTags.includes(t)} onChange={() => toggleSpec(t)} />)}
+            {SPECIALTY_TYPES.length > 6 && (
+              <button type="button" onClick={() => setShowAllAreas((v) => !v)} style={{ background: "none", border: "none", color: "var(--brand-dark)", fontWeight: 600, fontSize: 13.5, cursor: "pointer", padding: "6px 0 0" }}>
+                {showAllAreas ? "Show fewer" : "Show all " + SPECIALTY_TYPES.length + " areas of law"}
+              </button>
+            )}
           </FilterGroup>
           <FilterGroup label="Certifications">
             {/* NCRA credentials - a separate skills axis from case-subject specialties. */}
@@ -234,11 +239,11 @@ function ReporterDirectory() {
             <div style={{ display: "flex", gap: 10 }}>
               <div style={{ position: "relative", flex: 1 }}>
                 <span style={{ position: "absolute", left: 18, top: "50%", transform: "translateY(-50%)", color: "var(--brand)" }}><Icon name="search" size={20} /></span>
-                <input className="ds-input" style={{ paddingLeft: 50, fontSize: 16, height: 58, borderWidth: 2, width: "100%" }} placeholder="Try a name, city, practice area, or expertise – e.g. “maritime”" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") runSearch(); }} />
+                <input className="ds-input" style={{ paddingLeft: 50, fontSize: 16, height: 58, borderWidth: 2, width: "100%" }} placeholder="Try a name, city, area of law, or expertise – e.g. “maritime”" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") runSearch(); }} />
               </div>
               <button className="btn btn-primary" style={{ height: 58, padding: "0 28px", flexShrink: 0 }} onClick={runSearch}>Search</button>
             </div>
-            <p style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 6 }}>Set filters at left and search terms here, then press Search. Covers names, locations, practice areas, proceedings, services, and profile bios.</p>
+            <p style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 6 }}>Set filters at left and search terms here, then press Search. Covers names, locations, areas of law, proceedings, services, and profile bios.</p>
           </div>
           {dirty && (
             <div className="banner" style={{ display: "flex", alignItems: "center", gap: 8, background: draftCount === 0 ? "var(--ochre-soft)" : "var(--brand-soft)", color: draftCount === 0 ? "var(--ochre-deep)" : "var(--brand-dark)", borderRadius: 10, padding: "10px 14px", fontSize: 13.5, fontWeight: 600, marginBottom: 14 }}>
@@ -349,7 +354,7 @@ function GatedProfile({ r }) {
       <div style={{ position: "relative", marginTop: 18, borderRadius: 16, overflow: "hidden" }}>
         <div aria-hidden="true" style={{ filter: "blur(7px)", userSelect: "none", pointerEvents: "none", opacity: 0.5, display: "flex", flexDirection: "column", gap: 22, padding: 4 }}>
           <ProfileSection title="About"><p style={{ fontSize: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>{r.bio}</p></ProfileSection>
-          <ProfileSection title="Practice areas"><TagList items={r.specialties} tone="brand" /></ProfileSection>
+          <ProfileSection title="Areas of law"><TagList items={r.specialties} tone="brand" /></ProfileSection>
           <ProfileSection title="Rates"><p style={{ fontSize: 16, color: "var(--ink-soft)" }}>{r.rate || "Provided on request"}</p></ProfileSection>
           <ProfileSection title="Geographic coverage"><TagList items={(r.coverage || []).map((c) => c + " County")} tone="brand" /></ProfileSection>
         </div>
@@ -357,7 +362,7 @@ function GatedProfile({ r }) {
           <div className="ds-card" style={{ maxWidth: 440, textAlign: "center", boxShadow: "var(--shadow-lg)" }}>
             <div style={{ width: 48, height: 48, borderRadius: 12, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px" }}><Icon name="lock" size={22} /></div>
             <h3 style={{ fontSize: 21 }}>See {first}'s full profile with Pro</h3>
-            <p style={{ fontSize: 14.5, color: "var(--muted)", marginTop: 10, lineHeight: 1.6 }}>Full bio, practice areas, rates, coverage, and certifications for every reporter, plus direct messaging and advanced search to find new reporters.</p>
+            <p style={{ fontSize: 14.5, color: "var(--muted)", marginTop: 10, lineHeight: 1.6 }}>Full bio, areas of law, rates, coverage, and certifications for every reporter, plus direct messaging and advanced search to find new reporters.</p>
             <button className="btn btn-primary" style={{ marginTop: 16 }} onClick={() => store.upgradeFirm()}><Icon name="arrow" size={16} /> Upgrade to Pro</button>
             <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 12, lineHeight: 1.5 }}>Pro pricing announced before launch. Reporters who invite your firm are always free to view.</p>
           </div>
@@ -389,7 +394,7 @@ function ReporterProfile({ reporterId, invited }) {
     <Page>
       <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 16 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to directory</button>
       {invited && <div className="banner banner-ok" style={{ marginBottom: 14 }}><Icon name="heart" size={18} style={{ flexShrink: 0 }} /><div><strong>{first} invited you to Dewey Sholes.</strong> Create a free account to message {first}, pay their invoices, and save them to your firm. Joining is free for your firm.</div></div>}
-      <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This reporter's bio, practice areas, and rates are illustrative placeholders for the prototype, not real. The name, license, county, and method are real public data.</div></div>
+      <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This reporter's bio, areas of law, and rates are illustrative placeholders for the prototype, not real. The name, license, county, and method are real public data.</div></div>
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 32, alignItems: "start" }} className="profile-grid">
         {/* main */}
         <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>
@@ -418,7 +423,7 @@ function ReporterProfile({ reporterId, invited }) {
           </div>
 
           <ProfileSection title="About"><p style={{ fontSize: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>{r.bio}</p></ProfileSection>
-          <ProfileSection title="Practice areas"><TagList items={r.specialties} tone="brand" /></ProfileSection>
+          <ProfileSection title="Areas of law"><TagList items={r.specialties} tone="brand" /></ProfileSection>
           <ProfileSection title="Proceedings covered"><TagList items={r.proceedings} tone="sage" /></ProfileSection>
           {(r.services || []).length > 0 && <ProfileSection title="Services offered"><TagList items={r.services} tone="brand" /></ProfileSection>}
           {(r.languages || []).length > 0 && <ProfileSection title="Languages"><TagList items={r.languages} tone="plum" /></ProfileSection>}
@@ -495,13 +500,13 @@ function UnclaimedProfile({ r }) {
             {r.email ? <><dt style={{ color: "var(--muted)" }}>Public email</dt><dd><a href={"mailto:" + r.email} style={{ color: "var(--brand-dark)", textDecoration: "none" }}>{r.email}</a></dd></> : null}
             <dt style={{ color: "var(--muted)" }}>License status</dt><dd style={{ color: "var(--ink)" }}>Active · expires {r.expiration}</dd>
           </dl>
-          <p style={{ fontSize: 13.5, color: "var(--dim)", marginTop: 16, lineHeight: 1.5 }}>Name, license, county, and any public email are from California's CSR licensing records. A bio, practice areas, coverage, and rates appear once the reporter claims and completes their profile.</p>
+          <p style={{ fontSize: 13.5, color: "var(--dim)", marginTop: 16, lineHeight: 1.5 }}>Name, license, county, and any public email are from California's CSR licensing records. A bio, areas of law, coverage, and rates appear once the reporter claims and completes their profile.</p>
         </div>
 
         <div className="banner banner-ok" style={{ marginTop: 20 }}>
           <Icon name="user" size={20} style={{ flexShrink: 0 }} />
           <div>
-            <strong>Is this you?</strong> Claim your profile to add your bio, practice areas, and rates – and to start invoicing clients and getting paid. It's free.
+            <strong>Is this you?</strong> Claim your profile to add your bio, areas of law, and rates – and to start invoicing clients and getting paid. It's free.
             <div><button className="btn btn-primary" style={{ marginTop: 14 }} onClick={() => navigate("/claim/" + r.id)}>Claim this profile <Icon name="arrow" size={16} /></button></div>
           </div>
         </div>

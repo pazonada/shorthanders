@@ -31,7 +31,7 @@ function LandingPage() {
       <section className="container" style={{ padding: "clamp(36px, 4vw, 52px) 24px clamp(56px, 6.5vw, 88px)" }}>
         <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}>
           <ValueCard icon="building" tone="brand" eyebrow="For law firms" title="Find and hire reporters quickly"
-            points={["Search every CA reporter by location, practice areas, language, rates, turnaround, and more", "See full profiles and message reporters directly to negotiate work", "Pay invoices online by card or ACH – no paper checks, no agency markup"]}
+            points={["Search every CA reporter by location, areas of law, language, rates, turnaround, and more", "See full profiles and message reporters directly to negotiate work", "Pay invoices online by card or ACH – no paper checks, no agency markup"]}
             cta={["Browse the directory", "/directory"]} />
           <ValueCard icon="user" tone="ochre" eyebrow="For court reporters" title="Run your business from one place"
             points={["Free promotion; your claimed, professional profile will be prioritized for firms to find", "Invoice in seconds, get paid by card or ACH, and get year-end 1099s and clean records", "No agency taking massive cuts – you keep your rate, minus only a small platform fee"]}
@@ -160,9 +160,9 @@ function ForFirmsPage() {
   return (
     <Page roomy>
       <MarketingHero eyebrow="For law firms" title="Stop calling agencies. Find the reporter yourself."
-        sub="Every licensed CSR in California, for depositions, trials, and hearings. Search by the things that actually matter – county, practice area, language, and whether they take rush work – then message them directly and agree terms without a middleman marking up the rate." />
+        sub="Every licensed CSR in California, for depositions, trials, and hearings. Search by the things that actually matter – county, area of law, language, and whether they take rush work – then message them directly and agree terms without a middleman marking up the rate." />
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 8 }}>
-        <FeatureBlock icon="search" title="Detailed search" body="Filter every licensed California reporter by county, city, language, years of experience, practice area, proceedings, services, and rush availability." />
+        <FeatureBlock icon="search" title="Detailed search" body="Filter every licensed California reporter by county, city, language, years of experience, area of law, proceedings, services, and rush availability." />
         <FeatureBlock icon="badge" title="Verified profiles" body="Claimed reporters verify their identity through Stripe. You see who you're hiring before you reach out." />
         <FeatureBlock icon="message" title="Direct messaging" body="Contact reporters through the platform. Scope, dates, and rates are agreed directly between you." />
         <FeatureBlock icon="dollar" title="No markup" body="You're not paying an agency's cut. The rate you agree with the reporter is the rate you pay." />
@@ -182,7 +182,7 @@ function ForReportersPage() {
       <MarketingHero eyebrow="For court reporters" title="Your whole business, minus the agency."
         sub="You're already in our directory – every licensed California CSR is. Claiming your profile is free, forever, and firms can find and message you at no cost. Use the site to invoice and get paid, and you keep far more than any agency leaves you." />
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 8 }}>
-        <FeatureBlock icon="user" title="Get discovered" body="A professional profile firms find when they search by county, practice area, language, and turnaround – without building a website of your own." />
+        <FeatureBlock icon="user" title="Get discovered" body="A professional profile firms find when they search by county, area of law, language, and turnaround – without building a website of your own." />
         <FeatureBlock icon="message" title="Firms come to you" body="Firms message you directly through the platform. You choose who to work with, and on what terms – no agency deciding for you." />
         <FeatureBlock icon="dollar" title="No agency cut" body="Agencies take 30–50% off the top. Here there's none – just a small fee when you collect payment through the site, so you keep the rest. Your practice, your rate, your call." />
         <FeatureBlock icon="invoice" title="Invoicing in seconds" body="Create an invoice with the client, matter, and line items, and send it as a payment link. Every invoice is saved – a clean record of your whole book." />
@@ -239,7 +239,7 @@ function PricingPage() {
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", maxWidth: 1040, margin: "0 auto" }}>
         <PriceCard tone="sage" name="Reporters · Free" price="$0" unit="forever"
           blurb="Get listed and control how firms see you."
-          features={["Claim your public profile", "Verify your identity via Stripe", "Appear in the directory & search", "Add practice areas, coverage, rates", "Firms can find you"]}
+          features={["Claim your public profile", "Verify your identity via Stripe", "Appear in the directory & search", "Add areas of law, coverage, rates", "Firms can find you"]}
           cta={["Claim your profile", "/claim"]} note="Free forever. No card required to claim and list." />
         <PriceCard tone="brand" featured name="Reporters · Pro" price="Pricing coming soon" unit=""
           blurb="Everything in Free, plus the tools to actually get paid."
