@@ -66,6 +66,7 @@ function matchesCriteria(r, s, haystacks) {
   if (s.county && r.county !== s.county) return false;
   if (s.claimedOnly && !r.claimed) return false;
   if (s.rushOnly && !r.rush) return false;
+  if (s.notaryOnly && !r.notary) return false;
   if (s.language && !(r.languages || []).includes(s.language)) return false;
   if (s.minYears) {
     const y = r.yearsExp;
@@ -89,6 +90,7 @@ function ReporterDirectory() {
   const [specTags, setSpecTags] = useState([]);   // selected specialties (multi, OR within group)
   const [certTags, setCertTags] = useState([]);   // selected credentials (multi, OR within group)
   const [rushOnly, setRushOnly] = useState(false);
+  const [notaryOnly, setNotaryOnly] = useState(false);
   const [claimedOnly, setClaimedOnly] = useState(false);
   const [limit, setLimit] = useState(PAGE_SIZE);
   // Deferred search: the controls above are a DRAFT. Nothing filters the list until "Search" is
@@ -115,9 +117,10 @@ function ReporterDirectory() {
   const haystacks = useMemo(() => {
     const m = new Map();
     for (const r of all) {
-      m.set(r.id, [r.name, r.city, r.county, r.csrNumber, r.method, r.bio,
+      m.set(r.id, [r.name, r.city, r.county, r.csrNumber, r.zip, r.method, r.bio,
         ...(r.specialties || []), ...(r.proceedings || []), ...(r.services || []),
-        ...(r.languages || []), ...(r.certifications || []), ...(r.coverage || [])]
+        ...(r.languages || []), ...(r.certifications || []), ...(r.coverage || []),
+        r.notary ? "notary" : ""]
         .filter(Boolean).join(" ").toLowerCase());
     }
     return m;
@@ -125,15 +128,15 @@ function ReporterDirectory() {
 
   // Signatures let us tell "draft differs from what's applied" (dirty) and "nothing is applied"
   // (browse) cheaply. Arrays are sorted so checkbox order doesn't create false dirtiness.
-  const sig = (o) => JSON.stringify([o.q, o.county, o.language, o.minYears, [...o.tags].sort(), [...o.specTags].sort(), [...o.certTags].sort(), o.rushOnly, o.claimedOnly]);
-  const draft = { q, county, language, minYears, tags, specTags, certTags, rushOnly, claimedOnly };
-  const EMPTY_SIG = sig({ q: "", county: "", language: "", minYears: "", tags: [], specTags: [], certTags: [], rushOnly: false, claimedOnly: false });
+  const sig = (o) => JSON.stringify([o.q, o.county, o.language, o.minYears, [...o.tags].sort(), [...o.specTags].sort(), [...o.certTags].sort(), o.rushOnly, o.notaryOnly, o.claimedOnly]);
+  const draft = { q, county, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly };
+  const EMPTY_SIG = sig({ q: "", county: "", language: "", minYears: "", tags: [], specTags: [], certTags: [], rushOnly: false, notaryOnly: false, claimedOnly: false });
   const draftSig = sig(draft);
   const searchedSig = searched ? sig(searched) : EMPTY_SIG;
   const browseMode = searchedSig === EMPTY_SIG;   // nothing applied -> featured + everyone
   const dirty = draftSig !== searchedSig;          // controls changed since last Search
   const anyDraft = draftSig !== EMPTY_SIG;
-  const runSearch = () => { setSearched(draftSig === EMPTY_SIG ? null : { q, county, language, minYears, tags: [...tags], specTags: [...specTags], certTags: [...certTags], rushOnly, claimedOnly }); setLimit(PAGE_SIZE); };
+  const runSearch = () => { setSearched(draftSig === EMPTY_SIG ? null : { q, county, language, minYears, tags: [...tags], specTags: [...specTags], certTags: [...certTags], rushOnly, notaryOnly, claimedOnly }); setLimit(PAGE_SIZE); };
 
   // Live count of what the current DRAFT would return - the useful signal live filtering gives
   // ("0 results, loosen something"), without reflowing the list. Recomputed on draft change.
@@ -155,7 +158,7 @@ function ReporterDirectory() {
     return list;
   }, [all, haystacks, searched]);
 
-  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setTags([]); setSpecTags([]); setCertTags([]); setRushOnly(false); setClaimedOnly(false); setSearched(null); setLimit(PAGE_SIZE); };
+  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setTags([]); setSpecTags([]); setCertTags([]); setRushOnly(false); setNotaryOnly(false); setClaimedOnly(false); setSearched(null); setLimit(PAGE_SIZE); };
   // Featured only in browse mode - an active search shows a pure ranked list.
   const featured = browseMode ? weeklyFeatured(filtered.filter((r) => r.claimed), 3) : [];
   const featuredIds = new Set(featured.map((r) => r.id));
@@ -218,6 +221,7 @@ function ReporterDirectory() {
           </FilterGroup>
           <FilterGroup label="Options">
             <FilterCheck label="Takes rush / expedited" checked={rushOnly} onChange={() => { setRushOnly((v) => !v); setLimit(PAGE_SIZE); }} />
+            <FilterCheck label="Notary public" checked={notaryOnly} onChange={() => { setNotaryOnly((v) => !v); setLimit(PAGE_SIZE); }} />
             <FilterCheck label="Claimed profiles only" checked={claimedOnly} onChange={() => { setClaimedOnly((v) => !v); setLimit(PAGE_SIZE); }} />
           </FilterGroup>
           <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 18 }} onClick={runSearch}><Icon name="search" size={16} /> Search{anyDraft ? " · " + draftCount.toLocaleString() + (draftCount === 1 ? " result" : " results") : ""}</button>
@@ -400,6 +404,7 @@ function ReporterProfile({ reporterId, invited }) {
                 <span><Icon name="pin" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.city}{r.county ? ", " + r.county + " County" : ""}</span>
                 <span><Icon name="clock" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.yearsExp} years</span>
                 {r.method ? <span><Icon name="doc" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.method}</span> : null}
+                {r.notary ? <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />Notary public</span> : null}
               </div>
               {/* Shown only when true - absence is not a negative signal. */}
               {recentlyActive(r) && (
