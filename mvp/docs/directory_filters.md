@@ -28,14 +28,24 @@ Decisions and open work for the directory sidebar. Last updated 2026-07-21.
 
 ## Open
 
-### The specialty taxonomy - researched 2026-07-21, filter pulled pending a decision
+### Specialty + Certifications facets - shipped 2026-07-21 from sourced lists
 
-The fabricated specialty filter was **removed** on 2026-07-21. A cited research pass then produced
-a grounded ~18-item shortlist from real sources (court-reporting agency expertise pages, the CA
-State Bar, Martindale) - see `specialty_taxonomy_research.md`. That list is sourced, not invented,
-but the research itself flags that no source is a CA CSR describing their own work, so **user
-testing is still the final gate**, the same call Aud made for rates. Decision pending: ship the
-researched core list as the dropdown now, or hold the whole feature until CSR testing.
+The fabricated specialty filter was removed, then rebuilt from the cited research
+(`specialty_taxonomy_research.md`). Now live as **two separate multi-select facets**:
+
+- **Specialty** (`SPECIALTY_TYPES`, `_app_02_data.jsx`) - 18 litigation practice areas from
+  court-reporting agency expertise pages + CA State Bar + Martindale. Multi-select, match any.
+- **Certifications** (`CREDENTIAL_TYPES`) - the NCRA credential axis (CRR/RMR/RDR/RPR/CLVS/CRC),
+  kept distinct from case-subject specialties per the research. Matched by code against a
+  reporter's certifications.
+
+Semantics: OR within a facet, AND across facets. The six sample profiles were remapped to
+canonical specialty values so the filter demonstrates.
+
+**Still an open user-testing question** (the list is sourced but no source is a CA CSR describing
+their own work): overlap consolidation (Insurance Defense / PI; Business / Commercial / Corporate
+/ Securities), granularity (~18 vs fewer buckets), and weak items (Corporate, Bankruptcy). Adjust
+the constant once CSR testing lands.
 
 ### Grow the specialty list from real demand (needs a backend)
 
