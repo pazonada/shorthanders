@@ -26,6 +26,21 @@ Decisions and open work for the directory sidebar. Last updated 2026-07-21.
   naming what it covers (names, locations, specialties, proceedings, services, bios) and an
   example. It reaches every write-in field on a profile.
 
+## Search interaction (decided 2026-07-21)
+
+- **Deferred search, not live filtering.** The sidebar controls and keyword box are a *draft*;
+  nothing filters the list until **Search** is pressed (button beside the keyword box, a second at
+  the bottom of the filter sidebar, and Enter in the keyword field). With this many facets,
+  compose-then-apply beats the list reflowing on every keystroke, and it maps cleanly to
+  server-side search later. A "Filters changed - press Search" hint appears when the draft differs
+  from what's applied. Implemented as a draft-vs-applied snapshot in `_app_05_directory.jsx`
+  (`searched`); the filtered list reads only the snapshot.
+  - *Not built (offered):* keeping the result **count** live while the list stays deferred - the
+    one useful signal live filtering gives ("0 results, loosen something"). Easy to add if wanted.
+- **Featured cards are browse-only.** They show when nothing is applied (discovery). An active
+  search shows a pure ranked list with no featured section; Clear all returns to browse. The count
+  label reads "reporters" in browse and "results" after a search.
+
 ## Open
 
 ### Specialty + Certifications facets - shipped 2026-07-21 from sourced lists
