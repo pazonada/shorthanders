@@ -85,11 +85,17 @@ These are bigger than string edits, and easy to forget because they're not in th
   "court reporter Houston" should land on a Texas page, which the current architecture can't
   provide. Per-state landing pages (real URLs) are the point at which the routing/SSR limitation
   stops being optional. Decide this as part of expansion.
-- **Marketing is operational, tracked elsewhere.** The CSR outreach email
-  (`csr_email_outreach.md`), the Facebook reporter channel, and the firm-outreach playbook are all
-  California / Bay-Area specific. A new state needs its own reporter channels, firm targets, and a
-  new outreach send. See `../marketing/` – not part of this product checklist, but don't launch a
-  state without it.
+- **Marketing is operational, tracked elsewhere – and follows the wide-supply / local-selling
+  model, NOT a Bay-Area limit.** The supply side runs **statewide**: the directory, reporter
+  claiming, the CSR outreach email (`csr_email_outreach.md`), and the Facebook reporter channel
+  cover the whole state, and reporters pull in their own firms statewide. Only the **manual
+  firm-selling** concentrates (CA: Bay Area first, then LA) – that is where `TIER_A_COUNTIES`
+  and the firm-outreach playbook apply, and the ★ in the county dropdown marks those
+  firm-selling priority metros, not the reach of the directory. So a new state expands the
+  **same way**: statewide reporter supply + reporter-pulled demand everywhere, with hands-on
+  firm-selling seeded in one or two of that state's metros (Texas would pick its own – Houston /
+  Dallas / Austin, TBD). See `../marketing/growth_strategy.md`. Don't launch a state without its
+  own statewide reporter outreach and its chosen firm-selling metros.
 
 ## 8. Things that need NO change (nice)
 
