@@ -65,6 +65,8 @@ function ReporterDirectory() {
   const [language, setLanguage] = useState("");
   const [minYears, setMinYears] = useState("");
   const [tags, setTags] = useState([]);       // selected proceeding / service tags
+  const [specTags, setSpecTags] = useState([]);   // selected specialties (multi, OR within group)
+  const [certTags, setCertTags] = useState([]);   // selected credentials (multi, OR within group)
   const [rushOnly, setRushOnly] = useState(false);
   const [claimedOnly, setClaimedOnly] = useState(false);
   const [limit, setLimit] = useState(PAGE_SIZE);
@@ -75,6 +77,9 @@ function ReporterDirectory() {
   // research produces a grounded list. See docs/directory_filters.md.
 
   const toggleTag = (t) => { setTags((cur) => cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]); setLimit(PAGE_SIZE); };
+  const toggleIn = (setter) => (t) => { setter((cur) => cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]); setLimit(PAGE_SIZE); };
+  const toggleSpec = toggleIn(setSpecTags);
+  const toggleCert = toggleIn(setCertTags);
 
   // One lowercased haystack per reporter so keyword search reaches expertise, not just name/
   // city/license. A firm searching "maritime" or "realtime" should find the reporters who list
@@ -105,6 +110,10 @@ function ReporterDirectory() {
         else if (typeof y !== "number" || y < Number(minYears)) return false;
       }
       if (tags.length && !tags.every((t) => (r.proceedings || []).includes(t) || (r.services || []).includes(t))) return false;
+      // Specialty and credential facets: match ANY selected within the facet (OR), while each
+      // facet must be satisfied (AND across facets) - standard faceted-search behavior.
+      if (specTags.length && !specTags.some((t) => (r.specialties || []).includes(t))) return false;
+      if (certTags.length && !certTags.some((code) => (r.certifications || []).some((c) => c.includes(code)))) return false;
       return true;
     });
     // PRD ranking: claimed first, then completeness, then recent claim.
@@ -118,10 +127,10 @@ function ReporterDirectory() {
       return (b.claimedAt || "").localeCompare(a.claimedAt || "");
     });
     return list;
-  }, [all, haystacks, q, county, language, minYears, tags, rushOnly, claimedOnly]);
+  }, [all, haystacks, q, county, language, minYears, tags, specTags, certTags, rushOnly, claimedOnly]);
 
-  const anyFilter = q || county || language || minYears || tags.length || rushOnly || claimedOnly;
-  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setTags([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
+  const anyFilter = q || county || language || minYears || tags.length || specTags.length || certTags.length || rushOnly || claimedOnly;
+  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setTags([]); setSpecTags([]); setCertTags([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
   // Rotates weekly, and rotates within whatever the firm has filtered to.
   const featured = weeklyFeatured(filtered.filter((r) => r.claimed), 3);
   const featuredIds = new Set(featured.map((r) => r.id));
@@ -152,6 +161,17 @@ function ReporterDirectory() {
           </FilterGroup>
           <FilterGroup label="Services">
             {SERVICE_TYPES.map((t) => <FilterCheck key={t} label={t} checked={tags.includes(t)} onChange={() => toggleTag(t)} />)}
+          </FilterGroup>
+          <FilterGroup label="Specialty">
+            {/* Litigation subject matter. Multi-select (match any). Sourced list, pending CSR
+                user testing - see docs/specialty_taxonomy_research.md. */}
+            <div style={{ maxHeight: 208, overflowY: "auto", paddingRight: 4 }}>
+              {SPECIALTY_TYPES.map((t) => <FilterCheck key={t} label={t} checked={specTags.includes(t)} onChange={() => toggleSpec(t)} />)}
+            </div>
+          </FilterGroup>
+          <FilterGroup label="Certifications">
+            {/* NCRA credentials - a separate skills axis from case-subject specialties. */}
+            {CREDENTIAL_TYPES.map((c) => <FilterCheck key={c.code} label={c.label} checked={certTags.includes(c.code)} onChange={() => toggleCert(c.code)} />)}
           </FilterGroup>
           <FilterGroup label="Experience">
             <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={minYears} onChange={(e) => { setMinYears(e.target.value); setLimit(PAGE_SIZE); }}>
