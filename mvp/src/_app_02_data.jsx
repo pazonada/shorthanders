@@ -86,7 +86,7 @@ function weeklyFeatured(pool, n) {
 // Profile completeness (0–100) for ranking + reporter dashboard meter.
 function completeness(p) {
   if (!p.claimed) return 0;
-  const checks = [p.bio, p.yearsExp, (p.proceedings || []).length, (p.services || []).length, (p.specialties || []).length, (p.coverage || []).length, (p.certifications || []).length, p.rate, (p.testimonials || []).length];
+  const checks = [p.bio, p.yearsExp, (p.proceedings || []).length, (p.services || []).length, (p.specialties || []).length, (p.coverage || []).length, (p.certifications || []).length, p.rate];
   const got = checks.filter(Boolean).length;
   return Math.round((got / checks.length) * 100);
 }

@@ -70,6 +70,11 @@ Two serverless stubs already exist and fall back to demo behavior:
   `payment_intent` / `invoice` events (→ update invoice status), subscription events (→ plan).
 - [ ] **Tax** – Stripe issues the reporter's year-end **1099-K** for what they collect (the
   "get your tax forms" value prop). Confirm thresholds; don't over-promise "we do your taxes".
+- [ ] **Capture a rating after a paid invoice** (not before). Once payments are live, invite the
+  firm to rate (and optionally comment on) the reporter after an invoice is paid - a verified
+  transaction, which is the only kind of review worth publishing. **Store it, display nothing
+  yet**: hold until a reporter has enough ratings to average, publish ratings before free-text
+  comments, and keep every rating tied to a real paid job. Full reasoning: `reviews_and_ratings.md`.
 
 ## 4. Messaging & email – Resend/Postmark + realtime
 

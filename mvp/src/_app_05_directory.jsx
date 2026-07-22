@@ -83,8 +83,7 @@ function ReporterDirectory() {
     for (const r of all) {
       m.set(r.id, [r.name, r.city, r.county, r.csrNumber, r.method, r.bio,
         ...(r.specialties || []), ...(r.proceedings || []), ...(r.services || []),
-        ...(r.languages || []), ...(r.certifications || []), ...(r.coverage || []),
-        ...(r.testimonials || []).flatMap((t) => [t.quote, t.author])]
+        ...(r.languages || []), ...(r.certifications || []), ...(r.coverage || [])]
         .filter(Boolean).join(" ").toLowerCase());
     }
     return m;
@@ -358,16 +357,9 @@ function ReporterProfile({ reporterId, invited }) {
           {(r.languages || []).length > 0 && <ProfileSection title="Languages"><TagList items={r.languages} tone="plum" /></ProfileSection>}
           <ProfileSection title="Geographic coverage"><TagList items={(r.coverage || []).map((c) => c + " County")} tone="brand" /></ProfileSection>
           <ProfileSection title="Certifications"><TagList items={r.certifications} tone="sage" /></ProfileSection>
-          {(r.testimonials || []).length > 0 && (
-            <ProfileSection title="What firms say">
-              {r.testimonials.map((t, i) => (
-                <blockquote key={i} style={{ borderLeft: "3px solid var(--brand-pale)", paddingLeft: 18, margin: "0 0 14px" }}>
-                  <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: 20, fontStyle: "italic", color: "var(--ink)", lineHeight: 1.4 }}>“{t.quote}”</p>
-                  <cite style={{ fontSize: 13, color: "var(--muted)", fontStyle: "normal", marginTop: 8, display: "block" }}>– {t.author}</cite>
-                </blockquote>
-              ))}
-            </ProfileSection>
-          )}
+          {/* Testimonials pulled 2026-07-21: unverified reporter-supplied quotes are a
+              credibility risk, and ratings/reviews were already out of the reduced scope.
+              Real ratings come later, captured after payment. See docs/reviews_and_ratings.md. */}
         </div>
 
         {/* sidebar */}
