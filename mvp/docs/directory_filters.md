@@ -35,8 +35,11 @@ Decisions and open work for the directory sidebar. Last updated 2026-07-21.
   server-side search later. A "Filters changed - press Search" hint appears when the draft differs
   from what's applied. Implemented as a draft-vs-applied snapshot in `_app_05_directory.jsx`
   (`searched`); the filtered list reads only the snapshot.
-  - *Not built (offered):* keeping the result **count** live while the list stays deferred - the
-    one useful signal live filtering gives ("0 results, loosen something"). Easy to add if wanted.
+  - **Live count kept** (2026-07-21): as the draft changes, the count of what Search *would*
+    return updates live on the Search button ("Search - N results") and in the hint; a draft that
+    matches nothing shows an ochre "no matches, loosen something" warning before you commit. The
+    list still only changes on Search. `matchesCriteria()` is shared by the live count and the
+    applied list so they can't diverge.
 - **Featured cards are browse-only.** They show when nothing is applied (discovery). An active
   search shows a pure ranked list with no featured section; Clear all returns to browse. The count
   label reads "reporters" in browse and "results" after a search.
