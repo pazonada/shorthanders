@@ -3392,13 +3392,17 @@ function ReporterDirectory() {
   const [county, setCounty] = useState("");
   const [language, setLanguage] = useState("");
   const [minYears, setMinYears] = useState("");
-  const [method, setMethod] = useState("");   // reporting method (from license)
+  const [specialty, setSpecialty] = useState("");
   const [tags, setTags] = useState([]);       // selected proceeding / service tags
   const [rushOnly, setRushOnly] = useState(false);
   const [claimedOnly, setClaimedOnly] = useState(false);
   const [limit, setLimit] = useState(PAGE_SIZE);
 
   const counties = useMemo(() => Array.from(new Set(all.map((r) => r.county).filter(Boolean))).sort(), [all]);
+  // Specialty options are derived from what reporters actually list, like counties - not a fixed
+  // taxonomy we invented. Sparse at launch (only claimed profiles have specialties); it fills in
+  // as reporters claim. See the note in the directory doc about growing this into a real list.
+  const specialties = useMemo(() => Array.from(new Set(all.flatMap((r) => r.specialties || []))).sort(), [all]);
 
   const toggleTag = (t) => { setTags((cur) => cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]); setLimit(PAGE_SIZE); };
 
@@ -3425,8 +3429,12 @@ function ReporterDirectory() {
       if (claimedOnly && !r.claimed) return false;
       if (rushOnly && !r.rush) return false;
       if (language && !(r.languages || []).includes(language)) return false;
-      if (minYears && (!(r.yearsExp) || r.yearsExp < Number(minYears))) return false;
-      if (method && !(r.method || "").includes(method)) return false;
+      if (minYears) {
+        const y = r.yearsExp;
+        if (minYears === "u5") { if (typeof y !== "number" || y >= 5) return false; }
+        else if (typeof y !== "number" || y < Number(minYears)) return false;
+      }
+      if (specialty && !(r.specialties || []).includes(specialty)) return false;
       if (tags.length && !tags.every((t) => (r.proceedings || []).includes(t) || (r.services || []).includes(t))) return false;
       return true;
     });
@@ -3441,10 +3449,10 @@ function ReporterDirectory() {
       return (b.claimedAt || "").localeCompare(a.claimedAt || "");
     });
     return list;
-  }, [all, haystacks, q, county, language, minYears, method, tags, rushOnly, claimedOnly]);
+  }, [all, haystacks, q, county, language, minYears, specialty, tags, rushOnly, claimedOnly]);
 
-  const anyFilter = q || county || language || minYears || method || tags.length || rushOnly || claimedOnly;
-  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setMethod(""); setTags([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
+  const anyFilter = q || county || language || minYears || specialty || tags.length || rushOnly || claimedOnly;
+  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setSpecialty(""); setTags([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
   // Rotates weekly, and rotates within whatever the firm has filtered to.
   const featured = weeklyFeatured(filtered.filter((r) => r.claimed), 3);
   const featuredIds = new Set(featured.map((r) => r.id));
@@ -3479,23 +3487,25 @@ function ReporterDirectory() {
           <FilterGroup label="Experience">
             <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={minYears} onChange={(e) => { setMinYears(e.target.value); setLimit(PAGE_SIZE); }}>
               <option value="">Any experience</option>
+              <option value="u5">Under 5 years</option>
               <option value="5">5+ years</option>
               <option value="10">10+ years</option>
               <option value="15">15+ years</option>
               <option value="20">20+ years</option>
             </select>
           </FilterGroup>
-          <FilterGroup label="Language">
-            <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={language} onChange={(e) => { setLanguage(e.target.value); setLimit(PAGE_SIZE); }}>
-              <option value="">Any language</option>
-              {LANGUAGES.map((l) => <option key={l} value={l}>{l}</option>)}
+          <FilterGroup label="Specialty">
+            <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={specialty} onChange={(e) => { setSpecialty(e.target.value); setLimit(PAGE_SIZE); }}>
+              <option value="">Any specialty</option>
+              {specialties.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
           </FilterGroup>
-          <FilterGroup label="Method">
-            <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={method} onChange={(e) => { setMethod(e.target.value); setLimit(PAGE_SIZE); }}>
-              <option value="">Any method</option>
-              <option value="Machine">Machine (steno)</option>
-              <option value="Voice">Voice writing</option>
+          <FilterGroup label="Additional languages">
+            {/* English is assumed for every CA CSR, so it isn't an option - this filters for
+                reporters who ALSO work in another language. */}
+            <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={language} onChange={(e) => { setLanguage(e.target.value); setLimit(PAGE_SIZE); }}>
+              <option value="">Any (English assumed)</option>
+              {LANGUAGES.map((l) => <option key={l} value={l}>{l}</option>)}
             </select>
           </FilterGroup>
           <FilterGroup label="Options">
@@ -3506,9 +3516,13 @@ function ReporterDirectory() {
 
         {/* results */}
         <div className="dir-main">
-          <div style={{ position: "relative", marginBottom: 16 }}>
-            <span style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", color: "var(--dim)" }}><Icon name="search" size={18} /></span>
-            <input className="ds-input" style={{ paddingLeft: 46, fontSize: 16, height: 52 }} placeholder="Search by name, city, specialty, or license number…" value={q} onChange={(e) => { setQ(e.target.value); setLimit(PAGE_SIZE); }} />
+          <div style={{ marginBottom: 16 }}>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 700, color: "var(--ink)", marginBottom: 7 }}>Search by keyword</label>
+            <div style={{ position: "relative" }}>
+              <span style={{ position: "absolute", left: 18, top: "50%", transform: "translateY(-50%)", color: "var(--brand)" }}><Icon name="search" size={20} /></span>
+              <input className="ds-input" style={{ paddingLeft: 50, fontSize: 16, height: 58, borderWidth: 2 }} placeholder="Try a name, city, specialty, or expertise – e.g. “maritime”" value={q} onChange={(e) => { setQ(e.target.value); setLimit(PAGE_SIZE); }} />
+            </div>
+            <p style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 6 }}>Searches names, locations, specialties, proceedings, services, and profile bios.</p>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "4px 0 16px", flexWrap: "wrap", gap: 8 }}>
             <span style={{ fontSize: 14, color: "var(--muted)" }}>{filtered.length.toLocaleString()} {filtered.length === 1 ? "reporter" : "reporters"}{anyFilter ? " match" : ""}</span>
