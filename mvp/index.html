@@ -2554,6 +2554,11 @@
   .ds-grid { display: grid; gap: 20px; }
   .ds-dir-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
   @media (max-width: 640px) { .ds-dir-grid { grid-template-columns: 1fr; } }
+  /* Featured showcase: exactly 4 across on desktop -> 2 -> 1. Deterministic (not auto-fill) so
+     the row always holds the 4 featured cards. */
+  .ds-feature-grid { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 1100px) { .ds-feature-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .ds-feature-grid { grid-template-columns: 1fr; } }
 
   .rep-card {
     background: var(--bg); border: 1px solid var(--rule); border-radius: 18px;
@@ -3062,7 +3067,7 @@ function Toast({ msg, onClose }) {
 // ═══ LANDING ═══════════════════════════════════════════════════════
 function LandingPage() {
   const dir = useMemo(() => buildDirectory(), []);
-  const preview = useMemo(() => weeklyFeatured(dir.filter((r) => r.claimed), 3), [dir]);
+  const preview = useMemo(() => weeklyFeatured(dir.filter((r) => r.claimed), 4), [dir]);
   const total = dir.length;
   return (
     <>
@@ -3128,7 +3133,7 @@ function LandingPage() {
             </div>
             <button className="btn btn-secondary" onClick={() => navigate("/directory")}>See all <Icon name="arrow" size={16} /></button>
           </div>
-          <div className="ds-grid ds-dir-grid">{preview.map((r) => <RepCard key={r.id} r={r} />)}</div>
+          <div className="ds-grid ds-feature-grid">{preview.map((r) => <RepCard key={r.id} r={r} />)}</div>
         </div>
       </section>
 

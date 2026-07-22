@@ -1,7 +1,7 @@
 // ═══ LANDING ═══════════════════════════════════════════════════════
 function LandingPage() {
   const dir = useMemo(() => buildDirectory(), []);
-  const preview = useMemo(() => weeklyFeatured(dir.filter((r) => r.claimed), 3), [dir]);
+  const preview = useMemo(() => weeklyFeatured(dir.filter((r) => r.claimed), 4), [dir]);
   const total = dir.length;
   return (
     <>
@@ -67,7 +67,7 @@ function LandingPage() {
             </div>
             <button className="btn btn-secondary" onClick={() => navigate("/directory")}>See all <Icon name="arrow" size={16} /></button>
           </div>
-          <div className="ds-grid ds-dir-grid">{preview.map((r) => <RepCard key={r.id} r={r} />)}</div>
+          <div className="ds-grid ds-feature-grid">{preview.map((r) => <RepCard key={r.id} r={r} />)}</div>
         </div>
       </section>
 
