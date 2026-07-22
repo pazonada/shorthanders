@@ -47,7 +47,7 @@ function FirmSubscription() {
     "Pay invoices by card or ACH – no booking fees, ever",
   ];
   const pro = [
-    "Full profiles for every reporter (bio, specialties, rates, coverage, certifications)",
+    "Full profiles for every reporter (bio, practice areas, rates, coverage, certifications)",
     "Advanced search and filters to discover new reporters",
     "Message any reporter directly",
     "Shared team lists and unlimited team seats",

@@ -284,7 +284,7 @@ function ClaimFlow({ reporterId }) {
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{SERVICE_TYPES.map((w) => <button key={w} type="button" className={"chip-filter" + (form.services.includes(w) ? " on" : "")} onClick={() => toggle("services", w)}>{w}</button>)}</div>
               </div>
               <div>
-                <label className="ds-label">Specialties (case types you've covered)</label>
+                <label className="ds-label">Practice areas (case types you've covered)</label>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{SPECIALTY_TYPES.map((w) => <button key={w} type="button" className={"chip-filter" + (form.specialties.includes(w) ? " on" : "")} onClick={() => toggle("specialties", w)}>{w}</button>)}</div>
               </div>
               <div>

@@ -38,7 +38,7 @@ function PrivacyPage() {
   return <LegalPage title="Privacy" intro="Prototype summary. Final privacy policy to follow."
     sections={[
       { h: "Public license data", p: ["The base directory is built from publicly available California CSR licensing records – name, license number, and city. This information is public whether or not a reporter claims their profile."] },
-      { h: "Claimed profiles", p: ["Information a reporter adds when claiming a profile (bio, specialties, rates, etc.) is shown publicly by their choice. A reporter can edit or remove it at any time."] },
+      { h: "Claimed profiles", p: ["Information a reporter adds when claiming a profile (bio, practice areas, rates, etc.) is shown publicly by their choice. A reporter can edit or remove it at any time."] },
       { h: "Payments & identity", p: ["Identity and banking information is collected and held by Stripe, not by Dewey Sholes. We store only verification status and invoice metadata."] },
       { h: "Messages", p: ["Messages are carried by the platform so both parties have a record. We don't sell your data or use your conversations for advertising."] },
     ]} />;
