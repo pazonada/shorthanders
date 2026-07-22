@@ -1,4 +1,24 @@
-# CSR specialty taxonomy – research findings
+# CSR area-of-law taxonomy
+
+> **DECISION (2026-07-21): superseded.** We adopted the **California State Bar lawyer-referral
+> "area of law" list** (61 areas), which Rosie (CA trial lawyer) endorsed as the authoritative,
+> comprehensive taxonomy - it's what the Bar itself calls the field ("Area of law", not
+> "specialty" or "practice area"). It lives in `SPECIALTY_TYPES` in `_app_02_data.jsx`. The
+> ~18-item researched shortlist below is kept only as background on how the court-reporting
+> industry categorizes work; it is NOT the shipped list.
+>
+> Two things to watch, both self-correcting or for later:
+> - The Bar list is a *lawyer*-referral taxonomy, so it includes transactional areas a court
+>   reporter would never cover (Estate Planning, Contracts, Equestrian, Art, Sports...). Because
+>   reporters self-report, those simply stay empty - noisy in the dropdown, harmless in results.
+>   Trim later with CSR user testing if the dropdown feels too long.
+> - It also lacks a couple of reporter-relevant litigation tags (e.g. "Product Liability"); the
+>   closest Bar equivalents ("Tort", "Personal Injury") stand in.
+
+---
+
+## Background: earlier research (not the shipped list)
+
 
 Cited research into what "specialty" categories a California court reporter could list on a
 directory profile. Run 2026-07-21 (multi-source, adversarially verified: 20 sources, 62 claims,
