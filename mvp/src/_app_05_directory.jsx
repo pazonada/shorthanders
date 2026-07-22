@@ -58,6 +58,27 @@ function FilterCheck({ label, checked, onChange }) {
   );
 }
 const PAGE_SIZE = 24;
+// One reporter vs one criteria set. Shared by the applied list and the live draft count so the
+// "N results" preview and the actual results can never diverge in logic.
+function matchesCriteria(r, s, haystacks) {
+  const needle = (s.q || "").trim().toLowerCase();
+  if (needle && !(haystacks.get(r.id) || "").includes(needle)) return false;
+  if (s.county && r.county !== s.county) return false;
+  if (s.claimedOnly && !r.claimed) return false;
+  if (s.rushOnly && !r.rush) return false;
+  if (s.language && !(r.languages || []).includes(s.language)) return false;
+  if (s.minYears) {
+    const y = r.yearsExp;
+    if (s.minYears === "u5") { if (typeof y !== "number" || y >= 5) return false; }
+    else if (typeof y !== "number" || y < Number(s.minYears)) return false;
+  }
+  if (s.tags.length && !s.tags.every((t) => (r.proceedings || []).includes(t) || (r.services || []).includes(t))) return false;
+  // Specialty and credential facets: match ANY selected within the facet (OR), each facet must
+  // be satisfied (AND across facets) - standard faceted-search behavior.
+  if (s.specTags.length && !s.specTags.some((t) => (r.specialties || []).includes(t))) return false;
+  if (s.certTags.length && !s.certTags.some((code) => (r.certifications || []).some((c) => c.includes(code)))) return false;
+  return true;
+}
 function ReporterDirectory() {
   const all = useMemo(() => buildDirectory(), []);
   const [q, setQ] = useState("");
@@ -114,28 +135,13 @@ function ReporterDirectory() {
   const anyDraft = draftSig !== EMPTY_SIG;
   const runSearch = () => { setSearched(draftSig === EMPTY_SIG ? null : { q, county, language, minYears, tags: [...tags], specTags: [...specTags], certTags: [...certTags], rushOnly, claimedOnly }); setLimit(PAGE_SIZE); };
 
+  // Live count of what the current DRAFT would return - the useful signal live filtering gives
+  // ("0 results, loosen something"), without reflowing the list. Recomputed on draft change.
+  const draftCount = useMemo(() => all.reduce((n, r) => n + (matchesCriteria(r, draft, haystacks) ? 1 : 0), 0), [all, haystacks, draftSig]);
+
   const filtered = useMemo(() => {
     const s = searched;
-    let list = all.filter((r) => {
-      if (!s) return true;   // browse mode: everyone
-      const needle = (s.q || "").trim().toLowerCase();
-      if (needle && !(haystacks.get(r.id) || "").includes(needle)) return false;
-      if (s.county && r.county !== s.county) return false;
-      if (s.claimedOnly && !r.claimed) return false;
-      if (s.rushOnly && !r.rush) return false;
-      if (s.language && !(r.languages || []).includes(s.language)) return false;
-      if (s.minYears) {
-        const y = r.yearsExp;
-        if (s.minYears === "u5") { if (typeof y !== "number" || y >= 5) return false; }
-        else if (typeof y !== "number" || y < Number(s.minYears)) return false;
-      }
-      if (s.tags.length && !s.tags.every((t) => (r.proceedings || []).includes(t) || (r.services || []).includes(t))) return false;
-      // Specialty and credential facets: match ANY selected within the facet (OR), while each
-      // facet must be satisfied (AND across facets) - standard faceted-search behavior.
-      if (s.specTags.length && !s.specTags.some((t) => (r.specialties || []).includes(t))) return false;
-      if (s.certTags.length && !s.certTags.some((code) => (r.certifications || []).some((c) => c.includes(code)))) return false;
-      return true;
-    });
+    let list = s ? all.filter((r) => matchesCriteria(r, s, haystacks)) : all.slice();
     // PRD ranking: claimed first, then completeness, then recent claim.
     // Activity is deliberately NOT a ranking input (decided 2026-07-21). It shows on cards and
     // profiles only. Sorting by it would compound the cold start: the few active reporters would
@@ -214,7 +220,7 @@ function ReporterDirectory() {
             <FilterCheck label="Takes rush / expedited" checked={rushOnly} onChange={() => { setRushOnly((v) => !v); setLimit(PAGE_SIZE); }} />
             <FilterCheck label="Claimed profiles only" checked={claimedOnly} onChange={() => { setClaimedOnly((v) => !v); setLimit(PAGE_SIZE); }} />
           </FilterGroup>
-          <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 18 }} onClick={runSearch}><Icon name="search" size={16} /> Search</button>
+          <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 18 }} onClick={runSearch}><Icon name="search" size={16} /> Search{anyDraft ? " · " + draftCount.toLocaleString() + (draftCount === 1 ? " result" : " results") : ""}</button>
         </aside>
 
         {/* results */}
@@ -231,8 +237,11 @@ function ReporterDirectory() {
             <p style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 6 }}>Set filters at left and search terms here, then press Search. Covers names, locations, specialties, proceedings, services, and profile bios.</p>
           </div>
           {dirty && (
-            <div className="banner" style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--brand-soft)", color: "var(--brand-dark)", borderRadius: 10, padding: "10px 14px", fontSize: 13.5, fontWeight: 600, marginBottom: 14 }}>
-              <Icon name="search" size={15} /> Filters changed – press Search to update results.
+            <div className="banner" style={{ display: "flex", alignItems: "center", gap: 8, background: draftCount === 0 ? "var(--ochre-soft)" : "var(--brand-soft)", color: draftCount === 0 ? "var(--ochre-deep)" : "var(--brand-dark)", borderRadius: 10, padding: "10px 14px", fontSize: 13.5, fontWeight: 600, marginBottom: 14 }}>
+              <Icon name="search" size={15} />
+              {draftCount === 0
+                ? "No reporters match these filters – loosen something before searching."
+                : "Press Search to see " + draftCount.toLocaleString() + (draftCount === 1 ? " result." : " results.")}
             </div>
           )}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "4px 0 16px", flexWrap: "wrap", gap: 8 }}>
