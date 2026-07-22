@@ -18,45 +18,37 @@ const SPECIALTY_TYPES = ["Administrative", "Admiralty", "Alternative Dispute Res
 // Source: ncra.org/certification. Matched against the reporter's certifications by code.
 const CREDENTIAL_TYPES = [{ code: "CRR", label: "CRR (realtime)" }, { code: "RMR", label: "RMR (merit)" }, { code: "RDR", label: "RDR (diplomate)" }, { code: "RPR", label: "RPR (registered)" }, { code: "CLVS", label: "CLVS (legal video)" }, { code: "CRC", label: "CRC (captioning)" }];
 
-// ─── Claimed-profile overlay (keyed by real CSR license number) ─────
-// The rest of the ~4,700 imported records render as unclaimed public stubs.
-const CLAIMED = {
-  "14585": { bio: "Fifteen years reporting complex civil and IP litigation across the South Bay. Realtime feeds for trial teams, same-day rough drafts, and secure delivery. I run my whole practice solo – no agency markup.", yearsExp: 15, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime", "Remote / videoconference", "Rough draft / ASCII"], specialties: ["Intellectual Property", "Patent", "Commercial Litigation"], languages: ["Spanish"], coverage: ["Santa Clara", "San Mateo", "Alameda"], certifications: ["CSR #14585", "CRR", "RPR"], notary: true, rate: null, rush: true, testimonials: [{ quote: "Adam's realtime feed kept our trial team in sync every day. Flawless.", author: "Partner, Morgan & Reyes LLP" }], verified: true, claimedAt: "2026-07-11", views: 214 },
-  "7716": { bio: "Concord-based, 20+ years. Insurance defense and PI depositions throughout the I-680 corridor. Rush drafts available same evening.", yearsExp: 22, proceedings: ["Depositions", "Trials", "Arbitrations", "Workers' comp"], services: ["Realtime", "Remote / videoconference", "Expedited turnaround"], specialties: ["Insurance", "Personal Injury", "Construction"], languages: [], coverage: ["Contra Costa", "Alameda", "Solano"], certifications: ["CSR #7716", "CRR", "RMR"], notary: true, rate: null, rush: true, testimonials: [{ quote: "Allison is my first call in Contra Costa, every time.", author: "Sr. Associate, Delaney Defense" }], verified: true, claimedAt: "2026-06-28", views: 301 },
-  "8239": { bio: "Fremont reporter, bilingual (English/Spanish). Two decades of depositions and a growing transcription practice for court-audio overflow.", yearsExp: 19, proceedings: ["Depositions", "Hearings", "Workers' comp"], services: ["Court-audio transcription"], specialties: ["Personal Injury", "Family"], languages: ["Spanish", "Tagalog"], coverage: ["Alameda", "Santa Clara"], certifications: ["CSR #8239"], rate: null, rush: true, testimonials: [{ quote: "Catherine's Spanish-language depos are impeccable.", author: "Solo practitioner, Fremont" }], verified: true, claimedAt: "2026-07-02", views: 143 },
-  "10518": { bio: "Sunnyvale realtime reporter for the tech-litigation bar. Trade-secret and patent cases, tight security protocols, encrypted delivery.", yearsExp: 14, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime", "Legal video", "Rough draft / ASCII"], specialties: ["Patent", "Trade Secrets"], languages: ["Mandarin"], coverage: ["Santa Clara", "San Mateo", "Alameda"], certifications: ["CSR #10518", "CRR", "RMR"], rate: null, rush: true, testimonials: [{ quote: "The only reporter we trust with sealed trade-secret depos.", author: "IP Group, Kessler Tang LLP" }], verified: true, claimedAt: "2026-07-13", views: 256 },
-  "4360": { bio: "Downtown LA. Thirty years on the record. Business and entertainment litigation, and expert-witness depositions with dense exhibits.", yearsExp: 30, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime"], specialties: ["Business", "Entertainment"], languages: [], coverage: ["Los Angeles", "Orange"], certifications: ["CSR #4360", "CRR", "RMR", "RPR"], rate: null, rush: true, testimonials: [{ quote: "Adrienne has reported half my career's biggest cases.", author: "Name partner, Century City" }], verified: true, claimedAt: "2026-06-30", views: 412 },
-  "14273": { bio: "San Diego reporter focused on cross-border and maritime civil matters. Bilingual, tech-forward, encrypted delivery standard.", yearsExp: 11, proceedings: ["Depositions", "Arbitrations"], services: ["Realtime", "Remote / videoconference", "Court-audio transcription"], specialties: ["Maritime", "Commercial Litigation", "Insurance"], languages: ["Spanish"], coverage: ["San Diego", "Imperial"], certifications: ["CSR #14273", "CRR"], rate: null, rush: false, testimonials: [], verified: true, claimedAt: "2026-07-08", views: 118 },
-};
+// ─── Sample claimed profiles ────────────────────────────────────────
+// FICTIONAL demo profiles - NOT tied to any real licensee. They exist only to show how a claimed
+// profile looks. Names + license numbers (900001+) are invented and verified absent from the CRB
+// roster (real numbers run 917-15248). Marked sample:true, so cards show a "Sample" badge and the
+// profile carries a "fictional demo" banner. SWAP FOR REAL CLAIMED PROFILES once reporters claim
+// (see launch_prep.md). The real 5,705 records render as unclaimed public stubs (that IS real
+// public data, which is fine).
+const SAMPLE_PROFILES = [
+  { csrNumber: "900001", name: "Marguerite Ellsworth", city: "San Jose", county: "Santa Clara", method: "Voice", sample: true, bio: "Fifteen years reporting complex civil and IP litigation across the South Bay. Realtime feeds for trial teams, same-day rough drafts, and secure delivery. I run my whole practice solo – no agency markup.", yearsExp: 15, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime", "Remote / videoconference", "Rough draft / ASCII"], specialties: ["Intellectual Property", "Patent", "Commercial Litigation"], languages: ["Spanish"], coverage: ["Santa Clara", "San Mateo", "Alameda"], certifications: ["CSR #900001", "CRR", "RPR"], notary: true, rate: null, rush: true, verified: true, claimedAt: "2026-07-11", views: 214 },
+  { csrNumber: "900002", name: "Desmond Farrataglia", city: "Concord", county: "Contra Costa", method: "Machine (steno)", sample: true, bio: "Concord-based, 20+ years. Insurance defense and PI depositions throughout the I-680 corridor. Rush drafts available same evening.", yearsExp: 22, proceedings: ["Depositions", "Trials", "Arbitrations", "Workers' comp"], services: ["Realtime", "Remote / videoconference", "Expedited turnaround"], specialties: ["Insurance", "Personal Injury", "Construction"], languages: [], coverage: ["Contra Costa", "Alameda", "Solano"], certifications: ["CSR #900002", "CRR", "RMR"], notary: true, rate: null, rush: true, verified: true, claimedAt: "2026-06-28", views: 301 },
+  { csrNumber: "900003", name: "Priyanka Venkatesh", city: "Fremont", county: "Alameda", method: "Machine (steno)", sample: true, bio: "Fremont reporter, bilingual (English/Spanish). Two decades of depositions and a growing transcription practice for court-audio overflow.", yearsExp: 19, proceedings: ["Depositions", "Hearings", "Workers' comp"], services: ["Court-audio transcription"], specialties: ["Personal Injury", "Family"], languages: ["Spanish", "Tagalog"], coverage: ["Alameda", "Santa Clara"], certifications: ["CSR #900003"], rate: null, rush: true, verified: true, claimedAt: "2026-07-02", views: 143 },
+  { csrNumber: "900004", name: "Cornelius Hathaway", city: "Sunnyvale", county: "Santa Clara", method: "Machine (steno)", sample: true, bio: "Sunnyvale realtime reporter for the tech-litigation bar. Trade-secret and patent cases, tight security protocols, encrypted delivery.", yearsExp: 14, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime", "Legal video", "Rough draft / ASCII"], specialties: ["Patent", "Trade Secrets"], languages: ["Mandarin"], coverage: ["Santa Clara", "San Mateo", "Alameda"], certifications: ["CSR #900004", "CRR", "RMR"], rate: null, rush: true, verified: true, claimedAt: "2026-07-13", views: 256 },
+  { csrNumber: "900005", name: "Lucinda Brightwater", city: "Los Angeles", county: "Los Angeles", method: "Machine (steno)", sample: true, bio: "Downtown LA. Thirty years on the record. Business and entertainment litigation, and expert-witness depositions with dense exhibits.", yearsExp: 30, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime"], specialties: ["Business", "Entertainment"], languages: [], coverage: ["Los Angeles", "Orange"], certifications: ["CSR #900005", "CRR", "RMR", "RPR"], rate: null, rush: true, verified: true, claimedAt: "2026-06-30", views: 412 },
+  { csrNumber: "900006", name: "Thaddeus Okonkwo-Reyes", city: "San Diego", county: "San Diego", method: "Machine (steno)", sample: true, bio: "San Diego reporter focused on cross-border and maritime civil matters. Bilingual, tech-forward, encrypted delivery standard.", yearsExp: 11, proceedings: ["Depositions", "Arbitrations"], services: ["Realtime", "Remote / videoconference", "Court-audio transcription"], specialties: ["Maritime", "Commercial Litigation", "Insurance"], languages: ["Spanish"], coverage: ["San Diego", "Imperial"], certifications: ["CSR #900006", "CRR"], rate: null, rush: false, verified: true, claimedAt: "2026-07-08", views: 118 },
+];
 const RECENT_CLAIM_CUTOFF = "2026-07-10"; // claimed on/after this date shows "New" badge
 
-// Build the working directory list once from the imported license roll.
+// Build the working directory list: the real CRB roll (all unclaimed public stubs) plus the
+// fictional sample claimed profiles injected at the top. No real record is marked claimed.
 function buildDirectory() {
   const roll = (typeof CSR_PROFILES !== "undefined") ? CSR_PROFILES : [];
-  return roll.map((r) => {
-    const overlay = CLAIMED[r.csrNumber];
-    // County now comes straight from the CRB data; fall back to the city map
-    // only for the handful of records with a blank/unmapped county.
-    const county = r.county || countyFor(r.city) || null;
-    return {
-      id: r.csrNumber,
-      csrNumber: r.csrNumber,
-      name: r.name,
-      city: r.city,
-      county: county,
-      method: r.method || "",
-      zip: r.zip || "",
-      email: r.email || "",
-      expiration: r.expiration,
-      claimed: !!overlay,
-      ...(overlay || {}),
-    };
-  }).map((p) => {
-    // Prototype stand-in for "last signed in", which the real product reads from auth.
-    // Derived from the license number so it stays the same between renders. Claimed only:
-    // an unclaimed record has nobody behind it, so it can never be active.
-    if (p.claimed && p.activeDaysAgo == null) p.activeDaysAgo = (Number(p.csrNumber) * 7) % 75;
-    return p;
+  const real = roll.map((r) => ({
+    id: r.csrNumber, csrNumber: r.csrNumber, name: r.name, city: r.city,
+    county: r.county || countyFor(r.city) || null, method: r.method || "",
+    zip: r.zip || "", email: r.email || "", expiration: r.expiration, claimed: false,
+  }));
+  const samples = SAMPLE_PROFILES.map((sp) => ({ id: sp.csrNumber, claimed: true, ...sp }));
+  return [...samples, ...real].map((prof) => {
+    // Prototype stand-in for "last signed in"; the real product reads it from auth.
+    if (prof.claimed && prof.activeDaysAgo == null) prof.activeDaysAgo = (Number(prof.csrNumber) * 7) % 75;
+    return prof;
   });
 }
 
@@ -116,7 +108,7 @@ const SEED_INVOICES = [
 
 const SEED_CONVOS = [
   { id: "c1", with: "Morgan & Reyes LLP", role: "firm", subtitle: "Karen Ruiz, Legal Ops", unread: 1, msgs: [
-    { from: "them", t: "Hi Adam – are you available for a deposition in San Jose on Aug 4? Complex IP matter, expert witness.", at: "Jul 15, 2:14 PM" },
+    { from: "them", t: "Hi Marguerite – are you available for a deposition in San Jose on Aug 4? Complex IP matter, expert witness.", at: "Jul 15, 2:14 PM" },
     { from: "them", t: "We'd want realtime and a same-day rough draft if possible.", at: "Jul 15, 2:15 PM" },
     { from: "me", t: "Hi Karen – yes, Aug 4 is open. Realtime + same-day rough is no problem. I'll send a quick scope so we're aligned.", at: "Jul 15, 3:02 PM" },
     { from: "them", t: "Perfect. Exhibits are here if you want to prep terminology.", at: "Jul 15, 3:20 PM", link: { label: "Exhibit set (firm's secure share)", url: "https://share.morgan-reyes.example/expert-exhibits" } },

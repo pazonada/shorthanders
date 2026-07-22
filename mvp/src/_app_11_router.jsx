@@ -80,8 +80,8 @@ function ContactSubmit() {
 // ═══ Store provider ════════════════════════════════════════════════
 function StoreProvider({ children }) {
   const [role, setRole] = useState(null);        // null | 'reporter' | 'firm'
-  const [myCsr, setMyCsr] = useState("14585");   // demo reporter = Adam Elwailly
-  const [saved, setSaved] = useState(["10518", "8239", "4360"]);
+  const [myCsr, setMyCsr] = useState("900001");   // demo reporter = Marguerite Ellsworth (sample)
+  const [saved, setSaved] = useState(["900004", "900003", "900005"]);
   const [convos, setConvos] = useState(SEED_CONVOS);
   const [invoices, setInvoices] = useState(SEED_INVOICES);
   const [customTemplates, setCustomTemplates] = useState([]);
@@ -89,7 +89,7 @@ function StoreProvider({ children }) {
   const [firmPlan, setFirmPlan] = useState("free");   // 'free' | 'pro'
   const [firmName, setFirmName] = useState("Morgan & Reyes LLP"); // demo default; set from signup
   // Reporters a free firm may fully view/message: the ones who invited or are connected to them.
-  const [unlockedReporters, setUnlockedReporters] = useState(["10518", "8239", "4360"]);
+  const [unlockedReporters, setUnlockedReporters] = useState(["900004", "900003", "900005"]);
 
   const store = {
     role, myCsr, saved, convos, invoices, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters,

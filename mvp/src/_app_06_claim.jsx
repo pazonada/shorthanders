@@ -74,7 +74,7 @@ function ClaimStart() {
           </div>
           <label className="ds-label">{mode === "license" ? "Your CSR license number" : "Your name"}</label>
           <div style={{ display: "flex", gap: 10 }}>
-            <input className="ds-input" placeholder={mode === "license" ? "e.g. 14585" : "e.g. Adam Elwailly"} value={q}
+            <input className="ds-input" placeholder={mode === "license" ? "e.g. 12345" : "e.g. Jordan Rivera"} value={q}
               onChange={(e) => { setQ(e.target.value); setSubmitted(false); }}
               onKeyDown={(e) => { if (e.key === "Enter") run(); }} />
             <button className="btn btn-primary" style={{ whiteSpace: "nowrap" }} onClick={run}><Icon name="search" size={16} /> Find me</button>
