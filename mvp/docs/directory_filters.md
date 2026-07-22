@@ -10,9 +10,14 @@ Decisions and open work for the directory sidebar. Last updated 2026-07-21.
 - **Additional languages** (was "Language"). English is assumed for every CA CSR, so it is not
   an option - the filter is for reporters who *also* work in another language. Single-select for
   now; a firm filtering usually needs one specific language.
-- **Specialty** is a filter, options **derived from what reporters actually list** (same pattern
-  as counties), not a fixed taxonomy we made up. Sparse at launch because only claimed profiles
-  carry specialties; it fills in as reporters claim.
+- **Specialty** is a filter whose options are **derived from whatever reporters list**, not a
+  hardcoded taxonomy. Important honesty note: this is NOT like the county filter. Counties come
+  from the real 5,705-record state import, so that filter is genuine. Specialties do not exist in
+  the state data at all - the only specialty values in the app today are the ~16 in the **six
+  fabricated sample profiles** (Maritime, Patent, Trade secret...). So the specialty dropdown
+  currently shows invented categories. The mechanism is self-correcting (it will show real
+  specialties once real reporters claim), but until then it is demo data, and we must not treat
+  those 16 values as a validated taxonomy. See "the specialty taxonomy is unknown" below.
 - **Method removed as a filter.** Steno vs voice is real state data, but firms rarely dictate how
   a reporter captures the record - they care about the output. Method still shows on the profile
   and is keyword-searchable; it's just not worth a filter slot. (If firm research later shows
@@ -23,10 +28,17 @@ Decisions and open work for the directory sidebar. Last updated 2026-07-21.
 
 ## Open
 
+### The specialty taxonomy is unknown - take it to user testing (decided 2026-07-21)
+
+We do not actually know what specialties reporters would list or how they'd name them. The 16
+values in the app are fabricated. So the specialty taxonomy is an **open question for CSR user
+testing**, the same call Aud made for rates: ask reporters, don't invent it. Do not ship a fixed
+specialty list built from the fake seed. The filter mechanism can stay (it self-derives and
+demonstrates the feature), but the taxonomy behind it is unvalidated.
+
 ### Grow the specialty list from real demand (needs a backend)
 
-Right now specialty options are whatever reporters have typed. Two things to add once there's a
-backend:
+Once the taxonomy question is settled, two things to add when there's a backend:
 
 - **Log what firms search for.** Capturing the keyword queries that return few or zero results
   tells us which specialties firms want that no reporter has listed yet - the honest way to grow
@@ -39,11 +51,19 @@ backend:
   still add their own - would make the filter denser without forcing a rigid taxonomy. Seed it
   from the firm practice-area list + the most-searched terms; do not invent it wholesale.
 
-### Rates - the big missing piece (HARD RULE: never invent the numbers)
+### Rates - deferred to user testing (decided 2026-07-21)
 
-A firm's most-wanted filter, and deliberately not built yet because it must not ship with made-up
-prices. Every seeded profile has `rate: null` on purpose. What this needs, as its own focused
-build:
+**Decision: do not build rates yet; ask CSRs in user testing first.** The tension Aud named:
+reporters are often cagey about publishing rates (visible in the CSR Facebook group), while
+price-sensitive firms genuinely want them. That is a real two-sided design problem, not a build
+task - forcing public rates could suppress reporter signups, the exact supply we need. So the
+questions for user testing are whether reporters will publish rates at all, in what form (a
+range, "on request", per-line-item), and what would make them comfortable doing so.
+
+Every seeded profile already has `rate: null`, and the profile already renders "Provided on
+request" when a rate is absent, so nothing fake is shown in the meantime.
+
+When/if it is built (HARD RULE: never invent the numbers), the shape would be:
 
 - **A rate structure on the profile**, reporter-entered, blank until they fill it in. The line
   items follow the taxonomy already in the memory/policy docs - per-page transcript, per-diem
