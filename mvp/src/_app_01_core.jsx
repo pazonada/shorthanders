@@ -88,6 +88,8 @@ const CITY_COUNTY = {
   "Mill Valley": "Marin", "San Rafael": "Marin", "Novato": "Marin", "Santa Rosa": "Sonoma", "Petaluma": "Sonoma", "Napa": "Napa", "Vallejo": "Solano", "Fairfield": "Solano",
   "Stockton": "San Joaquin", "Modesto": "Stanislaus", "Salinas": "Monterey", "Monterey": "Monterey", "Santa Cruz": "Santa Cruz",
 };
+// Internal go-to-market reference only (manual firm-selling priority metros). NOT for the
+// directory UI - a firm searching shouldn't see our sales strategy. See state_expansion_checklist.md.
 const TIER_A_COUNTIES = ["Santa Clara", "Contra Costa", "Alameda"];
 
 function countyFor(city) { return CITY_COUNTY[city] || null; }

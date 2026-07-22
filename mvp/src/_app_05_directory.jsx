@@ -178,7 +178,7 @@ function ReporterDirectory() {
           <FilterGroup label="County">
             <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={county} onChange={(e) => { setCounty(e.target.value); setLimit(PAGE_SIZE); }}>
               <option value="">All counties</option>
-              {counties.map((c) => <option key={c} value={c}>{c}{TIER_A_COUNTIES.includes(c) ? " ★" : ""}</option>)}
+              {counties.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           </FilterGroup>
           <FilterGroup label="Proceedings">

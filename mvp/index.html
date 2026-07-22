@@ -2775,6 +2775,8 @@ const CITY_COUNTY = {
   "Mill Valley": "Marin", "San Rafael": "Marin", "Novato": "Marin", "Santa Rosa": "Sonoma", "Petaluma": "Sonoma", "Napa": "Napa", "Vallejo": "Solano", "Fairfield": "Solano",
   "Stockton": "San Joaquin", "Modesto": "Stanislaus", "Salinas": "Monterey", "Monterey": "Monterey", "Santa Cruz": "Santa Cruz",
 };
+// Internal go-to-market reference only (manual firm-selling priority metros). NOT for the
+// directory UI - a firm searching shouldn't see our sales strategy. See state_expansion_checklist.md.
 const TIER_A_COUNTIES = ["Santa Clara", "Contra Costa", "Alameda"];
 
 function countyFor(city) { return CITY_COUNTY[city] || null; }
@@ -3515,7 +3517,7 @@ function ReporterDirectory() {
           <FilterGroup label="County">
             <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={county} onChange={(e) => { setCounty(e.target.value); setLimit(PAGE_SIZE); }}>
               <option value="">All counties</option>
-              {counties.map((c) => <option key={c} value={c}>{c}{TIER_A_COUNTIES.includes(c) ? " ★" : ""}</option>)}
+              {counties.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           </FilterGroup>
           <FilterGroup label="Proceedings">
