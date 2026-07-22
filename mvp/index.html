@@ -3407,6 +3407,12 @@ function ReporterDirectory() {
   const [rushOnly, setRushOnly] = useState(false);
   const [claimedOnly, setClaimedOnly] = useState(false);
   const [limit, setLimit] = useState(PAGE_SIZE);
+  // Deferred search: the controls above are a DRAFT. Nothing filters the list until "Search" is
+  // pressed, which snapshots the draft into `searched`. null (or an empty snapshot) = browse mode
+  // (featured cards + everyone); a real snapshot = search mode (pure ranked list, no featured).
+  // Deliberate choice 2026-07-21: with this many facets, compose-then-apply beats the list
+  // reflowing on every keystroke. See docs/directory_filters.md.
+  const [searched, setSearched] = useState(null);
 
   const counties = useMemo(() => Array.from(new Set(all.map((r) => r.county).filter(Boolean))).sort(), [all]);
   // Specialty filter pulled 2026-07-21: the only specialty values in the app are fabricated
@@ -3433,24 +3439,38 @@ function ReporterDirectory() {
     return m;
   }, [all]);
 
+  // Signatures let us tell "draft differs from what's applied" (dirty) and "nothing is applied"
+  // (browse) cheaply. Arrays are sorted so checkbox order doesn't create false dirtiness.
+  const sig = (o) => JSON.stringify([o.q, o.county, o.language, o.minYears, [...o.tags].sort(), [...o.specTags].sort(), [...o.certTags].sort(), o.rushOnly, o.claimedOnly]);
+  const draft = { q, county, language, minYears, tags, specTags, certTags, rushOnly, claimedOnly };
+  const EMPTY_SIG = sig({ q: "", county: "", language: "", minYears: "", tags: [], specTags: [], certTags: [], rushOnly: false, claimedOnly: false });
+  const draftSig = sig(draft);
+  const searchedSig = searched ? sig(searched) : EMPTY_SIG;
+  const browseMode = searchedSig === EMPTY_SIG;   // nothing applied -> featured + everyone
+  const dirty = draftSig !== searchedSig;          // controls changed since last Search
+  const anyDraft = draftSig !== EMPTY_SIG;
+  const runSearch = () => { setSearched(draftSig === EMPTY_SIG ? null : { q, county, language, minYears, tags: [...tags], specTags: [...specTags], certTags: [...certTags], rushOnly, claimedOnly }); setLimit(PAGE_SIZE); };
+
   const filtered = useMemo(() => {
-    const needle = q.trim().toLowerCase();
+    const s = searched;
     let list = all.filter((r) => {
+      if (!s) return true;   // browse mode: everyone
+      const needle = (s.q || "").trim().toLowerCase();
       if (needle && !(haystacks.get(r.id) || "").includes(needle)) return false;
-      if (county && r.county !== county) return false;
-      if (claimedOnly && !r.claimed) return false;
-      if (rushOnly && !r.rush) return false;
-      if (language && !(r.languages || []).includes(language)) return false;
-      if (minYears) {
+      if (s.county && r.county !== s.county) return false;
+      if (s.claimedOnly && !r.claimed) return false;
+      if (s.rushOnly && !r.rush) return false;
+      if (s.language && !(r.languages || []).includes(s.language)) return false;
+      if (s.minYears) {
         const y = r.yearsExp;
-        if (minYears === "u5") { if (typeof y !== "number" || y >= 5) return false; }
-        else if (typeof y !== "number" || y < Number(minYears)) return false;
+        if (s.minYears === "u5") { if (typeof y !== "number" || y >= 5) return false; }
+        else if (typeof y !== "number" || y < Number(s.minYears)) return false;
       }
-      if (tags.length && !tags.every((t) => (r.proceedings || []).includes(t) || (r.services || []).includes(t))) return false;
+      if (s.tags.length && !s.tags.every((t) => (r.proceedings || []).includes(t) || (r.services || []).includes(t))) return false;
       // Specialty and credential facets: match ANY selected within the facet (OR), while each
       // facet must be satisfied (AND across facets) - standard faceted-search behavior.
-      if (specTags.length && !specTags.some((t) => (r.specialties || []).includes(t))) return false;
-      if (certTags.length && !certTags.some((code) => (r.certifications || []).some((c) => c.includes(code)))) return false;
+      if (s.specTags.length && !s.specTags.some((t) => (r.specialties || []).includes(t))) return false;
+      if (s.certTags.length && !s.certTags.some((code) => (r.certifications || []).some((c) => c.includes(code)))) return false;
       return true;
     });
     // PRD ranking: claimed first, then completeness, then recent claim.
@@ -3464,12 +3484,11 @@ function ReporterDirectory() {
       return (b.claimedAt || "").localeCompare(a.claimedAt || "");
     });
     return list;
-  }, [all, haystacks, q, county, language, minYears, tags, specTags, certTags, rushOnly, claimedOnly]);
+  }, [all, haystacks, searched]);
 
-  const anyFilter = q || county || language || minYears || tags.length || specTags.length || certTags.length || rushOnly || claimedOnly;
-  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setTags([]); setSpecTags([]); setCertTags([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
-  // Rotates weekly, and rotates within whatever the firm has filtered to.
-  const featured = weeklyFeatured(filtered.filter((r) => r.claimed), 3);
+  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setTags([]); setSpecTags([]); setCertTags([]); setRushOnly(false); setClaimedOnly(false); setSearched(null); setLimit(PAGE_SIZE); };
+  // Featured only in browse mode - an active search shows a pure ranked list.
+  const featured = browseMode ? weeklyFeatured(filtered.filter((r) => r.claimed), 3) : [];
   const featuredIds = new Set(featured.map((r) => r.id));
   const rest = filtered.filter((r) => !featuredIds.has(r.id));
 
@@ -3485,7 +3504,7 @@ function ReporterDirectory() {
         <aside className="dir-sidebar">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 2 }}>
             <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)" }}>Filters</span>
-            {anyFilter ? <button onClick={clearAll} style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 13, cursor: "pointer", textDecoration: "underline" }}>Clear all</button> : null}
+            {(anyDraft || !browseMode) ? <button onClick={clearAll} style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 13, cursor: "pointer", textDecoration: "underline" }}>Clear all</button> : null}
           </div>
           <FilterGroup label="County">
             <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={county} onChange={(e) => { setCounty(e.target.value); setLimit(PAGE_SIZE); }}>
@@ -3532,20 +3551,29 @@ function ReporterDirectory() {
             <FilterCheck label="Takes rush / expedited" checked={rushOnly} onChange={() => { setRushOnly((v) => !v); setLimit(PAGE_SIZE); }} />
             <FilterCheck label="Claimed profiles only" checked={claimedOnly} onChange={() => { setClaimedOnly((v) => !v); setLimit(PAGE_SIZE); }} />
           </FilterGroup>
+          <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 18 }} onClick={runSearch}><Icon name="search" size={16} /> Search</button>
         </aside>
 
         {/* results */}
         <div className="dir-main">
           <div style={{ marginBottom: 16 }}>
             <label style={{ display: "block", fontSize: 13, fontWeight: 700, color: "var(--ink)", marginBottom: 7 }}>Search by keyword</label>
-            <div style={{ position: "relative" }}>
-              <span style={{ position: "absolute", left: 18, top: "50%", transform: "translateY(-50%)", color: "var(--brand)" }}><Icon name="search" size={20} /></span>
-              <input className="ds-input" style={{ paddingLeft: 50, fontSize: 16, height: 58, borderWidth: 2 }} placeholder="Try a name, city, specialty, or expertise – e.g. “maritime”" value={q} onChange={(e) => { setQ(e.target.value); setLimit(PAGE_SIZE); }} />
+            <div style={{ display: "flex", gap: 10 }}>
+              <div style={{ position: "relative", flex: 1 }}>
+                <span style={{ position: "absolute", left: 18, top: "50%", transform: "translateY(-50%)", color: "var(--brand)" }}><Icon name="search" size={20} /></span>
+                <input className="ds-input" style={{ paddingLeft: 50, fontSize: 16, height: 58, borderWidth: 2, width: "100%" }} placeholder="Try a name, city, specialty, or expertise – e.g. “maritime”" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") runSearch(); }} />
+              </div>
+              <button className="btn btn-primary" style={{ height: 58, padding: "0 28px", flexShrink: 0 }} onClick={runSearch}>Search</button>
             </div>
-            <p style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 6 }}>Searches names, locations, specialties, proceedings, services, and profile bios.</p>
+            <p style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 6 }}>Set filters at left and search terms here, then press Search. Covers names, locations, specialties, proceedings, services, and profile bios.</p>
           </div>
+          {dirty && (
+            <div className="banner" style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--brand-soft)", color: "var(--brand-dark)", borderRadius: 10, padding: "10px 14px", fontSize: 13.5, fontWeight: 600, marginBottom: 14 }}>
+              <Icon name="search" size={15} /> Filters changed – press Search to update results.
+            </div>
+          )}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "4px 0 16px", flexWrap: "wrap", gap: 8 }}>
-            <span style={{ fontSize: 14, color: "var(--muted)" }}>{filtered.length.toLocaleString()} {filtered.length === 1 ? "reporter" : "reporters"}{anyFilter ? " match" : ""}</span>
+            <span style={{ fontSize: 14, color: "var(--muted)" }}>{filtered.length.toLocaleString()} {browseMode ? (filtered.length === 1 ? "reporter" : "reporters") : (filtered.length === 1 ? "result" : "results")}</span>
             <span style={{ fontSize: 13, color: "var(--dim)" }}>Claimed profiles shown first</span>
           </div>
           {filtered.length === 0 ? (
