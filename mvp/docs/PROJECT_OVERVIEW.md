@@ -120,6 +120,9 @@ a terms-of-service review (`legal_question_deposition_neutrality.md`, `open_stra
 - `csr_profile_field_taxonomy.md` – the two-axis reporter taxonomy.
 - `reviews_and_ratings.md` – why there are no testimonials/reviews/ratings at launch, and the
   plan to capture verified ratings after payment for later. **NEW 2026-07-21.**
+- `directory_filters.md` – directory sidebar decisions (experience/specialty/language, method
+  removed) plus the open work: growing specialties from real search demand, and the **rates**
+  feature (never invent the numbers). **NEW 2026-07-21.**
 - `activity_signal_design.md` – why reporter activity is computed from sign-ins and shown
   only when positive, instead of a self-set availability status or a Care.com-style
   "last active" timestamp. **NEW 2026-07-21.**
