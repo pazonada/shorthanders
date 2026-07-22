@@ -160,7 +160,7 @@ function ReporterDirectory() {
 
   const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setTags([]); setSpecTags([]); setCertTags([]); setRushOnly(false); setNotaryOnly(false); setClaimedOnly(false); setSearched(null); setLimit(PAGE_SIZE); };
   // Featured only in browse mode - an active search shows a pure ranked list.
-  const featured = browseMode ? weeklyFeatured(filtered.filter((r) => r.claimed), 3) : [];
+  const featured = browseMode ? weeklyFeatured(filtered.filter((r) => r.claimed), 4) : [];
   const featuredIds = new Set(featured.map((r) => r.id));
   const rest = filtered.filter((r) => !featuredIds.has(r.id));
 
