@@ -64,17 +64,15 @@ function ReporterDirectory() {
   const [county, setCounty] = useState("");
   const [language, setLanguage] = useState("");
   const [minYears, setMinYears] = useState("");
-  const [specialty, setSpecialty] = useState("");
   const [tags, setTags] = useState([]);       // selected proceeding / service tags
   const [rushOnly, setRushOnly] = useState(false);
   const [claimedOnly, setClaimedOnly] = useState(false);
   const [limit, setLimit] = useState(PAGE_SIZE);
 
   const counties = useMemo(() => Array.from(new Set(all.map((r) => r.county).filter(Boolean))).sort(), [all]);
-  // Specialty options are derived from what reporters actually list, like counties - not a fixed
-  // taxonomy we invented. Sparse at launch (only claimed profiles have specialties); it fills in
-  // as reporters claim. See the note in the directory doc about growing this into a real list.
-  const specialties = useMemo(() => Array.from(new Set(all.flatMap((r) => r.specialties || []))).sort(), [all]);
+  // Specialty filter pulled 2026-07-21: the only specialty values in the app are fabricated
+  // (six sample profiles), and the real taxonomy is an open user-testing question. Re-add once
+  // research produces a grounded list. See docs/directory_filters.md.
 
   const toggleTag = (t) => { setTags((cur) => cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]); setLimit(PAGE_SIZE); };
 
@@ -106,7 +104,6 @@ function ReporterDirectory() {
         if (minYears === "u5") { if (typeof y !== "number" || y >= 5) return false; }
         else if (typeof y !== "number" || y < Number(minYears)) return false;
       }
-      if (specialty && !(r.specialties || []).includes(specialty)) return false;
       if (tags.length && !tags.every((t) => (r.proceedings || []).includes(t) || (r.services || []).includes(t))) return false;
       return true;
     });
@@ -121,10 +118,10 @@ function ReporterDirectory() {
       return (b.claimedAt || "").localeCompare(a.claimedAt || "");
     });
     return list;
-  }, [all, haystacks, q, county, language, minYears, specialty, tags, rushOnly, claimedOnly]);
+  }, [all, haystacks, q, county, language, minYears, tags, rushOnly, claimedOnly]);
 
-  const anyFilter = q || county || language || minYears || specialty || tags.length || rushOnly || claimedOnly;
-  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setSpecialty(""); setTags([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
+  const anyFilter = q || county || language || minYears || tags.length || rushOnly || claimedOnly;
+  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setTags([]); setRushOnly(false); setClaimedOnly(false); setLimit(PAGE_SIZE); };
   // Rotates weekly, and rotates within whatever the firm has filtered to.
   const featured = weeklyFeatured(filtered.filter((r) => r.claimed), 3);
   const featuredIds = new Set(featured.map((r) => r.id));
@@ -164,12 +161,6 @@ function ReporterDirectory() {
               <option value="10">10+ years</option>
               <option value="15">15+ years</option>
               <option value="20">20+ years</option>
-            </select>
-          </FilterGroup>
-          <FilterGroup label="Specialty">
-            <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={specialty} onChange={(e) => { setSpecialty(e.target.value); setLimit(PAGE_SIZE); }}>
-              <option value="">Any specialty</option>
-              {specialties.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
           </FilterGroup>
           <FilterGroup label="Additional languages">
