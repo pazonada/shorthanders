@@ -69,7 +69,29 @@ Grep: `grep -rn "CSR" mvp/src/`.
 - **Specialty taxonomy** – sourced partly from the **CA** State Bar's certified areas
   (`specialty_taxonomy_research.md`); re-check against the new state's bar.
 
-## 7. Things that need NO change (nice)
+## 7. Beyond code – the real gates before you can operate in a new state
+
+These are bigger than string edits, and easy to forget because they're not in the codebase:
+
+- **Legal / regulatory review, per state.** This is the actual gate, the same one CA has. The
+  deposition-neutrality question (`legal_question_deposition_neutrality.md`) was framed for
+  California; every target state has its own rules on reporter neutrality, **who may administer
+  the oath** (notary vs. commissioned reporter, esp. for remote/out-of-state depositions),
+  remote-deposition procedure, and transcript-custody duties. Terms of service and the platform's
+  disclaimed role must be re-checked against the new state's law. **Do this before spending on
+  the state, not after** – it can change the product.
+- **SEO / landing pages.** The site is a single-page hash-router app, so today it is one
+  indexable URL (see `launch_prep.md`). Multi-state makes this bite harder: a Texas firm googling
+  "court reporter Houston" should land on a Texas page, which the current architecture can't
+  provide. Per-state landing pages (real URLs) are the point at which the routing/SSR limitation
+  stops being optional. Decide this as part of expansion.
+- **Marketing is operational, tracked elsewhere.** The CSR outreach email
+  (`csr_email_outreach.md`), the Facebook reporter channel, and the firm-outreach playbook are all
+  California / Bay-Area specific. A new state needs its own reporter channels, firm targets, and a
+  new outreach send. See `../marketing/` – not part of this product checklist, but don't launch a
+  state without it.
+
+## 8. Things that need NO change (nice)
 
 - **The share image** ("The directory of certified court reporters") carries no state – a
   side benefit of the logo-only decision. No re-export on expansion.
