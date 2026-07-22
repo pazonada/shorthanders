@@ -7,13 +7,16 @@
 > ~18-item researched shortlist below is kept only as background on how the court-reporting
 > industry categorizes work; it is NOT the shipped list.
 >
-> Two things to watch, both self-correcting or for later:
-> - The Bar list is a *lawyer*-referral taxonomy, so it includes transactional areas a court
->   reporter would never cover (Estate Planning, Contracts, Equestrian, Art, Sports...). Because
->   reporters self-report, those simply stay empty - noisy in the dropdown, harmless in results.
->   Trim later with CSR user testing if the dropdown feels too long.
-> - It also lacks a couple of reporter-relevant litigation tags (e.g. "Product Liability"); the
->   closest Bar equivalents ("Tort", "Personal Injury") stand in.
+>
+> **Nothing removed (decided 2026-07-21).** Earlier this doc implied transactional areas (Estate
+> Planning, Contracts, Real Estate...) should be trimmed because reporters don't cover them. That
+> was too absolute: almost every area of law has a *litigation* form that generates depositions
+> (will contests, breach-of-contract suits, real-estate fraud disputes...). We cannot say for
+> sure any area never involves a deposition, and reporters self-report, so areas none have
+> covered just stay empty. Keeping the full list avoids excluding a reporter's real experience.
+>
+> **Two additions (2026-07-21).** The Bar's *lawyer* list omits two depo-heavy litigation areas
+> reporters clearly work: **Antitrust** and **Product Liability**. Added alphabetically. Total: 63.
 
 ---
 
