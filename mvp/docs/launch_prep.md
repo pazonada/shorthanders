@@ -85,6 +85,14 @@ This is the big one, and it's real engineering. Everything here is spelled out i
       gate. **CLAUDE**
 - [ ] **Read every page start to finish** with fresh eyes, checking that nothing describes the
       old v1 model (12% fee, matching, scheduling). **YOU**
+- [ ] **Replace the 6 fictional SAMPLE profiles with real claimed profiles.** The featured/demo
+      profiles (Marguerite Ellsworth, Desmond Farrataglia, etc., license #900001-900006) are
+      invented - `SAMPLE_PROFILES` in `_app_02_data.jsx`, badged "SAMPLE" on cards and flagged
+      "fictional demo" on the profile. They exist so the directory isn't empty. Swap them for
+      real reporters as soon as a few claim (with their consent + real data), then drop the
+      SAMPLE badge logic. **Do NOT re-attach fabricated data to real licensee records** - that
+      was the bug this fixed (real names carried invented credentials). Real reporters appear as
+      unclaimed public stubs until they themselves claim. **YOU / CLAUDE**
 - [ ] **Confirm every number on the site is real** – rates, fees, the 5,705 count, the invoice
       figures in the money comparison. **YOU**
 - [ ] **Design how a reporter states what work they want.** The CRB roster is every licensed CSR
