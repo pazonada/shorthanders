@@ -39,6 +39,14 @@ Ranked by how much court-reporter work they generate (from `firm_priority_starte
 6. **Civil / commercial litigation** – steady work.
 7. **Probate / trust litigation** – lower volume, long complex matters.
 
+**Also worth including: in-house counsel at nonprofits and other organizations.** They're not
+law firms, but in-house legal teams at nonprofits, associations, agencies, universities,
+hospitals, and mid-size companies litigate too – employment disputes, contract and IP fights,
+regulatory matters – and they hire deposition reporters directly, often without an agency
+relationship or a big-firm vendor list. A price-conscious, small in-house team is exactly who
+benefits from booking a reporter directly and paying online. Add them to the target list where
+you can find them (LinkedIn "General Counsel" / "In-house counsel" at local orgs).
+
 **Skip:** BigLaw (100+), transactional (M&A, corporate, securities, real estate),
 immigration, pure criminal defense. Sweet spot is **5–50 attorneys (ideal 10–30)**.
 

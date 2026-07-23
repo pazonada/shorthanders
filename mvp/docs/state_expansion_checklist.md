@@ -1,8 +1,8 @@
 # Adding a state (geography expansion checklist)
 
-Everything hardcoded to California, in one place, so a future expansion (Texas first – it has a
-licensing registry; see `PROJECT_OVERVIEW.md` growth strategy) is a checklist, not a scavenger
-hunt. Created 2026-07-21.
+Everything hardcoded to California, in one place, so a future expansion is a checklist, not a
+scavenger hunt. State priority order (Texas, Illinois, New Jersey, Georgia, Florida) and its
+rationale live in `../marketing/growth_strategy.md`. Created 2026-07-21.
 
 **Why a note and not a config switch:** wiring a geography abstraction now would be speculative
 complexity for an expansion gated behind "one metro provably pays." When that day comes, decide

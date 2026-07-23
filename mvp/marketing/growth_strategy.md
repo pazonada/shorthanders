@@ -68,9 +68,27 @@ subscription. Prices are unset – dollars live in [pro_pricing_worksheet.md](pr
 - **Rebuilding the old matching / scheduling / escrow platform** – the cost, complexity, and legal
   risk we cut on purpose. Add a feature only when a *paying* firm asks for that specific thing.
 - **Spreading manual firm-selling thin** across the state.
-- **Adding states before one metro provably pays** – then **Texas first** (it has a court-reporter
-  licensing registry that makes the directory cheap to stand up; New York and Florida largely don't
-  license reporters at the state level, so their data is messier – verify per state).
+- **Adding states before one metro provably pays.** Expansion is gated on proving one CA metro
+  pays; only then do we open a new state (in the order below).
+
+## State expansion order (after one metro pays)
+
+Prioritized by market size, how closely the state mirrors CA's licensed-CSR model (cheaper
+directory to stand up), and reciprocity that widens the reporter pool. Don't rebuild v1 to
+expand – it's the same directory + reporter-pulled demand, re-pointed at a new state's roster.
+Verify licensing specifics per state before launch (see `../docs/state_expansion_checklist.md`).
+
+1. **Texas** – huge market, a similar CSR licensure model, and many freelance deposition
+   reporters. The cleanest first expansion (a licensing registry makes the directory cheap to
+   build).
+2. **Illinois** – 1,400+ licensed reporters, CSR licensure, and an especially strong Chicago
+   litigation market.
+3. **New Jersey** – a dense legal market wedged between NYC and Philadelphia, with reciprocal
+   standards.
+4. **Georgia** – Atlanta is a major litigation hub, and Texas recognizes Georgia's certification
+   (reciprocity widens the cross-state reporter pool).
+5. **Florida** – enormous litigation volume, though its licensing rules differ somewhat from
+   Texas, so expect a messier data lift than the states above.
 
 ---
 *Companion docs: [README.md](README.md) · [firm_outreach_playbook.md](firm_outreach_playbook.md)
