@@ -51,6 +51,19 @@ Grep: `grep -rn "CSR" mvp/src/`.
   county, method, zip, email, expiration). A new state needs its own roster from that state's
   registry, in the same shape. Multi-state = concatenate with a `state` field per record, and add
   a **state filter/selector** to the directory (today there's only a county filter).
+  - **CRITICAL per-state check: does the roster include CONTACT INFO (email)?** California's CRB
+    data is unusually generous - it includes reporter emails (5,702 of 5,705), which is what makes
+    our cold-email claim campaign possible. Other states may publish the *roster* (name / license /
+    city, so the directory itself can be built) but NOT contact info:
+    - **Texas (JBCC):** public searchable roster exists, but *personal contact information is
+      exempt from public disclosure* (Rule 12.5(d), Rules of Judicial Administration). So expect
+      names/licenses but likely **no emails** - the CSR email campaign may not transfer to TX.
+    - **Illinois (IDFPR):** licenses CSRs; a public license lookup and downloadable active-license
+      reports exist, but whether they include email/contact is unconfirmed - verify before
+      counting on email outreach.
+    - Implication: in states without published emails, lean harder on the Facebook / organic /
+      reporter-referral channels to get reporters to claim, since cold email won't be available.
+      (Quick web-research finding 2026-07-21, not a definitive legal audit - confirm per state.)
 - **`CITY_COUNTY` map + `countyFor()`** (`_app_01_core.jsx`) is a **California** city→county
   fallback for the ~194 records with a blank county. A new state needs its own map (or better
   county data in the source).
