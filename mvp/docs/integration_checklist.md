@@ -75,6 +75,10 @@ Two serverless stubs already exist and fall back to demo behavior:
   **reporter Pro** flat monthly. Drive `store.firmPlan` / reporter Pro from subscription status.
 - [ ] **Webhooks** – `account.updated` (Connect onboarding done → mark verified),
   `payment_intent` / `invoice` events (→ update invoice status), subscription events (→ plan).
+- [ ] **Quarterly roster refresh** – a scheduled job that re-pulls the CRB roster, diffs it,
+  adds new licensees, refreshes unclaimed contact info, and freezes (not deletes) expired/
+  retired licenses - never overwriting claimed profiles' self-entered data. Full spec + the
+  claimed-profile-expiry notify/grace/billing-pause path: `roster_refresh_policy.md`.
 - [ ] **Tax** – Stripe issues the reporter's year-end **1099-K** for what they collect (the
   "get your tax forms" value prop). Confirm thresholds; don't over-promise "we do your taxes".
 - [ ] **Capture a rating after a paid invoice** (not before). Once payments are live, invite the
