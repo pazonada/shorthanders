@@ -234,20 +234,20 @@ function PricingPage() {
     <Page wide roomy>
       <div style={{ textAlign: "center", maxWidth: 700, margin: "12px auto 44px" }}>
         <h1 className="h-section">Simple, honest pricing</h1>
-        <p style={{ fontSize: 18, color: "var(--ink-soft)", marginTop: 16, lineHeight: 1.6 }}>Claim your profile and get listed for free. Upgrade to Pro when you want to receive messages from firms and get paid through Dewey Sholes. No booking fees, no commission on your work.</p>
+        <p style={{ fontSize: 18, color: "var(--ink-soft)", marginTop: 16, lineHeight: 1.6 }}>Claim your profile, get listed, and message firms – all free. Get paid as you go, or upgrade to Pro for a lower payment fee. No booking fees, no commission on your work.</p>
       </div>
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", maxWidth: 1040, margin: "0 auto" }}>
-        <PriceCard tone="sage" name="Reporters · Free" price="$0" unit="forever"
-          blurb="Get listed and control how firms see you."
-          features={["Claim your public profile", "Verify your identity via Stripe", "Appear in the directory & search", "Add areas of law, coverage, rates", "Firms can find you"]}
-          cta={["Claim your profile", "/claim"]} note="Free forever. No card required to claim and list." />
-        <PriceCard tone="brand" featured name="Reporters · Pro" price="Pricing coming soon" unit=""
-          blurb="Everything in Free, plus the tools to actually get paid."
-          features={["Receive & reply to firm messages", "Create & send invoices", "Collect card & ACH payments", "Payment tracking dashboard", "Stripe payouts to your bank"]}
-          cta={["Claim your profile", "/claim"]} note="We'll set Pro pricing before launch. Standard Stripe fees apply to payments you collect." />
-        <PriceCard tone="sage" name="Law firms" price="Pricing coming soon" unit=""
-          blurb="Search the directory and reach reporters directly."
-          features={["Browse the full directory free", "Advanced search & filters", "Message reporters", "Saved reporters & shared lists", "Pay invoices by card or ACH"]}
+        <PriceCard tone="brand" name="Reporters · Free" price="$0" unit="/forever"
+          blurb="Get listed, get found, and message firms – all free. Get paid as you go."
+          features={["Claim your public profile", "Appear in the directory & search", "Add areas of law, coverage & rates", "Message firms directly", "Invoice & collect card / ACH payments"]}
+          cta={["Claim your profile", "/claim"]} note="Free to list and message. Getting paid costs 5% per payment, no monthly fee. Standard Stripe fees apply." />
+        <PriceCard tone="brand" featured name="Reporters · Pro" price="$29" unit="/month"
+          blurb="Everything in Free, at a lower payment fee. Best once you invoice often."
+          features={["Everything in the free plan", "2% per payment, not 5%", "The more you invoice, the more you save"]}
+          cta={["Claim your profile", "/claim"]} note="$29/month + 2% per payment. Worth it once you're collecting roughly $970+/month. Standard Stripe fees apply." />
+        <PriceCard tone="brand" name="Law firms" price="Pricing coming soon" unit=""
+          blurb="Search the directory and reach reporters directly – no agency in the middle."
+          features={["Message reporters who invited you, free", "Subscribe to search the full directory", "Advanced search & filters", "Saved reporters & shared lists", "Pay invoices by card or ACH"]}
           cta={["Explore the directory", "/directory"]} note="Firm pricing is still being decided." />
       </div>
       <div className="ds-panel" style={{ maxWidth: 1040, margin: "32px auto 0", textAlign: "center" }}>
