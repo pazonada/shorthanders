@@ -29,35 +29,46 @@ abandoned even while it worked.
 
 ## The accepting-jobs toggle (added 2026-07-24)
 
-The profile editor now has a single **availability toggle, default ON** ("Accepting jobs").
-Turning it OFF **removes the reporter from search results** entirely, behind a confirmation
-dialog that spells that out. Turning it back on is immediate, no confirmation. It sits alongside
-the computed "Recently active" line, not in place of it – the two answer different questions:
-*am I willing to take work* (self-set) vs *am I engaged here* (earned).
+The profile editor has a single **availability toggle, default ON** ("Accepting jobs"). Turning
+it OFF does **not** hide the reporter – they stay in search and stay messageable – it flags them
+as *not taking new work*. It sits alongside the computed "Recently active" line, not in place of
+it: the two answer different questions – *am I willing to take new work* (self-set) vs *am I
+engaged here* (earned).
 
-**Why this survives the self-set-status rejection above.** The thing we rejected was a *published
-availability claim* – a positive "available" a firm reads and acts on. This toggle is the inverse:
+**Why a self-set flag is safe here (the earlier rejection was of a different thing).** What we
+rejected was a *published availability claim* – a positive "available" a firm reads and acts on.
+This flag is the inverse, and negative:
 
 - **Default ON means no upkeep for the normal case.** The common state (accepting work) is the
   default, so a reporter who fills out a profile and gets on with their life is represented
   correctly without ever touching it. The rejected design failed *because* staying accurate
   required coming back to update it; here, doing nothing is accurate.
-- **OFF removes you; it doesn't mislead.** A stale "available" was worse than nothing because a
-  firm messaged someone who'd stopped taking work and got silence. OFF can't produce that failure
-  – it hides the reporter rather than advertising a claim. The worst a stale OFF does is keep a
-  willing reporter out of search.
-- **The staleness incentive is aligned.** A forgotten OFF costs the *reporter* (no work), not the
-  firm. So the person with the information and the motivation to fix it is the same person – the
-  opposite of the rejected design, where upkeep fell on the side of the market we're courting and
-  the cost of neglect fell on the other side.
+- **It warns; it doesn't mislead.** A stale "available" was worse than nothing because a firm
+  messaged someone who'd stopped taking work and got silence. A stale "not taking new work" only
+  ever *under*-promises – the worst it does is make a willing reporter look busy.
+- **The staleness cost falls on the reporter.** A forgotten OFF costs the *reporter* (looks
+  unavailable), not the firm – so the person who can fix it is the one motivated to. The opposite
+  of the rejected design, where upkeep fell on the side we're courting and neglect hurt the other
+  side.
 
-It's a "going on vacation / booked solid" switch, not an "I'm available!" billboard. That
-distinction is the whole reason it's safe.
+It's a "booked solid / on hiatus" sign, not an "I'm available!" billboard.
 
-**Not built yet:** the toggle is prototype-local (resets on refresh) and doesn't actually gate
-search or the public profile. Wiring `accepting` into the directory filter and the profile
-(hide when off) is backend work – see `integration_checklist.md`. Ranking is unaffected either
-way.
+**Why OFF keeps them in search and messageable (decided 2026-07-24).** Removing a not-accepting
+reporter would break a real need: a firm often wants a *specific* reporter – the one who was on
+the record at a hearing or trial – to **request a transcript they already produced**, including
+years later. That contact has nothing to do with whether the reporter takes *new* work. So OFF
+keeps them findable and keeps the message button live; it just surfaces a **loud warning** in
+three places: a banner at the top of their profile, an inline indicator on directory cards and
+list rows ("Not taking new work"), and a reminder inside the messaging thread when a firm writes
+to them. Because OFF is no longer destructive, the earlier confirmation dialog was removed –
+toggling is now a plain switch.
+
+**Not built for real yet:** the editor toggle is prototype-local (resets on refresh) and doesn't
+persist. The display side *is* wired – `notAcceptingJobs(p)` (in `_app_02_data.jsx`, true when a
+claimed profile has `accepting === false`) drives the profile banner, the card/row indicator, and
+the messaging reminder; one sample profile (Lucinda, 900005) carries the flag to demo it.
+Persisting the reporter's own setting is backend work – see `integration_checklist.md`. Ranking
+is unaffected.
 
 ## Why the computed version works
 

@@ -4,6 +4,8 @@ function MessagesPanel({ embedded }) {
   const convos = store.convos;
   const [activeId, setActiveId] = useState(convos[0] ? convos[0].id : null);
   const active = convos.find((c) => c.id === activeId);
+  // The reporter this conversation is with, so a firm sees the "not accepting new work" reminder.
+  const withRep = active ? buildDirectory().find((x) => x.name === active.with) : null;
   const [draft, setDraft] = useState("");
   const [linkOpen, setLinkOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
@@ -34,7 +36,7 @@ function MessagesPanel({ embedded }) {
                 <span style={{ fontWeight: 600, fontSize: 14, color: "var(--ink)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.with}</span>
                 {c.unread ? <span style={{ background: "var(--brand)", color: "#fff", fontSize: 10, fontWeight: 700, padding: "1px 6px", borderRadius: 999 }}>{c.unread}</span> : null}
               </div>
-              <div style={{ fontSize: 12.5, color: "var(--muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.msgs[c.msgs.length - 1].t || "Shared a link"}</div>
+              <div style={{ fontSize: 12.5, color: "var(--muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.msgs.length ? (c.msgs[c.msgs.length - 1].t || "Shared a link") : "New conversation"}</div>
             </div>
           </button>
         ))}
@@ -49,6 +51,7 @@ function MessagesPanel({ embedded }) {
           </div>
 
           <div style={{ flex: 1, overflowY: "auto", padding: "18px 20px", display: "flex", flexDirection: "column", gap: 12, background: "var(--bg-soft)" }}>
+            {store.role === "firm" && withRep && notAcceptingJobs(withRep) && <div className="banner banner-warn" style={{ fontSize: 12.5, padding: "10px 14px" }}><Icon name="info" size={15} style={{ flexShrink: 0 }} /><div><strong>{active.with.split(" ")[0]} isn't accepting new jobs right now.</strong> They may still help with a past transcript or an existing matter, but likely won't take on new work.</div></div>}
             <div className="banner banner-info" style={{ fontSize: 12.5, padding: "10px 14px" }}><Icon name="shield" size={15} style={{ flexShrink: 0 }} /><div>Dewey Sholes carries your messages and links but never stores files. Share audio and deliverables through your own secure link. Terms are between you and {active.with}.</div></div>
             {active.msgs.map((m, i) => (
               <div key={i} className={"msg-bubble " + (m.from === "me" ? "msg-me" : "msg-them")}>

@@ -109,20 +109,6 @@ function ToggleSwitch({ on, onClick }) {
     </button>
   );
 }
-function ConfirmDialog({ title, body, confirmLabel, onConfirm, onCancel }) {
-  return (
-    <div className="modal-overlay" onClick={onCancel}>
-      <div className="ds-card" style={{ maxWidth: 440, width: "92%" }} onClick={(e) => e.stopPropagation()}>
-        <h3 style={{ fontSize: 22, marginBottom: 8 }}>{title}</h3>
-        <p style={{ color: "var(--ink-soft)", fontSize: 14.5, lineHeight: 1.6 }}>{body}</p>
-        <div style={{ display: "flex", gap: 10, marginTop: 22, justifyContent: "flex-end", flexWrap: "wrap" }}>
-          <button className="btn btn-secondary" onClick={onCancel}>Cancel</button>
-          <button className="btn btn-primary" onClick={onConfirm}>{confirmLabel}</button>
-        </div>
-      </div>
-    </div>
-  );
-}
 function chipStyle(on) {
   return { fontSize: 13, padding: "6px 13px", borderRadius: 999, cursor: "pointer", fontFamily: "'Inter', sans-serif",
     border: on ? "1px solid var(--brand)" : "1px solid var(--rule-strong)", background: on ? "var(--brand-soft)" : "var(--bg)",
@@ -213,8 +199,7 @@ function ReporterProfileEditor({ me }) {
   const [coverage, setCoverage] = useState(me.coverage || []);
   const [notary, setNotary] = useState(!!me.notary);
   const [rush, setRush] = useState(!!me.rush);
-  const [accepting, setAccepting] = useState(true);
-  const [confirmOff, setConfirmOff] = useState(false);
+  const [accepting, setAccepting] = useState(me.accepting !== false);
   const [showRates, setShowRates] = useState(false);
   const [rates, setRates] = useState({ pageOriginal: { low: "", high: "" }, pageCopy: { low: "", high: "" }, halfDay: { low: "", high: "" }, fullDay: { low: "", high: "" }, trialDay: { low: "", high: "" }, expedited: { low: "", high: "" }, realtime: { low: "", high: "" } });
   const [expUnit, setExpUnit] = useState("percent");
@@ -263,9 +248,9 @@ function ReporterProfileEditor({ me }) {
       <FieldBlock label="Languages" hint="Languages you work in besides English. Pick from the list or type your own to add it."><TagSearchAdd options={LANGUAGES} selected={languages} onChange={setLanguages} placeholder="Search languages, or type your own" allowOther /></FieldBlock>
       <FieldBlock label="Certifications"><ChipToggle options={CREDENTIAL_TYPES} selected={certs} onToggle={toggleIn(setCerts)} /></FieldBlock>
       <FieldBlock label="Counties covered"><TagSearchAdd options={counties} selected={coverage} onChange={setCoverage} placeholder="Search California counties" /></FieldBlock>
-      <FieldBlock label="Availability" hint="When this is off, you're hidden from search and firms can't find or message you.">
+      <FieldBlock label="Availability" hint="When this is off, you still appear in search and firms can still message you (say, to ask for a past transcript) - your profile just shows that you're not taking new work right now.">
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <ToggleSwitch on={accepting} onClick={() => { if (accepting) setConfirmOff(true); else setAccepting(true); }} />
+          <ToggleSwitch on={accepting} onClick={() => setAccepting(!accepting)} />
           <span style={{ fontSize: 14, fontWeight: 500, color: accepting ? "var(--ink)" : "var(--muted)" }}>{accepting ? "Accepting jobs" : "Not accepting jobs right now"}</span>
         </div>
       </FieldBlock>
@@ -306,7 +291,6 @@ function ReporterProfileEditor({ me }) {
         <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--brand)", cursor: "pointer", fontSize: 14, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 6, padding: 0 }}><Icon name="eye" size={15} /> View public profile</button>
       </div>
       <Toast msg={toast} onClose={() => setToast("")} />
-      {confirmOff ? <ConfirmDialog title="Stop accepting jobs?" body="This removes you from search results. Firms won't be able to find or message you on Dewey Sholes until you turn availability back on." confirmLabel="Yes, stop accepting jobs" onCancel={() => setConfirmOff(false)} onConfirm={() => { setAccepting(false); setConfirmOff(false); }} /> : null}
     </div>
   );
 }

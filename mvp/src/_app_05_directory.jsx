@@ -15,6 +15,9 @@ function RepCard({ r }) {
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 5, flexShrink: 0 }}>
           <SaveHeart r={r} />
+          {notAcceptingJobs(r) && (
+            <span className="pill" style={{ background: "var(--ochre-soft)", color: "var(--ochre-deep)", fontSize: 11, fontWeight: 600, padding: "3px 9px", whiteSpace: "nowrap" }}>Not taking new work</span>
+          )}
           {recentlyActive(r) && (
             <span style={{ fontSize: 12.5, fontStyle: "italic", color: "var(--dim)", whiteSpace: "nowrap" }}>Recently active</span>
           )}
@@ -337,7 +340,7 @@ function RepRow({ r }) {
         <Avatar name={r.name} size={40} claimed={r.claimed} />
         <div style={{ minWidth: 0 }}>
           <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "block" }}>{r.name}{r.sample && <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".04em", color: "var(--ochre-deep)", background: "var(--ochre-soft)", borderRadius: 5, padding: "1px 5px", marginLeft: 7, verticalAlign: "middle" }}>SAMPLE</span>}</span>
-          <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}{recentlyActive(r) ? <span style={{ fontStyle: "italic", color: "var(--dim)" }}> · Recently active</span> : null}</div>
+          <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}{recentlyActive(r) ? <span style={{ fontStyle: "italic", color: "var(--dim)" }}> · Recently active</span> : null}{notAcceptingJobs(r) ? <span style={{ color: "var(--ochre-deep)", fontWeight: 600 }}> · Not taking new work</span> : null}</div>
         </div>
       </div>
       <div style={{ minWidth: 0, display: "flex", alignItems: "center", gap: 6, fontSize: 13.5, fontWeight: 600, color: "var(--ink-soft)" }}>
@@ -433,6 +436,7 @@ function ReporterProfile({ reporterId, invited }) {
     <Page>
       {invited && <div className="banner banner-ok" style={{ marginBottom: 14 }}><Icon name="heart" size={18} style={{ flexShrink: 0 }} /><div><strong>{first} invited you to Dewey Sholes.</strong> Create a free account to message {first}, pay their invoices, and save them to your firm. Joining is free for your firm.</div></div>}
       {r.sample && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This is a fictional demo profile – the name, license number, and every detail are made up to show how a claimed profile looks. Not a real reporter.</div></div>}
+      {notAcceptingJobs(r) && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="info" size={18} style={{ flexShrink: 0 }} /><div><strong>Not accepting new jobs right now.</strong> {first} isn't taking on new work at the moment. Firms can still message {first} – for example, to request a copy of a transcript already prepared, or one from a past matter.</div></div>}
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 32, alignItems: "start" }} className="profile-grid">
         {/* main */}
         <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>
@@ -445,28 +449,22 @@ function ReporterProfile({ reporterId, invited }) {
               <div style={{ color: "var(--muted)", marginTop: 8, fontSize: 15, display: "flex", gap: 14, flexWrap: "wrap" }}>
                 <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />CSR #{r.csrNumber}</span>
                 <span><Icon name="pin" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.city}{r.county ? ", " + r.county + " County" : ""}</span>
+              </div>
+              <div style={{ color: "var(--muted)", marginTop: 6, fontSize: 15, display: "flex", gap: 14, flexWrap: "wrap" }}>
                 <span><Icon name="clock" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.yearsExp} years</span>
                 {r.method ? <span><Icon name="doc" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.method}</span> : null}
                 {r.notary ? <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />Notary public</span> : null}
-              </div>
-              {/* Shown only when true - absence is not a negative signal. */}
-              {recentlyActive(r) && (
-                <div style={{ marginTop: 7, fontSize: 13.5, fontStyle: "italic", color: "var(--dim)" }}>Recently active on Dewey Sholes</div>
-              )}
-              <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
-                {(r.proceedings || []).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
-                {r.rush && <span className="pill pill-rush"><Icon name="clock" size={12} /> Rush available</span>}
               </div>
             </div>
           </div>
 
           <ProfileSection title="About"><p style={{ fontSize: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>{r.bio}</p></ProfileSection>
-          <ProfileSection title="Areas of law"><TagList items={r.specialties} tone="brand" /></ProfileSection>
-          <ProfileSection title="Proceedings covered"><TagList items={r.proceedings} tone="sage" /></ProfileSection>
-          {(r.services || []).length > 0 && <ProfileSection title="Services offered"><TagList items={r.services} tone="brand" /></ProfileSection>}
-          {(r.languages || []).length > 0 && <ProfileSection title="Languages"><TagList items={r.languages} tone="plum" /></ProfileSection>}
-          <ProfileSection title="Geographic coverage"><TagList items={(r.coverage || []).map((c) => c + " County")} tone="brand" /></ProfileSection>
-          <ProfileSection title="Certifications"><TagList items={r.certifications} tone="sage" /></ProfileSection>
+          <ProfileSection title="Areas of law"><PlainRow items={r.specialties} /></ProfileSection>
+          <ProfileSection title="Proceedings covered"><ChipRow items={r.proceedings} /></ProfileSection>
+          {((r.services || []).length > 0 || r.rush) && <ProfileSection title="Services offered"><ChipRow items={r.services} rush={r.rush} /></ProfileSection>}
+          {(r.languages || []).length > 0 && <ProfileSection title="Languages"><PlainRow items={r.languages} /></ProfileSection>}
+          <ProfileSection title="Geographic coverage"><PlainRow items={(r.coverage || []).map((c) => c + " County")} /></ProfileSection>
+          <ProfileSection title="Certifications"><PlainRow items={r.certifications} /></ProfileSection>
           {/* Testimonials pulled 2026-07-21: unverified reporter-supplied quotes are a
               credibility risk, and ratings/reviews were already out of the reduced scope.
               Real ratings come later, captured after payment. See docs/reviews_and_ratings.md. */}
@@ -498,6 +496,11 @@ function ReporterProfile({ reporterId, invited }) {
               </>
             )}
           </div>
+          {recentlyActive(r) && (
+            <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13.5, color: "var(--ink-soft)", padding: "0 4px" }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#22C55E", display: "inline-block", flexShrink: 0 }} />Recently active on Dewey Sholes
+            </div>
+          )}
           <div className="ds-panel" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: "var(--muted)" }}>
             <Icon name="eye" size={16} /> {r.views} profile views this month
           </div>
@@ -509,6 +512,24 @@ function ReporterProfile({ reporterId, invited }) {
 }
 function ProfileSection({ title, children }) {
   return <section><h2 style={{ fontSize: 15, fontWeight: 700, fontFamily: "'Inter', sans-serif", color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 12 }}>{title}</h2>{children}</section>;
+}
+// Most profile fields are plain middot-separated text - they're facts, not links, so a pill (which
+// implies a click target) is misleading. Proceedings + Services keep a light label treatment
+// (neutral, not the brand-blue that now reads as a link) since they're the scannable capability axis.
+function PlainRow({ items }) {
+  const list = (items || []).filter(Boolean);
+  if (!list.length) return <span style={{ color: "var(--dim)", fontSize: 15.5 }}>Not specified</span>;
+  return <div style={{ fontSize: 15.5, color: "var(--ink-soft)", lineHeight: 1.7 }}>{list.join("  ·  ")}</div>;
+}
+function ChipRow({ items, rush }) {
+  const list = (items || []).filter(Boolean);
+  const chip = { fontSize: 13.5, padding: "6px 12px", borderRadius: 8, background: "var(--bg-soft)", border: "1px solid var(--rule)", color: "var(--ink-soft)" };
+  return (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+      {list.map((it) => <span key={it} style={chip}>{it}</span>)}
+      {rush ? <span style={chip}>Rush / expedited</span> : null}
+    </div>
+  );
 }
 function TagList({ items, tone }) {
   const cls = tone === "sage" ? "pill-claimed" : tone === "plum" ? "pill-tag" : "pill-verified";
