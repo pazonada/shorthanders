@@ -117,11 +117,27 @@ addition to the "payment received → rate your reporter?" screen **when Stripe 
 **Keep the collection simple:** two quick scores (quality, timeliness) + one optional testimonial,
 skippable, one screen. Firm rates reporter only (a reporter-rates-firm direction can come later).
 
+**Reporter approves testimonials before they show (opt-in display + veto):**
+- When a firm leaves a testimonial, it lands in the reporter's dashboard **pending**, not live. The
+  reporter **approves** the ones they want on their public profile and can **veto/hide** any they
+  don't – for any reason, no justification needed. Nothing appears until they say so.
+- **Critical split: this applies to the testimonial *quotes*, not the numeric rating.** Reporters
+  curate which quotes show; they **cannot** pick and choose which scores count toward their
+  average, or the rating stops meaning anything (everyone would keep only their 5s). So: quotes are
+  opt-in and vetoable; the aggregate rating is computed from all verified ratings and is not
+  reporter-editable. Worth stating plainly in onboarding so the deal is clear – "you control which
+  kind words appear; the score reflects every paid job."
+- A reporter can un-publish a previously approved testimonial later too (hide is reversible).
+- This also doubles as first-line moderation: since only reporter-approved quotes go public, an
+  abusive or off-base "testimonial" simply never gets approved. We still keep our own takedown
+  ability for anything that slips through or violates terms.
+
 **Bank for display-time (later):**
 - A per-reporter threshold before any ratings or testimonials show.
-- Moderation / takedown even for opt-in testimonials; a reporter's right to respond or hide.
-- Be transparent with reporters up front that ratings + testimonials are being collected and will
-  eventually show (put it in their onboarding/terms).
+- The approval/veto flow above, plus our own takedown ability; a reporter's right to respond.
+- Be transparent with reporters up front that ratings + testimonials are being collected, that
+  they control which testimonials appear, and that the score reflects all paid jobs (put it in
+  their onboarding/terms).
 - Testimonials are user-generated content we host, not author – standard platform posture; confirm
   wording in the terms-of-service review.
 

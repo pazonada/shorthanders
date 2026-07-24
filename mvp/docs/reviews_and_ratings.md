@@ -58,10 +58,18 @@ to give. Much lower risk, same warmth.
   the platform, not self-supplied. That tie is what makes it worth more than the testimonials we
   just removed.
 
-**Bank for display-time (still true):** a per-reporter threshold before anything shows; a light
-moderation / takedown path even for opt-in testimonials; a reporter's right to respond or hide;
-transparency with reporters up front that this is being collected and will eventually show (put it
-in onboarding/terms); the standard "we host user content, we don't author it" ToS posture.
+**Reporters approve their testimonials (opt-in display + veto):** a firm's testimonial lands in the
+reporter's dashboard **pending** and only goes public if the reporter **approves** it; they can
+**veto/hide** any quote, for any reason, and un-publish later. This also serves as first-line
+moderation - an abusive quote simply never gets approved. **The split that matters:** approval/veto
+covers the testimonial *quotes* only. Reporters do **not** get to pick which numeric ratings count
+- the aggregate is computed from every verified paid job, or the score is worthless. State this
+plainly in onboarding: you control which kind words appear; the score reflects all your paid work.
+
+**Bank for display-time (still true):** a per-reporter threshold before anything shows; the
+approval/veto flow above plus our own takedown path; a reporter's right to respond; transparency
+with reporters up front that this is being collected and will eventually show (put it in
+onboarding/terms); the standard "we host user content, we don't author it" ToS posture.
 
 **Only works for firms who pay through the platform** - so ratings and testimonials build up for
 the reporters who use invoicing/payments (Pro reporters especially). A nice bonus reason to go Pro.
