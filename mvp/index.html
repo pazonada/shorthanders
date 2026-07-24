@@ -4649,12 +4649,13 @@ function ReporterPayments({ invoices, paidThisMonth }) {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
           <div className="ds-panel" style={{ border: "2px solid var(--ink)" }}>
             <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span></div>
-            <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 6, lineHeight: 1.55 }}>A small fee per payment, no monthly cost. Best if you invoice occasionally.</p>
+            <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 27, color: "var(--ink)", marginTop: 8, lineHeight: 1 }}>5%<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}> per payment</span></div>
+            <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 8, lineHeight: 1.55 }}>No monthly cost. Best if you invoice occasionally.</p>
           </div>
           <div className="ds-panel">
             <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pro</div>
-            <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 6, lineHeight: 1.55 }}>Flat monthly plus a lower per-invoice fee. Best once you invoice often or in large amounts.</p>
-            <div style={{ fontSize: 12.5, color: "var(--dim)", marginTop: 8 }}>Pricing announced before launch.</div>
+            <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 27, color: "var(--ink)", marginTop: 8, lineHeight: 1 }}>$29<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}>/month + 2% per payment</span></div>
+            <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 8, lineHeight: 1.55 }}>A lower per-payment fee. Best once you invoice often or in large amounts.</p>
           </div>
         </div>
       </div>
