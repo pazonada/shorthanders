@@ -57,6 +57,44 @@ concentrated hands-on selling, Bay Area first.
 6. **Cold email** to enriched paralegal contacts at the target firms – last, once warm
    channels are worked.
 
+## Paid acquisition (the next tier, once there's a budget)
+
+Everything above is free. These cost money, so they're **not part of the $0 stack** – they're
+where the first real marketing dollars go, once a metro is provably paying and there's budget to
+spend. Start small, measure cost per firm signup, kill anything that doesn't convert. Never invent
+the numbers – set real caps and read the real results.
+
+1. **Google Search ads (demand side, highest intent).** A paralegal or office manager who types
+   "court reporter San Jose," "deposition reporter near me," or "certified shorthand reporter
+   California" is a buyer at the moment of need. Point those searches at the directory (or a
+   county landing page), not the homepage. Notes:
+   - **Intent keywords, tight geo.** Bid on county/city + "court reporter / deposition reporter /
+     CSR" terms, geo-fenced to the metro we're actually selling in (Bay Area first, then LA).
+     Statewide broad match burns money fast.
+   - **Competitor/agency terms** (agency brand names + "alternative") are worth a small, careful
+     test – firms shopping an agency are exactly who we want – but watch trademark rules and cost.
+   - **Demand, not supply.** Reporters are already free to reach via the claim email + Facebook, so
+     don't spend ad money chasing supply. The paid dollar goes to firm search intent.
+   - Land on a page that proves the value fast (directory results in their county + the
+     agency-vs-DS money comparison) and makes firm signup one click.
+
+2. **ChatGPT / AI-assistant advertising (emerging).** More people now ask an AI assistant "how do
+   I find a court reporter in <place>" than a search box. Two plays, and they're different:
+   - **Paid placements inside ChatGPT.** OpenAI is rolling out sponsored/ad formats in ChatGPT;
+     as they open to smaller advertisers, a sponsored answer to court-reporter / deposition
+     queries reaches the buyer inside the tool they're already asking. Treat it like Google
+     Search ads – high-intent, geo-targeted, measured on cost per firm signup. This is a newer,
+     less-proven surface, so it's a **test-budget line, not a core channel** until the numbers
+     earn it.
+   - **Be the answer even without paying (answer-engine presence).** Separate and free-ish: make
+     the directory the thing an AI *cites* when someone asks how to find a CA court reporter –
+     clear public pages, structured/plain descriptions, county coverage the model can read. Worth
+     doing regardless of whether we ever buy AI ads; it's the AI-era version of SEO.
+
+**Guardrail on this whole tier:** it breaks the "~$0, two people" rule on purpose, so it waits
+until there's money to lose and a metro worth amplifying. Cap spend, attribute every signup, and
+compare cost per firm against the free channels before scaling anything.
+
 ## What we are deliberately NOT doing (and why)
 
 The v1 plan assumed a ~$2,300 pilot budget and a transaction-fee model. Both are gone,

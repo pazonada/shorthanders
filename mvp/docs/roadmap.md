@@ -72,43 +72,57 @@ attorney can find them later to order the transcript.
 
 ---
 
-## Reviews – collect early, display later – ROADMAP
+## Ratings + optional testimonials – collect early, display later – ROADMAP
 
-**What it is:** firms rate a reporter on **quality** and **timeliness** (like the full version
-of Dewey Sholes), plus an optional written comment. Prompted **right after the firm pays an
-invoice.**
+**What it is:** after a firm pays an invoice, prompt them once for two things – a **rating** (two
+quick scores: **quality of the deliverable** and **timeliness of delivery**, averaged into one
+headline score) and an **optional testimonial** (a short quote about the reporter, **skippable**).
+
+**Why an optional testimonial, not a "review":** a review field invites negative free text – the
+big moderation and liability surface (defamation, disputes, fake text). An opt-in testimonial is
+positive-only by construction: a firm that liked the reporter adds a nice line; a firm that didn't
+just skips it and lets the numeric scores speak. So the text we host is praise a firm chose to
+give – much lower risk, same warmth. (Full write-up: [`reviews_and_ratings.md`](reviews_and_ratings.md).)
 
 **The sequencing (this is the smart part):** start **collecting** as soon as real payments are
-live, but **don't display** anything until each reporter has a decent number of reviews and
-we've thought through moderation. You can't backfill reviews for past jobs, so collecting
-early is uniquely valuable – but showing them early backfires.
+live, but **don't display** anything until each reporter has a decent number of ratings and we've
+thought through moderation. You can't backfill ratings for past jobs, so collecting early is
+uniquely valuable – but showing them early backfires.
+
+**Turn both on together, later:** when a reporter crosses the volume threshold and we flip ratings
+on, the testimonials collected for that reporter **start appearing at the same time.** Over time
+the best reporters become evident from the *combination* – their rating plus the volume of
+testimonials attached. A reporter with a rating but no testimonials sits a little lower in a firm's
+consideration than one with several glowing quotes. Keep that a **soft discovery nudge, not the
+sort order itself:** the numeric rating stays the backbone, so we don't reward reporters who nag
+firms for quotes or penalize great reporters whose busy firms never write one.
 
 **Why not display from the start:**
-- One or two reviews are noisy and unfair.
-- A reporter with zero reviews looks bad next to one with a few – punishes newcomers.
-- Before it's public you need enough data per reporter, a way to handle bad/abusive reviews,
-  and a way for reporters to respond. All display-time work.
+- One or two ratings are noisy and unfair.
+- A reporter with zero ratings looks bad next to one with a few – punishes newcomers.
+- Before it's public you need enough data per reporter, a light takedown path even for opt-in
+  testimonials, and a way for reporters to respond. All display-time work.
 
 **Trigger – the payment-success moment:**
 - Fresh impressions right after the firm paid.
-- **Payment-gated = trustworthy:** only a firm that actually paid a reporter can review them
-  (like an Amazon "verified purchase"). Quietly solves fake reviews.
-- **Nuance:** only works for firms who pay *through* the platform. Reviews build up for the
-  reporters who use invoicing/payments (Pro reporters) – a nice bonus reason to go Pro.
+- **Payment-gated = trustworthy:** only a firm that actually paid a reporter can rate them (like
+  an Amazon "verified purchase"). Quietly solves fake ratings and fake testimonials.
+- **Nuance:** only works for firms who pay *through* the platform. Ratings and testimonials build
+  up for the reporters who use invoicing/payments (Pro reporters) – a nice bonus reason to go Pro.
 
 **Timing note:** the prompt hangs off the *real* payment-success screen, which isn't live yet
 (payments are mocked in the prototype). So this is **not** for the current demo – it's a small
 addition to the "payment received → rate your reporter?" screen **when Stripe goes live.**
 
-**Keep the collection simple:** two quick ratings (quality, timeliness) + one optional comment,
+**Keep the collection simple:** two quick scores (quality, timeliness) + one optional testimonial,
 skippable, one screen. Firm rates reporter only (a reporter-rates-firm direction can come later).
 
 **Bank for display-time (later):**
-- A per-reporter threshold before any reviews show.
-- Moderation / abuse handling; a reporter's right to respond.
-- Be transparent with reporters up front that reviews are being collected and will eventually
-  show (put it in their onboarding/terms).
-- Reviews are user-generated content we host, not author – standard platform posture; confirm
+- A per-reporter threshold before any ratings or testimonials show.
+- Moderation / takedown even for opt-in testimonials; a reporter's right to respond or hide.
+- Be transparent with reporters up front that ratings + testimonials are being collected and will
+  eventually show (put it in their onboarding/terms).
+- Testimonials are user-generated content we host, not author – standard platform posture; confirm
   wording in the terms-of-service review.
 
 ## Parking lot (mentioned, not yet scoped)
