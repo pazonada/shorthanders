@@ -90,9 +90,12 @@ function StoreProvider({ children }) {
   const [firmName, setFirmName] = useState("Morgan & Reyes LLP"); // demo default; set from signup
   // Reporters a free firm may fully view/message: the ones who invited or are connected to them.
   const [unlockedReporters, setUnlockedReporters] = useState(["900004", "900003", "900005"]);
+  // The demo reporter's saved "accepting jobs" setting. Prototype stand-in for the one editable
+  // profile field with cross-page display consequences; committed on Save, read by the profile.
+  const [myAccepting, setMyAccepting] = useState(true);
 
   const store = {
-    role, myCsr, saved, convos, invoices, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters,
+    role, myCsr, saved, convos, invoices, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, myAccepting, setMyAccepting,
     addTemplate: (t) => setCustomTemplates((xs) => [...xs, t]),
     enterAsReporter: () => setRole("reporter"),
     enterAsFirm: (name) => { setRole("firm"); if (name && name.trim()) setFirmName(name.trim()); },

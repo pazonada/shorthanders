@@ -186,6 +186,7 @@ function RateRow({ label, unit, value, onChange, extra }) {
   );
 }
 function ReporterProfileEditor({ me }) {
+  const store = useStore();
   const [toast, setToast] = useState("");
   const counties = useMemo(() => Array.from(new Set(buildDirectory().map((r) => r.county).filter(Boolean))).sort(), []);
   const [photo, setPhoto] = useState(me.photo || "");
@@ -199,7 +200,8 @@ function ReporterProfileEditor({ me }) {
   const [coverage, setCoverage] = useState(me.coverage || []);
   const [notary, setNotary] = useState(!!me.notary);
   const [rush, setRush] = useState(!!me.rush);
-  const [accepting, setAccepting] = useState(me.accepting !== false);
+  // Draft, seeded from the saved value. Committed to the store on Save, then read by the profile.
+  const [accepting, setAccepting] = useState(store.myAccepting);
   const [showRates, setShowRates] = useState(false);
   const [rates, setRates] = useState({ pageOriginal: { low: "", high: "" }, pageCopy: { low: "", high: "" }, halfDay: { low: "", high: "" }, fullDay: { low: "", high: "" }, trialDay: { low: "", high: "" }, expedited: { low: "", high: "" }, realtime: { low: "", high: "" } });
   const [expUnit, setExpUnit] = useState("percent");
@@ -287,7 +289,7 @@ function ReporterProfileEditor({ me }) {
       </div>
 
       <div style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
-        <button className="btn btn-primary" onClick={() => setToast("Profile saved")}><Icon name="check" size={16} /> Save changes</button>
+        <button className="btn btn-primary" onClick={() => { store.setMyAccepting(accepting); setToast("Profile saved"); }}><Icon name="check" size={16} /> Save changes</button>
         <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--brand)", cursor: "pointer", fontSize: 14, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 6, padding: 0 }}><Icon name="eye" size={15} /> View public profile</button>
       </div>
       <Toast msg={toast} onClose={() => setToast("")} />

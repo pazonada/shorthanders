@@ -426,6 +426,8 @@ function ReporterProfile({ reporterId, invited }) {
 
   const pct = completeness(r);
   const isOwner = store.role === "reporter" && r.id === store.myCsr;
+  // Own profile reflects the saved availability from the editor; others use their stored flag.
+  const notAccepting = r.id === store.myCsr ? !store.myAccepting : notAcceptingJobs(r);
   const first = r.name.split(" ")[0];
   const acceptInvite = () => { store.acceptInvite(r.id); navigate("/firm"); };
   const messageReporter = () => {
@@ -436,7 +438,7 @@ function ReporterProfile({ reporterId, invited }) {
     <Page>
       {invited && <div className="banner banner-ok" style={{ marginBottom: 14 }}><Icon name="heart" size={18} style={{ flexShrink: 0 }} /><div><strong>{first} invited you to Dewey Sholes.</strong> Create a free account to message {first}, pay their invoices, and save them to your firm. Joining is free for your firm.</div></div>}
       {r.sample && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This is a fictional demo profile – the name, license number, and every detail are made up to show how a claimed profile looks. Not a real reporter.</div></div>}
-      {notAcceptingJobs(r) && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="info" size={18} style={{ flexShrink: 0 }} /><div><strong>Not accepting new jobs right now.</strong> {first} isn't taking on new work at the moment. Firms can still message {first} – for example, to request a copy of a transcript already prepared, or one from a past matter.</div></div>}
+      {notAccepting && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="info" size={18} style={{ flexShrink: 0 }} /><div><strong>Not accepting new jobs right now.</strong> {first} isn't taking on new work at the moment. Firms can still message {first} – for example, to request a copy of a transcript already prepared, or one from a past matter.</div></div>}
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 32, alignItems: "start" }} className="profile-grid">
         {/* main */}
         <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>
@@ -459,11 +461,11 @@ function ReporterProfile({ reporterId, invited }) {
           </div>
 
           <ProfileSection title="About"><p style={{ fontSize: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>{r.bio}</p></ProfileSection>
-          <ProfileSection title="Areas of law"><PlainRow items={r.specialties} /></ProfileSection>
+          <ProfileSection title="Areas of law"><ChipRow items={r.specialties} /></ProfileSection>
           <ProfileSection title="Proceedings covered"><ChipRow items={r.proceedings} /></ProfileSection>
           {((r.services || []).length > 0 || r.rush) && <ProfileSection title="Services offered"><ChipRow items={r.services} rush={r.rush} /></ProfileSection>}
-          {(r.languages || []).length > 0 && <ProfileSection title="Languages"><PlainRow items={r.languages} /></ProfileSection>}
-          <ProfileSection title="Geographic coverage"><PlainRow items={(r.coverage || []).map((c) => c + " County")} /></ProfileSection>
+          {(r.languages || []).length > 0 && <ProfileSection title="Languages"><ChipRow items={r.languages} /></ProfileSection>}
+          <ProfileSection title="Geographic coverage"><ChipRow items={(r.coverage || []).map((c) => c + " County")} /></ProfileSection>
           <ProfileSection title="Certifications"><PlainRow items={r.certifications} /></ProfileSection>
           {/* Testimonials pulled 2026-07-21: unverified reporter-supplied quotes are a
               credibility risk, and ratings/reviews were already out of the reduced scope.
@@ -496,13 +498,13 @@ function ReporterProfile({ reporterId, invited }) {
               </>
             )}
           </div>
-          {recentlyActive(r) && (
-            <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13.5, color: "var(--ink-soft)", padding: "0 4px" }}>
-              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#22C55E", display: "inline-block", flexShrink: 0 }} />Recently active on Dewey Sholes
-            </div>
-          )}
-          <div className="ds-panel" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: "var(--muted)" }}>
-            <Icon name="eye" size={16} /> {r.views} profile views this month
+          <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 11, fontSize: 13, color: "var(--muted)" }}>
+            {recentlyActive(r) && (
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ width: 16, display: "inline-flex", justifyContent: "center", flexShrink: 0 }}><span style={{ width: 8, height: 8, borderRadius: "50%", background: "#22C55E" }} /></span>Recently active on Dewey Sholes
+              </div>
+            )}
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}><Icon name="eye" size={16} style={{ flexShrink: 0 }} /> {r.views} profile views this month</div>
           </div>
         </aside>
       </div>
