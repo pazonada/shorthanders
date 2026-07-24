@@ -377,7 +377,7 @@ function GatedProfile({ r }) {
   const first = r.name.split(" ")[0];
   return (
     <Page>
-      <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 16 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to directory</button>
+      <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 16 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back</button>
       <div style={{ display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap", marginBottom: 8 }}>
         <Avatar name={r.name} size={84} photo={r.photo} />
         <div style={{ flex: 1, minWidth: 200 }}>
@@ -432,7 +432,7 @@ function ReporterProfile({ reporterId, invited }) {
   };
   return (
     <Page>
-      <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 16 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to directory</button>
+      <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 16 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back</button>
       {invited && <div className="banner banner-ok" style={{ marginBottom: 14 }}><Icon name="heart" size={18} style={{ flexShrink: 0 }} /><div><strong>{first} invited you to Dewey Sholes.</strong> Create a free account to message {first}, pay their invoices, and save them to your firm. Joining is free for your firm.</div></div>}
       {r.sample && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This is a fictional demo profile – the name, license number, and every detail are made up to show how a claimed profile looks. Not a real reporter.</div></div>}
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 32, alignItems: "start" }} className="profile-grid">
@@ -520,7 +520,7 @@ function TagList({ items, tone }) {
 function UnclaimedProfile({ r }) {
   return (
     <Page>
-      <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 20 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to directory</button>
+      <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 20 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back</button>
       <div style={{ maxWidth: 620 }}>
         <div style={{ display: "flex", gap: 18, alignItems: "center" }}>
           <Avatar name={r.name} size={72} claimed={false} />
