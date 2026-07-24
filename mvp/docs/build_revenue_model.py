@@ -66,7 +66,7 @@ inputs = [
     ("Avg billed per Pro reporter ($/mo)", [4000, 5000, 6000, 5000], CUR, "Dollars a Pro reporter runs THROUGH the platform monthly."),
     ("Avg billed per pay-per-invoice reporter ($/mo)", [700, 800, 1000, 800], CUR, "Dollars an occasional reporter runs through monthly."),
     ("Paying firms (#)", [50, 200, 500, 200], INT, "Firms on the paid subscription. Grow this."),
-    ("Firm subscription ($/mo)", [29, 29, 29, 29], CUR, "Set to Pro price per your 'for kicks' – firms can bear more; raise later."),
+    ("Firm subscription ($/mo)", [39, 39, 39, 39], CUR, "Firm plan, priced above reporter Pro ($29) – firms bear more. Annual is $390 (~2 months free)."),
 ]
 row = 7
 input_rows = {}
@@ -265,7 +265,7 @@ def res3(label, formula, fmt, note="", total=False):
     return rr
 
 section3(r3, "SHARED INPUTS  (blue = change these)"); r3 += 1
-R_NET = inp3("Net take-home target ($/yr)", 150000, CUR, "What you want to keep after taxes and expenses.")
+R_NET = inp3("Net take-home target ($/yr)", 120000, CUR, "What you want to keep after taxes and expenses. 120k = $10k/mo.")
 R_TAX = inp3("Tax rate (%)", 0.33, PCT, "All-in: federal + self-employment + NJ. Rough – confirm with an accountant.")
 R_TECH = inp3("Tech + tools ($/yr)", 12000, CUR, "Hosting, email, Stripe account fees, SaaS. Small at this scale.")
 R_ENG = inp3("Engineer / dev help ($/yr, optional)", 0, CUR, "On-call engineering, if you pay for it. 0 if not.")
@@ -277,9 +277,9 @@ R_GMO = res3("Gross needed ($/mo)", f"=B{R_GYR}/12", CUR)
 
 r3 += 1
 section3(r3, "PATH A – subscriptions (firms + CSR Pro)"); r3 += 1
-R_SPRICE = inp3("Price per paying user ($/mo)", 29, CUR, "Same for firms and CSRs, per your 'for kicks'.")
+R_SPRICE = inp3("Price per paying user ($/mo)", 39, CUR, "Firm plan is $39; reporter Pro is $29. Set to $39 since firms drive subscription growth.")
 res3("Paying users needed", f"=B{R_GYR}/(B{R_SPRICE}*12)", INT,
-     "Mostly firms – CSR Pro realistically tops out ~50-140.", total=True)
+     "Mostly firms at $39 – CSR Pro ($29) realistically tops out ~50-140.", total=True)
 
 r3 += 1
 section3(r3, "PATH B – per-payment fee (reporters collecting on-platform)"); r3 += 1

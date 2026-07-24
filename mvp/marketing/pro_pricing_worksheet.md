@@ -9,8 +9,8 @@ sourced real data point or a clearly-labelled input you set.
 >   ~5,145 emailed ≈ **139 Pro, ~$4,000/mo at $29** (softer paid-upgrade step ≈ 46 Pro, ~$1,300/mo).
 > - **Net target** – how many *paying users* (Path A: subscriptions) **or** how many *reporters
 >   collecting on-platform* (Path B: the per-payment fee) it takes to net a target after NJ tax +
->   tech. Default $150k net ≈ **~680 paying users** at $29, **or ~165 reporters** running $4k/mo
->   each through a ~3% blended fee (Pro 2% / base 5%).
+>   tech. Default $120k net ($10k/mo) ≈ **~410 paying firms** at $39, **or ~133 reporters** running
+>   $4k/mo each through a ~3% blended fee (Pro 2% / base 5%).
 
 Change the blue cells; everything recalcs on open.
 
