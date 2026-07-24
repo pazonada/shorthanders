@@ -3,16 +3,20 @@ function RepCard({ r }) {
   const store = useStore();
   const locked = firmLocked(store, r);
   const scope = [...(r.proceedings || []), ...(r.services || [])];
+  const open = () => openReporter(r.id);
   return (
-    <button className={"rep-card" + (r.claimed ? "" : " unclaimed")} onClick={() => navigate("/reporters/" + r.id)}>
+    <div className={"rep-card" + (r.claimed ? "" : " unclaimed")} role="button" tabIndex={0} onClick={open} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } }}>
       <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
         <Avatar name={r.name} claimed={r.claimed} photo={r.photo} />
         <div style={{ flex: 1, minWidth: 0 }}>
           <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)", lineHeight: 1.15, display: "block" }}>{r.name}{r.sample && <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10.5, fontWeight: 700, letterSpacing: ".04em", color: "var(--ochre-deep)", background: "var(--ochre-soft)", borderRadius: 5, padding: "2px 6px", marginLeft: 8, verticalAlign: "middle" }}>SAMPLE</span>}</span>
           <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 3 }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}</div>
           <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon name="pin" size={13} style={{ color: "var(--dim)", flexShrink: 0 }} />{r.city}{r.county && r.county !== r.city ? ", " + r.county + " County" : ""}</div>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 5, flexShrink: 0 }}>
+          <SaveHeart r={r} />
           {recentlyActive(r) && (
-            <div style={{ fontSize: 12.5, fontStyle: "italic", color: "var(--dim)", marginTop: 4 }}>Recently active</div>
+            <span style={{ fontSize: 12.5, fontStyle: "italic", color: "var(--dim)", whiteSpace: "nowrap" }}>Recently active</span>
           )}
         </div>
       </div>
@@ -36,7 +40,7 @@ function RepCard({ r }) {
           Public license record. <span style={{ color: "var(--ink)", fontWeight: 600 }}>Is this you? Claim it →</span>
         </div>
       )}
-    </button>
+    </div>
   );
 }
 
@@ -58,6 +62,35 @@ function FilterCheck({ label, checked, onChange }) {
   );
 }
 const PAGE_SIZE = 24;
+// Directory browse state that must survive opening a profile and coming back. Kept at module
+// scope (not React state) because ReporterDirectory unmounts while a profile is open; on return
+// it re-seeds its filters, applied search, page size, and scroll position from here so "back to
+// directory" lands you exactly where you were. Cleared only by a full reload - the right lifetime
+// for one browsing session.
+const dirCache = {
+  q: "", county: "", language: "", minYears: "",
+  tags: [], specTags: [], certTags: [],
+  rushOnly: false, notaryOnly: false, claimedOnly: false,
+  searched: null, limit: PAGE_SIZE, scrollY: 0,
+};
+// Open a reporter, remembering the scroll position first so returning restores it. Runs before
+// the router's scroll-to-top on hashchange, so the saved value is the real browse position.
+function openReporter(id) { dirCache.scrollY = window.scrollY; navigate("/reporters/" + id); }
+// Small heart toggle used on cards and list rows so a firm can build a saved list without leaving
+// the results. stopPropagation keeps the click off the card's open-profile handler.
+function SaveHeart({ r, size = 20 }) {
+  const store = useStore();
+  if (store.role === "reporter") return null;   // reporters don't save other reporters
+  const isSaved = store.saved.includes(r.id);
+  return (
+    <button onClick={(e) => { e.stopPropagation(); store.toggleSaved(r.id); }}
+      aria-label={isSaved ? "Remove from saved" : "Save reporter"}
+      title={isSaved ? "Saved" : "Save reporter"}
+      style={{ background: "none", border: "none", padding: 4, cursor: "pointer", display: "flex", color: isSaved ? "var(--brand)" : "var(--dim)", flexShrink: 0 }}>
+      <Icon name="heart" size={size} />
+    </button>
+  );
+}
 // One reporter vs one criteria set. Shared by the applied list and the live draft count so the
 // "N results" preview and the actual results can never diverge in logic.
 function matchesCriteria(r, s, haystacks) {
@@ -82,23 +115,34 @@ function matchesCriteria(r, s, haystacks) {
 }
 function ReporterDirectory() {
   const all = useMemo(() => buildDirectory(), []);
-  const [q, setQ] = useState("");
-  const [county, setCounty] = useState("");
-  const [language, setLanguage] = useState("");
-  const [minYears, setMinYears] = useState("");
-  const [tags, setTags] = useState([]);       // selected proceeding / service tags
-  const [specTags, setSpecTags] = useState([]);   // selected specialties (multi, OR within group)
-  const [certTags, setCertTags] = useState([]);   // selected credentials (multi, OR within group)
-  const [rushOnly, setRushOnly] = useState(false);
-  const [notaryOnly, setNotaryOnly] = useState(false);
-  const [claimedOnly, setClaimedOnly] = useState(false);
-  const [limit, setLimit] = useState(PAGE_SIZE);
+  // Seed every control from dirCache so returning from a profile restores the exact browse state.
+  const [q, setQ] = useState(dirCache.q);
+  const [county, setCounty] = useState(dirCache.county);
+  const [language, setLanguage] = useState(dirCache.language);
+  const [minYears, setMinYears] = useState(dirCache.minYears);
+  const [tags, setTags] = useState(dirCache.tags);       // selected proceeding / service tags
+  const [specTags, setSpecTags] = useState(dirCache.specTags);   // selected specialties (multi, OR within group)
+  const [certTags, setCertTags] = useState(dirCache.certTags);   // selected credentials (multi, OR within group)
+  const [rushOnly, setRushOnly] = useState(dirCache.rushOnly);
+  const [notaryOnly, setNotaryOnly] = useState(dirCache.notaryOnly);
+  const [claimedOnly, setClaimedOnly] = useState(dirCache.claimedOnly);
+  const [limit, setLimit] = useState(dirCache.limit);
   // Deferred search: the controls above are a DRAFT. Nothing filters the list until "Search" is
   // pressed, which snapshots the draft into `searched`. null (or an empty snapshot) = browse mode
   // (featured cards + everyone); a real snapshot = search mode (pure ranked list, no featured).
   // Deliberate choice 2026-07-21: with this many facets, compose-then-apply beats the list
   // reflowing on every keystroke. See docs/directory_filters.md.
-  const [searched, setSearched] = useState(null);
+  const [searched, setSearched] = useState(dirCache.searched);
+
+  // Persist the live browse state back to dirCache so a trip to a profile and back restores it.
+  useEffect(() => {
+    Object.assign(dirCache, { q, county, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit });
+  }, [q, county, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit]);
+  // Restore scroll on return. Runs before paint so there's no flash of the top after the router's
+  // scroll-to-top fires on the hashchange back into the directory.
+  useLayoutEffect(() => {
+    if (dirCache.scrollY) window.scrollTo({ top: dirCache.scrollY, left: 0, behavior: "instant" });
+  }, []);
 
   const counties = useMemo(() => Array.from(new Set(all.map((r) => r.county).filter(Boolean))).sort(), [all]);
   // Specialty filter pulled 2026-07-21: the only specialty values in the app are fabricated
@@ -288,7 +332,7 @@ function RepRow({ r }) {
   const langs = (r.languages || []).filter(Boolean);
   const specs = (r.specialties || []).slice(0, 3);
   return (
-    <div className="dir-row" onClick={() => navigate("/reporters/" + r.id)}>
+    <div className="dir-row" onClick={() => openReporter(r.id)}>
       <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
         <Avatar name={r.name} size={40} claimed={r.claimed} />
         <div style={{ minWidth: 0 }}>
@@ -315,6 +359,7 @@ function RepRow({ r }) {
       <div className="dir-rate" style={{ fontSize: 13, color: r.claimed ? "var(--ink-soft)" : "var(--dim)", textAlign: "right" }}>
         {r.claimed ? (r.rate || "Rate on request") : "–"}
       </div>
+      <div className="dir-save" style={{ display: "flex", justifyContent: "flex-end" }}><SaveHeart r={r} size={18} /></div>
       <div className="dir-chevron" style={{ color: "var(--dim)", display: "flex", justifyContent: "flex-end" }}><Icon name="arrow" size={16} /></div>
     </div>
   );
