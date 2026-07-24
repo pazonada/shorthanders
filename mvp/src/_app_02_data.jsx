@@ -4,7 +4,16 @@
 // "Workers' comp" is a payment-affecting proceeding (own fee schedule / O&2 / minimum).
 const PROCEEDING_TYPES = ["Depositions", "Trials", "Hearings", "Arbitrations", "Workers' comp"];
 const SERVICE_TYPES = ["Realtime", "Remote / videoconference", "Legal video", "Rough draft / ASCII", "Court-audio transcription", "Expedited turnaround"];
-const LANGUAGES = ["Spanish", "Mandarin", "Cantonese", "Korean", "Vietnamese", "Tagalog", "ASL", "Russian", "Armenian", "Farsi"];
+// Common-first (the claim flow shows the first 6 as quick chips; the directory select and profile
+// search show all). Weighted toward CA court-interpreter languages, then a broader alphabetical
+// tail. Reporters can also add one not listed via the profile editor's "Other" write-in.
+const LANGUAGES = ["Spanish", "Mandarin", "Cantonese", "Korean", "Vietnamese", "Tagalog",
+  "Armenian", "Farsi (Persian)", "Russian", "Punjabi", "Arabic", "ASL (American Sign Language)",
+  "Amharic", "Bengali", "Burmese", "Cebuano", "Croatian", "Dari", "Dutch", "French", "German",
+  "Greek", "Gujarati", "Haitian Creole", "Hebrew", "Hindi", "Hmong", "Hungarian", "Ilocano",
+  "Indonesian", "Italian", "Japanese", "Khmer (Cambodian)", "Lao", "Mongolian", "Nepali", "Pashto",
+  "Polish", "Portuguese", "Romanian", "Samoan", "Serbian", "Somali", "Swahili", "Tamil", "Telugu",
+  "Thai", "Tigrinya", "Tongan", "Turkish", "Ukrainian", "Urdu", "Yoruba"];
 
 // Areas of law (displayed as "Area of law"). This is the California State Bar lawyer-referral
 // "area of law" taxonomy, which Rosie (CA trial lawyer) endorsed as the authoritative list.

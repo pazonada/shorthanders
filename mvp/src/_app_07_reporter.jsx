@@ -234,7 +234,7 @@ function ReporterProfileEditor({ me }) {
       <FieldBlock label="Areas of law" hint="Pick from the California State Bar list, or type your own and press Enter to add it.">
         <TagSearchAdd options={SPECIALTY_TYPES} selected={areas} onChange={setAreas} placeholder="Search areas of law, or type your own" allowOther />
       </FieldBlock>
-      <FieldBlock label="Languages" hint="Besides English."><ChipToggle options={LANGUAGES} selected={languages} onToggle={toggleIn(setLanguages)} /></FieldBlock>
+      <FieldBlock label="Languages" hint="Languages you work in besides English. Pick from the list or type your own to add it."><TagSearchAdd options={LANGUAGES} selected={languages} onChange={setLanguages} placeholder="Search languages, or type your own" allowOther /></FieldBlock>
       <FieldBlock label="Certifications"><ChipToggle options={CREDENTIAL_TYPES} selected={certs} onToggle={toggleIn(setCerts)} /></FieldBlock>
       <FieldBlock label="Counties covered"><TagSearchAdd options={counties} selected={coverage} onChange={setCoverage} placeholder="Search California counties" /></FieldBlock>
       <FieldBlock label="Availability"><ChipToggle options={AVAIL_OPTS} selected={avail} onToggle={toggleIn(setAvail)} /></FieldBlock>
