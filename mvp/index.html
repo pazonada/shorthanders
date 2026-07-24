@@ -2849,7 +2849,7 @@ const SAMPLE_PROFILES = [
   { csrNumber: "900002", name: "Desmond Farrataglia", city: "Concord", county: "Contra Costa", method: "Machine (steno)", sample: true, bio: "Concord-based, 20+ years. Insurance defense and PI depositions throughout the I-680 corridor. Rush drafts available same evening.", yearsExp: 22, proceedings: ["Depositions", "Trials", "Arbitrations", "Workers' comp"], services: ["Realtime", "Remote / videoconference", "Expedited turnaround"], specialties: ["Insurance", "Personal Injury", "Construction"], languages: [], coverage: ["Contra Costa", "Alameda", "Solano"], certifications: ["CSR #900002", "CRR", "RMR"], notary: true, rate: null, rush: true, verified: true, claimedAt: "2026-06-28", views: 301 },
   { csrNumber: "900003", name: "Priyanka Venkatesh", city: "Fremont", county: "Alameda", method: "Machine (steno)", sample: true, bio: "Fremont reporter, bilingual (English/Spanish). Two decades of depositions and a growing transcription practice for court-audio overflow.", yearsExp: 19, proceedings: ["Depositions", "Hearings", "Workers' comp"], services: ["Court-audio transcription"], specialties: ["Personal Injury", "Family"], languages: ["Spanish", "Tagalog"], coverage: ["Alameda", "Santa Clara"], certifications: ["CSR #900003"], rate: null, rush: true, verified: true, claimedAt: "2026-07-02", views: 143 },
   { csrNumber: "900004", name: "Cornelius Hathaway", city: "Sunnyvale", county: "Santa Clara", method: "Machine (steno)", sample: true, bio: "Sunnyvale realtime reporter for the tech-litigation bar. Trade-secret and patent cases, tight security protocols, encrypted delivery.", yearsExp: 14, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime", "Legal video", "Rough draft / ASCII"], specialties: ["Patent", "Trade Secrets"], languages: ["Mandarin"], coverage: ["Santa Clara", "San Mateo", "Alameda"], certifications: ["CSR #900004", "CRR", "RMR"], rate: null, rush: true, verified: true, claimedAt: "2026-07-13", views: 256 },
-  { csrNumber: "900005", name: "Lucinda Brightwater", city: "Los Angeles", county: "Los Angeles", method: "Machine (steno)", sample: true, bio: "Downtown LA. Thirty years on the record. Business and entertainment litigation, and expert-witness depositions with dense exhibits.", yearsExp: 30, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime"], specialties: ["Business", "Entertainment"], languages: [], coverage: ["Los Angeles", "Orange"], certifications: ["CSR #900005", "CRR", "RMR", "RPR"], rate: null, rush: true, verified: true, claimedAt: "2026-06-30", views: 412 },
+  { csrNumber: "900005", name: "Lucinda Brightwater", city: "Los Angeles", county: "Los Angeles", method: "Machine (steno)", sample: true, bio: "Downtown LA. Thirty years on the record. Business and entertainment litigation, and expert-witness depositions with dense exhibits.", yearsExp: 30, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime"], specialties: ["Business", "Entertainment"], languages: [], coverage: ["Los Angeles", "Orange"], certifications: ["CSR #900005", "CRR", "RMR", "RPR"], rate: null, rush: true, accepting: false, verified: true, claimedAt: "2026-06-30", views: 412 },
   { csrNumber: "900006", name: "Thaddeus Okonkwo-Reyes", city: "San Diego", county: "San Diego", method: "Machine (steno)", sample: true, bio: "San Diego reporter focused on cross-border and maritime civil matters. Bilingual, tech-forward, encrypted delivery standard.", yearsExp: 11, proceedings: ["Depositions", "Arbitrations"], services: ["Realtime", "Remote / videoconference", "Court-audio transcription"], specialties: ["Maritime", "Commercial Litigation", "Insurance"], languages: ["Spanish"], coverage: ["San Diego", "Imperial"], certifications: ["CSR #900006", "CRR"], rate: null, rush: false, verified: true, claimedAt: "2026-07-08", views: 118 },
 ];
 const RECENT_CLAIM_CUTOFF = "2026-07-10"; // claimed on/after this date shows "New" badge
@@ -2879,6 +2879,12 @@ function buildDirectory() {
 const ACTIVE_WINDOW_DAYS = 30;
 function recentlyActive(p) {
   return !!p.claimed && p.activeDaysAgo != null && p.activeDaysAgo <= ACTIVE_WINDOW_DAYS;
+}
+// A reporter who has turned off "accepting jobs". Absence of the flag = accepting (the default).
+// They STILL appear in search and can still be messaged (e.g. to request a past transcript) - the
+// flag only drives the "not taking new work" warning. See docs/activity_signal_design.md.
+function notAcceptingJobs(p) {
+  return !!p.claimed && p.accepting === false;
 }
 
 // ─── Featured slots ────────────────────────────────────────────────
@@ -3376,6 +3382,9 @@ function RepCard({ r }) {
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 5, flexShrink: 0 }}>
           <SaveHeart r={r} />
+          {notAcceptingJobs(r) && (
+            <span className="pill" style={{ background: "var(--ochre-soft)", color: "var(--ochre-deep)", fontSize: 11, fontWeight: 600, padding: "3px 9px", whiteSpace: "nowrap" }}>Not taking new work</span>
+          )}
           {recentlyActive(r) && (
             <span style={{ fontSize: 12.5, fontStyle: "italic", color: "var(--dim)", whiteSpace: "nowrap" }}>Recently active</span>
           )}
@@ -3698,7 +3707,7 @@ function RepRow({ r }) {
         <Avatar name={r.name} size={40} claimed={r.claimed} />
         <div style={{ minWidth: 0 }}>
           <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "block" }}>{r.name}{r.sample && <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".04em", color: "var(--ochre-deep)", background: "var(--ochre-soft)", borderRadius: 5, padding: "1px 5px", marginLeft: 7, verticalAlign: "middle" }}>SAMPLE</span>}</span>
-          <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}{recentlyActive(r) ? <span style={{ fontStyle: "italic", color: "var(--dim)" }}> · Recently active</span> : null}</div>
+          <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}{recentlyActive(r) ? <span style={{ fontStyle: "italic", color: "var(--dim)" }}> · Recently active</span> : null}{notAcceptingJobs(r) ? <span style={{ color: "var(--ochre-deep)", fontWeight: 600 }}> · Not taking new work</span> : null}</div>
         </div>
       </div>
       <div style={{ minWidth: 0, display: "flex", alignItems: "center", gap: 6, fontSize: 13.5, fontWeight: 600, color: "var(--ink-soft)" }}>
@@ -3794,6 +3803,7 @@ function ReporterProfile({ reporterId, invited }) {
     <Page>
       {invited && <div className="banner banner-ok" style={{ marginBottom: 14 }}><Icon name="heart" size={18} style={{ flexShrink: 0 }} /><div><strong>{first} invited you to Dewey Sholes.</strong> Create a free account to message {first}, pay their invoices, and save them to your firm. Joining is free for your firm.</div></div>}
       {r.sample && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This is a fictional demo profile – the name, license number, and every detail are made up to show how a claimed profile looks. Not a real reporter.</div></div>}
+      {notAcceptingJobs(r) && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="info" size={18} style={{ flexShrink: 0 }} /><div><strong>Not accepting new jobs right now.</strong> {first} isn't taking on new work at the moment. Firms can still message {first} – for example, to request a copy of a transcript already prepared, or one from a past matter.</div></div>}
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 32, alignItems: "start" }} className="profile-grid">
         {/* main */}
         <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>
@@ -3806,28 +3816,22 @@ function ReporterProfile({ reporterId, invited }) {
               <div style={{ color: "var(--muted)", marginTop: 8, fontSize: 15, display: "flex", gap: 14, flexWrap: "wrap" }}>
                 <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />CSR #{r.csrNumber}</span>
                 <span><Icon name="pin" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.city}{r.county ? ", " + r.county + " County" : ""}</span>
+              </div>
+              <div style={{ color: "var(--muted)", marginTop: 6, fontSize: 15, display: "flex", gap: 14, flexWrap: "wrap" }}>
                 <span><Icon name="clock" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.yearsExp} years</span>
                 {r.method ? <span><Icon name="doc" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.method}</span> : null}
                 {r.notary ? <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />Notary public</span> : null}
-              </div>
-              {/* Shown only when true - absence is not a negative signal. */}
-              {recentlyActive(r) && (
-                <div style={{ marginTop: 7, fontSize: 13.5, fontStyle: "italic", color: "var(--dim)" }}>Recently active on Dewey Sholes</div>
-              )}
-              <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
-                {(r.proceedings || []).map((w) => <span key={w} className="pill pill-tag">{w}</span>)}
-                {r.rush && <span className="pill pill-rush"><Icon name="clock" size={12} /> Rush available</span>}
               </div>
             </div>
           </div>
 
           <ProfileSection title="About"><p style={{ fontSize: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>{r.bio}</p></ProfileSection>
-          <ProfileSection title="Areas of law"><TagList items={r.specialties} tone="brand" /></ProfileSection>
-          <ProfileSection title="Proceedings covered"><TagList items={r.proceedings} tone="sage" /></ProfileSection>
-          {(r.services || []).length > 0 && <ProfileSection title="Services offered"><TagList items={r.services} tone="brand" /></ProfileSection>}
-          {(r.languages || []).length > 0 && <ProfileSection title="Languages"><TagList items={r.languages} tone="plum" /></ProfileSection>}
-          <ProfileSection title="Geographic coverage"><TagList items={(r.coverage || []).map((c) => c + " County")} tone="brand" /></ProfileSection>
-          <ProfileSection title="Certifications"><TagList items={r.certifications} tone="sage" /></ProfileSection>
+          <ProfileSection title="Areas of law"><PlainRow items={r.specialties} /></ProfileSection>
+          <ProfileSection title="Proceedings covered"><ChipRow items={r.proceedings} /></ProfileSection>
+          {((r.services || []).length > 0 || r.rush) && <ProfileSection title="Services offered"><ChipRow items={r.services} rush={r.rush} /></ProfileSection>}
+          {(r.languages || []).length > 0 && <ProfileSection title="Languages"><PlainRow items={r.languages} /></ProfileSection>}
+          <ProfileSection title="Geographic coverage"><PlainRow items={(r.coverage || []).map((c) => c + " County")} /></ProfileSection>
+          <ProfileSection title="Certifications"><PlainRow items={r.certifications} /></ProfileSection>
           {/* Testimonials pulled 2026-07-21: unverified reporter-supplied quotes are a
               credibility risk, and ratings/reviews were already out of the reduced scope.
               Real ratings come later, captured after payment. See docs/reviews_and_ratings.md. */}
@@ -3859,6 +3863,11 @@ function ReporterProfile({ reporterId, invited }) {
               </>
             )}
           </div>
+          {recentlyActive(r) && (
+            <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13.5, color: "var(--ink-soft)", padding: "0 4px" }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#22C55E", display: "inline-block", flexShrink: 0 }} />Recently active on Dewey Sholes
+            </div>
+          )}
           <div className="ds-panel" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: "var(--muted)" }}>
             <Icon name="eye" size={16} /> {r.views} profile views this month
           </div>
@@ -3870,6 +3879,24 @@ function ReporterProfile({ reporterId, invited }) {
 }
 function ProfileSection({ title, children }) {
   return <section><h2 style={{ fontSize: 15, fontWeight: 700, fontFamily: "'Inter', sans-serif", color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 12 }}>{title}</h2>{children}</section>;
+}
+// Most profile fields are plain middot-separated text - they're facts, not links, so a pill (which
+// implies a click target) is misleading. Proceedings + Services keep a light label treatment
+// (neutral, not the brand-blue that now reads as a link) since they're the scannable capability axis.
+function PlainRow({ items }) {
+  const list = (items || []).filter(Boolean);
+  if (!list.length) return <span style={{ color: "var(--dim)", fontSize: 15.5 }}>Not specified</span>;
+  return <div style={{ fontSize: 15.5, color: "var(--ink-soft)", lineHeight: 1.7 }}>{list.join("  ·  ")}</div>;
+}
+function ChipRow({ items, rush }) {
+  const list = (items || []).filter(Boolean);
+  const chip = { fontSize: 13.5, padding: "6px 12px", borderRadius: 8, background: "var(--bg-soft)", border: "1px solid var(--rule)", color: "var(--ink-soft)" };
+  return (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+      {list.map((it) => <span key={it} style={chip}>{it}</span>)}
+      {rush ? <span style={chip}>Rush / expedited</span> : null}
+    </div>
+  );
 }
 function TagList({ items, tone }) {
   const cls = tone === "sage" ? "pill-claimed" : tone === "plum" ? "pill-tag" : "pill-verified";
@@ -4413,20 +4440,6 @@ function ToggleSwitch({ on, onClick }) {
     </button>
   );
 }
-function ConfirmDialog({ title, body, confirmLabel, onConfirm, onCancel }) {
-  return (
-    <div className="modal-overlay" onClick={onCancel}>
-      <div className="ds-card" style={{ maxWidth: 440, width: "92%" }} onClick={(e) => e.stopPropagation()}>
-        <h3 style={{ fontSize: 22, marginBottom: 8 }}>{title}</h3>
-        <p style={{ color: "var(--ink-soft)", fontSize: 14.5, lineHeight: 1.6 }}>{body}</p>
-        <div style={{ display: "flex", gap: 10, marginTop: 22, justifyContent: "flex-end", flexWrap: "wrap" }}>
-          <button className="btn btn-secondary" onClick={onCancel}>Cancel</button>
-          <button className="btn btn-primary" onClick={onConfirm}>{confirmLabel}</button>
-        </div>
-      </div>
-    </div>
-  );
-}
 function chipStyle(on) {
   return { fontSize: 13, padding: "6px 13px", borderRadius: 999, cursor: "pointer", fontFamily: "'Inter', sans-serif",
     border: on ? "1px solid var(--brand)" : "1px solid var(--rule-strong)", background: on ? "var(--brand-soft)" : "var(--bg)",
@@ -4517,8 +4530,7 @@ function ReporterProfileEditor({ me }) {
   const [coverage, setCoverage] = useState(me.coverage || []);
   const [notary, setNotary] = useState(!!me.notary);
   const [rush, setRush] = useState(!!me.rush);
-  const [accepting, setAccepting] = useState(true);
-  const [confirmOff, setConfirmOff] = useState(false);
+  const [accepting, setAccepting] = useState(me.accepting !== false);
   const [showRates, setShowRates] = useState(false);
   const [rates, setRates] = useState({ pageOriginal: { low: "", high: "" }, pageCopy: { low: "", high: "" }, halfDay: { low: "", high: "" }, fullDay: { low: "", high: "" }, trialDay: { low: "", high: "" }, expedited: { low: "", high: "" }, realtime: { low: "", high: "" } });
   const [expUnit, setExpUnit] = useState("percent");
@@ -4567,9 +4579,9 @@ function ReporterProfileEditor({ me }) {
       <FieldBlock label="Languages" hint="Languages you work in besides English. Pick from the list or type your own to add it."><TagSearchAdd options={LANGUAGES} selected={languages} onChange={setLanguages} placeholder="Search languages, or type your own" allowOther /></FieldBlock>
       <FieldBlock label="Certifications"><ChipToggle options={CREDENTIAL_TYPES} selected={certs} onToggle={toggleIn(setCerts)} /></FieldBlock>
       <FieldBlock label="Counties covered"><TagSearchAdd options={counties} selected={coverage} onChange={setCoverage} placeholder="Search California counties" /></FieldBlock>
-      <FieldBlock label="Availability" hint="When this is off, you're hidden from search and firms can't find or message you.">
+      <FieldBlock label="Availability" hint="When this is off, you still appear in search and firms can still message you (say, to ask for a past transcript) - your profile just shows that you're not taking new work right now.">
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <ToggleSwitch on={accepting} onClick={() => { if (accepting) setConfirmOff(true); else setAccepting(true); }} />
+          <ToggleSwitch on={accepting} onClick={() => setAccepting(!accepting)} />
           <span style={{ fontSize: 14, fontWeight: 500, color: accepting ? "var(--ink)" : "var(--muted)" }}>{accepting ? "Accepting jobs" : "Not accepting jobs right now"}</span>
         </div>
       </FieldBlock>
@@ -4610,7 +4622,6 @@ function ReporterProfileEditor({ me }) {
         <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--brand)", cursor: "pointer", fontSize: 14, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 6, padding: 0 }}><Icon name="eye" size={15} /> View public profile</button>
       </div>
       <Toast msg={toast} onClose={() => setToast("")} />
-      {confirmOff ? <ConfirmDialog title="Stop accepting jobs?" body="This removes you from search results. Firms won't be able to find or message you on Dewey Sholes until you turn availability back on." confirmLabel="Yes, stop accepting jobs" onCancel={() => setConfirmOff(false)} onConfirm={() => { setAccepting(false); setConfirmOff(false); }} /> : null}
     </div>
   );
 }
@@ -5039,6 +5050,8 @@ function MessagesPanel({ embedded }) {
   const convos = store.convos;
   const [activeId, setActiveId] = useState(convos[0] ? convos[0].id : null);
   const active = convos.find((c) => c.id === activeId);
+  // The reporter this conversation is with, so a firm sees the "not accepting new work" reminder.
+  const withRep = active ? buildDirectory().find((x) => x.name === active.with) : null;
   const [draft, setDraft] = useState("");
   const [linkOpen, setLinkOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
@@ -5069,7 +5082,7 @@ function MessagesPanel({ embedded }) {
                 <span style={{ fontWeight: 600, fontSize: 14, color: "var(--ink)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.with}</span>
                 {c.unread ? <span style={{ background: "var(--brand)", color: "#fff", fontSize: 10, fontWeight: 700, padding: "1px 6px", borderRadius: 999 }}>{c.unread}</span> : null}
               </div>
-              <div style={{ fontSize: 12.5, color: "var(--muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.msgs[c.msgs.length - 1].t || "Shared a link"}</div>
+              <div style={{ fontSize: 12.5, color: "var(--muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.msgs.length ? (c.msgs[c.msgs.length - 1].t || "Shared a link") : "New conversation"}</div>
             </div>
           </button>
         ))}
@@ -5084,6 +5097,7 @@ function MessagesPanel({ embedded }) {
           </div>
 
           <div style={{ flex: 1, overflowY: "auto", padding: "18px 20px", display: "flex", flexDirection: "column", gap: 12, background: "var(--bg-soft)" }}>
+            {store.role === "firm" && withRep && notAcceptingJobs(withRep) && <div className="banner banner-warn" style={{ fontSize: 12.5, padding: "10px 14px" }}><Icon name="info" size={15} style={{ flexShrink: 0 }} /><div><strong>{active.with.split(" ")[0]} isn't accepting new jobs right now.</strong> They may still help with a past transcript or an existing matter, but likely won't take on new work.</div></div>}
             <div className="banner banner-info" style={{ fontSize: 12.5, padding: "10px 14px" }}><Icon name="shield" size={15} style={{ flexShrink: 0 }} /><div>Dewey Sholes carries your messages and links but never stores files. Share audio and deliverables through your own secure link. Terms are between you and {active.with}.</div></div>
             {active.msgs.map((m, i) => (
               <div key={i} className={"msg-bubble " + (m.from === "me" ? "msg-me" : "msg-them")}>
