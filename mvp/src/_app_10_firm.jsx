@@ -1,7 +1,7 @@
 // ═══ Firm dashboard ════════════════════════════════════════════════
 function FirmDashboard() {
   const store = useStore();
-  const [tab, setTab] = useState("saved");
+  const [tab, setTab] = useRouteTab("/firm", ["saved", "messages", "subscription"], "saved");
   const all = useMemo(() => buildDirectory(), []);
   const saved = all.filter((r) => store.saved.includes(r.id));
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);

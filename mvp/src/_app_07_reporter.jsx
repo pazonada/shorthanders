@@ -17,10 +17,21 @@ function DashLayout({ title, subtitle, tabs, active, onTab, headerRight, childre
   );
 }
 
+// Route-backed dashboard tabs: derive the active tab from the hash and switch by navigating, so
+// each tab is a real browser-history entry. That makes the browser Back button return to the
+// previous tab instead of jumping out of the dashboard - no "back" text links needed.
+function useRouteTab(base, tabIds, defaultTab) {
+  const route = useRoute();
+  const m = route.match(new RegExp("^#" + base + "/([a-z]+)"));
+  const tab = m && tabIds.indexOf(m[1]) !== -1 ? m[1] : defaultTab;
+  const setTab = (id) => navigate(id === defaultTab ? base : base + "/" + id);
+  return [tab, setTab];
+}
+
 // ═══ Reporter dashboard ════════════════════════════════════════════
 function ReporterDashboard() {
   const store = useStore();
-  const [tab, setTab] = useState("overview");
+  const [tab, setTab] = useRouteTab("/reporter", ["overview", "profile", "payments", "invoices", "messages"], "overview");
   const [inviteOpen, setInviteOpen] = useState(false);
   // Returning from real Stripe onboarding lands here – treat the reporter as signed in.
   useEffect(() => { if (window.location.hash.indexOf("stripe=connected") !== -1 && store.role !== "reporter") store.enterAsReporter(); }, []);
@@ -45,7 +56,7 @@ function ReporterDashboard() {
           <button className="btn btn-secondary" onClick={() => setTab("profile")}>Edit profile</button>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
             <button className="btn btn-primary" onClick={() => setTab("invoices")}><Icon name="plus" size={16} /> New invoice</button>
-            <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 5, padding: 0 }}><Icon name="eye" size={14} /> View public profile</button>
+            <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--brand)", cursor: "pointer", fontSize: 13, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 5, padding: 0 }}><Icon name="eye" size={14} /> View public profile</button>
           </div>
         </div>
       }>
@@ -81,8 +92,8 @@ function ReporterDashboard() {
 
 function StatCard({ icon, label, value, onClick }) {
   return (
-    <div className="ds-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : "default", display: "flex", flexDirection: "column", gap: 12 }}>
-      <div style={{ width: 40, height: 40, borderRadius: 11, background: "var(--bg-soft)", border: "1px solid var(--rule)", color: "var(--ink-soft)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name={icon} size={20} /></div>
+    <div className="ds-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : "default", display: "flex", flexDirection: "column", gap: 12, boxShadow: "inset 3px 0 0 0 var(--brand)" }}>
+      <div style={{ width: 40, height: 40, borderRadius: 11, background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", color: "var(--brand)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name={icon} size={20} /></div>
       <div><div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>{value}</div><div style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>{label}</div></div>
     </div>
   );

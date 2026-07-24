@@ -2725,7 +2725,7 @@ function Icon({ name, size = 18, style }) {
     search: <><circle cx="11" cy="11" r="7" {...P} /><path d="M21 21l-4.3-4.3" {...P} /></>,
     check: <path d="M20 6L9 17l-5-5" {...P} />,
     star: <path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.5 9.7l5.9-.9z" {...P} />,
-    message: <path d="M21 11.5a8.4 8.4 0 01-9 8.4 9 9 0 01-3.8-.8L3 21l1.9-4.2A8.4 8.4 0 013 11.5 8.4 8.4 0 0112 3a8.4 8.4 0 019 8.5z" {...P} />,
+    message: { vb: 256, node: <><path d="M224,128A96,96,0,0,1,79.93,211.11h0L42.54,223.58a8,8,0,0,1-10.12-10.12l12.47-37.39h0A96,96,0,1,1,224,128Z" opacity="0.2" fill="currentColor" /><path d="M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z" fill="currentColor" /></> },
     invoice: <><path d="M6 2h9l4 4v16H6z" {...P} /><path d="M9 8h6M9 12h6M9 16h4" {...P} /></>,
     bank: <><path d="M3 10l9-5 9 5" {...P} /><path d="M5 10v8M19 10v8M9 10v8M15 10v8M3 21h18" {...P} /></>,
     shield: <path d="M12 3l7 3v6c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z" {...P} />,
@@ -2733,9 +2733,9 @@ function Icon({ name, size = 18, style }) {
     arrow: <path d="M5 12h14M13 6l6 6-6 6" {...P} />,
     plus: <path d="M12 5v14M5 12h14" {...P} />,
     link: <path d="M10 14a4 4 0 006 .5l2.5-2.5a4 4 0 00-5.7-5.7L11 8M14 10a4 4 0 00-6-.5L5.5 12a4 4 0 005.7 5.7L13 16" {...P} />,
-    dollar: <><path d="M12 2v20" {...P} /><path d="M17 6.5C17 4.6 14.8 3.5 12 3.5S7 4.8 7 7s2.2 3 5 3.5 5 1.3 5 3.5-2.2 3.5-5 3.5-5-1.1-5-3" {...P} /></>,
-    clock: <><circle cx="12" cy="12" r="9" {...P} /><path d="M12 7v5l3 2" {...P} /></>,
-    info: <><circle cx="12" cy="12" r="9" {...P} /><path d="M12 11v5M12 7.6h.01" {...P} /></>,
+    dollar: { vb: 256, node: <><path d="M192,168a40,40,0,0,1-40,40H128V128h24A40,40,0,0,1,192,168ZM112,48a40,40,0,0,0,0,80h16V48Z" opacity="0.2" fill="currentColor" /><path d="M152,120H136V56h8a32,32,0,0,1,32,32,8,8,0,0,0,16,0,48.05,48.05,0,0,0-48-48h-8V24a8,8,0,0,0-16,0V40h-8a48,48,0,0,0,0,96h8v64H104a32,32,0,0,1-32-32,8,8,0,0,0-16,0,48.05,48.05,0,0,0,48,48h16v16a8,8,0,0,0,16,0V216h16a48,48,0,0,0,0-96Zm-40,0a32,32,0,0,1,0-64h8v64Zm40,80H136V136h16a32,32,0,0,1,0,64Z" fill="currentColor" /></> },
+    clock: { vb: 256, node: <><path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2" fill="currentColor" /><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z" fill="currentColor" /></> },
+    info: { vb: 256, node: <><path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2" fill="currentColor" /><path d="M144,176a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176Zm88-48A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128ZM124,96a12,12,0,1,0-12-12A12,12,0,0,0,124,96Z" fill="currentColor" /></> },
     pin: <><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z" {...P} /><circle cx="12" cy="10" r="2.5" {...P} /></>,
     filter: <path d="M3 5h18l-7 8v6l-4-2v-4z" {...P} />,
     chevron: <path d="M6 9l6 6 6-6" {...P} />,
@@ -2748,10 +2748,14 @@ function Icon({ name, size = 18, style }) {
     lock: <><rect x="5" y="11" width="14" height="10" rx="2" {...P} /><path d="M8 11V8a4 4 0 018 0v3" {...P} /></>,
     logout: <path d="M15 3h4v18h-4M10 12h9M13 8l-5 4 5 4" {...P} />,
     heart: <path d="M12 20s-7-4.4-9.2-9C1 7.5 3 4 6.5 4c2 0 3.4 1.2 4.5 2.7C12 5.2 13.5 4 15.5 4 19 4 21 7.5 21.2 11c-2.2 4.6-9.2 9-9.2 9z" {...P} />,
-    eye: <><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" {...P} /><circle cx="12" cy="12" r="3" {...P} /></>,
+    eye: { vb: 256, node: <><path d="M128,56C48,56,16,128,16,128s32,72,112,72,112-72,112-72S208,56,128,56Zm0,112a40,40,0,1,1,40-40A40,40,0,0,1,128,168Z" opacity="0.2" fill="currentColor" /><path d="M247.31,124.76c-.35-.79-8.82-19.58-27.65-38.41C194.57,61.26,162.88,48,128,48S61.43,61.26,36.34,86.35C17.51,105.18,9,124,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.57,27.65,38.4C61.43,194.74,93.12,208,128,208s66.57-13.26,91.66-38.34c18.83-18.83,27.3-37.61,27.65-38.4A8,8,0,0,0,247.31,124.76ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.47,133.47,0,0,1,25,128,133.33,133.33,0,0,1,48.07,97.25C70.33,75.19,97.22,64,128,64s57.67,11.19,79.93,33.25A133.46,133.46,0,0,1,231.05,128C223.84,141.46,192.43,192,128,192Zm0-112a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z" fill="currentColor" /></> },
     building: <><rect x="4" y="3" width="16" height="18" rx="1.5" {...P} /><path d="M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2M10 21v-3h4v3" {...P} /></>,
   };
-  return <svg viewBox="0 0 24 24" style={s}>{paths[name] || null}</svg>;
+  // Phosphor icons live on a 256 grid and are fill-based; our native set is 24-grid strokes.
+  // An entry can be a plain node (24-grid) or { vb, node } to carry its own viewBox.
+  const entry = paths[name];
+  if (entry && entry.vb) return <svg viewBox={"0 0 " + entry.vb + " " + entry.vb} style={s}>{entry.node}</svg>;
+  return <svg viewBox="0 0 24 24" style={s}>{entry || null}</svg>;
 }
 
 // ─── Brand logo ────────────────────────────────────────────────────
@@ -3725,7 +3729,6 @@ function GatedProfile({ r }) {
   const first = r.name.split(" ")[0];
   return (
     <Page>
-      <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 16 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back</button>
       <div style={{ display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap", marginBottom: 8 }}>
         <Avatar name={r.name} size={84} photo={r.photo} />
         <div style={{ flex: 1, minWidth: 200 }}>
@@ -3780,7 +3783,6 @@ function ReporterProfile({ reporterId, invited }) {
   };
   return (
     <Page>
-      <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 16 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back</button>
       {invited && <div className="banner banner-ok" style={{ marginBottom: 14 }}><Icon name="heart" size={18} style={{ flexShrink: 0 }} /><div><strong>{first} invited you to Dewey Sholes.</strong> Create a free account to message {first}, pay their invoices, and save them to your firm. Joining is free for your firm.</div></div>}
       {r.sample && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This is a fictional demo profile – the name, license number, and every detail are made up to show how a claimed profile looks. Not a real reporter.</div></div>}
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 32, alignItems: "start" }} className="profile-grid">
@@ -3868,7 +3870,6 @@ function TagList({ items, tone }) {
 function UnclaimedProfile({ r }) {
   return (
     <Page>
-      <button onClick={() => navigateBack("/directory")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 20 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back</button>
       <div style={{ maxWidth: 620 }}>
         <div style={{ display: "flex", gap: 18, alignItems: "center" }}>
           <Avatar name={r.name} size={72} claimed={false} />
@@ -4311,10 +4312,21 @@ function DashLayout({ title, subtitle, tabs, active, onTab, headerRight, childre
   );
 }
 
+// Route-backed dashboard tabs: derive the active tab from the hash and switch by navigating, so
+// each tab is a real browser-history entry. That makes the browser Back button return to the
+// previous tab instead of jumping out of the dashboard - no "back" text links needed.
+function useRouteTab(base, tabIds, defaultTab) {
+  const route = useRoute();
+  const m = route.match(new RegExp("^#" + base + "/([a-z]+)"));
+  const tab = m && tabIds.indexOf(m[1]) !== -1 ? m[1] : defaultTab;
+  const setTab = (id) => navigate(id === defaultTab ? base : base + "/" + id);
+  return [tab, setTab];
+}
+
 // ═══ Reporter dashboard ════════════════════════════════════════════
 function ReporterDashboard() {
   const store = useStore();
-  const [tab, setTab] = useState("overview");
+  const [tab, setTab] = useRouteTab("/reporter", ["overview", "profile", "payments", "invoices", "messages"], "overview");
   const [inviteOpen, setInviteOpen] = useState(false);
   // Returning from real Stripe onboarding lands here – treat the reporter as signed in.
   useEffect(() => { if (window.location.hash.indexOf("stripe=connected") !== -1 && store.role !== "reporter") store.enterAsReporter(); }, []);
@@ -4339,7 +4351,7 @@ function ReporterDashboard() {
           <button className="btn btn-secondary" onClick={() => setTab("profile")}>Edit profile</button>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
             <button className="btn btn-primary" onClick={() => setTab("invoices")}><Icon name="plus" size={16} /> New invoice</button>
-            <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 5, padding: 0 }}><Icon name="eye" size={14} /> View public profile</button>
+            <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--brand)", cursor: "pointer", fontSize: 13, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 5, padding: 0 }}><Icon name="eye" size={14} /> View public profile</button>
           </div>
         </div>
       }>
@@ -4375,8 +4387,8 @@ function ReporterDashboard() {
 
 function StatCard({ icon, label, value, onClick }) {
   return (
-    <div className="ds-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : "default", display: "flex", flexDirection: "column", gap: 12 }}>
-      <div style={{ width: 40, height: 40, borderRadius: 11, background: "var(--bg-soft)", border: "1px solid var(--rule)", color: "var(--ink-soft)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name={icon} size={20} /></div>
+    <div className="ds-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : "default", display: "flex", flexDirection: "column", gap: 12, boxShadow: "inset 3px 0 0 0 var(--brand)" }}>
+      <div style={{ width: 40, height: 40, borderRadius: 11, background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", color: "var(--brand)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name={icon} size={20} /></div>
       <div><div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>{value}</div><div style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>{label}</div></div>
     </div>
   );
@@ -4937,7 +4949,7 @@ function MessagingPage() {
 // ═══ Firm dashboard ════════════════════════════════════════════════
 function FirmDashboard() {
   const store = useStore();
-  const [tab, setTab] = useState("saved");
+  const [tab, setTab] = useRouteTab("/firm", ["saved", "messages", "subscription"], "saved");
   const all = useMemo(() => buildDirectory(), []);
   const saved = all.filter((r) => store.saved.includes(r.id));
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);

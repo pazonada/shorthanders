@@ -61,6 +61,40 @@ Two levels, and the quiet one is the default:
 
 Rule of thumb: if you're adding a tinted bar and it isn't success/error, make it a `.ds-note`.
 
+## Text links
+
+**Text links are brand indigo `#4361EE`** (`var(--brand)`), weight 500. Not purple, not grey. This
+was an open question ("blue or purple?") – answered blue, because the accent is indigo-only and
+purple/plum is retired. Muted grey is for non-interactive metadata, not links.
+
+## Icons
+
+- **Library: Phosphor** (`@phosphor-icons`), **duotone** weight, drawn on a 256 grid. Chosen over
+  the old hand-rolled line set for more character while staying professional. The `Icon` component
+  (`_app_01_core.jsx`) supports both: a plain node is 24-grid stroke (legacy), `{ vb: 256, node }`
+  is a Phosphor icon. Migrate the rest to Phosphor opportunistically; add new duotone paths by
+  copying from the Phosphor assets (`fill="currentColor"`, back layer `opacity="0.2"`).
+- **Icon color follows context** via `currentColor`. On the metric chips it's brand indigo.
+
+## Metric / stat cards
+
+The dashboard stat cards are the reference "stylized card": white surface, **brand indigo
+left-accent bar** (`box-shadow: inset 3px 0 0 0 var(--brand)` – an inset shadow so it follows the
+rounded corner, unlike a `border-left`), a **brand-soft icon chip** (`--brand-soft` bg, `--brand-pale`
+border, `--brand` icon) top-left, then a serif number over a muted label. Reuse this pattern for
+other metric rows.
+
+## Navigation – rely on the browser's Back button
+
+**No "back" text links.** They read dated and they lie about the destination. Instead, every
+navigable surface is a real hash route so the browser's Back button just works:
+
+- Dashboard **tabs are hash subroutes** (`#/reporter/profile`, `#/firm/messages`, …) via the
+  `useRouteTab` helper, so switching tabs is a history entry and Back returns to the previous tab
+  instead of jumping out of the dashboard.
+- Profile pages have no back button – Back returns you to wherever you came from (directory,
+  dashboard, an invite link), correctly, because you actually navigated there.
+
 ## Voice
 
 Plain language, sentence case, en-dashes (–) never em-dashes (—) – same as the rest of the site.
