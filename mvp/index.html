@@ -4388,8 +4388,8 @@ function ReporterDashboard() {
 function StatCard({ icon, label, value, onClick }) {
   return (
     <div className="ds-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : "default", display: "flex", flexDirection: "column", gap: 12, boxShadow: "inset 3px 0 0 0 var(--ink)" }}>
-      <span style={{ color: "var(--brand)", display: "flex", marginTop: -6 }}><Icon name={icon} size={30} /></span>
-      <div><div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>{value}</div><div style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>{label}</div></div>
+      <span style={{ color: "var(--brand)", display: "flex", marginTop: -2 }}><Icon name={icon} size={20} /></span>
+      <div style={{ marginLeft: 20 }}><div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>{value}</div><div style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>{label}</div></div>
     </div>
   );
 }
