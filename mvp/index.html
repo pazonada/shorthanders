@@ -4394,28 +4394,178 @@ function StatCard({ icon, label, value, onClick }) {
   );
 }
 
+// Shared bits for the editable profile form.
+const AVAIL_OPTS = [{ code: "rush", label: "Accepts rush / expedited" }, { code: "notary", label: "Notary public" }];
+function chipStyle(on) {
+  return { fontSize: 13, padding: "6px 13px", borderRadius: 999, cursor: "pointer", fontFamily: "'Inter', sans-serif",
+    border: on ? "1px solid var(--brand)" : "1px solid var(--rule-strong)", background: on ? "var(--brand-soft)" : "var(--bg)",
+    color: on ? "var(--brand-dark)" : "var(--ink-soft)", fontWeight: on ? 600 : 400, display: "inline-flex", alignItems: "center", gap: 5 };
+}
+function FieldBlock({ label, hint, children }) {
+  return (
+    <div>
+      <label className="ds-label" style={{ marginBottom: hint ? 3 : 7 }}>{label}</label>
+      {hint ? <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 9, lineHeight: 1.5 }}>{hint}</div> : null}
+      {children}
+    </div>
+  );
+}
+// Toggle chips for a small fixed list (proceedings, services, languages, credentials, availability).
+function ChipToggle({ options, selected, onToggle }) {
+  return (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+      {options.map((opt) => {
+        const val = typeof opt === "string" ? opt : opt.code;
+        const label = typeof opt === "string" ? opt : opt.label;
+        const on = selected.includes(val);
+        return <button key={val} type="button" onClick={() => onToggle(val)} style={chipStyle(on)}>{on ? <Icon name="check" size={13} /> : null}{label}</button>;
+      })}
+    </div>
+  );
+}
+// Search-to-add picker with removable chips, for long lists (areas of law, counties). allowOther
+// lets the reporter add a value not in the list.
+function TagSearchAdd({ options, selected, onChange, placeholder, allowOther }) {
+  const [q, setQ] = useState("");
+  const query = q.trim();
+  const lower = query.toLowerCase();
+  const matches = query ? options.filter((o) => !selected.includes(o) && o.toLowerCase().indexOf(lower) !== -1).slice(0, 8) : [];
+  const exists = !query || options.some((o) => o.toLowerCase() === lower) || selected.some((o) => o.toLowerCase() === lower);
+  const add = (v) => { if (v && !selected.includes(v)) onChange(selected.concat([v])); setQ(""); };
+  return (
+    <div>
+      {selected.length > 0 ? (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 10 }}>
+          {selected.map((v) => (
+            <span key={v} className="pill pill-verified" style={{ fontSize: 13, padding: "6px 8px 6px 13px", display: "inline-flex", alignItems: "center", gap: 7 }}>
+              {v}
+              <button type="button" onClick={() => onChange(selected.filter((x) => x !== v))} aria-label={"Remove " + v} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--brand-dark)", display: "flex" }}><Icon name="x" size={12} /></button>
+            </span>
+          ))}
+        </div>
+      ) : null}
+      <div style={{ position: "relative" }}>
+        <input className="ds-input" value={q} onChange={(e) => setQ(e.target.value)} placeholder={placeholder} onKeyDown={(e) => { if (e.key === "Enter" && allowOther && query) { e.preventDefault(); add(query); } }} />
+        {(matches.length > 0 || (allowOther && query && !exists)) ? (
+          <div style={{ position: "absolute", top: "calc(100% + 4px)", left: 0, right: 0, zIndex: 5, background: "var(--bg)", border: "1px solid var(--rule-strong)", borderRadius: 10, boxShadow: "var(--shadow-md)", overflow: "hidden", maxHeight: 240, overflowY: "auto" }}>
+            {matches.map((m) => <button key={m} type="button" onClick={() => add(m)} style={{ display: "block", width: "100%", textAlign: "left", padding: "9px 13px", background: "none", border: "none", cursor: "pointer", fontSize: 14, color: "var(--ink-soft)" }}>{m}</button>)}
+            {allowOther && query && !exists ? <button type="button" onClick={() => add(query)} style={{ display: "flex", alignItems: "center", gap: 6, width: "100%", textAlign: "left", padding: "9px 13px", background: "var(--bg-soft)", border: "none", cursor: "pointer", fontSize: 14, color: "var(--brand-dark)", fontWeight: 500 }}><Icon name="plus" size={13} /> Add "{query}"</button> : null}
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+// One rate line: an optional low and high. Blank = not shown; one = set rate; both = a range.
+function RateRow({ label, unit, value, onChange, extra }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+      <div style={{ flex: 1, minWidth: 150 }}>
+        <div style={{ fontSize: 14, color: "var(--ink)" }}>{label}</div>
+        <div style={{ fontSize: 12, color: "var(--dim)" }}>{unit}</div>
+      </div>
+      {extra || null}
+      <input className="ds-input" style={{ width: 82 }} placeholder="Low" value={value.low} onChange={(e) => onChange({ low: e.target.value, high: value.high })} />
+      <span style={{ color: "var(--dim)" }}>–</span>
+      <input className="ds-input" style={{ width: 82 }} placeholder="High" value={value.high} onChange={(e) => onChange({ low: value.low, high: e.target.value })} />
+    </div>
+  );
+}
 function ReporterProfileEditor({ me }) {
   const [toast, setToast] = useState("");
-  const field = (label, value) => (
-    <div><label className="ds-label">{label}</label><div className="ds-panel" style={{ padding: "12px 14px", fontSize: 14.5, color: "var(--ink-soft)" }}>{value || <span style={{ color: "var(--dim)" }}>Not set</span>}</div></div>
-  );
+  const counties = useMemo(() => Array.from(new Set(buildDirectory().map((r) => r.county).filter(Boolean))).sort(), []);
+  const [photo, setPhoto] = useState(me.photo || "");
+  const [bio, setBio] = useState(me.bio || "");
+  const [years, setYears] = useState(me.yearsExp || "");
+  const [proceedings, setProceedings] = useState(me.proceedings || []);
+  const [services, setServices] = useState(me.services || []);
+  const [areas, setAreas] = useState(me.specialties || []);
+  const [languages, setLanguages] = useState(me.languages || []);
+  const [certs, setCerts] = useState(() => CREDENTIAL_TYPES.map((c) => c.code).filter((code) => (me.certifications || []).some((x) => x.indexOf(code) !== -1)));
+  const [coverage, setCoverage] = useState(me.coverage || []);
+  const [avail, setAvail] = useState(() => [].concat(me.rush ? ["rush"] : [], me.notary ? ["notary"] : []));
+  const [showRates, setShowRates] = useState(false);
+  const [rates, setRates] = useState({ pageOriginal: { low: "", high: "" }, pageCopy: { low: "", high: "" }, halfDay: { low: "", high: "" }, fullDay: { low: "", high: "" }, trialDay: { low: "", high: "" }, expedited: { low: "", high: "" }, realtime: { low: "", high: "" } });
+  const [expUnit, setExpUnit] = useState("percent");
+  const [customRates, setCustomRates] = useState([]);
+
+  const toggleIn = (setter) => (v) => setter((cur) => cur.includes(v) ? cur.filter((x) => x !== v) : cur.concat([v]));
+  const setRate = (key) => (val) => setRates((r) => Object.assign({}, r, { [key]: val }));
+  const updateCustom = (i, k, v) => setCustomRates((cur) => cur.map((c, j) => j === i ? Object.assign({}, c, { [k]: v }) : c));
+  const photoPick = (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => setPhoto(reader.result);
+    reader.readAsDataURL(f);
+  };
+
   return (
-    <div style={{ maxWidth: 720, display: "flex", flexDirection: "column", gap: 18 }}>
-      <div className="banner banner-info"><Icon name="user" size={18} style={{ flexShrink: 0 }} /><div>This is a read-only preview of your profile data in the prototype. In the live product each field is editable inline.</div></div>
-      {field("Bio", me.bio)}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-        {field("Years of experience", me.yearsExp + " years")}
-        {field("Rates", me.rate)}
+    <div style={{ maxWidth: 720, display: "flex", flexDirection: "column", gap: 22 }}>
+      <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span>Prototype - your edits here aren't saved yet. This shows how editing your profile will work.</span></div>
+
+      <FieldBlock label="Profile photo" hint="A clear headshot helps firms recognize you. Optional.">
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <Avatar name={me.name} size={72} claimed photo={photo} />
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <label className="btn btn-secondary" style={{ cursor: "pointer" }}><Icon name="user" size={16} /> {photo ? "Change photo" : "Upload photo"}<input type="file" accept="image/*" onChange={photoPick} style={{ display: "none" }} /></label>
+            {photo ? <button className="btn btn-secondary" onClick={() => setPhoto("")}>Remove</button> : null}
+          </div>
+        </div>
+      </FieldBlock>
+
+      <FieldBlock label="Bio">
+        <textarea className="ds-input" rows={4} value={bio} onChange={(e) => setBio(e.target.value)} placeholder="A few sentences about your practice, experience, and how you work." />
+      </FieldBlock>
+
+      <div style={{ maxWidth: 200 }}>
+        <FieldBlock label="Years of experience">
+          <input className="ds-input" type="number" min="0" value={years} onChange={(e) => setYears(e.target.value)} placeholder="Years" />
+        </FieldBlock>
       </div>
-      {field("Proceedings covered", (me.proceedings || []).join(" · "))}
-      {field("Services offered", (me.services || []).join(" · "))}
-      {field("Areas of law", (me.specialties || []).join(" · "))}
-      {field("Certifications", (me.certifications || []).join(" · "))}
-      {field("Languages", (me.languages || []).join(" · ") || "English only")}
-      {field("Coverage", (me.coverage || []).map((c) => c + " County").join(" · "))}
-      {field("Rush jobs", me.rush ? "Yes – accepts rush / expedited" : "No")}
-      {field("Notary public", me.notary ? "Yes" : "No")}
-      <div style={{ display: "flex", gap: 12 }}>
+
+      <FieldBlock label="Proceedings covered"><ChipToggle options={PROCEEDING_TYPES} selected={proceedings} onToggle={toggleIn(setProceedings)} /></FieldBlock>
+      <FieldBlock label="Services offered"><ChipToggle options={SERVICE_TYPES} selected={services} onToggle={toggleIn(setServices)} /></FieldBlock>
+      <FieldBlock label="Areas of law" hint="Pick from the California State Bar list, or type your own and press Enter to add it.">
+        <TagSearchAdd options={SPECIALTY_TYPES} selected={areas} onChange={setAreas} placeholder="Search areas of law, or type your own" allowOther />
+      </FieldBlock>
+      <FieldBlock label="Languages" hint="Besides English."><ChipToggle options={LANGUAGES} selected={languages} onToggle={toggleIn(setLanguages)} /></FieldBlock>
+      <FieldBlock label="Certifications"><ChipToggle options={CREDENTIAL_TYPES} selected={certs} onToggle={toggleIn(setCerts)} /></FieldBlock>
+      <FieldBlock label="Counties covered"><TagSearchAdd options={counties} selected={coverage} onChange={setCoverage} placeholder="Search California counties" /></FieldBlock>
+      <FieldBlock label="Availability"><ChipToggle options={AVAIL_OPTS} selected={avail} onToggle={toggleIn(setAvail)} /></FieldBlock>
+
+      <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 20 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
+          <div style={{ flex: 1, minWidth: 240 }}>
+            <label className="ds-label" style={{ marginBottom: 3 }}>Rates</label>
+            <div style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.5 }}>Share as much or as little as you like - one number for a set rate, a low and high for a range, or leave a line blank to keep it private.</div>
+          </div>
+          <button type="button" onClick={() => setShowRates(!showRates)} style={chipStyle(showRates)}>{showRates ? <Icon name="eye" size={13} /> : null}{showRates ? "Shown on profile" : "Hidden - tap to show"}</button>
+        </div>
+        {showRates ? (
+          <div style={{ marginTop: 18, display: "flex", flexDirection: "column", gap: 14 }}>
+            <RateRow label="Per page - original transcript" unit="$ per page" value={rates.pageOriginal} onChange={setRate("pageOriginal")} />
+            <RateRow label="Per page - each copy" unit="$ per page" value={rates.pageCopy} onChange={setRate("pageCopy")} />
+            <RateRow label="Half day - appearance" unit="$ per half day" value={rates.halfDay} onChange={setRate("halfDay")} />
+            <RateRow label="Full day - appearance" unit="$ per day" value={rates.fullDay} onChange={setRate("fullDay")} />
+            <RateRow label="Trial day" unit="$ per day" value={rates.trialDay} onChange={setRate("trialDay")} />
+            <RateRow label="Expedited / rush" unit={expUnit === "percent" ? "% surcharge on base rate" : "$ per page"} value={rates.expedited} onChange={setRate("expedited")} extra={<select className="ds-input" style={{ width: 128 }} value={expUnit} onChange={(e) => setExpUnit(e.target.value)}><option value="percent">% surcharge</option><option value="perpage">Per page</option></select>} />
+            <RateRow label="Realtime / rough draft add-on" unit="$ per page or day" value={rates.realtime} onChange={setRate("realtime")} />
+            {customRates.map((cr, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                <input className="ds-input" style={{ flex: 1, minWidth: 150 }} placeholder="Rate name (e.g. Interpreter surcharge)" value={cr.label} onChange={(e) => updateCustom(i, "label", e.target.value)} />
+                <input className="ds-input" style={{ width: 82 }} placeholder="Low" value={cr.low} onChange={(e) => updateCustom(i, "low", e.target.value)} />
+                <span style={{ color: "var(--dim)" }}>–</span>
+                <input className="ds-input" style={{ width: 82 }} placeholder="High" value={cr.high} onChange={(e) => updateCustom(i, "high", e.target.value)} />
+                <button type="button" onClick={() => setCustomRates(customRates.filter((_, j) => j !== i))} aria-label="Remove rate" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", display: "flex" }}><Icon name="x" size={16} /></button>
+              </div>
+            ))}
+            <div><button className="btn btn-secondary" onClick={() => setCustomRates(customRates.concat([{ label: "", low: "", high: "" }]))}><Icon name="plus" size={15} /> Add another rate</button></div>
+          </div>
+        ) : null}
+      </div>
+
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
         <button className="btn btn-primary" onClick={() => setToast("Profile saved")}><Icon name="check" size={16} /> Save changes</button>
         <button className="btn btn-secondary" onClick={() => navigate("/reporters/" + me.id)}><Icon name="eye" size={16} /> Preview public profile</button>
       </div>
