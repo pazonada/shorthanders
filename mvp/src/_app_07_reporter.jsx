@@ -55,12 +55,12 @@ function ReporterDashboard() {
         <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
           <button className="btn btn-secondary" onClick={() => setTab("profile")}>Edit profile</button>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-            <button className="btn btn-primary" onClick={() => setTab("invoices")}><Icon name="plus" size={16} /> New invoice</button>
+            <button className="btn btn-primary" onClick={() => navigate("/reporter/invoices/new")}><Icon name="plus" size={16} /> New invoice</button>
             <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--brand)", cursor: "pointer", fontSize: 13, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 5, padding: 0 }}><Icon name="eye" size={14} /> View public profile</button>
           </div>
         </div>
       }>
-      <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Sample data</strong> — the invoices, payments, stats, and messages here are illustrative placeholders for the prototype.</span></div>
+      <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Sample data</strong> – the invoices, payments, stats, and messages here are illustrative placeholders for the prototype.</span></div>
       {tab === "overview" && (
         <>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 18 }}>
@@ -361,7 +361,7 @@ function InviteFirmModal({ me, onClose }) {
       <div className="ds-card" style={{ maxWidth: 540, width: "92%", maxHeight: "88vh", overflowY: "auto" }} onClick={(e) => e.stopPropagation()}>
         {sent ? (
           <div style={{ textAlign: "center", padding: "8px 4px" }}>
-            <div style={{ width: 52, height: 52, borderRadius: 14, background: "var(--sage-soft)", color: "var(--sage-deep)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 14px" }}><Icon name="mail" size={26} /></div>
+            <div style={{ width: 52, height: 52, borderRadius: 14, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 14px" }}><Icon name="mail" size={26} /></div>
             <h3 style={{ fontSize: 22 }}>Invite sent to {firm}</h3>
             <p style={{ color: "var(--muted)", marginTop: 10, lineHeight: 1.6, fontSize: 14.5 }}>When they join, {firm} is saved to your firm list automatically and can pay your invoices here, so you stay first in mind for their next job.</p>
             <p style={{ color: "var(--dim)", marginTop: 10, fontSize: 12.5 }}>Prototype: no email is actually sent.</p>

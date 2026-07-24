@@ -121,6 +121,12 @@ const SEED_INVOICES = [
   { id: "INV-1044", client: "Kessler Tang LLP", matter: "Sealed – trade secret", desc: "Expedited transcript – 92 pp.", date: "2026-07-16", amount: 690, due: "2026-07-30", status: "draft" },
 ];
 
+// Firm-initiated "please invoice me" requests (prototype). A firm asks a connected reporter to
+// bill through DS so they can pay electronically; the reporter one-taps to issue the invoice.
+// Sample data, like the seed invoices. See docs/open_strategic_decisions.md §1.
+const SEED_REQUESTS = [
+  { id: "REQ-1", reporterName: "Marguerite Ellsworth", firmName: "Delaney Defense", matter: "Okafor v. Sunrise Medical (25CV02901)", desc: "Half-day deposition transcript, 64 pp. + rough draft", amount: 384, at: "Yesterday", status: "pending" },
+];
 const SEED_CONVOS = [
   { id: "c1", with: "Morgan & Reyes LLP", role: "firm", subtitle: "Karen Ruiz, Legal Ops", unread: 1, msgs: [
     { from: "them", t: "Hi Marguerite – are you available for a deposition in San Jose on Aug 4? Complex IP matter, expert witness.", at: "Jul 15, 2:14 PM" },

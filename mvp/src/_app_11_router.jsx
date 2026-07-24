@@ -84,6 +84,7 @@ function StoreProvider({ children }) {
   const [saved, setSaved] = useState(["900004", "900003", "900005"]);
   const [convos, setConvos] = useState(SEED_CONVOS);
   const [invoices, setInvoices] = useState(SEED_INVOICES);
+  const [paymentRequests, setPaymentRequests] = useState(SEED_REQUESTS);
   const [customTemplates, setCustomTemplates] = useState([]);
   const [invitedFirms, setInvitedFirms] = useState([]);
   const [firmPlan, setFirmPlan] = useState("free");   // 'free' | 'pro'
@@ -95,7 +96,10 @@ function StoreProvider({ children }) {
   const [myAccepting, setMyAccepting] = useState(true);
 
   const store = {
-    role, myCsr, saved, convos, invoices, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, myAccepting, setMyAccepting,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, myAccepting, setMyAccepting,
+    // Firm asks a reporter to invoice them (so payment happens on-platform); reporter fulfills it.
+    requestInvoice: (req) => setPaymentRequests((rs) => [{ ...req, id: "REQ-" + Date.now(), status: "pending" }, ...rs]),
+    fulfillRequest: (id) => setPaymentRequests((rs) => rs.map((r) => r.id === id ? { ...r, status: "fulfilled" } : r)),
     addTemplate: (t) => setCustomTemplates((xs) => [...xs, t]),
     enterAsReporter: () => setRole("reporter"),
     enterAsFirm: (name) => { setRole("firm"); if (name && name.trim()) setFirmName(name.trim()); },

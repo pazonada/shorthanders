@@ -7,6 +7,13 @@ function MessagesPanel({ embedded }) {
   // The reporter this conversation is with, so a firm sees the "not accepting new work" reminder.
   const withRep = active ? buildDirectory().find((x) => x.name === active.with) : null;
   const [draft, setDraft] = useState("");
+  const [reqOpen, setReqOpen] = useState(false);
+  const sendRequest = (req) => {
+    store.requestInvoice({ reporterName: active.with, firmName: store.firmName, matter: req.matter, desc: req.desc, amount: req.amount, at: "Just now" });
+    const line = "Requested an invoice" + (req.matter ? " for " + req.matter : "") + (req.desc ? " – " + req.desc : "") + (req.amount ? " (about $" + req.amount.toLocaleString() + ")" : "") + ". Please send it here so I can pay by card or ACH.";
+    store.pushMessage(active.id, { from: "me", t: line, at: "Just now" });
+    setReqOpen(false);
+  };
   const [linkOpen, setLinkOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [linkLabel, setLinkLabel] = useState("");
@@ -65,6 +72,8 @@ function MessagesPanel({ embedded }) {
 
           {/* composer */}
           <div style={{ borderTop: "1px solid var(--rule)", padding: 14, background: "var(--bg)" }}>
+            {store.role === "firm" && withRep ? <button className="chip-filter" style={{ marginBottom: 10, fontSize: 12.5, padding: "8px 12px", display: "inline-flex", alignItems: "center", gap: 6 }} onClick={() => setReqOpen(true)}><Icon name="invoice" size={15} /> Request an invoice</button> : null}
+            {reqOpen && <RequestInvoiceModal reporterName={active.with} onSend={sendRequest} onClose={() => setReqOpen(false)} />}
             {linkOpen && (
               <div style={{ marginBottom: 10 }}>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -72,7 +81,7 @@ function MessagesPanel({ embedded }) {
                   <input className="ds-input" style={{ flex: 1, minWidth: 120, padding: "9px 12px", fontSize: 13 }} placeholder="Label (optional)" value={linkLabel} onChange={(e) => setLinkLabel(e.target.value)} />
                 </div>
                 {linkUrl.trim() ? (
-                  <div style={{ display: "flex", gap: 7, alignItems: "flex-start", marginTop: 8, fontSize: 12, color: "var(--ochre-deep)", background: "var(--ochre-soft)", border: "1px solid #E8D3A8", borderRadius: 9, padding: "8px 11px" }}>
+                  <div style={{ display: "flex", gap: 7, alignItems: "flex-start", marginTop: 8, fontSize: 12, color: "var(--ink-soft)", background: "#F7F8C6", border: "1px solid #DCE224", borderRadius: 9, padding: "8px 11px" }}>
                     <Icon name="shield" size={14} style={{ flexShrink: 0, marginTop: 1 }} />
                     <span>Only share links you control access to (private, access-controlled, or expiring). Dewey Sholes doesn't store, secure, or check your files or links. You're responsible for how sensitive material is shared.</span>
                   </div>
@@ -90,6 +99,37 @@ function MessagesPanel({ embedded }) {
       ) : (
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "var(--muted)" }}>No conversation selected.</div>
       )}
+    </div>
+  );
+}
+
+// A firm asks a reporter to bill them through Dewey Sholes, so the payment lands on-platform
+// instead of a check off-site. The reporter gets a one-tap prompt to issue the invoice.
+function RequestInvoiceModal({ reporterName, onSend, onClose }) {
+  const [matter, setMatter] = useState("");
+  const [desc, setDesc] = useState("");
+  const [amount, setAmount] = useState("");
+  const first = reporterName.split(" ")[0];
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="ds-card" style={{ maxWidth: 480, width: "94%" }} onClick={(e) => e.stopPropagation()}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+          <div>
+            <h3 style={{ fontSize: 22 }}>Request an invoice</h3>
+            <p style={{ color: "var(--muted)", fontSize: 13.5, marginTop: 4, lineHeight: 1.5 }}>Ask {first} to bill you through Dewey Sholes so you can pay by card or ACH. They get a one-tap prompt to send it.</p>
+          </div>
+          <button onClick={onClose} title="Close" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", padding: 4, flexShrink: 0 }}><Icon name="x" size={20} /></button>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 16 }}>
+          <div><label className="ds-label">Matter reference (optional)</label><input className="ds-input" value={matter} onChange={(e) => setMatter(e.target.value)} placeholder="e.g. Ramos v. Delta Logistics" /></div>
+          <div><label className="ds-label">What it's for</label><textarea className="ds-input" rows={3} value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="e.g. Half-day deposition on Aug 4, certified transcript + realtime." /></div>
+          <div style={{ maxWidth: 200 }}><label className="ds-label">Amount to confirm (optional)</label><input className="ds-input" type="number" min="0" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Agreed amount" /></div>
+        </div>
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 20, flexWrap: "wrap" }}>
+          <button className="btn btn-secondary" onClick={onClose}>Cancel</button>
+          <button className="btn btn-primary" onClick={() => onSend({ matter: matter.trim(), desc: desc.trim(), amount: amount ? Number(amount) : null })}><Icon name="invoice" size={16} /> Send request</button>
+        </div>
+      </div>
     </div>
   );
 }

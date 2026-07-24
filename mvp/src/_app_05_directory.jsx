@@ -9,14 +9,14 @@ function RepCard({ r }) {
       <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
         <Avatar name={r.name} claimed={r.claimed} photo={r.photo} />
         <div style={{ flex: 1, minWidth: 0 }}>
-          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)", lineHeight: 1.15, display: "block" }}>{r.name}{r.sample && <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10.5, fontWeight: 700, letterSpacing: ".04em", color: "var(--ochre-deep)", background: "var(--ochre-soft)", borderRadius: 5, padding: "2px 6px", marginLeft: 8, verticalAlign: "middle" }}>SAMPLE</span>}</span>
+          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)", lineHeight: 1.15, display: "block" }}>{r.name}{r.sample && <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10.5, fontWeight: 700, letterSpacing: ".04em", color: "var(--muted)", background: "var(--rule)", borderRadius: 5, padding: "2px 6px", marginLeft: 8, verticalAlign: "middle" }}>SAMPLE</span>}</span>
           <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 3 }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}</div>
           <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon name="pin" size={13} style={{ color: "var(--dim)", flexShrink: 0 }} />{r.city}{r.county && r.county !== r.city ? ", " + r.county + " County" : ""}</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 5, flexShrink: 0 }}>
           <SaveHeart r={r} />
           {notAcceptingJobs(r) && (
-            <span className="pill" style={{ background: "var(--ochre-soft)", color: "var(--ochre-deep)", fontSize: 11, fontWeight: 600, padding: "3px 9px", whiteSpace: "nowrap" }}>Not taking new work</span>
+            <span className="pill" style={{ background: "#F7F8C6", color: "var(--ink-soft)", border: "1px solid #DCE224", fontSize: 11, fontWeight: 600, padding: "3px 9px", whiteSpace: "nowrap" }}>Not taking new work</span>
           )}
           {recentlyActive(r) && (
             <span style={{ fontSize: 12.5, fontStyle: "italic", color: "var(--dim)", whiteSpace: "nowrap" }}>Recently active</span>
@@ -339,8 +339,8 @@ function RepRow({ r }) {
       <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
         <Avatar name={r.name} size={40} claimed={r.claimed} />
         <div style={{ minWidth: 0 }}>
-          <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "block" }}>{r.name}{r.sample && <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".04em", color: "var(--ochre-deep)", background: "var(--ochre-soft)", borderRadius: 5, padding: "1px 5px", marginLeft: 7, verticalAlign: "middle" }}>SAMPLE</span>}</span>
-          <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}{recentlyActive(r) ? <span style={{ fontStyle: "italic", color: "var(--dim)" }}> · Recently active</span> : null}{notAcceptingJobs(r) ? <span style={{ color: "var(--ochre-deep)", fontWeight: 600 }}> · Not taking new work</span> : null}</div>
+          <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "block" }}>{r.name}{r.sample && <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".04em", color: "var(--muted)", background: "var(--rule)", borderRadius: 5, padding: "1px 5px", marginLeft: 7, verticalAlign: "middle" }}>SAMPLE</span>}</span>
+          <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}{recentlyActive(r) ? <span style={{ fontStyle: "italic", color: "var(--dim)" }}> · Recently active</span> : null}{notAcceptingJobs(r) ? <span style={{ background: "#F7F8C6", border: "1px solid #DCE224", color: "var(--ink-soft)", fontSize: 11, fontWeight: 600, padding: "1px 6px", borderRadius: 5, marginLeft: 6 }}>Not taking new work</span> : null}</div>
         </div>
       </div>
       <div style={{ minWidth: 0, display: "flex", alignItems: "center", gap: 6, fontSize: 13.5, fontWeight: 600, color: "var(--ink-soft)" }}>

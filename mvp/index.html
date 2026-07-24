@@ -2933,6 +2933,12 @@ const SEED_INVOICES = [
   { id: "INV-1044", client: "Kessler Tang LLP", matter: "Sealed – trade secret", desc: "Expedited transcript – 92 pp.", date: "2026-07-16", amount: 690, due: "2026-07-30", status: "draft" },
 ];
 
+// Firm-initiated "please invoice me" requests (prototype). A firm asks a connected reporter to
+// bill through DS so they can pay electronically; the reporter one-taps to issue the invoice.
+// Sample data, like the seed invoices. See docs/open_strategic_decisions.md §1.
+const SEED_REQUESTS = [
+  { id: "REQ-1", reporterName: "Marguerite Ellsworth", firmName: "Delaney Defense", matter: "Okafor v. Sunrise Medical (25CV02901)", desc: "Half-day deposition transcript, 64 pp. + rough draft", amount: 384, at: "Yesterday", status: "pending" },
+];
 const SEED_CONVOS = [
   { id: "c1", with: "Morgan & Reyes LLP", role: "firm", subtitle: "Karen Ruiz, Legal Ops", unread: 1, msgs: [
     { from: "them", t: "Hi Marguerite – are you available for a deposition in San Jose on Aug 4? Complex IP matter, expert witness.", at: "Jul 15, 2:14 PM" },
@@ -3175,8 +3181,8 @@ function LandingPage() {
 }
 
 function ValueCard({ icon, tone, eyebrow, title, points, cta }) {
-  const bg = tone === "ochre" ? "var(--ochre-soft)" : tone === "sage" ? "var(--sage-soft)" : "var(--brand-soft)";
-  const fg = tone === "ochre" ? "var(--ochre-deep)" : tone === "sage" ? "var(--sage-deep)" : "var(--brand-dark)";
+  const bg = "var(--brand-soft)";
+  const fg = "var(--brand-dark)";
   return (
     <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 16, height: "100%" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -3277,8 +3283,8 @@ function ForReportersPage() {
         <FeatureBlock icon="bank" title="Get paid, and your tax forms" body="Collect by card or ACH straight to your bank, and get tidy income records plus the year-end 1099 Stripe issues for what you collect." />
         <FeatureBlock icon="shield" title="Verified once, via Stripe" body="Confirm your identity through Stripe Connect. It powers your payouts and shows firms you're the real, licensed reporter." />
       </div>
-      <div style={{ background: "var(--sage-soft)", border: "1px solid #C5D8C2", borderRadius: 18, padding: 32, marginTop: 40, textAlign: "center" }}>
-        <h3 style={{ fontSize: 26, color: "var(--sage-deep)" }}>Find your profile and claim it</h3>
+      <div style={{ background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 18, padding: 32, marginTop: 40, textAlign: "center" }}>
+        <h3 style={{ fontSize: 26, color: "var(--brand-dark)" }}>Find your profile and claim it</h3>
         <p style={{ color: "var(--ink-soft)", marginTop: 10, maxWidth: 560, margin: "10px auto 0" }}>Look yourself up by license number or name, confirm it's you, and create your account. Three minutes, start to finish.</p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 22, flexWrap: "wrap" }}>
           <button className="btn btn-primary" onClick={() => navigate("/claim")}><Icon name="user" size={16} /> Claim my profile</button>
@@ -3378,14 +3384,14 @@ function RepCard({ r }) {
       <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
         <Avatar name={r.name} claimed={r.claimed} photo={r.photo} />
         <div style={{ flex: 1, minWidth: 0 }}>
-          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)", lineHeight: 1.15, display: "block" }}>{r.name}{r.sample && <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10.5, fontWeight: 700, letterSpacing: ".04em", color: "var(--ochre-deep)", background: "var(--ochre-soft)", borderRadius: 5, padding: "2px 6px", marginLeft: 8, verticalAlign: "middle" }}>SAMPLE</span>}</span>
+          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)", lineHeight: 1.15, display: "block" }}>{r.name}{r.sample && <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10.5, fontWeight: 700, letterSpacing: ".04em", color: "var(--muted)", background: "var(--rule)", borderRadius: 5, padding: "2px 6px", marginLeft: 8, verticalAlign: "middle" }}>SAMPLE</span>}</span>
           <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 3 }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}</div>
           <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon name="pin" size={13} style={{ color: "var(--dim)", flexShrink: 0 }} />{r.city}{r.county && r.county !== r.city ? ", " + r.county + " County" : ""}</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 5, flexShrink: 0 }}>
           <SaveHeart r={r} />
           {notAcceptingJobs(r) && (
-            <span className="pill" style={{ background: "var(--ochre-soft)", color: "var(--ochre-deep)", fontSize: 11, fontWeight: 600, padding: "3px 9px", whiteSpace: "nowrap" }}>Not taking new work</span>
+            <span className="pill" style={{ background: "#F7F8C6", color: "var(--ink-soft)", border: "1px solid #DCE224", fontSize: 11, fontWeight: 600, padding: "3px 9px", whiteSpace: "nowrap" }}>Not taking new work</span>
           )}
           {recentlyActive(r) && (
             <span style={{ fontSize: 12.5, fontStyle: "italic", color: "var(--dim)", whiteSpace: "nowrap" }}>Recently active</span>
@@ -3708,8 +3714,8 @@ function RepRow({ r }) {
       <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
         <Avatar name={r.name} size={40} claimed={r.claimed} />
         <div style={{ minWidth: 0 }}>
-          <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "block" }}>{r.name}{r.sample && <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".04em", color: "var(--ochre-deep)", background: "var(--ochre-soft)", borderRadius: 5, padding: "1px 5px", marginLeft: 7, verticalAlign: "middle" }}>SAMPLE</span>}</span>
-          <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}{recentlyActive(r) ? <span style={{ fontStyle: "italic", color: "var(--dim)" }}> · Recently active</span> : null}{notAcceptingJobs(r) ? <span style={{ color: "var(--ochre-deep)", fontWeight: 600 }}> · Not taking new work</span> : null}</div>
+          <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "block" }}>{r.name}{r.sample && <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".04em", color: "var(--muted)", background: "var(--rule)", borderRadius: 5, padding: "1px 5px", marginLeft: 7, verticalAlign: "middle" }}>SAMPLE</span>}</span>
+          <div style={{ fontSize: 12.5, color: "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}{recentlyActive(r) ? <span style={{ fontStyle: "italic", color: "var(--dim)" }}> · Recently active</span> : null}{notAcceptingJobs(r) ? <span style={{ background: "#F7F8C6", border: "1px solid #DCE224", color: "var(--ink-soft)", fontSize: 11, fontWeight: 600, padding: "1px 6px", borderRadius: 5, marginLeft: 6 }}>Not taking new work</span> : null}</div>
         </div>
       </div>
       <div style={{ minWidth: 0, display: "flex", alignItems: "center", gap: 6, fontSize: 13.5, fontWeight: 600, color: "var(--ink-soft)" }}>
@@ -4390,12 +4396,12 @@ function ReporterDashboard() {
         <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
           <button className="btn btn-secondary" onClick={() => setTab("profile")}>Edit profile</button>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-            <button className="btn btn-primary" onClick={() => setTab("invoices")}><Icon name="plus" size={16} /> New invoice</button>
+            <button className="btn btn-primary" onClick={() => navigate("/reporter/invoices/new")}><Icon name="plus" size={16} /> New invoice</button>
             <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--brand)", cursor: "pointer", fontSize: 13, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 5, padding: 0 }}><Icon name="eye" size={14} /> View public profile</button>
           </div>
         </div>
       }>
-      <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Sample data</strong> — the invoices, payments, stats, and messages here are illustrative placeholders for the prototype.</span></div>
+      <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Sample data</strong> – the invoices, payments, stats, and messages here are illustrative placeholders for the prototype.</span></div>
       {tab === "overview" && (
         <>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 18 }}>
@@ -4696,7 +4702,7 @@ function InviteFirmModal({ me, onClose }) {
       <div className="ds-card" style={{ maxWidth: 540, width: "92%", maxHeight: "88vh", overflowY: "auto" }} onClick={(e) => e.stopPropagation()}>
         {sent ? (
           <div style={{ textAlign: "center", padding: "8px 4px" }}>
-            <div style={{ width: 52, height: 52, borderRadius: 14, background: "var(--sage-soft)", color: "var(--sage-deep)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 14px" }}><Icon name="mail" size={26} /></div>
+            <div style={{ width: 52, height: 52, borderRadius: 14, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 14px" }}><Icon name="mail" size={26} /></div>
             <h3 style={{ fontSize: 22 }}>Invite sent to {firm}</h3>
             <p style={{ color: "var(--muted)", marginTop: 10, lineHeight: 1.6, fontSize: 14.5 }}>When they join, {firm} is saved to your firm list automatically and can pay your invoices here, so you stay first in mind for their next job.</p>
             <p style={{ color: "var(--dim)", marginTop: 10, fontSize: 12.5 }}>Prototype: no email is actually sent.</p>
@@ -4773,6 +4779,17 @@ function ReporterInvoices() {
   const [tmpl, setTmpl] = useState(null);
   const [current, setCurrent] = useState(null);
   const invoices = store.invoices;
+  // The one pervasive "New invoice" button (in the dashboard header) routes here; open the builder
+  // and then reset the route so the button works again next time.
+  const route = useRoute();
+  useEffect(() => { if (/\/invoices\/new$/.test(route)) { setView("template"); setTmpl(null); navigate("/reporter/invoices"); } }, [route]);
+  const myName = useMemo(() => { const r = buildDirectory().find((x) => x.id === store.myCsr); return r ? r.name : ""; }, [store.myCsr]);
+  const requests = store.paymentRequests.filter((q) => q.status === "pending" && q.reporterName === myName);
+  // A firm asked us to invoice them - one tap turns the request into a draft invoice, ready to send.
+  const acceptRequest = (q) => {
+    const inv = { id: "INV-" + String(Date.now()).slice(-4), client: q.firmName, matter: q.matter || "", desc: q.desc || "", amount: q.amount || 0, date: new Date().toISOString().slice(0, 10), due: "", status: "draft" };
+    store.addInvoice(inv); store.fulfillRequest(q.id); setCurrent(inv); setView("detail");
+  };
 
   if (view === "template") return <TemplatePicker onCancel={() => setView("list")} onPick={(t) => { setTmpl(t); setView("build"); }} />;
   if (view === "build") return <InvoiceBuilder template={tmpl} onCancel={() => setView("list")} onCreated={(inv) => { store.addInvoice(inv); setCurrent(inv); setView("detail"); }} />;
@@ -4787,8 +4804,23 @@ function ReporterInvoices() {
           <span><strong style={{ color: "var(--ink)" }}>{invoices.filter((i) => i.status === "overdue").length}</strong> overdue</span>
           <span><strong style={{ color: "var(--ink)" }}>{invoices.filter((i) => i.status === "paid").length}</strong> paid</span>
         </div>
-        <button className="btn btn-primary" onClick={() => setView("template")}><Icon name="plus" size={16} /> New invoice</button>
       </div>
+      {requests.length > 0 && (
+        <div className="ds-card" style={{ marginBottom: 18, background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}><Icon name="invoice" size={18} style={{ color: "var(--brand-dark)" }} /><h3 style={{ fontSize: 17 }}>Invoice requests from firms</h3></div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {requests.map((q) => (
+              <div key={q.id} style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 10, padding: "12px 14px" }}>
+                <div style={{ flex: 1, minWidth: 200 }}>
+                  <div style={{ fontWeight: 600, color: "var(--ink)" }}>{q.firmName}{q.amount ? " · $" + q.amount.toLocaleString(undefined, { minimumFractionDigits: 2 }) : ""}</div>
+                  <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>{q.matter ? q.matter + " – " : ""}{q.desc}</div>
+                </div>
+                <button className="btn btn-primary" onClick={() => acceptRequest(q)}><Icon name="plus" size={15} /> Create invoice</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="ds-card" style={{ padding: 0, overflow: "hidden" }}>
         <div style={{ overflowX: "auto" }}>
           <table className="ds-table">
@@ -4832,7 +4864,7 @@ function TemplatePicker({ onCancel, onPick }) {
         {custom.map((t, i) => (
           <button key={"c" + i} className="rep-card" style={{ cursor: "pointer" }} onClick={() => onPick(t)}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--sage-soft)", color: "var(--sage-deep)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="star" size={19} /></div>
+              <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="star" size={19} /></div>
               <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 19 }}>{t.name}</span>
             </div>
             <div style={{ fontSize: 13, color: "var(--muted)" }}>Your saved template</div>
@@ -5060,6 +5092,13 @@ function MessagesPanel({ embedded }) {
   // The reporter this conversation is with, so a firm sees the "not accepting new work" reminder.
   const withRep = active ? buildDirectory().find((x) => x.name === active.with) : null;
   const [draft, setDraft] = useState("");
+  const [reqOpen, setReqOpen] = useState(false);
+  const sendRequest = (req) => {
+    store.requestInvoice({ reporterName: active.with, firmName: store.firmName, matter: req.matter, desc: req.desc, amount: req.amount, at: "Just now" });
+    const line = "Requested an invoice" + (req.matter ? " for " + req.matter : "") + (req.desc ? " – " + req.desc : "") + (req.amount ? " (about $" + req.amount.toLocaleString() + ")" : "") + ". Please send it here so I can pay by card or ACH.";
+    store.pushMessage(active.id, { from: "me", t: line, at: "Just now" });
+    setReqOpen(false);
+  };
   const [linkOpen, setLinkOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [linkLabel, setLinkLabel] = useState("");
@@ -5118,6 +5157,8 @@ function MessagesPanel({ embedded }) {
 
           {/* composer */}
           <div style={{ borderTop: "1px solid var(--rule)", padding: 14, background: "var(--bg)" }}>
+            {store.role === "firm" && withRep ? <button className="chip-filter" style={{ marginBottom: 10, fontSize: 12.5, padding: "8px 12px", display: "inline-flex", alignItems: "center", gap: 6 }} onClick={() => setReqOpen(true)}><Icon name="invoice" size={15} /> Request an invoice</button> : null}
+            {reqOpen && <RequestInvoiceModal reporterName={active.with} onSend={sendRequest} onClose={() => setReqOpen(false)} />}
             {linkOpen && (
               <div style={{ marginBottom: 10 }}>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -5125,7 +5166,7 @@ function MessagesPanel({ embedded }) {
                   <input className="ds-input" style={{ flex: 1, minWidth: 120, padding: "9px 12px", fontSize: 13 }} placeholder="Label (optional)" value={linkLabel} onChange={(e) => setLinkLabel(e.target.value)} />
                 </div>
                 {linkUrl.trim() ? (
-                  <div style={{ display: "flex", gap: 7, alignItems: "flex-start", marginTop: 8, fontSize: 12, color: "var(--ochre-deep)", background: "var(--ochre-soft)", border: "1px solid #E8D3A8", borderRadius: 9, padding: "8px 11px" }}>
+                  <div style={{ display: "flex", gap: 7, alignItems: "flex-start", marginTop: 8, fontSize: 12, color: "var(--ink-soft)", background: "#F7F8C6", border: "1px solid #DCE224", borderRadius: 9, padding: "8px 11px" }}>
                     <Icon name="shield" size={14} style={{ flexShrink: 0, marginTop: 1 }} />
                     <span>Only share links you control access to (private, access-controlled, or expiring). Dewey Sholes doesn't store, secure, or check your files or links. You're responsible for how sensitive material is shared.</span>
                   </div>
@@ -5143,6 +5184,37 @@ function MessagesPanel({ embedded }) {
       ) : (
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "var(--muted)" }}>No conversation selected.</div>
       )}
+    </div>
+  );
+}
+
+// A firm asks a reporter to bill them through Dewey Sholes, so the payment lands on-platform
+// instead of a check off-site. The reporter gets a one-tap prompt to issue the invoice.
+function RequestInvoiceModal({ reporterName, onSend, onClose }) {
+  const [matter, setMatter] = useState("");
+  const [desc, setDesc] = useState("");
+  const [amount, setAmount] = useState("");
+  const first = reporterName.split(" ")[0];
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="ds-card" style={{ maxWidth: 480, width: "94%" }} onClick={(e) => e.stopPropagation()}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+          <div>
+            <h3 style={{ fontSize: 22 }}>Request an invoice</h3>
+            <p style={{ color: "var(--muted)", fontSize: 13.5, marginTop: 4, lineHeight: 1.5 }}>Ask {first} to bill you through Dewey Sholes so you can pay by card or ACH. They get a one-tap prompt to send it.</p>
+          </div>
+          <button onClick={onClose} title="Close" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", padding: 4, flexShrink: 0 }}><Icon name="x" size={20} /></button>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 16 }}>
+          <div><label className="ds-label">Matter reference (optional)</label><input className="ds-input" value={matter} onChange={(e) => setMatter(e.target.value)} placeholder="e.g. Ramos v. Delta Logistics" /></div>
+          <div><label className="ds-label">What it's for</label><textarea className="ds-input" rows={3} value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="e.g. Half-day deposition on Aug 4, certified transcript + realtime." /></div>
+          <div style={{ maxWidth: 200 }}><label className="ds-label">Amount to confirm (optional)</label><input className="ds-input" type="number" min="0" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Agreed amount" /></div>
+        </div>
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 20, flexWrap: "wrap" }}>
+          <button className="btn btn-secondary" onClick={onClose}>Cancel</button>
+          <button className="btn btn-primary" onClick={() => onSend({ matter: matter.trim(), desc: desc.trim(), amount: amount ? Number(amount) : null })}><Icon name="invoice" size={16} /> Send request</button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -5392,6 +5464,7 @@ function StoreProvider({ children }) {
   const [saved, setSaved] = useState(["900004", "900003", "900005"]);
   const [convos, setConvos] = useState(SEED_CONVOS);
   const [invoices, setInvoices] = useState(SEED_INVOICES);
+  const [paymentRequests, setPaymentRequests] = useState(SEED_REQUESTS);
   const [customTemplates, setCustomTemplates] = useState([]);
   const [invitedFirms, setInvitedFirms] = useState([]);
   const [firmPlan, setFirmPlan] = useState("free");   // 'free' | 'pro'
@@ -5403,7 +5476,10 @@ function StoreProvider({ children }) {
   const [myAccepting, setMyAccepting] = useState(true);
 
   const store = {
-    role, myCsr, saved, convos, invoices, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, myAccepting, setMyAccepting,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, myAccepting, setMyAccepting,
+    // Firm asks a reporter to invoice them (so payment happens on-platform); reporter fulfills it.
+    requestInvoice: (req) => setPaymentRequests((rs) => [{ ...req, id: "REQ-" + Date.now(), status: "pending" }, ...rs]),
+    fulfillRequest: (id) => setPaymentRequests((rs) => rs.map((r) => r.id === id ? { ...r, status: "fulfilled" } : r)),
     addTemplate: (t) => setCustomTemplates((xs) => [...xs, t]),
     enterAsReporter: () => setRole("reporter"),
     enterAsFirm: (name) => { setRole("firm"); if (name && name.trim()) setFirmName(name.trim()); },

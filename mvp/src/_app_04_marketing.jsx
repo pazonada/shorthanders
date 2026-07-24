@@ -87,8 +87,8 @@ function LandingPage() {
 }
 
 function ValueCard({ icon, tone, eyebrow, title, points, cta }) {
-  const bg = tone === "ochre" ? "var(--ochre-soft)" : tone === "sage" ? "var(--sage-soft)" : "var(--brand-soft)";
-  const fg = tone === "ochre" ? "var(--ochre-deep)" : tone === "sage" ? "var(--sage-deep)" : "var(--brand-dark)";
+  const bg = "var(--brand-soft)";
+  const fg = "var(--brand-dark)";
   return (
     <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 16, height: "100%" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -189,8 +189,8 @@ function ForReportersPage() {
         <FeatureBlock icon="bank" title="Get paid, and your tax forms" body="Collect by card or ACH straight to your bank, and get tidy income records plus the year-end 1099 Stripe issues for what you collect." />
         <FeatureBlock icon="shield" title="Verified once, via Stripe" body="Confirm your identity through Stripe Connect. It powers your payouts and shows firms you're the real, licensed reporter." />
       </div>
-      <div style={{ background: "var(--sage-soft)", border: "1px solid #C5D8C2", borderRadius: 18, padding: 32, marginTop: 40, textAlign: "center" }}>
-        <h3 style={{ fontSize: 26, color: "var(--sage-deep)" }}>Find your profile and claim it</h3>
+      <div style={{ background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 18, padding: 32, marginTop: 40, textAlign: "center" }}>
+        <h3 style={{ fontSize: 26, color: "var(--brand-dark)" }}>Find your profile and claim it</h3>
         <p style={{ color: "var(--ink-soft)", marginTop: 10, maxWidth: 560, margin: "10px auto 0" }}>Look yourself up by license number or name, confirm it's you, and create your account. Three minutes, start to finish.</p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 22, flexWrap: "wrap" }}>
           <button className="btn btn-primary" onClick={() => navigate("/claim")}><Icon name="user" size={16} /> Claim my profile</button>

@@ -40,6 +40,17 @@ function ReporterInvoices() {
   const [tmpl, setTmpl] = useState(null);
   const [current, setCurrent] = useState(null);
   const invoices = store.invoices;
+  // The one pervasive "New invoice" button (in the dashboard header) routes here; open the builder
+  // and then reset the route so the button works again next time.
+  const route = useRoute();
+  useEffect(() => { if (/\/invoices\/new$/.test(route)) { setView("template"); setTmpl(null); navigate("/reporter/invoices"); } }, [route]);
+  const myName = useMemo(() => { const r = buildDirectory().find((x) => x.id === store.myCsr); return r ? r.name : ""; }, [store.myCsr]);
+  const requests = store.paymentRequests.filter((q) => q.status === "pending" && q.reporterName === myName);
+  // A firm asked us to invoice them - one tap turns the request into a draft invoice, ready to send.
+  const acceptRequest = (q) => {
+    const inv = { id: "INV-" + String(Date.now()).slice(-4), client: q.firmName, matter: q.matter || "", desc: q.desc || "", amount: q.amount || 0, date: new Date().toISOString().slice(0, 10), due: "", status: "draft" };
+    store.addInvoice(inv); store.fulfillRequest(q.id); setCurrent(inv); setView("detail");
+  };
 
   if (view === "template") return <TemplatePicker onCancel={() => setView("list")} onPick={(t) => { setTmpl(t); setView("build"); }} />;
   if (view === "build") return <InvoiceBuilder template={tmpl} onCancel={() => setView("list")} onCreated={(inv) => { store.addInvoice(inv); setCurrent(inv); setView("detail"); }} />;
@@ -54,8 +65,23 @@ function ReporterInvoices() {
           <span><strong style={{ color: "var(--ink)" }}>{invoices.filter((i) => i.status === "overdue").length}</strong> overdue</span>
           <span><strong style={{ color: "var(--ink)" }}>{invoices.filter((i) => i.status === "paid").length}</strong> paid</span>
         </div>
-        <button className="btn btn-primary" onClick={() => setView("template")}><Icon name="plus" size={16} /> New invoice</button>
       </div>
+      {requests.length > 0 && (
+        <div className="ds-card" style={{ marginBottom: 18, background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}><Icon name="invoice" size={18} style={{ color: "var(--brand-dark)" }} /><h3 style={{ fontSize: 17 }}>Invoice requests from firms</h3></div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {requests.map((q) => (
+              <div key={q.id} style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 10, padding: "12px 14px" }}>
+                <div style={{ flex: 1, minWidth: 200 }}>
+                  <div style={{ fontWeight: 600, color: "var(--ink)" }}>{q.firmName}{q.amount ? " · $" + q.amount.toLocaleString(undefined, { minimumFractionDigits: 2 }) : ""}</div>
+                  <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>{q.matter ? q.matter + " – " : ""}{q.desc}</div>
+                </div>
+                <button className="btn btn-primary" onClick={() => acceptRequest(q)}><Icon name="plus" size={15} /> Create invoice</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="ds-card" style={{ padding: 0, overflow: "hidden" }}>
         <div style={{ overflowX: "auto" }}>
           <table className="ds-table">
@@ -99,7 +125,7 @@ function TemplatePicker({ onCancel, onPick }) {
         {custom.map((t, i) => (
           <button key={"c" + i} className="rep-card" style={{ cursor: "pointer" }} onClick={() => onPick(t)}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--sage-soft)", color: "var(--sage-deep)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="star" size={19} /></div>
+              <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="star" size={19} /></div>
               <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 19 }}>{t.name}</span>
             </div>
             <div style={{ fontSize: 13, color: "var(--muted)" }}>Your saved template</div>
