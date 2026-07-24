@@ -69,7 +69,7 @@ function ReporterDashboard() {
           <StatCard icon="eye" label="Profile views (30d)" value={me.views} tone="brand" />
           <StatCard icon="message" label="Unread messages" value={unread} tone="plum" onClick={() => setTab("messages")} />
 
-          <div className="ds-card" style={{ gridColumn: "1 / -1", display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+          <div className="ds-card" style={{ gridColumn: "1 / -1", marginTop: 20, display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
             <div style={{ width: 46, height: 46, borderRadius: 12, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="mail" size={22} /></div>
             <div style={{ flex: 1, minWidth: 220 }}>
               <div style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Invite the firms you already work with</div>
