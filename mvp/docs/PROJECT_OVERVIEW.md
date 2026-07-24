@@ -131,6 +131,9 @@ a terms-of-service review (`legal_question_deposition_neutrality.md`, `open_stra
   "last active" timestamp. **NEW 2026-07-21.**
 - `csr_email_outreach.md` – the one-time CSR claim-invite email + send plan.
 - `legal_question_deposition_neutrality.md` – brief for a reporting-industry attorney.
+- `palette.md` – the concrete color palette: **indigo-only accent** (`#4361EE`), slate neutrals,
+  three semantic colors used sparingly, acid yellow reserved for micro-accents/data-viz, and
+  **quiet `.ds-note` notices** instead of tinted banners by default. **NEW 2026-07-24.**
 - `roadmap.md` – deferred product ideas.
 - `state_expansion_checklist.md` – every California-hardcoded string, data file, and structural
   assumption, so a future state expansion is a checklist not a hunt. **NEW 2026-07-21.**

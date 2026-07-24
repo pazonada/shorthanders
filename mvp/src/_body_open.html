@@ -97,6 +97,14 @@
   .banner-info { background: var(--brand-soft); border: 1px solid var(--brand-pale); color: var(--ink-soft); }
   .banner-warn { background: var(--ochre-soft); border: 1px solid #E8D3A8; color: var(--ochre-deep); }
   .banner-ok { background: var(--sage-soft); border: 1px solid #C5D8C2; color: var(--sage-deep); }
+  /* Quiet notice: the low-key alternative to a tinted banner. No fill, hairline rules, muted
+     text. Use for passive/informational notes (see docs/palette.md); reserve tinted banners for
+     genuine success/error moments. */
+  .ds-note {
+    display: flex; gap: 8px; align-items: flex-start; margin-bottom: 22px;
+    padding: 9px 2px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    font-size: 13px; line-height: 1.5; color: var(--muted);
+  }
 
   /* decorative shorthand that blends into the hero background (ported from the original site) */
   .mvp-hero { position: relative; overflow: hidden; }

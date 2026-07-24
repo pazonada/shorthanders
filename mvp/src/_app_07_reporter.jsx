@@ -1,10 +1,13 @@
 // ═══ Dashboard shell (shared by reporter + firm) ═══════════════════
-function DashLayout({ title, subtitle, tabs, active, onTab, children }) {
+function DashLayout({ title, subtitle, tabs, active, onTab, headerRight, children }) {
   return (
     <Page wide>
-      <div style={{ marginBottom: 22 }}>
-        <h1 style={{ fontSize: "clamp(28px, 3.5vw, 40px)" }}>{title}</h1>
-        {subtitle && <p style={{ color: "var(--muted)", marginTop: 6 }}>{subtitle}</p>}
+      <div style={{ marginBottom: 22, display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, flexWrap: "wrap" }}>
+        <div>
+          <h1 style={{ fontSize: "clamp(28px, 3.5vw, 40px)" }}>{title}</h1>
+          {subtitle && <p style={{ color: "var(--muted)", marginTop: 6 }}>{subtitle}</p>}
+        </div>
+        {headerRight}
       </div>
       <div className="ds-tabs" style={{ marginBottom: 26, overflowX: "auto" }}>
         {tabs.map((t) => <button key={t.id} className={"ds-tab" + (active === t.id ? " on" : "")} onClick={() => onTab(t.id)}>{t.label}{t.badge ? <span style={{ marginLeft: 7, background: "var(--brand)", color: "#fff", fontSize: 11, fontWeight: 700, padding: "1px 7px", borderRadius: 999 }}>{t.badge}</span> : null}</button>)}
@@ -26,7 +29,6 @@ function ReporterDashboard() {
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);
   const paidThisMonth = invoices.filter((i) => i.status === "paid").reduce((s, i) => s + i.amount, 0);
   const outstanding = invoices.filter((i) => i.status === "sent" || i.status === "overdue").reduce((s, i) => s + i.amount, 0);
-  const pct = completeness(me);
 
   const tabs = [
     { id: "overview", label: "Overview" },
@@ -37,8 +39,17 @@ function ReporterDashboard() {
   ];
 
   return (
-    <DashLayout title={"Welcome back, " + me.name.split(" ")[0]} subtitle={"CSR #" + me.csrNumber + " · " + me.city + ", CA"} tabs={tabs} active={tab} onTab={setTab}>
-      <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample data.</strong> The invoices, payments, stats, and messages shown here are illustrative placeholders for the prototype.</div></div>
+    <DashLayout title={"Welcome back, " + me.name.split(" ")[0]} subtitle={"CSR #" + me.csrNumber + " · " + me.city + ", CA"} tabs={tabs} active={tab} onTab={setTab}
+      headerRight={
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
+          <div style={{ display: "flex", gap: 10 }}>
+            <button className="btn btn-secondary" onClick={() => setTab("profile")}>Edit profile</button>
+            <button className="btn btn-primary" onClick={() => setTab("invoices")}><Icon name="plus" size={16} /> New invoice</button>
+          </div>
+          <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 5, padding: 0 }}><Icon name="eye" size={14} /> View public profile</button>
+        </div>
+      }>
+      <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Sample data</strong> — the invoices, payments, stats, and messages here are illustrative placeholders for the prototype.</span></div>
       {tab === "overview" && (
         <>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 18 }}>
@@ -46,28 +57,6 @@ function ReporterDashboard() {
           <StatCard icon="clock" label="Outstanding" value={"$" + outstanding.toLocaleString(undefined, { minimumFractionDigits: 2 })} tone="ochre" />
           <StatCard icon="eye" label="Profile views (30d)" value={me.views} tone="brand" />
           <StatCard icon="message" label="Unread messages" value={unread} tone="plum" onClick={() => setTab("messages")} />
-
-          <div className="ds-card" style={{ gridColumn: "1 / -1", display: "flex", flexDirection: "column", gap: 14 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
-              <h3 style={{ fontSize: 20 }}>Profile completeness</h3>
-              <span style={{ fontWeight: 700, color: pct >= 80 ? "var(--sage-deep)" : "var(--ochre-deep)" }}>{pct}%</span>
-            </div>
-            <Meter value={pct} />
-            <p style={{ fontSize: 14, color: "var(--muted)" }}>{pct >= 80 ? "Your profile looks great and ranks near the top of search." : "Add rates and a testimonial to rank higher in firm searches."}</p>
-            <div style={{ display: "flex", gap: 10 }}>
-              <button className="btn btn-secondary" onClick={() => setTab("profile")}>Edit profile</button>
-              <button className="btn btn-secondary" onClick={() => navigate("/reporters/" + me.id)}><Icon name="eye" size={16} /> View public profile</button>
-            </div>
-          </div>
-
-          <div className="ds-card" style={{ gridColumn: "1 / -1", display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", background: "var(--sage-soft)", borderColor: "#C5D8C2" }}>
-            <div style={{ width: 46, height: 46, borderRadius: 12, background: "#635BFF", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="bank" size={22} /></div>
-            <div style={{ flex: 1, minWidth: 220 }}>
-              <div style={{ fontWeight: 700, color: "var(--sage-deep)" }}>Stripe payouts connected</div>
-              <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 2 }}>Deposits to •••• 4471. Next payout Jul 19.</div>
-            </div>
-            <button className="btn btn-primary" onClick={() => setTab("invoices")}><Icon name="plus" size={16} /> New invoice</button>
-          </div>
 
           <div className="ds-card" style={{ gridColumn: "1 / -1", display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
             <div style={{ width: 46, height: 46, borderRadius: 12, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="mail" size={22} /></div>
