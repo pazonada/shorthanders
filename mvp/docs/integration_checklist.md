@@ -89,9 +89,18 @@ Two serverless stubs already exist and fall back to demo behavior:
 
 ## 4. Messaging & email – Resend/Postmark + realtime
 
-- [ ] **Reporter → firm invites** – `InviteFirmModal` and invoice-as-invite (`_app_05` /
-  `_app_08`) currently say "no email is actually sent." Send the real invite email (profile
-  link + create-account CTA) and the invoice/payment-link email.
+- [ ] **Reporter → firm invites** – `InviteFirmModal` (`_app_07_reporter.jsx`) and invoice-as-invite
+  (`_app_05` / `_app_08`). Two send paths, both to wire:
+  - **Self-send (built, no backend needed):** the modal now offers **Copy message** / **Copy link**
+    so the reporter pastes the invite into their *own* email or text. For firms the reporter already
+    works with this is usually the best-delivering, most-trusted path – keep it prominent.
+  - **Platform-send ("Send through Dewey Sholes") – currently simulated** ("no email is actually
+    sent"). When wired: send server-side via the authenticated domain, but attribute to the reporter –
+    **From:** `"<Reporter> via Dewey Sholes <invite@deweysholes.com>"`, **Reply-To:** the reporter's
+    own email (so replies go to them). Requires SPF/DKIM/DMARC on the sending domain or it spam-folders
+    (see the deliverability discipline in `open_strategic_decisions.md` §4). Contains the reporter's
+    message + the personalized `/#/invite/<id>` link + create-account CTA. Firm name is now optional;
+    only a valid email is required to send. Also wire the invoice/payment-link email.
 - [ ] **CSR outreach campaign** – the one-time claim invite to the 5,145 independent CSRs
   (`mvp/docs/csr_email_outreach.md`, `data/email_campaign.csv`). Either send via a mail-merge
   tool (GMass/YAMM through Workspace) or programmatically (Resend) – domain auth (SPF/DKIM/
