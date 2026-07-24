@@ -78,11 +78,11 @@ purple/plum is retired. Muted grey is for non-interactive metadata, not links.
 
 ## Metric / stat cards
 
-The dashboard stat cards are the reference "stylized card": white surface, **brand indigo
-left-accent bar** (`box-shadow: inset 3px 0 0 0 var(--brand)` – an inset shadow so it follows the
+The dashboard stat cards are the reference "stylized card": white surface, **DEWEY navy
+left-accent bar** (`box-shadow: inset 3px 0 0 0 var(--ink)` – an inset shadow so it follows the
 rounded corner, unlike a `border-left`), a **brand-soft icon chip** (`--brand-soft` bg, `--brand-pale`
-border, `--brand` icon) top-left, then a serif number over a muted label. Reuse this pattern for
-other metric rows.
+border, `--brand` icon) top-left, then a serif number over a muted label. Navy anchors, indigo
+accents – the two brand colors doing different jobs. Reuse this pattern for other metric rows.
 
 ## Navigation – rely on the browser's Back button
 
