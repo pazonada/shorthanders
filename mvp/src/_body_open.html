@@ -31,7 +31,7 @@
     font-size: 12px; font-weight: 600; padding: 4px 11px; border-radius: 999px;
     font-family: 'Inter', sans-serif; letter-spacing: .01em; white-space: nowrap;
   }
-  .pill-claimed { background: var(--sage-soft); color: var(--sage-deep); }
+  .pill-claimed { background: var(--brand-soft); color: var(--brand-dark); }
   .pill-unclaimed { background: var(--bg-soft); color: var(--muted); border: 1px solid var(--rule); }
   .pill-verified { background: var(--brand-soft); color: var(--brand-dark); }
   .pill-rush { background: var(--ochre-soft); color: var(--ochre-deep); }
@@ -95,8 +95,10 @@
     font-size: 14px; line-height: 1.55;
   }
   .banner-info { background: var(--brand-soft); border: 1px solid var(--brand-pale); color: var(--ink-soft); }
-  .banner-warn { background: var(--ochre-soft); border: 1px solid #E8D3A8; color: var(--ochre-deep); }
-  .banner-ok { background: var(--sage-soft); border: 1px solid #C5D8C2; color: var(--sage-deep); }
+  /* Attention/warning notice - acid yellow (not olive-green). Dark text for contrast. */
+  .banner-warn { background: #F7F8C6; border: 1px solid #DCE224; color: var(--ink-soft); }
+  /* Positive/confirmation notice - indigo, same family as info (no green). */
+  .banner-ok { background: var(--brand-soft); border: 1px solid var(--brand-pale); color: var(--ink-soft); }
   /* Quiet notice: the low-key alternative to a tinted banner. No fill, hairline rules, muted
      text. Use for passive/informational notes (see docs/palette.md); reserve tinted banners for
      genuine success/error moments. */

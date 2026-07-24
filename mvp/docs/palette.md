@@ -26,28 +26,32 @@ that's a deliberate full rebrand (swap indigo out), not a second accent bolted o
 `--rule` `#E2E8F0` · `--rule-strong` `#CBD5E1` · surfaces `#FFFFFF` / `--bg-soft` `#F8FAFC`.
 Most of the UI is neutrals. This is correct – lean on it.
 
-### Semantic – three, used only for status, sparingly
+### Notification colors – indigo or acid yellow. NEVER green.
 
-- **success** – one green (`--sage-deep` `#4F6F4D` on `--sage-soft`). Payment received, connected.
-- **warning** – amber (`--ochre` family, or a truer amber). Attention, not error.
+**Hard rule (Aud, firm):** notifications / status callouts are **indigo** (default) or **acid
+yellow** (attention). **No green, no olive.** Green/olive tints read as generic and "AI-coded"
+and are banned from banners, pills, and status chips.
+
+- **info / positive / status** – **indigo** (`--brand-soft` bg, `--brand-pale` border,
+  `--brand-dark`/`--ink-soft` text). This is `.banner-info`, `.banner-ok`, and `.pill-claimed`.
+- **attention / warning** – **acid yellow** (`#F7F8C6` bg, `#DCE224` border, `--ink-soft` text).
+  This is `.banner-warn` (e.g. "not accepting new jobs", "sample profile"). This is the one place
+  acid yellow is a fill.
 - **error** – red `#DC2626`. Failures, destructive confirms.
+- **The one green allowed:** the tiny "Recently active" **status dot** (`#22C55E`) – a universal
+  online/active convention Aud asked for. Green appears nowhere else.
 
-Semantic colors mean *status*. They are not decoration. A green card is a success state, not "a
-green card."
+### Acid yellow – accents + the warning notice
 
-### Acid yellow – reserved micro-accent
+- `#E2E929` (and the soft `#F7F8C6` fill) – small decorative accents, certain data-viz values, and
+  the **attention/warning banner** above. Not for large decorative surfaces.
 
-- `#E2E929` – **allowed only for small decorative accents and certain data-viz values.** A "new"
-  dot, a highlight underline, one series in a chart. **Never** a background fill behind text, a
-  notice, or a surface – it's too low-contrast and too loud at size.
+### Retired
 
-### Retired as decorative accents
-
-`--ochre` (olive), `--sage`, `--plum`, `--periwinkle`, the second `--accent` indigo – stop using
-these as decoration. Sage survives only as the single success green; ochre only as warning. The
-rest should migrate to neutrals or brand over time. (Legacy usages still exist – e.g. the
-`StatCard` tones on the reporter overview and several `.banner` instances. Migrate opportunistically;
-don't churn the whole app in one pass.)
+`--ochre` (olive), `--sage` (green), `--plum`, `--periwinkle`, the second `--accent` indigo – gone
+from banners, pills, and status. `.banner-warn`/`.banner-ok`/`.pill-claimed` were moved off olive/
+sage to indigo + acid yellow. Any remaining inline olive/sage (e.g. the messaging link-share
+caution, some `StatCard` legacy tones) should migrate the same way – don't leave green in notices.
 
 ## Notices – quiet by default
 

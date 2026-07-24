@@ -301,13 +301,14 @@ function ReporterPayments({ invoices, paidThisMonth }) {
   const paid = invoices.filter((i) => i.status === "paid");
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 20, alignItems: "start" }}>
       <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
           <h3 style={{ fontSize: 20 }}>Your plan</h3>
           <span className="pill pill-claimed"><Icon name="check" size={13} /> Pay per invoice</span>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 14 }}>
-          <div className="ds-panel" style={{ borderColor: "var(--brand-pale)" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <div className="ds-panel" style={{ border: "2px solid var(--ink)" }}>
             <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span></div>
             <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 6, lineHeight: 1.55 }}>A small fee per payment, no monthly cost. Best if you invoice occasionally.</p>
           </div>
@@ -320,11 +321,12 @@ function ReporterPayments({ invoices, paidThisMonth }) {
       </div>
       <div className="ds-card" style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
         <div style={{ width: 48, height: 48, borderRadius: 12, background: "#635BFF", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="bank" size={24} /></div>
-        <div style={{ flex: 1, minWidth: 220 }}>
+        <div style={{ flex: 1, minWidth: 180 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}><h3 style={{ fontSize: 20 }}>Stripe Connect</h3><span className="pill pill-claimed"><Icon name="check" size={13} /> Active</span></div>
           <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>Payouts to Bank of America •••• 4471 · Identity & tax verified</div>
         </div>
         <button className="btn btn-secondary">Manage on Stripe</button>
+      </div>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
         <StatCard icon="dollar" label="Paid this month" value={"$" + paidThisMonth.toLocaleString(undefined, { minimumFractionDigits: 2 })} tone="sage" />

@@ -501,7 +501,7 @@ function ReporterProfile({ reporterId, invited }) {
           <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 11, fontSize: 13, color: "var(--muted)" }}>
             {recentlyActive(r) && (
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ width: 16, display: "inline-flex", justifyContent: "center", flexShrink: 0 }}><span style={{ width: 8, height: 8, borderRadius: "50%", background: "#22C55E" }} /></span>Recently active on Dewey Sholes
+                <span style={{ width: 16, display: "inline-flex", justifyContent: "center", flexShrink: 0 }}><span style={{ width: 8, height: 8, borderRadius: "50%", background: "#22C55E" }} /></span>Recently active
               </div>
             )}
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}><Icon name="eye" size={16} style={{ flexShrink: 0 }} /> {r.views} profile views this month</div>
