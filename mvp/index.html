@@ -4335,12 +4335,12 @@ function ReporterDashboard() {
   return (
     <DashLayout title={"Welcome back, " + me.name.split(" ")[0]} subtitle={"CSR #" + me.csrNumber + " · " + me.city + ", CA"} tabs={tabs} active={tab} onTab={setTab}
       headerRight={
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
-          <div style={{ display: "flex", gap: 10 }}>
-            <button className="btn btn-secondary" onClick={() => setTab("profile")}>Edit profile</button>
+        <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+          <button className="btn btn-secondary" onClick={() => setTab("profile")}>Edit profile</button>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
             <button className="btn btn-primary" onClick={() => setTab("invoices")}><Icon name="plus" size={16} /> New invoice</button>
+            <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 5, padding: 0 }}><Icon name="eye" size={14} /> View public profile</button>
           </div>
-          <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 5, padding: 0 }}><Icon name="eye" size={14} /> View public profile</button>
         </div>
       }>
       <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Sample data</strong> — the invoices, payments, stats, and messages here are illustrative placeholders for the prototype.</span></div>
