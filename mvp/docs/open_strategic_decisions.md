@@ -78,13 +78,45 @@ already public, and (b) firms default to agencies unless they hire direct?
 Stripe free tiers; the processing fee is the reporter's). Not trying to turn a profit at
 launch – trying to prove people use it. Turn on serious pricing once there's real usage.
 
-**Still open:**
-- **Actual prices** (firm subscription, reporter flat plan, and the reporter per-payment %):
-  unset – do not invent. Aud sets them.
-- Firm subscriptions will be slow to grow – a catch-22 (firms won't pay until lots of
-  reporters have rich profiles; reporters won't fill profiles until firms are there), plus
-  the habit of just calling an agency. Start with the firms most likely to say yes: ones
-  that already hire reporters directly, and transcription work (where agencies are weakest).
+**Prices – set as working numbers 2026-07-24 (Aud):**
+- **Reporters:** free to list + message. Get paid at **5% per payment** (pay-as-you-go, no
+  monthly) or **Pro $29/month + 2% per payment**. Pro crossover ≈ **$970/mo** of billing.
+- **Firms:** **$39/month per firm** (not per seat) or **$390/year** (~2 months free). The free
+  tier stays generous – message/pay/save any reporter who invited or is connected to you; the
+  subscription only gates *discovery* of new reporters via full search. Live on the Pricing page,
+  the reporter Payments tab, and the firm Subscription tab. Still working numbers – validate with
+  Rosie's network before scaling.
+
+**Why reporter messaging is free – intentional, not a leak (decided 2026-07-24):**
+Charging the scarce supply side to *respond to inbound demand we generate* would stall the
+marketplace and the reporter-invite flywheel, and mirror the agency behaviour we position against.
+We charge each side for what IT values: firms pay for **access** (subscription); reporters pay a
+small fee for **getting paid**. The real risk isn't free messaging – it's **payment
+disintermediation** (parties meet on DS, transact off it). Mitigations:
+- **Let the firm pull the payment onto the rails.** Firms want electronic payment and dislike
+  check-only reporters (see `firm_electronic_payment` memory), so firm-side convenience drags the
+  transaction – and the fee – on-platform regardless of reporter habit. Strongest lever.
+- **Make on-platform payment strictly better** – instant payout, auto-invoice from the thread,
+  tracking, 1099-K handling. Path of least resistance.
+- **Reviews-after-payment flywheel** – verified ratings only come from on-platform payments, so
+  reporters *want* to invoice through DS (`reviews_and_ratings.md`).
+- **The firm subscription is the reliable, recurring anchor;** reporter per-payment fees are the
+  variable upside that grows as the payment habit forms.
+
+**The one number to validate (OPEN):** the **digital-invoicing adoption rate** – what share of
+reporters who message on DS actually invoice/collect through DS vs. off-platform. The whole
+supply-side revenue line rides on it. Ask Rosie's network + pilot reporters/firms.
+
+**Considered feature (OPEN) – firm-initiated payment request:** today a payment needs the CSR to
+send an invoice first, so a firm that wants to pay electronically can't self-serve. Consider a
+"request an invoice / request to pay" action from a firm on a connected reporter: the firm signals
+the matter + amount to confirm, the reporter one-taps to issue the invoice. Directly lowers the
+friction that keeps payments off-platform. Not built; worth prototyping.
+
+**Still open:** Firm subscriptions grow slowly – a catch-22 (firms won't pay until reporters have
+rich profiles; reporters won't fill profiles until firms are there), plus the just-call-an-agency
+habit. Start with firms most likely to say yes: ones already hiring reporters directly, and
+transcription work (where agencies are weakest).
 
 ---
 
@@ -194,6 +226,29 @@ hearing transcripts (hearings are usually public record; depos can be confidenti
   Hands-off + clear user responsibility + a helpful nudge is the safest posture.
 - Confirm the terms wording in the one-time terms-of-service review (same lawyer as the depo
   question). Not legal advice.
+
+## 7. Message several reporters at once – DECIDED 2026-07-24 (prototyped)
+
+**Question:** a firm shortlisting 5 candidates shouldn't have to copy-paste the same message
+into 5 threads. Can we help without building the full v1 job board?
+
+**Decision – a "message several reporters" fan-out, NOT a job board.** From Saved reporters, a
+firm drafts **one** message and picks recipients; it sends as **separate 1:1 threads**, one per
+reporter. Each reporter sees a normal DM and **never sees they were one of several**; each reply
+splits into its own thread. It's pure fan-out over existing messaging – **no applications,
+scheduling, escrow, first-claim-wins, or cascade** (all the retired v1 machinery). ~80% of the
+job-board's "reach several candidates" value at ~5% of the complexity.
+
+**Guardrails (built):** cap at **10** recipients + it's private per-reporter (no group thread, no
+competitive/reverse-auction signal – protects supply-side trust); the compose list flags any
+"not taking new work" reporter; copy nudges the firm to keep the message general. Prototype:
+`BulkMessageModal` + `store.sendToMany` (`_app_10_firm.jsx` / `_app_11_router.jsx`), entered from
+the firm's Saved reporters tab.
+
+**Open:** whether bulk send is a **Pro/subscription lever** (reaching a shortlist is a nice reason
+to subscribe); rate-limiting/anti-spam when it's wired to real messaging.
+
+---
 
 ## Decisions still needed from Aud
 - [x] **Monetization shape (§1) – DECIDED 2026-07-17.** Firms pay a subscription for full

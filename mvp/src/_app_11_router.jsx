@@ -108,6 +108,16 @@ function StoreProvider({ children }) {
     startConvoWith: (name) => setConvos((cs) => cs.some((c) => c.with === name) ? cs
       : [{ id: "new-" + name, with: name, role: "reporter", subtitle: "New conversation", unread: 0, msgs: [{ from: "me", t: "", at: "Just now" }].filter((m) => m.t) }, ...cs]),
     pushMessage: (cid, msg) => setConvos((cs) => cs.map((c) => c.id === cid ? { ...c, msgs: [...c.msgs, msg], unread: 0 } : c)),
+    // Send ONE message to MANY reporters as separate 1:1 threads (not a group thread). Each
+    // recipient gets an identical opening message in their own conversation; replies split off.
+    // Reporters never see they were one of several. See docs/open_strategic_decisions.md.
+    sendToMany: (names, text) => setConvos((cs) => {
+      const mk = () => ({ from: "me", t: text, at: "Just now" });
+      const updated = cs.map((c) => names.includes(c.with) ? { ...c, msgs: [...c.msgs, mk()] } : c);
+      const have = new Set(cs.map((c) => c.with));
+      const fresh = names.filter((n) => !have.has(n)).map((n) => ({ id: "new-" + n, with: n, role: "reporter", subtitle: "New conversation", unread: 0, msgs: [mk()] }));
+      return [...fresh, ...updated];
+    }),
     markRead: (cid) => setConvos((cs) => cs.map((c) => c.id === cid ? { ...c, unread: 0 } : c)),
     addInvoice: (inv) => setInvoices((xs) => [inv, ...xs]),
     updateInvoice: (id, patch) => setInvoices((xs) => xs.map((i) => i.id === id ? { ...i, ...patch } : i)),

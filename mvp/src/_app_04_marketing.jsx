@@ -245,10 +245,10 @@ function PricingPage() {
           blurb="Everything in Free, at a lower payment fee. Best once you invoice often."
           features={["Everything in the free plan", "2% per payment, not 5%", "The more you invoice, the more you save"]}
           cta={["Claim your profile", "/claim"]} note="$29/month + 2% per payment. Worth it once you're collecting roughly $970+/month. Standard Stripe fees apply." />
-        <PriceCard tone="brand" name="Law firms" price="Pricing coming soon" unit=""
+        <PriceCard tone="brand" name="Law firms" price="$39" unit="/month"
           blurb="Search the directory and reach reporters directly – no agency in the middle."
-          features={["Message reporters who invited you, free", "Subscribe to search the full directory", "Advanced search & filters", "Saved reporters & shared lists", "Pay invoices by card or ACH"]}
-          cta={["Explore the directory", "/directory"]} note="Firm pricing is still being decided." />
+          features={["Message reporters who invited you, free", "Subscribe to search the full directory", "Advanced search & filters", "Saved reporters & shared team lists", "Pay invoices by card or ACH"]}
+          cta={["Explore the directory", "/directory"]} note="$39/month per firm, or $390/year (2 months free). No booking fees or commissions." />
       </div>
       <div className="ds-panel" style={{ maxWidth: 1040, margin: "32px auto 0", textAlign: "center" }}>
         <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.6 }}>
