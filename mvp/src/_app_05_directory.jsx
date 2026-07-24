@@ -438,7 +438,7 @@ function ReporterProfile({ reporterId, invited }) {
     <Page>
       {invited && <div className="banner banner-ok" style={{ marginBottom: 14 }}><Icon name="heart" size={18} style={{ flexShrink: 0 }} /><div><strong>{first} invited you to Dewey Sholes.</strong> Create a free account to message {first}, pay their invoices, and save them to your firm. Joining is free for your firm.</div></div>}
       {r.sample && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This is a fictional demo profile – the name, license number, and every detail are made up to show how a claimed profile looks. Not a real reporter.</div></div>}
-      {notAccepting && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="info" size={18} style={{ flexShrink: 0 }} /><div><strong>Not accepting new jobs right now.</strong> {first} isn't taking on new work at the moment. Firms can still message {first} – for example, to request a copy of a transcript already prepared, or one from a past matter.</div></div>}
+      {notAccepting && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="info" size={18} style={{ flexShrink: 0 }} /><div><strong>This reporter is not accepting new jobs right now,</strong> but can still view messages.</div></div>}
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 32, alignItems: "start" }} className="profile-grid">
         {/* main */}
         <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>
