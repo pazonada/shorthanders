@@ -1,0 +1,6 @@
+# Private, non-deployed working files (legal drafts, negotiation notes, ledgers).
+# Never commit or deploy anything in here.
+_private/
+
+# OS cruft
+.DS_Store
