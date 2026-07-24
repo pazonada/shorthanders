@@ -100,7 +100,9 @@ function StatCard({ icon, label, value, onClick }) {
 }
 
 // Shared bits for the editable profile form.
-const AVAIL_OPTS = [{ code: "rush", label: "Accepts rush / expedited" }, { code: "notary", label: "Notary public" }];
+// Single-select job-availability status (self-set - note: activity_signal_design.md chose a
+// computed "Recently active" signal; this accepting-jobs switch is a separate, complementary axis).
+const AVAIL_STATUS = [{ code: "open", label: "Accepting jobs" }, { code: "rush", label: "Accepting jobs, including rush / expedited" }, { code: "closed", label: "Not accepting jobs right now" }];
 function chipStyle(on) {
   return { fontSize: 13, padding: "6px 13px", borderRadius: 999, cursor: "pointer", fontFamily: "'Inter', sans-serif",
     border: on ? "1px solid var(--brand)" : "1px solid var(--rule-strong)", background: on ? "var(--brand-soft)" : "var(--bg)",
@@ -116,7 +118,7 @@ function FieldBlock({ label, hint, children }) {
   );
 }
 // Toggle chips for a small fixed list (proceedings, services, languages, credentials, availability).
-function ChipToggle({ options, selected, onToggle }) {
+function ChipToggle({ options, selected, onToggle, extra }) {
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
       {options.map((opt) => {
@@ -125,6 +127,7 @@ function ChipToggle({ options, selected, onToggle }) {
         const on = selected.includes(val);
         return <button key={val} type="button" onClick={() => onToggle(val)} style={chipStyle(on)}>{on ? <Icon name="check" size={13} /> : null}{label}</button>;
       })}
+      {extra || null}
     </div>
   );
 }
@@ -188,7 +191,8 @@ function ReporterProfileEditor({ me }) {
   const [languages, setLanguages] = useState(me.languages || []);
   const [certs, setCerts] = useState(() => CREDENTIAL_TYPES.map((c) => c.code).filter((code) => (me.certifications || []).some((x) => x.indexOf(code) !== -1)));
   const [coverage, setCoverage] = useState(me.coverage || []);
-  const [avail, setAvail] = useState(() => [].concat(me.rush ? ["rush"] : [], me.notary ? ["notary"] : []));
+  const [notary, setNotary] = useState(!!me.notary);
+  const [availStatus, setAvailStatus] = useState(me.rush ? "rush" : "open");
   const [showRates, setShowRates] = useState(false);
   const [rates, setRates] = useState({ pageOriginal: { low: "", high: "" }, pageCopy: { low: "", high: "" }, halfDay: { low: "", high: "" }, fullDay: { low: "", high: "" }, trialDay: { low: "", high: "" }, expedited: { low: "", high: "" }, realtime: { low: "", high: "" } });
   const [expUnit, setExpUnit] = useState("percent");
@@ -230,14 +234,18 @@ function ReporterProfileEditor({ me }) {
       </div>
 
       <FieldBlock label="Proceedings covered"><ChipToggle options={PROCEEDING_TYPES} selected={proceedings} onToggle={toggleIn(setProceedings)} /></FieldBlock>
-      <FieldBlock label="Services offered"><ChipToggle options={SERVICE_TYPES} selected={services} onToggle={toggleIn(setServices)} /></FieldBlock>
+      <FieldBlock label="Services offered"><ChipToggle options={SERVICE_TYPES} selected={services} onToggle={toggleIn(setServices)} extra={<button type="button" onClick={() => setNotary(!notary)} style={chipStyle(notary)}>{notary ? <Icon name="check" size={13} /> : null}Notary public</button>} /></FieldBlock>
       <FieldBlock label="Areas of law" hint="Pick from the California State Bar list, or type your own and press Enter to add it.">
         <TagSearchAdd options={SPECIALTY_TYPES} selected={areas} onChange={setAreas} placeholder="Search areas of law, or type your own" allowOther />
       </FieldBlock>
       <FieldBlock label="Languages" hint="Languages you work in besides English. Pick from the list or type your own to add it."><TagSearchAdd options={LANGUAGES} selected={languages} onChange={setLanguages} placeholder="Search languages, or type your own" allowOther /></FieldBlock>
       <FieldBlock label="Certifications"><ChipToggle options={CREDENTIAL_TYPES} selected={certs} onToggle={toggleIn(setCerts)} /></FieldBlock>
       <FieldBlock label="Counties covered"><TagSearchAdd options={counties} selected={coverage} onChange={setCoverage} placeholder="Search California counties" /></FieldBlock>
-      <FieldBlock label="Availability"><ChipToggle options={AVAIL_OPTS} selected={avail} onToggle={toggleIn(setAvail)} /></FieldBlock>
+      <FieldBlock label="Availability" hint="Shown on your public profile so firms know whether to reach out.">
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          {AVAIL_STATUS.map((opt) => <button key={opt.code} type="button" onClick={() => setAvailStatus(opt.code)} style={chipStyle(availStatus === opt.code)}>{availStatus === opt.code ? <Icon name="check" size={13} /> : null}{opt.label}</button>)}
+        </div>
+      </FieldBlock>
 
       <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 20 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
@@ -270,9 +278,9 @@ function ReporterProfileEditor({ me }) {
         ) : null}
       </div>
 
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+      <div style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
         <button className="btn btn-primary" onClick={() => setToast("Profile saved")}><Icon name="check" size={16} /> Save changes</button>
-        <button className="btn btn-secondary" onClick={() => navigate("/reporters/" + me.id)}><Icon name="eye" size={16} /> Preview public profile</button>
+        <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--brand)", cursor: "pointer", fontSize: 14, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 6, padding: 0 }}><Icon name="eye" size={15} /> View public profile</button>
       </div>
       <Toast msg={toast} onClose={() => setToast("")} />
     </div>
