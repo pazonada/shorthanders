@@ -118,9 +118,9 @@ function Step({ n, title, body, art }) {
   );
 }
 
-// Pen-and-ink step illustrations. Files live in mvp/graphics/ at 800x400.
+// Pen-and-ink step illustrations. Files live in mvp/graphics/, ~3:2, shown object-fit cover.
 function StepArt({ kind }) {
-  const files = { search: "step-1-search.png", message: "step-2-message.png", work: "step-3-work.png", invoice: "step-4-invoice.png" };
+  const files = { search: "step-1-search_v2.png", message: "step-2-message_v2.png", work: "step-3-work.png", invoice: "step-4-invoice.png" };
   return <img src={"graphics/" + files[kind]} alt="" aria-hidden="true" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", borderRadius: 13 }} />;
 }
 
