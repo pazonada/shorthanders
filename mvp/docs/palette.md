@@ -69,11 +69,12 @@ purple/plum is retired. Muted grey is for non-interactive metadata, not links.
 
 ## Icons
 
-- **Library: Phosphor** (`@phosphor-icons`), **duotone** weight, drawn on a 256 grid. Chosen over
-  the old hand-rolled line set for more character while staying professional. The `Icon` component
-  (`_app_01_core.jsx`) supports both: a plain node is 24-grid stroke (legacy), `{ vb: 256, node }`
-  is a Phosphor icon. Migrate the rest to Phosphor opportunistically; add new duotone paths by
-  copying from the Phosphor assets (`fill="currentColor"`, back layer `opacity="0.2"`).
+- **Library: Phosphor** (`@phosphor-icons`), **regular** weight, drawn on a 256 grid. Chosen over
+  the old hand-rolled line set for more character while staying professional. (Duotone was tried
+  and rejected – the shaded two-tone read as busy.) The `Icon` component (`_app_01_core.jsx`)
+  supports both: a plain node is 24-grid stroke (legacy), `{ vb: 256, node }` is a Phosphor icon.
+  Migrate the rest to Phosphor opportunistically; copy paths from the `assets/regular/` SVGs
+  (single path, `fill="currentColor"`).
 - **Icon color follows context** via `currentColor`. On the metric chips it's brand indigo.
 
 ## Metric / stat cards
