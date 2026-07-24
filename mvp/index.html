@@ -4641,13 +4641,12 @@ function ReporterPayments({ invoices, paidThisMonth }) {
         <StatCard icon="clock" label="Next payout" value="Jul 19" />
         <StatCard icon="invoice" label="Payments received" value={paid.length} />
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 20, alignItems: "start" }}>
       <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
           <h3 style={{ fontSize: 20 }}>Your plan</h3>
           <span className="pill pill-claimed"><Icon name="check" size={13} /> Pay per invoice</span>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
           <div className="ds-panel" style={{ border: "2px solid var(--ink)" }}>
             <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span></div>
             <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 6, lineHeight: 1.55 }}>A small fee per payment, no monthly cost. Best if you invoice occasionally.</p>
@@ -4659,15 +4658,6 @@ function ReporterPayments({ invoices, paidThisMonth }) {
           </div>
         </div>
       </div>
-      <div className="ds-card" style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
-        <div style={{ width: 48, height: 48, borderRadius: 12, background: "#635BFF", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="bank" size={24} /></div>
-        <div style={{ flex: 1, minWidth: 180 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}><h3 style={{ fontSize: 20 }}>Stripe Connect</h3><span className="pill pill-claimed"><Icon name="check" size={13} /> Active</span></div>
-          <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>Payouts to Bank of America •••• 4471 · Identity & tax verified</div>
-        </div>
-        <button className="btn btn-secondary">Manage on Stripe</button>
-      </div>
-      </div>
       <div className="ds-card" style={{ padding: 0, overflow: "hidden" }}>
         <div style={{ padding: "18px 22px", borderBottom: "1px solid var(--rule)" }}><h3 style={{ fontSize: 18 }}>Recent payments</h3></div>
         <div style={{ overflowX: "auto" }}>
@@ -4676,6 +4666,14 @@ function ReporterPayments({ invoices, paidThisMonth }) {
             <tbody>{paid.length ? paid.map((i) => <tr key={i.id}><td style={{ fontWeight: 600, color: "var(--ink)" }}>{i.id}</td><td>{i.client}</td><td>{i.method || "Card"}</td><td>{i.date}</td><td style={{ textAlign: "right", fontWeight: 600, color: "var(--ink)" }}>${i.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td></tr>) : <tr><td colSpan={5} style={{ textAlign: "center", color: "var(--muted)", padding: 30 }}>No payments yet.</td></tr>}</tbody>
           </table>
         </div>
+      </div>
+      <div className="ds-card" style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
+        <div style={{ width: 48, height: 48, borderRadius: 12, background: "#635BFF", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="bank" size={24} /></div>
+        <div style={{ flex: 1, minWidth: 180 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}><h3 style={{ fontSize: 20 }}>Stripe Connect</h3><span className="pill pill-claimed"><Icon name="check" size={13} /> Active</span></div>
+          <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>Payouts to Bank of America •••• 4471 · Identity & tax verified</div>
+        </div>
+        <button className="btn btn-secondary">Manage on Stripe</button>
       </div>
     </div>
   );
