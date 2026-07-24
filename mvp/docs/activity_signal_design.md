@@ -17,11 +17,47 @@ status at all, because a firm acts on it, messages someone who stopped taking wo
 and hears nothing – which is precisely the failure the feature was meant to prevent. It also
 puts the maintenance burden on the side of the market we're trying to attract.
 
+*Revisited 2026-07-24 – see "The accepting-jobs toggle" below. This critique holds for a
+**published availability claim** (a positive "I'm available" the firm acts on). A binary,
+default-on "pause my listing" toggle escapes it, so we shipped that.*
+
 **A visible "last active" timestamp**, Care.com style. On Care.com the providers browse demand,
 so logging in is rational and frequent. Here, a reporter who fills out a profile and gets on
 with their life is using the product *correctly* – firms come to them. Publishing "last active
 5 months ago" would punish reporters for behaving as designed and make the directory look
 abandoned even while it worked.
+
+## The accepting-jobs toggle (added 2026-07-24)
+
+The profile editor now has a single **availability toggle, default ON** ("Accepting jobs").
+Turning it OFF **removes the reporter from search results** entirely, behind a confirmation
+dialog that spells that out. Turning it back on is immediate, no confirmation. It sits alongside
+the computed "Recently active" line, not in place of it – the two answer different questions:
+*am I willing to take work* (self-set) vs *am I engaged here* (earned).
+
+**Why this survives the self-set-status rejection above.** The thing we rejected was a *published
+availability claim* – a positive "available" a firm reads and acts on. This toggle is the inverse:
+
+- **Default ON means no upkeep for the normal case.** The common state (accepting work) is the
+  default, so a reporter who fills out a profile and gets on with their life is represented
+  correctly without ever touching it. The rejected design failed *because* staying accurate
+  required coming back to update it; here, doing nothing is accurate.
+- **OFF removes you; it doesn't mislead.** A stale "available" was worse than nothing because a
+  firm messaged someone who'd stopped taking work and got silence. OFF can't produce that failure
+  – it hides the reporter rather than advertising a claim. The worst a stale OFF does is keep a
+  willing reporter out of search.
+- **The staleness incentive is aligned.** A forgotten OFF costs the *reporter* (no work), not the
+  firm. So the person with the information and the motivation to fix it is the same person – the
+  opposite of the rejected design, where upkeep fell on the side of the market we're courting and
+  the cost of neglect fell on the other side.
+
+It's a "going on vacation / booked solid" switch, not an "I'm available!" billboard. That
+distinction is the whole reason it's safe.
+
+**Not built yet:** the toggle is prototype-local (resets on refresh) and doesn't actually gate
+search or the public profile. Wiring `accepting` into the directory filter and the profile
+(hide when off) is backend work – see `integration_checklist.md`. Ranking is unaffected either
+way.
 
 ## Why the computed version works
 
