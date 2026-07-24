@@ -1,6 +1,6 @@
 # Launch prep – everything that has to happen before Dewey Sholes is real
 
-A working to-do list. Tick things off as they're done. Last updated 2026-07-21.
+A working to-do list. Tick things off as they're done. Last updated 2026-07-24.
 
 **Who does what:**
 **YOU** = a decision or a design only you can make · **CLAUDE** = I can do it, just ask ·
@@ -125,7 +125,38 @@ This is the big one, and it's real engineering. Everything here is spelled out i
       language. **LAWYER**
 - [ ] **Real privacy policy**, same situation. **LAWYER**
 
-## Phase 6 – The final pass
+## Phase 6 – Prove it actually works (pre-launch verification / UAT)
+
+The point of maximum anxiety, and rightly so: losing users – or getting in trouble – because a
+payment, a message, or an email notification *silently* didn't work. This is a **layered gate**,
+run once the Phase 3 integrations exist and before the final pass. No single tool covers it; each
+layer catches what the others miss.
+
+- [ ] **End-to-end tests in Stripe + Resend TEST mode.** Prove the riskiest flows with a real
+      assertion, not a screenshot. Invoice → firm pays (card *and* ACH) → the reporter-side fee is
+      taken → the payout lands. Pro and firm subscriptions bill monthly. A message sent in one
+      browser actually appears in the other. Every email (invite, invoice notice, digest) actually
+      **gets delivered to a real inbox and isn't flagged as spam.** And verify **Stripe webhooks
+      fire and are handled** – a "payment succeeded" screen means nothing if the webhook that
+      records it never ran. This is where the money/email fears get put to bed. **ENGINEER**
+- [ ] **Run an AI UAT agent on a review branch.** Reviewed `MarkusNiGit/human-uat-kit` – good fit
+      as *one* layer. Its expectation-loop + adversarial-input catalog is built to catch
+      **coherence failures** – the "screen says success but it silently didn't happen" class, which
+      is exactly the fear. **Prerequisite, and it must be built during Phase 3:** a **"headless
+      drive surface"** – a way to drive the app *without* the GUI (an API / CLI / test harness),
+      plus test-mode keys and a way to seed/reset test data and to trigger and inspect webhooks and
+      emails. The tool's whole depth depends on that seam, so the backend has to be built with it in
+      mind. **ENGINEER + CLAUDE**
+- [ ] **Know what the UAT agent can't do, and cover it elsewhere.** It can't perceive visuals (it
+      routes those to human review), can't confirm money *actually* moved, an email *actually*
+      landed, or a payout hit a bank, and it's no substitute for real user research. So those live
+      in the other layers: money/email in the test-mode E2E above, the visual check in the Phase 7
+      click-through, the legal gates in Phase 5 (the lawyer), and real user testing next. **YOU / ENGINEER**
+- [ ] **Real human testing with a handful of CSRs and firms.** A few real reporters claim and
+      invoice, a real firm searches and pays, on their own phones and laptops. They will find things
+      no automated pass does. Rosie's network is the path. **YOU**
+
+## Phase 7 – The final pass
 
 Do this last, right before you go live.
 
@@ -150,7 +181,7 @@ Do this last, right before you go live.
 - [ ] **Confirm `dewey-sholes.vercel.app` still shows the old v1 prototype** and the two sites
       haven't been crossed. See `../../V1_ARCHIVE.md`. **CLAUDE**
 
-## Phase 7 – After you're live
+## Phase 8 – After you're live
 
 - [ ] **Add analytics**, so you know whether anyone is showing up. **CLAUDE**
 - [ ] **Watch the first real signups closely.** The first reporter who claims a profile and the
