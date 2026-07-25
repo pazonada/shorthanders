@@ -49,10 +49,58 @@ Studio Crux, LLC • 70 W 35th St. Bayonne, NJ 07002
   (it also carries your real business email). This email is low-complaint by nature, so dripping
   from a real address is probably fine – but if you want to fully protect the main domain, send
   from a close-cousin domain set up just for outreach.
-- **Compliance basics (met by the email above):** real sender, honest subject, a physical
-  mailing address in the signature, and a way to opt out ("reply and I'll take you down").
-  Honor delisting replies. Confirm specifics in the terms-of-service review.
+- **Compliance & deliverability:** the email already meets the basics (real sender, honest
+  subject, physical address, opt-out). See **Compliance (CAN-SPAM)** and **Authenticate your
+  sending domain** below before you send.
 
 ## One ask only
 This email invites them to claim their free profile – nothing else. Save the Pro/invoicing pitch
 for a personal follow-up *after* someone claims and it goes well.
+
+## A follow-up? (decide before you send)
+The email above promises "this is a one-time note, and I won't keep emailing you." **A follow-up
+breaks that promise** – so if you want one, change that line in the copy first (drop it, or say
+something like "I'll send one quick reminder and then leave you be"). Don't send a follow-up on top
+of a one-time promise; it reads as exactly the thing the copy swore off.
+
+If you do follow up:
+- **One gentle nudge, to non-openers only,** about a week later – a short "in case this got buried"
+  with the same claim link. One follow-up lifts response meaningfully; a third starts to annoy.
+- **Suppress anyone who opted out or replied "take me down"** – they must never get the follow-up.
+  Your send tool has to track and exclude them (YAMM/GMass can; HubSpot does it automatically in a
+  sequence – a reason to run the sequence there if you want follow-ups handled cleanly).
+- Everything in Compliance below applies to the follow-up too.
+
+## Compliance (CAN-SPAM)
+This is commercial email (it promotes the platform), so the federal **CAN-SPAM Act** applies – and
+it applies to a one-off invite and any follow-up just the same. "It's not a newsletter" does **not**
+exempt it; what matters is that the message is commercial, not whether it's recurring. The
+requirements, and how this plan meets them:
+- **Honest From and Subject** – no misleading headers. *(Met.)*
+- **A real physical mailing address** in the email. *(Met – the signature carries Studio Crux's
+  address. A P.O. box or mailbox-service address is fine if you'd rather not use a street address.)*
+- **A clear opt-out, honored promptly** (within 10 business days). "Reply and I'll take you down"
+  counts – as long as you actually process those replies. *(Met – just stay on top of the inbox.)*
+- **Never email someone after they opt out,** including any follow-up – keep a suppression list.
+- Applies to **business** addresses too (no B2B exemption in the US). California's own spam law is
+  mostly overridden by CAN-SPAM except for outright deception.
+
+Not legal advice – fold into the terms-of-service review.
+
+## Authenticate your sending domain (SPF, DKIM, DMARC)
+The single biggest lever for staying out of spam. Do this before any real volume.
+- **Send from your own domain, not `@gmail.com`.** You can't set these records for gmail.com
+  (Google owns it). Send from `deweysholes.com` via Google Workspace – ideally bulk outreach from a
+  **subdomain** like `go.deweysholes.com`, so it doesn't wear on your main business mail.
+- **Three DNS records,** added at your DNS host (registrar / Cloudflare / Vercel):
+  - **SPF** (one `TXT`): who may send as you – e.g. `v=spf1 include:_spf.google.com ~all`. Keep a
+    single SPF record and merge an "include" for each sender (Google, HubSpot, Resend).
+  - **DKIM** (`TXT`/`CNAME`): a signature proving the mail is really yours. The sending tool
+    generates the exact record – you paste it in, you don't invent it. Each sender needs its own.
+  - **DMARC** (`TXT` at `_dmarc.deweysholes.com`): start in monitor mode –
+    `v=DMARC1; p=none; rua=mailto:you@deweysholes.com` – then tighten to `p=quarantine`, then
+    `p=reject`, once the reports look clean.
+- **Verify + test:** click Verify in each sending tool, then send a test to **mail-tester.com** for
+  a 0–10 score that flags anything missing (MXToolbox works too).
+- **Warm up:** the "few hundred a day over 2–3 weeks" drip above isn't only politeness – a fresh
+  domain that suddenly sends thousands gets flagged no matter how clean the authentication is.
