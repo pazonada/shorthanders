@@ -416,7 +416,6 @@ function GatedProfile({ r }) {
 
 function ReporterProfile({ reporterId, invited }) {
   const store = useStore();
-  const [inviteOpen, setInviteOpen] = useState(false);
   const all = useMemo(() => buildDirectory(), []);
   const r = all.find((x) => x.id === reporterId);
   if (!r) return <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60 }}><h2>Reporter not found</h2><button className="btn btn-secondary" style={{ marginTop: 16 }} onClick={() => navigate("/directory")}>Back to directory</button></div></Page>;
@@ -439,6 +438,16 @@ function ReporterProfile({ reporterId, invited }) {
       {invited && <div className="banner banner-ok" style={{ marginBottom: 14 }}><Icon name="heart" size={18} style={{ flexShrink: 0 }} /><div><strong>{first} invited you to Dewey Sholes.</strong> Create a free account to message {first}, pay their invoices, and save them to your firm. Joining is free for your firm.</div></div>}
       {r.sample && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This is a fictional demo profile – the name, license number, and every detail are made up to show how a claimed profile looks. Not a real reporter.</div></div>}
       {notAccepting && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="info" size={18} style={{ flexShrink: 0 }} /><div><strong>This reporter is not accepting new jobs right now,</strong> but can still view messages.</div></div>}
+      {isOwner && (
+        <div className="ds-card" style={{ marginBottom: 22, display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+          <Icon name="eye" size={20} style={{ flexShrink: 0, color: "var(--brand-dark)" }} />
+          <div style={{ flex: 1, minWidth: 220 }}>
+            <div style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Preview – how firms see your profile</div>
+            <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 2 }}>Everything below is exactly what a law firm sees. The Message and Save buttons are theirs, so they are inactive in your preview.</div>
+          </div>
+          <button className="btn btn-secondary" style={{ flexShrink: 0 }} onClick={() => navigate("/reporter")}>Back to dashboard</button>
+        </div>
+      )}
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 320px", gap: 32, alignItems: "start" }} className="profile-grid">
         {/* main */}
         <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>
@@ -484,9 +493,9 @@ function ReporterProfile({ reporterId, invited }) {
               </>
             ) : isOwner ? (
               <>
-                <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={() => setInviteOpen(true)}><Icon name="mail" size={16} /> Invite a law firm</button>
-                <button className="btn btn-secondary" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} onClick={() => navigate("/reporter")}><Icon name="user" size={16} /> Back to dashboard</button>
-                <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>This is how firms see your profile. Invite the firms you already work with, so they join and save you.</p>
+                <button className="btn btn-primary" disabled style={{ width: "100%", justifyContent: "center", opacity: 0.45, cursor: "default" }}><Icon name="message" size={16} /> Message {first}</button>
+                <button className="btn btn-secondary" disabled style={{ width: "100%", justifyContent: "center", marginTop: 10, opacity: 0.45, cursor: "default" }}><Icon name="heart" size={16} /> Save reporter</button>
+                <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>This is what firms use to reach you – inactive in your own preview. To invite a firm you know, use "Invite a law firm" on your dashboard.</p>
               </>
             ) : (
               <>
@@ -508,7 +517,6 @@ function ReporterProfile({ reporterId, invited }) {
           </div>
         </aside>
       </div>
-      {isOwner && inviteOpen && <InviteFirmModal me={r} onClose={() => setInviteOpen(false)} />}
     </Page>
   );
 }
