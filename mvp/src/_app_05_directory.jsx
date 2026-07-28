@@ -214,7 +214,7 @@ function ReporterDirectory() {
   return (
     <Page wide>
       <div style={{ marginBottom: 22 }}>
-        <h1 style={{ fontSize: "clamp(30px, 4vw, 44px)" }}>California court reporter directory</h1>
+        <h1 style={{ fontSize: "clamp(34px, 4.4vw, 52px)" }}>California court reporter directory</h1>
         <p style={{ color: "var(--muted)", marginTop: 8, fontSize: 16 }}>{all.filter((r) => !r.sample).length.toLocaleString()} licensed CSRs. Search and filter, then open a profile to message the reporter.</p>
       </div>
 
@@ -384,7 +384,7 @@ function GatedProfile({ r }) {
         <Avatar name={r.name} size={84} photo={r.photo} />
         <div style={{ flex: 1, minWidth: 200 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-            <h1 style={{ fontSize: 40, lineHeight: 1 }}>{r.name}</h1>
+            <h1 style={{ fontSize: 46, lineHeight: 1 }}>{r.name}</h1>
           </div>
           <div style={{ color: "var(--muted)", marginTop: 8, fontSize: 15, display: "flex", gap: 14, flexWrap: "wrap" }}>
             <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />CSR #{r.csrNumber}</span>
@@ -459,7 +459,7 @@ function ReporterProfile({ reporterId, invited }) {
             <Avatar name={r.name} size={84} photo={r.photo} />
             <div style={{ flex: 1, minWidth: 200 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-                <h1 style={{ fontSize: 40, lineHeight: 1 }}>{r.name}</h1>
+                <h1 style={{ fontSize: 46, lineHeight: 1 }}>{r.name}</h1>
               </div>
               <div style={{ color: "var(--muted)", marginTop: 8, fontSize: 15, display: "flex", gap: 14, flexWrap: "wrap" }}>
                 <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />CSR #{r.csrNumber}</span>

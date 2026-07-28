@@ -139,7 +139,7 @@ function MessagingPage() {
   useEffect(() => { if (!store.role) store.enterAsFirm(); }, []);
   return (
     <Page wide>
-      <h1 style={{ fontSize: "clamp(28px, 3.5vw, 40px)", marginBottom: 6 }}>Messages</h1>
+      <h1 style={{ fontSize: "clamp(32px, 4vw, 46px)", marginBottom: 6 }}>Messages</h1>
       <p style={{ color: "var(--muted)", marginBottom: 24 }}>Talk directly with {store.role === "reporter" ? "law firms" : "reporters"}. Dewey Sholes is the channel – the working relationship is yours.</p>
       <MessagesPanel />
     </Page>

@@ -4,7 +4,7 @@ function DashLayout({ title, subtitle, tabs, active, onTab, headerRight, childre
     <Page wide>
       <div style={{ marginBottom: 22, display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, flexWrap: "wrap" }}>
         <div>
-          <h1 style={{ fontSize: "clamp(28px, 3.5vw, 40px)" }}>{title}</h1>
+          <h1 style={{ fontSize: "clamp(32px, 4vw, 46px)" }}>{title}</h1>
           {subtitle && <p style={{ color: "var(--muted)", marginTop: 6 }}>{subtitle}</p>}
         </div>
         {headerRight}

@@ -3,7 +3,7 @@ function LegalPage({ title, intro, sections }) {
   return (
     <Page roomy>
       <div style={{ maxWidth: 760 }}>
-        <h1 style={{ fontSize: "clamp(30px, 4vw, 46px)" }}>{title}</h1>
+        <h1 style={{ fontSize: "clamp(34px, 4.4vw, 54px)" }}>{title}</h1>
         {intro && <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 16, lineHeight: 1.7 }}>{intro}</p>}
         <div style={{ marginTop: 30, display: "flex", flexDirection: "column", gap: 26 }}>
           {sections.map((s, i) => (
@@ -55,7 +55,7 @@ function ContactPage() {
   return (
     <Page roomy>
       <div style={{ maxWidth: 560 }}>
-        <h1 style={{ fontSize: "clamp(30px, 4vw, 46px)" }}>Get in touch</h1>
+        <h1 style={{ fontSize: "clamp(34px, 4.4vw, 54px)" }}>Get in touch</h1>
         <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 14, lineHeight: 1.6 }}>Questions, feedback, or want to be part of the pilot? We'd love to hear from you.</p>
         <div className="ds-card" style={{ marginTop: 26, display: "flex", flexDirection: "column", gap: 14 }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>

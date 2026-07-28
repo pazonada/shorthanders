@@ -20,7 +20,7 @@ function SignupChooser() {
     <Page>
       <div style={{ maxWidth: 720, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 30 }}>
-          <h1 style={{ fontSize: "clamp(30px, 4vw, 46px)" }}>Sign up</h1>
+          <h1 style={{ fontSize: "clamp(34px, 4.4vw, 54px)" }}>Sign up</h1>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 14, lineHeight: 1.6 }}>Which describes you? This just points you to the right first step.</p>
         </div>
         <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
@@ -61,7 +61,7 @@ function ClaimStart() {
       <div style={{ maxWidth: 640, margin: "0 auto" }}>
         <div style={{ textAlign: "center" }}>
           <span className="pill pill-tag" style={{ marginBottom: 14, display: "inline-flex" }}>Free to claim & get listed</span>
-          <h1 style={{ fontSize: "clamp(30px, 4vw, 46px)" }}>Claim your profile</h1>
+          <h1 style={{ fontSize: "clamp(34px, 4.4vw, 54px)" }}>Claim your profile</h1>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 14, lineHeight: 1.6 }}>
             You're already listed – every licensed California CSR is. Find your record to control how firms see you, then start invoicing and getting paid. It takes about three minutes.
           </p>
@@ -335,7 +335,7 @@ function FirmSignup() {
         <button onClick={() => navigate("/for-firms")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 22 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Cancel</button>
         <div style={{ textAlign: "center" }}>
           <span className="pill pill-tag" style={{ marginBottom: 14, display: "inline-flex" }}>Free for firms</span>
-          <h1 style={{ fontSize: "clamp(30px, 4vw, 46px)" }}>Create your firm account</h1>
+          <h1 style={{ fontSize: "clamp(34px, 4.4vw, 54px)" }}>Create your firm account</h1>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 14, lineHeight: 1.6 }}>Search the directory, message reporters, and pay their invoices in one place. Free to start – you only pay when you want to search for new reporters.</p>
         </div>
         {store.pendingSave != null && <div className="ds-note" style={{ marginTop: 20 }}><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span>A free account is required to save reporters. Create yours below – it's free, and we'll save the reporter to your firm.</span></div>}
