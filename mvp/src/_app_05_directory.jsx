@@ -525,7 +525,7 @@ function ReporterProfile({ reporterId, invited }) {
   );
 }
 function ProfileSection({ title, children }) {
-  return <section><h2 style={{ fontSize: 15, fontWeight: 700, fontFamily: "'Inter', sans-serif", color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 12 }}>{title}</h2>{children}</section>;
+  return <section><h2 style={{ fontSize: 15, fontWeight: 700, fontFamily: "'Inter', sans-serif", color: "var(--brand)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 12 }}>{title}</h2>{children}</section>;
 }
 // Most profile fields are plain middot-separated text - they're facts, not links, so a pill (which
 // implies a click target) is misleading. Proceedings + Services keep a light label treatment
