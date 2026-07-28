@@ -119,6 +119,7 @@ function matchesCriteria(r, s, haystacks) {
   return true;
 }
 function ReporterDirectory() {
+  const store = useStore();
   const all = useMemo(() => buildDirectory(), []);
   // Seed every control from dirCache so returning from a profile restores the exact browse state.
   const [q, setQ] = useState(dirCache.q);
@@ -148,6 +149,14 @@ function ReporterDirectory() {
   useLayoutEffect(() => {
     if (dirCache.scrollY) window.scrollTo({ top: dirCache.scrollY, left: 0, behavior: "instant" });
   }, []);
+  // A free firm that ran a search matching a reporter's exact name or license number gets that one
+  // reporter unlocked from the Pro gate - knowing exactly who you want isn't discovery. Persists in
+  // the store so the unlock carries to the reporter's profile page too.
+  useEffect(() => {
+    if (store.role !== "firm" || store.firmPlan === "pro") return;
+    const ids = exactSearchMatches(all, searched && searched.q);
+    if (ids.length) store.noteDirectMatch(ids);
+  }, [searched]);
 
   const counties = useMemo(() => Array.from(new Set(all.map((r) => r.county).filter(Boolean))).sort(), [all]);
   // Specialty filter pulled 2026-07-21: the only specialty values in the app are fabricated
@@ -374,7 +383,17 @@ function RepRow({ r }) {
 // A free firm may fully view only unclaimed profiles + reporters connected to / who invited
 // them (store.unlockedReporters). Every other claimed profile is gated behind Pro.
 function firmLocked(store, r) {
-  return store.role === "firm" && store.firmPlan !== "pro" && r.claimed && !store.unlockedReporters.includes(r.id);
+  return store.role === "firm" && store.firmPlan !== "pro" && r.claimed
+    && !store.unlockedReporters.includes(r.id)
+    && !(store.directUnlocked || []).includes(r.id);
+}
+// A firm that types a reporter's EXACT full name or license number already knows who they want -
+// that's not discovery, so it's free. Broad filtered browsing stays Pro. Returns matching ids.
+function exactSearchMatches(all, query) {
+  const q = (query || "").trim().toLowerCase();
+  if (!q) return [];
+  const digits = q.replace(/[^0-9]/g, "");
+  return all.filter((r) => r.claimed && (r.name.toLowerCase() === q || (digits && String(r.csrNumber) === digits))).map((r) => r.id);
 }
 
 function GatedProfile({ r }) {
@@ -553,6 +572,15 @@ function TagList({ items, tone }) {
 }
 
 function UnclaimedProfile({ r }) {
+  const store = useStore();
+  const [invited, setInvited] = useState(false);
+  const first = r.name.split(" ")[0];
+  // A firm that already worked with this (still-unclaimed) reporter can nudge them to join, so the
+  // firm's lookup pulls the reporter onto the platform. Prototype: no real email is sent.
+  const doInvite = () => {
+    if (store.role === "firm") { if (!store.saved.includes(r.id)) store.toggleSaved(r.id); setInvited(true); }
+    else { navigate("/firm-signup"); }
+  };
   return (
     <Page>
       <div style={{ maxWidth: 620 }}>
@@ -576,6 +604,28 @@ function UnclaimedProfile({ r }) {
           </dl>
           <p style={{ fontSize: 13.5, color: "var(--dim)", marginTop: 16, lineHeight: 1.5 }}>Name, license, county, and any public email are from California's CSR licensing records. A bio, areas of law, coverage, and rates appear once the reporter claims and completes their profile.</p>
         </div>
+
+        {store.role !== "reporter" && (
+          <div className="ds-card" style={{ marginTop: 20, background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+            {invited ? (
+              <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                <Icon name="check" size={20} style={{ flexShrink: 0, color: "var(--brand-dark)" }} />
+                <div style={{ fontSize: 14.5, color: "var(--ink-soft)", lineHeight: 1.6 }}>
+                  <strong style={{ color: "var(--brand-dark)" }}>Invite sent.</strong> {r.email ? "We'll let " + first + " know at their public license email (" + r.email + ") that your firm is looking for them." : "We don't have a public email for " + first + " on file, so we can't reach them automatically yet."} We've saved them to your firm so you can follow up – and when they claim their profile, you'll be connected here.
+                </div>
+              </div>
+            ) : (
+              <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+                <div style={{ width: 46, height: 46, borderRadius: 12, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="mail" size={22} /></div>
+                <div style={{ flex: 1, minWidth: 220 }}>
+                  <div style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Worked with {first} before?</div>
+                  <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 2 }}>Invite them to Dewey Sholes so you can message and pay them here. We'll let them know your firm is looking for them{store.role === "firm" ? "" : " once you create a free account"}.</div>
+                </div>
+                <button className="btn btn-primary" style={{ flexShrink: 0 }} onClick={doInvite}><Icon name="mail" size={16} /> Invite this reporter</button>
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="banner banner-ok" style={{ marginTop: 20 }}>
           <Icon name="user" size={20} style={{ flexShrink: 0 }} />

@@ -130,6 +130,9 @@ function StoreProvider({ children }) {
   const [firmName, setFirmName] = useState("Morgan & Reyes LLP"); // demo default; set from signup
   // Reporters a free firm may fully view/message: the ones who invited or are connected to them.
   const [unlockedReporters, setUnlockedReporters] = useState(["900004", "900003", "900005"]);
+  // Reporters a free firm reached by an EXACT name/license search - "I already know who I want" is
+  // not discovery, so it's free. Broad filtered browsing still needs Pro. See directory search.
+  const [directUnlocked, setDirectUnlocked] = useState([]);
   // The demo reporter's saved "accepting jobs" setting. Prototype stand-in for the one editable
   // profile field with cross-page display consequences; committed on Save, read by the profile.
   const [myAccepting, setMyAccepting] = useState(true);
@@ -137,7 +140,9 @@ function StoreProvider({ children }) {
   const [pendingMessage, setPendingMessage] = useState(null);  // reporter name a logged-out visitor tried to message; started after signup
 
   const store = {
-    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, myAccepting, setMyAccepting, pendingSave, pendingMessage,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, pendingSave, pendingMessage,
+    // A free firm searched a reporter's exact name or license number - unlock just that reporter.
+    noteDirectMatch: (ids) => setDirectUnlocked((u) => { const add = ids.filter((id) => !u.includes(id)); return add.length ? [...u, ...add] : u; }),
     // Firm asks a reporter to invoice them (so payment happens on-platform); reporter fulfills it.
     requestInvoice: (req) => setPaymentRequests((rs) => [{ ...req, id: "REQ-" + Date.now(), status: "pending" }, ...rs]),
     fulfillRequest: (id) => setPaymentRequests((rs) => rs.map((r) => r.id === id ? { ...r, status: "fulfilled" } : r)),

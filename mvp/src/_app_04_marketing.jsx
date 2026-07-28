@@ -169,7 +169,17 @@ function ForFirmsPage() {
         <FeatureBlock icon="doc" title="Clean invoices" body="Reporters invoice you through the platform with your matter reference on every line, ready for AP." />
         <FeatureBlock icon="lock" title="Pay online, not by check" body="No more cutting paper checks to reporters who won't take anything else. Pay any invoice by card or ACH in a click – receipts automatic, nothing to chase." />
       </div>
-      <section style={{ marginTop: 52, background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>
+      <section style={{ marginTop: 40, background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 20, padding: "clamp(32px, 4vw, 48px)" }}>
+        <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap" }}>
+          <div style={{ width: 52, height: 52, borderRadius: 14, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="search" size={26} /></div>
+          <div style={{ flex: 1, minWidth: 260 }}>
+            <h2 style={{ fontSize: "clamp(24px, 3vw, 34px)", lineHeight: 1.12, color: "var(--brand-dark)" }}>Already worked with a reporter? Find them again.</h2>
+            <p style={{ fontSize: 16, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6, maxWidth: 620 }}>You usually already have the name – it's on the cover of the transcript, or you jotted it down at the hearing. Search the directory by name or license number, message them, and pick up where you left off. Reaching a reporter you looked up by name is free; if they haven't joined yet, invite them in a click.</p>
+            <button className="btn btn-primary" style={{ marginTop: 20 }} onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
+          </div>
+        </div>
+      </section>
+      <section style={{ marginTop: 40, background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>
         <div style={{ textAlign: "center", margin: "0 0 28px" }}>
           <h2 style={{ fontSize: "clamp(26px, 3.2vw, 40px)", lineHeight: 1.1 }}>What it costs</h2>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Messaging reporters who invited you is free. A simple monthly membership unlocks searching the full directory – no booking fees, no commission on the work.</p>
