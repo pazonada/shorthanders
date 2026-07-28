@@ -114,7 +114,7 @@ function FirmSubscription() {
     "Matter references + a tidy invoice and receipt history",
   ];
   return (
-    <div style={{ maxWidth: 760, display: "flex", flexDirection: "column", gap: 20 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
       <div className="ds-card" style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
         <div style={{ width: 48, height: 48, borderRadius: 12, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="building" size={24} /></div>
         <div style={{ flex: 1, minWidth: 220 }}>
