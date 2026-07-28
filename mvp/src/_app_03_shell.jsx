@@ -86,8 +86,6 @@ function Footer() {
             <p style={{ marginTop: 14, fontSize: 14, color: "rgba(255,255,255,.6)", lineHeight: 1.6 }}>The directory of every licensed California court reporter. Find a reporter, or run your reporting business from one place.</p>
           </div>
           <div style={{ display: "flex", gap: 56, flexWrap: "wrap" }}>
-            {col("Find reporters", [["/directory", "Search directory"], ["/for-firms", "For law firms"]])}
-            {col("For reporters", [["/claim", "Claim your profile"], ["/for-reporters", "Invoicing & payments"]])}
             {col("Company", [["/about", "About"], ["/terms", "Terms of service"], ["/privacy", "Privacy"], ["/contact", "Contact"]])}
           </div>
         </div>
