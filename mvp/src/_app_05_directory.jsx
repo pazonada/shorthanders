@@ -497,13 +497,13 @@ function ReporterProfile({ reporterId, invited }) {
               </>
             ) : isOwner ? (
               <>
-                <button className="btn btn-primary" disabled style={{ width: "100%", justifyContent: "center", opacity: 0.45, cursor: "default" }}><Icon name="message" size={16} /> Message {first}</button>
+                <button className="btn btn-primary" disabled style={{ width: "100%", justifyContent: "center", opacity: 0.45, cursor: "default" }}><Icon name="message" size={16} /> Send a message</button>
                 <button className="btn btn-secondary" disabled style={{ width: "100%", justifyContent: "center", marginTop: 10, opacity: 0.45, cursor: "default" }}><Icon name="heart" size={16} /> Save this reporter</button>
                 <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>This is what firms use to reach you – inactive in your own preview. To invite a firm you know, use "Invite a law firm" on your dashboard.</p>
               </>
             ) : (
               <>
-                <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={messageReporter}><Icon name="message" size={16} /> Message {first}</button>
+                <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={messageReporter}><Icon name="message" size={16} /> Send a message</button>
                 <button className="btn btn-secondary" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} onClick={saveReporter}>
                   <Icon name="heart" size={16} /> {store.role === "firm" && store.saved.includes(r.id) ? "Saved" : "Save this reporter"}
                 </button>
