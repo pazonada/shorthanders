@@ -35,16 +35,33 @@ and are banned from banners, pills, and status chips.
 - **info / positive / status** – **indigo** (`--brand-soft` bg, `--brand-pale` border,
   `--brand-dark`/`--ink-soft` text). This is `.banner-info`, `.banner-ok`, and `.pill-claimed`.
 - **attention / warning** – **acid yellow** (`#F7F8C6` bg, `#DCE224` border, `--ink-soft` text).
-  This is `.banner-warn` (e.g. "not accepting new jobs", "sample profile"). This is the one place
-  acid yellow is a fill.
+  This is `.banner-warn` (e.g. "not accepting new jobs", "sample profile") and a **focused
+  attention CTA card** (see "Acid-yellow CTA card" below). Reserve acid-yellow *fill* for these two;
+  everywhere else it's a micro-accent, never a page/section background.
 - **error** – red `#DC2626`. Failures, destructive confirms.
 - **The one green allowed:** the tiny "Recently active" **status dot** (`#22C55E`) – a universal
   online/active convention Aud asked for. Green appears nowhere else.
 
-### Acid yellow – accents + the warning notice
+### Acid yellow – accents, the warning notice, and the CTA card
 
-- `#E2E929` (and the soft `#F7F8C6` fill) – small decorative accents, certain data-viz values, and
-  the **attention/warning banner** above. Not for large decorative surfaces.
+- `#E2E929` (and the soft `#F7F8C6` fill) – small decorative accents, certain data-viz values, the
+  **attention/warning banner**, and the **acid-yellow CTA card** below. Not for large decorative
+  surfaces or page/section backgrounds.
+
+### Acid-yellow CTA card
+
+A focused call-to-action card can use the acid-yellow attention fill (`#F7F8C6` bg, `#DCE224`
+border, navy/`--ink-soft` text, navy `.btn-primary`). Reference: the **"Is this you?" reporter-claim
+card** on an unclaimed profile (`_app_05_directory.jsx`). Conventions:
+
+- **No icon chip.** These cards drop the icon and lead with a short **uppercase eyebrow**
+  (`--ink-soft`, 12px, weight 700, `.05em` tracking) over the serif heading. Cleaner than a colored
+  icon tile, and keeps acid yellow the only accent on the card.
+- **One accent per audience.** On a shared surface, pair the two accents by who the card speaks to:
+  **acid yellow = the reporter** (claim/attention), **indigo = the firm** (invite/action). The
+  unclaimed profile does exactly this – acid-yellow claim card + indigo firm-invite card – so the
+  two paths read as distinct, not two shades of the same blue.
+- Keep it a **compact card**, not a full-width band – acid yellow stays a highlight, never a wash.
 
 ### Retired
 
