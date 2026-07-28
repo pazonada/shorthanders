@@ -170,7 +170,7 @@ function ForFirmsPage() {
         <FeatureBlock icon="lock" title="Pay online, not by check" body="No more cutting paper checks to reporters who won't take anything else. Pay any invoice by card or ACH in a click – receipts automatic, nothing to chase." />
       </div>
       <section style={{ marginTop: 52, background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>
-        <div style={{ textAlign: "center", maxWidth: 640, margin: "0 auto 28px" }}>
+        <div style={{ textAlign: "center", margin: "0 0 28px" }}>
           <h2 style={{ fontSize: "clamp(26px, 3.2vw, 40px)", lineHeight: 1.1 }}>What it costs</h2>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Messaging reporters who invited you is free. A simple monthly membership unlocks searching the full directory – no booking fees, no commission on the work.</p>
         </div>
@@ -202,7 +202,7 @@ function ForReportersPage() {
         <FeatureBlock icon="shield" title="Verified once, via Stripe" body="Confirm your identity through Stripe Connect. It powers your payouts and shows firms you're the real, licensed reporter." />
       </div>
       <section style={{ marginTop: 52, background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>
-        <div style={{ textAlign: "center", maxWidth: 640, margin: "0 auto 28px" }}>
+        <div style={{ textAlign: "center", margin: "0 0 28px" }}>
           <h2 style={{ fontSize: "clamp(26px, 3.2vw, 40px)", lineHeight: 1.1 }}>What it costs</h2>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Getting listed and messaging firms is free. You only pay a small fee when you collect payment through the site – pay as you go, or a lower fee on Pro.</p>
         </div>
