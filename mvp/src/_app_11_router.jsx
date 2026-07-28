@@ -51,23 +51,62 @@ function AboutPage() {
       { h: "How it started", p: ["Dewey Sholes is a women-owned business. It began with a question its founder put to a good friend, a California trial lawyer: what's the most broken part of your work you'd love to see fixed? The answer came fast – finding and paying court reporters, a process that's hard, opaque, and agency-dependent.", "So she built the fix, with that lawyer's guidance along the way. We stay close to the reporters and firms who use it, and build deliberately."] },
     ]} />;
 }
+function ContactChannel({ icon, title, children }) {
+  return (
+    <div className="contact-channel">
+      <div className="contact-chip"><Icon name={icon} size={21} /></div>
+      <div>
+        <div style={{ fontWeight: 600, fontSize: 15.5, color: "var(--ink)" }}>{title}</div>
+        <div style={{ color: "var(--muted)", fontSize: 14.5, lineHeight: 1.55, marginTop: 3 }}>{children}</div>
+      </div>
+    </div>
+  );
+}
 function ContactPage() {
   return (
-    <Page roomy>
-      <div style={{ maxWidth: 560 }}>
-        <h1 style={{ fontSize: "clamp(34px, 4.4vw, 54px)" }}>Get in touch</h1>
-        <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 14, lineHeight: 1.6 }}>Questions, feedback, or want to be part of the pilot? We'd love to hear from you.</p>
-        <div className="ds-card" style={{ marginTop: 26, display: "flex", flexDirection: "column", gap: 14 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-            <div><label className="ds-label">Name</label><input className="ds-input" placeholder="Your name" /></div>
-            <div><label className="ds-label">Email</label><input className="ds-input" type="email" placeholder="you@example.com" /></div>
+    <>
+      <Nav />
+      <main style={{ background: "linear-gradient(180deg, var(--periwinkle-soft) 0%, var(--bg) 58%)", minHeight: "60vh" }}>
+        <div className="container" style={{ maxWidth: 1080, padding: "clamp(56px, 6.5vw, 88px) 24px" }}>
+          <div className="contact-grid">
+            {/* left: intro + ways to reach us */}
+            <div>
+              <span className="kicker">Contact</span>
+              <h1 style={{ fontSize: "clamp(40px, 5vw, 66px)", lineHeight: 1.04, letterSpacing: "-.025em" }}>Get in touch</h1>
+              <p style={{ fontSize: 18, color: "var(--ink-soft)", marginTop: 20, lineHeight: 1.65, maxWidth: 440 }}>
+                Questions, feedback, or want to be part of the pilot? We read every message and reply personally.
+              </p>
+              <div style={{ marginTop: 36, display: "flex", flexDirection: "column", gap: 22 }}>
+                <ContactChannel icon="mail" title="Email us directly">
+                  <a href="mailto:hello@deweysholes.com" className="contact-textlink">hello@deweysholes.com</a>
+                </ContactChannel>
+                <ContactChannel icon="user" title="Court reporters">
+                  Every licensed California reporter is already listed. <button className="contact-textlink" onClick={() => navigate("/for-reporters")}>Claim your profile</button>.
+                </ContactChannel>
+                <ContactChannel icon="building" title="Law firms">
+                  Search the directory and message reporters directly. <button className="contact-textlink" onClick={() => navigate("/for-firms")}>See how it works</button>.
+                </ContactChannel>
+              </div>
+            </div>
+            {/* right: message form */}
+            <div className="ds-card" style={{ boxShadow: "var(--shadow-md)", display: "flex", flexDirection: "column", gap: 16 }}>
+              <div>
+                <h2 style={{ fontSize: 25 }}>Send us a message</h2>
+                <p style={{ color: "var(--muted)", fontSize: 14, marginTop: 4 }}>We'll get back to you at the email you leave.</p>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                <div><label className="ds-label">Name</label><input className="ds-input" placeholder="Your name" /></div>
+                <div><label className="ds-label">Email</label><input className="ds-input" type="email" placeholder="you@example.com" /></div>
+              </div>
+              <div><label className="ds-label">I am a…</label><select className="ds-input"><option>Court reporter</option><option>Law firm</option><option>Other</option></select></div>
+              <div><label className="ds-label">Message</label><textarea className="ds-input" rows={5} placeholder="How can we help?" style={{ resize: "vertical" }} /></div>
+              <ContactSubmit />
+            </div>
           </div>
-          <div><label className="ds-label">I am a…</label><select className="ds-input"><option>Court reporter</option><option>Law firm</option><option>Other</option></select></div>
-          <div><label className="ds-label">Message</label><textarea className="ds-input" rows={4} placeholder="How can we help?" /></div>
-          <ContactSubmit />
         </div>
-      </div>
-    </Page>
+      </main>
+      <Footer />
+    </>
   );
 }
 function ContactSubmit() {
