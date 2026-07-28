@@ -18,8 +18,10 @@ function MessagesPanel({ embedded }) {
   const [linkOpen, setLinkOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [linkLabel, setLinkLabel] = useState("");
-  const endRef = useRef(null);
-  useEffect(() => { if (endRef.current) endRef.current.scrollIntoView({ behavior: "smooth" }); }, [activeId, active && active.msgs.length]);
+  const threadRef = useRef(null);
+  // Pin the thread to its latest message by scrolling the thread's OWN container – not
+  // scrollIntoView, which also scrolls the whole window down and buries the page header.
+  useEffect(() => { const el = threadRef.current; if (el) requestAnimationFrame(() => { el.scrollTop = el.scrollHeight; }); }, [activeId, active && active.msgs.length]);
 
   const send = () => {
     if (!draft.trim() && !linkUrl.trim()) return;
@@ -58,7 +60,7 @@ function MessagesPanel({ embedded }) {
             <div><div style={{ fontWeight: 600, fontSize: 15 }}>{active.with}</div>{active.subtitle && <div style={{ fontSize: 12.5, color: "var(--muted)" }}>{active.subtitle}</div>}</div>
           </div>
 
-          <div style={{ flex: 1, overflowY: "auto", padding: "18px 20px", display: "flex", flexDirection: "column", gap: 12, background: "var(--bg-soft)" }}>
+          <div ref={threadRef} style={{ flex: 1, overflowY: "auto", padding: "18px 20px", display: "flex", flexDirection: "column", gap: 12, background: "var(--bg-soft)" }}>
             {store.role === "firm" && withRep && notAcceptingJobs(withRep) && <div className="banner banner-warn" style={{ fontSize: 12.5, padding: "10px 14px" }}><Icon name="info" size={15} style={{ flexShrink: 0 }} /><div><strong>{active.with.split(" ")[0]} isn't accepting new jobs right now.</strong> They may still help with a past transcript or an existing matter, but likely won't take on new work.</div></div>}
             <div className="banner banner-info" style={{ fontSize: 12.5, padding: "10px 14px" }}><Icon name="shield" size={15} style={{ flexShrink: 0 }} /><div>Dewey Sholes carries your messages and links but never stores files. Share audio and deliverables through your own secure link. Terms are between you and {active.with}.</div></div>
             {active.msgs.map((m, i) => (
@@ -68,7 +70,6 @@ function MessagesPanel({ embedded }) {
                 <div style={{ fontSize: 11, opacity: 0.6, marginTop: 6 }}>{m.at}</div>
               </div>
             ))}
-            <div ref={endRef} />
           </div>
 
           {/* composer */}
