@@ -81,7 +81,10 @@ launch – trying to prove people use it. Turn on serious pricing once there's r
 **Prices – set as working numbers 2026-07-24 (Aud):**
 - **Reporters:** free to list + message. Get paid at **5% per payment** (pay-as-you-go, no
   monthly) or **Pro $29/month + 2% per payment**. Pro crossover ≈ **$970/mo** of billing.
-- **Firms:** **$39/month per firm** (not per seat) or **$390/year** (~2 months free). The free
+- **Firms:** **$39/month per firm** (not per seat) or **$429/year** (1 month free; revised down from
+  2 months free 2026-07-28 as too generous). Founding-firm codes (capped/private) **MAY stack** with
+  the annual discount – exposure is bounded by the code cap; only restrict stacking for a future
+  public/uncapped promo. The free
   tier stays generous – message/pay/save any reporter who invited or is connected to you; the
   subscription only gates *discovery* of new reporters via full search. Live on the Pricing page,
   the reporter Payments tab, and the firm Subscription tab. Still working numbers – validate with

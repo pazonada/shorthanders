@@ -73,6 +73,13 @@ Two serverless stubs already exist and fall back to demo behavior:
   online, not by check" value prop).
 - [ ] **Subscriptions** – Stripe Checkout/Billing for the **firm Pro** tier (discovery) and the
   **reporter Pro** flat monthly. Drive `store.firmPlan` / reporter Pro from subscription status.
+  - Firm plans: **$39/month** or **$429/year (1 month free)**. Reporter Pro: **$29/month**.
+- [ ] **Coupon stacking policy (DECIDED 2026-07-28):** founding-firm codes are **capped and
+  private** (see founding-cohort policy), so **let them stack with the annual discount** – it's
+  simpler to build, cleaner UX, and rewards exactly the early annual commitment we want, with
+  exposure bounded by the code cap (not the discount depth). **Only restrict stacking for a future
+  PUBLIC / uncapped promo** – there, gate coupons to monthly-only or first-term so they can't
+  compound with the annual price.
 - [ ] **Webhooks** – `account.updated` (Connect onboarding done → mark verified),
   `payment_intent` / `invoice` events (→ update invoice status), subscription events (→ plan).
 - [ ] **Quarterly roster refresh** – a scheduled job that re-pulls the CRB roster, diffs it,

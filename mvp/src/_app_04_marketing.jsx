@@ -178,7 +178,7 @@ function ForFirmsPage() {
           <PriceCard tone="brand" name="Firm membership" price="$39" unit="/month"
             blurb="Search the directory and reach reporters directly – no agency in the middle."
             features={["Message reporters who invited you, free", "Subscribe to search the full directory", "Advanced search & filters", "Saved reporters & shared team lists", "Pay invoices by card or ACH"]}
-            cta={["Explore the directory", "/directory"]} note="$39/month per firm. No booking fees or commissions." />
+            cta={["Explore the directory", "/directory"]} note="$39/month per firm, or $429/year (1 month free). No booking fees or commissions." />
         </div>
       </section>
       <CtaStrip title="Create a free firm account – search, message, and pay reporters in one place." button={["Create a firm account", "/firm-signup"]} />
