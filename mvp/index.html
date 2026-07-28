@@ -3999,14 +3999,6 @@ function TagList({ items, tone }) {
   return <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{(items || []).map((it, i) => <span key={i} className={"pill " + cls} style={{ fontSize: 13, padding: "6px 13px" }}>{it}</span>)}</div>;
 }
 
-// The public license email is public CRB data, but showing it raw/clickable makes Dewey Sholes the
-// tool a firm uses to go around Dewey Sholes (and invites scraping/spam the reporter blames us for).
-// We mask it - transparent that an address exists - and route contact through "Invite this reporter".
-function maskEmail(email) {
-  const at = (email || "").indexOf("@");
-  if (at < 1) return "";
-  return (email[0] + "•••@" + email.slice(at + 1)).toLowerCase();
-}
 function UnclaimedProfile({ r }) {
   const store = useStore();
   const [invited, setInvited] = useState(false);
@@ -4039,10 +4031,9 @@ function UnclaimedProfile({ r }) {
             <dt style={{ color: "var(--muted)" }}>License</dt><dd style={{ color: "var(--ink)" }}>CSR #{r.csrNumber}</dd>
             <dt style={{ color: "var(--muted)" }}>Location</dt><dd style={{ color: "var(--ink)" }}>{r.city}{r.county ? ", " + r.county + " County" : ""}, CA</dd>
             {r.method ? <><dt style={{ color: "var(--muted)" }}>Reporting method</dt><dd style={{ color: "var(--ink)" }}>{r.method}</dd></> : null}
-            {r.email ? <><dt style={{ color: "var(--muted)" }}>Public email</dt><dd style={{ color: "var(--ink)" }}>{maskEmail(r.email)} <span style={{ color: "var(--dim)", fontSize: 13 }}>· use Invite to reach them</span></dd></> : null}
             <dt style={{ color: "var(--muted)" }}>License status</dt><dd style={{ color: "var(--ink)" }}>Active · expires {r.expiration}</dd>
           </dl>
-          <p style={{ fontSize: 13.5, color: "var(--dim)", marginTop: 16, lineHeight: 1.5 }}>Name, license, county, and any public email are from California's CSR licensing records. A bio, areas of law, coverage, and rates appear once the reporter claims and completes their profile.</p>
+          <p style={{ fontSize: 13.5, color: "var(--dim)", marginTop: 16, lineHeight: 1.5 }}>Name, license, county, and city are from California's CSR licensing records. A bio, areas of law, coverage, and rates appear once the reporter claims and completes their profile. To reach this reporter, use Invite – we contact them for you.</p>
         </div>
 
         {store.role !== "reporter" && (
@@ -4051,7 +4042,7 @@ function UnclaimedProfile({ r }) {
               <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                 <Icon name="check" size={20} style={{ flexShrink: 0, color: "var(--brand-dark)" }} />
                 <div style={{ fontSize: 14.5, color: "var(--ink-soft)", lineHeight: 1.6 }}>
-                  <strong style={{ color: "var(--brand-dark)" }}>Invite sent.</strong> {r.email ? "We'll let " + first + " know at their public license email (" + maskEmail(r.email) + ") that your firm is looking for them." : "We don't have a public email for " + first + " on file, so we can't reach them automatically yet."} We've saved them to your firm so you can follow up – and when they claim their profile, you'll be connected here.
+                  <strong style={{ color: "var(--brand-dark)" }}>Invite sent.</strong> {r.email ? "We'll let " + first + " know at the public license email on file that your firm is looking for them." : "We don't have a public email for " + first + " on file, so we can't reach them automatically yet."} We've saved them to your firm so you can follow up – and when they claim their profile, you'll be connected here.
                 </div>
               </div>
             ) : (

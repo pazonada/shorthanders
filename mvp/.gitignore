@@ -3,3 +3,7 @@ node_modules/
 .env
 .env.local
 crb_all_raw.json
+# Reporter PII / bulk contact lists — never commit or deploy (raw emails, addresses).
+data/csr_active_directory.csv
+data/email_campaign.csv
+data/*.csv

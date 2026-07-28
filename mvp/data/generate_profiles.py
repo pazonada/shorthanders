@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Regenerate mvp/csr_profiles.js from the active-CSR pull, with county + email."""
+"""Regenerate mvp/csr_profiles.js from the active-CSR pull, with county + MASKED email.
+
+The public license email is masked (m***@domain) before it is written to the client file so the
+deployed directory can't be scraped for reporters' raw addresses. Contact is routed through Dewey
+Sholes (the "Invite this reporter" flow), never by exposing the address. The real address lives only
+in the source pull (crb_all_raw.json, not deployed) and, later, the backend. Must match the JS
+maskEmail() in _app_05_directory.jsx.
+"""
 import json, os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -12,6 +19,14 @@ def tc(s):
         return ""
     s = re.sub(r"\s+", " ", s.strip())
     return s.title()
+
+def mask_email(email):
+    """m***@domain, lowercased. Empty if no address. Matches JS maskEmail()."""
+    email = (email or "").strip()
+    at = email.find("@")
+    if at < 1:
+        return ""
+    return (email[0] + "•••@" + email[at + 1:]).lower()
 
 CA_COUNTIES = {c.lower(): c for c in [
     "Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte",
@@ -57,7 +72,7 @@ for r in rows:
         "county": county,
         "method": method,
         "zip": (r.get("Zip") or "").strip(),
-        "email": (r.get("PublicEmail") or "").strip(),
+        "email": mask_email(r.get("PublicEmail")),
         "expiration": (r.get("LicenseExpirationDate") or "")[:10],
     })
 

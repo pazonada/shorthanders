@@ -1,0 +1,22 @@
+# Vercel serves the mvp/ root. Without this, internal working files are publicly downloadable
+# (e.g. /data/email_campaign.csv exposed ~5,700 reporters' raw emails + street addresses).
+# Keep only what the deployed site actually needs: index.html, csr_profiles.js, graphics/, api/.
+
+# Reporter PII + working data (raw emails, addresses, campaign lists). NEVER deploy.
+data/
+
+# Internal strategy, pricing rationale, and marketing playbooks — not for the public.
+docs/
+marketing/
+
+# Source + tooling (index.html is the built artifact; src/ is concatenated into it).
+src/
+scripts/
+build.sh
+README.md
+prd-v1.rtf
+
+# DB schema + env template (info leak; no reason to serve).
+supabase/
+.env.example
+.claude/

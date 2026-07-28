@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
+# Advisory only (ignored by malicious bots) — the real protection is not deploying these paths
+# (.vercelignore) and shipping no raw emails in csr_profiles.js. Keep both in place.
+Disallow: /data/
+Disallow: /docs/
+Disallow: /marketing/
+Disallow: /csr_profiles.js
+Disallow: /src/
 
 Sitemap: https://dsmvp.vercel.app/sitemap.xml
