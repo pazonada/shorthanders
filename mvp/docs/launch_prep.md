@@ -180,6 +180,12 @@ Do this last, right before you go live.
       what the share image from Phase 2 is for. **YOU**
 - [ ] **Confirm `dewey-sholes.vercel.app` still shows the old v1 prototype** and the two sites
       haven't been crossed. See `../../V1_ARCHIVE.md`. **CLAUDE**
+- [ ] **Nothing private is downloadable.** The live site must not serve reporter PII or internal
+      docs. After deploying, confirm these all return **404**: `/data/email_campaign.csv`,
+      `/data/csr_active_directory.csv`, `/docs/`, `/marketing/`. And confirm `/csr_profiles.js`
+      contains **no raw emails** (only masked `m***@domain`). This is guarded by `mvp/.vercelignore`
+      + gitignored `data/*.csv` + the masked generator — a 2026-07-28 fix after ~5,700 reporters'
+      emails/addresses were briefly live. See `integration_checklist.md` §7. **CLAUDE**
 
 ## Phase 8 – After you're live
 

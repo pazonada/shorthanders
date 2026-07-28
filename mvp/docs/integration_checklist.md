@@ -148,3 +148,28 @@ Two serverless stubs already exist and fall back to demo behavior:
 - [ ] **Legal gates before real money moves:** the deposition-neutrality check (TO-DO) and a
   terms-of-service review – see `mvp/docs/open_strategic_decisions.md` and
   `mvp/docs/legal_question_deposition_neutrality.md`.
+
+## 7. Data exposure / reporter PII (fixed 2026-07-28 – keep it fixed)
+
+**What happened:** Vercel serves the whole `mvp/` root, so internal working files were publicly
+downloadable. `dsmvp.vercel.app/data/email_campaign.csv` and `.../data/csr_active_directory.csv`
+exposed **~5,700 reporters' raw emails and street addresses** in one request – a ready-made spam
+list, worse than crawling. `docs/` and `marketing/` (internal strategy) were public too.
+
+**Fixed by:** `mvp/.vercelignore` (excludes `data/ docs/ marketing/ src/ scripts/ supabase/` + loose
+internal files – only `index.html`, `csr_profiles.js`, `graphics/`, `api/` ship); `data/*.csv`
+gitignored + `git rm`'d; `csr_profiles.js` now ships **masked** emails only (`m***@domain`, via
+`data/generate_profiles.py`); the "Public email" row was removed from the UI (contact only via
+"Invite this reporter"); `robots.txt` disallows the sensitive paths.
+
+**Still owed / keep honest:**
+- [ ] **Real emails server-side only.** When the backend lands, the reporter's real address lives in
+  the DB/`api/` layer, **never** in `csr_profiles.js`, the client bundle, or any public API/JSON.
+  Contact stays relayed (invite/message) so the address is never handed to a firm. Rate-limit +
+  Vercel/Cloudflare WAF on any endpoint that could enumerate reporters.
+- [ ] **The two PII CSVs remain in git *history*** (private repo). If the repo is ever made public,
+  scrub with `git filter-repo`/BFG first.
+- [ ] **Preflight gate:** `scripts/preflight.py` should fail the deploy if `csr_profiles.js` contains
+  a raw email (`@` with a multi-char local part) or if any `data/*.csv` / `docs/` / `marketing/`
+  file would be served. Add before the first public launch.
+- [ ] After each deploy, spot-check that `/data/…`, `/docs/…`, `/marketing/…` return 404.
