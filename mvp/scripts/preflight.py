@@ -108,6 +108,27 @@ def main():
         hits = len(re.findall(bad, html, flags))
         check("FAIL", label, hits == 0, "%d found" % hits)
 
+    # --- reporter PII must not ship ---------------------------------------
+    # csr_profiles.js is downloaded whole by every visitor. It must carry only MASKED emails
+    # (m***@domain, one leading char). A raw address (2+ chars before @) is a scrapeable spam
+    # vector. See docs/integration_checklist.md sec 7 and the generate_profiles.py masker.
+    prof_path = os.path.join(MVP, "csr_profiles.js")
+    if os.path.exists(prof_path):
+        prof = open(prof_path, encoding="utf-8").read()
+        raw = re.findall(r'"email":"[A-Za-z0-9._%+\-]{2,}@', prof)
+        check("FAIL", "csr_profiles.js has no raw emails (masked only)", len(raw) == 0,
+              "%d raw address(es) - re-run data/generate_profiles.py (it masks)" % len(raw))
+    else:
+        check("WARN", "csr_profiles.js present", False, "not found - the directory won't load")
+
+    # The Vercel deploy serves the whole mvp/ root, so internal dirs must be excluded or they're
+    # publicly downloadable (a /data/*.csv once leaked ~5,700 reporters' emails + addresses).
+    vign_path = os.path.join(MVP, ".vercelignore")
+    vign = open(vign_path, encoding="utf-8").read() if os.path.exists(vign_path) else ""
+    for d in ("data/", "docs/", "marketing/"):
+        check("FAIL", ".vercelignore excludes %s" % d, d in vign,
+              "add it - otherwise /%s is publicly served" % d)
+
     # --- prototype markers (expected until the backend is wired) ----------
     proto = len(re.findall(r"prototype|demo persona|faked|not real", html, re.I))
     check("NOTE", "prototype markers still in the page", proto == 0,

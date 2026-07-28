@@ -12,7 +12,7 @@ marketing/
 # Source + tooling (index.html is the built artifact; src/ is concatenated into it).
 src/
 scripts/
-build.sh
+*.sh
 README.md
 prd-v1.rtf
 
