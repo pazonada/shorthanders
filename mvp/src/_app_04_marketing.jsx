@@ -217,7 +217,7 @@ function ForReportersPage() {
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Getting listed and messaging firms is free. You only pay a small fee when you collect payment through the site – pay as you go, or a lower fee on Pro.</p>
         </div>
         <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
-          <PriceCard tone="brand" name="Free" price="$0" unit="/mo (for now)"
+          <PriceCard tone="brand" name="Free" price="$0" unit="/mo"
             blurb="Get listed, get found, and message firms – all free. Get paid as you go."
             features={["Claim your public profile", "Appear in the directory & search", "Add areas of law, coverage & rates", "Message firms directly", "Invoice & collect card / ACH payments for a small fee per transaction"]}
             cta={["Claim your profile", "/claim"]} note="Free to list and message. Getting paid costs 5% per payment, no monthly fee. Standard Stripe fees apply." />

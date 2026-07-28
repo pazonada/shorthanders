@@ -116,6 +116,17 @@ send an invoice first, so a firm that wants to pay electronically can't self-ser
 the matter + amount to confirm, the reporter one-taps to issue the invoice. Directly lowers the
 friction that keeps payments off-platform. Not built; worth prototyping.
 
+**Firms finding reporters they already know – DECIDED/built 2026-07-28 (Rosie channel):** a firm
+often already has the reporter's name (off the transcript cover, jotted at a hearing). Three linked
+mechanics let that pull both sides onto the platform: (1) the **For firms** page pitches "Already
+worked with a reporter? Find them again"; (2) the **gate now treats a name/license search as
+non-discovery** – a free firm that searches a reporter's name (substring match, not just exact) or
+exact license number unlocks *that* reporter free; broad filtered browsing still needs Pro
+(`searchUnlockIds` + `store.directUnlocked` in `_app_05_directory.jsx`); (3) on an **unclaimed**
+profile a firm sees an **"Invite this reporter"** nudge → confirmation + auto-save, so the lookup
+pulls the reporter in (they connect once they claim). Rationale: charging Pro to reach someone you
+already know adds friction to the warmest lead; Pro's value is *discovery* of new reporters.
+
 **Still open:** Firm subscriptions grow slowly – a catch-22 (firms won't pay until reporters have
 rich profiles; reporters won't fill profiles until firms are there), plus the just-call-an-agency
 habit. Start with firms most likely to say yes: ones already hiring reporters directly, and
