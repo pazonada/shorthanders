@@ -94,9 +94,10 @@ function StoreProvider({ children }) {
   // The demo reporter's saved "accepting jobs" setting. Prototype stand-in for the one editable
   // profile field with cross-page display consequences; committed on Save, read by the profile.
   const [myAccepting, setMyAccepting] = useState(true);
+  const [pendingSave, setPendingSave] = useState(null);   // reporter id a logged-out visitor tried to save; applied after signup
 
   const store = {
-    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, myAccepting, setMyAccepting,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, myAccepting, setMyAccepting, pendingSave,
     // Firm asks a reporter to invoice them (so payment happens on-platform); reporter fulfills it.
     requestInvoice: (req) => setPaymentRequests((rs) => [{ ...req, id: "REQ-" + Date.now(), status: "pending" }, ...rs]),
     fulfillRequest: (id) => setPaymentRequests((rs) => rs.map((r) => r.id === id ? { ...r, status: "fulfilled" } : r)),
@@ -109,6 +110,10 @@ function StoreProvider({ children }) {
     inviteFirm: (firm) => setInvitedFirms((xs) => [firm, ...xs]),
     // A firm arriving on a reporter's invite link: create their free account, save + unlock the inviter.
     acceptInvite: (reporterId) => { setRole("firm"); setSaved((s) => s.includes(reporterId) ? s : [...s, reporterId]); setUnlockedReporters((u) => u.includes(reporterId) ? u : [...u, reporterId]); },
+    // A logged-out visitor tapped "Save this reporter": remember which reporter, then send them to firm signup.
+    queueSave: (reporterId) => setPendingSave(reporterId),
+    // After firm signup completes: save + unlock the queued reporter, then clear the queue.
+    completeSave: () => { if (pendingSave != null) { setSaved((s) => s.includes(pendingSave) ? s : [...s, pendingSave]); setUnlockedReporters((u) => u.includes(pendingSave) ? u : [...u, pendingSave]); setPendingSave(null); } },
     startConvoWith: (name) => setConvos((cs) => cs.some((c) => c.with === name) ? cs
       : [{ id: "new-" + name, with: name, role: "reporter", subtitle: "New conversation", unread: 0, msgs: [{ from: "me", t: "", at: "Just now" }].filter((m) => m.t) }, ...cs]),
     pushMessage: (cid, msg) => setConvos((cs) => cs.map((c) => c.id === cid ? { ...c, msgs: [...c.msgs, msg], unread: 0 } : c)),

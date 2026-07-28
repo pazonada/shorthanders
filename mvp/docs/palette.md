@@ -71,6 +71,19 @@ Rule of thumb: if you're adding a tinted bar and it isn't success/error, make it
 was an open question ("blue or purple?") – answered blue, because the accent is indigo-only and
 purple/plum is retired. Muted grey is for non-interactive metadata, not links.
 
+## Buttons
+
+**Button labels are short – a few words at most, ideally two or three.** A button is a control, not
+a sentence; long labels wrap, look clumsy, and bury the action. Say the verb + the object and stop:
+**"Save this reporter,"** "Message reporter," "New invoice," "Create account" – not "Create free
+account and save Marguerite."
+
+- **Never personalize a button with a person's name.** Keep labels generic so the same control
+  reads the same on every profile and record, and never has to be rebuilt per name. Put the name or
+  context in the surrounding copy, not on the button.
+- Explanation, reassurance ("free for your firm"), and consequences belong in the **microcopy near
+  the button**, never inside the label.
+
 ## Icons
 
 - **Library: Phosphor** (`@phosphor-icons`), **regular** weight, drawn on a 256 grid. Chosen over

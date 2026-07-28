@@ -428,10 +428,14 @@ function ReporterProfile({ reporterId, invited }) {
   // Own profile reflects the saved availability from the editor; others use their stored flag.
   const notAccepting = r.id === store.myCsr ? !store.myAccepting : notAcceptingJobs(r);
   const first = r.name.split(" ")[0];
-  const acceptInvite = () => { store.acceptInvite(r.id); navigate("/firm"); };
   const messageReporter = () => {
     if (store.role === "firm") { store.startConvoWith(r.name); navigate("/messages"); }
     else { store.enterAsFirm(); store.startConvoWith(r.name); navigate("/messages"); }
+  };
+  // Logged-in firm: save right here. Everyone else: remember the reporter and go create a free account.
+  const saveReporter = () => {
+    if (store.role === "firm") { store.toggleSaved(r.id); }
+    else { store.queueSave(r.id); navigate("/firm-signup"); }
   };
   return (
     <Page>
@@ -488,20 +492,20 @@ function ReporterProfile({ reporterId, invited }) {
               : <div style={{ marginBottom: 16, fontSize: 14, color: "var(--muted)" }}>Rates provided on request.</div>}
             {invited ? (
               <>
-                <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={acceptInvite}><Icon name="heart" size={16} /> Create free account and save {first}</button>
-                <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>Free for your firm. Message {first} and pay their invoices right away; upgrade only when you want to search the full directory.</p>
+                <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={saveReporter}><Icon name="heart" size={16} /> Save this reporter</button>
+                <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>Free for your firm. Create an account to save {first}, message them, and pay their invoices.</p>
               </>
             ) : isOwner ? (
               <>
                 <button className="btn btn-primary" disabled style={{ width: "100%", justifyContent: "center", opacity: 0.45, cursor: "default" }}><Icon name="message" size={16} /> Message {first}</button>
-                <button className="btn btn-secondary" disabled style={{ width: "100%", justifyContent: "center", marginTop: 10, opacity: 0.45, cursor: "default" }}><Icon name="heart" size={16} /> Save reporter</button>
+                <button className="btn btn-secondary" disabled style={{ width: "100%", justifyContent: "center", marginTop: 10, opacity: 0.45, cursor: "default" }}><Icon name="heart" size={16} /> Save this reporter</button>
                 <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>This is what firms use to reach you – inactive in your own preview. To invite a firm you know, use "Invite a law firm" on your dashboard.</p>
               </>
             ) : (
               <>
                 <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={messageReporter}><Icon name="message" size={16} /> Message {first}</button>
-                <button className="btn btn-secondary" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} onClick={() => { store.toggleSaved(r.id); }}>
-                  <Icon name="heart" size={16} /> {store.saved.includes(r.id) ? "Saved" : "Save reporter"}
+                <button className="btn btn-secondary" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} onClick={saveReporter}>
+                  <Icon name="heart" size={16} /> {store.role === "firm" && store.saved.includes(r.id) ? "Saved" : "Save this reporter"}
                 </button>
                 <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>Terms are agreed directly between you and the reporter. Dewey Sholes is a communication channel only.</p>
               </>
