@@ -169,7 +169,7 @@ function ForFirmsPage() {
         <FeatureBlock icon="doc" title="Clean invoices" body="Reporters invoice you through the platform with your matter reference on every line, ready for AP." />
         <FeatureBlock icon="lock" title="Pay online, not by check" body="No more cutting paper checks to reporters who won't take anything else. Pay any invoice by card or ACH in a click – receipts automatic, nothing to chase." />
       </div>
-      <section style={{ marginTop: 52 }}>
+      <section style={{ marginTop: 52, background: "var(--bg-soft)", border: "1px solid var(--rule)", borderRadius: 20, padding: "clamp(36px, 4vw, 52px) clamp(24px, 4vw, 44px)" }}>
         <div style={{ textAlign: "center", maxWidth: 640, margin: "0 auto 28px" }}>
           <h2 style={{ fontSize: "clamp(26px, 3.2vw, 40px)", lineHeight: 1.1 }}>What it costs</h2>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Messaging reporters who invited you is free. A simple monthly membership unlocks searching the full directory – no booking fees, no commission on the work.</p>
@@ -201,7 +201,7 @@ function ForReportersPage() {
         <FeatureBlock icon="bank" title="Get paid, and your tax forms" body="Collect by card or ACH straight to your bank, and get tidy income records plus the year-end 1099 Stripe issues for what you collect." />
         <FeatureBlock icon="shield" title="Verified once, via Stripe" body="Confirm your identity through Stripe Connect. It powers your payouts and shows firms you're the real, licensed reporter." />
       </div>
-      <section style={{ marginTop: 52 }}>
+      <section style={{ marginTop: 52, background: "var(--bg-soft)", border: "1px solid var(--rule)", borderRadius: 20, padding: "clamp(36px, 4vw, 52px) clamp(24px, 4vw, 44px)" }}>
         <div style={{ textAlign: "center", maxWidth: 640, margin: "0 auto 28px" }}>
           <h2 style={{ fontSize: "clamp(26px, 3.2vw, 40px)", lineHeight: 1.1 }}>What it costs</h2>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Getting listed and messaging firms is free. You only pay a small fee when you collect payment through the site – pay as you go, or a lower fee on Pro.</p>
@@ -231,7 +231,7 @@ function ForReportersPage() {
 
 function MarketingHero({ eyebrow, title, sub }) {
   return (
-    <div style={{ maxWidth: 780, margin: "12px 0 40px" }}>
+    <div style={{ maxWidth: 880, margin: "12px 0 40px" }}>
       <span className="kicker">{eyebrow}</span>
       <h1 className="h-section">{title}</h1>
       <p style={{ fontSize: 18, color: "var(--ink-soft)", marginTop: 20, lineHeight: 1.65 }}>{sub}</p>
