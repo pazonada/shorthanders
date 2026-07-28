@@ -5110,10 +5110,11 @@ const backLink = { background: "none", border: "none", color: "var(--muted)", cu
 function MessagesPanel({ embedded }) {
   const store = useStore();
   const convos = store.convos;
+  const dir = useMemo(() => buildDirectory(), []);   // build once, not on every render/keystroke
   const [activeId, setActiveId] = useState(convos[0] ? convos[0].id : null);
   const active = convos.find((c) => c.id === activeId);
   // The reporter this conversation is with, so a firm sees the "not accepting new work" reminder.
-  const withRep = active ? buildDirectory().find((x) => x.name === active.with) : null;
+  const withRep = active ? dir.find((x) => x.name === active.with) : null;
   const [draft, setDraft] = useState("");
   const [reqOpen, setReqOpen] = useState(false);
   const sendRequest = (req) => {
