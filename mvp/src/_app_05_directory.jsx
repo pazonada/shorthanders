@@ -655,9 +655,9 @@ function UnclaimedProfile({ r }) {
        </div>
 
        <aside className="profile-aside">
-         <div className="ds-card" style={{ background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
-           <div style={{ width: 44, height: 44, borderRadius: 12, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}><Icon name="user" size={22} /></div>
-           <h2 style={{ fontSize: 22 }}>Is this you?</h2>
+         <div className="ds-card" style={{ background: "#F7F8C6", borderColor: "#DCE224" }}>
+           <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", color: "var(--ink-soft)" }}>For court reporters</div>
+           <h2 style={{ fontSize: 26, marginTop: 6 }}>Is this you?</h2>
            <p style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 8, lineHeight: 1.6 }}>Claim your profile to add your bio, areas of law, and rates – and to start invoicing clients and getting paid. It's free.</p>
            <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 16 }} onClick={() => navigate("/claim/" + r.id)}>Claim this profile <Icon name="arrow" size={16} /></button>
          </div>
