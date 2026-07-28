@@ -5406,7 +5406,7 @@ function FirmSubscription() {
 function LegalPage({ title, intro, sections }) {
   return (
     <Page roomy>
-      <h1 style={{ fontSize: "clamp(28px, 3.2vw, 40px)", lineHeight: 1.12 }}>{title}</h1>
+      <h1 style={{ fontSize: "clamp(34px, 4.4vw, 54px)", lineHeight: 1.12, marginBottom: 28 }}>{title}</h1>
       <div style={{ maxWidth: 760 }}>
         {intro && <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 16, lineHeight: 1.7 }}>{intro}</p>}
         <div style={{ marginTop: 30, display: "flex", flexDirection: "column", gap: 26 }}>
@@ -5424,7 +5424,7 @@ function LegalPage({ title, intro, sections }) {
 }
 
 function TermsPage() {
-  return <LegalPage title="How Dewey Sholes works – and what it is not"
+  return <LegalPage title="How Dewey Sholes works"
     intro="Plain-language summary of the platform's role. This is prototype copy for review, not final legal terms of service."
     sections={[
       { h: "What Dewey Sholes is", p: ["Dewey Sholes plays exactly three roles, and no others:"], list: ["A directory provider – a searchable listing of licensed California court reporters, built from public licensing data.", "A communication platform – a channel for law firms and reporters to message each other.", "A payment facilitator – a way for reporters to invoice firms and collect payment through Stripe."] },
