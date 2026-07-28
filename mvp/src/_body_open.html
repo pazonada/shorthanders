@@ -125,6 +125,11 @@
   /* wider screens: run nearly edge to edge; the native width caps any upscaling */
   @media (min-width: 721px) { .mvp-hero-shorthand { width: 96vw; max-width: 2346px; } }
 
+  /* unclaimed profile: record + firm nudge on the left, claim card top-right */
+  .profile-split { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 32px; align-items: start; }
+  .profile-split .profile-aside { position: sticky; top: 86px; }
+  @media (max-width: 760px) { .profile-split { grid-template-columns: 1fr; gap: 22px; } .profile-split .profile-aside { position: static; } }
+
   /* contact page: intro + channels beside the message form */
   .contact-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: start; }
   @media (min-width: 860px) { .contact-grid { grid-template-columns: 0.92fr 1.08fr; gap: 64px; } }

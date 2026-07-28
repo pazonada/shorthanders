@@ -220,7 +220,7 @@ function ClaimFlow({ reporterId }) {
               <p style={{ color: "var(--ink-soft)", fontSize: 15, lineHeight: 1.6 }}>Claiming this profile lets you control how firms see you and unlocks invoicing and payments. You'll verify your identity in a moment so firms know it's really you.</p>
               <div style={{ display: "flex", gap: 12 }}>
                 <button className="btn btn-primary" onClick={() => setStep(1)}>Yes, this is me <Icon name="arrow" size={16} /></button>
-                <button className="btn btn-secondary" onClick={() => navigate("/directory")}>That's not me</button>
+                <button className="btn btn-secondary" onClick={() => navigateBack("/directory")}>That's not me</button>
               </div>
             </div>
           )}

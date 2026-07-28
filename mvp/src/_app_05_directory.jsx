@@ -73,7 +73,7 @@ const PAGE_SIZE = 24;
 // directory" lands you exactly where you were. Cleared only by a full reload - the right lifetime
 // for one browsing session.
 const dirCache = {
-  q: "", county: "", language: "", minYears: "",
+  q: "", county: "", state: "", language: "", minYears: "",
   tags: [], specTags: [], certTags: [],
   rushOnly: false, notaryOnly: false, claimedOnly: false,
   searched: null, limit: PAGE_SIZE, scrollY: 0,
@@ -102,6 +102,7 @@ function matchesCriteria(r, s, haystacks) {
   const needle = (s.q || "").trim().toLowerCase();
   if (needle && !(haystacks.get(r.id) || "").includes(needle)) return false;
   if (s.county && r.county !== s.county) return false;
+  if (s.state && !(r.otherStates || []).includes(s.state)) return false;
   if (s.claimedOnly && !r.claimed) return false;
   if (s.rushOnly && !r.rush) return false;
   if (s.notaryOnly && !r.notary) return false;
@@ -124,6 +125,7 @@ function ReporterDirectory() {
   // Seed every control from dirCache so returning from a profile restores the exact browse state.
   const [q, setQ] = useState(dirCache.q);
   const [county, setCounty] = useState(dirCache.county);
+  const [state, setState] = useState(dirCache.state);
   const [language, setLanguage] = useState(dirCache.language);
   const [minYears, setMinYears] = useState(dirCache.minYears);
   const [tags, setTags] = useState(dirCache.tags);       // selected proceeding / service tags
@@ -142,23 +144,26 @@ function ReporterDirectory() {
 
   // Persist the live browse state back to dirCache so a trip to a profile and back restores it.
   useEffect(() => {
-    Object.assign(dirCache, { q, county, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit });
-  }, [q, county, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit]);
+    Object.assign(dirCache, { q, county, state, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit });
+  }, [q, county, state, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit]);
   // Restore scroll on return. Runs before paint so there's no flash of the top after the router's
   // scroll-to-top fires on the hashchange back into the directory.
   useLayoutEffect(() => {
     if (dirCache.scrollY) window.scrollTo({ top: dirCache.scrollY, left: 0, behavior: "instant" });
   }, []);
-  // A free firm that ran a search matching a reporter's exact name or license number gets that one
-  // reporter unlocked from the Pro gate - knowing exactly who you want isn't discovery. Persists in
-  // the store so the unlock carries to the reporter's profile page too.
+  // A free firm that searched a reporter by name (or exact license number) unlocks those reporters
+  // from the Pro gate - knowing who you want isn't discovery. Persists in the store so the unlock
+  // carries to the reporter's profile page too.
   useEffect(() => {
     if (store.role !== "firm" || store.firmPlan === "pro") return;
-    const ids = exactSearchMatches(all, searched && searched.q);
+    const ids = searchUnlockIds(all, searched && searched.q);
     if (ids.length) store.noteDirectMatch(ids);
   }, [searched]);
 
   const counties = useMemo(() => Array.from(new Set(all.map((r) => r.county).filter(Boolean))).sort(), [all]);
+  // Other-state certifications actually present in the directory, so the filter only offers states
+  // some reporter lists (like the county filter). Full US list lives in the profile editor.
+  const otherStates = useMemo(() => Array.from(new Set(all.flatMap((r) => r.otherStates || []))).sort(), [all]);
   // Specialty filter pulled 2026-07-21: the only specialty values in the app are fabricated
   // (six sample profiles), and the real taxonomy is an open user-testing question. Re-add once
   // research produces a grounded list. See docs/directory_filters.md.
@@ -178,6 +183,7 @@ function ReporterDirectory() {
       m.set(r.id, [r.name, r.city, r.county, r.csrNumber, r.zip, r.method, r.bio,
         ...(r.specialties || []), ...(r.proceedings || []), ...(r.services || []),
         ...(r.languages || []), ...(r.certifications || []), ...(r.coverage || []),
+        ...(r.otherStates || []),
         r.notary ? "notary" : ""]
         .filter(Boolean).join(" ").toLowerCase());
     }
@@ -186,15 +192,15 @@ function ReporterDirectory() {
 
   // Signatures let us tell "draft differs from what's applied" (dirty) and "nothing is applied"
   // (browse) cheaply. Arrays are sorted so checkbox order doesn't create false dirtiness.
-  const sig = (o) => JSON.stringify([o.q, o.county, o.language, o.minYears, [...o.tags].sort(), [...o.specTags].sort(), [...o.certTags].sort(), o.rushOnly, o.notaryOnly, o.claimedOnly]);
-  const draft = { q, county, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly };
-  const EMPTY_SIG = sig({ q: "", county: "", language: "", minYears: "", tags: [], specTags: [], certTags: [], rushOnly: false, notaryOnly: false, claimedOnly: false });
+  const sig = (o) => JSON.stringify([o.q, o.county, o.state, o.language, o.minYears, [...o.tags].sort(), [...o.specTags].sort(), [...o.certTags].sort(), o.rushOnly, o.notaryOnly, o.claimedOnly]);
+  const draft = { q, county, state, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly };
+  const EMPTY_SIG = sig({ q: "", county: "", state: "", language: "", minYears: "", tags: [], specTags: [], certTags: [], rushOnly: false, notaryOnly: false, claimedOnly: false });
   const draftSig = sig(draft);
   const searchedSig = searched ? sig(searched) : EMPTY_SIG;
   const browseMode = searchedSig === EMPTY_SIG;   // nothing applied -> featured + everyone
   const dirty = draftSig !== searchedSig;          // controls changed since last Search
   const anyDraft = draftSig !== EMPTY_SIG;
-  const runSearch = () => { setSearched(draftSig === EMPTY_SIG ? null : { q, county, language, minYears, tags: [...tags], specTags: [...specTags], certTags: [...certTags], rushOnly, notaryOnly, claimedOnly }); setLimit(PAGE_SIZE); };
+  const runSearch = () => { setSearched(draftSig === EMPTY_SIG ? null : { q, county, state, language, minYears, tags: [...tags], specTags: [...specTags], certTags: [...certTags], rushOnly, notaryOnly, claimedOnly }); setLimit(PAGE_SIZE); };
 
   // Live count of what the current DRAFT would return - the useful signal live filtering gives
   // ("0 results, loosen something"), without reflowing the list. Recomputed on draft change.
@@ -216,7 +222,7 @@ function ReporterDirectory() {
     return list;
   }, [all, haystacks, searched]);
 
-  const clearAll = () => { setQ(""); setCounty(""); setLanguage(""); setMinYears(""); setTags([]); setSpecTags([]); setCertTags([]); setRushOnly(false); setNotaryOnly(false); setClaimedOnly(false); setSearched(null); setLimit(PAGE_SIZE); };
+  const clearAll = () => { setQ(""); setCounty(""); setState(""); setLanguage(""); setMinYears(""); setTags([]); setSpecTags([]); setCertTags([]); setRushOnly(false); setNotaryOnly(false); setClaimedOnly(false); setSearched(null); setLimit(PAGE_SIZE); };
   // Featured only in browse mode - an active search shows a pure ranked list.
   const featured = browseMode ? weeklyFeatured(filtered.filter((r) => r.claimed), 4) : [];
   const featuredIds = new Set(featured.map((r) => r.id));
@@ -242,6 +248,15 @@ function ReporterDirectory() {
               {counties.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           </FilterGroup>
+          {otherStates.length > 0 && (
+            <FilterGroup label="Also certified in">
+              {/* Reporters licensed in another state besides California, self-reported. */}
+              <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={state} onChange={(e) => { setState(e.target.value); setLimit(PAGE_SIZE); }}>
+                <option value="">Any state</option>
+                {otherStates.map((s) => <option key={s} value={s}>{s}</option>)}
+              </select>
+            </FilterGroup>
+          )}
           <FilterGroup label="Proceedings">
             {PROCEEDING_TYPES.map((t) => <FilterCheck key={t} label={t} checked={tags.includes(t)} onChange={() => toggleTag(t)} />)}
           </FilterGroup>
@@ -387,13 +402,19 @@ function firmLocked(store, r) {
     && !store.unlockedReporters.includes(r.id)
     && !(store.directUnlocked || []).includes(r.id);
 }
-// A firm that types a reporter's EXACT full name or license number already knows who they want -
-// that's not discovery, so it's free. Broad filtered browsing stays Pro. Returns matching ids.
-function exactSearchMatches(all, query) {
+// A firm that searches a reporter by NAME (or exact license number) already knows who they want -
+// that's not discovery, so reaching them is free. We match the query as a substring of the name
+// (so "ellsworth" or "marguerite ellsworth" both work, not just the exact full name) - firms rarely
+// have the license number, usually just the name off the transcript. Keyword searches that only hit
+// location/specialty/skill (not a name) don't unlock, so Pro-gated discovery stays intact. Broad
+// filtered browsing stays Pro. Returns the matching reporter ids.
+function searchUnlockIds(all, query) {
   const q = (query || "").trim().toLowerCase();
-  if (!q) return [];
+  if (q.length < 3) return [];
   const digits = q.replace(/[^0-9]/g, "");
-  return all.filter((r) => r.claimed && (r.name.toLowerCase() === q || (digits && String(r.csrNumber) === digits))).map((r) => r.id);
+  return all.filter((r) => r.claimed && (
+    r.name.toLowerCase().includes(q) || (digits.length >= 3 && String(r.csrNumber) === digits)
+  )).map((r) => r.id);
 }
 
 function GatedProfile({ r }) {
@@ -501,6 +522,7 @@ function ReporterProfile({ reporterId, invited }) {
           {(r.languages || []).length > 0 && <ProfileSection title="Languages"><ChipRow items={r.languages} /></ProfileSection>}
           <ProfileSection title="Geographic coverage"><ChipRow items={(r.coverage || []).map((c) => c + " County")} /></ProfileSection>
           <ProfileSection title="Certifications"><PlainRow items={r.certifications} /></ProfileSection>
+          {(r.otherStates || []).length > 0 && <ProfileSection title="Also certified in"><ChipRow items={r.otherStates} /></ProfileSection>}
           {/* Testimonials pulled 2026-07-21: unverified reporter-supplied quotes are a
               credibility risk, and ratings/reviews were already out of the reduced scope.
               Real ratings come later, captured after payment. See docs/reviews_and_ratings.md. */}
@@ -574,7 +596,10 @@ function TagList({ items, tone }) {
 function UnclaimedProfile({ r }) {
   const store = useStore();
   const [invited, setInvited] = useState(false);
-  const first = r.name.split(" ")[0];
+  // Fall back to the full name when the first token is a lone initial ("A Saunders" -> "A Saunders",
+  // not "A"), so the invite copy reads naturally.
+  const firstToken = r.name.split(" ")[0];
+  const first = firstToken.length > 1 ? firstToken : r.name;
   // A firm that already worked with this (still-unclaimed) reporter can nudge them to join, so the
   // firm's lookup pulls the reporter onto the platform. Prototype: no real email is sent.
   const doInvite = () => {
@@ -583,7 +608,8 @@ function UnclaimedProfile({ r }) {
   };
   return (
     <Page>
-      <div style={{ maxWidth: 620 }}>
+      <div className="profile-split">
+       <div style={{ display: "flex", flexDirection: "column", gap: 20, minWidth: 0 }}>
         <div style={{ display: "flex", gap: 18, alignItems: "center" }}>
           <Avatar name={r.name} size={72} claimed={false} />
           <div>
@@ -593,7 +619,7 @@ function UnclaimedProfile({ r }) {
           </div>
         </div>
 
-        <div className="ds-panel" style={{ marginTop: 26 }}>
+        <div className="ds-panel">
           <h2 style={{ fontSize: 15, fontWeight: 700, fontFamily: "'Inter', sans-serif", color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 14 }}>Public license record</h2>
           <dl style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "10px 20px", fontSize: 15 }}>
             <dt style={{ color: "var(--muted)" }}>License</dt><dd style={{ color: "var(--ink)" }}>CSR #{r.csrNumber}</dd>
@@ -606,7 +632,7 @@ function UnclaimedProfile({ r }) {
         </div>
 
         {store.role !== "reporter" && (
-          <div className="ds-card" style={{ marginTop: 20, background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+          <div className="ds-card" style={{ background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
             {invited ? (
               <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                 <Icon name="check" size={20} style={{ flexShrink: 0, color: "var(--brand-dark)" }} />
@@ -627,13 +653,16 @@ function UnclaimedProfile({ r }) {
           </div>
         )}
 
-        <div className="banner banner-ok" style={{ marginTop: 20 }}>
-          <Icon name="user" size={20} style={{ flexShrink: 0 }} />
-          <div>
-            <strong>Is this you?</strong> Claim your profile to add your bio, areas of law, and rates – and to start invoicing clients and getting paid. It's free.
-            <div><button className="btn btn-primary" style={{ marginTop: 14 }} onClick={() => navigate("/claim/" + r.id)}>Claim this profile <Icon name="arrow" size={16} /></button></div>
-          </div>
-        </div>
+       </div>
+
+       <aside className="profile-aside">
+         <div className="ds-card" style={{ background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+           <div style={{ width: 44, height: 44, borderRadius: 12, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}><Icon name="user" size={22} /></div>
+           <h2 style={{ fontSize: 22 }}>Is this you?</h2>
+           <p style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 8, lineHeight: 1.6 }}>Claim your profile to add your bio, areas of law, and rates – and to start invoicing clients and getting paid. It's free.</p>
+           <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 16 }} onClick={() => navigate("/claim/" + r.id)}>Claim this profile <Icon name="arrow" size={16} /></button>
+         </div>
+       </aside>
       </div>
     </Page>
   );

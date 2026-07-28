@@ -198,6 +198,7 @@ function ReporterProfileEditor({ me }) {
   const [languages, setLanguages] = useState(me.languages || []);
   const [certs, setCerts] = useState(() => CREDENTIAL_TYPES.map((c) => c.code).filter((code) => (me.certifications || []).some((x) => x.indexOf(code) !== -1)));
   const [coverage, setCoverage] = useState(me.coverage || []);
+  const [otherStates, setOtherStates] = useState(me.otherStates || []);
   const [notary, setNotary] = useState(!!me.notary);
   const [rush, setRush] = useState(!!me.rush);
   // Draft, seeded from the saved value. Committed to the store on Save, then read by the profile.
@@ -250,6 +251,7 @@ function ReporterProfileEditor({ me }) {
       <FieldBlock label="Languages" hint="Languages you work in besides English. Pick from the list or type your own to add it."><TagSearchAdd options={LANGUAGES} selected={languages} onChange={setLanguages} placeholder="Search languages, or type your own" allowOther /></FieldBlock>
       <FieldBlock label="Certifications"><ChipToggle options={CREDENTIAL_TYPES} selected={certs} onToggle={toggleIn(setCerts)} /></FieldBlock>
       <FieldBlock label="Counties covered"><TagSearchAdd options={counties} selected={coverage} onChange={setCoverage} placeholder="Search California counties" /></FieldBlock>
+      <FieldBlock label="Also certified in" hint="Other states where you're licensed or certified. California is your base directory, so it's not listed here."><TagSearchAdd options={US_STATES} selected={otherStates} onChange={setOtherStates} placeholder="Search states" /></FieldBlock>
       <FieldBlock label="Availability" hint="When this is off, you still appear in search and firms can still message you (say, to ask for a past transcript) - your profile just shows that you're not taking new work right now.">
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <ToggleSwitch on={accepting} onClick={() => setAccepting(!accepting)} />
