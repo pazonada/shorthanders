@@ -4440,7 +4440,7 @@ function ReporterDashboard() {
             <div style={{ width: 46, height: 46, borderRadius: 12, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="mail" size={22} /></div>
             <div style={{ flex: 1, minWidth: 220 }}>
               <div style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Invite the firms you already work with</div>
-              <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 2 }}>They join free and save you as a favorite, so you are first in mind next time they need a reporter{store.invitedFirms.length ? " · " + store.invitedFirms.length + " invited" : ""}.</div>
+              <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 2 }}>Send your profile to firms you know, or drop your profile link in the chat at a remote hearing. They join free and save you as a favorite, so you can be contacted easily and are first in mind next time they need a reporter{store.invitedFirms.length ? " · " + store.invitedFirms.length + " invited" : ""}.</div>
             </div>
             <button className="btn btn-primary" onClick={() => setInviteOpen(true)}><Icon name="mail" size={16} /> Invite a law firm</button>
           </div>
