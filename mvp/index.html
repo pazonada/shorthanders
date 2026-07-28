@@ -5406,8 +5406,8 @@ function FirmSubscription() {
 function LegalPage({ title, intro, sections }) {
   return (
     <Page roomy>
+      <h1 style={{ fontSize: "clamp(28px, 3.2vw, 40px)", lineHeight: 1.12 }}>{title}</h1>
       <div style={{ maxWidth: 760 }}>
-        <h1 style={{ fontSize: "clamp(34px, 4.4vw, 54px)" }}>{title}</h1>
         {intro && <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 16, lineHeight: 1.7 }}>{intro}</p>}
         <div style={{ marginTop: 30, display: "flex", flexDirection: "column", gap: 26 }}>
           {sections.map((s, i) => (
