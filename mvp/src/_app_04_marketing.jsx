@@ -237,9 +237,9 @@ function PricingPage() {
         <p style={{ fontSize: 18, color: "var(--ink-soft)", marginTop: 16, lineHeight: 1.6 }}>Claim your profile, get listed, and message firms – all free. Get paid as you go, or upgrade to Pro for a lower payment fee. No booking fees, no commission on your work.</p>
       </div>
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", maxWidth: 1040, margin: "0 auto" }}>
-        <PriceCard tone="brand" name="Reporters · Free" price="$0" unit="/forever"
+        <PriceCard tone="brand" name="Reporters · Free" price="$0" unit="/mo (for now)"
           blurb="Get listed, get found, and message firms – all free. Get paid as you go."
-          features={["Claim your public profile", "Appear in the directory & search", "Add areas of law, coverage & rates", "Message firms directly", "Invoice & collect card / ACH payments"]}
+          features={["Claim your public profile", "Appear in the directory & search", "Add areas of law, coverage & rates", "Message firms directly", "Invoice & collect card / ACH payments for a small fee per transaction"]}
           cta={["Claim your profile", "/claim"]} note="Free to list and message. Getting paid costs 5% per payment, no monthly fee. Standard Stripe fees apply." />
         <PriceCard tone="brand" featured name="Reporters · Pro" price="$29" unit="/month"
           blurb="Everything in Free, at a lower payment fee. Best once you invoice often."
@@ -248,7 +248,7 @@ function PricingPage() {
         <PriceCard tone="brand" name="Law firms" price="$39" unit="/month"
           blurb="Search the directory and reach reporters directly – no agency in the middle."
           features={["Message reporters who invited you, free", "Subscribe to search the full directory", "Advanced search & filters", "Saved reporters & shared team lists", "Pay invoices by card or ACH"]}
-          cta={["Explore the directory", "/directory"]} note="$39/month per firm, or $390/year (2 months free). No booking fees or commissions." />
+          cta={["Explore the directory", "/directory"]} note="$39/month per firm. No booking fees or commissions." />
       </div>
       <div className="ds-panel" style={{ maxWidth: 1040, margin: "32px auto 0", textAlign: "center" }}>
         <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.6 }}>
@@ -262,7 +262,6 @@ function PriceCard({ tone, featured, name, price, unit, blurb, features, cta, no
   const fg = tone === "sage" ? "var(--sage-deep)" : "var(--brand-dark)";
   return (
     <div className="ds-card" style={{ borderColor: featured ? "var(--brand)" : "var(--rule)", borderWidth: featured ? 2 : 1, position: "relative", display: "flex", flexDirection: "column", gap: 16 }}>
-      {featured && <span className="pill pill-verified" style={{ position: "absolute", top: -12, left: 26 }}>Most popular</span>}
       <div>
         <div style={{ fontSize: 14, fontWeight: 700, color: fg, textTransform: "uppercase", letterSpacing: ".04em" }}>{name}</div>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 10 }}>
