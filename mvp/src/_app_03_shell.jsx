@@ -18,7 +18,6 @@ function Nav() {
           {link("/directory", "Directory")}
           {link("/for-firms", "For firms")}
           {link("/for-reporters", "For reporters")}
-          {link("/pricing", "Pricing")}
         </nav>
         <div style={{ display: "flex", alignItems: "center", gap: 12, position: "relative" }}>
           {store.role === "reporter" && <button className="btn btn-primary" style={{ padding: "10px 18px", fontSize: 14 }} onClick={() => navigate("/reporter")}>My dashboard</button>}
@@ -87,8 +86,8 @@ function Footer() {
             <p style={{ marginTop: 14, fontSize: 14, color: "rgba(255,255,255,.6)", lineHeight: 1.6 }}>The directory of every licensed California court reporter. Find a reporter, or run your reporting business from one place.</p>
           </div>
           <div style={{ display: "flex", gap: 56, flexWrap: "wrap" }}>
-            {col("Find reporters", [["/directory", "Search directory"], ["/for-firms", "For law firms"], ["/pricing", "Pricing"]])}
-            {col("For reporters", [["/claim", "Claim your profile"], ["/for-reporters", "Invoicing & payments"], ["/pricing", "Pricing"]])}
+            {col("Find reporters", [["/directory", "Search directory"], ["/for-firms", "For law firms"]])}
+            {col("For reporters", [["/claim", "Claim your profile"], ["/for-reporters", "Invoicing & payments"]])}
             {col("Company", [["/about", "About"], ["/terms", "Terms of service"], ["/privacy", "Privacy"], ["/contact", "Contact"]])}
           </div>
         </div>

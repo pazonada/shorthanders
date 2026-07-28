@@ -156,7 +156,6 @@ function AppRouter() {
   if (route.startsWith("#/messages")) return <MessagingPage />;
   if (route.startsWith("#/for-firms")) return <ForFirmsPage />;
   if (route.startsWith("#/for-reporters")) return <ForReportersPage />;
-  if (route.startsWith("#/pricing")) return <PricingPage />;
   if (route.startsWith("#/terms")) return <TermsPage />;
   if (route.startsWith("#/privacy")) return <PrivacyPage />;
   if (route.startsWith("#/about")) return <AboutPage />;
