@@ -67,7 +67,8 @@ payment pulls reporters onto the rails. Detail: `../marketing/growth_strategy.md
 
 - **Marketing:** landing (hero, two-sided value cards, "how it works" with pen-and-ink step
   illustrations, the agency-vs-DS **money-comparison** bars, directory preview, **dark footer**),
-  For firms, For reporters, Pricing, About, Terms, Privacy, Contact.
+  For firms, For reporters (each with an inline "What it costs" pricing section – there is no
+  standalone Pricing page), About, Terms, Privacy, Contact.
 - **Directory:** **sidebar-filter** search (county / experience / language / method selects +
   Proceedings/Services checkboxes + rush/claimed toggles), cards + list rows, **logo avatars**
   (brand-blue = claimed, grey = unclaimed; photo override supported), and the **firm gate** – a
