@@ -234,7 +234,7 @@ function MarketingHero({ eyebrow, title, sub }) {
     <div style={{ margin: "12px 0 40px" }}>
       <span className="kicker">{eyebrow}</span>
       <h1 className="h-section">{title}</h1>
-      <p style={{ fontSize: 18, color: "var(--ink-soft)", marginTop: 20, lineHeight: 1.65, maxWidth: 760 }}>{sub}</p>
+      <p style={{ fontSize: 18, color: "var(--ink-soft)", marginTop: 20, lineHeight: 1.65 }}>{sub}</p>
     </div>
   );
 }
