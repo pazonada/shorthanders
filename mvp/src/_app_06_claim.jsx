@@ -328,7 +328,12 @@ function FirmSignup() {
   const PRACTICE = ["Insurance defense", "Personal injury", "Family law", "Employment", "Medical malpractice", "Civil / commercial", "Probate / trust"];
   const step0Valid = form.firm.trim().length > 1 && form.name.trim().length > 1;
   const step1Valid = /.+@.+\..+/.test(form.email) && form.pw.length >= 1;
-  const finish = () => { store.enterAsFirm(form.firm); store.completeSave(); navigate("/firm"); };
+  const finish = () => {
+    store.enterAsFirm(form.firm);
+    store.completeSave();
+    if (store.pendingMessage != null) { store.startConvoWith(store.pendingMessage); store.queueMessage(null); navigate("/messages"); }
+    else navigate("/firm");
+  };
   return (
     <Page>
       <div style={{ maxWidth: 640, margin: "0 auto" }}>
@@ -338,7 +343,7 @@ function FirmSignup() {
           <h1 style={{ fontSize: "clamp(34px, 4.4vw, 54px)" }}>Create your firm account</h1>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 14, lineHeight: 1.6 }}>Search the directory, message reporters, and pay their invoices in one place. Free to start – you only pay when you want to search for new reporters.</p>
         </div>
-        {store.pendingSave != null && <div className="ds-note" style={{ marginTop: 20 }}><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span>A free account is required to save reporters. Create yours below – it's free, and we'll save the reporter to your firm.</span></div>}
+        {(store.pendingSave != null || store.pendingMessage != null) && <div className="ds-note" style={{ marginTop: 20 }}><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span>A free account is required to {store.pendingMessage != null ? "message" : "save"} reporters. Create yours below – it's free.</span></div>}
         <div style={{ display: "flex", alignItems: "center", gap: 6, margin: "28px 0 26px" }}>
           {steps.map((s, i) => (
             <React.Fragment key={s}>

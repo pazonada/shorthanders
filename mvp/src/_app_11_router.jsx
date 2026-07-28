@@ -95,9 +95,10 @@ function StoreProvider({ children }) {
   // profile field with cross-page display consequences; committed on Save, read by the profile.
   const [myAccepting, setMyAccepting] = useState(true);
   const [pendingSave, setPendingSave] = useState(null);   // reporter id a logged-out visitor tried to save; applied after signup
+  const [pendingMessage, setPendingMessage] = useState(null);  // reporter name a logged-out visitor tried to message; started after signup
 
   const store = {
-    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, myAccepting, setMyAccepting, pendingSave,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, myAccepting, setMyAccepting, pendingSave, pendingMessage,
     // Firm asks a reporter to invoice them (so payment happens on-platform); reporter fulfills it.
     requestInvoice: (req) => setPaymentRequests((rs) => [{ ...req, id: "REQ-" + Date.now(), status: "pending" }, ...rs]),
     fulfillRequest: (id) => setPaymentRequests((rs) => rs.map((r) => r.id === id ? { ...r, status: "fulfilled" } : r)),
@@ -112,6 +113,8 @@ function StoreProvider({ children }) {
     acceptInvite: (reporterId) => { setRole("firm"); setSaved((s) => s.includes(reporterId) ? s : [...s, reporterId]); setUnlockedReporters((u) => u.includes(reporterId) ? u : [...u, reporterId]); },
     // A logged-out visitor tapped "Save this reporter": remember which reporter, then send them to firm signup.
     queueSave: (reporterId) => setPendingSave(reporterId),
+    // A logged-out visitor tapped "Message": remember which reporter, then send them to firm signup.
+    queueMessage: (name) => setPendingMessage(name),
     // After firm signup completes: save + unlock the queued reporter, then clear the queue.
     completeSave: () => { if (pendingSave != null) { setSaved((s) => s.includes(pendingSave) ? s : [...s, pendingSave]); setUnlockedReporters((u) => u.includes(pendingSave) ? u : [...u, pendingSave]); setPendingSave(null); } },
     startConvoWith: (name) => setConvos((cs) => cs.some((c) => c.with === name) ? cs

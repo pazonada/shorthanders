@@ -3805,7 +3805,7 @@ function ReporterProfile({ reporterId, invited }) {
   const first = r.name.split(" ")[0];
   const messageReporter = () => {
     if (store.role === "firm") { store.startConvoWith(r.name); navigate("/messages"); }
-    else { store.enterAsFirm(); store.startConvoWith(r.name); navigate("/messages"); }
+    else { store.queueMessage(r.name); navigate("/firm-signup"); }
   };
   // Logged-in firm: save right here. Everyone else: remember the reporter and go create a free account.
   const saveReporter = () => {
@@ -4291,7 +4291,12 @@ function FirmSignup() {
   const PRACTICE = ["Insurance defense", "Personal injury", "Family law", "Employment", "Medical malpractice", "Civil / commercial", "Probate / trust"];
   const step0Valid = form.firm.trim().length > 1 && form.name.trim().length > 1;
   const step1Valid = /.+@.+\..+/.test(form.email) && form.pw.length >= 1;
-  const finish = () => { store.enterAsFirm(form.firm); store.completeSave(); navigate("/firm"); };
+  const finish = () => {
+    store.enterAsFirm(form.firm);
+    store.completeSave();
+    if (store.pendingMessage != null) { store.startConvoWith(store.pendingMessage); store.queueMessage(null); navigate("/messages"); }
+    else navigate("/firm");
+  };
   return (
     <Page>
       <div style={{ maxWidth: 640, margin: "0 auto" }}>
@@ -4301,7 +4306,7 @@ function FirmSignup() {
           <h1 style={{ fontSize: "clamp(34px, 4.4vw, 54px)" }}>Create your firm account</h1>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 14, lineHeight: 1.6 }}>Search the directory, message reporters, and pay their invoices in one place. Free to start – you only pay when you want to search for new reporters.</p>
         </div>
-        {store.pendingSave != null && <div className="ds-note" style={{ marginTop: 20 }}><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span>A free account is required to save reporters. Create yours below – it's free, and we'll save the reporter to your firm.</span></div>}
+        {(store.pendingSave != null || store.pendingMessage != null) && <div className="ds-note" style={{ marginTop: 20 }}><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span>A free account is required to {store.pendingMessage != null ? "message" : "save"} reporters. Create yours below – it's free.</span></div>}
         <div style={{ display: "flex", alignItems: "center", gap: 6, margin: "28px 0 26px" }}>
           {steps.map((s, i) => (
             <React.Fragment key={s}>
@@ -5496,9 +5501,10 @@ function StoreProvider({ children }) {
   // profile field with cross-page display consequences; committed on Save, read by the profile.
   const [myAccepting, setMyAccepting] = useState(true);
   const [pendingSave, setPendingSave] = useState(null);   // reporter id a logged-out visitor tried to save; applied after signup
+  const [pendingMessage, setPendingMessage] = useState(null);  // reporter name a logged-out visitor tried to message; started after signup
 
   const store = {
-    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, myAccepting, setMyAccepting, pendingSave,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, myAccepting, setMyAccepting, pendingSave, pendingMessage,
     // Firm asks a reporter to invoice them (so payment happens on-platform); reporter fulfills it.
     requestInvoice: (req) => setPaymentRequests((rs) => [{ ...req, id: "REQ-" + Date.now(), status: "pending" }, ...rs]),
     fulfillRequest: (id) => setPaymentRequests((rs) => rs.map((r) => r.id === id ? { ...r, status: "fulfilled" } : r)),
@@ -5513,6 +5519,8 @@ function StoreProvider({ children }) {
     acceptInvite: (reporterId) => { setRole("firm"); setSaved((s) => s.includes(reporterId) ? s : [...s, reporterId]); setUnlockedReporters((u) => u.includes(reporterId) ? u : [...u, reporterId]); },
     // A logged-out visitor tapped "Save this reporter": remember which reporter, then send them to firm signup.
     queueSave: (reporterId) => setPendingSave(reporterId),
+    // A logged-out visitor tapped "Message": remember which reporter, then send them to firm signup.
+    queueMessage: (name) => setPendingMessage(name),
     // After firm signup completes: save + unlock the queued reporter, then clear the queue.
     completeSave: () => { if (pendingSave != null) { setSaved((s) => s.includes(pendingSave) ? s : [...s, pendingSave]); setUnlockedReporters((u) => u.includes(pendingSave) ? u : [...u, pendingSave]); setPendingSave(null); } },
     startConvoWith: (name) => setConvos((cs) => cs.some((c) => c.with === name) ? cs

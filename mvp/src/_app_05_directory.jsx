@@ -430,7 +430,7 @@ function ReporterProfile({ reporterId, invited }) {
   const first = r.name.split(" ")[0];
   const messageReporter = () => {
     if (store.role === "firm") { store.startConvoWith(r.name); navigate("/messages"); }
-    else { store.enterAsFirm(); store.startConvoWith(r.name); navigate("/messages"); }
+    else { store.queueMessage(r.name); navigate("/firm-signup"); }
   };
   // Logged-in firm: save right here. Everyone else: remember the reporter and go create a free account.
   const saveReporter = () => {
