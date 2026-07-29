@@ -40,6 +40,12 @@ function ReporterDashboard() {
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);
   const paidThisMonth = invoices.filter((i) => i.status === "paid").reduce((s, i) => s + i.amount, 0);
   const outstanding = invoices.filter((i) => i.status === "sent" || i.status === "overdue").reduce((s, i) => s + i.amount, 0);
+  // Feel-good "money kept from an agency" ESTIMATE (see docs/roadmap.md + the never-invent-data rule).
+  // Benchmark = the real ~39% agency cut from research/agency_invoice_evidence.md - the same invoice
+  // the homepage money-comparison uses - minus the reporter's small DS fee. Always labeled an estimate;
+  // in the prototype it's computed from the demo invoices. Cheap read-time calc, no background job.
+  const AGENCY_CUT = 0.39, DS_FEE = 0.05;
+  const estSavedVsAgency = Math.round(paidThisMonth * (AGENCY_CUT - DS_FEE));
 
   const tabs = [
     { id: "overview", label: "Overview" },
@@ -65,6 +71,7 @@ function ReporterDashboard() {
         <>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 18 }}>
           <StatCard icon="dollar" label="Paid this month" value={"$" + paidThisMonth.toLocaleString(undefined, { minimumFractionDigits: 2 })} tone="sage" />
+          <StatCard icon="star" label="Kept from agencies (est.)" value={"$" + estSavedVsAgency.toLocaleString()} sub="Estimate vs. a typical 39% agency cut, after our fee." />
           <StatCard icon="clock" label="Outstanding" value={"$" + outstanding.toLocaleString(undefined, { minimumFractionDigits: 2 })} tone="ochre" />
           <StatCard icon="eye" label="Profile views (30d)" value={me.views} tone="brand" />
           <StatCard icon="message" label="Unread messages" value={unread} tone="plum" onClick={() => setTab("messages")} />
@@ -90,11 +97,11 @@ function ReporterDashboard() {
   );
 }
 
-function StatCard({ icon, label, value, onClick }) {
+function StatCard({ icon, label, value, onClick, sub }) {
   return (
     <div className="ds-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : "default", display: "flex", flexDirection: "column", gap: 12, boxShadow: "inset 3px 0 0 0 var(--ink)" }}>
       <span style={{ color: "var(--brand)", display: "flex", marginTop: -6 }}><Icon name={icon} size={20} /></span>
-      <div style={{ marginTop: 10 }}><div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>{value}</div><div style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>{label}</div></div>
+      <div style={{ marginTop: 10 }}><div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>{value}</div><div style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>{label}</div>{sub ? <div style={{ fontSize: 11.5, color: "var(--dim)", marginTop: 6, lineHeight: 1.4 }}>{sub}</div> : null}</div>
     </div>
   );
 }
