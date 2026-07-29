@@ -2,7 +2,9 @@
 
 **Status:** Draft. Updated 2026-05-24 to reflect the applicant-pool review model and to lead with a model-validation conversation before any prototype walkthrough.
 **Owner:** Aud (drafting); Rosie (recruitment, co-facilitation – most launch-cohort firms are her network).
-**Last updated:** 2026-05-24
+**Last updated:** 2026-07-28 (added the "Recommendations & match suggestions" section).
+
+> **Caveat (2026-07-28):** most of this guide still describes the older **applicant-pool / order-flow** model that was retired for the reduced-scope MVP (a searchable directory + direct messaging + invoicing – no posting jobs, no applicant pools, flat 12% is gone). Before running interviews, the prototype-walkthrough sections likely need a refresh to match the current product. The **Recommendations & match suggestions** section below IS written for the current reduced-scope model.
 
 ---
 
@@ -125,6 +127,20 @@ Walk through prototype on screen-share. Now they've validated (or pushed back on
   - Which reward in the catalog is most appealing? Which feels off?
   - Do you have firm policies that would prevent you from accepting personal rewards?
 
+### Recommendations & personalized directory (NEW – added 2026-07-28) (6-8 min)
+
+*Facilitator framing: this tests an OPTIONAL personalization layer on the current reduced-scope directory (search + contact reporters directly; no applicant pool). We're deciding (a) whether to personalize the directory at all, (b) whether to base it on the firm's stated needs or their actual behavior – reporters they've paid, saved, or messaged, and (c) standing personalization vs. help for a specific job. Aud's lean (2026-07-28): capture a few preference fields at signup, and surface a personalized band at the TOP of the directory (the firm's own reporters + similar) rather than a separate recommendations feature or push notifications. Don't pitch – surface honest reactions.*
+
+- **Personalized directory top (the main idea):** *"Imagine that when you open the directory, the top row is personalized to your firm – the reporters you've actually worked with (paid an invoice to, saved, or messaged) pinned at the top, plus a few similar ones. Useful, or would you rather just see a neutral list and search yourself?"* (Listen: do they want their history surfaced, or find it presumptuous? Do they trust "similar," or see it as filler?)
+- **Which behavioral signal matters:** *"If we surfaced reporters based on your past behavior – ones you paid, saved, or messaged – which of those best predicts who you'd want to see again?"* (Probe the strength order: a paid invoice is the strongest "I actually hired them" signal; saves and messages are weaker intent.)
+- **The homogeneity worry (key):** *"A lot of reporters look similar on paper. If we recommend reporters 'similar to' the ones you've used, would that genuinely help, or feel random? What makes one reporter a good substitute for another you like?"*
+- **Standing vs. job-level:** *"Which is more useful: a standing personalized directory (your reporters + similar, always up top), or help in the moment of a specific job – say a workers' comp deposition next Tuesday in Oakland with a Cantonese-speaking witness that needs a rush turnaround?"* (Decides standing-personalization vs. a job-context filter. Aud expects standing to be the everyday default and job-level to matter most for the hard, constrained cases.)
+- **What differentiates reporters for you:** *"When several reporters could do a job, what makes you pick one – location, availability for your date, a specific skill like realtime or a language, rush capability, prior relationship?"*
+- **Field priority:** *"Rank these for choosing a reporter: location, proceeding type, services (realtime / transcription / rush), area of law, language."* (Aud's hypothesis: location + proceedings + services matter most in general; language is low in general but decisive for specific jobs.)
+- **Labeling / transparency:** *"If we put reporters at the top, would you want us to say WHY – e.g. 'Suggested for your firm,' or a tag on each like 'worked with you 3 times' or 'near you, does depositions'? Does a reason make it feel more useful, or would an unlabeled 'Featured' row feel like an ad?"* (Aud's lean: always label the reason – it separates behavioral personalization from paid promotion and defuses the "why am I seeing this?" reaction.)
+- **Capture at signup:** *"Would you tell us at signup what you typically need – location, proceedings, services – so a brand-new account with no history yet still gets a useful directory? Or is that busywork?"*
+- **Notifications (only if raised / time permits):** *"Would you ever want an email when a new reporter who fits joins? On by default, or strictly opt-in? Per-reporter, or an occasional digest?"* (Aud's lean: probably unnecessary if the directory is already personalized; if built, default OFF, opt-in, digest. Listen for spam sensitivity.)
+
 ### Hypothetical decisions (5-7 min)
 
 - If you needed a transcript tomorrow, would you try Dewey Sholes? What would make you not try it?
@@ -167,6 +183,11 @@ Same length (45 min), same comp ($25 Starbucks).
 | Is the cost-splitting feature a real win? | Yes – Rosie has flagged it as a key differentiator. | Whether to keep cost-splitting in MVP critical path. |
 | Does the assistant incentive program actually motivate? | Mixed – some firms have policies against personal rewards. | Whether to keep it launch-window-only or kill it. |
 | What's the trust-killer for the firm? | File security + transcript authenticity. | Where to invest in design/security messaging. |
+| Do firms want a personalized directory top (their reporters + similar), or a neutral list they search themselves? | Yes to "my reporters up top" (own history is unarguably useful); "similar" is softer / needs proof. | Whether to personalize directory ordering for logged-in firms, and how far. |
+| Which behavioral signal best predicts wanted reporters – paid invoice, save, or message? | Paid invoice strongest ("I hired them"); saves next; messages weakest. | How to weight signals in personalized ordering. |
+| Standing personalization vs. job-level match help? | Standing = everyday default; job-level = the hard, high-value cases (language / rush / WC). | Whether to add a job-context filter on top of a personalized directory. |
+| Which reporter fields carry real matching signal? | Location + proceedings + services generally; language decisive per-job. | Which fields to weight / capture at signup. |
+| Do firms want "new matching reporter" notifications? | Likely unnecessary with a personalized directory; if built, opt-in / default-off / digest. | Whether to build notifications at all, and the default. |
 
 ---
 
