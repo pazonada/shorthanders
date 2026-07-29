@@ -57,3 +57,23 @@ Result: **5,705 active CSRs.**
 Status: Cancelled 7,308 · Active 5,865 · Delinquent 820 · Deceased 403 · Revoked 86 ·
 Active (Pending Renewal) 23 · disciplinary <15.
 Type: CSR 14,247 · Court Reporter Firm 272.
+
+## Our count (5,705) vs. published figures — how to defend it
+
+A June 2025 CalMatters article ("California court reporter shortage") states **"Around 4,600 court
+reporters are licensed in California … down from 7,500 in 2010,"** attributed to **"the last
+available statistic from the judicial branch."** That's ~1,100 lower than our **5,705**. We are not
+wrong — the two numbers come from different sources:
+
+- **Ours (5,705)** is a **live pull from the Court Reporters Board (CRB)** — the agency that actually
+  *issues and tracks* the licenses — filtered to currently Active (+ Active-Pending-Renewal) CSR
+  licenses. It's current and reproducible from the raw roster.
+- **CalMatters' 4,600** is a **secondhand, undated figure from the judicial branch** ("last available
+  statistic") — i.e., the freshest number the *courts* had on hand, which is typically a few years
+  stale, and may be scoped differently (the exact methodology/date isn't given).
+
+The CRB is the authoritative source for who holds a license, so **stand behind 5,705 ("over 5,700
+licensed CA reporters")**. If we ever cite the shortage, attribute the 4,600 to CalMatters / the
+judicial branch and note it's their (older) figure — never downgrade our own directory count to it.
+Unexplained residual: the exact reason for the gap (recency vs. a scope nuance like voice writers or
+pending-renewals) isn't knowable without the judicial branch's methodology; don't assert one.
