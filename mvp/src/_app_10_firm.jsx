@@ -6,6 +6,14 @@ function FirmDashboard() {
   const all = useMemo(() => buildDirectory(), []);
   const saved = all.filter((r) => store.saved.includes(r.id));
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);
+  // Firm-side "agency markup avoided" ESTIMATE (mirror of the reporter savings card; see
+  // docs/roadmap.md + never-invent-data rule). Markup = what an agency adds ON TOP of the reporter's
+  // rate: from the real CA invoice (research/agency_invoice_evidence.md, the same one the homepage
+  // uses) the agency added ~$907 on a ~$1,404 direct rate = AGENCY_CUT/(1-AGENCY_CUT) of direct spend.
+  // Prototype basis = the demo's paid invoices (no real firm-payment data yet); always labeled est.
+  const firmPaid = store.invoices.filter((i) => i.status === "paid").reduce((s, i) => s + i.amount, 0);
+  const AGENCY_CUT = 0.39;
+  const firmMarkupAvoided = Math.round(firmPaid * (AGENCY_CUT / (1 - AGENCY_CUT)));
   const tabs = [
     { id: "saved", label: "Saved reporters", badge: saved.length || null },
     { id: "messages", label: "Messages", badge: unread || null },
@@ -14,7 +22,14 @@ function FirmDashboard() {
   return (
     <DashLayout title={store.firmName} subtitle="Firm account · Legal Operations" tabs={tabs} active={tab} onTab={setTab}>
       {tab === "saved" && (
-        saved.length ? (
+        <>
+        <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Sample data</strong> – the payment figure below is an illustrative placeholder for the prototype.</span></div>
+        {firmPaid > 0 && (
+          <div style={{ maxWidth: 300, marginBottom: 22 }}>
+            <StatCard icon="star" label="Saved" value={"~$" + firmMarkupAvoided.toLocaleString()} sub="Estimated agency markup avoided" />
+          </div>
+        )}
+        {saved.length ? (
           <>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, flexWrap: "wrap", gap: 10 }}>
               <span style={{ color: "var(--muted)", fontSize: 14 }}>{saved.length} saved {saved.length === 1 ? "reporter" : "reporters"}</span>
@@ -32,7 +47,8 @@ function FirmDashboard() {
             <p style={{ color: "var(--muted)", marginTop: 8, maxWidth: 420, margin: "8px auto 0" }}>Browse the directory and tap “Save reporter” on anyone you might want to work with. They'll show up here for your whole team.</p>
             <button className="btn btn-primary" style={{ marginTop: 22 }} onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Browse the directory</button>
           </div>
-        )
+        )}
+        </>
       )}
       {tab === "messages" && <MessagesPanel embedded />}
       {tab === "subscription" && <FirmSubscription />}

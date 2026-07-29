@@ -71,7 +71,7 @@ function ReporterDashboard() {
         <>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 18 }}>
           <StatCard icon="dollar" label="Paid this month" value={"$" + paidThisMonth.toLocaleString(undefined, { minimumFractionDigits: 2 })} tone="sage" />
-          <StatCard icon="star" label="Kept from agencies (est.)" value={"$" + estSavedVsAgency.toLocaleString()} sub="Estimate vs. a typical 39% agency cut, after our fee." />
+          <StatCard icon="star" label="Saved" value={"~$" + estSavedVsAgency.toLocaleString()} sub="Estimated savings compared to working with an agency" />
           <StatCard icon="clock" label="Outstanding" value={"$" + outstanding.toLocaleString(undefined, { minimumFractionDigits: 2 })} tone="ochre" />
           <StatCard icon="eye" label="Profile views (30d)" value={me.views} tone="brand" />
           <StatCard icon="message" label="Unread messages" value={unread} tone="plum" onClick={() => setTab("messages")} />
