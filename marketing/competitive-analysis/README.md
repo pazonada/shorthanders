@@ -1,7 +1,7 @@
 # Competitive analysis
 
 **Owner:** marketing-strategist agent
-**Last updated:** 2026-05-14
+**Last updated:** 2026-07-29
 **Purpose:** Track how the competitive landscape around Dewey Sholes evolves so positioning, tagline, channel, and pricing decisions are grounded in current reality rather than assumptions.
 
 ---
@@ -61,3 +61,9 @@ Sites or products that surfaced during research but don't yet warrant a full ent
 - **DepoDash** – remote deposition infrastructure; deposition-only scope, no court-hearing angle. Monitor if they add hearing-transcript functionality.
 - **DepoDirect** – remote deposition platform targeting "virtual depositions" without reporters; AI-only model. Outside V1 scope but watch for expansion into transcript delivery.
 - **Planet Depos / Veritext / Esquire** – large incumbent agencies with online booking portals. Not a tech marketplace; their model is what DS disrupts. Monitor for any self-serve marketplace moves.
+- **MyTexasCSR** (mytexascsr.com) – a Texas job board for court reporting assignments, run jointly
+  by the two Texas trade associations (TCRA + TEXDRA). Surfaced 2026-07-29 while researching
+  partner orgs for the Texas expansion (see `mytexascsr.md` stub). Looks like a staffing job board,
+  not a directory + messaging + payments product like DS – but it has built-in distribution to
+  every Texas freelance reporter, which DS won't have on day one there. Needs a real profile before
+  Texas launch, not just this stub.

@@ -124,6 +124,12 @@ so these are out:
 - **[pro_pricing_worksheet.md](pro_pricing_worksheet.md)** – the real CA invoice/rate
   data we've captured, the fee stack, and the pay-per-invoice → Pro crossover model you
   can plug real volume into.
+- **[positioning_and_partners.md](positioning_and_partners.md)** – the movement/mission narrative
+  (empower reporters, cut litigant middleman cost, help human reporting stay affordable against
+  electronic recording), a ranked tagline/CTA shortlist, how the "money saved vs. an agency"
+  dashboard metric reinforces the story, and researched partner/cross-promotion targets –
+  including whether there's a court reporters' union (yes for official/court-employed reporters,
+  county by county; no for freelance reporters, who have trade associations instead).
 
 ## Reusable v1 assets (kept where they are)
 
