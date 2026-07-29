@@ -29,6 +29,38 @@ See [`agency_invoice_evidence.md`](../../research/agency_invoice_evidence.md) fo
 30–50% range (or the specific 39% figure from the arbitration invoice) – never the retired 11%/12%
 figures, which described an abandoned pricing model.
 
+### Grounding evidence – the CA court reporter shortage (Rosie shared, 2026-07-29)
+
+Source: CalMatters, "California has a court reporter shortage…", June 2025
+(calmatters.org/politics/2025/06/california-court-reporter-shortage/). Real, current, cited numbers
+that sharpen the whole narrative:
+- **Scale:** ~4,600 licensed reporters, **down from 7,500 in 2010**; ~half were retirement-eligible
+  in 2023. LA County alone had 106 vacancies; statewide need ~428 full-time reporters. **1.7M+**
+  family-law/restraining-order/probate/civil proceedings since 2023 have **no written record**; more
+  than half of family-law and probate cases have no reporter present.
+- **Pay:** median official pay **$200k+** with benefits; private contractors **$3,000+/day**; LA
+  Superior offers a **$50k signing bonus + $25k referral**. Courts spent **$23.7M** on transcripts
+  last fiscal year (reporters keep that).
+- **The recording fight is live and legislative:** AB 882 proposes a temporary 3-year electronic-
+  recording authorization for civil cases; **court-reporter unions (SEIU) blocked broader recording
+  in 2023**, arguing humans give 100% accurate, clarifiable transcripts.
+
+**How this shapes DS (and one honesty caution):**
+1. **The shortage is a demand tailwind.** Firms genuinely can't find reporters. A searchable
+   directory of who's licensed and available is a real answer to that – lead with "find a reporter,"
+   not only "save money."
+2. **The job-loss fear is current, not abstract** – AB 882 is the "recorded hearings" threat Rosie
+   named. Reinforces DS's honest counter: cutting the agency markup keeps a human reporter
+   price-competitive with recording. Frame as "helps," never "saves your job."
+3. **HONESTY CAUTION:** reporters are scarce and well-paid ($200k+/$3k+ per day) – so do NOT lean on
+   "reporters are underpaid/exploited." That's not the story. DS's honest angles are the agency
+   **markup on freelance/depo work**, **findability**, and **keeping human reporting viable vs.
+   recording** – not reporter poverty. (The shortage is partly *because* private work pays more,
+   pulling reporters out of court jobs – which is the "pushed into freelance" dynamic.)
+4. Confirms the alliance map: **unions (SEIU) are fighting recording** (potential allies), while
+   **legal-aid/access-to-justice groups back recording** as the shortage fix (the conflict flagged
+   in 4F – use their stats, don't co-brand).
+
 ### Why this matters – reporters
 
 Court reporting in California has been squeezed from two directions at once: state budget cuts
