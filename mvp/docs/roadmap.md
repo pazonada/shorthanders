@@ -141,6 +141,30 @@ skippable, one screen. Firm rates reporter only (a reporter-rates-firm direction
 - Testimonials are user-generated content we host, not author – standard platform posture; confirm
   wording in the terms-of-service review.
 
+## "Money saved vs. an agency" – stickiness metric (Jay/Rosie, 2026-07-29)
+
+A dashboard number for BOTH sides showing money kept out of a middleman's hands by using DS. Jay's
+"make it sticky" advice; the tangible proof behind Rosie's "movement" framing (below / in marketing).
+
+- **Reporter view:** "cut you kept" ≈ your DS-collected billings × a typical agency cut, minus the
+  small DS fee. Only counts for work they'd otherwise route through an agency (many already work
+  direct – don't imply otherwise).
+- **Firm view:** "agency markup avoided" ≈ what you paid reporters through DS × a typical agency
+  markup (what an agency would have added on top).
+- **HARD RULES ([[feedback_never_invent_data]]):**
+  - It is an **ESTIMATE, labeled as such** with the basis shown inline ("est. vs. a typical ~39%
+    agency markup, from a real CA invoice" – see `research/agency_invoice_evidence.md`). Never an
+    exact claim.
+  - Benchmark = the **real 39%** (or the 30–50% range), NOT the retired "11%" in that evidence doc.
+  - Use the **current** pricing model (reporter 2–5%, firm subscription), not old fee schemes.
+  - The two views are the SAME agency margin seen from two sides – **don't double-count** or imply DS
+    "creates" 2× savings company-wide.
+  - Needs real transactions; in the prototype it's illustrative/demo data, clearly flagged.
+- Fits as a StatCard on the reporter Overview + firm dashboard. Could roll up to a lifetime total for
+  the feel-good hook ("you've kept $X from agencies").
+- **Consistency:** the homepage `MoneyComparison` already uses this same real invoice – so the
+  dashboard metric extends that identical proof into the app (one story, landing page → daily use).
+
 ## Parking lot (mentioned, not yet scoped)
 - **Featured / promoted listings** – Rosie's earlier idea; a discovery surface, decided post-launch.
 - **Enterprise account options** (SSO, multi-seat/admin roles, custom contracts, SLAs) –
