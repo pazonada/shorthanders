@@ -49,6 +49,31 @@ confirm it** – the site currently shows working numbers, not decisions.
 This is the big one, and it's real engineering. Everything here is spelled out in
 `integration_checklist.md`.
 
+> **NOTE TO SELF (Claude) – "ENGINEER" below = me + Aud; there is no separate engineer.** When I wire
+> this backend, two standing obligations, both on me:
+>
+> **1. Re-enable the backend deploy.** `mvp/api/` and `mvp/package.json` are currently in
+> `mvp/.vercelignore` (excluded 2026-07-28 to keep deploys static-only and cheap). Before the
+> Stripe/Supabase functions can work live, **remove those two lines from `.vercelignore`** so the
+> functions deploy again. The claim flow already calls `api/connect/create-account` and falls back to
+> a demo stub on a 404 – that stub comes out once the real function is live.
+>
+> **2. Don't run up Aud's bill – cost is a HARD constraint (Aud is funding this personally).** Build
+> cost-efficiently and keep watching spend *myself*; don't offload monitoring to Aud. Concretely:
+> - **Set a Vercel spend limit / usage alert FIRST** (Vercel → Settings → Billing → Spend Management)
+>   as a hard backstop, *before* enabling functions, so nothing can balloon silently.
+> - **Keep functions lean** – minimal deps, fast cold starts; don't bundle Stripe/Supabase into
+>   functions that don't need them. Push heavy work into Postgres/Supabase, not per-invocation compute.
+> - **Notifications from a DB trigger, not polling** (already the plan – `open_strategic_decisions.md`
+>   §4). No always-on processes; no cron unless genuinely required.
+> - **Static-first** – keep the frontend static + CDN-cached; only hit a function when unavoidable.
+> - **Cache build deps** so builds don't reinstall every push; **batch deploys** (fewer pushes).
+> - **Re-check the Vercel usage chart each session** while integrations are live; if it climbs, dig in
+>   before it compounds.
+> - **Right-size the host** – the frontend is pure static, so if Vercel Pro + functions gets pricey,
+>   move the frontend to a free static host (Cloudflare Pages / Netlify) + Supabase for the backend.
+>   Cheapest architecture that works wins.
+
 - [ ] **Accounts and login** – so people can sign up and their account still exists tomorrow.
       (Supabase.) **ENGINEER**
 - [ ] **A real database** – so profiles, messages, and invoices are stored instead of vanishing
