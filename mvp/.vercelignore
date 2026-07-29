@@ -1,6 +1,15 @@
 # Vercel serves the mvp/ root. Without this, internal working files are publicly downloadable
 # (e.g. /data/email_campaign.csv exposed ~5,700 reporters' raw emails + street addresses).
-# Keep only what the deployed site actually needs: index.html, csr_profiles.js, graphics/, api/.
+# Keep only what the deployed site actually needs: index.html, csr_profiles.js, graphics/.
+
+# Backend scaffolding — NOT deployed (cost control). The api/ Stripe+Supabase functions +
+# package.json trigger an npm install + serverless-function build on EVERY deploy, which was
+# burning most of the build CPU minutes. The prototype doesn't need them: the only caller
+# (claim -> api/connect/create-account) degrades to a demo fallback if the function 404s, and the
+# functions can't work without real keys anyway. RE-INCLUDE these when actually wiring the backend
+# (see docs/integration_checklist.md). Excluding them makes each deploy a static-file upload.
+api/
+package.json
 
 # Reporter PII + working data (raw emails, addresses, campaign lists). NEVER deploy.
 data/

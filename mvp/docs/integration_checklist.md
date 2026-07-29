@@ -157,10 +157,17 @@ exposed **~5,700 reporters' raw emails and street addresses** in one request –
 list, worse than crawling. `docs/` and `marketing/` (internal strategy) were public too.
 
 **Fixed by:** `mvp/.vercelignore` (excludes `data/ docs/ marketing/ src/ scripts/ supabase/` + loose
-internal files – only `index.html`, `csr_profiles.js`, `graphics/`, `api/` ship); `data/*.csv`
+internal files – only `index.html`, `csr_profiles.js`, `graphics/` ship); `data/*.csv`
 gitignored + `git rm`'d; `csr_profiles.js` now ships **masked** emails only (`m***@domain`, via
 `data/generate_profiles.py`); the "Public email" row was removed from the UI (contact only via
 "Invite this reporter"); `robots.txt` disallows the sensitive paths.
+
+**Build-cost note (2026-07-28):** `api/` **and `package.json` are also `.vercelignore`d** — not for
+privacy but for **cost**. Deploying them made Vercel run `npm install` (Stripe + Supabase SDKs) and
+bundle 6 serverless functions on *every* push, burning most of the build CPU minutes. The prototype
+doesn't need them live (the one caller, `api/connect/create-account`, degrades to a demo fallback).
+**When you wire the real backend, REMOVE `api/` and `package.json` from `.vercelignore`** so the
+functions deploy again.
 
 **Still owed / keep honest:**
 - [ ] **Real emails server-side only.** When the backend lands, the reporter's real address lives in
