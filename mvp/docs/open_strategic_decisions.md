@@ -172,6 +172,21 @@ deposition officer.
 **Shareable brief for the lawyer (and Rosie):** `mvp/docs/legal_question_deposition_neutrality.md`
 – plain-English explanation + the exact question(s) to ask.
 
+**Update 2026-07-29 – Rosie's read (no written opinion needed):** Rosie says we do **not**
+need a formal legal opinion on whether DS can be a **pass-through / referral** for depo jobs.
+Her reasoning: the concern about a non-reporter routing depo work rests on an **archaic law
+that doesn't apply to our situation** (directory + payment rail, DS is not the hiring party).
+She's confident, so we're **not commissioning an opinion** on the broker/pass-through angle.
+Two things to keep straight so this green-light doesn't get over-read:
+- Her read covers the **broker/pass-through** question. The narrower concern this section was
+  actually raising – deposition-reporter **neutrality / financial-disclosure** rules – is a
+  CSR-regulatory question she flagged herself as outside her family-law expertise. Confirm
+  with her whether "doesn't apply" also covers that, or only the broker angle, before we
+  actively facilitate depo *payments*.
+- Separate issue, not covered here: **money custody** (money-transmitter/escrow) only arises
+  if DS ever *holds* funds. Using Stripe Connect (platform never holds the money) keeps us
+  clear; don't let this note be remembered as a green-light on holding money.
+
 ---
 
 ## 4. Messaging & notifications – DECIDED (async threads) + engineering guidance
