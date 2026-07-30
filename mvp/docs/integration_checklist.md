@@ -29,7 +29,8 @@ Nothing is really authenticated today; the UI just flips `store.role` and picks 
   and make the dashboard editor a real editable form (reuse the same fields/constants) so a
   reporter can update their profile after claiming.
 - [ ] **Firm signup** (`FirmSignup`, `_app_06_claim.jsx`) – real account creation; persist the
-  firm profile it collects (name, your name, role, location, size, practice areas).
+  firm profile it collects (name, your name, role, location, size, practice areas, and the
+  optional firm-wide-plan interest answer – see §8).
 - [ ] **Sessions + role** – replace `store.role` / `enterAsReporter` / `enterAsFirm` / `logout`
   with real session state. `store.firmName` is currently in-memory only (set from signup).
 - [ ] Password reset, email verification, "remember me".
@@ -73,7 +74,8 @@ Two serverless stubs already exist and fall back to demo behavior:
   online, not by check" value prop).
 - [ ] **Subscriptions** – Stripe Checkout/Billing for the **firm Pro** tier (discovery) and the
   **reporter Pro** flat monthly. Drive `store.firmPlan` / reporter Pro from subscription status.
-  - Firm plans: **$39/month** or **$429/year (1 month free)**. Reporter Pro: **$29/month**.
+  - Firm plans: **$49/month per user** or **$539/year (1 month free)**; **firm-wide plans TBD**
+    (demand-gauged at signup – see §8). Reporter Pro: **$29/month**.
 - [ ] **Coupon stacking policy (DECIDED 2026-07-28):** founding-firm codes are **capped and
   private** (see founding-cohort policy), so **let them stack with the annual discount** – it's
   simpler to build, cleaner UX, and rewards exactly the early annual commitment we want, with
@@ -180,3 +182,28 @@ functions deploy again.
   a raw email (`@` with a multi-char local part) or if any `data/*.csv` / `docs/` / `marketing/`
   file would be served. Add before the first public launch.
 - [ ] After each deploy, spot-check that `/data/…`, `/docs/…`, `/marketing/…` return 404.
+
+## 8. Product analytics & usage events (foundation for recommendations)
+
+Nothing is instrumented today. Capturing behavior is the prerequisite for the **personalized
+reporter recommendations** now sold as a paid firm feature, and for building usage personas.
+Do it early (per Jay Hariani's "instrument usage data now").
+
+- [ ] **Events table in Supabase** – log key actions as `{user_id, role, event, target, ts}`:
+  directory search, profile view (claimed vs public), invite sent/accepted, save, message sent,
+  invoice created/paid, plan upgrade. This raw log feeds recommendations + persona analysis.
+  Supabase **stores** it but does not build personas for you – that's analysis on top.
+- [ ] **Recommendations** – derive "suggested for your firm" from this behavior (paid > saved >
+  messaged), labeled with the reason. See the directory-personalization direction
+  (`project_directory_personalization` in memory): validate with lawyers first; shelved for build.
+- [ ] **Product analytics tool (optional)** – PostHog's free tier fits behavior/funnels/cohorts far
+  better than a CRM; use it or query Supabase directly. A CRM (HubSpot) is **not** this – it's for
+  leads/outbound, a separate and later need. Don't stack tools early (each is a recurring bill).
+- [ ] **Firm-wide-plan demand signal** – `FirmSignup` now collects `form.teamInterest` (the optional
+  "would a firm-wide plan interest you?" question), but `finish()` discards it. Persist it so we can
+  gauge demand for the future firm-wide tier before building it.
+- [ ] **Marketing / CRM (later, only if needed)** – if HubSpot is adopted, integrate only what should
+  be automated (push signups/contacts via its API or tracking script); a hand-managed list needs no
+  site integration. Add selectively when campaign volume justifies it.
+- [ ] **Privacy** – behavior tracking must be disclosed in the privacy policy, and **CCPA** applies
+  (California users). Don't instrument silently.
