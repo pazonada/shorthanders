@@ -386,7 +386,7 @@ function RepRow({ r }) {
         ) : <span style={{ color: "var(--dim)" }}>Public license record · unclaimed</span>}
       </div>
       <div className="dir-rate" style={{ fontSize: 13, color: r.claimed ? "var(--ink-soft)" : "var(--dim)", textAlign: "right" }}>
-        {r.claimed ? (r.rate || "Rate on request") : "–"}
+        {r.claimed ? "Rate on request" : "–"}
       </div>
       <div className="dir-save" style={{ display: "flex", justifyContent: "flex-end" }}><SaveHeart r={r} size={18} /></div>
       <div className="dir-chevron" style={{ color: "var(--dim)", display: "flex", justifyContent: "flex-end" }}><Icon name="arrow" size={16} /></div>
@@ -439,7 +439,7 @@ function GatedProfile({ r }) {
         <div aria-hidden="true" style={{ filter: "blur(7px)", userSelect: "none", pointerEvents: "none", opacity: 0.5, display: "flex", flexDirection: "column", gap: 22, padding: 4 }}>
           <ProfileSection title="About"><p style={{ fontSize: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>{r.bio}</p></ProfileSection>
           <ProfileSection title="Areas of law"><TagList items={r.specialties} tone="brand" /></ProfileSection>
-          <ProfileSection title="Rates"><p style={{ fontSize: 16, color: "var(--ink-soft)" }}>{r.rate || "Provided on request"}</p></ProfileSection>
+          <ProfileSection title="Rates"><p style={{ fontSize: 16, color: "var(--ink-soft)" }}>Provided on request</p></ProfileSection>
           <ProfileSection title="Geographic coverage"><TagList items={(r.coverage || []).map((c) => c + " County")} tone="brand" /></ProfileSection>
         </div>
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, background: "linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0.78))" }}>
@@ -475,6 +475,7 @@ function ReporterProfile({ reporterId, invited }) {
   // Rates show ONLY to a paying (Pro) firm member, plus the reporter's own preview, and only if the
   // reporter opted in (r.publishRates). Never to other reporters, free firms, or logged-out visitors.
   const canSeeRate = isOwner || (store.role === "firm" && store.firmPlan === "pro");
+  const rateLines = RATE_FIELDS.filter(([k]) => r.rates && r.rates[k]).map(([k, label]) => [label, r.rates[k]]);
   const messageReporter = () => {
     if (store.role === "firm") { store.startConvoWith(r.name); navigate("/messages"); }
     else { store.queueMessage(r.name); navigate("/firm-signup"); }
@@ -535,6 +536,21 @@ function ReporterProfile({ reporterId, invited }) {
           <ProfileSection title="Geographic coverage"><ChipRow items={(r.coverage || []).map((c) => c + " County")} /></ProfileSection>
           <ProfileSection title="Certifications"><PlainRow items={r.certifications} /></ProfileSection>
           {(r.otherStates || []).length > 0 && <ProfileSection title="Also certified in"><ChipRow items={r.otherStates} /></ProfileSection>}
+          <ProfileSection title="Rates">
+            {(r.publishRates && canSeeRate && rateLines.length) ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, maxWidth: 480 }}>
+                {rateLines.map(([label, val]) => (
+                  <div key={label} style={{ display: "flex", justifyContent: "space-between", gap: 16, borderBottom: "1px solid var(--rule)", paddingBottom: 8, fontSize: 15 }}>
+                    <span style={{ color: "var(--ink-soft)" }}>{label}</span>
+                    <span style={{ color: "var(--ink)", fontWeight: 600, whiteSpace: "nowrap" }}>{val}</span>
+                  </div>
+                ))}
+                {isOwner && <p style={{ fontSize: 12.5, color: "var(--dim)", marginTop: 4 }}>Only paying law firms see your rates – never other reporters or the public.</p>}
+              </div>
+            ) : (
+              <p style={{ fontSize: 16, color: "var(--ink-soft)" }}>Provided on request. Message this reporter to ask.</p>
+            )}
+          </ProfileSection>
           {/* Testimonials pulled 2026-07-21: unverified reporter-supplied quotes are a
               credibility risk, and ratings/reviews were already out of the reduced scope.
               Real ratings come later, captured after payment. See docs/reviews_and_ratings.md. */}
@@ -543,8 +559,6 @@ function ReporterProfile({ reporterId, invited }) {
         {/* sidebar */}
         <aside style={{ position: "sticky", top: 86, display: "flex", flexDirection: "column", gap: 16 }}>
           <div className="ds-card">
-            {(r.rate && r.publishRates && canSeeRate) ? <div style={{ marginBottom: 16 }}><div style={{ fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".04em" }}>Rates</div><div style={{ fontSize: 17, color: "var(--ink)", fontWeight: 600, marginTop: 4 }}>{r.rate}</div>{isOwner && <div style={{ fontSize: 11.5, color: "var(--dim)", marginTop: 4, lineHeight: 1.4 }}>Only paying law firms see your rates – never other reporters.</div>}</div>
-              : <div style={{ marginBottom: 16, fontSize: 14, color: "var(--muted)" }}>Rates provided on request.</div>}
             {invited ? (
               <>
                 <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={saveReporter}><Icon name="heart" size={16} /> Save this reporter</button>

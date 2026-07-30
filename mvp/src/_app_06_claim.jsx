@@ -152,7 +152,7 @@ function ClaimFlow({ reporterId }) {
   const r = all.find((x) => x.id === reporterId);
   const [step, setStep] = useState(0);
   const [stripeState, setStripeState] = useState("idle"); // idle | connecting | done
-  const [form, setForm] = useState({ bio: "", yearsExp: "", rate: "", publishRates: false, rush: false, notary: false, proceedings: [], services: [], specialties: [], certifications: [], languages: [], coverage: "" });
+  const [form, setForm] = useState({ bio: "", yearsExp: "", rates: {}, publishRates: false, rush: false, notary: false, proceedings: [], services: [], specialties: [], certifications: [], languages: [], coverage: "" });
 
   if (!r) return (
     <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60, maxWidth: 520, margin: "0 auto" }}>
@@ -271,11 +271,17 @@ function ClaimFlow({ reporterId }) {
               <h1 style={{ fontSize: 30 }}>Build your profile</h1>
               <p style={{ color: "var(--muted)", fontSize: 14 }}>Everything here is optional, but a complete profile ranks higher and earns firms' trust. You can finish it later.</p>
               <div><label className="ds-label">Short bio</label><textarea className="ds-input" rows={3} placeholder="Tell firms who you are and what you're great at…" value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} /></div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-                <div><label className="ds-label">Years of experience</label><input className="ds-input" type="number" placeholder="e.g. 12" value={form.yearsExp} onChange={(e) => setForm({ ...form, yearsExp: e.target.value })} /></div>
-                <div><label className="ds-label">Rates (optional)</label><input className="ds-input" placeholder="e.g. From $4.50/pg" value={form.rate} onChange={(e) => setForm({ ...form, rate: e.target.value })} /></div>
+              <div style={{ maxWidth: 240 }}><label className="ds-label">Years of experience</label><input className="ds-input" type="number" placeholder="e.g. 12" value={form.yearsExp} onChange={(e) => setForm({ ...form, yearsExp: e.target.value })} /></div>
+              <div>
+                <label className="ds-label">Rates (optional)</label>
+                <p style={{ fontSize: 12.5, color: "var(--dim)", margin: "2px 0 10px", lineHeight: 1.5 }}>Fill in only what applies – blanks stay "provided on request." Firms see these only if you opt in below.</p>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12 }}>
+                  {RATE_FIELDS.map(([k, label]) => (
+                    <div key={k}><label style={{ fontSize: 12.5, color: "var(--muted)", display: "block", marginBottom: 4 }}>{label}</label><input className="ds-input" placeholder="e.g. $4.50/pg" value={form.rates[k] || ""} onChange={(e) => setForm({ ...form, rates: { ...form.rates, [k]: e.target.value } })} /></div>
+                  ))}
+                </div>
               </div>
-              {form.rate.trim() && (
+              {Object.values(form.rates).some((v) => v && v.trim()) && (
                 <label style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14, color: "var(--ink-soft)", cursor: "pointer" }}>
                   <input type="checkbox" checked={form.publishRates} onChange={(e) => setForm({ ...form, publishRates: e.target.checked })} style={{ width: 18, height: 18, marginTop: 2, flexShrink: 0 }} />
                   <span>Show my rates to paying law firms<span style={{ display: "block", fontSize: 12.5, color: "var(--dim)", marginTop: 2, lineHeight: 1.5 }}>Only paying firm members see your rates – never other reporters or the public. Leave this off and firms message you for a quote.</span></span>

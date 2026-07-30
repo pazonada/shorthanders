@@ -45,7 +45,7 @@ const CREDENTIAL_TYPES = [{ code: "CRR", label: "CRR (realtime)" }, { code: "RMR
 // (see launch_prep.md). The real 5,705 records render as unclaimed public stubs (that IS real
 // public data, which is fine).
 const SAMPLE_PROFILES = [
-  { csrNumber: "900001", name: "Marguerite Ellsworth", city: "San Jose", county: "Santa Clara", method: "Voice", sample: true, bio: "Fifteen years reporting complex civil and IP litigation across the South Bay. Realtime feeds for trial teams, same-day rough drafts, and secure delivery. I run my whole practice solo – no agency markup.", yearsExp: 15, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime", "Remote / videoconference", "Rough draft / ASCII"], specialties: ["Intellectual Property", "Patent", "Commercial Litigation"], languages: ["Spanish"], coverage: ["Santa Clara", "San Mateo", "Alameda"], certifications: ["CSR #900001", "CRR", "RPR"], otherStates: ["Nevada"], notary: true, rate: "From $4.50/pg", publishRates: true, rush: true, verified: true, claimedAt: "2026-07-11", views: 214 },
+  { csrNumber: "900001", name: "Marguerite Ellsworth", city: "San Jose", county: "Santa Clara", method: "Voice", sample: true, bio: "Fifteen years reporting complex civil and IP litigation across the South Bay. Realtime feeds for trial teams, same-day rough drafts, and secure delivery. I run my whole practice solo – no agency markup.", yearsExp: 15, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime", "Remote / videoconference", "Rough draft / ASCII"], specialties: ["Intellectual Property", "Patent", "Commercial Litigation"], languages: ["Spanish"], coverage: ["Santa Clara", "San Mateo", "Alameda"], certifications: ["CSR #900001", "CRR", "RPR"], otherStates: ["Nevada"], notary: true, publishRates: true, rates: { perDiemHalf: "$395", perDiemFull: "$695", pageOriginal: "$4.50", pageCopy: "$1.25", realtime: "$1.25/pg", rushRate: "+50%" }, rush: true, verified: true, claimedAt: "2026-07-11", views: 214 },
   { csrNumber: "900002", name: "Desmond Farrataglia", city: "Concord", county: "Contra Costa", method: "Machine (steno)", sample: true, bio: "Concord-based, 20+ years. Insurance defense and PI depositions throughout the I-680 corridor. Rush drafts available same evening.", yearsExp: 22, proceedings: ["Depositions", "Trials", "Arbitrations", "Workers' comp"], services: ["Realtime", "Remote / videoconference", "Expedited turnaround"], specialties: ["Insurance", "Personal Injury", "Construction"], languages: [], coverage: ["Contra Costa", "Alameda", "Solano"], certifications: ["CSR #900002", "CRR", "RMR"], notary: true, rate: null, rush: true, verified: true, claimedAt: "2026-06-28", views: 301 },
   { csrNumber: "900003", name: "Priyanka Venkatesh", city: "Fremont", county: "Alameda", method: "Machine (steno)", sample: true, bio: "Fremont reporter, bilingual (English/Spanish). Two decades of depositions and a growing transcription practice for court-audio overflow.", yearsExp: 19, proceedings: ["Depositions", "Hearings", "Workers' comp"], services: ["Court-audio transcription"], specialties: ["Personal Injury", "Family"], languages: ["Spanish", "Tagalog"], coverage: ["Alameda", "Santa Clara"], certifications: ["CSR #900003"], rate: null, rush: true, verified: true, claimedAt: "2026-07-02", views: 143 },
   { csrNumber: "900004", name: "Cornelius Hathaway", city: "Sunnyvale", county: "Santa Clara", method: "Machine (steno)", sample: true, bio: "Sunnyvale realtime reporter for the tech-litigation bar. Trade-secret and patent cases, tight security protocols, encrypted delivery.", yearsExp: 14, proceedings: ["Depositions", "Trials", "Arbitrations"], services: ["Realtime", "Legal video", "Rough draft / ASCII"], specialties: ["Patent", "Trade Secrets"], languages: ["Mandarin"], coverage: ["Santa Clara", "San Mateo", "Alameda"], certifications: ["CSR #900004", "CRR", "RMR"], rate: null, rush: true, verified: true, claimedAt: "2026-07-13", views: 256 },
@@ -115,7 +115,7 @@ function weeklyFeatured(pool, n) {
 // Profile completeness (0–100) for ranking + reporter dashboard meter.
 function completeness(p) {
   if (!p.claimed) return 0;
-  const checks = [p.bio, p.yearsExp, (p.proceedings || []).length, (p.services || []).length, (p.specialties || []).length, (p.coverage || []).length, (p.certifications || []).length, p.rate];
+  const checks = [p.bio, p.yearsExp, (p.proceedings || []).length, (p.services || []).length, (p.specialties || []).length, (p.coverage || []).length, (p.certifications || []).length, (p.rates && Object.values(p.rates).some(Boolean))];
   const got = checks.filter(Boolean).length;
   return Math.round((got / checks.length) * 100);
 }
@@ -123,6 +123,20 @@ function completeness(p) {
 // ─── Prototype store (mock auth + saved + messages + invoices) ──────
 const StoreContext = createContext(null);
 function useStore() { return useContext(StoreContext); }
+
+// Rate-sheet line items a reporter can publish. STRUCTURE from the CSR rate research
+// (mvp/docs/csr_profile_field_taxonomy.md §B.5/G/H – real FB rate-sheet + agency-invoice line items);
+// the VALUES are always reporter-entered, never ours. Reporters fill only what applies.
+const RATE_FIELDS = [
+  ["perDiemHalf", "Appearance – half day"],
+  ["perDiemFull", "Appearance – full day"],
+  ["pageOriginal", "Transcript – original (per page)"],
+  ["pageCopy", "Transcript – copy (per page)"],
+  ["transcription", "Court-audio transcription (per page)"],
+  ["realtime", "Realtime feed"],
+  ["rushRate", "Rush / expedited"],
+  ["rough", "Rough draft / ASCII"],
+];
 
 const SEED_INVOICES = [
   { id: "INV-1041", client: "Morgan & Reyes LLP", from: "Marguerite Ellsworth", matter: "Ramos v. Delta Freight (24CV01188)", desc: "Certified deposition transcript – 118 pp.", date: "2026-07-08", amount: 560.5, due: "2026-07-22", status: "paid", method: "ACH" },

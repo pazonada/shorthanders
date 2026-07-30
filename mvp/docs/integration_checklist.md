@@ -155,9 +155,13 @@ Two serverless stubs already exist and fall back to demo behavior:
   **only to paying (Pro) firm members** (plus the reporter's own preview); hidden from other reporters,
   free firms, and logged-out visitors, who all see "Rates provided on request" and must message to ask.
   Client gate today (`canSeeRate` in `_app_05_directory.jsx` = `isOwner || (firm && pro)`); **enforce
-  server-side too – never send a rate to an unauthorized viewer.** Onboarding collects `publishRates`
-  (`ClaimFlow`, `_app_06_claim.jsx`, shown only once a rate is entered); persist it and add the same
-  toggle to the dashboard profile editor. Keeping DS rate-neutral (opt-in, firm-only) also supports the
+  server-side too – never send a rate (or the whole `rates` object) to an unauthorized viewer.**
+  Rates are a **structured object** now (`rates`, keyed by `RATE_FIELDS` in `_app_02_data.jsx` –
+  per-diem half/full, original/copy per page, transcription, realtime, rush, rough draft; fields from
+  the CSR rate research, values reporter-entered) shown in a dedicated **profile body section**, not
+  the sidebar. Onboarding collects `rates` + `publishRates` (`ClaimFlow`, `_app_06_claim.jsx`; the
+  opt-in toggle appears once any rate is entered); persist both and add the same builder+toggle to the
+  dashboard profile editor. Keeping DS rate-neutral (opt-in, firm-only) also supports the
   reporter-independence / AB-5 §2778 argument.
 
 ## 6. Infra & housekeeping
