@@ -287,7 +287,7 @@ function PriceCard({ tone, featured, name, price, unit, blurb, features, cta, no
         {features.map((f, i) => <li key={i} style={{ display: "flex", gap: 10, fontSize: 14.5, color: "var(--ink-soft)" }}><Icon name="check" size={17} style={{ color: fg, flexShrink: 0, marginTop: 2 }} />{f}</li>)}
       </ul>
       <button className="btn btn-primary" style={{ justifyContent: "center", marginTop: "auto" }} onClick={() => navigate(cta[1])}>{cta[0]}</button>
-      <p style={{ fontSize: 12.5, color: "var(--dim)", lineHeight: 1.5, textAlign: "center" }}>{note}</p>
+      <p style={{ fontSize: 12.5, color: "var(--dim)", lineHeight: 1.5, textAlign: "center", minHeight: 60 }}>{note}</p>
     </div>
   );
 }

@@ -65,13 +65,23 @@ Two serverless stubs already exist and fall back to demo behavior:
   `api/connect/create-account`; wire the real account link + redirect back.
 - [ ] **Invoicing / getting paid** (`InvoiceDetail` in `_app_08_invoices.jsx`) – real payment
   links / hosted invoices accepting **card and ACH**. Already calls `api/pay/create-payment-link`.
+- [ ] **Gate Connect onboarding at FIRST INVOICE (decided 2026-07-30), not at claim.** Keep
+  listing/claim friction-free (no KYC just to appear in the directory); require the reporter to
+  complete Express/Connect onboarding the first time they **send** an invoice / accept payment.
+  Note the frontend send call currently does **not** pass the reporter's `connectedAccountId`, so as
+  wired the money would not route to them – pass it (plus the platform `application_fee_amount`) on
+  the real payment link/charge, and block the first send until onboarding is verified.
 - [ ] **The platform fee** – take **2% (Pro) / 5% (Free)** via Connect `application_fee_amount`
   on each payment; pick the tier from the reporter's plan. (This is the site's stated pricing –
   see the money-comparison section + `open_strategic_decisions.md`.)
 - [ ] **Default large invoices to ACH** – card fee (~2.9%) is the reporter's cost; ACH (~0.8%,
   cap $5) is far cheaper on big transcripts. Nudge/steer accordingly. (Roadmap item.)
-- [ ] **Firm payment methods** – collect card/ACH so firms can pay invoices online (the "pay
-  online, not by check" value prop).
+- [ ] **Firm-side receive & pay** – the firm dashboard now has an **Invoices tab** (`FirmInvoices`,
+  `_app_10_firm.jsx`) listing invoices addressed to the firm (`client === firmName`) with a **Pay
+  now** button; paying is **simulated** today (flips status to paid). Wire it to the reporter's real
+  Stripe hosted payment page (card/ACH) and update status from Stripe webhooks (the "pay online, not
+  by check" value prop). A "Request an invoice" button also now sits on the reporter profile (firm
+  view), in addition to Messages.
 - [ ] **Subscriptions** – Stripe Checkout/Billing for the **firm Pro** tier (discovery) and the
   **reporter Pro** flat monthly. Drive `store.firmPlan` / reporter Pro from subscription status.
   - Firm plans: **$49/month per user** or **$539/year (1 month free)**; **firm-wide plans TBD**

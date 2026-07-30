@@ -1,11 +1,13 @@
 // ═══ Firm dashboard ════════════════════════════════════════════════
 function FirmDashboard() {
   const store = useStore();
-  const [tab, setTab] = useRouteTab("/firm", ["saved", "messages", "subscription"], "saved");
+  const [tab, setTab] = useRouteTab("/firm", ["saved", "messages", "invoices", "subscription"], "saved");
   const [bulkOpen, setBulkOpen] = useState(false);
   const all = useMemo(() => buildDirectory(), []);
   const saved = all.filter((r) => store.saved.includes(r.id));
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);
+  const firmInvoices = store.invoices.filter((i) => i.client === store.firmName);
+  const toPay = firmInvoices.filter((i) => i.status === "sent" || i.status === "overdue").length;
   // Firm-side "agency markup avoided" ESTIMATE (mirror of the reporter savings card; see
   // docs/roadmap.md + never-invent-data rule). Markup = what an agency adds ON TOP of the reporter's
   // rate: from the real CA invoice (research/agency_invoice_evidence.md, the same one the homepage
@@ -17,6 +19,7 @@ function FirmDashboard() {
   const tabs = [
     { id: "saved", label: "Saved reporters", badge: saved.length || null },
     { id: "messages", label: "Messages", badge: unread || null },
+    { id: "invoices", label: "Invoices", badge: toPay || null },
     { id: "subscription", label: "Subscription" },
   ];
   return (
@@ -51,9 +54,52 @@ function FirmDashboard() {
         </>
       )}
       {tab === "messages" && <MessagesPanel embedded />}
+      {tab === "invoices" && <FirmInvoices />}
       {tab === "subscription" && <FirmSubscription />}
       {bulkOpen && <BulkMessageModal reporters={saved} onClose={() => setBulkOpen(false)} />}
     </DashLayout>
+  );
+}
+
+// A firm's received invoices - pay by card or ACH. Invoices addressed to this firm are those whose
+// client === firmName. Paying is real Stripe in production (see integration_checklist.md); simulated
+// here. This is the firm-side counterpart to the reporter's invoice list.
+function FirmInvoices() {
+  const store = useStore();
+  const mine = store.invoices.filter((i) => i.client === store.firmName);
+  const payable = mine.filter((i) => i.status === "sent" || i.status === "overdue");
+  const pay = (inv) => store.updateInvoice(inv.id, { status: "paid", method: "Card" });
+  if (!mine.length) return (
+    <div className="ds-panel" style={{ textAlign: "center", padding: 56 }}>
+      <Icon name="invoice" size={30} style={{ margin: "0 auto", color: "var(--dim)" }} />
+      <h3 style={{ fontSize: 22, marginTop: 12 }}>No invoices yet</h3>
+      <p style={{ color: "var(--muted)", marginTop: 8, maxWidth: 440, margin: "8px auto 0" }}>When a reporter sends you an invoice through Dewey Sholes, it lands here to pay by card or ACH. Ask a reporter for one from their profile or your messages.</p>
+      <button className="btn btn-primary" style={{ marginTop: 22 }} onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Find a reporter</button>
+    </div>
+  );
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Prototype</strong> – paying is simulated. In production, Pay now opens the reporter's secure Stripe page (card or ACH); no real charge is made here.</span></div>
+      {payable.length > 0 && <div style={{ color: "var(--muted)", fontSize: 14 }}>{payable.length} invoice{payable.length === 1 ? "" : "s"} to pay</div>}
+      {mine.map((i) => {
+        const paid = i.status === "paid";
+        return (
+          <div key={i.id} className="ds-card" style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+            <div style={{ flex: 1, minWidth: 220 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                <span style={{ fontWeight: 700, fontSize: 17, color: "var(--ink)" }}>${i.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+                <InvStatus status={i.status} />
+              </div>
+              <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 4 }}>{i.from ? "From " + i.from + " · " : ""}{i.matter}</div>
+              <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>{i.desc}{i.due ? " · due " + i.due : ""}</div>
+            </div>
+            {paid
+              ? <span className="pill pill-claimed"><Icon name="check" size={13} /> Paid{i.method ? " · " + i.method : ""}</span>
+              : <button className="btn btn-primary" onClick={() => pay(i)}><Icon name="dollar" size={16} /> Pay now</button>}
+          </div>
+        );
+      })}
+    </div>
   );
 }
 

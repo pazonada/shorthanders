@@ -459,6 +459,8 @@ function GatedProfile({ r }) {
 function ReporterProfile({ reporterId, invited }) {
   const store = useStore();
   const all = useMemo(() => buildDirectory(), []);
+  const [reqOpen, setReqOpen] = useState(false);
+  const [reqSent, setReqSent] = useState(false);
   const r = all.find((x) => x.id === reporterId);
   if (!r) return <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60 }}><h2>Reporter not found</h2><button className="btn btn-secondary" style={{ marginTop: 16 }} onClick={() => navigate("/directory")}>Back to directory</button></div></Page>;
 
@@ -478,6 +480,13 @@ function ReporterProfile({ reporterId, invited }) {
   const saveReporter = () => {
     if (store.role === "firm") { store.toggleSaved(r.id); }
     else { store.queueSave(r.id); navigate("/firm-signup"); }
+  };
+  // Firm asks this reporter to bill through DS so payment stays on-platform. Records the request
+  // (reporter fulfills it from their dashboard) and ensures a thread exists for follow-up.
+  const sendRequest = (req) => {
+    store.startConvoWith(r.name);
+    store.requestInvoice({ reporterName: r.name, firmName: store.firmName, matter: req.matter, desc: req.desc, amount: req.amount, at: "Just now" });
+    setReqOpen(false); setReqSent(true);
   };
   return (
     <Page>
@@ -550,7 +559,11 @@ function ReporterProfile({ reporterId, invited }) {
                 <button className="btn btn-secondary" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} onClick={saveReporter}>
                   <Icon name="heart" size={16} /> {store.role === "firm" && store.saved.includes(r.id) ? "Saved" : "Save this reporter"}
                 </button>
+                {store.role === "firm" && (reqSent
+                  ? <div className="banner banner-ok" style={{ marginTop: 10, fontSize: 12.5, padding: "10px 12px" }}><Icon name="check" size={15} style={{ flexShrink: 0 }} /><div>Invoice request sent to {first}. When they send it, pay it under <button onClick={() => navigate("/firm/invoices")} style={{ background: "none", border: "none", padding: 0, color: "var(--brand-dark)", cursor: "pointer", textDecoration: "underline", font: "inherit" }}>Invoices</button>.</div></div>
+                  : <button className="btn btn-secondary" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} onClick={() => setReqOpen(true)}><Icon name="invoice" size={16} /> Request an invoice</button>)}
                 <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>Terms are agreed directly between you and the reporter. Dewey Sholes is a communication channel only.</p>
+                {reqOpen && <RequestInvoiceModal reporterName={r.name} onSend={sendRequest} onClose={() => setReqOpen(false)} />}
               </>
             )}
           </div>
