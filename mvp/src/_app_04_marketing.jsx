@@ -182,13 +182,17 @@ function ForFirmsPage() {
       <section style={{ marginTop: 40, background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>
         <div style={{ textAlign: "center", margin: "0 0 28px" }}>
           <h2 style={{ fontSize: "clamp(26px, 3.2vw, 40px)", lineHeight: 1.1 }}>What it costs</h2>
-          <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Messaging reporters who invited you is free. A simple monthly membership unlocks searching the full directory – no booking fees, no commission on the work.</p>
+          <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Browsing the directory, inviting reporters, and paying invoices are always free. A simple monthly membership unlocks the full directory, reaching any reporter, and personalized recommendations – no booking fees, no commission on the work.</p>
         </div>
-        <div style={{ maxWidth: 460, margin: "0 auto" }}>
-          <PriceCard tone="brand" name="Firm membership" price="$39" unit="/month"
-            blurb="Search the directory and reach reporters directly – no agency in the middle."
-            features={["Message reporters who invited you, free", "Subscribe to search the full directory", "Advanced search & filters", "Saved reporters & shared team lists", "Pay invoices by card or ACH"]}
-            cta={["Explore the directory", "/directory"]} note="$39/month per firm, or $429/year (1 month free). No booking fees or commissions." />
+        <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", maxWidth: 820, margin: "0 auto" }}>
+          <PriceCard tone="brand" name="Free" price="$0" unit="/mo"
+            blurb="Work with the reporters who already know you – browse, invite, and pay, at no cost."
+            features={["Browse the directory – the public license details the state already publishes", "Look up reporters you know and invite them to connect", "Message & save the reporters you're connected to", "Pay any reporter's invoice by card or ACH"]}
+            cta={["Browse the directory", "/directory"]} note="Free forever. No card required." />
+          <PriceCard tone="brand" featured name="Firm membership" price="$49" unit="/month"
+            blurb="Search the full directory and reach any reporter – no agency in the middle."
+            features={["Everything in the free plan", "Full profiles – claimed reporters, rates, coverage & certifications", "Search, message & save any reporter, not just your connections", "Personalized reporter recommendations", "Advanced search & filters, saved & shared team lists"]}
+            cta={["Create a firm account", "/firm-signup"]} note="$49/month per user, or $539/year (1 month free). Firm-wide plans coming soon. No booking fees or commissions." />
         </div>
       </section>
       <CtaStrip title="Create a free firm account – search, message, and pay reporters in one place." button={["Create a firm account", "/firm-signup"]} />

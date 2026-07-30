@@ -119,14 +119,15 @@ function FirmSubscription() {
   // Pro  = discover and reach NEW reporters (full profiles, search filters, open messaging).
   const free = [
     "Search the directory and see each reporter's public license info",
-    "Message, pay, and save any reporter who invites you",
+    "Message and save the reporters you're connected to",
     "Pay invoices by card or ACH – no booking fees, ever",
   ];
   const pro = [
     "Full profiles for every reporter (bio, areas of law, rates, coverage, certifications)",
     "Advanced search and filters to discover new reporters",
-    "Message any reporter directly",
-    "Shared team lists and unlimited team seats",
+    "Message and save any reporter directly",
+    "Personalized reporter recommendations",
+    "Saved reporters and shared team lists",
     "Matter references + a tidy invoice and receipt history",
   ];
   return (
@@ -135,7 +136,7 @@ function FirmSubscription() {
         <div style={{ width: 48, height: 48, borderRadius: 12, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="building" size={24} /></div>
         <div style={{ flex: 1, minWidth: 220 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}><h3 style={{ fontSize: 20 }}>Firm plan</h3><span className={isPro ? "pill pill-verified" : "pill pill-tag"}>{isPro ? "Pro" : "Free"}</span></div>
-          <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>{isPro ? "You're on Pro – full profiles, search, and messaging unlocked." : "You're on the free plan. Pro is $39/month per firm, or $429/year (1 month free)."}</div>
+          <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>{isPro ? "You're on Pro – full profiles, search, and messaging unlocked." : "You're on the free plan. The membership is $49/month per user, or $539/year (1 month free). Firm-wide plans coming soon."}</div>
         </div>
         {isPro
           ? <button className="btn btn-secondary">Manage billing</button>
@@ -152,7 +153,7 @@ function FirmSubscription() {
         <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 12, borderColor: "var(--brand-pale)", background: "var(--brand-soft)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}><h3 style={{ fontSize: 18 }}>Pro</h3>{isPro ? <span className="pill pill-verified"><Icon name="check" size={13} /> Your plan</span> : <span className="pill pill-verified">Subscription</span>}</div>
           <p style={{ fontSize: 13.5, color: "var(--muted)", margin: 0 }}>Discover and reach reporters you don't know yet.</p>
-          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>$39<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}>/month · or $429/year</span></div>
+          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>$49<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}>/month per user · or $539/year</span></div>
           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10, margin: 0, padding: 0 }}>
             {pro.map((f) => <li key={f} style={{ display: "flex", gap: 10, fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.5 }}><Icon name="check" size={16} style={{ color: "var(--brand-dark)", flexShrink: 0, marginTop: 2 }} />{f}</li>)}
           </ul>

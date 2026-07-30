@@ -3299,13 +3299,17 @@ function ForFirmsPage() {
       <section style={{ marginTop: 40, background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>
         <div style={{ textAlign: "center", margin: "0 0 28px" }}>
           <h2 style={{ fontSize: "clamp(26px, 3.2vw, 40px)", lineHeight: 1.1 }}>What it costs</h2>
-          <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Messaging reporters who invited you is free. A simple monthly membership unlocks searching the full directory – no booking fees, no commission on the work.</p>
+          <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Browsing the directory, inviting reporters, and paying invoices are always free. A simple monthly membership unlocks the full directory, reaching any reporter, and personalized recommendations – no booking fees, no commission on the work.</p>
         </div>
-        <div style={{ maxWidth: 460, margin: "0 auto" }}>
-          <PriceCard tone="brand" name="Firm membership" price="$39" unit="/month"
-            blurb="Search the directory and reach reporters directly – no agency in the middle."
-            features={["Message reporters who invited you, free", "Subscribe to search the full directory", "Advanced search & filters", "Saved reporters & shared team lists", "Pay invoices by card or ACH"]}
-            cta={["Explore the directory", "/directory"]} note="$39/month per firm, or $429/year (1 month free). No booking fees or commissions." />
+        <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", maxWidth: 820, margin: "0 auto" }}>
+          <PriceCard tone="brand" name="Free" price="$0" unit="/mo"
+            blurb="Work with the reporters who already know you – browse, invite, and pay, at no cost."
+            features={["Browse the directory – the public license details the state already publishes", "Look up reporters you know and invite them to connect", "Message & save the reporters you're connected to", "Pay any reporter's invoice by card or ACH"]}
+            cta={["Browse the directory", "/directory"]} note="Free forever. No card required." />
+          <PriceCard tone="brand" featured name="Firm membership" price="$49" unit="/month"
+            blurb="Search the full directory and reach any reporter – no agency in the middle."
+            features={["Everything in the free plan", "Full profiles – claimed reporters, rates, coverage & certifications", "Search, message & save any reporter, not just your connections", "Personalized reporter recommendations", "Advanced search & filters, saved & shared team lists"]}
+            cta={["Create a firm account", "/firm-signup"]} note="$49/month per user, or $539/year (1 month free). Firm-wide plans coming soon. No booking fees or commissions." />
         </div>
       </section>
       <CtaStrip title="Create a free firm account – search, message, and pay reporters in one place." button={["Create a firm account", "/firm-signup"]} />
@@ -4395,7 +4399,7 @@ function StripeCheck({ label }) {
 function FirmSignup() {
   const store = useStore();
   const [step, setStep] = useState(0);
-  const [form, setForm] = useState({ firm: "", name: "", role: "", location: "", size: "", practices: [], email: "", pw: "" });
+  const [form, setForm] = useState({ firm: "", name: "", role: "", location: "", size: "", practices: [], teamInterest: "", email: "", pw: "" });
   const steps = ["About your firm", "Create your login"];
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
   const togglePractice = (p) => setForm((f) => ({ ...f, practices: f.practices.includes(p) ? f.practices.filter((x) => x !== p) : [...f.practices, p] }));
@@ -4444,6 +4448,12 @@ function FirmSignup() {
               <div>
                 <label className="ds-label">Areas of law (optional)</label>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{PRACTICE.map((p) => <button key={p} type="button" className={"chip-filter" + (form.practices.includes(p) ? " on" : "")} onClick={() => togglePractice(p)}>{p}</button>)}</div>
+              </div>
+              {/* teamInterest: demo-only gauge of firm-wide-plan demand; not stored on this fake submit - wire on real signup */}
+              <div>
+                <label className="ds-label">Would a firm-wide plan interest you? (optional)</label>
+                <select className="ds-input" value={form.teamInterest} onChange={set("teamInterest")}><option value="">Select…</option><option>Yes – one plan for our whole office</option><option>Maybe later</option><option>No – just me for now</option></select>
+                <p style={{ fontSize: 12.5, color: "var(--dim)", lineHeight: 1.5, marginTop: 6 }}>Membership is $49/month per user today. We're gauging interest in a single firm-wide plan.</p>
               </div>
               <div style={{ marginTop: 4 }}>
                 <button className="btn btn-primary" disabled={!step0Valid} style={{ opacity: step0Valid ? 1 : 0.4 }} onClick={() => setStep(1)}>Continue <Icon name="arrow" size={16} /></button>
@@ -5499,14 +5509,15 @@ function FirmSubscription() {
   // Pro  = discover and reach NEW reporters (full profiles, search filters, open messaging).
   const free = [
     "Search the directory and see each reporter's public license info",
-    "Message, pay, and save any reporter who invites you",
+    "Message and save the reporters you're connected to",
     "Pay invoices by card or ACH – no booking fees, ever",
   ];
   const pro = [
     "Full profiles for every reporter (bio, areas of law, rates, coverage, certifications)",
     "Advanced search and filters to discover new reporters",
-    "Message any reporter directly",
-    "Shared team lists and unlimited team seats",
+    "Message and save any reporter directly",
+    "Personalized reporter recommendations",
+    "Saved reporters and shared team lists",
     "Matter references + a tidy invoice and receipt history",
   ];
   return (
@@ -5515,7 +5526,7 @@ function FirmSubscription() {
         <div style={{ width: 48, height: 48, borderRadius: 12, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="building" size={24} /></div>
         <div style={{ flex: 1, minWidth: 220 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}><h3 style={{ fontSize: 20 }}>Firm plan</h3><span className={isPro ? "pill pill-verified" : "pill pill-tag"}>{isPro ? "Pro" : "Free"}</span></div>
-          <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>{isPro ? "You're on Pro – full profiles, search, and messaging unlocked." : "You're on the free plan. Pro is $39/month per firm, or $429/year (1 month free)."}</div>
+          <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>{isPro ? "You're on Pro – full profiles, search, and messaging unlocked." : "You're on the free plan. The membership is $49/month per user, or $539/year (1 month free). Firm-wide plans coming soon."}</div>
         </div>
         {isPro
           ? <button className="btn btn-secondary">Manage billing</button>
@@ -5532,7 +5543,7 @@ function FirmSubscription() {
         <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 12, borderColor: "var(--brand-pale)", background: "var(--brand-soft)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}><h3 style={{ fontSize: 18 }}>Pro</h3>{isPro ? <span className="pill pill-verified"><Icon name="check" size={13} /> Your plan</span> : <span className="pill pill-verified">Subscription</span>}</div>
           <p style={{ fontSize: 13.5, color: "var(--muted)", margin: 0 }}>Discover and reach reporters you don't know yet.</p>
-          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>$39<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}>/month · or $429/year</span></div>
+          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>$49<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}>/month per user · or $539/year</span></div>
           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10, margin: 0, padding: 0 }}>
             {pro.map((f) => <li key={f} style={{ display: "flex", gap: 10, fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.5 }}><Icon name="check" size={16} style={{ color: "var(--brand-dark)", flexShrink: 0, marginTop: 2 }} />{f}</li>)}
           </ul>

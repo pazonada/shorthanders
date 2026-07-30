@@ -321,7 +321,7 @@ function StripeCheck({ label }) {
 function FirmSignup() {
   const store = useStore();
   const [step, setStep] = useState(0);
-  const [form, setForm] = useState({ firm: "", name: "", role: "", location: "", size: "", practices: [], email: "", pw: "" });
+  const [form, setForm] = useState({ firm: "", name: "", role: "", location: "", size: "", practices: [], teamInterest: "", email: "", pw: "" });
   const steps = ["About your firm", "Create your login"];
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
   const togglePractice = (p) => setForm((f) => ({ ...f, practices: f.practices.includes(p) ? f.practices.filter((x) => x !== p) : [...f.practices, p] }));
@@ -370,6 +370,12 @@ function FirmSignup() {
               <div>
                 <label className="ds-label">Areas of law (optional)</label>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{PRACTICE.map((p) => <button key={p} type="button" className={"chip-filter" + (form.practices.includes(p) ? " on" : "")} onClick={() => togglePractice(p)}>{p}</button>)}</div>
+              </div>
+              {/* teamInterest: demo-only gauge of firm-wide-plan demand; not stored on this fake submit - wire on real signup */}
+              <div>
+                <label className="ds-label">Would a firm-wide plan interest you? (optional)</label>
+                <select className="ds-input" value={form.teamInterest} onChange={set("teamInterest")}><option value="">Select…</option><option>Yes – one plan for our whole office</option><option>Maybe later</option><option>No – just me for now</option></select>
+                <p style={{ fontSize: 12.5, color: "var(--dim)", lineHeight: 1.5, marginTop: 6 }}>Membership is $49/month per user today. We're gauging interest in a single firm-wide plan.</p>
               </div>
               <div style={{ marginTop: 4 }}>
                 <button className="btn btn-primary" disabled={!step0Valid} style={{ opacity: step0Valid ? 1 : 0.4 }} onClick={() => setStep(1)}>Continue <Icon name="arrow" size={16} /></button>
