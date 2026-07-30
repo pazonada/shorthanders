@@ -376,7 +376,7 @@ function FirmSignup() {
                 <div><label className="ds-label">Your role</label><select className="ds-input" value={form.role} onChange={set("role")}><option value="">Select…</option><option>Paralegal</option><option>Legal secretary</option><option>Office manager</option><option>Attorney</option><option>Other</option></select></div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-                <div><label className="ds-label">City or county</label><input className="ds-input" placeholder="e.g. San Jose, Santa Clara" value={form.location} onChange={set("location")} /></div>
+                <div><label className="ds-label">City</label><input className="ds-input" placeholder="e.g. San Jose" value={form.location} onChange={set("location")} /></div>
                 <div><label className="ds-label">Firm size</label><select className="ds-input" value={form.size} onChange={set("size")}><option value="">Select…</option><option>Solo</option><option>2–10 attorneys</option><option>11–50 attorneys</option><option>51+ attorneys</option></select></div>
               </div>
               <div>
@@ -385,7 +385,7 @@ function FirmSignup() {
               </div>
               {/* teamInterest: demo-only gauge of firm-wide-plan demand; not stored on this fake submit - wire on real signup */}
               <div style={{ background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 12, padding: "16px 18px" }}>
-                <div style={{ fontSize: 11.5, fontWeight: 700, color: "var(--brand-dark)", textTransform: "uppercase", letterSpacing: ".05em" }}>Not offered yet – gauging interest</div>
+                <div style={{ fontSize: 11.5, fontWeight: 700, color: "var(--brand-dark)", textTransform: "uppercase", letterSpacing: ".05em" }}>Give us your opinion</div>
                 <label className="ds-label" style={{ marginTop: 8 }}>If we offered a firm-wide plan in future, would you be interested? (optional)</label>
                 <p style={{ fontSize: 12.5, color: "var(--ink-soft)", lineHeight: 1.5, margin: "6px 0 10px" }}>Today, membership is $49/month per user. A firm-wide plan – one price for your whole office – doesn't exist yet; your answer just helps us decide whether to build it.</p>
                 <select className="ds-input" value={form.teamInterest} onChange={set("teamInterest")}><option value="">Select…</option><option>Yes – one plan for our whole office</option><option>Maybe later</option><option>No – just me for now</option></select>
