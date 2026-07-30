@@ -152,7 +152,7 @@ function ClaimFlow({ reporterId }) {
   const r = all.find((x) => x.id === reporterId);
   const [step, setStep] = useState(0);
   const [stripeState, setStripeState] = useState("idle"); // idle | connecting | done
-  const [form, setForm] = useState({ bio: "", yearsExp: "", rate: "", rush: false, notary: false, proceedings: [], services: [], specialties: [], certifications: [], languages: [], coverage: "" });
+  const [form, setForm] = useState({ bio: "", yearsExp: "", rate: "", publishRates: false, rush: false, notary: false, proceedings: [], services: [], specialties: [], certifications: [], languages: [], coverage: "" });
 
   if (!r) return (
     <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60, maxWidth: 520, margin: "0 auto" }}>
@@ -275,6 +275,12 @@ function ClaimFlow({ reporterId }) {
                 <div><label className="ds-label">Years of experience</label><input className="ds-input" type="number" placeholder="e.g. 12" value={form.yearsExp} onChange={(e) => setForm({ ...form, yearsExp: e.target.value })} /></div>
                 <div><label className="ds-label">Rates (optional)</label><input className="ds-input" placeholder="e.g. From $4.50/pg" value={form.rate} onChange={(e) => setForm({ ...form, rate: e.target.value })} /></div>
               </div>
+              {form.rate.trim() && (
+                <label style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14, color: "var(--ink-soft)", cursor: "pointer" }}>
+                  <input type="checkbox" checked={form.publishRates} onChange={(e) => setForm({ ...form, publishRates: e.target.checked })} style={{ width: 18, height: 18, marginTop: 2, flexShrink: 0 }} />
+                  <span>Show my rates to paying law firms<span style={{ display: "block", fontSize: 12.5, color: "var(--dim)", marginTop: 2, lineHeight: 1.5 }}>Only paying firm members see your rates – never other reporters or the public. Leave this off and firms message you for a quote.</span></span>
+                </label>
+              )}
               <div>
                 <label className="ds-label">Proceedings covered</label>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{PROCEEDING_TYPES.map((w) => <button key={w} type="button" className={"chip-filter" + (form.proceedings.includes(w) ? " on" : "")} onClick={() => toggle("proceedings", w)}>{w}</button>)}</div>

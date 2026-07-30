@@ -151,6 +151,14 @@ Two serverless stubs already exist and fall back to demo behavior:
   search + pagination (Postgres full-text / filters).
 - [ ] **Firm gate** – `firmLocked()` blurs non-connected claimed profiles for free firms. This
   is client-only today; enforce on the server (don't ship full claimed data to a free firm).
+- [ ] **Rate visibility (added 2026-07-30)** – reporter rates are **opt-in** (`publishRates`) and shown
+  **only to paying (Pro) firm members** (plus the reporter's own preview); hidden from other reporters,
+  free firms, and logged-out visitors, who all see "Rates provided on request" and must message to ask.
+  Client gate today (`canSeeRate` in `_app_05_directory.jsx` = `isOwner || (firm && pro)`); **enforce
+  server-side too – never send a rate to an unauthorized viewer.** Onboarding collects `publishRates`
+  (`ClaimFlow`, `_app_06_claim.jsx`, shown only once a rate is entered); persist it and add the same
+  toggle to the dashboard profile editor. Keeping DS rate-neutral (opt-in, firm-only) also supports the
+  reporter-independence / AB-5 §2778 argument.
 
 ## 6. Infra & housekeeping
 

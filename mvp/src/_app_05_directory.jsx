@@ -472,6 +472,9 @@ function ReporterProfile({ reporterId, invited }) {
   // Own profile reflects the saved availability from the editor; others use their stored flag.
   const notAccepting = r.id === store.myCsr ? !store.myAccepting : notAcceptingJobs(r);
   const first = r.name.split(" ")[0];
+  // Rates show ONLY to a paying (Pro) firm member, plus the reporter's own preview, and only if the
+  // reporter opted in (r.publishRates). Never to other reporters, free firms, or logged-out visitors.
+  const canSeeRate = isOwner || (store.role === "firm" && store.firmPlan === "pro");
   const messageReporter = () => {
     if (store.role === "firm") { store.startConvoWith(r.name); navigate("/messages"); }
     else { store.queueMessage(r.name); navigate("/firm-signup"); }
@@ -540,7 +543,7 @@ function ReporterProfile({ reporterId, invited }) {
         {/* sidebar */}
         <aside style={{ position: "sticky", top: 86, display: "flex", flexDirection: "column", gap: 16 }}>
           <div className="ds-card">
-            {r.rate ? <div style={{ marginBottom: 16 }}><div style={{ fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".04em" }}>Rates</div><div style={{ fontSize: 17, color: "var(--ink)", fontWeight: 600, marginTop: 4 }}>{r.rate}</div></div>
+            {(r.rate && r.publishRates && canSeeRate) ? <div style={{ marginBottom: 16 }}><div style={{ fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".04em" }}>Rates</div><div style={{ fontSize: 17, color: "var(--ink)", fontWeight: 600, marginTop: 4 }}>{r.rate}</div>{isOwner && <div style={{ fontSize: 11.5, color: "var(--dim)", marginTop: 4, lineHeight: 1.4 }}>Only paying law firms see your rates – never other reporters.</div>}</div>
               : <div style={{ marginBottom: 16, fontSize: 14, color: "var(--muted)" }}>Rates provided on request.</div>}
             {invited ? (
               <>
