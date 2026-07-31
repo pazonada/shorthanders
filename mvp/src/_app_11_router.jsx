@@ -138,9 +138,10 @@ function StoreProvider({ children }) {
   const [myAccepting, setMyAccepting] = useState(true);
   const [pendingSave, setPendingSave] = useState(null);   // reporter id a logged-out visitor tried to save; applied after signup
   const [pendingMessage, setPendingMessage] = useState(null);  // reporter name a logged-out visitor tried to message; started after signup
+  const [justJoined, setJustJoined] = useState(false);  // set on claim/signup finish so the dashboard greets first-timers with "Welcome" not "Welcome back"
 
   const store = {
-    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, pendingSave, pendingMessage,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, pendingSave, pendingMessage, justJoined,
     // A free firm searched a reporter's exact name or license number - unlock just that reporter.
     noteDirectMatch: (ids) => setDirectUnlocked((u) => { const add = ids.filter((id) => !u.includes(id)); return add.length ? [...u, ...add] : u; }),
     // Firm asks a reporter to invoice them (so payment happens on-platform); reporter fulfills it.
@@ -148,6 +149,8 @@ function StoreProvider({ children }) {
     fulfillRequest: (id) => setPaymentRequests((rs) => rs.map((r) => r.id === id ? { ...r, status: "fulfilled" } : r)),
     addTemplate: (t) => setCustomTemplates((xs) => [...xs, t]),
     enterAsReporter: () => setRole("reporter"),
+    markJustJoined: () => setJustJoined(true),
+    clearJustJoined: () => setJustJoined(false),
     enterAsFirm: (name) => { setRole("firm"); if (name && name.trim()) setFirmName(name.trim()); },
     logout: () => setRole(null),
     upgradeFirm: () => setFirmPlan("pro"),

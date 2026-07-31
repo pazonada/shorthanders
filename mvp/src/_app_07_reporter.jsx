@@ -31,6 +31,10 @@ function useRouteTab(base, tabIds, defaultTab) {
 // ═══ Reporter dashboard ════════════════════════════════════════════
 function ReporterDashboard() {
   const store = useStore();
+  // Greet a brand-new reporter with "Welcome"; returning reporters with "Nice to see you". Capture the
+  // flag once on mount so the title is stable, then clear it so later visits read as returns.
+  const [firstVisit] = useState(store.justJoined);
+  useEffect(() => { if (store.justJoined) store.clearJustJoined(); }, []);
   const [tab, setTab] = useRouteTab("/reporter", ["overview", "profile", "payments", "invoices", "messages"], "overview");
   const [inviteOpen, setInviteOpen] = useState(false);
   // Returning from real Stripe onboarding lands here – treat the reporter as signed in.
@@ -56,7 +60,7 @@ function ReporterDashboard() {
   ];
 
   return (
-    <DashLayout title={"Welcome back, " + me.name.split(" ")[0]} subtitle={"CSR #" + me.csrNumber + " · " + me.city + ", CA"} tabs={tabs} active={tab} onTab={setTab}
+    <DashLayout title={(firstVisit ? "Welcome, " : "Nice to see you, ") + me.name.split(" ")[0]} subtitle={"CSR #" + me.csrNumber + " · " + me.city + ", CA"} tabs={tabs} active={tab} onTab={setTab}
       headerRight={
         <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
           <button className="btn btn-secondary" onClick={() => setTab("profile")}>Edit profile</button>
