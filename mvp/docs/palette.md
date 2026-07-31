@@ -133,3 +133,5 @@ navigable surface is a real hash route so the browser's Back button just works:
 ## Voice
 
 Plain language, sentence case, en-dashes (–) never em-dashes (—) – same as the rest of the site.
+
+**Sentence case applies to values pulled from external data too, not just our own copy.** The CA CRB roster stores some fields in title case (e.g. county `"Out of State"`); render them in sentence case (`"Out of state"`) at display time. Never rewrite the source data – normalize in the display helper. For out-of-CA reporters we show just `Out of state` (no city, no "county" label) – their physical city (e.g. Alpine, UT) isn't a California location and reads like a CA town. See `isOutOfState()` in `src/_app_02_data.jsx`.

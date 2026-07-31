@@ -102,7 +102,7 @@ function SaveHeart({ r, size = 20 }) {
 // state) show "City, State" so a city like Springfield isn't mistaken for a CA town; otherwise the
 // normal "City, County".
 function cityLine(r) {
-  if (r.baseState && r.baseState !== "California") return r.city + ", " + r.baseState;
+  if (isOutOfState(r)) return "Out of state";
   return r.city + (r.county && r.county !== r.city ? ", " + r.county + " County" : "");
 }
 function matchesCriteria(r, s, haystacks) {
@@ -174,7 +174,7 @@ function ReporterDirectory() {
     if (ids.length) store.noteDirectMatch(ids);
   }, [searched]);
 
-  const counties = useMemo(() => Array.from(new Set(all.flatMap((r) => [r.county, ...(r.coverage || [])]).filter(Boolean))).sort(), [all]);
+  const counties = useMemo(() => Array.from(new Set(all.flatMap((r) => [r.county, ...(r.coverage || [])]).filter((c) => c && c !== "Out of State"))).sort(), [all]);
   // Other-state certifications actually present in the directory, so the filter only offers states
   // some reporter lists (like the county filter). Full US list lives in the profile editor.
   const otherStates = useMemo(() => Array.from(new Set(all.flatMap((r) => r.otherStates || []))).sort(), [all]);
@@ -377,7 +377,7 @@ function RepRow({ r }) {
       </div>
       <div style={{ minWidth: 0, display: "flex", alignItems: "center", gap: 6, fontSize: 13.5, fontWeight: 600, color: "var(--ink-soft)" }}>
         <Icon name="pin" size={14} style={{ color: "var(--brand)", flexShrink: 0 }} />
-        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.county && r.county !== r.city ? r.county + " Co." : r.city}<span style={{ fontWeight: 400, color: "var(--muted)" }}>{r.county && r.county !== r.city ? " · " + r.city : ""}</span></span>
+        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{isOutOfState(r) ? "Out of state" : <>{r.county && r.county !== r.city ? r.county + " Co." : r.city}<span style={{ fontWeight: 400, color: "var(--muted)" }}>{r.county && r.county !== r.city ? " · " + r.city : ""}</span></>}</span>
       </div>
       <div style={{ minWidth: 0, fontSize: 13 }}>
         {r.claimed ? (
@@ -651,7 +651,7 @@ function UnclaimedProfile({ r }) {
           <Avatar name={r.name} size={72} claimed={false} />
           <div>
             <h1 style={{ fontSize: 34, lineHeight: 1 }}>{r.name}</h1>
-            <div style={{ color: "var(--muted)", marginTop: 8, fontSize: 15 }}>CSR #{r.csrNumber} · {r.city}{r.county ? " · " + r.county + " County" : ""}</div>
+            <div style={{ color: "var(--muted)", marginTop: 8, fontSize: 15 }}>CSR #{r.csrNumber} · {isOutOfState(r) ? "Out of state" : r.city + (r.county ? " · " + r.county + " County" : "")}</div>
             <span className="pill pill-unclaimed" style={{ marginTop: 10 }}>Unclaimed profile</span>
           </div>
         </div>
@@ -660,7 +660,7 @@ function UnclaimedProfile({ r }) {
           <h2 style={{ fontSize: 15, fontWeight: 700, fontFamily: "'Inter', sans-serif", color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 14 }}>Public license record</h2>
           <dl style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "10px 20px", fontSize: 15 }}>
             <dt style={{ color: "var(--muted)" }}>License</dt><dd style={{ color: "var(--ink)" }}>CSR #{r.csrNumber}</dd>
-            <dt style={{ color: "var(--muted)" }}>Location</dt><dd style={{ color: "var(--ink)" }}>{cityLine(r)}, CA</dd>
+            <dt style={{ color: "var(--muted)" }}>Location</dt><dd style={{ color: "var(--ink)" }}>{cityLine(r)}{isOutOfState(r) ? "" : ", CA"}</dd>
             {r.method ? <><dt style={{ color: "var(--muted)" }}>Reporting method</dt><dd style={{ color: "var(--ink)" }}>{r.method}</dd></> : null}
             <dt style={{ color: "var(--muted)" }}>License status</dt><dd style={{ color: "var(--ink)" }}>Active · expires {r.expiration}</dd>
           </dl>

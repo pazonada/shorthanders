@@ -114,7 +114,7 @@ function ClaimMatch({ r }) {
       <Avatar name={r.name} size={48} claimed={r.claimed} />
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 20, lineHeight: 1.1 }}>{r.name}</div>
-        <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>CSR #{r.csrNumber} · {r.city}{r.county ? ", " + r.county + " County" : ""}</div>
+        <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>CSR #{r.csrNumber} · {isOutOfState(r) ? "Out of state" : r.city + (r.county ? ", " + r.county + " County" : "")}</div>
       </div>
       {r.claimed ? (
         <div style={{ textAlign: "right", display: "flex", flexDirection: "column", gap: 6, alignItems: "flex-end" }}>
@@ -191,7 +191,8 @@ function ClaimFlow({ reporterId }) {
   const r = all.find((x) => x.id === reporterId);
   const [step, setStep] = useState(0);
   const [stripeState, setStripeState] = useState("idle"); // idle | connecting | done
-  const [form, setForm] = useState({ bio: "", yearsExp: "", city: (r && r.city) || "", county: (r && r.county) || "", workMode: "", baseState: "California", coverage: (r && r.county) || "", rates: {}, publishRates: false, rush: false, notary: false, proceedings: [], services: [], specialties: [], certifications: [], languages: [], otherStates: (r && r.otherStates) || [] });
+  const rOOS = r && isOutOfState(r);
+  const [form, setForm] = useState({ bio: "", yearsExp: "", city: (r && !rOOS && r.city) || "", county: (r && !rOOS && r.county) || "", workMode: rOOS ? "remote" : "", baseState: "California", coverage: (r && !rOOS && r.county) || "", rates: {}, publishRates: false, rush: false, notary: false, proceedings: [], services: [], specialties: [], certifications: [], languages: [], otherStates: (r && r.otherStates) || [] });
 
   if (!r) return (
     <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60, maxWidth: 520, margin: "0 auto" }}>
@@ -253,7 +254,7 @@ function ClaimFlow({ reporterId }) {
                 <Avatar name={r.name} size={56} claimed={false} />
                 <div>
                   <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24 }}>{r.name}</div>
-                  <div style={{ color: "var(--muted)", fontSize: 14, marginTop: 2 }}>CSR #{r.csrNumber} · {r.city}, CA · License active</div>
+                  <div style={{ color: "var(--muted)", fontSize: 14, marginTop: 2 }}>CSR #{r.csrNumber} · {isOutOfState(r) ? "Out of state" : r.city + ", CA"} · License active</div>
                 </div>
               </div>
               <p style={{ color: "var(--ink-soft)", fontSize: 15, lineHeight: 1.6 }}>Claiming this profile lets you control how firms see you and unlocks invoicing and payments. You'll verify your identity in a moment so firms know it's really you.</p>
@@ -312,17 +313,21 @@ function ClaimFlow({ reporterId }) {
 
               <div style={{ background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 12, padding: "14px 16px" }}>
                 <div style={{ fontSize: 13, fontWeight: 700, color: "var(--brand-dark)", display: "flex", alignItems: "center", gap: 6 }}><Icon name="badge" size={15} /> From your California license record</div>
-                <p style={{ fontSize: 12.5, color: "var(--brand-dark)", margin: "4px 0 12px", lineHeight: 1.5 }}>Prefilled from the state's CSR records. Name, license, and method come from the state. Edit your city or county if you've moved.</p>
+                <p style={{ fontSize: 12.5, color: "var(--brand-dark)", margin: "4px 0 12px", lineHeight: 1.5 }}>Prefilled from the state's CSR records. Name, license, and method come from the state.{rOOS ? " Your license lists an out-of-state address, so you'll take California work remotely." : " Edit your city or county if you've moved."}</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 22px", fontSize: 14, color: "var(--ink-soft)", marginBottom: 14 }}>
                   <span><strong style={{ color: "var(--ink)", fontWeight: 600 }}>{r.name}</strong></span>
                   <span>CSR #{r.csrNumber}</span>
                   {r.method ? <span>{r.method}</span> : null}
                   <span>License active</span>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-                  <div><label className="ds-label">City</label><input className="ds-input" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></div>
-                  <div><label className="ds-label">Home county</label><input className="ds-input" value={form.county} onChange={(e) => setForm({ ...form, county: e.target.value })} /></div>
-                </div>
+                {rOOS ? (
+                  <div style={{ fontSize: 14, color: "var(--ink-soft)" }}><label className="ds-label">Location</label>Based out of state</div>
+                ) : (
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                    <div><label className="ds-label">City</label><input className="ds-input" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></div>
+                    <div><label className="ds-label">Home county</label><input className="ds-input" value={form.county} onChange={(e) => setForm({ ...form, county: e.target.value })} /></div>
+                  </div>
+                )}
               </div>
 
               <div><label className="ds-label">Short bio</label><textarea className="ds-input" rows={3} placeholder="Tell firms who you are and what you're great at" value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} /></div>

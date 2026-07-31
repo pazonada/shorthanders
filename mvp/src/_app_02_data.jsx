@@ -71,6 +71,16 @@ function buildDirectory() {
   });
 }
 
+// A reporter whose address of record is outside California. The CRB roster stores the literal
+// string "Out of State" as the county for these unclaimed records; a claimed reporter can also
+// set a non-CA base state in the claim flow. Their physical city (e.g. Alpine, UT) is not a
+// California location, so firm-facing displays show just "Out of state" - never a city that
+// reads like a CA town, and never "Out of State" sitting under a "county" label. Rendered in
+// sentence case ("Out of state") even though the raw data is title case.
+function isOutOfState(r) {
+  return r.county === "Out of State" || !!(r.baseState && r.baseState !== "California");
+}
+
 // Activity is shown only when it's good news. We never display a stale "last active 6 months
 // ago" - a reporter who set up a profile and got on with their life is using the product
 // correctly, and shaming that would make the whole directory look abandoned.

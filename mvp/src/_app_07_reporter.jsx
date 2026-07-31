@@ -60,7 +60,7 @@ function ReporterDashboard() {
   ];
 
   return (
-    <DashLayout title={(firstVisit ? "Welcome, " : "Nice to see you, ") + me.name.split(" ")[0]} subtitle={"CSR #" + me.csrNumber + " · " + me.city + ", CA"} tabs={tabs} active={tab} onTab={setTab}
+    <DashLayout title={(firstVisit ? "Welcome, " : "Nice to see you, ") + me.name.split(" ")[0]} subtitle={"CSR #" + me.csrNumber + " · " + (isOutOfState(me) ? "Out of state" : me.city + ", CA")} tabs={tabs} active={tab} onTab={setTab}
       headerRight={
         <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
           <button className="btn btn-secondary" onClick={() => setTab("profile")}>Edit profile</button>
@@ -199,7 +199,7 @@ function RateRow({ label, unit, value, onChange, extra }) {
 function ReporterProfileEditor({ me }) {
   const store = useStore();
   const [toast, setToast] = useState("");
-  const counties = useMemo(() => Array.from(new Set(buildDirectory().map((r) => r.county).filter(Boolean))).sort(), []);
+  const counties = useMemo(() => Array.from(new Set(buildDirectory().map((r) => r.county).filter((c) => c && c !== "Out of State"))).sort(), []);
   const [photo, setPhoto] = useState(me.photo || "");
   const [bio, setBio] = useState(me.bio || "");
   const [years, setYears] = useState(me.yearsExp || "");
