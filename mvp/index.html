@@ -3438,7 +3438,7 @@ function RepCard({ r }) {
         <div style={{ flex: 1, minWidth: 0 }}>
           <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)", lineHeight: 1.15, display: "block", overflowWrap: "break-word" }}>{r.name}{r.sample && <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10.5, fontWeight: 700, letterSpacing: ".04em", color: "var(--muted)", background: "var(--rule)", borderRadius: 5, padding: "2px 6px", marginLeft: 8, verticalAlign: "middle", whiteSpace: "nowrap" }}>SAMPLE</span>}</span>
           <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 3 }}>CSR #{r.csrNumber}{r.method ? " · " + r.method : ""}</div>
-          <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon name="pin" size={13} style={{ color: "var(--dim)", flexShrink: 0 }} />{r.city}{r.county && r.county !== r.city ? ", " + r.county + " County" : ""}</div>
+          <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon name="pin" size={13} style={{ color: "var(--dim)", flexShrink: 0 }} />{cityLine(r)}</div>
           {(notAcceptingJobs(r) || recentlyActive(r)) && (
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8, marginTop: 8 }}>
               {notAcceptingJobs(r) && (
@@ -3525,13 +3525,24 @@ function SaveHeart({ r, size = 20 }) {
 }
 // One reporter vs one criteria set. Shared by the applied list and the live draft count so the
 // "N results" preview and the actual results can never diverge in logic.
+// Location label for firm-facing displays. For an out-of-CA reporter (remote-only who set a base
+// state) show "City, State" so a city like Springfield isn't mistaken for a CA town; otherwise the
+// normal "City, County".
+function cityLine(r) {
+  if (r.baseState && r.baseState !== "California") return r.city + ", " + r.baseState;
+  return r.city + (r.county && r.county !== r.city ? ", " + r.county + " County" : "");
+}
 function matchesCriteria(r, s, haystacks) {
   const needle = (s.q || "").trim().toLowerCase();
   if (needle && !(haystacks.get(r.id) || "").includes(needle)) return false;
-  // A county filter is an in-person / local intent, so remote-only reporters (who don't travel) are
-  // skipped even when their home county matches. They still surface for service/remote searches and
-  // general browsing below - this only keeps them out of location-specific in-person searches.
-  if (s.county && (r.county !== s.county || r.workMode === "remote")) return false;
+  // Match on COVERAGE counties (where the reporter says they appear in person), not where they live -
+  // a Marin-based reporter who covers Sonoma should show for a Sonoma search. Reporters with no
+  // coverage yet (unclaimed CRB records) fall back to their home county, the only signal they have.
+  // Remote-only reporters are excluded either way - a county filter is an in-person intent.
+  if (s.county) {
+    const covers = (r.coverage && r.coverage.length) ? r.coverage.includes(s.county) : (r.county === s.county);
+    if (!covers || r.workMode === "remote") return false;
+  }
   if (s.state && !(r.otherStates || []).includes(s.state)) return false;
   if (s.claimedOnly && !r.claimed) return false;
   if (s.rushOnly && !r.rush) return false;
@@ -3590,7 +3601,7 @@ function ReporterDirectory() {
     if (ids.length) store.noteDirectMatch(ids);
   }, [searched]);
 
-  const counties = useMemo(() => Array.from(new Set(all.map((r) => r.county).filter(Boolean))).sort(), [all]);
+  const counties = useMemo(() => Array.from(new Set(all.flatMap((r) => [r.county, ...(r.coverage || [])]).filter(Boolean))).sort(), [all]);
   // Other-state certifications actually present in the directory, so the filter only offers states
   // some reporter lists (like the county filter). Full US list lives in the profile editor.
   const otherStates = useMemo(() => Array.from(new Set(all.flatMap((r) => r.otherStates || []))).sort(), [all]);
@@ -3852,7 +3863,7 @@ function GatedProfile({ r }) {
           </div>
           <div style={{ color: "var(--muted)", marginTop: 8, fontSize: 15, display: "flex", gap: 14, flexWrap: "wrap" }}>
             <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />CSR #{r.csrNumber}</span>
-            <span><Icon name="pin" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.city}{r.county ? ", " + r.county + " County" : ""}</span>
+            <span><Icon name="pin" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{cityLine(r)}</span>
             {r.method ? <span><Icon name="doc" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.method}</span> : null}
           </div>
         </div>
@@ -3940,12 +3951,13 @@ function ReporterProfile({ reporterId, invited }) {
               </div>
               <div style={{ color: "var(--muted)", marginTop: 8, fontSize: 15, display: "flex", gap: 14, flexWrap: "wrap" }}>
                 <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />CSR #{r.csrNumber}</span>
-                <span><Icon name="pin" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.city}{r.county ? ", " + r.county + " County" : ""}</span>
+                <span><Icon name="pin" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{cityLine(r)}</span>
               </div>
               <div style={{ color: "var(--muted)", marginTop: 6, fontSize: 15, display: "flex", gap: 14, flexWrap: "wrap" }}>
                 <span><Icon name="clock" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.yearsExp} years</span>
                 {r.method ? <span><Icon name="doc" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />{r.method}</span> : null}
                 {r.notary ? <span><Icon name="badge" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />Notary public</span> : null}
+                {r.workMode === "remote" ? <span style={{ color: "var(--brand-dark)", fontWeight: 600 }}><Icon name="message" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />Remote only</span> : r.workMode === "both" ? <span><Icon name="pin" size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />In person and remote</span> : null}
               </div>
             </div>
           </div>
@@ -4075,7 +4087,7 @@ function UnclaimedProfile({ r }) {
           <h2 style={{ fontSize: 15, fontWeight: 700, fontFamily: "'Inter', sans-serif", color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 14 }}>Public license record</h2>
           <dl style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "10px 20px", fontSize: 15 }}>
             <dt style={{ color: "var(--muted)" }}>License</dt><dd style={{ color: "var(--ink)" }}>CSR #{r.csrNumber}</dd>
-            <dt style={{ color: "var(--muted)" }}>Location</dt><dd style={{ color: "var(--ink)" }}>{r.city}{r.county ? ", " + r.county + " County" : ""}, CA</dd>
+            <dt style={{ color: "var(--muted)" }}>Location</dt><dd style={{ color: "var(--ink)" }}>{cityLine(r)}, CA</dd>
             {r.method ? <><dt style={{ color: "var(--muted)" }}>Reporting method</dt><dd style={{ color: "var(--ink)" }}>{r.method}</dd></> : null}
             <dt style={{ color: "var(--muted)" }}>License status</dt><dd style={{ color: "var(--ink)" }}>Active · expires {r.expiration}</dd>
           </dl>
