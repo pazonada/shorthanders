@@ -167,9 +167,8 @@ function ReporterDirectory() {
   // Other-state certifications actually present in the directory, so the filter only offers states
   // some reporter lists (like the county filter). Full US list lives in the profile editor.
   const otherStates = useMemo(() => Array.from(new Set(all.flatMap((r) => r.otherStates || []))).sort(), [all]);
-  // Specialty filter pulled 2026-07-21: the only specialty values in the app are fabricated
-  // (six sample profiles), and the real taxonomy is an open user-testing question. Re-add once
-  // research produces a grounded list. See docs/directory_filters.md.
+  // The Area-of-law filter (below) uses SPECIALTY_TYPES (the CA Bar list). Values are self-reported;
+  // only the sample profiles carry any today, so results stay thin until real claims populate them.
 
   const toggleTag = (t) => { setTags((cur) => cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]); setLimit(PAGE_SIZE); };
   const toggleIn = (setter) => (t) => { setter((cur) => cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]); setLimit(PAGE_SIZE); };
@@ -204,6 +203,10 @@ function ReporterDirectory() {
   const dirty = draftSig !== searchedSig;          // controls changed since last Search
   const anyDraft = draftSig !== EMPTY_SIG;
   const runSearch = () => { setSearched(draftSig === EMPTY_SIG ? null : { q, county, state, language, minYears, tags: [...tags], specTags: [...specTags], certTags: [...certTags], rushOnly, notaryOnly, claimedOnly }); setLimit(PAGE_SIZE); };
+  // Live filtering: apply the draft automatically whenever a control changes (no "Search" button).
+  // Skip the very first run so returning from a profile keeps the restored applied search + scroll.
+  const firstApply = useRef(true);
+  useEffect(() => { if (firstApply.current) { firstApply.current = false; return; } runSearch(); }, [draftSig]);
 
   // Live count of what the current DRAFT would return - the useful signal live filtering gives
   // ("0 results, loosen something"), without reflowing the list. Recomputed on draft change.
@@ -302,29 +305,17 @@ function ReporterDirectory() {
             <FilterCheck label="Notary public" checked={notaryOnly} onChange={() => { setNotaryOnly((v) => !v); setLimit(PAGE_SIZE); }} />
             <FilterCheck label="Claimed profiles only" checked={claimedOnly} onChange={() => { setClaimedOnly((v) => !v); setLimit(PAGE_SIZE); }} />
           </FilterGroup>
-          <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 18 }} onClick={runSearch}><Icon name="search" size={16} /> Search{anyDraft ? " · " + draftCount.toLocaleString() + (draftCount === 1 ? " result" : " results") : ""}</button>
         </aside>
 
         {/* results */}
         <div className="dir-main">
           <div style={{ marginBottom: 16 }}>
             <label style={{ display: "block", fontSize: 13, fontWeight: 700, color: "var(--ink)", marginBottom: 7 }}>Search by keyword</label>
-            <div style={{ display: "flex", gap: 10 }}>
-              <div style={{ position: "relative", flex: 1 }}>
-                <span style={{ position: "absolute", left: 18, top: "50%", transform: "translateY(-50%)", color: "var(--brand)" }}><Icon name="search" size={20} /></span>
-                <input className="ds-input" style={{ paddingLeft: 50, fontSize: 16, height: 58, borderWidth: 2, width: "100%" }} placeholder="Try a name, location, or other criteria" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") runSearch(); }} />
-              </div>
-              <button className="btn btn-primary" style={{ height: 58, padding: "0 28px", flexShrink: 0 }} onClick={runSearch}>Search</button>
+            <div style={{ position: "relative" }}>
+              <span style={{ position: "absolute", left: 18, top: "50%", transform: "translateY(-50%)", color: "var(--brand)" }}><Icon name="search" size={20} /></span>
+              <input className="ds-input" style={{ paddingLeft: 50, fontSize: 16, height: 58, borderWidth: 2, width: "100%" }} placeholder="Try a name, location, or other criteria" value={q} onChange={(e) => setQ(e.target.value)} />
             </div>
           </div>
-          {dirty && (
-            <div className="banner" style={{ display: "flex", alignItems: "center", gap: 8, background: draftCount === 0 ? "transparent" : "var(--brand-soft)", color: draftCount === 0 ? "#DC2626" : "var(--brand-dark)", borderRadius: 10, padding: draftCount === 0 ? "10px 0" : "10px 14px", fontSize: 13.5, fontWeight: 600, marginBottom: 14 }}>
-              {draftCount !== 0 && <Icon name="search" size={15} />}
-              {draftCount === 0
-                ? "No reporters match these filters"
-                : "Press Search to see " + draftCount.toLocaleString() + (draftCount === 1 ? " result." : " results.")}
-            </div>
-          )}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "4px 0 16px", flexWrap: "wrap", gap: 8 }}>
             <span style={{ fontSize: 14, color: "var(--muted)" }}>{filtered.length.toLocaleString()} {browseMode ? (filtered.length === 1 ? "reporter" : "reporters") : (filtered.length === 1 ? "result" : "results")}</span>
             <span style={{ fontSize: 13, color: "var(--dim)" }}>Claimed profiles shown first</span>
@@ -442,7 +433,7 @@ function GatedProfile({ r }) {
       <div style={{ position: "relative", marginTop: 18, borderRadius: 16, overflow: "hidden" }}>
         <div aria-hidden="true" style={{ filter: "blur(7px)", userSelect: "none", pointerEvents: "none", opacity: 0.5, display: "flex", flexDirection: "column", gap: 22, padding: 4 }}>
           <ProfileSection title="About"><p style={{ fontSize: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>{r.bio}</p></ProfileSection>
-          <ProfileSection title="Areas of law"><TagList items={r.specialties} tone="brand" /></ProfileSection>
+          <ProfileSection title="Area of law"><TagList items={r.specialties} tone="brand" /></ProfileSection>
           <ProfileSection title="Rates"><p style={{ fontSize: 16, color: "var(--ink-soft)" }}>Provided on request</p></ProfileSection>
           <ProfileSection title="Geographic coverage"><TagList items={(r.coverage || []).map((c) => c + " County")} tone="brand" /></ProfileSection>
         </div>
@@ -533,7 +524,7 @@ function ReporterProfile({ reporterId, invited }) {
           </div>
 
           <ProfileSection title="About"><p style={{ fontSize: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>{r.bio}</p></ProfileSection>
-          <ProfileSection title="Areas of law"><ChipRow items={r.specialties} /></ProfileSection>
+          <ProfileSection title="Area of law"><ChipRow items={r.specialties} /></ProfileSection>
           <ProfileSection title="Proceedings covered"><ChipRow items={r.proceedings} /></ProfileSection>
           {((r.services || []).length > 0 || r.rush) && <ProfileSection title="Services offered"><ChipRow items={r.services} rush={r.rush} /></ProfileSection>}
           {(r.languages || []).length > 0 && <ProfileSection title="Languages"><ChipRow items={r.languages} /></ProfileSection>}

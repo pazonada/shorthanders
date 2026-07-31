@@ -256,7 +256,7 @@ function ReporterProfileEditor({ me }) {
 
       <FieldBlock label="Proceedings covered"><ChipToggle options={PROCEEDING_TYPES} selected={proceedings} onToggle={toggleIn(setProceedings)} /></FieldBlock>
       <FieldBlock label="Services offered"><ChipToggle options={SERVICE_TYPES} selected={services} onToggle={toggleIn(setServices)} extra={<><button type="button" onClick={() => setRush(!rush)} style={chipStyle(rush)}>{rush ? <Icon name="check" size={13} /> : null}Accepts rush / expedited</button><button type="button" onClick={() => setNotary(!notary)} style={chipStyle(notary)}>{notary ? <Icon name="check" size={13} /> : null}Notary public</button></>} /></FieldBlock>
-      <FieldBlock label="Areas of law" hint="Pick from the California State Bar list, or type your own and press Enter to add it.">
+      <FieldBlock label="Area of law" hint="Pick from the California State Bar list, or type your own and press Enter to add it.">
         <TagSearchAdd options={SPECIALTY_TYPES} selected={areas} onChange={setAreas} placeholder="Search areas of law, or type your own" allowOther />
       </FieldBlock>
       <FieldBlock label="Languages" hint="Languages you work in besides English. Pick from the list or type your own to add it."><TagSearchAdd options={LANGUAGES} selected={languages} onChange={setLanguages} placeholder="Search languages, or type your own" allowOther /></FieldBlock>

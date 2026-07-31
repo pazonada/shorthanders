@@ -191,7 +191,7 @@ function ClaimFlow({ reporterId }) {
   const r = all.find((x) => x.id === reporterId);
   const [step, setStep] = useState(0);
   const [stripeState, setStripeState] = useState("idle"); // idle | connecting | done
-  const [form, setForm] = useState({ bio: "", yearsExp: "", city: (r && r.city) || "", county: (r && r.county) || "", workMode: "", baseState: "California", coverage: (r && r.county) || "", rates: {}, publishRates: false, rush: false, notary: false, proceedings: [], services: [], specialties: [], certifications: [], languages: [] });
+  const [form, setForm] = useState({ bio: "", yearsExp: "", city: (r && r.city) || "", county: (r && r.county) || "", workMode: "", baseState: "California", coverage: (r && r.county) || "", rates: {}, publishRates: false, rush: false, notary: false, proceedings: [], services: [], specialties: [], certifications: [], languages: [], otherStates: (r && r.otherStates) || [] });
 
   if (!r) return (
     <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60, maxWidth: 520, margin: "0 auto" }}>
@@ -367,6 +367,10 @@ function ClaimFlow({ reporterId }) {
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{CREDENTIAL_TYPES.map((c) => <button key={c.code} type="button" className={"chip-filter" + (form.certifications.includes(c.code) ? " on" : "")} onClick={() => toggle("certifications", c.code)}>{c.label}</button>)}</div>
               </div>
               <div>
+                <label className="ds-label">Also certified in (other states)</label>
+                <MultiSelect options={US_STATES} value={form.otherStates} onChange={(v) => setForm({ ...form, otherStates: v })} />
+              </div>
+              <div>
                 <label className="ds-label">Languages (beyond English)</label>
                 <MultiSelect options={LANGUAGES} value={form.languages} onChange={(v) => setForm({ ...form, languages: v })} />
               </div>
@@ -459,7 +463,7 @@ function FirmSignup() {
                 <div><label className="ds-label">Firm size</label><select className="ds-input" value={form.size} onChange={set("size")}><option value="">Select…</option><option>Solo</option><option>2–10 attorneys</option><option>11–50 attorneys</option><option>51+ attorneys</option></select></div>
               </div>
               <div>
-                <label className="ds-label">Areas of law (optional)</label>
+                <label className="ds-label">Area of law (optional)</label>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{PRACTICE.map((p) => <button key={p} type="button" className={"chip-filter" + (form.practices.includes(p) ? " on" : "")} onClick={() => togglePractice(p)}>{p}</button>)}</div>
               </div>
               {/* teamInterest: demo-only gauge of firm-wide-plan demand; not stored on this fake submit - wire on real signup */}
