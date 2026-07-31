@@ -250,6 +250,7 @@ function ReporterDirectory() {
               <option value="">All counties</option>
               {counties.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
+            {county && <p style={{ fontSize: 12, color: "var(--dim)", margin: "7px 0 0", lineHeight: 1.45 }}>A county filter hides remote-only reporters, since they don't appear in person. Clear it to include them.</p>}
           </FilterGroup>
           {otherStates.length > 0 && (
             <FilterGroup label="Also certified in">
