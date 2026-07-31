@@ -101,7 +101,10 @@ function SaveHeart({ r, size = 20 }) {
 function matchesCriteria(r, s, haystacks) {
   const needle = (s.q || "").trim().toLowerCase();
   if (needle && !(haystacks.get(r.id) || "").includes(needle)) return false;
-  if (s.county && r.county !== s.county) return false;
+  // A county filter is an in-person / local intent, so remote-only reporters (who don't travel) are
+  // skipped even when their home county matches. They still surface for service/remote searches and
+  // general browsing below - this only keeps them out of location-specific in-person searches.
+  if (s.county && (r.county !== s.county || r.workMode === "remote")) return false;
   if (s.state && !(r.otherStates || []).includes(s.state)) return false;
   if (s.claimedOnly && !r.claimed) return false;
   if (s.rushOnly && !r.rush) return false;

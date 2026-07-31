@@ -167,11 +167,13 @@ Two serverless stubs already exist and fall back to demo behavior:
   **work mode** (`workMode`: "both" = in person and remote, or "remote" = remote only), an editable
   **city/county** (prefilled from the CRB record), in-person **coverage counties** (only when
   "both"), and a **baseState** (only when "remote", for out-of-CA transcriptionists). Persist these.
-  Then make the directory **work-mode-aware**: a **county / in-person** search must NOT return
-  remote-only reporters; a **transcription / remote** search must return remote-only reporters
-  regardless of where they're based. This is what keeps an out-of-state remote transcriptionist
-  findable for CA remote work without polluting local in-person county searches. Sample reporters
-  don't carry `workMode` yet, so add it to the seed data when wiring this.
+  The directory filter is now **work-mode-aware (done 2026-07-30):** a **county** filter skips
+  `workMode: "remote"` reporters in `matchesCriteria` (`_app_05_directory.jsx`), while service /
+  remote / general searches still include them - so an out-of-state remote transcriptionist stays
+  findable for CA remote work without polluting local in-person county searches. Priyanka (900003)
+  is seeded remote-only to demo it. **Still to wire (backend):** persist the claim form's `workMode`,
+  in-person `coverage`, `baseState`, and edited `city`/`county` so real claimed reporters carry them
+  (the prototype `finish()` discards them today).
 
 ## 6. Infra & housekeeping
 
