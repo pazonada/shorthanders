@@ -163,6 +163,15 @@ Two serverless stubs already exist and fall back to demo behavior:
   opt-in toggle appears once any rate is entered); persist both and add the same builder+toggle to the
   dashboard profile editor. Keeping DS rate-neutral (opt-in, firm-only) also supports the
   reporter-independence / AB-5 §2778 argument.
+- [ ] **Work mode + location filtering (added 2026-07-30).** The claim form now captures a
+  **work mode** (`workMode`: "both" = in person and remote, or "remote" = remote only), an editable
+  **city/county** (prefilled from the CRB record), in-person **coverage counties** (only when
+  "both"), and a **baseState** (only when "remote", for out-of-CA transcriptionists). Persist these.
+  Then make the directory **work-mode-aware**: a **county / in-person** search must NOT return
+  remote-only reporters; a **transcription / remote** search must return remote-only reporters
+  regardless of where they're based. This is what keeps an out-of-state remote transcriptionist
+  findable for CA remote work without polluting local in-person county searches. Sample reporters
+  don't carry `workMode` yet, so add it to the seed data when wiring this.
 
 ## 6. Infra & housekeeping
 
