@@ -117,10 +117,14 @@ so these are out:
 - **[growth_strategy.md](growth_strategy.md)** – the one-page direction: statewide supply,
   reporter-pulled demand, concentrated firm-selling, transcription-goes-wide / live-is-local,
   and when to expand (Texas first). **Read this first.**
+- **[firm_go_to_market.md](firm_go_to_market.md)** – the current firm (demand-side) acquisition
+  **strategy**: positioning, segmentation, the free-tier wedge, the $1–3k LA + Bay Area channel
+  budget, objection handling, a 90-day action plan, funnel metrics, and risks. Read this for
+  *why and how much*; read the playbook below for the Bay Area tactical detail.
 - **[firm_outreach_playbook.md](firm_outreach_playbook.md)** – the firm side: who to
   target, the 26-firm Bay Area starter list, channels, the postcard campaign, the
-  founding-firm discount code, and onboarding. (Supersedes the old
-  `mvp/docs/first_50_firms_plan.md`, folded in here.)
+  founding-firm discount code, and onboarding. Bay-Area-specific tactics; still current.
+  (Supersedes the old `mvp/docs/first_50_firms_plan.md`, folded in here.)
 - **[pro_pricing_worksheet.md](pro_pricing_worksheet.md)** – the real CA invoice/rate
   data we've captured, the fee stack, and the pay-per-invoice → Pro crossover model you
   can plug real volume into.

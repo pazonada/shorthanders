@@ -1,10 +1,13 @@
 # Firm outreach playbook – getting the first ~50 firms
 
-> This is the **concentrated, hands-on firm-selling** engine within a **statewide** supply
-> strategy – see [growth_strategy.md](growth_strategy.md). The directory + reporter claiming run
-> statewide; the manual outreach below concentrates in the Bay Area first (then LA), because two
-> people can't sell firms in 40 metros at once. Reporters bringing their own firms seeds every
-> other metro for free.
+> **This is the Bay Area tactical detail for the current firm strategy – see
+> [firm_go_to_market.md](firm_go_to_market.md)**, which now runs Bay Area *and* Los Angeles in
+> parallel with a real (if small) budget, and covers positioning, the free-tier wedge, the
+> channel budget, objection handling, and a 90-day plan. This doc stays as-is for the Bay Area
+> specifics (the 26-firm list, postcard copy, association names, onboarding steps) – nothing
+> below needs to change, it's just no longer the whole plan. The "Bay Area first, then LA"
+> framing below reflects the $0-budget baseline in [growth_strategy.md](growth_strategy.md);
+> `firm_go_to_market.md` §3 explains why LA runs in parallel instead, now that there's budget.
 
 The firm side of the plan, at ~$0 and two people. Built on the v1 research (target list,
 practice areas, the paralegal-as-buyer insight) re-based for the reduced-scope MVP: a

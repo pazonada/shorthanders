@@ -1,6 +1,8 @@
 # CSR Suite
 
-**Last reviewed:** 2026-05-14
+**Last reviewed:** 2026-08-01 (re-verified: still no demand-side/firm product, confirming DS's
+firm-facing directory + messaging + payment offer remains undifferentiated by this competitor –
+see `mvp/marketing/firm_go_to_market.md`)
 
 ---
 

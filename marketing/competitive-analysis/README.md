@@ -25,8 +25,8 @@ Platforms that are marketplaces, directories, or booking tools connecting attorn
 
 | Name | One-line description | Entry | Last reviewed |
 |---|---|---|---|
-| CSR Suite | Reporter-side booking and billing SaaS; built by a SF Bay Area CSR for independent reporters with direct clients | [csr-suite.md](csr-suite.md) | 2026-05-14 |
-| On The Record | Reporter-side practice-management SaaS with a marketplace tab for finding scopists/proofreaders | [on-the-record-tech.md](on-the-record-tech.md) | 2026-05-14 |
+| CSR Suite | Reporter-side booking and billing SaaS; built by a SF Bay Area CSR for independent reporters with direct clients | [csr-suite.md](csr-suite.md) | 2026-08-01 |
+| On The Record | Reporter-side practice-management SaaS with a marketplace tab for finding scopists/proofreaders | [on-the-record-tech.md](on-the-record-tech.md) | 2026-08-01 |
 
 ---
 
