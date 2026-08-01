@@ -62,7 +62,7 @@ function MessagesPanel({ embedded }) {
 
           <div ref={threadRef} style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "18px 20px", display: "flex", flexDirection: "column", gap: 12, background: "var(--bg-soft)" }}>
             {store.role === "firm" && withRep && notAcceptingJobs(withRep) && <div className="banner banner-warn" style={{ fontSize: 12.5, padding: "10px 14px" }}><Icon name="info" size={15} style={{ flexShrink: 0 }} /><div><strong>{active.with.split(" ")[0]} isn't accepting new jobs right now.</strong> They may still help with a past transcript or an existing matter, but likely won't take on new work.</div></div>}
-            <div className="banner banner-info" style={{ fontSize: 12.5, padding: "10px 14px" }}><Icon name="shield" size={15} style={{ flexShrink: 0 }} /><div>Dewey Sholes carries your messages and links but never stores files. Share audio and deliverables through your own secure link. Terms are between you and {active.with}.</div></div>
+            <div style={{ display: "flex", gap: 6, alignItems: "flex-start", justifyContent: "center", maxWidth: 620, margin: "0 auto", padding: "2px 16px 8px", fontSize: 11.5, lineHeight: 1.55, color: "var(--dim)", textAlign: "center" }}><Icon name="shield" size={13} style={{ flexShrink: 0, marginTop: 2 }} /><span>Dewey Sholes carries your messages and links but never stores files – share deliverables through your own secure link. Terms are between you and {active.with}.</span></div>
             {active.msgs.map((m, i) => (
               <div key={i} className={"msg-bubble " + (m.from === "me" ? "msg-me" : "msg-them")}>
                 {m.t && <div>{m.t}</div>}
