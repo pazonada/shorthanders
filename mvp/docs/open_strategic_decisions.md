@@ -18,7 +18,7 @@ OPEN · TO-DO (an action, often needing an outside expert).
 
 ---
 
-## 1. Monetization model – DECIDED (shape; prices still TBD)
+## 1. Monetization model – DECIDED (shape; FIRM price $49/user locked, reporter prices still TBD)
 
 **Question:** how does DS make money and recoup costs, given (a) CSR contact info is
 already public, and (b) firms default to agencies unless they hire direct?
@@ -78,13 +78,18 @@ already public, and (b) firms default to agencies unless they hire direct?
 Stripe free tiers; the processing fee is the reporter's). Not trying to turn a profit at
 launch – trying to prove people use it. Turn on serious pricing once there's real usage.
 
-**Prices – set as working numbers 2026-07-24 (Aud):**
+**Prices (firm = DECIDED $49/user; reporter side still working numbers):**
 - **Reporters:** free to list + message. Get paid at **5% per payment** (pay-as-you-go, no
   monthly) or **Pro $29/month + 2% per payment**. Pro crossover ≈ **$970/mo** of billing.
-- **Firms:** **$39/month per firm** (not per seat) or **$429/year** (1 month free; revised down from
-  2 months free 2026-07-28 as too generous). Founding-firm codes (capped/private) **MAY stack** with
-  the annual discount – exposure is bounded by the code cap; only restrict stacking for a future
-  public/uncapped promo. The free
+  *(Still working numbers.)*
+- **Firms:** **$49/month per user (per seat)** – **HARD / decided 2026-08-01** (Aud). This is up
+  from the old $39 **and now per seat**, which **reverses the earlier "$39/firm, not per seat"**
+  call; the live prototype copy already reads "$49/month per user." A **firm-wide** single-price
+  plan (one price for the whole office) stays **deferred** – gauged via the signup interest
+  question, not offered yet. **Annual is $539/year (1 month free)** – already live on the For firms
+  page (`mvp/src/_app_04_marketing.jsx`) alongside the $49/mo per-seat price. Founding-firm codes (capped/private)
+  **MAY stack** with any annual discount – exposure is bounded by the code cap; only restrict
+  stacking for a future public/uncapped promo. The free
   tier stays generous – message/pay/save any reporter who invited or is connected to you; the
   subscription only gates *discovery* of new reporters via full search. Live on the Pricing page,
   the reporter Payments tab, and the firm Subscription tab. Still working numbers – validate with

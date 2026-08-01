@@ -32,7 +32,8 @@ ws["A1"] = "Dewey Sholes – revenue model"
 ws["A1"].font = TITLE
 ws.merge_cells("A1:F1")
 ws["A2"] = ("Illustrative, to frame the decision – not a forecast. Change the blue and yellow cells; everything "
-            "recalculates. Reporters pay a per-payment fee, lower on Pro. Prices are yours to set.")
+            "recalculates. Reporters pay a per-payment fee, lower on Pro. Firm price is $49/user (decided); "
+            "reporter prices are still yours to set.")
 ws["A2"].font = SUB
 ws.merge_cells("A2:F2")
 ws["A3"] = "Blue = inputs you can change.   Yellow ('Your custom' column) = model your own scenario.   Black = calculated."
@@ -57,7 +58,7 @@ section(6, "INPUTS")
 # (label, [Launch, Growth, Scaled, Custom], numfmt, note)
 inputs = [
     ("Active CSRs (real, from the CRB scrape)", [5705, 5705, 5705, 5705], INT, "Total active California CSRs in our data."),
-    ("% of CSRs who claim a free profile", [0.05, 0.10, 0.20, 0.10], PCT, "Of all active CSRs, how many claim (free)."),
+    ("% of CSRs who claim a free profile", [0.05, 0.10, 0.20, 0.1227], PCT, "Of all active CSRs, how many claim (free). Custom = 700 CSRs (~12%), your 6-month scenario."),
     ("Pro reporters (% of claimers)", [0.20, 0.25, 0.30, 0.25], PCT, "Claimers who upgrade to Pro: flat monthly PLUS the reduced fee."),
     ("Pay-per-invoice reporters (% of claimers)", [0.30, 0.35, 0.40, 0.35], PCT, "Claimers who collect on-platform on the base fee (the rest just list, no volume)."),
     ("Reporter Pro price ($/mo)", [29, 29, 29, 29], CUR, "Flat monthly Pro plan."),
@@ -65,8 +66,9 @@ inputs = [
     ("Pro fee (%)", [0.02, 0.02, 0.02, 0.02], PCT, "Reduced cut per payment for Pro reporters (who ALSO pay the sub)."),
     ("Avg billed per Pro reporter ($/mo)", [4000, 5000, 6000, 5000], CUR, "Dollars a Pro reporter runs THROUGH the platform monthly."),
     ("Avg billed per pay-per-invoice reporter ($/mo)", [700, 800, 1000, 800], CUR, "Dollars an occasional reporter runs through monthly."),
-    ("Paying firms (#)", [50, 200, 500, 200], INT, "Firms on the paid subscription. Grow this."),
-    ("Firm subscription ($/mo)", [39, 39, 39, 39], CUR, "Firm plan, priced above reporter Pro ($29) – firms bear more. Annual is $390 (~2 months free)."),
+    ("Paying firms (#)", [50, 200, 500, 75], INT, "Firms on the paid subscription. Grow this. Custom = 75 (your 50–100 firm-user scenario, at 1 seat each)."),
+    ("Avg paying seats per firm", [1, 1, 1, 1], INT, "Firm price is per USER/seat. 1 = each firm buys one seat; raise it for multi-seat firms."),
+    ("Firm subscription ($/mo per seat)", [49, 49, 49, 49], CUR, "$49/user – HARD (decided 2026-08-01), per seat. Annual = $539/yr (1 month free), live on the site."),
 ]
 row = 7
 input_rows = {}
@@ -90,7 +92,8 @@ R_PROF = input_rows["Pro fee (%)"]
 R_PROBILL = input_rows["Avg billed per Pro reporter ($/mo)"]
 R_PPIBILL = input_rows["Avg billed per pay-per-invoice reporter ($/mo)"]
 R_FIRMS = input_rows["Paying firms (#)"]
-R_FPRICE = input_rows["Firm subscription ($/mo)"]
+R_FSEATS = input_rows["Avg paying seats per firm"]
+R_FPRICE = input_rows["Firm subscription ($/mo per seat)"]
 
 res_start = row + 1
 section(res_start, "RESULTS")
@@ -123,7 +126,7 @@ R_proSub = result("Pro subscription revenue (/mo)", lambda c: f"={c}{R_proN}*{c}
 R_proFee = result("Pro fee revenue (/mo)", lambda c: f"={c}{R_proVol}*{c}{R_PROF}", CUR, "The Pro fee on Pro reporters' volume.")
 R_ppiFee = result("Pay-per-invoice fee revenue (/mo)", lambda c: f"={c}{R_ppiVol}*{c}{R_BASEF}", CUR, "The base fee on everyone else's volume.")
 R_repRev = result("Reporter revenue (/mo)", lambda c: f"={c}{R_proSub}+{c}{R_proFee}+{c}{R_ppiFee}", CUR, "Pro subs + both fee tiers.")
-R_firmRev = result("Firm revenue (/mo)", lambda c: f"={c}{R_FIRMS}*{c}{R_FPRICE}", CUR)
+R_firmRev = result("Firm revenue (/mo)", lambda c: f"={c}{R_FIRMS}*{c}{R_FSEATS}*{c}{R_FPRICE}", CUR, "Firms × seats/firm × $49.")
 R_totMo = result("TOTAL revenue (/mo)", lambda c: f"={c}{R_repRev}+{c}{R_firmRev}", CUR, total=True)
 R_totYr = result("TOTAL revenue (/year)", lambda c: f"={c}{R_totMo}*12", CUR, total=True)
 row += 1
@@ -265,10 +268,10 @@ def res3(label, formula, fmt, note="", total=False):
     return rr
 
 section3(r3, "SHARED INPUTS  (blue = change these)"); r3 += 1
-R_NET = inp3("Net take-home target ($/yr)", 120000, CUR, "What you want to keep after taxes and expenses. 120k = $10k/mo.")
-R_TAX = inp3("Tax rate (%)", 0.33, PCT, "All-in: federal + self-employment + NJ. Rough – confirm with an accountant.")
+R_NET = inp3("Net take-home target ($/yr)", 200000, CUR, "Your stated target. IMPORTANT: if 200k is your PRE-TAX salary (a business expense, personal taxes separate), set the tax rate below to 0. If it's take-home AFTER personal taxes, leave the tax rate as-is.")
+R_TAX = inp3("Tax rate (%)", 0.33, PCT, "All-in: federal + self-employment + NJ. Rough – confirm with an accountant. Set to 0 to treat the target as a pre-tax salary.")
 R_TECH = inp3("Tech + tools ($/yr)", 12000, CUR, "Hosting, email, Stripe account fees, SaaS. Small at this scale.")
-R_ENG = inp3("Engineer / dev help ($/yr, optional)", 0, CUR, "On-call engineering, if you pay for it. 0 if not.")
+R_ENG = inp3("Engineer / dev help ($/yr)", 28000, CUR, "PT engineering support. ~$28k = midpoint of the $21–36k Year-1 range in the engineering-support plan.")
 
 r3 += 1
 section3(r3, "WHAT YOU NEED TO GROSS"); r3 += 1
@@ -277,9 +280,9 @@ R_GMO = res3("Gross needed ($/mo)", f"=B{R_GYR}/12", CUR)
 
 r3 += 1
 section3(r3, "PATH A – subscriptions (firms + CSR Pro)"); r3 += 1
-R_SPRICE = inp3("Price per paying user ($/mo)", 39, CUR, "Firm plan is $39; reporter Pro is $29. Set to $39 since firms drive subscription growth.")
-res3("Paying users needed", f"=B{R_GYR}/(B{R_SPRICE}*12)", INT,
-     "Mostly firms at $39 – CSR Pro ($29) realistically tops out ~50-140.", total=True)
+R_SPRICE = inp3("Price per paying user ($/mo)", 49, CUR, "Firm plan is $49/user (per seat, decided); reporter Pro is $29. Using $49 since firms drive subscription growth.")
+res3("Paying user-seats needed", f"=B{R_GYR}/(B{R_SPRICE}*12)", INT,
+     "Paid user-SEATS at $49. Firms = seats ÷ seats-per-firm. CSR Pro ($29) realistically tops out ~50–140.", total=True)
 
 r3 += 1
 section3(r3, "PATH B – per-payment fee (reporters collecting on-platform)"); r3 += 1
