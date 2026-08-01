@@ -5030,6 +5030,9 @@ function InviteFirmModal({ me, onClose }) {
   const who = firm.trim() || "the firm";
   const send = () => { store.inviteFirm({ name: firm.trim() || email.trim(), email: email.trim(), at: "Just now" }); setSent(true); };
   const copy = (text, which) => { navigator.clipboard.writeText(text); setCopied(which); setTimeout(() => setCopied(""), 1800); };
+  const subhead = { fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em" };
+  const cancelLink = { background: "none", border: "none", color: "var(--muted)", cursor: "pointer", fontSize: 14, fontWeight: 600, padding: 4 };
+  const copyLink = { background: "none", border: "none", color: "var(--brand-dark)", cursor: "pointer", fontSize: 13, fontWeight: 600, padding: 4, alignSelf: "flex-start" };
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="ds-card" style={{ maxWidth: 540, width: "92%", maxHeight: "88vh", overflowY: "auto" }} onClick={(e) => e.stopPropagation()}>
@@ -5046,28 +5049,38 @@ function InviteFirmModal({ me, onClose }) {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
               <div>
                 <h3 style={{ fontSize: 24 }}>Invite a law firm</h3>
-                <p style={{ color: "var(--muted)", marginTop: 6, fontSize: 14, lineHeight: 1.55 }}>Bring a firm you already work with. They join free, save you as a favorite, and can pay your invoices here. Copy the message to send from your own email, or send it through Dewey Sholes.</p>
+                <p style={{ color: "var(--muted)", marginTop: 6, fontSize: 14, lineHeight: 1.55 }}>Bring a firm you already work with. They join free, save you as a favorite, and can pay your invoices here.</p>
               </div>
               <button onClick={onClose} title="Close" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", padding: 4, flexShrink: 0 }}><Icon name="x" size={20} /></button>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 18 }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                <div><label className="ds-label">Firm name <span style={{ color: "var(--dim)", fontWeight: 400 }}>(optional)</span></label><input className="ds-input" placeholder="Morgan & Reyes LLP" value={firm} onChange={(e) => setFirm(e.target.value)} /></div>
-                <div><label className="ds-label">Contact email</label><input className="ds-input" type="email" placeholder="office@firm.com" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
-              </div>
-              <div><label className="ds-label">Message</label><textarea className="ds-input" rows={8} value={msg} onChange={(e) => setMsg(e.target.value)} style={{ resize: "vertical", lineHeight: 1.5 }} /></div>
-              <div className="ds-panel" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 12.5, color: "var(--muted)" }}>
+
+            <div style={{ marginTop: 20 }}>
+              <div style={subhead}>Send through your own email</div>
+              <p style={{ color: "var(--muted)", fontSize: 12.5, margin: "5px 0 10px", lineHeight: 1.5 }}>Copy your profile link and paste it into an email from your own account.</p>
+              <div className="ds-panel" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 12.5, color: "var(--muted)", padding: "10px 12px" }}>
                 <Icon name="link" size={15} style={{ flexShrink: 0 }} /> <span style={{ fontFamily: "'JetBrains Mono', monospace", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>{link}</span>
                 <button className="btn btn-secondary" style={{ padding: "4px 10px", fontSize: 12.5, flexShrink: 0 }} onClick={() => copy(link, "link")}>{copied === "link" ? "Copied!" : "Copy"}</button>
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 18 }}>
-              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <button className="btn btn-primary" onClick={() => copy(msg, "msg")}><Icon name="link" size={16} /> {copied === "msg" ? "Message copied!" : "Copy message"}</button>
-                <button className="btn btn-secondary" disabled={!emailValid} style={{ opacity: emailValid ? 1 : 0.4 }} onClick={send}><Icon name="mail" size={16} /> Send through Dewey Sholes</button>
-                <button className="btn btn-secondary" onClick={onClose}>Cancel</button>
+
+            <div style={{ marginTop: 20 }}>
+              <div style={subhead}>Or send through Dewey Sholes</div>
+              <p style={{ color: "var(--muted)", fontSize: 12.5, margin: "5px 0 12px", lineHeight: 1.5 }}>We'll email the firm your invite – add their email and hit Send.</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                  <div><label className="ds-label">Firm name <span style={{ color: "var(--dim)", fontWeight: 400 }}>(optional)</span></label><input className="ds-input" placeholder="Morgan & Reyes LLP" value={firm} onChange={(e) => setFirm(e.target.value)} /></div>
+                  <div><label className="ds-label">Contact email</label><input className="ds-input" type="email" placeholder="office@firm.com" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
+                </div>
+                <div><label className="ds-label">Message</label><textarea className="ds-input" rows={6} value={msg} onChange={(e) => setMsg(e.target.value)} style={{ resize: "vertical", lineHeight: 1.5 }} /></div>
               </div>
-              <p style={{ color: "var(--dim)", fontSize: 12, margin: 0, lineHeight: 1.5 }}>{emailValid ? "Copy the message to send from your own email (best for firms you already know), or send it through Dewey Sholes." : "Add the firm's email to send through Dewey Sholes - or just copy the message and send it from your own email."}</p>
+            </div>
+
+            <div style={{ marginTop: 20 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                <button className="btn btn-primary" disabled={!emailValid} style={{ opacity: emailValid ? 1 : 0.4 }} onClick={send}><Icon name="mail" size={16} /> Send</button>
+                <button onClick={onClose} style={cancelLink}>Cancel</button>
+              </div>
+              <button onClick={() => copy(msg, "msg")} style={{ ...copyLink, marginTop: 12 }}>{copied === "msg" ? "Message copied!" : "Copy the message"}</button>
             </div>
           </>
         )}
