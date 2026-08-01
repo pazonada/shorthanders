@@ -34,7 +34,7 @@ function MessagesPanel({ embedded }) {
   const meLabel = store.role === "firm" ? "you (firm)" : "you";
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "280px 1fr", gap: 0, border: "1px solid var(--rule)", borderRadius: 18, overflow: "hidden", height: embedded ? 560 : 640, background: "var(--bg)" }} className="msg-grid">
+    <div style={{ display: "grid", gridTemplateColumns: "280px 1fr", gridTemplateRows: "minmax(0, 1fr)", gap: 0, border: "1px solid var(--rule)", borderRadius: 18, overflow: "hidden", height: embedded ? 560 : 640, background: "var(--bg)" }} className="msg-grid">
       {/* conversation list */}
       <div style={{ borderRight: "1px solid var(--rule)", overflowY: "auto", background: "var(--bg-soft)" }}>
         <div style={{ padding: "16px 18px", borderBottom: "1px solid var(--rule)", fontWeight: 700, fontSize: 15 }}>Messages</div>
@@ -60,7 +60,7 @@ function MessagesPanel({ embedded }) {
             <div><div style={{ fontWeight: 600, fontSize: 15 }}>{active.with}</div>{active.subtitle && <div style={{ fontSize: 12.5, color: "var(--muted)" }}>{active.subtitle}</div>}</div>
           </div>
 
-          <div ref={threadRef} style={{ flex: 1, overflowY: "auto", padding: "18px 20px", display: "flex", flexDirection: "column", gap: 12, background: "var(--bg-soft)" }}>
+          <div ref={threadRef} style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "18px 20px", display: "flex", flexDirection: "column", gap: 12, background: "var(--bg-soft)" }}>
             {store.role === "firm" && withRep && notAcceptingJobs(withRep) && <div className="banner banner-warn" style={{ fontSize: 12.5, padding: "10px 14px" }}><Icon name="info" size={15} style={{ flexShrink: 0 }} /><div><strong>{active.with.split(" ")[0]} isn't accepting new jobs right now.</strong> They may still help with a past transcript or an existing matter, but likely won't take on new work.</div></div>}
             <div className="banner banner-info" style={{ fontSize: 12.5, padding: "10px 14px" }}><Icon name="shield" size={15} style={{ flexShrink: 0 }} /><div>Dewey Sholes carries your messages and links but never stores files. Share audio and deliverables through your own secure link. Terms are between you and {active.with}.</div></div>
             {active.msgs.map((m, i) => (
