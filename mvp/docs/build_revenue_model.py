@@ -268,8 +268,8 @@ def res3(label, formula, fmt, note="", total=False):
     return rr
 
 section3(r3, "SHARED INPUTS  (blue = change these)"); r3 += 1
-R_NET = inp3("Net take-home target ($/yr)", 200000, CUR, "Your stated target. IMPORTANT: if 200k is your PRE-TAX salary (a business expense, personal taxes separate), set the tax rate below to 0. If it's take-home AFTER personal taxes, leave the tax rate as-is.")
-R_TAX = inp3("Tax rate (%)", 0.33, PCT, "All-in: federal + self-employment + NJ. Rough – confirm with an accountant. Set to 0 to treat the target as a pre-tax salary.")
+R_NET = inp3("Net take-home target ($/yr)", 132000, CUR, "$11k/mo AFTER Aud's own taxes = $132k/yr in-pocket. At the tax rate below this grosses up to the salary he must pay himself, then adds business costs.")
+R_TAX = inp3("Tax rate (%)", 0.33, PCT, "Aud's all-in personal rate (federal + self-employment + NJ) on his salary. Rough ~33% – CONFIRM with an accountant; the answer swings a lot with this. This grosses the salary up so $11k/mo lands after tax.")
 R_TECH = inp3("Tech + tools ($/yr)", 12000, CUR, "Hosting, email, Stripe account fees, SaaS. Small at this scale.")
 R_ENG = inp3("Engineer / dev help ($/yr)", 28000, CUR, "PT engineering support. ~$28k = midpoint of the $21–36k Year-1 range in the engineering-support plan.")
 
