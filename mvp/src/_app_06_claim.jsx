@@ -331,7 +331,7 @@ function ClaimFlow({ reporterId }) {
                 ) : (
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                     <div><label className="ds-label">City</label><input className="ds-input" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></div>
-                    <div><label className="ds-label">Home county</label><input className="ds-input" value={form.county} onChange={(e) => setForm({ ...form, county: e.target.value })} /></div>
+                    <div><label className="ds-label">County</label><input className="ds-input" value={form.county} onChange={(e) => setForm({ ...form, county: e.target.value })} /></div>
                   </div>
                 )}
               </div>
@@ -432,6 +432,7 @@ function FirmSignup() {
   // scroll clamp when the next step is shorter than the current one.
   React.useEffect(() => { requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })); }, [step]);
   const [form, setForm] = useState({ firm: "", name: "", role: "", location: "", size: "", practices: [], teamInterest: "", email: "", pw: "" });
+  const [legal, setLegal] = useState(null); // null | "terms" | "privacy" – shown in a modal so opening it doesn't discard the form
   const steps = ["About your firm", "Create your login"];
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
   const togglePractice = (p) => setForm((f) => ({ ...f, practices: f.practices.includes(p) ? f.practices.filter((x) => x !== p) : [...f.practices, p] }));
@@ -446,6 +447,7 @@ function FirmSignup() {
   };
   return (
     <Page>
+      {legal && <LegalModal docKey={legal} onClose={() => setLegal(null)} />}
       <div style={{ maxWidth: 640, margin: "0 auto" }}>
         <button onClick={() => navigate("/for-firms")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 22 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Cancel</button>
         <div style={{ textAlign: "center" }}>
@@ -498,7 +500,7 @@ function FirmSignup() {
               <div className="banner banner-info"><Icon name="lock" size={18} style={{ flexShrink: 0 }} /><div>Prototype – this is a demo. No real account is created and nothing you type is stored or sent.</div></div>
               <div><label className="ds-label">Work email *</label><input className="ds-input" type="email" placeholder="you@firm.com" value={form.email} onChange={set("email")} /></div>
               <div><label className="ds-label">Create a password *</label><input className="ds-input" type="password" placeholder="••••••••" value={form.pw} onChange={set("pw")} /></div>
-              <p style={{ fontSize: 12.5, color: "var(--dim)", lineHeight: 1.5 }}>By creating an account you agree to the <button onClick={() => navigate("/terms")} style={claimLinkBtn}>Terms</button> and <button onClick={() => navigate("/privacy")} style={claimLinkBtn}>Privacy</button>.</p>
+              <p style={{ fontSize: 12.5, color: "var(--dim)", lineHeight: 1.5 }}>By creating an account you agree to the <button onClick={() => setLegal("terms")} style={claimLinkBtn}>Terms</button> and <button onClick={() => setLegal("privacy")} style={claimLinkBtn}>Privacy</button>.</p>
               <div style={{ display: "flex", gap: 12, marginTop: 4 }}>
                 <button className="btn btn-primary" disabled={!step1Valid} style={{ opacity: step1Valid ? 1 : 0.4 }} onClick={finish}><Icon name="check" size={16} /> Create account</button>
                 <button className="btn btn-secondary" onClick={() => setStep(0)}>Back</button>

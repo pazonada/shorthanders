@@ -19,29 +19,70 @@ function LegalPage({ title, intro, sections }) {
   );
 }
 
-function TermsPage() {
-  return <LegalPage title="How Dewey Sholes works"
-    intro="Plain-language summary of the platform's role. This is prototype copy for review, not final legal terms of service."
-    sections={[
-      { h: "What Dewey Sholes is", p: ["Dewey Sholes plays exactly three roles, and no others:"], list: ["A directory provider – a searchable listing of licensed California court reporters, built from public licensing data.", "A communication platform – a channel for law firms and reporters to message each other.", "A payment facilitator – a way for reporters to invoice firms and collect payment through Stripe."] },
-      { h: "What Dewey Sholes is not", p: ["Dewey Sholes does not, and will not:"], list: ["Employ reporters or treat them as agents of the platform.", "Guarantee the quality, accuracy, or completeness of any reporter's work.", "Guarantee that any invoice will be paid.", "Negotiate, set, or influence rates between the parties.", "Mediate, arbitrate, or resolve disputes between a firm and a reporter.", "Store, host, or take custody of audio files, transcripts, or other work product.", "Become a party to any agreement between a firm and a reporter."] },
-      { h: "The agreement is between you", p: ["Any service agreement exists solely between the law firm and the court reporter. Scope, deadlines, rates, confidentiality, and delivery are agreed directly between those two parties. Dewey Sholes is not a signatory and assumes no obligations under that agreement."] },
-      { h: "Files and confidential material", p: [
-        "Dewey Sholes does not store, host, secure, or review any files. When you exchange audio, transcripts, or other deliverables, you share a link to your own storage through messaging. The file stays with you, never on our servers.",
-        "You are solely responsible for how you share materials, including choosing links that are private, access-controlled, or expiring, and for complying with any confidentiality obligations or protective orders that apply. Dewey Sholes does not vet the links you share and is not responsible for how you or the other party store or secure files.",
-        "Because depositions and other proceedings can involve confidential or personal information, keeping custody of files with the parties, not the platform, protects everyone.",
-      ] },
-      { h: "Identity verification & payments", p: ["Reporter identity verification and all payment processing are handled by Stripe, including KYC, identity, tax, and banking. Dewey Sholes stores only the status Stripe returns, never your bank details or ID documents."] },
-    ]} />;
-}
-function PrivacyPage() {
-  return <LegalPage title="Privacy" intro="Prototype summary. Final privacy policy to follow."
-    sections={[
-      { h: "Public license data", p: ["The base directory is built from publicly available California CSR licensing records – name, license number, and city. This information is public whether or not a reporter claims their profile."] },
-      { h: "Claimed profiles", p: ["Information a reporter adds when claiming a profile (bio, areas of law, rates, etc.) is shown publicly by their choice. A reporter can edit or remove it at any time."] },
-      { h: "Payments & identity", p: ["Identity and banking information is collected and held by Stripe, not by Dewey Sholes. We store only verification status and invoice metadata."] },
-      { h: "Messages", p: ["Messages are carried by the platform so both parties have a record. We don't sell your data or use your conversations for advertising."] },
-    ]} />;
+// Terms + Privacy content, kept as data so the SAME text renders both as a full page (footer /
+// marketing links) and inside a modal (the sign-up flow – see LegalModal).
+const TERMS_DOC = {
+  title: "How Dewey Sholes works",
+  intro: "Plain-language summary of the platform's role. This is prototype copy for review, not final legal terms of service.",
+  sections: [
+    { h: "What Dewey Sholes is", p: ["Dewey Sholes plays exactly three roles, and no others:"], list: ["A directory provider – a searchable listing of licensed California court reporters, built from public licensing data.", "A communication platform – a channel for law firms and reporters to message each other.", "A payment facilitator – a way for reporters to invoice firms and collect payment through Stripe."] },
+    { h: "What Dewey Sholes is not", p: ["Dewey Sholes does not, and will not:"], list: ["Employ reporters or treat them as agents of the platform.", "Guarantee the quality, accuracy, or completeness of any reporter's work.", "Guarantee that any invoice will be paid.", "Negotiate, set, or influence rates between the parties.", "Mediate, arbitrate, or resolve disputes between a firm and a reporter.", "Store, host, or take custody of audio files, transcripts, or other work product.", "Become a party to any agreement between a firm and a reporter."] },
+    { h: "The agreement is between you", p: ["Any service agreement exists solely between the law firm and the court reporter. Scope, deadlines, rates, confidentiality, and delivery are agreed directly between those two parties. Dewey Sholes is not a signatory and assumes no obligations under that agreement."] },
+    { h: "Files and confidential material", p: [
+      "Dewey Sholes does not store, host, secure, or review any files. When you exchange audio, transcripts, or other deliverables, you share a link to your own storage through messaging. The file stays with you, never on our servers.",
+      "You are solely responsible for how you share materials, including choosing links that are private, access-controlled, or expiring, and for complying with any confidentiality obligations or protective orders that apply. Dewey Sholes does not vet the links you share and is not responsible for how you or the other party store or secure files.",
+      "Because depositions and other proceedings can involve confidential or personal information, keeping custody of files with the parties, not the platform, protects everyone.",
+    ] },
+    { h: "Identity verification & payments", p: ["Reporter identity verification and all payment processing are handled by Stripe, including KYC, identity, tax, and banking. Dewey Sholes stores only the status Stripe returns, never your bank details or ID documents."] },
+  ],
+};
+const PRIVACY_DOC = {
+  title: "Privacy",
+  intro: "Prototype summary. Final privacy policy to follow.",
+  sections: [
+    { h: "Public license data", p: ["The base directory is built from publicly available California CSR licensing records – name, license number, and city. This information is public whether or not a reporter claims their profile."] },
+    { h: "Claimed profiles", p: ["Information a reporter adds when claiming a profile (bio, areas of law, rates, etc.) is shown publicly by their choice. A reporter can edit or remove it at any time."] },
+    { h: "Payments & identity", p: ["Identity and banking information is collected and held by Stripe, not by Dewey Sholes. We store only verification status and invoice metadata."] },
+    { h: "Messages", p: ["Messages are carried by the platform so both parties have a record. We don't sell your data or use your conversations for advertising."] },
+  ],
+};
+function TermsPage() { return <LegalPage {...TERMS_DOC} />; }
+function PrivacyPage() { return <LegalPage {...PRIVACY_DOC} />; }
+
+// A legal doc shown in a MODAL rather than as its own page. Used for the Terms/Privacy links
+// INSIDE a sign-up flow: opening them there must not navigate away and throw out the half-filled
+// form (which is the bug this fixes). Escape or a click outside closes back to exactly where you
+// were. The standalone /terms and /privacy routes still exist for footer and marketing links.
+function LegalModal({ docKey, onClose }) {
+  const doc = docKey === "privacy" ? PRIVACY_DOC : TERMS_DOC;
+  React.useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+  return (
+    <div className="modal-overlay" onClick={onClose} style={{ alignItems: "flex-start", overflowY: "auto", padding: "40px 20px" }}>
+      <div className="ds-card" style={{ maxWidth: 640, width: "92%", maxHeight: "85vh", overflowY: "auto" }} onClick={(e) => e.stopPropagation()}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 6 }}>
+          <h2 style={{ fontSize: 26 }}>{doc.title}</h2>
+          <button onClick={onClose} title="Close" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", padding: 4, flexShrink: 0 }}><Icon name="x" size={20} /></button>
+        </div>
+        {doc.intro && <p style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.6, marginBottom: 18 }}>{doc.intro}</p>}
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          {doc.sections.map((s, i) => (
+            <section key={i}>
+              <h3 style={{ fontSize: 17, marginBottom: 8 }}>{s.h}</h3>
+              {s.p.map((para, j) => <p key={j} style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.6, marginBottom: 8 }}>{para}</p>)}
+              {s.list && <ul style={{ paddingLeft: 18, display: "flex", flexDirection: "column", gap: 6 }}>{s.list.map((li, k) => <li key={k} style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.55 }}>{li}</li>)}</ul>}
+            </section>
+          ))}
+        </div>
+        <div style={{ marginTop: 22, textAlign: "right" }}>
+          <button className="btn btn-primary" onClick={onClose}>Got it</button>
+        </div>
+      </div>
+    </div>
+  );
 }
 function AboutPage() {
   return <LegalPage title="About Dewey Sholes"
