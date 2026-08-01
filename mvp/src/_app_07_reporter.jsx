@@ -365,7 +365,7 @@ function InviteFirmModal({ me, onClose }) {
   const link = "https://dsmvp.vercel.app/#/invite/" + me.id;
   const [firm, setFirm] = useState("");
   const [email, setEmail] = useState("");
-  const [msg, setMsg] = useState("Hi there,\n\nI'm now listed on Dewey Sholes, where you can hire me for transcriptions, message me, and pay my invoices in one place. It's free for your firm to join, and you can pay me by card or ACH right from your account.\n\nCreate your free account and save my profile here:\n" + link + "\n\nThanks,\n" + first);
+  const [msg, setMsg] = useState("Hi there,\n\nI'm now listed on Dewey Sholes, where you can hire me, message me, and pay my invoices in one place. It's free for your firm to join, and you can pay me by card or ACH right from your account.\n\nCreate your free account and save my profile here:\n" + link + "\n\nThanks,\n" + first);
   const [sent, setSent] = useState(false);
   const [copied, setCopied] = useState("");
   const emailValid = /.+@.+\..+/.test(email);
