@@ -100,6 +100,25 @@ account and save Marguerite."
   context in the surrounding copy, not on the button.
 - Explanation, reassurance ("free for your firm"), and consequences belong in the **microcopy near
   the button**, never inside the label.
+- **Color.** The **primary** button is **DEWEY navy** (`--ink`), white text (hover shifts to
+  `--brand` indigo); the **secondary** button is the outlined/soft style. A **disabled** primary
+  button dims to ~40% opacity and reads as grey until its required input is filled – e.g. "Send" in
+  the invite modal stays grey until a contact email is entered, then turns navy. Grey is not a color
+  choice here, it's the disabled state.
+- **Placement (modals).** Modal action buttons are **right-aligned** (`justify-content: flex-end`),
+  **Cancel (secondary) then the primary** on the far right – matching RequestInvoiceModal and the
+  firm modals. A tertiary text link (e.g. "Copy the message") can sit on the left of the same row.
+
+## Subheads and section labels
+
+Section subheads – the small uppercase labels that head a group of fields or a profile section –
+are **brand indigo** (`--brand`), **not grey**. Grey (`--dim`) subheads recede too far and are hard
+to read.
+
+- Style: `color: var(--brand)`, **uppercase**, `font-weight: 700`, Inter, `letter-spacing: .05em`,
+  ~12–15px. Reference: the profile section headers in `_app_05_directory.jsx` (the `var(--brand)`
+  `<h2>` used for "About", "Coverage", etc.).
+- This is the indigo accent doing a wayfinding job – consistent with "navy anchors, indigo accents."
 
 ## Icons
 

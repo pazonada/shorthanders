@@ -5023,16 +5023,15 @@ function InviteFirmModal({ me, onClose }) {
   const link = "https://dsmvp.vercel.app/#/invite/" + me.id;
   const [firm, setFirm] = useState("");
   const [email, setEmail] = useState("");
-  const [msg, setMsg] = useState("Hi there,\n\nI'm now on Dewey Sholes, where you can hire me, message me, and pay my invoices in one place. It's free for your firm to join, and you can pay me by card or ACH right from your account.\n\nCreate your free account and save my profile here:\n" + link + "\n\nThanks,\n" + first);
+  const [msg, setMsg] = useState("Hi there,\n\nI'm now listed on Dewey Sholes, where you can hire me for transcriptions, message me, and pay my invoices in one place. It's free for your firm to join, and you can pay me by card or ACH right from your account.\n\nCreate your free account and save my profile here:\n" + link + "\n\nThanks,\n" + first);
   const [sent, setSent] = useState(false);
   const [copied, setCopied] = useState("");
   const emailValid = /.+@.+\..+/.test(email);
   const who = firm.trim() || "the firm";
   const send = () => { store.inviteFirm({ name: firm.trim() || email.trim(), email: email.trim(), at: "Just now" }); setSent(true); };
   const copy = (text, which) => { navigator.clipboard.writeText(text); setCopied(which); setTimeout(() => setCopied(""), 1800); };
-  const subhead = { fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em" };
-  const cancelLink = { background: "none", border: "none", color: "var(--muted)", cursor: "pointer", fontSize: 14, fontWeight: 600, padding: 4 };
-  const copyLink = { background: "none", border: "none", color: "var(--brand-dark)", cursor: "pointer", fontSize: 13, fontWeight: 600, padding: 4, alignSelf: "flex-start" };
+  const subhead = { fontSize: 12.5, fontWeight: 700, fontFamily: "'Inter', sans-serif", color: "var(--brand)", textTransform: "uppercase", letterSpacing: ".05em" };
+  const copyLink = { background: "none", border: "none", color: "var(--brand-dark)", cursor: "pointer", fontSize: 13, fontWeight: 600, padding: 4 };
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="ds-card" style={{ maxWidth: 540, width: "92%", maxHeight: "88vh", overflowY: "auto" }} onClick={(e) => e.stopPropagation()}>
@@ -5075,12 +5074,12 @@ function InviteFirmModal({ me, onClose }) {
               </div>
             </div>
 
-            <div style={{ marginTop: 20 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, marginTop: 20, flexWrap: "wrap" }}>
+              <button onClick={() => copy(msg, "msg")} style={copyLink}>{copied === "msg" ? "Message copied!" : "Copy the message"}</button>
+              <div style={{ display: "flex", gap: 10 }}>
+                <button className="btn btn-secondary" onClick={onClose}>Cancel</button>
                 <button className="btn btn-primary" disabled={!emailValid} style={{ opacity: emailValid ? 1 : 0.4 }} onClick={send}><Icon name="mail" size={16} /> Send</button>
-                <button onClick={onClose} style={cancelLink}>Cancel</button>
               </div>
-              <button onClick={() => copy(msg, "msg")} style={{ ...copyLink, marginTop: 12 }}>{copied === "msg" ? "Message copied!" : "Copy the message"}</button>
             </div>
           </>
         )}
