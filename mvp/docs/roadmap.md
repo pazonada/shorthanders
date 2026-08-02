@@ -5,6 +5,29 @@ extend). Not commitments – a parking lot with enough detail to pick up later.
 
 ---
 
+## Scaling roadmap – the order we grow (Aud, 2026-08-01)
+
+Aud's intended scale sequence after the reduced-scope launch. Rough priority, not fixed dates:
+
+1. **Publish ratings + optional testimonials** – flip on the average score (**timeliness of
+   delivery + quality of transcription**, averaged into one headline number) and opt-in
+   testimonials, once there's enough paid-through-platform volume. Already designed and
+   collecting-early → see "Ratings + optional testimonials" below and `reviews_and_ratings.md`.
+   This note is the *display/publish* milestone of that already-spec'd feature.
+2. **Job board** – firms post full job details → reporters one-click "available/interested" → the
+   firm reviews interested reporters, messages, and hires, all through the existing messaging.
+   Detail below; builds on the applicant-pool design in
+   `governance-and-process/matching_applicant_pool_policy.md`.
+3. **Geographic expansion → ILLINOIS next, NOT Texas** – Texas is **deprioritized: it already has
+   its own similar site** (a competitor), so Illinois becomes the next state. This **reverses** the
+   earlier "Texas first" order in `state_expansion_checklist.md` and `marketing/growth_strategy.md`
+   (both updated). Mechanics of adding a state live in `state_expansion_checklist.md`.
+4. **DS-assigned matching (premium, opt-in tier)** – research seamless ways for *Dewey Sholes* to
+   match/assign a reporter to a firm's job (we review + assign, instead of the firm picking), likely
+   as a **new paid membership tier** people opt into and pay for. Detail below.
+
+---
+
 ## Favorite / save a reporter (firms) – ALREADY IN MVP, room to grow
 
 **What it is:** a firm marks a reporter to come back to later.
@@ -164,6 +187,49 @@ A dashboard number for BOTH sides showing money kept out of a middleman's hands 
   the feel-good hook ("you've kept $X from agencies").
 - **Consistency:** the homepage `MoneyComparison` already uses this same real invoice – so the
   dashboard metric extends that identical proof into the app (one story, landing page → daily use).
+
+## Job board (firm posts → reporters express interest → firm hires) – ROADMAP
+
+**What it is:** a law firm enters all the details of a job (proceeding type, date, location,
+services needed, turnaround, etc.) and publishes it to reporters. Reporters see relevant jobs and
+**indicate availability/interest with one click**. The firm then reviews the profiles of the
+reporters who expressed interest, messages them, and hires – **all through the messaging feature
+the site already has.**
+
+**Why it fits:** this is the demand→supply flow the reduced-scope MVP intentionally left out (it
+ships directory + messaging + payments). It reuses the existing messaging and profiles rather than
+adding a new comms surface, so it's an extension, not a rebuild.
+
+**Prior design to build on:** this is essentially the **applicant-pool review model** already
+spec'd in `governance-and-process/matching_applicant_pool_policy.md` (firm posts → CSRs apply during
+a turnaround-tier notification window → firm reviews profiles/prices live → selects one → CSR
+confirms availability). The retired "first-claim-wins" and "cascade/veto-window" variants are
+recorded there too; cascade is kept as a deferred fallback. Revive that spec when building this.
+
+**Open questions:** silent vs. explicit rejection comms; how a job post is filtered/notified to the
+right reporters (county coverage, work mode, services, languages); whether the job board is free or
+gated to a paid tier; how it coexists with the reporter-invites flywheel.
+
+## DS-assigned matching (premium, opt-in tier) – ROADMAP / RESEARCH
+
+**What it is:** instead of a firm browsing (or posting a job and picking), **Dewey Sholes reviews
+the job and assigns a specific reporter** – a done-for-you match. Likely a **new paid membership
+tier**: firms (and possibly reporters) opt in and pay for matching.
+
+**Why:** it removes the firm's search/vetting effort entirely – the highest-touch, highest-value
+version of the product, and a natural premium upsell above the $49 discovery subscription.
+
+**The hard part (flag):** this is close to the **concierge / booking-agent role we deliberately
+said NO to** ([[project_no_concierge_depos]] – "scheduling complexity is the blocker, not legal
+risk"). So the research is specifically: how to make assignment **seamless/automated** enough that
+it doesn't drag Dewey Sholes into manual scheduling and coordination on every job. Relates to the
+retired **auto-match / cascade** model (kept as a deferred fallback in the matching policy) and to
+**featured / promoted listings** (parking lot).
+
+**Open questions:** who pays (firm, reporter, or both)? how is "assign" done without DS taking on
+scheduling/coordination labor and liability – algorithmic match, or a human reviewing? how does it
+coexist with the self-serve directory + job board (do premium firms get all three)? neutrality /
+AB-5 §2778 implications of DS choosing the reporter rather than the parties choosing each other.
 
 ## Parking lot (mentioned, not yet scoped)
 - **Featured / promoted listings** – Rosie's earlier idea; a discovery surface, decided post-launch.

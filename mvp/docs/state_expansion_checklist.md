@@ -1,7 +1,8 @@
 # Adding a state (geography expansion checklist)
 
 Everything hardcoded to California, in one place, so a future expansion is a checklist, not a
-scavenger hunt. State priority order (Texas, Illinois, New Jersey, Georgia, Florida) and its
+scavenger hunt. State priority order – **Illinois first, then New Jersey, Georgia, Florida;
+Texas is deprioritized (it already has its own similar site)** (Aud, 2026-08-01) – and its
 rationale live in `../marketing/growth_strategy.md`. Created 2026-07-21.
 
 **Why a note and not a config switch:** wiring a geography abstraction now would be speculative

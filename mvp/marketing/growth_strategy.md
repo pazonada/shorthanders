@@ -78,17 +78,18 @@ directory to stand up), and reciprocity that widens the reporter pool. Don't reb
 expand – it's the same directory + reporter-pulled demand, re-pointed at a new state's roster.
 Verify licensing specifics per state before launch (see `../docs/state_expansion_checklist.md`).
 
-1. **Texas** – huge market, a similar CSR licensure model, and many freelance deposition
-   reporters. The cleanest first expansion (a licensing registry makes the directory cheap to
-   build).
-2. **Illinois** – 1,400+ licensed reporters, CSR licensure, and an especially strong Chicago
-   litigation market.
-3. **New Jersey** – a dense legal market wedged between NYC and Philadelphia, with reciprocal
+**Texas is DEPRIORITIZED (Aud, 2026-08-01):** despite its size, Texas **already has its own
+similar site** serving that market, so leading there means fighting an entrenched incumbent.
+Revisit only if that changes. Illinois is now the first expansion.
+
+1. **Illinois** – the next state. 1,400+ licensed reporters, CSR licensure, and an especially
+   strong Chicago litigation market, with no entrenched equivalent competitor (unlike Texas).
+2. **New Jersey** – a dense legal market wedged between NYC and Philadelphia, with reciprocal
    standards.
-4. **Georgia** – Atlanta is a major litigation hub, and Texas recognizes Georgia's certification
-   (reciprocity widens the cross-state reporter pool).
-5. **Florida** – enormous litigation volume, though its licensing rules differ somewhat from
-   Texas, so expect a messier data lift than the states above.
+3. **Georgia** – Atlanta is a major litigation hub; reciprocity with neighboring states widens
+   the cross-state reporter pool.
+4. **Florida** – enormous litigation volume, though its licensing rules differ somewhat, so
+   expect a messier data lift than the states above.
 
 ---
 *Companion docs: [README.md](README.md) · [firm_outreach_playbook.md](firm_outreach_playbook.md)
