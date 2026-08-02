@@ -265,8 +265,6 @@ function ReporterProfileEditor({ me }) {
 
   return (
     <div style={{ maxWidth: 720, display: "flex", flexDirection: "column", gap: 22 }}>
-      <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span>Prototype - changes save for this session so you can preview them on your public profile; they reset on reload.</span></div>
-
       <FieldBlock label="Profile photo" hint="A clear headshot helps firms recognize you. Optional.">
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <Avatar name={me.name} size={72} claimed photo={photo} />
