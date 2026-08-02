@@ -4700,7 +4700,10 @@ function ReporterDashboard() {
   const [tab, setTab] = useRouteTab("/reporter", ["overview", "profile", "payments", "invoices", "messages"], "overview");
   const [inviteOpen, setInviteOpen] = useState(false);
   // Returning from real Stripe onboarding lands here – treat the reporter as signed in.
-  useEffect(() => { if (window.location.hash.indexOf("stripe=connected") !== -1 && store.role !== "reporter") store.enterAsReporter(); }, []);
+  // Being on the reporter dashboard means you're acting as the reporter - set the role if it
+  // isn't already, so navigating straight here (no explicit login) still treats you as the owner
+  // on your own public profile (otherwise rates/edits look gated, as to an outside viewer).
+  useEffect(() => { if (store.role !== "reporter") store.enterAsReporter(); }, []);
   const me = useMemo(() => { const all = buildDirectory(); const base = all.find((x) => x.id === store.myCsr) || all.find((x) => x.claimed); return { ...base, ...store.myProfile }; }, [store.myCsr, store.myProfile]);
   const invoices = store.invoices;
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);
