@@ -177,12 +177,15 @@ function StoreProvider({ children }) {
   // The demo reporter's saved "accepting jobs" setting. Prototype stand-in for the one editable
   // profile field with cross-page display consequences; committed on Save, read by the profile.
   const [myAccepting, setMyAccepting] = useState(true);
+  // The demo reporter's saved profile edits (bio, rates, etc.). Prototype in-session persistence so
+  // the edit -> save -> "view public profile" loop actually reflects changes (resets on reload).
+  const [myProfile, setMyProfile] = useState({});
   const [pendingSave, setPendingSave] = useState(null);   // reporter id a logged-out visitor tried to save; applied after signup
   const [pendingMessage, setPendingMessage] = useState(null);  // reporter name a logged-out visitor tried to message; started after signup
   const [justJoined, setJustJoined] = useState(false);  // set on claim/signup finish so the dashboard greets first-timers with "Welcome" not "Welcome back"
 
   const store = {
-    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, pendingSave, pendingMessage, justJoined,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, myProfile, saveMyProfile: (patch) => setMyProfile((p) => ({ ...p, ...patch })), pendingSave, pendingMessage, justJoined,
     // A free firm searched a reporter's exact name or license number - unlock just that reporter.
     noteDirectMatch: (ids) => setDirectUnlocked((u) => { const add = ids.filter((id) => !u.includes(id)); return add.length ? [...u, ...add] : u; }),
     // Firm asks a reporter to invoice them (so payment happens on-platform); reporter fulfills it.

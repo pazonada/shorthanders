@@ -467,7 +467,9 @@ function ReporterProfile({ reporterId, invited }) {
   const all = useMemo(() => buildDirectory(), []);
   const [reqOpen, setReqOpen] = useState(false);
   const [reqSent, setReqSent] = useState(false);
-  const r = all.find((x) => x.id === reporterId);
+  const base = all.find((x) => x.id === reporterId);
+  // The reporter viewing their OWN profile sees their in-session edits (see saveMyProfile).
+  const r = base && store.role === "reporter" && base.id === store.myCsr ? { ...base, ...store.myProfile } : base;
   if (!r) return <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60 }}><h2>Reporter not found</h2><button className="btn btn-secondary" style={{ marginTop: 16 }} onClick={() => navigate("/directory")}>Back to directory</button></div></Page>;
 
   if (!r.claimed) return <UnclaimedProfile r={r} />;
@@ -481,7 +483,9 @@ function ReporterProfile({ reporterId, invited }) {
   // Rates show ONLY to a paying (Pro) firm member, plus the reporter's own preview, and only if the
   // reporter opted in (r.publishRates). Never to other reporters, free firms, or logged-out visitors.
   const canSeeRate = isOwner || (store.role === "firm" && store.firmPlan === "pro");
-  const rateLines = RATE_FIELDS.filter(([k]) => r.rates && r.rates[k]).map(([k, label]) => [label, r.rates[k]]);
+  // Prefer the reporter's own edited rate lines (from the profile editor); fall back to the
+  // structured sample rates for unedited/sample profiles.
+  const rateLines = (r.rateLines && r.rateLines.length) ? r.rateLines : RATE_FIELDS.filter(([k]) => r.rates && r.rates[k]).map(([k, label]) => [label, r.rates[k]]);
   const messageReporter = () => {
     if (store.role === "firm") { store.startConvoWith(r.name); navigate("/messages"); }
     else { store.queueMessage(r.name); navigate("/firm-signup"); }

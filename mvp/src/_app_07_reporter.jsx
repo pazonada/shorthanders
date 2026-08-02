@@ -39,7 +39,7 @@ function ReporterDashboard() {
   const [inviteOpen, setInviteOpen] = useState(false);
   // Returning from real Stripe onboarding lands here – treat the reporter as signed in.
   useEffect(() => { if (window.location.hash.indexOf("stripe=connected") !== -1 && store.role !== "reporter") store.enterAsReporter(); }, []);
-  const me = useMemo(() => { const all = buildDirectory(); return all.find((x) => x.id === store.myCsr) || all.find((x) => x.claimed); }, [store.myCsr]);
+  const me = useMemo(() => { const all = buildDirectory(); const base = all.find((x) => x.id === store.myCsr) || all.find((x) => x.claimed); return { ...base, ...store.myProfile }; }, [store.myCsr, store.myProfile]);
   const invoices = store.invoices;
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);
   const paidThisMonth = invoices.filter((i) => i.status === "paid").reduce((s, i) => s + i.amount, 0);
@@ -212,10 +212,11 @@ function ReporterProfileEditor({ me }) {
   const [rush, setRush] = useState(!!me.rush);
   // Draft, seeded from the saved value. Committed to the store on Save, then read by the profile.
   const [accepting, setAccepting] = useState(store.myAccepting);
-  const [showRates, setShowRates] = useState(false);
-  const [rates, setRates] = useState({ pageOriginal: { low: "", high: "" }, pageCopy: { low: "", high: "" }, halfDay: { low: "", high: "" }, fullDay: { low: "", high: "" }, trialDay: { low: "", high: "" }, expedited: { low: "", high: "" }, realtime: { low: "", high: "" } });
-  const [expUnit, setExpUnit] = useState("percent");
-  const [customRates, setCustomRates] = useState([]);
+  const [showRates, setShowRates] = useState(!!me.publishRates);
+  const blankRates = { pageOriginal: { low: "", high: "" }, pageCopy: { low: "", high: "" }, halfDay: { low: "", high: "" }, fullDay: { low: "", high: "" }, trialDay: { low: "", high: "" }, expedited: { low: "", high: "" }, realtime: { low: "", high: "" } };
+  const [rates, setRates] = useState(() => (me._rateDraft && me._rateDraft.rates) || blankRates);
+  const [expUnit, setExpUnit] = useState((me._rateDraft && me._rateDraft.expUnit) || "percent");
+  const [customRates, setCustomRates] = useState(() => (me._rateDraft && me._rateDraft.customRates) || []);
 
   const toggleIn = (setter) => (v) => setter((cur) => cur.includes(v) ? cur.filter((x) => x !== v) : cur.concat([v]));
   const setRate = (key) => (val) => setRates((r) => Object.assign({}, r, { [key]: val }));
@@ -228,9 +229,43 @@ function ReporterProfileEditor({ me }) {
     reader.readAsDataURL(f);
   };
 
+  // Format one rate line for the public profile: "$low–$high", "$one", or a % surcharge.
+  const rateStr = (v) => {
+    const lo = (v.low || "").toString().trim(), hi = (v.high || "").toString().trim();
+    if (!lo && !hi) return null;
+    return lo && hi ? "$" + lo + "–$" + hi : "$" + (lo || hi);
+  };
+  const expStr = (v) => {
+    const lo = (v.low || "").toString().trim(), hi = (v.high || "").toString().trim();
+    if (!lo && !hi) return null;
+    if (expUnit !== "percent") return rateStr(v);
+    return lo && hi ? lo + "%–" + hi + "%" : "+" + (lo || hi) + "%";
+  };
+  const buildRateLines = () => [
+    ["Transcript – original (per page)", rateStr(rates.pageOriginal)],
+    ["Transcript – copy (per page)", rateStr(rates.pageCopy)],
+    ["Appearance – half day", rateStr(rates.halfDay)],
+    ["Appearance – full day", rateStr(rates.fullDay)],
+    ["Trial day", rateStr(rates.trialDay)],
+    ["Expedited / rush", expStr(rates.expedited)],
+    ["Realtime / rough draft add-on", rateStr(rates.realtime)],
+  ].concat(customRates.map((c) => [(c.label || "").trim(), rateStr({ low: c.low, high: c.high })]))
+   .filter(([label, val]) => label && val);
+
+  const saveProfile = () => {
+    const rateLines = buildRateLines();
+    store.saveMyProfile({
+      photo, bio, yearsExp: years, proceedings, services, specialties: areas, languages,
+      certifications: ["CSR #" + me.csrNumber].concat(certs), coverage, otherStates, notary, rush,
+      publishRates: showRates, rateLines, _rateDraft: { rates, expUnit, customRates },
+    });
+    store.setMyAccepting(accepting);
+    setToast("Profile saved");
+  };
+
   return (
     <div style={{ maxWidth: 720, display: "flex", flexDirection: "column", gap: 22 }}>
-      <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span>Prototype - your edits here aren't saved yet. This shows how editing your profile will work.</span></div>
+      <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span>Prototype - changes save for this session so you can preview them on your public profile; they reset on reload.</span></div>
 
       <FieldBlock label="Profile photo" hint="A clear headshot helps firms recognize you. Optional.">
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
@@ -283,7 +318,7 @@ function ReporterProfileEditor({ me }) {
             <RateRow label="Half day - appearance" unit="$ per half day" value={rates.halfDay} onChange={setRate("halfDay")} />
             <RateRow label="Full day - appearance" unit="$ per day" value={rates.fullDay} onChange={setRate("fullDay")} />
             <RateRow label="Trial day" unit="$ per day" value={rates.trialDay} onChange={setRate("trialDay")} />
-            <RateRow label="Expedited / rush" unit={expUnit === "percent" ? "% surcharge on base rate" : "$ per page"} value={rates.expedited} onChange={setRate("expedited")} extra={<select className="ds-input" style={{ width: 128 }} value={expUnit} onChange={(e) => setExpUnit(e.target.value)}><option value="percent">% surcharge</option><option value="perpage">Per page</option></select>} />
+            <RateRow label="Expedited / rush" unit={expUnit === "percent" ? "% surcharge on base rate" : "$ per page"} value={rates.expedited} onChange={setRate("expedited")} extra={<select className="ds-input" style={{ width: 162 }} value={expUnit} onChange={(e) => setExpUnit(e.target.value)}><option value="percent">% surcharge</option><option value="perpage">Per page</option></select>} />
             <RateRow label="Realtime / rough draft add-on" unit="$ per page or day" value={rates.realtime} onChange={setRate("realtime")} />
             {customRates.map((cr, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
@@ -300,7 +335,7 @@ function ReporterProfileEditor({ me }) {
       </div>
 
       <div style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
-        <button className="btn btn-primary" onClick={() => { store.setMyAccepting(accepting); setToast("Profile saved"); }}><Icon name="check" size={16} /> Save changes</button>
+        <button className="btn btn-primary" onClick={saveProfile}><Icon name="check" size={16} /> Save changes</button>
         <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--brand)", cursor: "pointer", fontSize: 14, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 6, padding: 0 }}><Icon name="eye" size={15} /> View public profile</button>
       </div>
       <Toast msg={toast} onClose={() => setToast("")} />
