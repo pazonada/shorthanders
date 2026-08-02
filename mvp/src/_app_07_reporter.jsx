@@ -327,7 +327,7 @@ function ReporterProfileEditor({ me }) {
                 <button type="button" onClick={() => setCustomRates(customRates.filter((_, j) => j !== i))} aria-label="Remove rate" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", display: "flex" }}><Icon name="x" size={16} /></button>
               </div>
             ))}
-            <div><button className="btn btn-secondary" onClick={() => setCustomRates(customRates.concat([{ label: "", low: "", high: "" }]))}><Icon name="plus" size={15} /> Add another rate</button></div>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}><button type="button" onClick={() => setCustomRates(customRates.concat([{ label: "", low: "", high: "" }]))} style={{ background: "none", border: "none", color: "var(--brand-dark)", cursor: "pointer", fontSize: 13, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 5, padding: "4px 2px" }}><Icon name="plus" size={14} /> Add another rate</button></div>
           </div>
         ) : null}
       </div>
