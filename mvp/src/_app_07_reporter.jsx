@@ -74,11 +74,9 @@ function ReporterDashboard() {
       {tab === "overview" && (
         <>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 18 }}>
-          <StatCard icon="dollar" label="Paid this month" value={"$" + paidThisMonth.toLocaleString(undefined, { minimumFractionDigits: 2 })} tone="sage" />
-          <StatCard icon="star" label="Saved" value={"~$" + estSavedVsAgency.toLocaleString()} sub="Estimated savings compared to working with an agency" />
-          <StatCard icon="clock" label="Outstanding" value={"$" + outstanding.toLocaleString(undefined, { minimumFractionDigits: 2 })} tone="ochre" />
-          <StatCard icon="eye" label="Profile views (30d)" value={me.views} tone="brand" />
-          <StatCard icon="message" label="Unread messages" value={unread} tone="plum" onClick={() => setTab("messages")} />
+          <StatCard icon="dollar" label="Paid this month" value={"$" + paidThisMonth.toLocaleString(undefined, { minimumFractionDigits: 2 })} sub={"Est. ~$" + estSavedVsAgency.toLocaleString() + " saved vs. an agency"} />
+          <StatCard icon="invoice" label="Outstanding" value={"$" + outstanding.toLocaleString(undefined, { minimumFractionDigits: 2 })} sub="Invoiced, awaiting payment" />
+          <StatCard icon="eye" label="Profile views (30d)" value={me.views} sub={(me.saves || 0) + " firms saved your profile"} />
 
           <div className="ds-card" style={{ gridColumn: "1 / -1", marginTop: 20, display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
             <div style={{ width: 46, height: 46, borderRadius: 12, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="mail" size={22} /></div>
