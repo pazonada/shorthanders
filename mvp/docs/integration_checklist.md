@@ -63,8 +63,17 @@ Two serverless stubs already exist and fall back to demo behavior:
 - [ ] **Reporter payouts – Stripe Connect** (`ClaimFlow` step 2) – real Express/Connect
   onboarding: identity/KYC, bank account, W-9. The "Continue to Stripe" button already calls
   `api/connect/create-account`; wire the real account link + redirect back.
-- [ ] **Invoicing / getting paid** (`InvoiceDetail` in `_app_08_invoices.jsx`) – real payment
-  links / hosted invoices accepting **card and ACH**. Already calls `api/pay/create-payment-link`.
+- [ ] **Invoicing / getting paid** (`InvoiceBuilder` + `InvoiceModal` in `_app_08_invoices.jsx`;
+  the old `InvoiceDetail` was replaced 2026-08-04) – real payment links / hosted invoices accepting
+  **card and ACH**. Already calls `api/pay/create-payment-link`. **Persist the invoice line-item
+  shape**, which now carries a **metered-vs-flat distinction**: metered lines store `{desc, qty,
+  rate}` (per-page work), flat lines store `{desc, flat:true, amount}` (one-off fees – appearance,
+  minimum, expedited); the builder/document/receipt all key off `flat`. Also persist `payLink`,
+  `paidAt`, and `method`. The reporter's own saved profile **rates pre-fill** the builder's rate
+  cells (Tier 1, via `rateKey`→`RATE_FIELDS`); **Tier 2 deferred** = a percentage-surcharge
+  calculator (rush/expedited as % of subtotal), kept manual for now. Viewing any invoice/payment is
+  a **shared modal** (reporter Payments/Invoices + firm Invoices), printable as a receipt (green
+  PAID stamp); drafts open the editable builder. See the state-model notes in `palette.md`/build.
 - [ ] **Gate Connect onboarding at FIRST INVOICE (decided 2026-07-30), not at claim.** Keep
   listing/claim friction-free (no KYC just to appear in the directory); require the reporter to
   complete Express/Connect onboarding the first time they **send** an invoice / accept payment.
