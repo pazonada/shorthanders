@@ -136,10 +136,25 @@ Two serverless stubs already exist and fall back to demo behavior:
     (see the deliverability discipline in `open_strategic_decisions.md` §4). Contains the reporter's
     message + the personalized `/#/invite/<id>` link + create-account CTA. Firm name is now optional;
     only a valid email is required to send. Also wire the invoice/payment-link email.
-- [ ] **CSR outreach campaign** – the one-time claim invite to the 5,145 independent CSRs
-  (`mvp/docs/csr_email_outreach.md`, `data/email_campaign.csv`). Either send via a mail-merge
-  tool (GMass/YAMM through Workspace) or programmatically (Resend) – domain auth (SPF/DKIM/
-  DMARC), warm-up, drip, CAN-SPAM basics.
+- [ ] **CSR outreach campaign** – the claim invite to the ~5,145 independent CSRs (`mvp/docs/
+  csr_email_outreach.md`, `data/email_campaign.csv`), recurring per state as we expand.
+  **Send via a Google Workspace mail-merge tool (GMass / YAMM / Mailmeteor) – NOT Resend or
+  Postmark.** Both ESPs' acceptable-use policies prohibit cold/unsolicited/scraped-list email and
+  will suspend the account (which would also take down transactional sending on the same domain).
+  The mail-merge tool sends from a real Workspace mailbox and manages the email **unsubscribe**
+  (one-click header + auto suppression). Requirements: a **dedicated outreach identity** (ideally an
+  `outreach.`/`go.` subdomain, or at minimum a non-primary address) so a rough campaign can't torch
+  the primary domain's reputation; its own SPF/DKIM/DMARC; validate the list first (low bounces);
+  **warm up + drip over days**, not big same-day batches; CAN-SPAM (physical address + honored
+  opt-out). **Transactional app email stays on Resend** (invites-accepted, invoices, receipts,
+  notifications) – that's permission-based and AUP-fine.
+- [ ] **"Remove my unclaimed listing" requests – a SEPARATE, data-side flow** (not an email-tool or
+  CRM job). A reporter asking to be taken off the directory is a data request, not an email
+  unsubscribe: a link to `support@deweysholes.com` (or a small form) → flag that reporter as
+  **suppressed / do-not-list** in the directory data → the **quarterly CRB refresh must honor the
+  suppression** so they aren't re-added on the next sync (see `roster_refresh_policy.md`). Handle
+  manually while solo; build a one-tap request link on unclaimed profiles when the backend lands.
+  HubSpot is **not** the tool for this (it's a sales CRM, not the directory DB) – don't add it.
 - [ ] **In-app messaging** (`MessagingPage`, `_app_09_messaging.jsx`) – persist threads and make
   them real-time (Supabase Realtime). Async threads, not live chat.
 - [ ] **Notifications** – new message, invoice paid, invite accepted, favorite job alerts.
