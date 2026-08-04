@@ -150,6 +150,42 @@ This is the highest-leverage UX surface. Take the time.
 - **Open question C:** How do you feel about the "Additional expertise" free-text field vs. the standardized specialty checkboxes? Which would you actually fill out?
 - What's missing from this profile that would make you more comfortable / more useful?
 
+**Invoice builder + getting paid (12-15 min) – HIGH PRIORITY, go slow**
+
+The core "get paid" surface in the reduced-scope prototype. Walk it with the reporter's own
+real billing in mind: the Payments tab, the Invoices tab, starting a new invoice (template pick →
+builder → line items → surcharges → preview → send), and the shared invoice modal / paid receipt.
+Do **not** over-explain – have them narrate what they'd do and where it doesn't match their world.
+Several of these are **live design questions** we're deciding right now, so their instinct matters.
+
+- First: walk me through how you invoice today. What tool? What does a typical invoice look like –
+  which line items, in what order, and what does the firm expect to see?
+- **Open question K – the fields.** Do the invoice fields match how you actually bill? What's
+  missing, what's extra? (Probe: matter/case reference, service vs. delivery date, terms/due date,
+  tax, your license/cert on the face of the invoice, remit-to, PO number.)
+- **Open question L – the math (metered vs. flat).** For each line, does "quantity × rate" fit, or
+  is it a single flat fee? Which of your items are truly per-page (need a page count) vs. one-off
+  fees (appearance/per-diem, minimum, certification, expedited)? Should we **hide the quantity on
+  flat-fee lines** so a minimum fee can't get multiplied? Are any of yours per-hour (realtime,
+  waiting) or per-mile (travel) – i.e. metered but not per-page?
+- **Open question M – rate prefill.** We can pre-fill each line's rate from the rates on your
+  profile. Helpful, or would you rather type it fresh? Do your rates vary enough by job / attorney /
+  county that a saved default would be wrong more often than right?
+- **Open question N – surcharges & templates.** Are the surcharge add-ons (realtime, expedited,
+  rough draft, travel, waiting time) the right set? What else do you add? Would you use saved
+  templates, and do the per-regime starters (deposition / workers' comp / court-audio) match how you
+  think about jobs?
+- **Open question O – expedited / rush.** How do you actually bill rush – a flat fee, a per-page
+  bump, or a percentage of the transcript? (We keep it manual today; this decides whether we build a
+  percentage calculator.)
+- **Open question P – the receipt / paid state.** Show a paid invoice (the modal + green PAID stamp +
+  Print). Is this a good enough receipt for you and for the firm's records? Do you need to print /
+  PDF / email it? Anything an attorney's accounts-payable would demand that isn't here?
+- **Open question Q – routing payment through us.** Your fee comes out of the payment (2% / 5%); the
+  firm sees only what you billed. Does that model make sense? Would you route real payments through
+  here instead of your current method – and what would stop you?
+- What's missing from the invoicing flow that you'd need on day one?
+
 **Available jobs + Apply flow (10-12 min)**
 
 Show the CSR dashboard – Available jobs tab. Frame: "When firms post orders, qualified reporters see them here. Click Apply on the ones you want; the firm reviews everyone who applied and picks one."
