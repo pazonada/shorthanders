@@ -72,3 +72,62 @@ engineering-support plan. Owner tags: **YOU** (decision) · **CLAUDE** (I scaffo
 **Rough dependency order:** M0 → M1 → (M2, M3) → M4/M5 → M6/M7 → **M8 gates real money** → M9 → launch.
 Most of M1/M4 is where a human ENGINEER should own or review (auth, money, webhooks); Claude can
 scaffold everything and own M6/M7 and the frontend wiring.
+
+---
+
+# Engineer scope brief (shareable – forward this section)
+
+*What a solo, non-technical founder needs a human engineer for on this build. The AI assistant
+(Claude) writes and wires almost all of the code and the whole frontend. A human is needed for the
+few areas where a bug is **invisible and expensive** — it fails silently (the screen says "success"
+while money went nowhere or data is exposed via an API the UI never shows), so it can't be caught by
+looking at the site. This is a **bounded, hours-not-months** engagement: design the risky pieces up
+front, then review + edge-test before real money turns on.*
+
+**Stack:** React (single-file prototype today) · **Supabase** (auth + Postgres + Realtime) ·
+**Stripe Connect** (marketplace payouts + application fees + subscriptions) · **Resend** (email) ·
+Vercel serverless functions. Two-sided marketplace: **court reporters** (get paid) and **law firms**
+(pay + discover). Ideal reviewer has shipped a **two-sided marketplace on Supabase + Stripe Connect**
+— that exact combo moves ~5× faster than a generalist and knows the footguns.
+
+### The 3 review areas (with where to look + rough senior-hours)
+
+1. **Auth + data access — risk: a data leak.** ~**3–6 h**.
+   - Design/review **Supabase Row-Level Security (RLS)** policies — the client queries the DB
+     directly, so wrong RLS = anyone can pull reporter PII / other firms' invoices. (This project
+     already had one PII leak; keep it from recurring.)
+   - Confirm the **paywall gates are enforced server-side, not just in the UI**: the "free firms
+     can't see claimed profiles" gate (`firmLocked()` in `src/_app_05_directory.jsx`) and "rates
+     only to Pro firms" (`canSeeRate` same file). UI-only = bypassable = the whole business model
+     leaks. Auth/session/role flows: `src/_app_11_router.jsx` (StoreProvider), `_app_03_shell.jsx`
+     (LoginModal), `_app_06_claim.jsx` (signup).
+2. **Payments — Stripe Connect — risk: money misrouted or your fee lost.** ~**6–12 h** (the meatiest).
+   - Review the Connect integration: each payment routes to the right reporter's connected account
+     and takes the platform **application fee (2% Pro / 5% Free)** — the current send call
+     (`src/_app_08_invoices.jsx` → `api/pay/create-payment-link`) omits `connectedAccountId` +
+     `application_fee_amount`, so as-wired the money wouldn't route or the fee wouldn't be taken.
+     Also: **idempotency** (no double-charge on retries), failures/disputes, Connect onboarding
+     gated at first invoice (`api/connect/create-account`), and the test→live cutover.
+3. **Webhooks — risk: silent failure + a security hole.** ~**2–4 h**.
+   - Verify webhook handlers **check the Stripe signature** (without it, anyone can POST a fake
+     "payment succeeded" and mark invoices paid), are **idempotent**, and actually update the DB
+     with retries. Same discipline for Resend delivery/bounce webhooks (so "the email didn't send"
+     is visible, not silent).
+   - **Plus ~3–5 h** end-to-end edge-testing in Stripe + Resend **TEST mode** before go-live (M9).
+
+**Rough total:** ~**15–25 hours of senior time**, spread across the build — not a full-time hire.
+
+### Engagement shapes (cheapest first)
+- **Review-only** (cheapest): Claude builds it; the human **reviews** the flows above + the RLS. A
+  review costs far less than a build. Best default.
+- **Setup + review:** the human sets up RLS + Stripe Connect + webhooks, reviews the rest. Fixed-fee
+  or hourly.
+- **On-call buddy** (separate, small retainer/favor): someone reachable when production breaks — the
+  founder is solo and non-technical. See `governance-and-process/engineering_support_plan.md` for the
+  fuller "where a human is needed" picture (Year-1 budget ballpark $21–36k).
+
+### The ask, in one line
+*"Claude builds it all in test mode. I need a senior engineer with Supabase + Stripe Connect
+marketplace experience to (a) design/review the RLS + payment architecture up front and (b) review +
+edge-test the auth, payments, and webhook code before real money turns on — roughly 15–25 hours.
+Who should I hire, and does anyone in your network fit?"*
