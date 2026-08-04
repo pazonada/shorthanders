@@ -173,6 +173,14 @@ Two serverless stubs already exist and fall back to demo behavior:
   opt-in toggle appears once any rate is entered); persist both and add the same builder+toggle to the
   dashboard profile editor. Keeping DS rate-neutral (opt-in, firm-only) also supports the
   reporter-independence / AB-5 §2778 argument.
+  - **Store rates as number + unit, not display strings.** The prototype saves rates as free-text
+    (`"$4.50"`, `"$1.25/pg"`, `"+50%"`), and the invoice builder's rate-prefill (Tier 1) parses them
+    back to numbers at use time (`parseRate` in `_app_08_invoices.jsx`). When persisting for real,
+    store a numeric value + a unit/type (per-page $, per-diem $, hourly $, or **percentage** for
+    rush/expedited) so the invoice builder and any future surcharge calculator don't have to parse
+    text. The builder pre-fills a line's rate from the reporter's own saved rate where the template
+    line maps to one (`rateKey` → `RATE_FIELDS`); **Tier 2 (deferred):** a percentage-surcharge
+    calculator (expedited/rush computed off the transcript subtotal) – kept manual for now.
 - [ ] **Work mode + location filtering (added 2026-07-30).** The claim form now captures a
   **work mode** (`workMode`: "both" = in person and remote, or "remote" = remote only), an editable
   **city/county** (prefilled from the CRB record), in-person **coverage counties** (only when
