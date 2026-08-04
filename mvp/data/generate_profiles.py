@@ -7,12 +7,34 @@ Sholes (the "Invite this reporter" flow), never by exposing the address. The rea
 in the source pull (crb_all_raw.json, not deployed) and, later, the backend. Must match the JS
 maskEmail() in _app_05_directory.jsx.
 """
-import json, os, re
+import json, os, re, csv
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = "/Users/audubondougherty/Desktop/AI_experiments/dewey-sholes"
 rows = json.load(open(os.path.join(HERE, "crb_all_raw.json")))
 ACTIVE = {"Active", "Active (Pending Renewal)"}
+
+def load_suppressed():
+    """License numbers of reporters who asked to be removed from the directory (data/
+    suppressed_csrs.csv, first column = license number). Applied on EVERY build and every
+    quarterly CRB refresh, so a removed reporter is never re-added on the next data pull."""
+    path = os.path.join(HERE, "suppressed_csrs.csv")
+    if not os.path.exists(path):
+        return set()
+    out = set()
+    with open(path, newline="") as f:
+        for row in csv.reader(f):
+            if not row:
+                continue
+            cell = row[0].strip()
+            if not cell or cell.startswith("#"):
+                continue
+            if cell.lower() in {"csrnumber", "license", "licensenumber", "license number", "license#"}:
+                continue  # header row
+            out.add(cell)
+    return out
+
+SUPPRESSED = load_suppressed()
 
 def tc(s):
     if not s:
@@ -51,10 +73,15 @@ def county_clean(c):
     return ""                                             # numeric codes, "CA", typos -> unknown
 
 recs = []
+suppressed_count = 0
 for r in rows:
     if "Certified Shorthand Reporter" not in (r.get("LicenseTypeName") or ""):
         continue
     if r.get("LicenseStatusTypeName") not in ACTIVE:
+        continue
+    csrNumber = str(r.get("LicenseNumber") or "")
+    if csrNumber in SUPPRESSED:                 # reporter asked off the directory -> skip
+        suppressed_count += 1
         continue
     state = (r.get("IFNULL(Addr.StateCode, '')") or "").strip().upper()
     county = county_clean(r.get("CountyName"))
@@ -66,7 +93,7 @@ for r in rows:
         "Steno Machine Writer, Voice Writer": "Machine & Voice",
     }.get((r.get("CertificationMethod") or "").strip(), "")
     recs.append({
-        "csrNumber": str(r.get("LicenseNumber") or ""),
+        "csrNumber": csrNumber,
         "name": tc(r.get("Name")),
         "city": tc(r.get("City")),
         "county": county,
@@ -86,3 +113,4 @@ with open(out, "w") as f:
 print(f"Wrote {len(recs)} active CSRs -> {out}  ({os.path.getsize(out)//1024} KB)")
 blank_county = sum(1 for r in recs if not r["county"])
 print(f"  blank county after cleaning: {blank_county}")
+print(f"  removed by suppression list: {suppressed_count} (of {len(SUPPRESSED)} listed)")
