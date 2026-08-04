@@ -115,6 +115,8 @@ a terms-of-service review (`legal_question_deposition_neutrality.md`, `open_stra
 - `integration_checklist.md` – prototype fakes → real wiring.
 - `accounts_and_infrastructure.md` – **every account/service (entity, DBA, domain, Resend,
   GitHub, Vercel, Supabase, Stripe, trademark), its state, and what to do with it.** **NEW 2026-08-04.**
+- `build_phase_plan.md` – **the sequenced backend build (M0–M9, dependency order, owner tags)** for
+  the "Rosie clears the name → build" branch; complements `integration_checklist.md`. **NEW 2026-08-04.**
 - `launch_prep.md` – **the launch to-do list** (plain language, phased, marked YOU / CLAUDE /
   ENGINEER / LAWYER). Pairs with `scripts/preflight.py`, which checks the built page's
   metadata, share tags, and leftovers before any public deploy. **NEW 2026-07-21.**

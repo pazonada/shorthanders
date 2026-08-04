@@ -113,6 +113,35 @@ per-person):**
 3. Run `bash build.sh`, commit, push → the live directory no longer shows them.
 - You can do this yourself, or hand Claude the license numbers and say "add these and redeploy."
 
+### Google Form – exact spec (build this before the first send)
+
+**Form title:** "[Brand] – remove my listing" · **Description:** "Ask us to take your public listing
+off the directory and/or stop emailing you. We'll process it within a few business days."
+
+**Fields:**
+1. **License number** – short answer, **required**. (This is the key the build matches on; it's
+   pre-filled by the personalized link below, so the reporter just confirms.)
+2. **Full name** – short answer, required (verification).
+3. **Email** – short answer, required (confirmation + adds them to the email-suppression list).
+4. **What would you like?** – multiple choice, required: *Remove my listing from the directory* /
+   *Stop emailing me* / *Both.* (Captures which of the two suppressions they want.)
+5. **Anything else? (optional)** – long answer.
+
+**Settings:** responses → a linked **Google Sheet** (the durable record); **don't require sign-in**
+(reporters won't all have Google accounts); confirmation message = "Thanks – you'll be removed within
+[X] business days." Keep the Sheet columns aligned so column A can export straight to
+`data/suppressed_csrs.csv` (license number first).
+
+**The personalized link (per reporter):** Google Forms supports **pre-filled URLs** – build one per
+reporter with their license number (and name/email) already filled in, using the mail-merge tool's
+merge fields. Format: `…/viewform?entry.<licenseFieldId>={{LicenseNumber}}&entry.<nameFieldId>={{Name}}`.
+The email's "Remove my listing" link points at each reporter's own pre-filled URL, so a removal is
+one tap and self-identifying (no manual email→license lookup).
+
+**Two suppressions from one form:** a "directory" or "both" answer → `suppressed_csrs.csv` (rebuild).
+Any answer that includes "stop emailing" (or "both") → the mail-merge tool's unsubscribe list. A
+directory removal always implies email-suppression too.
+
 ## Authenticate your sending domain (SPF, DKIM, DMARC)
 The single biggest lever for staying out of spam. Do this before any real volume.
 - **Send from your own domain, not `@gmail.com`.** You can't set these records for gmail.com
