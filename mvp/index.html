@@ -5449,14 +5449,16 @@ function InvoiceDocument({ reporterName, reporterSub, invoiceId, client, matter,
           {reporterSub ? <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>{reporterSub}</div> : null}
         </div>
         <div style={{ textAlign: "right" }}>
-          <div style={{ fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".08em" }}>Invoice{invoiceId ? " · " + invoiceId : ""}</div>
+          <div style={{ fontSize: 12, fontWeight: 700, color: "var(--brand)", textTransform: "uppercase", letterSpacing: ".08em" }}>Invoice{invoiceId ? " · " + invoiceId : ""}</div>
           <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>Issued {date || "–"}</div>
           <div style={{ fontSize: 13, color: "var(--muted)" }}>Due {due || "–"}</div>
-          {paid ? <div style={{ display: "inline-block", marginTop: 8, border: "2px solid var(--sage-deep)", color: "var(--sage-deep)", borderRadius: 7, padding: "3px 11px", fontSize: 13, fontWeight: 800, letterSpacing: ".1em", transform: "rotate(-3deg)" }}>PAID</div> : null}
+          {/* PAID stamp is deliberately GREEN - the universal paid convention (Aud, 2026-08-03).
+              An intentional exception to the "never green" palette rule; see docs/palette.md. */}
+          {paid ? <div style={{ display: "inline-block", marginTop: 8, border: "2px solid #16A34A", color: "#15803D", borderRadius: 7, padding: "3px 11px", fontSize: 13, fontWeight: 800, letterSpacing: ".1em", transform: "rotate(-3deg)" }}>PAID</div> : null}
         </div>
       </div>
       <div style={{ padding: "20px 28px", borderBottom: "1px solid var(--rule)" }}>
-        <div style={{ fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 4 }}>Bill to</div>
+        <div style={{ fontSize: 12, fontWeight: 700, color: "var(--brand)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 4 }}>Bill to</div>
         <div style={{ fontSize: 15, color: "var(--ink)" }}>{client || "–"}</div>
         {matter && matter !== "–" ? <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 2 }}>Matter: {matter}</div> : null}
       </div>
@@ -5474,8 +5476,11 @@ function InvoiceDocument({ reporterName, reporterSub, invoiceId, client, matter,
         <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 28, color: "var(--ink)" }}>${(total || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
       </div>
       {paid ? (
-        <div style={{ padding: "14px 28px 22px", fontSize: 13, color: "var(--muted)", display: "flex", alignItems: "center", gap: 8 }}>
-          <Icon name="check" size={16} style={{ color: "var(--sage-deep)", flexShrink: 0 }} /> Paid{method ? " by " + method : ""}{paidAt ? " on " + paidAt : ""} · via Stripe, powered by Dewey Sholes
+        <div style={{ padding: "16px 28px 22px" }}>
+          <div className="banner banner-ok" style={{ marginBottom: 0 }}>
+            <Icon name="check" size={18} style={{ color: "var(--brand-dark)", flexShrink: 0 }} />
+            <div><strong style={{ color: "var(--ink)", fontWeight: 600 }}>Paid in full.</strong>{method ? " By " + method : ""}{paidAt ? " on " + paidAt : ""} · via Stripe, powered by Dewey Sholes.</div>
+          </div>
         </div>
       ) : showPayBar ? (
         <div style={{ padding: "18px 28px 24px" }}>
@@ -5540,7 +5545,7 @@ function InvoiceModal({ inv, viewer, onClose }) {
                 <button className="btn btn-primary" onClick={payNow}><Icon name="dollar" size={16} /> Pay now</button>
               </div>
             ) : (
-              <div className="ds-note" style={{ marginBottom: 0 }}><Icon name="check" size={15} style={{ flexShrink: 0, color: "var(--sage-deep)" }} /><span>This invoice is paid. Use Print to save a copy for your records.</span></div>
+              <div className="ds-note" style={{ marginBottom: 0 }}><Icon name="printer" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span>Use Print to save a copy of this receipt for your records.</span></div>
             )}
           </div>
         </div>

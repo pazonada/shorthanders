@@ -39,8 +39,11 @@ and are banned from banners, pills, and status chips.
   attention CTA card** (see "Acid-yellow CTA card" below). Reserve acid-yellow *fill* for these two;
   everywhere else it's a micro-accent, never a page/section background.
 - **error** – red `#DC2626`. Failures, destructive confirms.
-- **The one green allowed:** the tiny "Recently active" **status dot** (`#22C55E`) – a universal
-  online/active convention Aud asked for. Green appears nowhere else.
+- **Green is allowed in exactly two spots**, both universal conventions Aud asked for – nowhere else:
+  1. the tiny "Recently active" **status dot** (`#22C55E`);
+  2. the **"PAID" stamp on an invoice/receipt** (`#16A34A` border, `#15803D` text) – the paid-in-full
+     rubber-stamp convention (added 2026-08-03). Note the paid *notification* banner stays **indigo**
+     (`.banner-ok`, positive/status); only the stamp glyph itself is green.
 
 ### Acid yellow – accents, the warning notice, and the CTA card
 
