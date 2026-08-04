@@ -265,6 +265,11 @@ Do it early (per Jay Hariani's "instrument usage data now").
   directory search, profile view (claimed vs public), invite sent/accepted, save, message sent,
   invoice created/paid, plan upgrade. This raw log feeds recommendations + persona analysis.
   Supabase **stores** it but does not build personas for you – that's analysis on top.
+- [ ] **Email engagement + signup-source attribution** – fold open/click/delivery/bounce events from
+  Resend (transactional) and the mail-merge tool (CSR campaign) into the same events log, and stamp
+  every signup with its **source** (reporter-invite link vs. direct/organic vs. campaign). This is
+  what answers "how many opened our emails," "invited-by-a-reporter vs. signed up on their own," and
+  campaign→claim conversion. It's behavior data – it lives in Supabase/PostHog, **not** a CRM.
 - [ ] **Recommendations** – derive "suggested for your firm" from this behavior (paid > saved >
   messaged), labeled with the reason. See the directory-personalization direction
   (`project_directory_personalization` in memory): validate with lawyers first; shelved for build.

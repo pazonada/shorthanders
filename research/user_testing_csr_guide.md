@@ -220,6 +220,16 @@ Show mockup: card with the CSR's name, license number, profile QR code, "Find me
 - What would you want the card to say?
 - *(If they don't already hand out business cards – survey Q5d) Would this change that?*
 
+**Reaching firms directly (roadmap probe, 3-4 min)**
+
+- **Open question S:** Today firms find and message reporters. Would you want it the other way too –
+  **browse profiles of law firms that have signed up, and message them directly to pitch your
+  services**? Walk me through when you'd actually use that. *(Roadmap item – "reverse discovery."
+  Listen for: is proactively pitching firms something CSRs do or want, or does it feel like
+  cold-selling that's beneath them / against etiquette? Which firms would they reach out to – ones
+  they know, or new ones? Does having it change how valuable the platform is to them? Validate
+  before building, same as the firm-side personalization direction.)*
+
 **Anything missing (3-5 min)**
 
 - Walk me through what you'd expect to be able to do on this site on a typical work day. Does what we've shown you cover it?
