@@ -11,8 +11,10 @@ Built 2026-08-04 from the individual profiles in this folder. Prices are working
   payment happens off-platform. They are **free to list** (a free base tier) and monetize the supply
   side via **paid featured/placement upgrades** – i.e. charging reporters to *be found*, before firm
   demand is proven. A fragile sequencing. **Note:** "free to list" is table stakes across this whole
-  segment – it is NOT a DS differentiator; DS's wedges are on-platform payment + messaging + day-one
-  CA completeness + rate transparency.
+  segment – it is NOT a DS differentiator; DS's real wedges are on-platform payment + messaging + day-one
+  CA completeness. A **softer** add is **optional reporter-set rate visibility** – but it's opt-in
+  per reporter (`publishRates`) AND shown only to paying Pro firms, so it's a capability others lack,
+  not blanket "rate transparency." Don't oversell it.
 - **Transaction platforms *without* a complete directory** – eCourt Reporters, AppearMe, Steno. They
   handle the money, but reporters must sign up one by one; there's no day-one full roster.
 - **Dewey Sholes does both** – a complete, public-data-seeded directory **and** on-site transactions.
