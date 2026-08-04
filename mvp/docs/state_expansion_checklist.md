@@ -56,15 +56,19 @@ Grep: `grep -rn "CSR" mvp/src/`.
     data is unusually generous - it includes reporter emails (5,702 of 5,705), which is what makes
     our cold-email claim campaign possible. Other states may publish the *roster* (name / license /
     city, so the directory itself can be built) but NOT contact info:
-    - **Texas (JBCC):** public searchable roster exists, but *personal contact information is
-      exempt from public disclosure* (Rule 12.5(d), Rules of Judicial Administration). So expect
-      names/licenses but likely **no emails** - the CSR email campaign may not transfer to TX.
-    - **Illinois (IDFPR):** licenses CSRs; a public license lookup and downloadable active-license
-      reports exist, but whether they include email/contact is unconfirmed - verify before
-      counting on email outreach.
-    - Implication: in states without published emails, lean harder on the Facebook / organic /
-      reporter-referral channels to get reporters to claim, since cold email won't be available.
-      (Quick web-research finding 2026-07-21, not a definitive legal audit - confirm per state.)
+    - **Texas (JBCC):** public searchable roster exists, but personal contact info is now
+      confirmed excluded - both by board rule and, as of HB 5129 (eff. 6/20/2025), by state
+      statute across all TX licensing agencies. No emails; no confirmed bulk export either.
+    - **Illinois (IDFPR):** CONFIRMED via a direct read of the live public API
+      (`data.illinois.gov/resource/pzzh-kp68.json`) - real bulk roster (1,166 active CA-style
+      pre-loadable records), but no email/phone field exists in the dataset at all.
+    - **New Jersey:** CONFIRMED bulk - a free full-database download exists (DCA "standard list"),
+      but the state explicitly excludes phone and email from what it publishes.
+    - Implication: in states without published emails (so far, every state checked except CA),
+      lean on the Facebook / organic / reporter-referral channels to get reporters to claim, since
+      cold email won't be available. **Full state-by-state findings with sources, a priority
+      table, and a strategic read: `research/state_csr_public_data_map.md`** (2026-08-04) -
+      supersedes the quick 2026-07-21 finding above with real per-state verification.
 - **`CITY_COUNTY` map + `countyFor()`** (`_app_01_core.jsx`) is a **California** city→county
   fallback for the ~194 records with a blank county. A new state needs its own map (or better
   county data in the source).
