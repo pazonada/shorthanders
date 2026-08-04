@@ -43,6 +43,13 @@ confirm it** – the site currently shows working numbers, not decisions.
       live. **If the 5,700 figure ever changes, this image has to be re-exported** - it is the
       one place a number is baked into a picture instead of read from the data.
 - [ ] **Check the site on a real phone**, not a resized browser window. **YOU**
+- [ ] **Set up the CSR-removal Google Form BEFORE the outreach campaign.** When you email reporters,
+      some will ask to be taken off the directory. Decided approach = a Google Form (auto-collects to
+      a Sheet) linked from a personalized "Remove my listing" line in the email; applying removals is
+      a batch "paste-and-rebuild" (export Sheet → `data/suppressed_csrs.csv` → run
+      `generate_profiles.py` + `build.sh` → deploy). The build filter is already wired. Full steps:
+      `csr_email_outreach.md` → "Opt-outs & removal requests." **YOU** (make the Form) **+ CLAUDE**
+      (run/redeploy the batch). Must exist before the first send so removals are honored promptly.
 
 ## Phase 3 – Making it actually work
 

@@ -87,6 +87,32 @@ requirements, and how this plan meets them:
 
 Not legal advice – fold into the terms-of-service review.
 
+## Opt-outs & removal requests – set this up BEFORE you send
+
+Two DIFFERENT requests will come in, and they need two different suppressions:
+
+1. **"Stop emailing me"** (email opt-out) → add them to your **mail-merge tool's unsubscribe list**
+   so they're never contacted again (the tool does this automatically via its unsubscribe link).
+2. **"Take my listing off the site"** (directory removal) → add their **license number** to the
+   directory **suppression list** (`data/suppressed_csrs.csv`), which `generate_profiles.py` drops
+   from the build on every rebuild and every quarterly CRB refresh, so they stay off. A directory
+   removal implies an email opt-out too – do both.
+
+**The mechanism (Option B – Google Form, decided; set up before launch):**
+- Put a **"Remove my listing"** link in the email, personalized with the reporter's **license
+  number** (so we know who it is without a lookup), pointing to a **Google Form**.
+- Form responses auto-collect into a **Google Sheet** – that Sheet is the durable record of
+  removals (no manual copy-paste, survives even if a local file is lost).
+- People who instead just reply "take me down" go to `support@`; look their license number up in
+  `email_campaign.csv` (email → license → name) and add them the same way.
+
+**Applying removals (the "paste-and-rebuild," a batch job – ~3–4 times across the campaign, not
+per-person):**
+1. Export the removals Sheet → `data/suppressed_csrs.csv` (first column = license number).
+2. Run `python3 data/generate_profiles.py` (it prints how many it removed).
+3. Run `bash build.sh`, commit, push → the live directory no longer shows them.
+- You can do this yourself, or hand Claude the license numbers and say "add these and redeploy."
+
 ## Authenticate your sending domain (SPF, DKIM, DMARC)
 The single biggest lever for staying out of spam. Do this before any real volume.
 - **Send from your own domain, not `@gmail.com`.** You can't set these records for gmail.com
