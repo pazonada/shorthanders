@@ -231,6 +231,19 @@ scheduling/coordination labor and liability – algorithmic match, or a human re
 coexist with the self-serve directory + job board (do premium firms get all three)? neutrality /
 AB-5 §2778 implications of DS choosing the reporter rather than the parties choosing each other.
 
+## Reverse discovery – reporters browse/pitch firms – ROADMAP / VALIDATE FIRST
+
+**What it is:** the mirror of the current model. Today firms find and message reporters; this would
+let a **reporter browse profiles of law firms that have signed up and message them directly to pitch
+their services.**
+
+**Status: NOT greenlit – validate with CSRs before building.** Added to the CSR user-testing guide
+as Open question S (`research/user_testing_csr_guide.md`). The open question is whether proactively
+pitching firms is something reporters actually want, or reads as cold-selling that's against
+professional etiquette – and which firms they'd reach out to (known vs. new). Only promote out of
+this section once CSR sessions show real demand. Distinct from the firm-side personalization
+direction, which is also validate-first.
+
 ## Parking lot (mentioned, not yet scoped)
 - **Featured / promoted listings** – Rosie's earlier idea; a discovery surface, decided post-launch.
 - **Enterprise account options** (SSO, multi-seat/admin roles, custom contracts, SLAs) –

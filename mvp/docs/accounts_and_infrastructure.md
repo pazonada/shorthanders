@@ -21,6 +21,43 @@ DBA, and trademark items are worth one confirmation from the release-review atto
 | **Stripe (+ Connect)** | Payments, payouts, subscriptions | Faked (stubs fall back to demo) | **Decide the payments entity BEFORE wiring real Connect** (see sequencing). Then: Express/Connect onboarding, 2%/5% application fee, card/ACH, subscriptions, webhooks. Set the business name/descriptor to Dewey Sholes. |
 | **Trademark** | "Dewey Sholes" mark | Pending, Serial No. 99703235 | Keep pursuing under the current name. If the brand ever changes, abandon this and file for the new name. |
 
+## Cost & financial sense-check
+
+Every figure is approximate – **verify current pricing before relying on it.** The design goal:
+**near-zero fixed cost until real usage justifies each spend** (free tiers everywhere), so the cost
+base scales with revenue, not ahead of it.
+
+| Account / service | Cost | You pay… | Notes |
+|---|---|---|---|
+| Studio Crux, LLC | ~$75/yr (NJ annual report) | Now (existing) | Formation already done. |
+| DBA / alternate name | **$50 one-time** | When you brand as Dewey Sholes | Free to keep; renew in 5 yrs. |
+| Domain (Gandi) | ~$20/yr | Now | ~$2/mo amortized. |
+| Google Workspace | ~$7/seat/mo → **~$14/mo** (2 seats) | Now | Could run 1 seat (~$7) if you drop the separate super-admin; `hello@`/`support@` Groups are free. |
+| GitHub | **$0** | – | Private repos free. |
+| Vercel | **$0** Hobby, or **$20/mo** Pro | Launch decision | Commercial use → Pro. Or move the static frontend to Cloudflare Pages / Netlify (free) and keep only functions elsewhere. Set a spend limit. |
+| Resend | **$0** free tier, or ~$20/mo | Marginal (shared w/ other site) | **Transactional only.** Free tier ~3k emails/mo may cover launch. Claude Code plugin available. |
+| Trademark | ~$250–350 one-time | Already filed | Sunk (Serial 99703235). |
+| Supabase | **$0** free tier → $25/mo Pro | Only at scale | Auth + DB + events. Free tier covers launch. |
+| Stripe (+ Connect) | **$0** base; ~$2/mo per *active* Connect account | Only when money moves | Processing fees are the reporter's cost, passed through. Offset by revenue. |
+| Mail-merge tool (outreach) | **$0–30/mo** | Campaign months only | YAMM ~$50/yr (cheapest, occasional) · GMass ~$30/mo (best, pausable) · Mailmeteor ~$10–25/mo. |
+| PostHog (analytics) | **$0** free tier (~1M events/mo) | Only at real scale | Product analytics; not a CRM. |
+| Postmark | **$0** | Not now | Transactional fallback only, if Resend flakes. |
+
+**Explicitly NOT buying:** HubSpot (sales CRM – wrong job, recurring bill), Instantly (cold-email
+SaaS – overkill), SMS/Twilio (no SMS by product decision), file storage / S3 (pass-through links
+only), a second email platform for outreach (the mail-merge tool is it).
+
+**Run-rate:**
+- **Today (pre-revenue prototype):** ~**$16/mo** (Workspace + domain; everything else free), plus
+  ~$30 in the months you run an outreach campaign. Fixed one-offs: DBA $50, NJ report ~$75/yr.
+- **At modest post-launch scale:** ~**$80–110/mo** (add Vercel Pro, Resend paid, Supabase Pro,
+  Stripe Connect per active account) – by which point firm subscriptions ($49/user) and reporter
+  per-payment fees more than cover it.
+
+**Levers if you need to trim:** 1 Workspace seat instead of 2 (~-$7/mo); host the static frontend
+free on Cloudflare/Netlify instead of Vercel Pro (~-$20/mo); YAMM annual instead of GMass monthly
+for outreach; stay on every free tier until usage forces the upgrade.
+
 ## Two guiding decisions
 
 - **Everything stays under Studio Crux, LLC for now**, branded as Dewey Sholes via the DBA. Your
