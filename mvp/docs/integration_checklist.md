@@ -99,6 +99,12 @@ Two serverless stubs already exist and fall back to demo behavior:
   date passes. Wire a scheduled job (or a computed check) that transitions `sent → overdue` once
   `due` is in the past. The reporter Payments "Awaiting payment" card sums `sent` + `overdue`, so
   the total is right regardless, but the *overdue* label is meaningless until this is built.
+  - **Open (validate with CSRs first): a payment-terms field.** Overdue keys off the CSR-set `due`
+    date, which today is a raw date picker – there's no net-30/60/90 "terms" concept, and it's *not*
+    auto net-30. Firms pay on their own AP cycle, so before leaning on "overdue," ask CSRs (user-test
+    Open question R) whether they even set terms and whether flagging overdue is wanted. If yes,
+    consider a **terms field** (net-N) that computes `due` from the service/send date; if no, overdue
+    may not belong in the product at all. Don't build the terms field until CSR input lands.
 - [ ] **The reporter's payout figure/date must come from Stripe, not a placeholder.** The prototype
   showed a hardcoded "Next payout: Jul 19", which the platform can't actually know – a firm pays
   whenever it pays, and the invoice due date is only a request. Replaced in the UI with **"Awaiting

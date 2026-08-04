@@ -184,6 +184,13 @@ Several of these are **live design questions** we're deciding right now, so thei
 - **Open question Q – routing payment through us.** Your fee comes out of the payment (2% / 5%); the
   firm sees only what you billed. Does that model make sense? Would you route real payments through
   here instead of your current method – and what would stop you?
+- **Open question R – payment terms & what "overdue" means.** Do you put payment terms on your
+  invoices – net-30 / net-60 / net-90, due on receipt? Does it vary by firm? Firms often pay on their
+  own accounts-payable cycle regardless. So when should an invoice show as **overdue** – a set number
+  of days after you send it, a due date you pick per invoice, or is "overdue" not something we should
+  flag at all (since you can't control when a firm pays)? Would a **terms field** (net-N that fills in
+  the due date for you) be useful, or just noise? *(This is a live design decision – their answer
+  shapes whether we add a terms field and how the "Awaiting payment" / overdue logic works.)*
 - What's missing from the invoicing flow that you'd need on day one?
 
 **Available jobs + Apply flow (10-12 min)**
