@@ -149,7 +149,7 @@ const RATE_FIELDS = [
 ];
 
 const SEED_INVOICES = [
-  { id: "INV-1041", client: "Morgan & Reyes LLP", from: "Marguerite Ellsworth", matter: "Ramos v. Delta Freight (24CV01188)", desc: "Certified deposition transcript – 118 pp.", date: "2026-07-08", amount: 560.5, due: "2026-07-22", status: "paid", method: "ACH" },
+  { id: "INV-1041", client: "Morgan & Reyes LLP", from: "Marguerite Ellsworth", matter: "Ramos v. Delta Freight (24CV01188)", desc: "Certified deposition transcript – 118 pp.", date: "2026-07-08", amount: 560.5, due: "2026-07-22", status: "paid", method: "ACH", paidAt: "2026-07-19" },
   { id: "INV-1042", client: "Bayline Employment Group", matter: "In re Coastal Staffing PAGA", desc: "Realtime + certified transcript, full day", date: "2026-07-11", amount: 1650, due: "2026-07-25", status: "sent" },
   { id: "INV-1043", client: "Delaney Defense", matter: "Okafor v. Sunrise Medical (25CV02901)", desc: "Deposition transcript – 64 pp. + rough draft", date: "2026-07-14", amount: 384, due: "2026-07-28", status: "overdue" },
   { id: "INV-1044", client: "Kessler Tang LLP", matter: "Sealed – trade secret", desc: "Expedited transcript – 92 pp.", date: "2026-07-16", amount: 690, due: "2026-07-30", status: "draft" },

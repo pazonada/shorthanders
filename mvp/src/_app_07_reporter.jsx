@@ -346,11 +346,16 @@ function ReporterProfileEditor({ me }) {
 
 function ReporterPayments({ invoices, paidThisMonth }) {
   const paid = invoices.filter((i) => i.status === "paid");
+  const [modalInv, setModalInv] = useState(null);
+  // What firms owe right now – the honest figure the platform can actually compute. A fixed "next
+  // payout" date was fabricated: DS can't know when a firm will pay, and a payout date only exists
+  // once Stripe reports money in transit. See docs/integration_checklist.md §3.
+  const awaiting = invoices.filter((i) => i.status === "sent" || i.status === "overdue").reduce((s, i) => s + i.amount, 0);
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
         <StatCard icon="dollar" label="Paid this month" value={"$" + paidThisMonth.toLocaleString(undefined, { minimumFractionDigits: 2 })} />
-        <StatCard icon="clock" label="Next payout" value="Jul 19" />
+        <StatCard icon="clock" label="Awaiting payment" value={"$" + awaiting.toLocaleString(undefined, { minimumFractionDigits: 2 })} />
         <StatCard icon="invoice" label="Payments received" value={paid.length} />
       </div>
       <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -376,7 +381,7 @@ function ReporterPayments({ invoices, paidThisMonth }) {
         <div style={{ overflowX: "auto" }}>
           <table className="ds-table">
             <thead><tr><th>Invoice</th><th>Client</th><th>Method</th><th>Date</th><th style={{ textAlign: "right" }}>Amount</th></tr></thead>
-            <tbody>{paid.length ? paid.map((i) => <tr key={i.id}><td style={{ fontWeight: 600, color: "var(--ink)" }}>{i.id}</td><td>{i.client}</td><td>{i.method || "Card"}</td><td>{i.date}</td><td style={{ textAlign: "right", fontWeight: 600, color: "var(--ink)" }}>${i.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td></tr>) : <tr><td colSpan={5} style={{ textAlign: "center", color: "var(--muted)", padding: 30 }}>No payments yet.</td></tr>}</tbody>
+            <tbody>{paid.length ? paid.map((i) => <tr key={i.id} style={{ cursor: "pointer" }} onClick={() => setModalInv(i)}><td style={{ fontWeight: 600, color: "var(--ink)" }}>{i.id}</td><td>{i.client}</td><td>{i.method || "Card"}</td><td>{i.date}</td><td style={{ textAlign: "right", fontWeight: 600, color: "var(--ink)" }}>${i.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td></tr>) : <tr><td colSpan={5} style={{ textAlign: "center", color: "var(--muted)", padding: 30 }}>No payments yet.</td></tr>}</tbody>
           </table>
         </div>
       </div>
@@ -388,6 +393,7 @@ function ReporterPayments({ invoices, paidThisMonth }) {
         </div>
         <button className="btn btn-secondary">Manage on Stripe</button>
       </div>
+      {modalInv && <InvoiceModal inv={modalInv} viewer="reporter" onClose={() => setModalInv(null)} />}
     </div>
   );
 }

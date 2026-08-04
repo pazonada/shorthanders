@@ -34,27 +34,39 @@ const INVOICE_ADDONS = [
   "Waiting time",
 ];
 
+// Turn a stored invoice (or a firm's payment request) back into editable builder state.
+function invoiceToLines(inv) {
+  if (inv.lineItems && inv.lineItems.length) return inv.lineItems.map((l) => ({ desc: l.desc, qty: String(l.qty), rate: String(l.rate) }));
+  return [{ desc: inv.desc || "", qty: "1", rate: inv.amount ? String(inv.amount) : "" }];
+}
+
 function ReporterInvoices() {
   const store = useStore();
-  const [view, setView] = useState("list");   // list | template | build | detail
-  const [tmpl, setTmpl] = useState(null);
-  const [current, setCurrent] = useState(null);
+  const [view, setView] = useState("list");   // list | template | build
+  const [src, setSrc] = useState(null);        // builder source: { template } | { prefill } | { invoice }
+  const [modalInv, setModalInv] = useState(null);
   const invoices = store.invoices;
   // The one pervasive "New invoice" button (in the dashboard header) routes here; open the builder
   // and then reset the route so the button works again next time.
   const route = useRoute();
-  useEffect(() => { if (/\/invoices\/new$/.test(route)) { setView("template"); setTmpl(null); navigate("/reporter/invoices"); } }, [route]);
+  useEffect(() => { if (/\/invoices\/new$/.test(route)) { setSrc(null); setView("template"); navigate("/reporter/invoices"); } }, [route]);
   const myName = useMemo(() => { const r = buildDirectory().find((x) => x.id === store.myCsr); return r ? r.name : ""; }, [store.myCsr]);
   const requests = store.paymentRequests.filter((q) => q.status === "pending" && q.reporterName === myName);
-  // A firm asked us to invoice them - one tap turns the request into a draft invoice, ready to send.
-  const acceptRequest = (q) => {
-    const inv = { id: "INV-" + String(Date.now()).slice(-4), client: q.firmName, matter: q.matter || "", desc: q.desc || "", amount: q.amount || 0, date: new Date().toISOString().slice(0, 10), due: "", status: "draft" };
-    store.addInvoice(inv); store.fulfillRequest(q.id); setCurrent(inv); setView("detail");
-  };
+  // A firm asked us to invoice them - accepting drops the reporter into the builder, pre-filled and
+  // fully editable, so they can itemize / add surcharges / switch templates before sending.
+  const acceptRequest = (q) => { store.fulfillRequest(q.id); setSrc({ prefill: q }); setView("build"); };
 
-  if (view === "template") return <TemplatePicker onCancel={() => setView("list")} onPick={(t) => { setTmpl(t); setView("build"); }} />;
-  if (view === "build") return <InvoiceBuilder template={tmpl} onCancel={() => setView("list")} onCreated={(inv) => { store.addInvoice(inv); setCurrent(inv); setView("detail"); }} />;
-  if (view === "detail" && current) return <InvoiceDetail inv={store.invoices.find((i) => i.id === current.id) || current} onBack={() => setView("list")} onSend={() => store.updateInvoice(current.id, { status: "sent" })} />;
+  // Draft persisted or updated from the builder. When it's sent, open the read-only modal on it.
+  const onSubmit = (inv, opts) => {
+    if (opts.editing) store.updateInvoice(inv.id, inv); else store.addInvoice(inv);
+    setView("list"); setSrc(null);
+    if (opts.send) setModalInv({ ...inv });
+  };
+  // Clicking a row: drafts open the builder (editable); sent/paid open the read-only modal.
+  const openInvoice = (i) => { if (i.status === "draft") { setSrc({ invoice: i }); setView("build"); } else setModalInv(i); };
+
+  if (view === "template") return <TemplatePicker onCancel={() => setView("list")} onPick={(t) => { setSrc({ template: t }); setView("build"); }} />;
+  if (view === "build") return <InvoiceBuilder src={src} onCancel={() => { setView("list"); setSrc(null); }} onSubmit={onSubmit} />;
 
   return (
     <div>
@@ -88,7 +100,7 @@ function ReporterInvoices() {
             <thead><tr><th>Invoice</th><th>Client / matter</th><th>Date</th><th>Due</th><th>Status</th><th style={{ textAlign: "right" }}>Amount</th></tr></thead>
             <tbody>
               {invoices.map((i) => (
-                <tr key={i.id} style={{ cursor: "pointer" }} onClick={() => { setCurrent(i); setView("detail"); }}>
+                <tr key={i.id} style={{ cursor: "pointer" }} onClick={() => openInvoice(i)}>
                   <td style={{ fontWeight: 600, color: "var(--ink)" }}>{i.id}</td>
                   <td><div style={{ color: "var(--ink)" }}>{i.client}</div><div style={{ fontSize: 12.5, color: "var(--muted)" }}>{i.matter}</div></td>
                   <td>{i.date}</td><td>{i.due}</td><td><InvStatus status={i.status} /></td>
@@ -99,6 +111,7 @@ function ReporterInvoices() {
           </table>
         </div>
       </div>
+      {modalInv && <InvoiceModal inv={store.invoices.find((i) => i.id === modalInv.id) || modalInv} viewer="reporter" onClose={() => setModalInv(null)} />}
     </div>
   );
 }
@@ -138,12 +151,30 @@ function TemplatePicker({ onCancel, onPick }) {
 }
 
 let INV_SEQ = 1045;
-function InvoiceBuilder({ template, onCancel, onCreated }) {
+// The builder is the one place invoices are authored OR edited. `src` decides what it opens on:
+//   { template }  – a fresh invoice from a starter template
+//   { prefill }   – a firm's payment request, pre-filled and fully editable (see acceptRequest)
+//   { invoice }   – an existing DRAFT, reopened to edit (finalized invoices never come here)
+function InvoiceBuilder({ src, onCancel, onSubmit }) {
   const store = useStore();
   const me = useMemo(() => { const all = buildDirectory(); return all.find((x) => x.id === store.myCsr) || all.find((x) => x.claimed); }, [store.myCsr]);
-  const [f, setF] = useState({ client: "", matter: "", date: "2026-07-17", due: "2026-07-31", notes: "" });
-  const [lines, setLines] = useState((template.lines || [{ desc: "", qty: "1", rate: "" }]).map((l) => ({ ...l })));
+  const editInv = src && src.invoice ? src.invoice : null;
+  const prefill = src && src.prefill ? src.prefill : null;
+  const template = src && src.template ? src.template : (editInv || prefill ? null : INVOICE_TEMPLATES[3]);
+  const label = editInv ? "Editing " + editInv.id : prefill ? "From " + prefill.firmName + "'s request" : (template ? template.name : "Invoice");
+
+  const [f, setF] = useState(
+    editInv ? { client: editInv.client, matter: editInv.matter === "–" ? "" : (editInv.matter || ""), date: editInv.date || "2026-07-17", due: editInv.due || "", notes: editInv.notes || "" }
+    : prefill ? { client: prefill.firmName || "", matter: prefill.matter || "", date: "2026-07-17", due: "", notes: "" }
+    : { client: "", matter: "", date: "2026-07-17", due: "2026-07-31", notes: "" }
+  );
+  const [lines, setLines] = useState(
+    editInv ? invoiceToLines(editInv)
+    : prefill ? [{ desc: prefill.desc || "", qty: "1", rate: prefill.amount ? String(prefill.amount) : "" }]
+    : (template.lines || [{ desc: "", qty: "1", rate: "" }]).map((l) => ({ ...l }))
+  );
   const [preview, setPreview] = useState(false);
+  const [sending, setSending] = useState(false);
   const [toast, setToast] = useState("");
 
   const setLine = (i, k, v) => setLines((xs) => xs.map((l, j) => j === i ? { ...l, [k]: v } : l));
@@ -156,14 +187,34 @@ function InvoiceBuilder({ template, onCancel, onCreated }) {
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
 
   const saveTemplate = () => {
-    const name = (window.prompt && window.prompt("Name this template", template.name + " (mine)")) || null;
+    const name = (window.prompt && window.prompt("Name this template", (template ? template.name : "Invoice") + " (mine)")) || null;
     if (name) { store.addTemplate({ id: "custom", name, lines: lines.map((l) => ({ ...l })) }); setToast("Template saved"); }
   };
-  const create = () => onCreated({
-    id: "INV-" + (++INV_SEQ), client: f.client, matter: f.matter || "–", desc: lines[0] && lines[0].desc ? lines[0].desc : "Court reporting services",
-    date: f.date, due: f.due, amount: total, status: "draft", notes: f.notes,
+  // Build the stored invoice object at a given status. Reuses the id when editing a draft.
+  const build = (status, extra) => Object.assign({
+    id: editInv ? editInv.id : ("INV-" + (++INV_SEQ)),
+    client: f.client, matter: f.matter || "–",
+    desc: lines[0] && lines[0].desc ? lines[0].desc : "Court reporting services",
+    date: f.date, due: f.due, amount: total, status, notes: f.notes,
     lineItems: lines.filter((l) => l.desc || lineAmt(l) > 0).map((l) => ({ desc: l.desc, qty: Number(l.qty) || 0, rate: Number(l.rate) || 0 })),
-  });
+  }, editInv && editInv.from ? { from: editInv.from } : {}, extra || {});
+
+  const saveDraft = () => onSubmit(build("draft"), { editing: !!editInv, send: false });
+  // Send: finalize, fetch a real payment link (falls back to a demo link), persist as sent, and
+  // let the parent open the read-only modal on it.
+  const sendInvoice = async () => {
+    setSending(true);
+    let payLink = "https://pay.deweysholes.com/i/" + (editInv ? editInv.id : "INV-" + (INV_SEQ + 1)).toLowerCase();
+    const inv = build("sent");
+    try {
+      const resp = await fetch("api/pay/create-payment-link", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ invoiceId: inv.id, client: inv.client, amount: inv.amount, description: inv.desc, matter: inv.matter }),
+      });
+      if (resp.ok) { const d = await resp.json(); if (d && d.url) payLink = d.url; }
+    } catch (e) { /* keep demo link */ }
+    onSubmit(Object.assign(inv, { payLink }), { editing: !!editInv, send: true });
+  };
 
   if (preview) return (
     <div style={{ maxWidth: 680 }}>
@@ -171,7 +222,8 @@ function InvoiceBuilder({ template, onCancel, onCreated }) {
       <div className="banner banner-info" style={{ marginBottom: 16 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div>This is how {f.client || "the firm"} will see your invoice.</div></div>
       <InvoicePreviewCard me={me} f={f} lines={lines} total={total} />
       <div style={{ display: "flex", gap: 12, marginTop: 18, flexWrap: "wrap" }}>
-        <button className="btn btn-primary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={create}><Icon name="check" size={16} /> Create draft</button>
+        <button className="btn btn-primary" disabled={!valid || sending} style={{ opacity: valid && !sending ? 1 : 0.4 }} onClick={sendInvoice}><Icon name="mail" size={16} /> {sending ? "Sending…" : "Send invoice"}</button>
+        <button className="btn btn-secondary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={saveDraft}>Save as draft</button>
         <button className="btn btn-secondary" onClick={() => setPreview(false)}>Back to edit</button>
       </div>
     </div>
@@ -182,9 +234,10 @@ function InvoiceBuilder({ template, onCancel, onCreated }) {
       <button onClick={onCancel} style={backLink}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
       <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 18 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
-          <h2 style={{ fontSize: 26 }}>New invoice</h2>
-          <span className="pill pill-tag">{template.name}</span>
+          <h2 style={{ fontSize: 26 }}>{editInv ? "Edit invoice" : "New invoice"}</h2>
+          <span className="pill pill-tag">{label}</span>
         </div>
+        {prefill && <div className="ds-note" style={{ marginBottom: 0 }}><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span>{prefill.firmName} asked you to bill them. We filled in what they sent – edit anything, add mileage or other fees, then send.</span></div>}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
           <div><label className="ds-label">Client / firm *</label><input className="ds-input" placeholder="Morgan & Reyes LLP" value={f.client} onChange={set("client")} /><div style={{ fontSize: 12, color: "var(--dim)", marginTop: 5, lineHeight: 1.45 }}>New to Dewey Sholes? They get a free account to view and pay, and you're saved to their firm.</div></div>
           <div><label className="ds-label">Matter reference</label><input className="ds-input" placeholder="Ramos v. Delta Freight (24CV01188)" value={f.matter} onChange={set("matter")} /></div>
@@ -228,7 +281,8 @@ function InvoiceBuilder({ template, onCancel, onCreated }) {
         </div>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
           <button className="btn btn-primary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={() => setPreview(true)}><Icon name="eye" size={16} /> Preview</button>
-          <button className="btn btn-secondary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={create}>Create draft</button>
+          <button className="btn btn-secondary" disabled={!valid || sending} style={{ opacity: valid && !sending ? 1 : 0.4 }} onClick={sendInvoice}><Icon name="mail" size={16} /> {sending ? "Sending…" : "Send invoice"}</button>
+          <button className="btn btn-secondary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={saveDraft}>Save as draft</button>
           <button className="btn btn-secondary" onClick={saveTemplate}><Icon name="star" size={16} /> Save as my template</button>
           <button className="btn btn-secondary" onClick={onCancel}>Cancel</button>
         </div>
@@ -238,106 +292,113 @@ function InvoiceBuilder({ template, onCancel, onCreated }) {
   );
 }
 
-// The invoice as the firm receives it (approximates the Stripe hosted invoice / PDF).
-function InvoicePreviewCard({ me, f, lines, total }) {
-  const items = lines.filter((l) => l.desc || (Number(l.qty) || 0) * (Number(l.rate) || 0) > 0);
+// The invoice document itself – the real issued page. Shared by the builder preview and the
+// read-only InvoiceModal so both look identical, and it's what prints (see .invoice-print in CSS).
+function InvoiceDocument({ reporterName, reporterSub, invoiceId, client, matter, date, due, items, total, paid, method, paidAt, showPayBar }) {
+  const rows = (items || []).filter((l) => l.desc || (Number(l.qty) || 0) * (Number(l.rate) || 0) > 0);
   return (
     <div className="ds-card" style={{ padding: 0, overflow: "hidden" }}>
       <div style={{ padding: "26px 28px", borderBottom: "1px solid var(--rule)", display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 14 }}>
         <div>
-          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)" }}>{me ? me.name : "Your name"}</div>
-          <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>Certified Shorthand Reporter{me ? " · CSR #" + me.csrNumber : ""}{me && me.city ? " · " + me.city + ", CA" : ""}</div>
+          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)" }}>{reporterName || "Your name"}</div>
+          {reporterSub ? <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>{reporterSub}</div> : null}
         </div>
         <div style={{ textAlign: "right" }}>
-          <div style={{ fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".08em" }}>Invoice</div>
-          <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>Issued {f.date}</div>
-          <div style={{ fontSize: 13, color: "var(--muted)" }}>Due {f.due}</div>
+          <div style={{ fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".08em" }}>Invoice{invoiceId ? " · " + invoiceId : ""}</div>
+          <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>Issued {date || "–"}</div>
+          <div style={{ fontSize: 13, color: "var(--muted)" }}>Due {due || "–"}</div>
+          {paid ? <div style={{ display: "inline-block", marginTop: 8, border: "2px solid var(--sage-deep)", color: "var(--sage-deep)", borderRadius: 7, padding: "3px 11px", fontSize: 13, fontWeight: 800, letterSpacing: ".1em", transform: "rotate(-3deg)" }}>PAID</div> : null}
         </div>
       </div>
       <div style={{ padding: "20px 28px", borderBottom: "1px solid var(--rule)" }}>
         <div style={{ fontSize: 12, fontWeight: 700, color: "var(--dim)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 4 }}>Bill to</div>
-        <div style={{ fontSize: 15, color: "var(--ink)" }}>{f.client || "–"}</div>
-        {f.matter ? <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 2 }}>Matter: {f.matter}</div> : null}
+        <div style={{ fontSize: 15, color: "var(--ink)" }}>{client || "–"}</div>
+        {matter && matter !== "–" ? <div style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 2 }}>Matter: {matter}</div> : null}
       </div>
       <div style={{ overflowX: "auto" }}>
         <table className="ds-table">
           <thead><tr><th>Description</th><th style={{ textAlign: "right" }}>Qty</th><th style={{ textAlign: "right" }}>Rate</th><th style={{ textAlign: "right" }}>Amount</th></tr></thead>
-          <tbody>{items.map((l, i) => {
+          <tbody>{rows.length ? rows.map((l, i) => {
             const amt = (Number(l.qty) || 0) * (Number(l.rate) || 0);
             return <tr key={i}><td style={{ color: "var(--ink)" }}>{l.desc || "–"}</td><td style={{ textAlign: "right" }}>{Number(l.qty) || 0}</td><td style={{ textAlign: "right" }}>${(Number(l.rate) || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}</td><td style={{ textAlign: "right", fontWeight: 600, color: "var(--ink)" }}>${amt.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td></tr>;
-          })}</tbody>
+          }) : <tr><td colSpan={4} style={{ color: "var(--muted)" }}>–</td></tr>}</tbody>
         </table>
       </div>
       <div style={{ padding: "18px 28px", display: "flex", justifyContent: "space-between", alignItems: "center", background: "var(--bg-soft)", borderTop: "1px solid var(--rule)" }}>
-        <span style={{ color: "var(--muted)", fontSize: 14 }}>Total due</span>
-        <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 28, color: "var(--ink)" }}>${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+        <span style={{ color: "var(--muted)", fontSize: 14 }}>{paid ? "Total paid" : "Total due"}</span>
+        <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 28, color: "var(--ink)" }}>${(total || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
       </div>
-      <div style={{ padding: "18px 28px 24px" }}>
-        <div className="btn btn-primary" style={{ width: "100%", justifyContent: "center", cursor: "default", pointerEvents: "none" }}><Icon name="lock" size={15} /> Pay by card or ACH</div>
-        <div style={{ fontSize: 11.5, color: "var(--dim)", textAlign: "center", marginTop: 10 }}>Secure payment via Stripe · powered by Dewey Sholes</div>
-      </div>
+      {paid ? (
+        <div style={{ padding: "14px 28px 22px", fontSize: 13, color: "var(--muted)", display: "flex", alignItems: "center", gap: 8 }}>
+          <Icon name="check" size={16} style={{ color: "var(--sage-deep)", flexShrink: 0 }} /> Paid{method ? " by " + method : ""}{paidAt ? " on " + paidAt : ""} · via Stripe, powered by Dewey Sholes
+        </div>
+      ) : showPayBar ? (
+        <div style={{ padding: "18px 28px 24px" }}>
+          <div className="btn btn-primary" style={{ width: "100%", justifyContent: "center", cursor: "default", pointerEvents: "none" }}><Icon name="lock" size={15} /> Pay by card or ACH</div>
+          <div style={{ fontSize: 11.5, color: "var(--dim)", textAlign: "center", marginTop: 10 }}>Secure payment via Stripe · powered by Dewey Sholes</div>
+        </div>
+      ) : null}
     </div>
   );
 }
 
-function InvoiceDetail({ inv, onBack, onSend }) {
-  const [sent, setSent] = useState(inv.status !== "draft");
-  const [copied, setCopied] = useState(false);
-  const [payLink, setPayLink] = useState("https://pay.deweysholes.com/i/" + inv.id.toLowerCase());
+// The invoice as the firm receives it (builder preview) – delegates to the shared document.
+function InvoicePreviewCard({ me, f, lines, total }) {
+  const items = lines.map((l) => ({ desc: l.desc, qty: l.qty, rate: l.rate }));
+  const sub = "Certified Shorthand Reporter" + (me ? " · CSR #" + me.csrNumber : "") + (me && me.city ? " · " + me.city + ", CA" : "");
+  return <InvoiceDocument reporterName={me ? me.name : "Your name"} reporterSub={sub} client={f.client} matter={f.matter} date={f.date} due={f.due} items={items} total={total} showPayBar />;
+}
 
-  const sendInvoice = async () => {
-    try {
-      const resp = await fetch("api/pay/create-payment-link", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ invoiceId: inv.id, client: inv.client, amount: inv.amount, description: inv.desc, matter: inv.matter }),
-      });
-      if (resp.ok) { const d = await resp.json(); if (d && d.url) setPayLink(d.url); }
-    } catch (e) { /* keep demo link */ }
-    setSent(true); if (onSend) onSend();
-  };
+// Read-only invoice viewer, shared across the reporter's Payments + Invoices lists and the firm's
+// Invoices list, so clicking any invoice or payment opens the SAME thing – a modal, not its own
+// page (the back button was unreliable). Prints as a standalone page/receipt via window.print().
+// Drafts never open here; they open the builder to edit (see the state model in launch_prep).
+function InvoiceModal({ inv, viewer, onClose }) {
+  const store = useStore();
+  const meMeta = useMemo(() => buildDirectory().find((x) => x.id === store.myCsr), [store.myCsr]);
+  const [copied, setCopied] = useState(false);
+  const paid = inv.status === "paid";
+  // Reporter viewing their own invoice -> full identity; firm viewing -> the reporter name the
+  // invoice carries (inv.from).
+  const reporterName = viewer === "reporter" ? (meMeta ? meMeta.name : inv.from) : (inv.from || "Court reporter");
+  const reporterSub = viewer === "reporter" && meMeta
+    ? "Certified Shorthand Reporter · CSR #" + meMeta.csrNumber + (meMeta.city ? " · " + meMeta.city + ", CA" : "")
+    : "Certified Shorthand Reporter";
+  const items = inv.lineItems && inv.lineItems.length ? inv.lineItems : [{ desc: inv.desc, qty: 1, rate: inv.amount }];
+  const payLink = inv.payLink || ("https://pay.deweysholes.com/i/" + inv.id.toLowerCase());
+  const copy = () => { navigator.clipboard.writeText(payLink); setCopied(true); setTimeout(() => setCopied(false), 1800); };
+  const payNow = () => { store.updateInvoice(inv.id, { status: "paid", method: "Card", paidAt: "2026-07-17" }); onClose(); };
 
   return (
-    <div style={{ maxWidth: 680 }}>
-      <button onClick={onBack} style={backLink}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
-      <div className="ds-card">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
-          <div><div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30 }}>{inv.id}</div><InvStatus status={sent ? (inv.status === "draft" ? "sent" : inv.status) : "draft"} /></div>
-          <div style={{ textAlign: "right" }}><div style={{ fontSize: 13, color: "var(--muted)" }}>Amount due</div><div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 34 }}>${inv.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div></div>
+    <div className="modal-overlay invoice-modal-overlay" onClick={onClose}>
+      <div className="ds-card invoice-print" style={{ maxWidth: 640, width: "94%", maxHeight: "90vh", overflowY: "auto", padding: 0 }} onClick={(e) => e.stopPropagation()}>
+        <div className="no-print" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 18px", borderBottom: "1px solid var(--rule)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}><span style={{ fontWeight: 700, color: "var(--ink)" }}>{inv.id}</span><InvStatus status={inv.status} /></div>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <button className="btn btn-secondary" style={{ padding: "6px 12px" }} onClick={() => window.print()}><Icon name="printer" size={15} /> Print</button>
+            <button onClick={onClose} title="Close" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", padding: 4 }}><Icon name="x" size={20} /></button>
+          </div>
         </div>
-        <div style={{ height: 1, background: "var(--rule)", margin: "20px 0" }} />
-        <dl style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "12px 22px", fontSize: 15 }}>
-          <dt style={{ color: "var(--muted)" }}>Client</dt><dd style={{ color: "var(--ink)" }}>{inv.client}</dd>
-          <dt style={{ color: "var(--muted)" }}>Matter</dt><dd style={{ color: "var(--ink)" }}>{inv.matter}</dd>
-          <dt style={{ color: "var(--muted)" }}>Service date</dt><dd style={{ color: "var(--ink)" }}>{inv.date}</dd>
-          <dt style={{ color: "var(--muted)" }}>Due</dt><dd style={{ color: "var(--ink)" }}>{inv.due}</dd>
-        </dl>
-        {inv.lineItems && inv.lineItems.length ? (
-          <div style={{ marginTop: 18, overflowX: "auto" }}>
-            <table className="ds-table">
-              <thead><tr><th>Description</th><th style={{ textAlign: "right" }}>Qty</th><th style={{ textAlign: "right" }}>Rate</th><th style={{ textAlign: "right" }}>Amount</th></tr></thead>
-              <tbody>{inv.lineItems.map((l, i) => (
-                <tr key={i}><td style={{ color: "var(--ink)" }}>{l.desc}</td><td style={{ textAlign: "right" }}>{l.qty}</td><td style={{ textAlign: "right" }}>${l.rate.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td><td style={{ textAlign: "right", fontWeight: 600, color: "var(--ink)" }}>${(l.qty * l.rate).toLocaleString(undefined, { minimumFractionDigits: 2 })}</td></tr>
-              ))}</tbody>
-            </table>
+        <div style={{ padding: 18 }}>
+          <InvoiceDocument reporterName={reporterName} reporterSub={reporterSub} invoiceId={inv.id} client={inv.client} matter={inv.matter} date={inv.date} due={inv.due} items={items} total={inv.amount} paid={paid} method={inv.method} paidAt={inv.paidAt} />
+          <div className="no-print" style={{ marginTop: 16 }}>
+            {viewer === "reporter" && !paid ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                <div className="banner banner-ok"><Icon name="mail" size={18} style={{ flexShrink: 0 }} /><div>Sent to {inv.client}. They can pay by card or ACH from the link below. New to Dewey Sholes? The email invites them to create a free account to view and pay, which saves you to their firm.</div></div>
+                <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+                  <div className="ds-panel" style={{ flex: 1, minWidth: 220, padding: "12px 14px", fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: "var(--ink-soft)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{payLink}</div>
+                  <button className="btn btn-secondary" onClick={copy}><Icon name="link" size={16} /> {copied ? "Copied!" : "Copy link"}</button>
+                </div>
+              </div>
+            ) : viewer === "firm" && !paid ? (
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <button className="btn btn-primary" onClick={payNow}><Icon name="dollar" size={16} /> Pay now</button>
+              </div>
+            ) : (
+              <div className="ds-note" style={{ marginBottom: 0 }}><Icon name="check" size={15} style={{ flexShrink: 0, color: "var(--sage-deep)" }} /><span>This invoice is paid. Use Print to save a copy for your records.</span></div>
+            )}
           </div>
-        ) : (
-          <><div style={{ height: 1, background: "var(--rule)", margin: "20px 0" }} /><div style={{ fontSize: 15, color: "var(--ink-soft)" }}>{inv.desc}</div></>
-        )}
-        <div style={{ height: 1, background: "var(--rule)", margin: "20px 0" }} />
-        {sent ? (
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <div className="banner banner-ok"><Icon name="mail" size={18} style={{ flexShrink: 0 }} /><div>Invoice sent to {inv.client}. They can pay by card or ACH from the link below. If they're new to Dewey Sholes, the email invites them to create a free account to view and pay, which also saves you to their firm.</div></div>
-            <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-              <div className="ds-panel" style={{ flex: 1, minWidth: 220, padding: "12px 14px", fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: "var(--ink-soft)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{payLink}</div>
-              <button className="btn btn-secondary" onClick={() => { setCopied(true); setTimeout(() => setCopied(false), 1800); }}><Icon name="link" size={16} /> {copied ? "Copied!" : "Copy link"}</button>
-            </div>
-          </div>
-        ) : (
-          <div style={{ display: "flex", gap: 12 }}>
-            <button className="btn btn-primary" onClick={sendInvoice}><Icon name="mail" size={16} /> Send invoice by email</button>
-            <button className="btn btn-secondary" onClick={onBack}>Save as draft</button>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

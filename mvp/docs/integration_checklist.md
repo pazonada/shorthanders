@@ -94,6 +94,16 @@ Two serverless stubs already exist and fall back to demo behavior:
   compound with the annual price.
 - [ ] **Webhooks** – `account.updated` (Connect onboarding done → mark verified),
   `payment_intent` / `invoice` events (→ update invoice status), subscription events (→ plan).
+- [ ] **Derive `overdue` from the due date (prototype gap).** Today an invoice's `overdue` status
+  is static – seeded or set by hand; nothing flips a `sent` invoice to `overdue` when its `due`
+  date passes. Wire a scheduled job (or a computed check) that transitions `sent → overdue` once
+  `due` is in the past. The reporter Payments "Awaiting payment" card sums `sent` + `overdue`, so
+  the total is right regardless, but the *overdue* label is meaningless until this is built.
+- [ ] **The reporter's payout figure/date must come from Stripe, not a placeholder.** The prototype
+  showed a hardcoded "Next payout: Jul 19", which the platform can't actually know – a firm pays
+  whenever it pays, and the invoice due date is only a request. Replaced in the UI with **"Awaiting
+  payment"** (sum of what firms owe). When wired, only show a real payout/arrival date from Stripe's
+  in-transit estimate *after* a firm has actually paid – never a standing calendar date.
 - [ ] **Quarterly roster refresh** – a scheduled job that re-pulls the CRB roster, diffs it,
   adds new licensees, refreshes unclaimed contact info, and freezes (not deletes) expired/
   retired licenses - never overwriting claimed profiles' self-entered data. Full spec + the

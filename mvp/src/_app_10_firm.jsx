@@ -66,9 +66,10 @@ function FirmDashboard() {
 // here. This is the firm-side counterpart to the reporter's invoice list.
 function FirmInvoices() {
   const store = useStore();
+  const [modalInv, setModalInv] = useState(null);
   const mine = store.invoices.filter((i) => i.client === store.firmName);
   const payable = mine.filter((i) => i.status === "sent" || i.status === "overdue");
-  const pay = (inv) => store.updateInvoice(inv.id, { status: "paid", method: "Card" });
+  const pay = (inv) => store.updateInvoice(inv.id, { status: "paid", method: "Card", paidAt: "2026-07-17" });
   if (!mine.length) return (
     <div className="ds-panel" style={{ textAlign: "center", padding: 56 }}>
       <Icon name="invoice" size={30} style={{ margin: "0 auto", color: "var(--dim)" }} />
@@ -84,7 +85,7 @@ function FirmInvoices() {
       {mine.map((i) => {
         const paid = i.status === "paid";
         return (
-          <div key={i.id} className="ds-card" style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+          <div key={i.id} className="ds-card" onClick={() => setModalInv(i)} style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", cursor: "pointer" }}>
             <div style={{ flex: 1, minWidth: 220 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                 <span style={{ fontWeight: 700, fontSize: 17, color: "var(--ink)" }}>${i.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
@@ -95,10 +96,11 @@ function FirmInvoices() {
             </div>
             {paid
               ? <span className="pill pill-claimed"><Icon name="check" size={13} /> Paid{i.method ? " · " + i.method : ""}</span>
-              : <button className="btn btn-primary" onClick={() => pay(i)}><Icon name="dollar" size={16} /> Pay now</button>}
+              : <button className="btn btn-primary" onClick={(e) => { e.stopPropagation(); pay(i); }}><Icon name="dollar" size={16} /> Pay now</button>}
           </div>
         );
       })}
+      {modalInv && <InvoiceModal inv={store.invoices.find((i) => i.id === modalInv.id) || modalInv} viewer="firm" onClose={() => setModalInv(null)} />}
     </div>
   );
 }

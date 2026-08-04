@@ -80,6 +80,13 @@ This is the big one, and it's real engineering. Everything here is spelled out i
       on refresh. **ENGINEER**
 - [ ] **Payments** – reporters getting paid by card or bank transfer, your fee coming out
       automatically, subscriptions billing monthly, and year-end tax forms. (Stripe.) **ENGINEER**
+- [ ] **Derive "overdue" from the due date.** In the prototype an invoice's `overdue` status is
+      static (seeded/set by hand); nothing turns a `sent` invoice `overdue` when its due date
+      passes. The reporter's "Awaiting payment" figure sums `sent` + `overdue`, so it's correct
+      either way, but the *overdue* label itself won't mean anything until a scheduled job (or a
+      computed check) flips `sent → overdue` once `due` is in the past. Build it properly, and
+      the reporter's payout dates must come from **Stripe's real in-transit estimate**, never a
+      standing calendar date (see the payments-page design notes / integration_checklist §3). **ENGINEER**
 - [ ] **Email** – invites, invoice notifications, the reporter outreach campaign. (Resend.) **ENGINEER**
 - [ ] **Messaging that actually delivers**, rather than only existing in one browser. **ENGINEER**
 - [ ] **Server-side search** – the directory currently searches 5,705 records in the visitor's

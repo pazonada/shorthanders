@@ -114,6 +114,17 @@
     font-size: 13px; line-height: 1.5; color: var(--muted);
   }
 
+  /* Print an open invoice modal as if it were its own page/receipt. The .invoice-print card is the
+     only thing that survives; the overlay scrim and any .no-print controls are dropped. */
+  @media print {
+    body * { visibility: hidden; }
+    .invoice-print, .invoice-print * { visibility: visible; }
+    .invoice-print { position: absolute; left: 0; top: 0; width: 100%; max-width: none !important;
+      max-height: none !important; overflow: visible !important; box-shadow: none !important; border: none !important; }
+    .invoice-modal-overlay { position: static !important; background: none !important; backdrop-filter: none !important; padding: 0 !important; display: block !important; }
+    .no-print { display: none !important; }
+  }
+
   /* decorative shorthand that blends into the hero background (ported from the original site) */
   .mvp-hero { position: relative; overflow: hidden; }
   .mvp-hero > .container { position: relative; z-index: 1; }
