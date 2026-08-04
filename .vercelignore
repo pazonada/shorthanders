@@ -1,0 +1,25 @@
+# Root (v1 / dewey-sholes.vercel.app) deploy — serve ONLY the v1 static site, never internal files.
+# The root project serves the raw repo, so without this everything below is publicly fetchable
+# (competitive analysis, strategy docs, research, PRDs, etc.). See feedback_never_deploy_reporter_pii
+# / the 2026-08-04 exposure fix. Mirrors mvp/.vercelignore for the dsmvp project.
+#
+# KEEP (what the v1 archive site needs): index.html, csr_profiles.js, logos/, graphics/
+
+# Internal strategy / docs / working files — never deploy
+mvp/
+marketing/
+research/
+governance-and-process/
+PRDs/
+admin/
+scripts/
+mockups/
+deploy/
+deploy-archive-2026-05-12/
+.claude/
+
+# Loose internal files
+README.md
+V1_ARCHIVE.md
+.DS_Store
+**/.DS_Store

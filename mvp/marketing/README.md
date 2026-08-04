@@ -90,6 +90,20 @@ the numbers – set real caps and read the real results.
      the directory the thing an AI *cites* when someone asks how to find a CA court reporter –
      clear public pages, structured/plain descriptions, county coverage the model can read. Worth
      doing regardless of whether we ever buy AI ads; it's the AI-era version of SEO.
+   - **Idea to test: a state-by-state "court reporter rates" content page, built from real sourced
+     data.** Competitive research (2026-08-04) found that CourtReporters.com runs exactly this play
+     – a `/court-reporter-rates` page and a "How Much Does a Court Reporter Cost?" blog post as an
+     SEO/organic-acquisition funnel into their directory. It's a proven pattern in this category, and
+     DS is better positioned to do it credibly: we already have real CA rate research (per-page,
+     per-diem, and workers'-comp-specific data points) in `research/csr_agency_live_attendance_rates.md`
+     and `research/agency_invoice_evidence.md`, not a generic national estimate. **Hard constraint:
+     never invent or round a rate that isn't sourced** ([[feedback_never_invent_data]] – blank or
+     CSR-entered, prefer real CRB/invoice data over a made-up number). A DS rate guide built on real
+     invoices and real reporter-reported data would be more trustworthy than a competitor's
+     unsourced page, which is a genuine differentiator if we do it – but only if every number on the
+     page can be traced to a real source. Not sized or scheduled yet; a candidate for the content/SEO
+     backlog once there's bandwidth. See `marketing/competitive-analysis/courtreporters-com.md` for
+     the competitive precedent.
 
 **Guardrail on this whole tier:** it breaks the "~$0, two people" rule on purpose, so it waits
 until there's money to lose and a metro worth amplifying. Cap spend, attribute every signup, and
@@ -128,6 +142,10 @@ so these are out:
 - **[pro_pricing_worksheet.md](pro_pricing_worksheet.md)** – the real CA invoice/rate
   data we've captured, the fee stack, and the pay-per-invoice → Pro crossover model you
   can plug real volume into.
+- **[rebrand_naming_research.md](rebrand_naming_research.md)** – contingency naming shortlist if
+  Rosie stays silent past Aug 15, 2026 and the "Dewey Sholes" name gets released. Not a decision;
+  a vetted shortlist (descriptive, evocative, abstract routes) with competitive-landscape grounding
+  and a verification checklist. Only relevant if the rename actually happens.
 - **[positioning_and_partners.md](positioning_and_partners.md)** – the movement/mission narrative
   (empower reporters, cut litigant middleman cost, help human reporting stay affordable against
   electronic recording), a ranked tagline/CTA shortlist, how the "money saved vs. an agency"
