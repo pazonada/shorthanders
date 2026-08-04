@@ -34,10 +34,10 @@ base scales with revenue, not ahead of it.
 | Domain (Gandi) | ~$20/yr | Now | ~$2/mo amortized. |
 | Google Workspace | ~$7/seat/mo → **~$14/mo** (2 seats) | Now | Could run 1 seat (~$7) if you drop the separate super-admin; `hello@`/`support@` Groups are free. |
 | GitHub | **$0** | – | Private repos free. |
-| Vercel | **$0** Hobby, or **$20/mo** Pro | Launch decision | Commercial use → Pro. Or move the static frontend to Cloudflare Pages / Netlify (free) and keep only functions elsewhere. Set a spend limit. |
+| Vercel | **Shared** – already on Pro (~$20/mo, sometimes more) | Now, across projects | DS is another project on your existing Pro plan – **no new base fee, just incremental usage.** "Sometimes more" = usage overage → hold it down with lean builds + batched pushes + the `.vercelignore`. |
 | Resend | **$0** free tier, or ~$20/mo | Marginal (shared w/ other site) | **Transactional only.** Free tier ~3k emails/mo may cover launch. Claude Code plugin available. |
 | Trademark | ~$250–350 one-time | Already filed | Sunk (Serial 99703235). |
-| Supabase | **$0** free tier → $25/mo Pro | Only at scale | Auth + DB + events. Free tier covers launch. |
+| Supabase | **Shared/marginal** – you already pay it (Disclosure Watch + iPhone app) | Now | Adding DS likely adds incremental compute, **not a fresh $25 base** – verify against your org billing. Keep DS as its **own project** (ideally its own org) so its data stays separable + transferable for a future spin-out/sale. |
 | Stripe (+ Connect) | **$0** base; ~$2/mo per *active* Connect account | Only when money moves | Processing fees are the reporter's cost, passed through. Offset by revenue. |
 | Mail-merge tool (outreach) | **$0–30/mo** | Campaign months only | YAMM ~$50/yr (cheapest, occasional) · GMass ~$30/mo (best, pausable) · Mailmeteor ~$10–25/mo. |
 | PostHog (analytics) | **$0** free tier (~1M events/mo) | Only at real scale | Product analytics; not a CRM. |
@@ -47,16 +47,18 @@ base scales with revenue, not ahead of it.
 SaaS – overkill), SMS/Twilio (no SMS by product decision), file storage / S3 (pass-through links
 only), a second email platform for outreach (the mail-merge tool is it).
 
-**Run-rate:**
-- **Today (pre-revenue prototype):** ~**$16/mo** (Workspace + domain; everything else free), plus
-  ~$30 in the months you run an outreach campaign. Fixed one-offs: DBA $50, NJ report ~$75/yr.
-- **At modest post-launch scale:** ~**$80–110/mo** (add Vercel Pro, Resend paid, Supabase Pro,
-  Stripe Connect per active account) – by which point firm subscriptions ($49/user) and reporter
-  per-payment fees more than cover it.
+**Run-rate:** Vercel Pro, Supabase, and Resend are **already paid across your portfolio**
+(Disclosure Watch, the iPhone app, your other site), so DS mostly adds *usage*, not new base fees.
+- **DS-specific recurring today:** ~**$16/mo** – its own Workspace (~$14) + domain (~$2) – **plus**
+  incremental usage on the shared Vercel/Supabase/Resend, **plus** ~$30 in outreach-campaign months.
+  One-offs: DBA $50, NJ report ~$75/yr.
+- **At scale:** the shared platforms tip into overage / additional Pro-compute as DS grows – but
+  that lands once firm subs ($49/user) + reporter per-payment fees are flowing.
 
-**Levers if you need to trim:** 1 Workspace seat instead of 2 (~-$7/mo); host the static frontend
-free on Cloudflare/Netlify instead of Vercel Pro (~-$20/mo); YAMM annual instead of GMass monthly
-for outreach; stay on every free tier until usage forces the upgrade.
+**Levers:** hold shared-platform *usage* down (lean builds, batched pushes, the `.vercelignore` –
+these directly control Vercel's "sometimes more"); 1 Workspace seat vs 2 (~-$7/mo); YAMM annual vs
+GMass monthly. The old "move to Cloudflare to dodge Vercel's $20" barely applies now – that base is
+already sunk in your Pro plan, so it'd only shave DS's marginal usage, not a base fee.
 
 ## Two guiding decisions
 
@@ -65,8 +67,10 @@ for outreach; stay on every free tier until usage forces the upgrade.
   one tax return. The only cost of sharing one entity is shared liability, which is minimal while
   everything is pre-revenue and payments aren't live.
 - **Keep DS infra cleanly separable from your other properties.** Its own domain/sending domain,
-  its own Vercel project, its own Stripe account, its own repo. That's what makes a later spin-out
-  (or a rebrand) cheap instead of a migration.
+  its own Vercel project, its own **Supabase project (ideally its own org)**, its own Stripe account,
+  its own repo. Riding on shared accounts is fine for *billing* (cheaper), but DS's **data and
+  services should stay in their own project** so a later spin-out, rebrand, or sale is a clean
+  hand-off, not a migration out of Disclosure Watch / the iPhone app's tables.
 
 ## Sequencing / triggers (what changes the answers above)
 
