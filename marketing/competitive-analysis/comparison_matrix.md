@@ -8,8 +8,11 @@ Built 2026-08-04 from the individual profiles in this folder. Prices are working
 
 **The market splits in two, and DS is the only one in the middle:**
 - **Complete directories that *don't* transact** – StenoScout, CourtReporters.com. Thin listing sites,
-  payment happens off-platform, so they monetize the supply side (charge reporters to list) *before*
-  proving firm demand – a fragile sequencing.
+  payment happens off-platform. They are **free to list** (a free base tier) and monetize the supply
+  side via **paid featured/placement upgrades** – i.e. charging reporters to *be found*, before firm
+  demand is proven. A fragile sequencing. **Note:** "free to list" is table stakes across this whole
+  segment – it is NOT a DS differentiator; DS's wedges are on-platform payment + messaging + day-one
+  CA completeness + rate transparency.
 - **Transaction platforms *without* a complete directory** – eCourt Reporters, AppearMe, Steno. They
   handle the money, but reporters must sign up one by one; there's no day-one full roster.
 - **Dewey Sholes does both** – a complete, public-data-seeded directory **and** on-site transactions.
@@ -23,8 +26,8 @@ Built 2026-08-04 from the individual profiles in this folder. Prices are working
 | Steno | Full-service agency | National | ✗ – ICs pick jobs from Steno's marketplace; **Steno owns the client** | ✓ (as the agency) | ✓ | Agency markup on the job + financing (DelayPay); firms pay |
 | eCourt Reporters | Transaction marketplace | National | ✗ – claim-only, not seeded | **✓** (messaging + payments) | ✓ | **%-of-invoice both sides**: attorneys **10%**, reporters **5%** self-produced / up to **20%** if eCourt produces the transcript; free to list *(verify)* |
 | AppearMe | On-demand dispatch (generalist legal; reporters are one category) | National | ✗ – register; real-time first-accept | ✓ (automated through payment) | ✓ | Transaction fee (dispatch) *(verify specifics)* |
-| StenoScout | Thin listing directory + lead-gen | National (claims 47 states) | ✗ – claim-only (Yelp-style) | **✗ off-platform** | ✗ (quote-request form) | **Reporters pay to list**: Free / $79/mo / $249/mo City Pro (one-per-city exclusivity); attorneys free |
-| CourtReporters.com | Thin listing directory + lead-gen (brand new, ~Jul 2026) | National | ✗ – claim; "first 500 founding members" | **✗ off-platform** ("Schedule" = a form) | ✗ (contact form) | **Reporters pay to list** (charge-to-list; founders free pre-launch, standing price not public) |
+| StenoScout | Thin listing directory + lead-gen | National (claims 47 states) | ✗ – claim-only (Yelp-style) | **✗ off-platform** | ✗ (quote-request form) | **Free to list**; paid **Featured $79/mo / City Pro $249/mo** (one-per-city exclusivity); attorneys free |
+| CourtReporters.com | Thin listing directory + lead-gen (brand new, ~Jul 2026) | National | ✗ – claim; "first 500 founding members" | **✗ off-platform** ("Schedule" = a form) | ✗ (contact form) | **Free to list**; paid **Featured / founding-member placement** (freemium – pay to stand out, not to appear) |
 
 ## DS's value prop, mapped to columns no competitor wins
 
