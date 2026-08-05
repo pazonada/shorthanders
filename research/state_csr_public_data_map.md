@@ -15,7 +15,7 @@ claim-invite campaign (`mvp/docs/csr_email_outreach.md`). Every directory compet
 eCourt Reporters, CourtReporters.com) is claim-only, so DS launches complete where they launch
 empty (see `marketing/competitive-analysis/README.md`).
 
-That moat only travels to a new state if the state (a) licenses court reporters at the state
+That advantage only travels to a new state if the state (a) licenses court reporters at the state
 level, (b) publishes the roster publicly, (c) in bulk/downloadable form, and (d) includes contact
 info so DS can invite reporters to claim. This doc checks all four, per state, with sources.
 
@@ -113,7 +113,7 @@ existing order (Illinois → New Jersey → Georgia → Florida, Texas depriorit
 
 ## Strategic read: how far does the differentiator actually travel?
 
-- **The pre-load moat travels to any mandatory-licensing state with a real bulk roster** – that's
+- **The pre-load advantage travels to any mandatory-licensing state with a real bulk roster** – that's
   a data/engineering problem, and it's now confirmed solvable in Illinois and New Jersey with no
   special negotiation. Expect it to work similarly in most licensing states; expect some (WA, and
   possibly TX/GA) to require an actual negotiation or fee.
@@ -130,7 +130,7 @@ existing order (Illinois → New Jersey → Georgia → Florida, Texas depriorit
   remaining majority (NY, FL, PA, OH, CT, MD, MA, VA, WI, and more) have no state roster at all,
   so DS would be claim-only there, exactly like every current directory competitor. That's not a
   reason to avoid those states – Florida is already #4 in `growth_strategy.md`'s order, and it's a
-  huge litigation market – but it's a **different, weaker-moat expansion motion**: no free
+  huge litigation market – but it's a **different, weaker expansion motion**: no free
   pre-load, competing purely on the other wedges (12% attorney-only fee vs. agency cuts, the
   match-preview UX, does-both breadth, founding-member perks). Worth being explicit internally
   that "expand geography" isn't one uniform play – licensing-state expansion and non-licensing-state

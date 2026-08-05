@@ -5,26 +5,51 @@ extend). Not commitments – a parking lot with enough detail to pick up later.
 
 ---
 
-## Scaling roadmap – the order we grow (Aud, 2026-08-01)
+## Scaling roadmap – WIN CALIFORNIA FIRST (updated Aud, 2026-08-04)
 
-Aud's intended scale sequence after the reduced-scope launch. Rough priority, not fixed dates:
+**The decision: go deep in California before expanding anywhere else.** Getting California working end
+to end – lots of reporters claimed, lots of firms actually using it, and real payments running through
+the site – matters far more than being thinly present in several states. The state research
+(`research/state_csr_public_data_map.md`) backs this up: California is the only state where we can
+*both* pre-load the complete reporter list *and* recruit reporters cheaply by email. Other states are
+pre-loadable but need different, slower outreach – Illinois publishes no reporter contact info at all,
+New Jersey is postcards-only, and NJ reporters are called "CCRs" (not "CSRs"), so the site copy needs
+relabeling per state. **So geographic expansion is pushed later – only after California provably pays.**
 
-1. **Publish ratings + optional testimonials** – flip on the average score (**timeliness of
-   delivery + quality of transcription**, averaged into one headline number) and opt-in
-   testimonials, once there's enough paid-through-platform volume. Already designed and
-   collecting-early → see "Ratings + optional testimonials" below and `reviews_and_ratings.md`.
-   This note is the *display/publish* milestone of that already-spec'd feature.
-2. **Job board** – firms post full job details → reporters one-click "available/interested" → the
-   firm reviews interested reporters, messages, and hires, all through the existing messaging.
-   Detail below; builds on the applicant-pool design in
+### The near-term demand plan: insurance-defense firms first, then their carriers
+
+About **70% of attorneys work for insurance carriers** (see `insurance_carrier_channel` in memory),
+and carriers care intensely about litigation cost – which makes them the best possible audience for
+our pitch: *skip the agency markup, pay reporters direct, and see the savings.* The realistic order:
+
+1. **Get insurance-defense firms in California actually using DS** and routing their payments through
+   it (start LA + Bay Area, per `../marketing/firm_go_to_market.md`).
+2. **Prove the savings with real numbers** – the "money saved vs. an agency" figure (see that section
+   below), measured from real jobs.
+3. **Then approach a carrier** with that data and ask them to push DS to their whole panel of defense
+   firms. The firms are the proof; the carrier is what makes it spread widely. A carrier won't push an
+   unproven site, so this has to be earned bottom-up, not led with.
+   - **Legal check first:** a carrier steering firms to a site that has payment arrangements with
+     reporters touches the deposition-neutrality question already queued for a reporting-industry
+     attorney – confirm DS (a neutral directory + payment rail, *not* choosing the reporter) stays
+     clear before building the carrier push. See `open_strategic_decisions.md` §3.
+
+### Product roadmap (runs alongside the California push)
+
+1. **Publish ratings + optional testimonials** – flip on the average score (**timeliness of delivery +
+   quality of transcription**, averaged into one headline number) and opt-in testimonials, once
+   there's enough paid-through-platform volume. See "Ratings + optional testimonials" below +
+   `reviews_and_ratings.md`.
+2. **Job board** – firms post full job details → reporters one-click "available/interested" → the firm
+   reviews, messages, and hires through the existing messaging. Detail below; builds on
    `governance-and-process/matching_applicant_pool_policy.md`.
-3. **Geographic expansion → ILLINOIS next, NOT Texas** – Texas is **deprioritized: it already has
-   its own similar site** (a competitor), so Illinois becomes the next state. This **reverses** the
-   earlier "Texas first" order in `state_expansion_checklist.md` and `marketing/growth_strategy.md`
-   (both updated). Mechanics of adding a state live in `state_expansion_checklist.md`.
-4. **DS-assigned matching (premium, opt-in tier)** – research seamless ways for *Dewey Sholes* to
-   match/assign a reporter to a firm's job (we review + assign, instead of the firm picking), likely
-   as a **new paid membership tier** people opt into and pay for. Detail below.
+3. **Geographic expansion → LATER, only after California provably pays.** Illinois and New Jersey are
+   both confirmed pre-loadable, but outreach differs by state and reporters use different credential
+   letters – see `research/state_csr_public_data_map.md` + `state_expansion_checklist.md`. Texas stays
+   deprioritized (its public data got more restricted in 2025, plus the MyTexasCSR competitor).
+4. **DS-assigned matching (premium, opt-in tier)** – research seamless ways for DS to match/assign a
+   reporter to a firm's job (we review + assign, instead of the firm picking), likely a **new paid
+   tier** people opt into. Detail below.
 
 ---
 
