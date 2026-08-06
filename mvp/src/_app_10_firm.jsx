@@ -1,14 +1,25 @@
 // ═══ Firm dashboard ════════════════════════════════════════════════
 function FirmDashboard() {
   const store = useStore();
-  const [tab, setTab] = useRouteTab("/firm", ["saved", "messages", "invoices", "subscription"], "saved");
+  const [tab, setTab] = useRouteTab("/firm", ["overview", "saved", "messages", "invoices", "subscription"], "overview");
   const [bulkOpen, setBulkOpen] = useState(false);
   const all = useMemo(() => buildDirectory(), []);
   const saved = all.filter((r) => store.saved.includes(r.id));
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);
   const firmInvoices = store.invoices.filter((i) => i.client === store.firmName);
   const toPay = firmInvoices.filter((i) => i.status === "sent" || i.status === "overdue").length;
+  // Overview stats – the firm-side mirror of the reporter dashboard's top-of-page StatCards.
+  const firmPaid = firmInvoices.filter((i) => i.status === "paid").reduce((s, i) => s + i.amount, 0);
+  const firmOutstanding = firmInvoices.filter((i) => i.status === "sent" || i.status === "overdue").reduce((s, i) => s + i.amount, 0);
+  // "Agency markup avoided" ESTIMATE (see docs/roadmap.md + the never-invent-data rule). Markup = what
+  // an agency adds ON TOP of the reporter's direct rate: from the real CA invoice
+  // (research/agency_invoice_evidence.md, the same one the homepage money-comparison uses) the agency
+  // added ~$907 on a ~$1,404 direct rate = AGENCY_CUT/(1-AGENCY_CUT) of direct spend. Prototype basis =
+  // the demo's paid invoices; always labeled an estimate.
+  const AGENCY_CUT = 0.39;
+  const firmMarkupAvoided = Math.round(firmPaid * (AGENCY_CUT / (1 - AGENCY_CUT)));
   const tabs = [
+    { id: "overview", label: "Overview" },
     { id: "saved", label: "Saved reporters", badge: saved.length || null },
     { id: "messages", label: "Messages", badge: unread || null },
     { id: "invoices", label: "Invoices", badge: toPay || null },
@@ -16,6 +27,16 @@ function FirmDashboard() {
   ];
   return (
     <DashLayout title={store.firmName} subtitle="Firm account · Legal Operations" tabs={tabs} active={tab} onTab={setTab}>
+      {tab === "overview" && (
+        <>
+        <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Sample data</strong> – the payment figures and estimated savings here are illustrative placeholders for the prototype.</span></div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 18 }}>
+          <StatCard icon="dollar" label="Paid this month" value={"$" + firmPaid.toLocaleString(undefined, { minimumFractionDigits: 2 })} sub="Invoices you've paid" />
+          <StatCard icon="invoice" label="Outstanding" value={"$" + firmOutstanding.toLocaleString(undefined, { minimumFractionDigits: 2 })} sub="Invoiced, awaiting your payment" />
+          <StatCard icon="star" label="Estimated savings" value={"~$" + firmMarkupAvoided.toLocaleString()} sub="Est. agency markup avoided by hiring direct" />
+        </div>
+        </>
+      )}
       {tab === "saved" && (
         <>
         {saved.length ? (

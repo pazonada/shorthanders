@@ -5041,6 +5041,8 @@ function ReporterProfileEditor({ me }) {
 }
 
 function ReporterPayments({ invoices, paidThisMonth }) {
+  const store = useStore();
+  const isPro = store.reporterPlan === "pro";   // 'payg' (pay per invoice) | 'pro'
   const paid = invoices.filter((i) => i.status === "paid");
   const [modalInv, setModalInv] = useState(null);
   // What firms owe right now – the honest figure the platform can actually compute. A fixed "next
@@ -5057,18 +5059,23 @@ function ReporterPayments({ invoices, paidThisMonth }) {
       <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
           <h3 style={{ fontSize: 22 }}>Your plan</h3>
-          <span className="pill pill-claimed"><Icon name="check" size={13} /> Pay per invoice</span>
+          <span className="pill pill-claimed"><Icon name="check" size={13} /> {isPro ? "Pro" : "Pay per invoice"}</span>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
-          <div className="ds-panel" style={{ border: "2px solid var(--ink)" }}>
-            <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span></div>
+        {/* The reporter's plan lives here in Payments (it's a per-payment fee choice, not discovery
+            access like the firm's Subscription tab). Current plan is outlined; the switch action sits
+            on the OTHER panel - same pattern as the firm Subscription cards. */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12, alignItems: "stretch" }}>
+          <div className="ds-panel" style={{ display: "flex", flexDirection: "column", ...(!isPro ? { border: "2px solid var(--ink)" } : null) }}>
+            <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice{!isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</div>
             <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 27, color: "var(--ink)", marginTop: 8, lineHeight: 1 }}>5%<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}> per payment</span></div>
             <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 8, lineHeight: 1.55 }}>No monthly cost. Best if you invoice occasionally.</p>
+            {isPro && <button className="btn btn-secondary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.downgradeReporter()}>Switch to pay-per-invoice</button>}
           </div>
-          <div className="ds-panel">
-            <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pro</div>
+          <div className="ds-panel" style={{ display: "flex", flexDirection: "column", ...(isPro ? { border: "2px solid var(--ink)" } : null) }}>
+            <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pro{isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</div>
             <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 27, color: "var(--ink)", marginTop: 8, lineHeight: 1 }}>$29<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}>/month + 2% per payment</span></div>
             <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 8, lineHeight: 1.55 }}>A lower per-payment fee. Best once you invoice often or in large amounts.</p>
+            {!isPro && <button className="btn btn-primary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.upgradeReporter()}><Icon name="arrow" size={16} /> Switch to Pro</button>}
           </div>
         </div>
       </div>
@@ -5771,14 +5778,25 @@ function MessagingPage() {
 // ═══ Firm dashboard ════════════════════════════════════════════════
 function FirmDashboard() {
   const store = useStore();
-  const [tab, setTab] = useRouteTab("/firm", ["saved", "messages", "invoices", "subscription"], "saved");
+  const [tab, setTab] = useRouteTab("/firm", ["overview", "saved", "messages", "invoices", "subscription"], "overview");
   const [bulkOpen, setBulkOpen] = useState(false);
   const all = useMemo(() => buildDirectory(), []);
   const saved = all.filter((r) => store.saved.includes(r.id));
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);
   const firmInvoices = store.invoices.filter((i) => i.client === store.firmName);
   const toPay = firmInvoices.filter((i) => i.status === "sent" || i.status === "overdue").length;
+  // Overview stats – the firm-side mirror of the reporter dashboard's top-of-page StatCards.
+  const firmPaid = firmInvoices.filter((i) => i.status === "paid").reduce((s, i) => s + i.amount, 0);
+  const firmOutstanding = firmInvoices.filter((i) => i.status === "sent" || i.status === "overdue").reduce((s, i) => s + i.amount, 0);
+  // "Agency markup avoided" ESTIMATE (see docs/roadmap.md + the never-invent-data rule). Markup = what
+  // an agency adds ON TOP of the reporter's direct rate: from the real CA invoice
+  // (research/agency_invoice_evidence.md, the same one the homepage money-comparison uses) the agency
+  // added ~$907 on a ~$1,404 direct rate = AGENCY_CUT/(1-AGENCY_CUT) of direct spend. Prototype basis =
+  // the demo's paid invoices; always labeled an estimate.
+  const AGENCY_CUT = 0.39;
+  const firmMarkupAvoided = Math.round(firmPaid * (AGENCY_CUT / (1 - AGENCY_CUT)));
   const tabs = [
+    { id: "overview", label: "Overview" },
     { id: "saved", label: "Saved reporters", badge: saved.length || null },
     { id: "messages", label: "Messages", badge: unread || null },
     { id: "invoices", label: "Invoices", badge: toPay || null },
@@ -5786,6 +5804,16 @@ function FirmDashboard() {
   ];
   return (
     <DashLayout title={store.firmName} subtitle="Firm account · Legal Operations" tabs={tabs} active={tab} onTab={setTab}>
+      {tab === "overview" && (
+        <>
+        <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Sample data</strong> – the payment figures and estimated savings here are illustrative placeholders for the prototype.</span></div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 18 }}>
+          <StatCard icon="dollar" label="Paid this month" value={"$" + firmPaid.toLocaleString(undefined, { minimumFractionDigits: 2 })} sub="Invoices you've paid" />
+          <StatCard icon="invoice" label="Outstanding" value={"$" + firmOutstanding.toLocaleString(undefined, { minimumFractionDigits: 2 })} sub="Invoiced, awaiting your payment" />
+          <StatCard icon="star" label="Estimated savings" value={"~$" + firmMarkupAvoided.toLocaleString()} sub="Est. agency markup avoided by hiring direct" />
+        </div>
+        </>
+      )}
       {tab === "saved" && (
         <>
         {saved.length ? (
@@ -6141,6 +6169,7 @@ function StoreProvider({ children }) {
   // "Invite sent" until they claim (the flag keys off !claimed, so it clears when they sign up).
   const [invitedReporters, setInvitedReporters] = useState([]);
   const [firmPlan, setFirmPlan] = useState("free");   // 'free' | 'pro'
+  const [reporterPlan, setReporterPlan] = useState("payg");   // 'payg' (pay per invoice, 5%) | 'pro' ($29/mo + 2%)
   const [firmName, setFirmName] = useState("Morgan & Reyes LLP"); // demo default; set from signup
   // Reporters a free firm may fully view/message: the ones who invited or are connected to them.
   const [unlockedReporters, setUnlockedReporters] = useState(["900004", "900003", "900005"]);
@@ -6158,7 +6187,7 @@ function StoreProvider({ children }) {
   const [justJoined, setJustJoined] = useState(false);  // set on claim/signup finish so the dashboard greets first-timers with "Welcome" not "Welcome back"
 
   const store = {
-    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, invitedReporters, firmPlan, firmName, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, myProfile, saveMyProfile: (patch) => setMyProfile((p) => ({ ...p, ...patch })), pendingSave, pendingMessage, justJoined,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, invitedReporters, firmPlan, reporterPlan, firmName, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, myProfile, saveMyProfile: (patch) => setMyProfile((p) => ({ ...p, ...patch })), pendingSave, pendingMessage, justJoined,
     // Record that this firm invited an unclaimed reporter (idempotent).
     noteInvite: (id) => setInvitedReporters((xs) => xs.includes(id) ? xs : [...xs, id]),
     // A free firm searched a reporter's exact name or license number - unlock just that reporter.
@@ -6174,6 +6203,8 @@ function StoreProvider({ children }) {
     logout: () => setRole(null),
     upgradeFirm: () => setFirmPlan("pro"),
     downgradeFirm: () => setFirmPlan("free"),
+    upgradeReporter: () => setReporterPlan("pro"),
+    downgradeReporter: () => setReporterPlan("payg"),
     toggleSaved: (id) => setSaved((s) => s.includes(id) ? s.filter((x) => x !== id) : [...s, id]),
     inviteFirm: (firm) => setInvitedFirms((xs) => [firm, ...xs]),
     // A firm arriving on a reporter's invite link: create their free account, save + unlock the inviter.

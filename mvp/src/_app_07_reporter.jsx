@@ -345,6 +345,8 @@ function ReporterProfileEditor({ me }) {
 }
 
 function ReporterPayments({ invoices, paidThisMonth }) {
+  const store = useStore();
+  const isPro = store.reporterPlan === "pro";   // 'payg' (pay per invoice) | 'pro'
   const paid = invoices.filter((i) => i.status === "paid");
   const [modalInv, setModalInv] = useState(null);
   // What firms owe right now – the honest figure the platform can actually compute. A fixed "next
@@ -361,18 +363,23 @@ function ReporterPayments({ invoices, paidThisMonth }) {
       <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
           <h3 style={{ fontSize: 22 }}>Your plan</h3>
-          <span className="pill pill-claimed"><Icon name="check" size={13} /> Pay per invoice</span>
+          <span className="pill pill-claimed"><Icon name="check" size={13} /> {isPro ? "Pro" : "Pay per invoice"}</span>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
-          <div className="ds-panel" style={{ border: "2px solid var(--ink)" }}>
-            <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span></div>
+        {/* The reporter's plan lives here in Payments (it's a per-payment fee choice, not discovery
+            access like the firm's Subscription tab). Current plan is outlined; the switch action sits
+            on the OTHER panel - same pattern as the firm Subscription cards. */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12, alignItems: "stretch" }}>
+          <div className="ds-panel" style={{ display: "flex", flexDirection: "column", ...(!isPro ? { border: "2px solid var(--ink)" } : null) }}>
+            <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice{!isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</div>
             <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 27, color: "var(--ink)", marginTop: 8, lineHeight: 1 }}>5%<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}> per payment</span></div>
             <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 8, lineHeight: 1.55 }}>No monthly cost. Best if you invoice occasionally.</p>
+            {isPro && <button className="btn btn-secondary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.downgradeReporter()}>Switch to pay-per-invoice</button>}
           </div>
-          <div className="ds-panel">
-            <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pro</div>
+          <div className="ds-panel" style={{ display: "flex", flexDirection: "column", ...(isPro ? { border: "2px solid var(--ink)" } : null) }}>
+            <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pro{isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</div>
             <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 27, color: "var(--ink)", marginTop: 8, lineHeight: 1 }}>$29<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}>/month + 2% per payment</span></div>
             <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 8, lineHeight: 1.55 }}>A lower per-payment fee. Best once you invoice often or in large amounts.</p>
+            {!isPro && <button className="btn btn-primary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.upgradeReporter()}><Icon name="arrow" size={16} /> Switch to Pro</button>}
           </div>
         </div>
       </div>

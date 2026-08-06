@@ -54,8 +54,12 @@ All of these are in-memory (React state) or seed data and reset on refresh:
   fakes that, but the real invite state must live server-side).
 - [ ] **Messages** – `SEED_CONVOS` / `store.convos` / `pushMessage` (see §4).
 - [ ] **Invoices** – `SEED_INVOICES` / `store.invoices` / `addInvoice` / `updateInvoice` (see §3).
-- [ ] **Plan state** – `store.firmPlan` (free/pro) and reporter Pro status come from real
-  subscriptions (see §3), not a client toggle.
+- [ ] **Plan state** – `store.firmPlan` (free/pro) and `store.reporterPlan` (payg/pro, added
+  2026-08-06) come from real subscriptions (see §3), not a client toggle. Both are user-switchable in
+  the prototype: the **firm** on its **Subscription tab** (`FirmSubscription`, upgrade/downgrade
+  cards), the **reporter** on its **Payments tab** ("Your plan", `upgradeReporter`/`downgradeReporter`
+  – kept there, not a separate tab, since a reporter's plan is a per-payment fee choice, not discovery
+  access). Wire both to Stripe Billing status.
 - [ ] **CRB data pipeline** – import the ~5,705 active CSRs and refresh periodically (license
   status + expirations). Match a signup to its CRB record on claim.
 
