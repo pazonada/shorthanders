@@ -1,7 +1,7 @@
 // ═══ Firm dashboard ════════════════════════════════════════════════
 function FirmDashboard() {
   const store = useStore();
-  const [tab, setTab] = useRouteTab("/firm", ["overview", "saved", "messages", "invoices", "subscription"], "overview");
+  const [tab, setTab] = useRouteTab("/firm", ["overview", "saved", "messages", "invoices"], "overview");
   const [bulkOpen, setBulkOpen] = useState(false);
   const all = useMemo(() => buildDirectory(), []);
   const saved = all.filter((r) => store.saved.includes(r.id));
@@ -23,7 +23,6 @@ function FirmDashboard() {
     { id: "saved", label: "Saved reporters", badge: saved.length || null },
     { id: "messages", label: "Messages", badge: unread || null },
     { id: "invoices", label: "Invoices", badge: toPay || null },
-    { id: "subscription", label: "Subscription" },
   ];
   return (
     <DashLayout title={store.firmName} subtitle="Firm account · Legal Operations" tabs={tabs} active={tab} onTab={setTab}>
@@ -66,7 +65,6 @@ function FirmDashboard() {
       )}
       {tab === "messages" && <MessagesPanel embedded />}
       {tab === "invoices" && <FirmInvoices />}
-      {tab === "subscription" && <FirmSubscription />}
       {bulkOpen && <BulkMessageModal reporters={saved} onClose={() => setBulkOpen(false)} />}
     </DashLayout>
   );
@@ -217,5 +215,114 @@ function FirmSubscription() {
         </div>
       </div>
     </div>
+  );
+}
+
+// ═══ Settings (account-level, shared by reporter + firm) ═══════════
+// Reached from the gear in the header. Holds plan/billing (moved out of the dashboards),
+// notifications, Stripe/payouts, and account & security. Prototype: controls are illustrative.
+function SettingsPage() {
+  const store = useStore();
+  const isReporter = store.role === "reporter";
+  const isFirm = store.role === "firm";
+  if (!store.role) {
+    return (
+      <Page>
+        <h1 style={{ fontSize: "clamp(30px, 4vw, 44px)" }}>Settings</h1>
+        <div className="ds-card" style={{ marginTop: 24, textAlign: "center", padding: 48 }}>
+          <Icon name="lock" size={28} style={{ margin: "0 auto", color: "var(--dim)" }} />
+          <p style={{ color: "var(--muted)", marginTop: 12 }}>Log in to manage your account settings.</p>
+          <button className="btn btn-primary" style={{ marginTop: 18 }} onClick={() => navigate("/")}>Go home</button>
+        </div>
+      </Page>
+    );
+  }
+  const notifs = [
+    { key: "newMessage", label: "New messages", sub: "When a firm or reporter messages you" },
+    { key: "invoicePaid", label: isReporter ? "Invoice paid" : "Payment receipts", sub: isReporter ? "When a firm pays one of your invoices" : "When a payment you made goes through" },
+    { key: "inviteAccepted", label: isReporter ? "Firm accepts your invite" : "Reporter joins from your invite", sub: "When someone you invited creates an account" },
+    { key: "weeklyDigest", label: "Weekly summary", sub: "A once-a-week recap by email" },
+  ];
+  return (
+    <Page>
+      <div>
+        <h1 style={{ fontSize: "clamp(30px, 4vw, 44px)", lineHeight: 1 }}>Settings</h1>
+        <p style={{ color: "var(--muted)", marginTop: 8 }}>{isFirm ? store.firmName + " · Firm account" : "Your account · Court reporter"}</p>
+      </div>
+      <div className="ds-note" style={{ marginTop: 18 }}><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Prototype</strong> – these controls are illustrative; account, billing, and Stripe actions aren't wired to a real backend yet.</span></div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 20, marginTop: 20 }}>
+        <SettingsSection icon="dollar" title="Plan &amp; billing" desc={isReporter ? "You're free to list and get found. You only pay a small fee when you collect payment through the site." : "Browse, invite, and pay for free. A membership unlocks full search and reaching any reporter."}>
+          {isFirm ? <FirmSubscription /> : <ReporterPlanCards />}
+        </SettingsSection>
+        <SettingsSection icon="mail" title="Notifications" desc="Choose what Dewey Sholes emails or notifies you about.">
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {notifs.map((n, i) => (
+              <div key={n.key} onClick={() => store.toggleNotif(n.key)} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "14px 0", borderTop: i ? "1px solid var(--rule)" : "none", cursor: "pointer" }}>
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontWeight: 600, color: "var(--ink)", fontSize: 14.5 }}>{n.label}</div>
+                  <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>{n.sub}</div>
+                </div>
+                <Toggle on={!!store.notifPrefs[n.key]} />
+              </div>
+            ))}
+          </div>
+        </SettingsSection>
+        {isReporter ? (
+          <SettingsSection icon="bank" title="Payouts" desc="Your Stripe Connect account powers payouts and your year-end 1099.">
+            <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+              <div style={{ width: 46, height: 46, borderRadius: 12, background: "#635BFF", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="bank" size={22} /></div>
+              <div style={{ flex: 1, minWidth: 180 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}><span style={{ fontWeight: 700, color: "var(--ink)" }}>Stripe Connect</span><span className="pill pill-claimed"><Icon name="check" size={13} /> Active</span></div>
+                <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>Payouts to Bank of America •••• 4471 · Identity &amp; tax verified</div>
+              </div>
+              <button className="btn btn-secondary">Manage on Stripe</button>
+            </div>
+          </SettingsSection>
+        ) : (
+          <SettingsSection icon="dollar" title="Payment methods" desc="How you pay reporters' invoices.">
+            <p style={{ color: "var(--ink-soft)", fontSize: 14.5, lineHeight: 1.6, margin: 0 }}>You choose card or ACH on each invoice's secure Stripe page – nothing is stored here. Card and bank details never touch Dewey Sholes.</p>
+          </SettingsSection>
+        )}
+        <SettingsSection icon="lock" title="Account &amp; security" desc="Your login and account.">
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+              <div><div style={{ fontSize: 13, color: "var(--muted)" }}>Email</div><div style={{ fontWeight: 600, color: "var(--ink)" }}>you@example.com</div></div>
+              <button className="btn btn-secondary">Change email</button>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap", borderTop: "1px solid var(--rule)", paddingTop: 14 }}>
+              <div><div style={{ fontSize: 13, color: "var(--muted)" }}>Password</div><div style={{ fontWeight: 600, color: "var(--ink)" }}>••••••••</div></div>
+              <button className="btn btn-secondary">Change password</button>
+            </div>
+            <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 14 }}>
+              <button className="btn btn-secondary" onClick={() => { store.logout(); navigate("/"); }}><Icon name="logout" size={15} /> Log out</button>
+            </div>
+          </div>
+        </SettingsSection>
+      </div>
+    </Page>
+  );
+}
+
+function SettingsSection({ icon, title, desc, children }) {
+  return (
+    <div className="ds-card">
+      <div style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 16 }}>
+        <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name={icon} size={18} /></div>
+        <div>
+          <h3 style={{ fontSize: 22 }}>{title}</h3>
+          {desc && <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 2, lineHeight: 1.5 }}>{desc}</p>}
+        </div>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+// Presentational on/off pill; the whole row handles the click (prototype: local store state).
+function Toggle({ on }) {
+  return (
+    <span style={{ flexShrink: 0, width: 42, height: 24, borderRadius: 999, background: on ? "var(--brand)" : "var(--rule-strong)", position: "relative", transition: "background .15s", display: "inline-block" }}>
+      <span style={{ position: "absolute", top: 3, left: on ? 21 : 3, width: 18, height: 18, borderRadius: "50%", background: "#fff", transition: "left .15s" }} />
+    </span>
   );
 }

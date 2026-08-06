@@ -169,7 +169,7 @@ function ForFirmsPage() {
         <FeatureBlock icon="doc" title="Clean invoices" body="Reporters invoice you through the platform with your matter reference on every line, ready for AP." />
         <FeatureBlock icon="lock" title="Pay online, not by check" body="No more cutting paper checks to reporters who won't take anything else. Pay any invoice by card or ACH in a click – receipts automatic, nothing to chase." />
       </div>
-      <section style={{ marginTop: 40, background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 20, padding: "clamp(32px, 4vw, 48px)" }}>
+      <section style={{ marginTop: 40, borderLeft: "3px solid var(--brand)", paddingLeft: "clamp(20px, 3vw, 32px)" }}>
         <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap" }}>
           <div style={{ flex: 1, minWidth: 260 }}>
             <h2 style={{ fontSize: "clamp(24px, 3vw, 34px)", lineHeight: 1.12, color: "var(--brand-dark)" }}>Already worked with a reporter? Find them again.</h2>
@@ -201,7 +201,6 @@ function ForFirmsPage() {
 
 // ═══ FOR REPORTERS ═════════════════════════════════════════════════
 function ForReportersPage() {
-  const store = useStore();
   return (
     <Page roomy>
       <MarketingHero eyebrow="For court reporters" title="Your whole business, minus the agency."
@@ -235,7 +234,6 @@ function ForReportersPage() {
         <p style={{ color: "var(--ink-soft)", marginTop: 10, maxWidth: 560, margin: "10px auto 0" }}>Look yourself up by license number or name, confirm it's you, and create your account. Three minutes, start to finish.</p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 22, flexWrap: "wrap" }}>
           <button className="btn btn-primary" onClick={() => navigate("/claim")}><Icon name="user" size={16} /> Claim my profile</button>
-          {store.role !== "reporter" && <button className="btn btn-secondary" onClick={() => { store.enterAsReporter(); navigate("/reporter"); }}>See a demo dashboard</button>}
         </div>
       </div>
     </Page>

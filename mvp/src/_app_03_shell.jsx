@@ -25,6 +25,7 @@ function Nav() {
           {!store.role && (
             <button className="btn btn-secondary" style={{ padding: "10px 20px", fontSize: 14 }} onClick={() => setLoginOpen(true)}>Log in</button>
           )}
+          {store.role && <button title="Settings" onClick={() => navigate("/settings")} style={{ background: route.startsWith("#/settings") ? "var(--brand-soft)" : "none", border: "1px solid var(--rule)", borderRadius: 999, width: 38, height: 38, cursor: "pointer", color: route.startsWith("#/settings") ? "var(--brand-dark)" : "var(--muted)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="gear" size={16} /></button>}
           {store.role && <button title="Log out" onClick={() => { store.logout(); navigate("/"); }} style={{ background: "none", border: "1px solid var(--rule)", borderRadius: 999, width: 38, height: 38, cursor: "pointer", color: "var(--muted)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="logout" size={16} /></button>}
         </div>
       </div>

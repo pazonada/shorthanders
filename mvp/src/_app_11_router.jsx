@@ -172,6 +172,7 @@ function StoreProvider({ children }) {
   const [invitedReporters, setInvitedReporters] = useState([]);
   const [firmPlan, setFirmPlan] = useState("free");   // 'free' | 'pro'
   const [reporterPlan, setReporterPlan] = useState("payg");   // 'payg' (pay per invoice, 5%) | 'pro' ($29/mo + 2%)
+  const [notifPrefs, setNotifPrefs] = useState({ newMessage: true, invoicePaid: true, inviteAccepted: true, weeklyDigest: false });   // Settings > Notifications toggles
   const [firmName, setFirmName] = useState("Morgan & Reyes LLP"); // demo default; set from signup
   // Reporters a free firm may fully view/message: the ones who invited or are connected to them.
   const [unlockedReporters, setUnlockedReporters] = useState(["900004", "900003", "900005"]);
@@ -207,6 +208,8 @@ function StoreProvider({ children }) {
     downgradeFirm: () => setFirmPlan("free"),
     upgradeReporter: () => setReporterPlan("pro"),
     downgradeReporter: () => setReporterPlan("payg"),
+    notifPrefs,
+    toggleNotif: (key) => setNotifPrefs((p) => ({ ...p, [key]: !p[key] })),
     toggleSaved: (id) => setSaved((s) => s.includes(id) ? s.filter((x) => x !== id) : [...s, id]),
     inviteFirm: (firm) => setInvitedFirms((xs) => [firm, ...xs]),
     // A firm arriving on a reporter's invite link: create their free account, save + unlock the inviter.
@@ -253,6 +256,7 @@ function AppRouter() {
   if (route.startsWith("#/reporter")) return <ReporterDashboard />;
   if (route.startsWith("#/firm-signup")) return <FirmSignup />;
   if (route.startsWith("#/firm")) return <FirmDashboard />;
+  if (route.startsWith("#/settings")) return <SettingsPage />;
   if (route.startsWith("#/messages")) return <MessagingPage />;
   if (route.startsWith("#/for-firms")) return <ForFirmsPage />;
   if (route.startsWith("#/for-reporters")) return <ForReportersPage />;
