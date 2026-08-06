@@ -171,12 +171,11 @@ function ForFirmsPage() {
       </div>
       <section style={{ marginTop: 40, background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 20, padding: "clamp(32px, 4vw, 48px)" }}>
         <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap" }}>
-          <div style={{ width: 52, height: 52, borderRadius: 14, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="search" size={26} /></div>
           <div style={{ flex: 1, minWidth: 260 }}>
             <h2 style={{ fontSize: "clamp(24px, 3vw, 34px)", lineHeight: 1.12, color: "var(--brand-dark)" }}>Already worked with a reporter? Find them again.</h2>
             <p style={{ fontSize: 16, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6, maxWidth: 620 }}>You usually already have the name – it's on the cover of the transcript, or you jotted it down at the hearing. Search the directory by name or license number, message them, and pick up where you left off. Reaching a reporter you looked up by name is free; if they haven't joined yet, invite them in a click.</p>
-            <button className="btn btn-primary" style={{ marginTop: 20 }} onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
           </div>
+          <button className="btn btn-primary" style={{ flexShrink: 0 }} onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
         </div>
       </section>
       <section style={{ marginTop: 40, background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>

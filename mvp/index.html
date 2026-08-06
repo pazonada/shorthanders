@@ -3328,12 +3328,11 @@ function ForFirmsPage() {
       </div>
       <section style={{ marginTop: 40, background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 20, padding: "clamp(32px, 4vw, 48px)" }}>
         <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap" }}>
-          <div style={{ width: 52, height: 52, borderRadius: 14, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="search" size={26} /></div>
           <div style={{ flex: 1, minWidth: 260 }}>
             <h2 style={{ fontSize: "clamp(24px, 3vw, 34px)", lineHeight: 1.12, color: "var(--brand-dark)" }}>Already worked with a reporter? Find them again.</h2>
             <p style={{ fontSize: 16, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6, maxWidth: 620 }}>You usually already have the name – it's on the cover of the transcript, or you jotted it down at the hearing. Search the directory by name or license number, message them, and pick up where you left off. Reaching a reporter you looked up by name is free; if they haven't joined yet, invite them in a click.</p>
-            <button className="btn btn-primary" style={{ marginTop: 20 }} onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
           </div>
+          <button className="btn btn-primary" style={{ flexShrink: 0 }} onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
         </div>
       </section>
       <section style={{ marginTop: 40, background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>
@@ -5056,29 +5055,6 @@ function ReporterPayments({ invoices, paidThisMonth }) {
         <StatCard icon="clock" label="Awaiting payment" value={"$" + awaiting.toLocaleString(undefined, { minimumFractionDigits: 2 })} />
         <StatCard icon="invoice" label="Payments received" value={paid.length} />
       </div>
-      <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
-          <h3 style={{ fontSize: 22 }}>Your plan</h3>
-          <span className="pill pill-claimed"><Icon name="check" size={13} /> {isPro ? "Pro" : "Pay per invoice"}</span>
-        </div>
-        {/* The reporter's plan lives here in Payments (it's a per-payment fee choice, not discovery
-            access like the firm's Subscription tab). Current plan is outlined; the switch action sits
-            on the OTHER panel - same pattern as the firm Subscription cards. */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12, alignItems: "stretch" }}>
-          <div className="ds-panel" style={{ display: "flex", flexDirection: "column", ...(!isPro ? { border: "2px solid var(--ink)" } : null) }}>
-            <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice{!isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</div>
-            <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 27, color: "var(--ink)", marginTop: 8, lineHeight: 1 }}>5%<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}> per payment</span></div>
-            <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 8, lineHeight: 1.55 }}>No monthly cost. Best if you invoice occasionally.</p>
-            {isPro && <button className="btn btn-secondary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.downgradeReporter()}>Switch to pay-per-invoice</button>}
-          </div>
-          <div className="ds-panel" style={{ display: "flex", flexDirection: "column", ...(isPro ? { border: "2px solid var(--ink)" } : null) }}>
-            <div style={{ fontWeight: 700, color: "var(--ink)" }}>Pro{isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</div>
-            <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 27, color: "var(--ink)", marginTop: 8, lineHeight: 1 }}>$29<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}>/month + 2% per payment</span></div>
-            <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 8, lineHeight: 1.55 }}>A lower per-payment fee. Best once you invoice often or in large amounts.</p>
-            {!isPro && <button className="btn btn-primary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.upgradeReporter()}><Icon name="arrow" size={16} /> Switch to Pro</button>}
-          </div>
-        </div>
-      </div>
       <div className="ds-card" style={{ padding: 0, overflow: "hidden" }}>
         <div style={{ padding: "18px 22px", borderBottom: "1px solid var(--rule)" }}><h3 style={{ fontSize: 22 }}>Recent payments</h3></div>
         <div style={{ overflowX: "auto" }}>
@@ -5095,6 +5071,31 @@ function ReporterPayments({ invoices, paidThisMonth }) {
           <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>Payouts to Bank of America •••• 4471 · Identity & tax verified</div>
         </div>
         <button className="btn btn-secondary">Manage on Stripe</button>
+      </div>
+      {/* Plan chooser sits at the BOTTOM of Payments (below Stripe Connect) - a settings-like control, not day-to-day figures. Price is top-right on each card's header row so the description + switch button get room to breathe (gap:12). */}
+      <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
+          <h3 style={{ fontSize: 22 }}>Your plan</h3>
+          <span className="pill pill-claimed"><Icon name="check" size={13} /> {isPro ? "Pro" : "Pay per invoice"}</span>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12, alignItems: "stretch" }}>
+          <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 12, ...(!isPro ? { border: "2px solid var(--ink)" } : null) }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+              <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice{!isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
+              <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, whiteSpace: "nowrap", marginLeft: "auto" }}>5%<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}> per payment</span></span>
+            </div>
+            <p style={{ fontSize: 13.5, color: "var(--muted)", margin: 0, lineHeight: 1.55 }}>No monthly cost. Best if you invoice occasionally.</p>
+            {isPro && <button className="btn btn-secondary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.downgradeReporter()}>Switch to pay-per-invoice</button>}
+          </div>
+          <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 12, ...(isPro ? { border: "2px solid var(--ink)" } : null) }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+              <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pro{isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
+              <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, whiteSpace: "nowrap", marginLeft: "auto" }}>$29<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}>/month + 2% per payment</span></span>
+            </div>
+            <p style={{ fontSize: 13.5, color: "var(--muted)", margin: 0, lineHeight: 1.55 }}>A lower per-payment fee. Best once you invoice often or in large amounts.</p>
+            {!isPro && <button className="btn btn-primary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.upgradeReporter()}><Icon name="arrow" size={16} /> Switch to Pro</button>}
+          </div>
+        </div>
       </div>
       {modalInv && <InvoiceModal inv={modalInv} viewer="reporter" onClose={() => setModalInv(null)} />}
     </div>
