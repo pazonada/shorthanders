@@ -47,7 +47,11 @@ All of these are in-memory (React state) or seed data and reset on refresh:
   languages, certifications, rush, photo.
 - [ ] **Firm accounts** – persist what `FirmSignup` collects; `store.firmName` becomes a real field.
 - [ ] **Saved reporters** (`store.saved`), **unlocked/connected reporters**
-  (`store.unlockedReporters`), **invited firms** (`store.invitedFirms`).
+  (`store.unlockedReporters`), **invited firms** (`store.invitedFirms`), **reporters this firm
+  invited** (`store.invitedReporters`, added 2026-08-06 – firm-side; drives the "Invite sent" badge
+  on unclaimed saved rows/cards. Persist per firm; **clear/transition when that reporter claims** so
+  the badge auto-resolves into a normal connected profile – the badge keying off `!claimed` today
+  fakes that, but the real invite state must live server-side).
 - [ ] **Messages** – `SEED_CONVOS` / `store.convos` / `pushMessage` (see §4).
 - [ ] **Invoices** – `SEED_INVOICES` / `store.invoices` / `addInvoice` / `updateInvoice` (see §3).
 - [ ] **Plan state** – `store.firmPlan` (free/pro) and reporter Pro status come from real
@@ -150,6 +154,16 @@ Two serverless stubs already exist and fall back to demo behavior:
     (see the deliverability discipline in `open_strategic_decisions.md` §4). Contains the reporter's
     message + the personalized `/#/invite/<id>` link + create-account CTA. Firm name is now optional;
     only a valid email is required to send. Also wire the invoice/payment-link email.
+- [ ] **Firm → unclaimed-reporter invite (added 2026-08-06) – currently simulated.** On an
+  **unclaimed** profile a firm can "Invite this reporter" (`doInvite`, `_app_05_directory.jsx`), which
+  today just saves them + records `store.invitedReporters` + shows an **"Invite sent"** badge on the
+  saved/browse rows; **no real email goes out.** When wired: send a claim invite to the reporter's
+  public license email (`r.email`) if we have one, on the authenticated domain – "**<Firm> is looking
+  for you on Dewey Sholes**" + the `/#/claim/<id>` link. **If there's no public email on file, send
+  nothing** (the UI already says so) – no other channel. Persist the invite + **flip the badge from
+  "Invite sent" to a connected profile when the reporter claims** (the growth loop's payoff). This is
+  transactional/permission-ish (a firm vouching for a specific named reporter), so Resend is fine here
+  – distinct from the bulk cold CSR campaign below.
 - [ ] **CSR outreach campaign** – the claim invite to the ~5,145 independent CSRs (`mvp/docs/
   csr_email_outreach.md`, `data/email_campaign.csv`), recurring per state as we expand.
   **Send via a Google Workspace mail-merge tool (GMass / YAMM / Mailmeteor) – NOT Resend or
@@ -224,7 +238,10 @@ Two serverless stubs already exist and fall back to demo behavior:
   `workMode: "remote"` reporters in `matchesCriteria` (`_app_05_directory.jsx`), while service /
   remote / general searches still include them - so an out-of-state remote transcriptionist stays
   findable for CA remote work without polluting local in-person county searches. Priyanka (900003)
-  is seeded remote-only to demo it. **Still to wire (backend):** persist the claim form's `workMode`,
+  is seeded remote-only to demo it. **There is now also an explicit "Work mode" filter select
+  (added 2026-08-06):** Any / **Appears in person** (`workMode !== "remote"` – "both" and unset
+  unclaimed records count as in-person) / **Works remotely** (`workMode` is "remote" or "both"). The
+  server-side search must implement these same three states, matching the `matchesCriteria` logic. **Still to wire (backend):** persist the claim form's `workMode`,
   in-person `coverage`, `baseState`, and edited `city`/`county` so real claimed reporters carry them
   (the prototype `finish()` discards them today).
 

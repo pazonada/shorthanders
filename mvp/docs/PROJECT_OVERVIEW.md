@@ -69,8 +69,8 @@ payment pulls reporters onto the rails. Detail: `../marketing/growth_strategy.md
   illustrations, the agency-vs-DS **money-comparison** bars, directory preview, **dark footer**),
   For firms, For reporters (each with an inline "What it costs" pricing section – there is no
   standalone Pricing page), About, Terms, Privacy, Contact.
-- **Directory:** **sidebar-filter** search (county / experience / language / method selects +
-  Proceedings/Services checkboxes + rush/claimed toggles), cards + list rows, **logo avatars**
+- **Directory:** **sidebar-filter** search (county / **work mode** / experience / language / method
+  selects + Proceedings/Services checkboxes + rush/claimed toggles), cards + list rows, **logo avatars**
   (brand-blue = claimed, grey = unclaimed; photo override supported), and the **firm gate** – a
   free firm sees a **blurred "Upgrade to Pro" overlay** on claimed profiles that didn't invite
   them (a `firmPlan` free/pro toggle demos the gate lifting; logic in `firmLocked()` in
