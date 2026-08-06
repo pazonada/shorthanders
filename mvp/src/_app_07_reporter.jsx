@@ -384,20 +384,16 @@ function ReporterPlanCards() {
           while the header and description stay tight (10). */}
       <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 28, ...(!isPro ? { border: "2px solid var(--ink)" } : null) }}>
         <div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
-            <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice{!isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
-            <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, whiteSpace: "nowrap", marginLeft: "auto" }}>5%<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}> per payment</span></span>
-          </div>
+          <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice{!isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
+          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, marginTop: 12 }}>5%<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}> per payment</span></div>
           <p style={{ fontSize: 13.5, color: "var(--muted)", margin: "10px 0 0", lineHeight: 1.55 }}>No monthly cost. Best if you invoice occasionally.</p>
         </div>
         {isPro && <button className="btn btn-secondary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.downgradeReporter()}>Switch to pay-per-invoice</button>}
       </div>
       <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 28, ...(isPro ? { border: "2px solid var(--ink)" } : null) }}>
         <div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
-            <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pro{isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
-            <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, whiteSpace: "nowrap", marginLeft: "auto" }}>$29<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}>/month + 2% per payment</span></span>
-          </div>
+          <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pro{isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
+          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, marginTop: 12 }}>$29<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}>/month + 2% per payment</span></div>
           <p style={{ fontSize: 13.5, color: "var(--muted)", margin: "10px 0 0", lineHeight: 1.55 }}>A lower per-payment fee. Best once you invoice often or in large amounts.</p>
         </div>
         {!isPro && <button className="btn btn-primary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.upgradeReporter()}><Icon name="arrow" size={16} /> Switch to Pro</button>}
