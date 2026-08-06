@@ -81,9 +81,12 @@ payment pulls reporters onto the rails. Detail: `../marketing/growth_strategy.md
   invite), and the **"Invite a firm"** flow (auto-favorites the reporter for the firm).
 - **Firm side:** **signup** (`#/firm-signup`, carries the entered firm name into the dashboard),
   dashboard (an **Overview** tab with paid/outstanding/estimated-savings StatCards mirroring the
-  reporter's, saved reporters, messages, invoices, and a **free-vs-Pro Subscription** tab with
-  upgrade/downgrade), and the invite-landing (`#/invite/<id>` → create free account + auto-save the
-  inviter). Reporters change their own plan (pay-per-invoice vs Pro) on their **Payments** tab.
+  reporter's, saved reporters, messages, invoices), and the invite-landing (`#/invite/<id>` → create
+  free account + auto-save the inviter).
+- **Settings** (`/settings`, header gear, both roles): account-level page holding **Plan & billing**
+  (free↔Pro switch – moved here out of the dashboards), **Notifications** toggles, **Payouts** (reporter
+  Stripe Connect) / **Payment methods** (firm), and **Account & security** (stubs). No more Subscription
+  tab; the reporter Payments tab is now just stats + recent payments.
 - **Auth:** a login modal (email/pw + reporter/firm signup links + prototype persona shortcuts).
   **All auth/data is faked** – nothing persists past refresh.
 - **Brand:** DEWEY (navy) / SHOLES (`#4361EE`) Courier-New lockup; brand blue `#4361EE`; the old

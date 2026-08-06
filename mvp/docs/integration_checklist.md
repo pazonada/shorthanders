@@ -54,12 +54,17 @@ All of these are in-memory (React state) or seed data and reset on refresh:
   fakes that, but the real invite state must live server-side).
 - [ ] **Messages** – `SEED_CONVOS` / `store.convos` / `pushMessage` (see §4).
 - [ ] **Invoices** – `SEED_INVOICES` / `store.invoices` / `addInvoice` / `updateInvoice` (see §3).
-- [ ] **Plan state** – `store.firmPlan` (free/pro) and `store.reporterPlan` (payg/pro, added
-  2026-08-06) come from real subscriptions (see §3), not a client toggle. Both are user-switchable in
-  the prototype: the **firm** on its **Subscription tab** (`FirmSubscription`, upgrade/downgrade
-  cards), the **reporter** on its **Payments tab** ("Your plan", `upgradeReporter`/`downgradeReporter`
-  – kept there, not a separate tab, since a reporter's plan is a per-payment fee choice, not discovery
-  access). Wire both to Stripe Billing status.
+- [ ] **Plan state** – `store.firmPlan` (free/pro) and `store.reporterPlan` (payg/pro) come from real
+  subscriptions (see §3), not a client toggle. Both are switched in the prototype from the new
+  **Settings** page ("Plan & billing" section) - `FirmSubscription` for firms, `ReporterPlanCards` for
+  reporters. Wire both to Stripe Billing status.
+- [ ] **Settings page (`SettingsPage`, `/settings`, added 2026-08-06)** – account-level, reached from
+  the header gear, shared by both roles. Persist/​wire its sections: **Plan & billing** (above);
+  **Notifications** (`store.notifPrefs` + `toggleNotif` – real per-user prefs that actually gate the
+  sends in §4 Notifications); **Payouts** (reporter Stripe Connect) / **Payment methods** (firm – we
+  store nothing, card/ACH chosen per invoice at Stripe); **Account & security** (email, password, log
+  out – all stubs; real auth not built). This replaced the firm dashboard's Subscription tab and the
+  reporter Payments tab's plan + Stripe Connect cards.
 - [ ] **CRB data pipeline** – import the ~5,705 active CSRs and refresh periodically (license
   status + expirations). Match a signup to its CRB record on claim.
 
