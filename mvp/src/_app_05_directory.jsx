@@ -4,6 +4,7 @@ function RepCard({ r }) {
   const locked = firmLocked(store, r);
   const scope = [...(r.proceedings || []), ...(r.services || [])];
   const open = () => openReporter(r.id);
+  const invitedByFirm = store.role === "firm" && !r.claimed && (store.invitedReporters || []).includes(r.id);
   return (
     <div className={"rep-card" + (r.claimed ? "" : " unclaimed")} role="button" tabIndex={0} onClick={open} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } }}>
       <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
@@ -42,7 +43,8 @@ function RepCard({ r }) {
         )
       ) : (
         <div style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.5 }}>
-          Public license record. <span style={{ color: "var(--ink)", fontWeight: 600 }}>Is this you? Claim it →</span>
+          {invitedByFirm && <span style={{ display: "inline-block", background: "var(--brand-soft)", color: "var(--brand-dark)", border: "1px solid var(--brand-pale)", fontSize: 11, fontWeight: 600, padding: "2px 8px", borderRadius: 5, marginBottom: 6 }}>Invite sent</span>}
+          <div>Public license record. <span style={{ color: "var(--ink)", fontWeight: 600 }}>Is this you? Claim it →</span></div>
         </div>
       )}
     </div>
@@ -380,8 +382,12 @@ function ReporterDirectory() {
 
 // One reporter as a compact directory list row.
 function RepRow({ r }) {
+  const store = useStore();
   const langs = (r.languages || []).filter(Boolean);
   const specs = (r.specialties || []).slice(0, 3);
+  // A firm that invited this still-unclaimed reporter: flag it so the saved/browse list shows the
+  // invite is out. Clears on its own once they claim (r.claimed), which is the "they joined" signal.
+  const invitedByFirm = store.role === "firm" && !r.claimed && (store.invitedReporters || []).includes(r.id);
   return (
     <div className="dir-row" onClick={() => openReporter(r.id)}>
       <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
@@ -405,7 +411,7 @@ function RepRow({ r }) {
               {specs.join(" · ")}{langs.length ? "  ·  " + langs.join(", ") : ""}
             </div>
           </div>
-        ) : <span style={{ color: "var(--dim)" }}>Public license record · unclaimed</span>}
+        ) : <span style={{ color: "var(--dim)", display: "inline-flex", alignItems: "center", flexWrap: "wrap", gap: 8 }}>Public license record · unclaimed{invitedByFirm && <span style={{ background: "var(--brand-soft)", color: "var(--brand-dark)", border: "1px solid var(--brand-pale)", fontSize: 11, fontWeight: 600, padding: "2px 8px", borderRadius: 5, whiteSpace: "nowrap" }}>Invite sent</span>}</span>}
       </div>
       <div className="dir-rate" style={{ fontSize: 13, color: r.claimed ? "var(--ink-soft)" : "var(--dim)", textAlign: "right" }}>
         {r.claimed ? "Rate on request" : "–"}
@@ -660,7 +666,7 @@ function UnclaimedProfile({ r }) {
   // A firm that already worked with this (still-unclaimed) reporter can nudge them to join, so the
   // firm's lookup pulls the reporter onto the platform. Prototype: no real email is sent.
   const doInvite = () => {
-    if (store.role === "firm") { if (!store.saved.includes(r.id)) store.toggleSaved(r.id); setInvited(true); }
+    if (store.role === "firm") { if (!store.saved.includes(r.id)) store.toggleSaved(r.id); store.noteInvite(r.id); setInvited(true); }
     else { navigate("/firm-signup"); }
   };
   return (

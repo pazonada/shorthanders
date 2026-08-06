@@ -85,7 +85,10 @@ function FirmInvoices() {
               <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>{i.desc}{i.due ? " · due " + i.due : ""}</div>
             </div>
             {paid
-              ? <span className="pill pill-claimed"><Icon name="check" size={13} /> Paid{i.method ? " · " + i.method : ""}</span>
+              // The green "Paid" status pill (left, by the amount) already marks it paid; the right
+              // side just notes HOW it was paid, in muted grey - no second "Paid" label, no color
+              // clash. Nothing here if no method was recorded.
+              ? (i.method ? <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "var(--muted)", fontSize: 13, whiteSpace: "nowrap" }}><Icon name="check" size={13} /> {i.method === "Card" ? "Card" : i.method}</span> : null)
               : <button className="btn btn-primary" onClick={(e) => { e.stopPropagation(); pay(i); }}><Icon name="dollar" size={16} /> Pay now</button>}
           </div>
         );

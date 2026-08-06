@@ -167,6 +167,9 @@ function StoreProvider({ children }) {
   const [paymentRequests, setPaymentRequests] = useState(SEED_REQUESTS);
   const [customTemplates, setCustomTemplates] = useState([]);
   const [invitedFirms, setInvitedFirms] = useState([]);
+  // Unclaimed reporters this firm has invited to join. Persists so the saved list can flag them
+  // "Invite sent" until they claim (the flag keys off !claimed, so it clears when they sign up).
+  const [invitedReporters, setInvitedReporters] = useState([]);
   const [firmPlan, setFirmPlan] = useState("free");   // 'free' | 'pro'
   const [firmName, setFirmName] = useState("Morgan & Reyes LLP"); // demo default; set from signup
   // Reporters a free firm may fully view/message: the ones who invited or are connected to them.
@@ -185,7 +188,9 @@ function StoreProvider({ children }) {
   const [justJoined, setJustJoined] = useState(false);  // set on claim/signup finish so the dashboard greets first-timers with "Welcome" not "Welcome back"
 
   const store = {
-    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, firmPlan, firmName, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, myProfile, saveMyProfile: (patch) => setMyProfile((p) => ({ ...p, ...patch })), pendingSave, pendingMessage, justJoined,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, invitedReporters, firmPlan, firmName, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, myProfile, saveMyProfile: (patch) => setMyProfile((p) => ({ ...p, ...patch })), pendingSave, pendingMessage, justJoined,
+    // Record that this firm invited an unclaimed reporter (idempotent).
+    noteInvite: (id) => setInvitedReporters((xs) => xs.includes(id) ? xs : [...xs, id]),
     // A free firm searched a reporter's exact name or license number - unlock just that reporter.
     noteDirectMatch: (ids) => setDirectUnlocked((u) => { const add = ids.filter((id) => !u.includes(id)); return add.length ? [...u, ...add] : u; }),
     // Firm asks a reporter to invoice them (so payment happens on-platform); reporter fulfills it.
