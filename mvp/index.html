@@ -3413,7 +3413,7 @@ function FeatureBlock({ icon, title, body }) {
   return (
     <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       <div style={{ width: 40, height: 40, borderRadius: 11, background: "var(--bg)", border: "1px solid var(--rule)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--brand)" }}><Icon name={icon} size={20} /></div>
-      <h3 style={{ fontSize: 19 }}>{title}</h3>
+      <h3 style={{ fontSize: 22 }}>{title}</h3>
       <p style={{ color: "var(--muted)", fontSize: 14.5, lineHeight: 1.6 }}>{body}</p>
     </div>
   );
@@ -3433,7 +3433,7 @@ function PriceCard({ tone, featured, name, price, unit, blurb, features, cta, no
   return (
     <div className="ds-card" style={{ borderColor: featured ? "var(--brand)" : "var(--rule)", borderWidth: featured ? 2 : 1, position: "relative", display: "flex", flexDirection: "column", gap: 16 }}>
       <div>
-        <div style={{ fontSize: 14, fontWeight: 700, color: fg, textTransform: "uppercase", letterSpacing: ".04em" }}>{name}</div>
+        <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "var(--ink)" }}>{name}</div>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 10 }}>
           <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: price[0] === "$" ? 48 : 30, color: "var(--ink)" }}>{price}</span>
           <span style={{ color: "var(--muted)", fontSize: 15 }}>{unit}</span>
