@@ -115,6 +115,28 @@ disintermediation** (parties meet on DS, transact off it). Mitigations:
 reporters who message on DS actually invoice/collect through DS vs. off-platform. The whole
 supply-side revenue line rides on it. Ask Rosie's network + pilot reporters/firms.
 
+**Invoice payment method – card vs ACH (LEAN 2026-08-06, confirm before the Stripe build):**
+When a firm pays an invoice, Pay opens the reporter's Stripe hosted payment page. *(Prototype today
+is simulated – `pay()` in `_app_10_firm.jsx` just flips the invoice to paid; real hosted-page wiring
+is a TODO in `integration_checklist.md`.)* Two questions, now answered as a lean:
+- **Who picks card vs ACH?** The **firm (the payer) chooses at the Stripe page** – the reporter does
+  not pre-lock a single method. But the method is the **reporter's** cost (card 2.9% + $0.30 vs ACH
+  ~0.8% capped at $5), so we shape the default in the reporter's favor rather than forcing a method.
+- **Offer both, default to ACH on large invoices – NOT ACH-only (LEAN, Aud 2026-08-06).** Always show
+  both methods; **pre-select ACH once the invoice is ≥ $1,000**, with card still one tap away. Card
+  stays the default below $1,000.
+- **Why $1,000:** Stripe's ACH fee caps at $5 above ~$625, while the card fee keeps climbing – at
+  $1,000 the reporter loses ~$29.30 to a card vs. ~$5 to ACH (a ~$24 gap), and it only widens (~$39
+  at $1,500). Below $1,000 the card premium is small (< ~$29) and card clears instantly vs. ACH's
+  1–4 business days, so nudging there mostly annoys. $1,000 is the clean point where the reporter's
+  savings start to matter, erring toward protecting the party who actually bears the fee. Common B2B
+  guidance lines up: ACH is the smarter call over ~$500 and cards stay fine under ~$5k, so $1,000
+  sits sensibly in that band. **Tunable** once we see real invoice sizes – the sample invoices
+  already cluster $384–$1,650, so a lot of real ones will straddle this line.
+- **Still open:** (1) whether a reporter may **hard-restrict to ACH-only** (protects their margin,
+  but a firm that wants card points/float then can't) – current lean is **no, keep both**; (2)
+  confirm the $1,000 threshold against real invoice-size data before locking it in.
+
 **Considered feature (OPEN) – firm-initiated payment request:** today a payment needs the CSR to
 send an invoice first, so a firm that wants to pay electronically can't self-serve. Consider a
 "request an invoice / request to pay" action from a firm on a connected reporter: the firm signals
