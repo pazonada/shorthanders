@@ -159,7 +159,10 @@ function ContactSubmit() {
 
 // ═══ Store provider ════════════════════════════════════════════════
 function StoreProvider({ children }) {
-  const [role, setRole] = useState(null);        // null | 'reporter' | 'firm'
+  // Persist the logged-in role across refreshes (prototype convenience) - otherwise React state
+  // resets on reload and you're kicked back to logged-out. Logout clears it.
+  const [role, setRole] = useState(() => { try { return localStorage.getItem("ds_role") || null; } catch (e) { return null; } });  // null | 'reporter' | 'firm'
+  useEffect(() => { try { if (role) localStorage.setItem("ds_role", role); else localStorage.removeItem("ds_role"); } catch (e) {} }, [role]);
   const [myCsr, setMyCsr] = useState("900001");   // demo reporter = Marguerite Ellsworth (sample)
   const [saved, setSaved] = useState(["900004", "900003", "900005"]);
   const [convos, setConvos] = useState(SEED_CONVOS);

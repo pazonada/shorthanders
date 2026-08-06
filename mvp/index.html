@@ -5074,20 +5074,27 @@ function ReporterPlanCards() {
   const isPro = store.reporterPlan === "pro";
   return (
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12, alignItems: "stretch" }}>
-      <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 12, ...(!isPro ? { border: "2px solid var(--ink)" } : null) }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
-          <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice{!isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
-          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, whiteSpace: "nowrap", marginLeft: "auto" }}>5%<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}> per payment</span></span>
+      {/* Each panel is header-group + button as two flex children, with a generous gap (28) between
+          them - so the button always has clear room above it (min 28, more when the panel stretches),
+          while the header and description stay tight (10). */}
+      <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 28, ...(!isPro ? { border: "2px solid var(--ink)" } : null) }}>
+        <div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+            <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice{!isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
+            <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, whiteSpace: "nowrap", marginLeft: "auto" }}>5%<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}> per payment</span></span>
+          </div>
+          <p style={{ fontSize: 13.5, color: "var(--muted)", margin: "10px 0 0", lineHeight: 1.55 }}>No monthly cost. Best if you invoice occasionally.</p>
         </div>
-        <p style={{ fontSize: 13.5, color: "var(--muted)", margin: 0, lineHeight: 1.55 }}>No monthly cost. Best if you invoice occasionally.</p>
         {isPro && <button className="btn btn-secondary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.downgradeReporter()}>Switch to pay-per-invoice</button>}
       </div>
-      <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 12, ...(isPro ? { border: "2px solid var(--ink)" } : null) }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
-          <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pro{isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
-          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, whiteSpace: "nowrap", marginLeft: "auto" }}>$29<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}>/month + 2% per payment</span></span>
+      <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 28, ...(isPro ? { border: "2px solid var(--ink)" } : null) }}>
+        <div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+            <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pro{isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
+            <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, whiteSpace: "nowrap", marginLeft: "auto" }}>$29<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}>/month + 2% per payment</span></span>
+          </div>
+          <p style={{ fontSize: 13.5, color: "var(--muted)", margin: "10px 0 0", lineHeight: 1.55 }}>A lower per-payment fee. Best once you invoice often or in large amounts.</p>
         </div>
-        <p style={{ fontSize: 13.5, color: "var(--muted)", margin: 0, lineHeight: 1.55 }}>A lower per-payment fee. Best once you invoice often or in large amounts.</p>
         {!isPro && <button className="btn btn-primary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.upgradeReporter()}><Icon name="arrow" size={16} /> Switch to Pro</button>}
       </div>
     </div>
@@ -6067,7 +6074,7 @@ function SettingsPage() {
         <p style={{ color: "var(--muted)", marginTop: 8 }}>{isFirm ? store.firmName + " · Firm account" : "Your account · Court reporter"}</p>
       </div>
       <div className="ds-note" style={{ marginTop: 18 }}><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Prototype</strong> – these controls are illustrative; account, billing, and Stripe actions aren't wired to a real backend yet.</span></div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 28, marginTop: 24 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 40, marginTop: 28 }}>
         <SettingsSection icon="dollar" title="Plan &amp; billing" desc={isReporter ? "You're free to list and get found. You only pay a small fee when you collect payment through the site." : "Browse, invite, and pay for free. A membership unlocks full search and reaching any reporter."}>
           {isFirm ? <FirmSubscription /> : <ReporterPlanCards />}
         </SettingsSection>
@@ -6304,7 +6311,10 @@ function ContactSubmit() {
 
 // ═══ Store provider ════════════════════════════════════════════════
 function StoreProvider({ children }) {
-  const [role, setRole] = useState(null);        // null | 'reporter' | 'firm'
+  // Persist the logged-in role across refreshes (prototype convenience) - otherwise React state
+  // resets on reload and you're kicked back to logged-out. Logout clears it.
+  const [role, setRole] = useState(() => { try { return localStorage.getItem("ds_role") || null; } catch (e) { return null; } });  // null | 'reporter' | 'firm'
+  useEffect(() => { try { if (role) localStorage.setItem("ds_role", role); else localStorage.removeItem("ds_role"); } catch (e) {} }, [role]);
   const [myCsr, setMyCsr] = useState("900001");   // demo reporter = Marguerite Ellsworth (sample)
   const [saved, setSaved] = useState(["900004", "900003", "900005"]);
   const [convos, setConvos] = useState(SEED_CONVOS);

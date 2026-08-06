@@ -250,7 +250,7 @@ function SettingsPage() {
         <p style={{ color: "var(--muted)", marginTop: 8 }}>{isFirm ? store.firmName + " · Firm account" : "Your account · Court reporter"}</p>
       </div>
       <div className="ds-note" style={{ marginTop: 18 }}><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Prototype</strong> – these controls are illustrative; account, billing, and Stripe actions aren't wired to a real backend yet.</span></div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 28, marginTop: 24 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 40, marginTop: 28 }}>
         <SettingsSection icon="dollar" title="Plan &amp; billing" desc={isReporter ? "You're free to list and get found. You only pay a small fee when you collect payment through the site." : "Browse, invite, and pay for free. A membership unlocks full search and reaching any reporter."}>
           {isFirm ? <FirmSubscription /> : <ReporterPlanCards />}
         </SettingsSection>
