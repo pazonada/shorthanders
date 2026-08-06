@@ -5634,6 +5634,18 @@ function InvoiceModal({ inv, viewer, onClose }) {
 
 const backLink = { background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 18 };
 // ═══ Messaging (text + pass-through secure links; no file storage) ══
+// Normalize + lightly validate a pasted link: add https:// if the scheme is missing, and require a
+// host with a dot so random text ("hello") can't pass as a URL. Returns the clean URL, or null.
+function normalizeUrl(raw) {
+  let s = (raw || "").trim();
+  if (!s) return null;
+  if (!/^https?:\/\//i.test(s)) s = "https://" + s;
+  try {
+    const u = new URL(s);
+    if (!u.hostname.includes(".")) return null;
+    return u.href;
+  } catch (e) { return null; }
+}
 function MessagesPanel({ embedded }) {
   const store = useStore();
   const convos = store.convos;
@@ -5653,17 +5665,36 @@ function MessagesPanel({ embedded }) {
   const [linkOpen, setLinkOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [linkLabel, setLinkLabel] = useState("");
+  const [attachedLink, setAttachedLink] = useState(null);   // committed { url, label }, shown as a chip
+  const [linkError, setLinkError] = useState("");
   const threadRef = useRef(null);
   // Pin the thread to its latest message by scrolling the thread's OWN container – not
   // scrollIntoView, which also scrolls the whole window down and buries the page header.
   useEffect(() => { const el = threadRef.current; if (el) requestAnimationFrame(() => { el.scrollTop = el.scrollHeight; }); }, [activeId, active && active.msgs.length]);
 
+  // Commit the typed URL into an attached-link "chip" (validated), so the sender can SEE it's
+  // attached before sending - instead of guessing whether it will ride along with Send.
+  const attachLink = () => {
+    const url = normalizeUrl(linkUrl);
+    if (!url) { setLinkError("Enter a valid link, like https://your-file-host.com/…"); return; }
+    setAttachedLink({ url: url, label: linkLabel.trim() || "Shared link" });
+    setLinkUrl(""); setLinkLabel(""); setLinkError(""); setLinkOpen(false);
+  };
+
   const send = () => {
-    if (!draft.trim() && !linkUrl.trim()) return;
+    let link = attachedLink;
+    // If the user typed a link but didn't click "Attach", fold it in on Send (validated) rather than
+    // silently dropping it - so either flow works and a bad URL is caught, not sent as-is.
+    if (!link && linkUrl.trim()) {
+      const url = normalizeUrl(linkUrl);
+      if (!url) { setLinkError("Enter a valid link, like https://your-file-host.com/…"); return; }
+      link = { url: url, label: linkLabel.trim() || "Shared link" };
+    }
+    if (!draft.trim() && !link) return;
     const msg = { from: "me", t: draft.trim(), at: "Just now" };
-    if (linkUrl.trim()) msg.link = { label: linkLabel.trim() || "Shared link", url: linkUrl.trim() };
+    if (link) msg.link = link;
     store.pushMessage(activeId, msg);
-    setDraft(""); setLinkUrl(""); setLinkLabel(""); setLinkOpen(false);
+    setDraft(""); setAttachedLink(null); setLinkUrl(""); setLinkLabel(""); setLinkError(""); setLinkOpen(false);
   };
 
   const meLabel = store.role === "firm" ? "you (firm)" : "you";
@@ -5714,9 +5745,11 @@ function MessagesPanel({ embedded }) {
             {linkOpen && (
               <div style={{ marginBottom: 10 }}>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                  <input className="ds-input" style={{ flex: 2, minWidth: 180, padding: "9px 12px", fontSize: 13 }} placeholder="Paste a secure link (your Dropbox, Box, etc.)" value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)} />
-                  <input className="ds-input" style={{ flex: 1, minWidth: 120, padding: "9px 12px", fontSize: 13 }} placeholder="Label (optional)" value={linkLabel} onChange={(e) => setLinkLabel(e.target.value)} />
+                  <input className="ds-input" style={{ flex: 2, minWidth: 180, padding: "9px 12px", fontSize: 13 }} placeholder="Paste a secure link (your Dropbox, Box, etc.)" value={linkUrl} onChange={(e) => { setLinkUrl(e.target.value); if (linkError) setLinkError(""); }} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); attachLink(); } }} />
+                  <input className="ds-input" style={{ flex: 1, minWidth: 120, padding: "9px 12px", fontSize: 13 }} placeholder="Label (optional)" value={linkLabel} onChange={(e) => setLinkLabel(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); attachLink(); } }} />
+                  <button className="btn btn-secondary" style={{ padding: "9px 16px", fontSize: 13, whiteSpace: "nowrap" }} onClick={attachLink}><Icon name="link" size={15} /> Attach link</button>
                 </div>
+                {linkError ? <div style={{ fontSize: 12, color: "#C0362C", marginTop: 6 }}>{linkError}</div> : null}
                 {linkUrl.trim() ? (
                   <div style={{ display: "flex", gap: 7, alignItems: "flex-start", marginTop: 8, fontSize: 12, color: "var(--ink-soft)", background: "#F7F8C6", border: "1px solid #DCE224", borderRadius: 9, padding: "8px 11px" }}>
                     <Icon name="shield" size={14} style={{ flexShrink: 0, marginTop: 1 }} />
@@ -5725,8 +5758,15 @@ function MessagesPanel({ embedded }) {
                 ) : null}
               </div>
             )}
+            {attachedLink && (
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10, padding: "8px 12px", background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 9, fontSize: 13 }}>
+                <Icon name="link" size={15} style={{ color: "var(--brand-dark)", flexShrink: 0 }} />
+                <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "var(--ink-soft)" }}><strong style={{ fontWeight: 600, color: "var(--ink)" }}>{attachedLink.label}</strong> · {attachedLink.url}</span>
+                <button title="Remove link" onClick={() => setAttachedLink(null)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--muted)", display: "flex", padding: 2 }}><Icon name="x" size={15} /></button>
+              </div>
+            )}
             <div style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
-              <button title="Attach a secure link" className="chip-filter" style={{ padding: "11px 12px", borderColor: linkOpen ? "var(--brand)" : "var(--rule)", color: linkOpen ? "var(--brand-dark)" : "var(--ink-soft)" }} onClick={() => setLinkOpen((v) => !v)}><Icon name="link" size={16} /></button>
+              <button title="Attach a secure link" className="chip-filter" style={{ padding: "11px 12px", borderColor: (linkOpen || attachedLink) ? "var(--brand)" : "var(--rule)", color: (linkOpen || attachedLink) ? "var(--brand-dark)" : "var(--ink-soft)" }} onClick={() => setLinkOpen((v) => !v)}><Icon name="link" size={16} /></button>
               <textarea className="ds-input" rows={1} style={{ flex: 1, resize: "none", padding: "11px 14px" }} placeholder={"Message " + active.with + "…"} value={draft} onChange={(e) => setDraft(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }} />
               <button className="btn btn-primary" style={{ padding: "12px 20px" }} onClick={send}>Send</button>
             </div>
