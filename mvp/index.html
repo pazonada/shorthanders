@@ -2612,8 +2612,13 @@
   .ds-label { font-size: 13px; font-weight: 600; color: var(--ink-soft); margin-bottom: 7px; display: block; }
 
   .ds-card {
-    background: var(--bg); border: 1px solid var(--rule); border-radius: 18px; padding: 26px;
+    background: var(--bg); border: 1px solid var(--border-light); border-radius: 18px; padding: 26px;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.05), 0 12px 30px -16px rgba(15,23,42,0.14);
   }
+  /* Tinted callout cards (brand-soft / acid-yellow prompts) keep their own border but stay flat -
+     a drop shadow reads wrong on a flat callout. They set boxShadow:none inline, but this is the
+     fallback for any that don't. */
+  .ds-card.flat { box-shadow: none; }
   .ds-panel { background: var(--bg-soft); border: 1px solid var(--rule); border-radius: 16px; padding: 20px; }
 
   /* Settings page: left section-nav + soft-shadow cards (no thin grey borders). */
@@ -3991,7 +3996,7 @@ function ReporterProfile({ reporterId, invited }) {
       {r.sample && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This is a fictional demo profile – the name, license number, and every detail are made up to show how a claimed profile looks. Not a real reporter.</div></div>}
       {notAccepting && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="info" size={18} style={{ flexShrink: 0 }} /><div><strong>This reporter is not accepting new jobs right now,</strong> but can still view messages.</div></div>}
       {isOwner && (
-        <div className="ds-card" style={{ marginBottom: 22, display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+        <div className="ds-card flat" style={{ marginBottom: 22, display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
           <Icon name="eye" size={20} style={{ flexShrink: 0, color: "var(--brand-dark)" }} />
           <div style={{ flex: 1, minWidth: 220 }}>
             <div style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Preview – how firms see your profile</div>
@@ -4155,7 +4160,7 @@ function UnclaimedProfile({ r }) {
         </div>
 
         {store.role !== "reporter" && (
-          <div className="ds-card" style={{ background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+          <div className="ds-card flat" style={{ background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
             {invited ? (
               <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                 <Icon name="check" size={20} style={{ flexShrink: 0, color: "var(--brand-dark)" }} />
@@ -4179,7 +4184,7 @@ function UnclaimedProfile({ r }) {
        </div>
 
        <aside className="profile-aside">
-         <div className="ds-card" style={{ background: "#F7F8C6", borderColor: "#DCE224" }}>
+         <div className="ds-card flat" style={{ background: "#F7F8C6", borderColor: "#DCE224" }}>
            <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", color: "var(--ink-soft)" }}>For court reporters</div>
            <h2 style={{ fontSize: 26, marginTop: 6 }}>Is this you?</h2>
            <p style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 8, lineHeight: 1.6 }}>Claiming is free – add your bio, areas of law, and rates, and message firms directly. Invoice and get paid through the site for a small fee per payment.</p>
@@ -4788,7 +4793,7 @@ function ReporterDashboard() {
           <StatCard icon="invoice" label="Outstanding" value={"$" + outstanding.toLocaleString(undefined, { minimumFractionDigits: 2 })} sub="Invoiced, awaiting payment" />
           <StatCard icon="eye" label="Profile views (30d)" value={me.views} sub={(me.saves || 0) + " firms saved your profile"} />
 
-          <div className="ds-card" style={{ gridColumn: "1 / -1", marginTop: 20, display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+          <div className="ds-card flat" style={{ gridColumn: "1 / -1", marginTop: 20, display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
             <div style={{ width: 46, height: 46, borderRadius: 12, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="mail" size={22} /></div>
             <div style={{ flex: 1, minWidth: 220 }}>
               <div style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Invite the firms you already work with</div>
@@ -4811,7 +4816,7 @@ function ReporterDashboard() {
 
 function StatCard({ icon, label, value, onClick, sub }) {
   return (
-    <div className="ds-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : "default", display: "flex", flexDirection: "column", gap: 12, boxShadow: "inset 3px 0 0 0 var(--ink)" }}>
+    <div className="ds-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : "default", display: "flex", flexDirection: "column", gap: 12, boxShadow: "inset 3px 0 0 0 var(--ink), 0 1px 3px rgba(15,23,42,0.05), 0 12px 30px -16px rgba(15,23,42,0.14)" }}>
       <span style={{ color: "var(--brand)", display: "flex", marginTop: -6 }}><Icon name={icon} size={20} /></span>
       <div style={{ marginTop: 10 }}><div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>{value}</div><div style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>{label}</div>{sub ? <div style={{ fontSize: 11.5, color: "var(--dim)", marginTop: 6, lineHeight: 1.4 }}>{sub}</div> : null}</div>
     </div>
@@ -5285,7 +5290,7 @@ function ReporterInvoices() {
         </div>
       </div>
       {requests.length > 0 && (
-        <div className="ds-card" style={{ marginBottom: 18, background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+        <div className="ds-card flat" style={{ marginBottom: 18, background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}><Icon name="invoice" size={18} style={{ color: "var(--brand-dark)" }} /><h3 style={{ fontSize: 17 }}>Invoice requests from firms</h3></div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {requests.map((q) => (

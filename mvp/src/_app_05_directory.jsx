@@ -530,7 +530,7 @@ function ReporterProfile({ reporterId, invited }) {
       {r.sample && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This is a fictional demo profile – the name, license number, and every detail are made up to show how a claimed profile looks. Not a real reporter.</div></div>}
       {notAccepting && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="info" size={18} style={{ flexShrink: 0 }} /><div><strong>This reporter is not accepting new jobs right now,</strong> but can still view messages.</div></div>}
       {isOwner && (
-        <div className="ds-card" style={{ marginBottom: 22, display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+        <div className="ds-card flat" style={{ marginBottom: 22, display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
           <Icon name="eye" size={20} style={{ flexShrink: 0, color: "var(--brand-dark)" }} />
           <div style={{ flex: 1, minWidth: 220 }}>
             <div style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Preview – how firms see your profile</div>
@@ -694,7 +694,7 @@ function UnclaimedProfile({ r }) {
         </div>
 
         {store.role !== "reporter" && (
-          <div className="ds-card" style={{ background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+          <div className="ds-card flat" style={{ background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
             {invited ? (
               <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                 <Icon name="check" size={20} style={{ flexShrink: 0, color: "var(--brand-dark)" }} />
@@ -718,7 +718,7 @@ function UnclaimedProfile({ r }) {
        </div>
 
        <aside className="profile-aside">
-         <div className="ds-card" style={{ background: "#F7F8C6", borderColor: "#DCE224" }}>
+         <div className="ds-card flat" style={{ background: "#F7F8C6", borderColor: "#DCE224" }}>
            <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", color: "var(--ink-soft)" }}>For court reporters</div>
            <h2 style={{ fontSize: 26, marginTop: 6 }}>Is this you?</h2>
            <p style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 8, lineHeight: 1.6 }}>Claiming is free – add your bio, areas of law, and rates, and message firms directly. Invoice and get paid through the site for a small fee per payment.</p>

@@ -103,7 +103,7 @@ function ReporterInvoices() {
         </div>
       </div>
       {requests.length > 0 && (
-        <div className="ds-card" style={{ marginBottom: 18, background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+        <div className="ds-card flat" style={{ marginBottom: 18, background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}><Icon name="invoice" size={18} style={{ color: "var(--brand-dark)" }} /><h3 style={{ fontSize: 17 }}>Invoice requests from firms</h3></div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {requests.map((q) => (

@@ -61,8 +61,13 @@
   .ds-label { font-size: 13px; font-weight: 600; color: var(--ink-soft); margin-bottom: 7px; display: block; }
 
   .ds-card {
-    background: var(--bg); border: 1px solid var(--rule); border-radius: 18px; padding: 26px;
+    background: var(--bg); border: 1px solid var(--border-light); border-radius: 18px; padding: 26px;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.05), 0 12px 30px -16px rgba(15,23,42,0.14);
   }
+  /* Tinted callout cards (brand-soft / acid-yellow prompts) keep their own border but stay flat -
+     a drop shadow reads wrong on a flat callout. They set boxShadow:none inline, but this is the
+     fallback for any that don't. */
+  .ds-card.flat { box-shadow: none; }
   .ds-panel { background: var(--bg-soft); border: 1px solid var(--rule); border-radius: 16px; padding: 20px; }
 
   /* Settings page: left section-nav + soft-shadow cards (no thin grey borders). */

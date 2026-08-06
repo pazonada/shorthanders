@@ -81,7 +81,7 @@ function ReporterDashboard() {
           <StatCard icon="invoice" label="Outstanding" value={"$" + outstanding.toLocaleString(undefined, { minimumFractionDigits: 2 })} sub="Invoiced, awaiting payment" />
           <StatCard icon="eye" label="Profile views (30d)" value={me.views} sub={(me.saves || 0) + " firms saved your profile"} />
 
-          <div className="ds-card" style={{ gridColumn: "1 / -1", marginTop: 20, display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
+          <div className="ds-card flat" style={{ gridColumn: "1 / -1", marginTop: 20, display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
             <div style={{ width: 46, height: 46, borderRadius: 12, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="mail" size={22} /></div>
             <div style={{ flex: 1, minWidth: 220 }}>
               <div style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Invite the firms you already work with</div>
@@ -104,7 +104,7 @@ function ReporterDashboard() {
 
 function StatCard({ icon, label, value, onClick, sub }) {
   return (
-    <div className="ds-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : "default", display: "flex", flexDirection: "column", gap: 12, boxShadow: "inset 3px 0 0 0 var(--ink)" }}>
+    <div className="ds-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : "default", display: "flex", flexDirection: "column", gap: 12, boxShadow: "inset 3px 0 0 0 var(--ink), 0 1px 3px rgba(15,23,42,0.05), 0 12px 30px -16px rgba(15,23,42,0.14)" }}>
       <span style={{ color: "var(--brand)", display: "flex", marginTop: -6 }}><Icon name={icon} size={20} /></span>
       <div style={{ marginTop: 10 }}><div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>{value}</div><div style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>{label}</div>{sub ? <div style={{ fontSize: 11.5, color: "var(--dim)", marginTop: 6, lineHeight: 1.4 }}>{sub}</div> : null}</div>
     </div>

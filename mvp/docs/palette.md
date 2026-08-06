@@ -134,8 +134,21 @@ panel of content (not a field-group label). These are the **Instrument Serif** `
 - Not to be confused with the small uppercase indigo field labels above (those stay ~12–15px), or with
   page **titles** (`h1`, the clamp() sizes bumped ~15% in commit b771104).
 - **One step up (26px):** headings that title a **full-width page section** (not a card) go to **26px**
-  Instrument Serif – e.g. the **Settings** page section headers (`SettingsSection`) and the marketing
-  `CtaStrip`. So: field label ~12–15px → card/panel subhead 22px → page-section heading 26px → page title (h1).
+  Instrument Serif – e.g. the **Settings** page section headers and the marketing `CtaStrip`. So:
+  field label ~12–15px → card/panel subhead 22px → page-section heading 26px → page title (h1).
+
+## Cards & surfaces
+
+Two card treatments (standardized 2026-08-06, replacing the old flat grey-bordered boxes):
+- **Content cards** – white, floating on a **soft shadow**, with a near-invisible edge (`.ds-card`:
+  default border is `--border-light`, not the old grey `--rule`). Use for dashboard tiles/tables,
+  Settings sections, pricing cards. `StatCard` combines its inset accent bar with the same shadow.
+- **Callout cards** – tinted (brand-soft / acid-yellow), **flat** (`.ds-card.flat`, no shadow) with
+  their own colored border. Inline prompts/notices only, never body content.
+
+**Settings vs. dashboards are different *areas* on purpose:** Settings uses a **left section-nav**
+(`.settings-grid` / `SettingsPage`); the reporter/firm dashboards keep their **top tabs**. Same card
+look, different navigation – so Settings reads as a separate part of the site.
 
 ## Icons
 
