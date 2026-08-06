@@ -169,7 +169,7 @@ function ForFirmsPage() {
         <FeatureBlock icon="doc" title="Clean invoices" body="Reporters invoice you through the platform with your matter reference on every line, ready for AP." />
         <FeatureBlock icon="lock" title="Pay online, not by check" body="No more cutting paper checks to reporters who won't take anything else. Pay any invoice by card or ACH in a click – receipts automatic, nothing to chase." />
       </div>
-      <section style={{ marginTop: 40, borderLeft: "3px solid var(--brand)", paddingLeft: "clamp(20px, 3vw, 32px)" }}>
+      <section style={{ marginTop: "clamp(56px, 7vw, 88px)", borderLeft: "3px solid var(--brand)", paddingLeft: "clamp(20px, 3vw, 32px)" }}>
         <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap" }}>
           <div style={{ flex: 1, minWidth: 260 }}>
             <h2 style={{ fontSize: "clamp(24px, 3vw, 34px)", lineHeight: 1.12, color: "var(--brand-dark)" }}>Already worked with a reporter? Find them again.</h2>
@@ -178,7 +178,7 @@ function ForFirmsPage() {
           <button className="btn btn-primary" style={{ flexShrink: 0 }} onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Search the directory</button>
         </div>
       </section>
-      <section style={{ marginTop: 40, background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>
+      <section style={{ marginTop: "clamp(56px, 7vw, 88px)", background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>
         <div style={{ textAlign: "center", margin: "0 0 28px" }}>
           <h2 style={{ fontSize: "clamp(26px, 3.2vw, 40px)", lineHeight: 1.1 }}>What it costs</h2>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Browsing the directory, inviting reporters, and paying invoices are always free. A simple monthly membership unlocks the full directory, reaching any reporter, and personalized recommendations – no booking fees, no commission on the work.</p>
@@ -213,7 +213,7 @@ function ForReportersPage() {
         <FeatureBlock icon="bank" title="Get paid, and your tax forms" body="Collect by card or ACH straight to your bank, and get tidy income records plus the year-end 1099 Stripe issues for what you collect." />
         <FeatureBlock icon="shield" title="Verified once, via Stripe" body="Confirm your identity through Stripe Connect. It powers your payouts and shows firms you're the real, licensed reporter." />
       </div>
-      <section style={{ marginTop: 52, background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>
+      <section style={{ marginTop: "clamp(56px, 7vw, 88px)", background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>
         <div style={{ textAlign: "center", margin: "0 0 28px" }}>
           <h2 style={{ fontSize: "clamp(26px, 3.2vw, 40px)", lineHeight: 1.1 }}>What it costs</h2>
           <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Getting listed and messaging firms is free. You only pay a small fee when you collect payment through the site – pay as you go, or a lower fee on Pro.</p>
@@ -229,7 +229,7 @@ function ForReportersPage() {
             cta={["Claim your profile", "/claim"]} note="$29/month + 2% per payment. Worth it once you're collecting roughly $970+/month. Standard Stripe fees apply." />
         </div>
       </section>
-      <div style={{ background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 18, padding: 32, marginTop: 40, textAlign: "center" }}>
+      <div style={{ background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 18, padding: 32, marginTop: "clamp(56px, 7vw, 88px)", textAlign: "center" }}>
         <h3 style={{ fontSize: 26, color: "var(--brand-dark)" }}>Find your profile and claim it</h3>
         <p style={{ color: "var(--ink-soft)", marginTop: 10, maxWidth: 560, margin: "10px auto 0" }}>Look yourself up by license number or name, confirm it's you, and create your account. Three minutes, start to finish.</p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 22, flexWrap: "wrap" }}>
@@ -260,7 +260,7 @@ function FeatureBlock({ icon, title, body }) {
 }
 function CtaStrip({ title, button }) {
   return (
-    <div style={{ background: "var(--ink)", color: "#fff", borderRadius: 20, padding: "40px 32px", marginTop: 44, textAlign: "center" }}>
+    <div style={{ background: "var(--ink)", color: "#fff", borderRadius: 20, padding: "40px 32px", marginTop: "clamp(56px, 7vw, 88px)", textAlign: "center" }}>
       <h3 style={{ fontSize: 26, color: "#fff" }}>{title}</h3>
       <button className="btn btn-white" style={{ marginTop: 20 }} onClick={() => navigate(button[1])}>{button[0]} <Icon name="arrow" size={16} /></button>
     </div>
