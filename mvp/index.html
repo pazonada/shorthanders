@@ -6067,7 +6067,7 @@ function SettingsPage() {
         <p style={{ color: "var(--muted)", marginTop: 8 }}>{isFirm ? store.firmName + " · Firm account" : "Your account · Court reporter"}</p>
       </div>
       <div className="ds-note" style={{ marginTop: 18 }}><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Prototype</strong> – these controls are illustrative; account, billing, and Stripe actions aren't wired to a real backend yet.</span></div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 20, marginTop: 20 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 28, marginTop: 24 }}>
         <SettingsSection icon="dollar" title="Plan &amp; billing" desc={isReporter ? "You're free to list and get found. You only pay a small fee when you collect payment through the site." : "Browse, invite, and pay for free. A membership unlocks full search and reaching any reporter."}>
           {isFirm ? <FirmSubscription /> : <ReporterPlanCards />}
         </SettingsSection>
@@ -6126,7 +6126,7 @@ function SettingsSection({ icon, title, desc, children }) {
       <div style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 16 }}>
         <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name={icon} size={18} /></div>
         <div>
-          <h3 style={{ fontSize: 22 }}>{title}</h3>
+          <h3 style={{ fontSize: 26 }}>{title}</h3>
           {desc && <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 2, lineHeight: 1.5 }}>{desc}</p>}
         </div>
       </div>

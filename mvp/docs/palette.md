@@ -133,6 +133,9 @@ panel of content (not a field-group label). These are the **Instrument Serif** `
   payments"**, **"Stripe Connect"** on the dashboards. Reference: `FirmSubscription` in `_app_10_firm.jsx`.
 - Not to be confused with the small uppercase indigo field labels above (those stay ~12–15px), or with
   page **titles** (`h1`, the clamp() sizes bumped ~15% in commit b771104).
+- **One step up (26px):** headings that title a **full-width page section** (not a card) go to **26px**
+  Instrument Serif – e.g. the **Settings** page section headers (`SettingsSection`) and the marketing
+  `CtaStrip`. So: field label ~12–15px → card/panel subhead 22px → page-section heading 26px → page title (h1).
 
 ## Icons
 
