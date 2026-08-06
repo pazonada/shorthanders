@@ -1,6 +1,13 @@
 // ═══ Reporter invoices ═════════════════════════════════════════════
 const INV_STATUS = { draft: ["inv-draft", "Draft"], sent: ["inv-sent", "Sent"], paid: ["inv-paid", "Paid"], overdue: ["inv-overdue", "Overdue"] };
-function InvStatus({ status }) { const [cls, label] = INV_STATUS[status]; return <span className={"inv-status " + cls}>{label}</span>; }
+function InvStatus({ status, viewer }) {
+  const [cls, base] = INV_STATUS[status];
+  // "Sent" is written from the reporter's side (they sent it). To the firm (the payer) that same
+  // invoice is one awaiting THEIR payment, not something they sent - so relabel it for the firm
+  // viewer, keeping the same pill styling.
+  const label = viewer === "firm" && status === "sent" ? "Awaiting payment" : base;
+  return <span className={"inv-status " + cls}>{label}</span>;
+}
 
 // Regime-aware starter templates (see mvp/docs/csr_profile_field_taxonomy.md).
 // Line-item STRUCTURE only – no prefilled rates. Dewey Sholes doesn't set rates;
@@ -420,7 +427,7 @@ function InvoiceModal({ inv, viewer, onClose }) {
     <div className="modal-overlay invoice-modal-overlay" onClick={onClose}>
       <div className="ds-card invoice-print" style={{ maxWidth: 640, width: "94%", maxHeight: "90vh", overflowY: "auto", padding: 0 }} onClick={(e) => e.stopPropagation()}>
         <div className="no-print" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 18px", borderBottom: "1px solid var(--rule)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}><span style={{ fontWeight: 700, color: "var(--ink)" }}>{inv.id}</span><InvStatus status={inv.status} /></div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}><span style={{ fontWeight: 700, color: "var(--ink)" }}>{inv.id}</span><InvStatus status={inv.status} viewer={viewer} /></div>
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
             <button className="btn btn-secondary" style={{ padding: "6px 12px" }} onClick={() => window.print()}><Icon name="printer" size={15} /> Print</button>
             <button onClick={onClose} title="Close" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", padding: 4 }}><Icon name="x" size={20} /></button>

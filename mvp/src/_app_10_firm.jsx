@@ -100,7 +100,7 @@ function FirmInvoices() {
             <div style={{ flex: 1, minWidth: 220 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                 <span style={{ fontWeight: 700, fontSize: 17, color: "var(--ink)" }}>${i.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
-                <InvStatus status={i.status} />
+                <InvStatus status={i.status} viewer="firm" />
               </div>
               <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 4 }}>{i.from ? "From " + i.from + " · " : ""}{i.matter}</div>
               <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>{i.desc}{i.due ? " · due " + i.due : ""}</div>
