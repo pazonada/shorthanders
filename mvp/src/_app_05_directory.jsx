@@ -73,7 +73,7 @@ const PAGE_SIZE = 24;
 // directory" lands you exactly where you were. Cleared only by a full reload - the right lifetime
 // for one browsing session.
 const dirCache = {
-  q: "", county: "", state: "", language: "", minYears: "",
+  q: "", county: "", state: "", language: "", minYears: "", workMode: "",
   tags: [], specTags: [], certTags: [],
   rushOnly: false, notaryOnly: false, claimedOnly: false,
   searched: null, limit: PAGE_SIZE, scrollY: 0,
@@ -117,6 +117,11 @@ function matchesCriteria(r, s, haystacks) {
     if (!covers || r.workMode === "remote") return false;
   }
   if (s.state && !(r.otherStates || []).includes(s.state)) return false;
+  // Work mode. "remote" = does remote work at all (remote-only OR both); "inperson" = appears in
+  // person (excludes only remote-only) - the same line the county filter draws, so unclaimed public
+  // records (no workMode set) count as in-person, since a licensed CSR reported somewhere physical.
+  if (s.workMode === "remote" && !(r.workMode === "remote" || r.workMode === "both")) return false;
+  if (s.workMode === "inperson" && r.workMode === "remote") return false;
   if (s.claimedOnly && !r.claimed) return false;
   if (s.rushOnly && !r.rush) return false;
   if (s.notaryOnly && !r.notary) return false;
@@ -142,6 +147,7 @@ function ReporterDirectory() {
   const [state, setState] = useState(dirCache.state);
   const [language, setLanguage] = useState(dirCache.language);
   const [minYears, setMinYears] = useState(dirCache.minYears);
+  const [workMode, setWorkMode] = useState(dirCache.workMode);   // "", "inperson", or "remote"
   const [tags, setTags] = useState(dirCache.tags);       // selected proceeding / service tags
   const [specTags, setSpecTags] = useState(dirCache.specTags);   // selected specialties (multi, OR within group)
   const [certTags, setCertTags] = useState(dirCache.certTags);   // selected credentials (multi, OR within group)
@@ -158,8 +164,8 @@ function ReporterDirectory() {
 
   // Persist the live browse state back to dirCache so a trip to a profile and back restores it.
   useEffect(() => {
-    Object.assign(dirCache, { q, county, state, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit });
-  }, [q, county, state, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit]);
+    Object.assign(dirCache, { q, county, state, language, minYears, workMode, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit });
+  }, [q, county, state, language, minYears, workMode, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit]);
   // Restore scroll on return. Runs before paint so there's no flash of the top after the router's
   // scroll-to-top fires on the hashchange back into the directory.
   useLayoutEffect(() => {
@@ -205,15 +211,15 @@ function ReporterDirectory() {
 
   // Signatures let us tell "draft differs from what's applied" (dirty) and "nothing is applied"
   // (browse) cheaply. Arrays are sorted so checkbox order doesn't create false dirtiness.
-  const sig = (o) => JSON.stringify([o.q, o.county, o.state, o.language, o.minYears, [...o.tags].sort(), [...o.specTags].sort(), [...o.certTags].sort(), o.rushOnly, o.notaryOnly, o.claimedOnly]);
-  const draft = { q, county, state, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly };
-  const EMPTY_SIG = sig({ q: "", county: "", state: "", language: "", minYears: "", tags: [], specTags: [], certTags: [], rushOnly: false, notaryOnly: false, claimedOnly: false });
+  const sig = (o) => JSON.stringify([o.q, o.county, o.state, o.language, o.minYears, o.workMode, [...o.tags].sort(), [...o.specTags].sort(), [...o.certTags].sort(), o.rushOnly, o.notaryOnly, o.claimedOnly]);
+  const draft = { q, county, state, language, minYears, workMode, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly };
+  const EMPTY_SIG = sig({ q: "", county: "", state: "", language: "", minYears: "", workMode: "", tags: [], specTags: [], certTags: [], rushOnly: false, notaryOnly: false, claimedOnly: false });
   const draftSig = sig(draft);
   const searchedSig = searched ? sig(searched) : EMPTY_SIG;
   const browseMode = searchedSig === EMPTY_SIG;   // nothing applied -> featured + everyone
   const dirty = draftSig !== searchedSig;          // controls changed since last Search
   const anyDraft = draftSig !== EMPTY_SIG;
-  const runSearch = () => { setSearched(draftSig === EMPTY_SIG ? null : { q, county, state, language, minYears, tags: [...tags], specTags: [...specTags], certTags: [...certTags], rushOnly, notaryOnly, claimedOnly }); setLimit(PAGE_SIZE); };
+  const runSearch = () => { setSearched(draftSig === EMPTY_SIG ? null : { q, county, state, language, minYears, workMode, tags: [...tags], specTags: [...specTags], certTags: [...certTags], rushOnly, notaryOnly, claimedOnly }); setLimit(PAGE_SIZE); };
   // Live filtering: apply the draft automatically whenever a control changes (no "Search" button).
   // Skip the very first run so returning from a profile keeps the restored applied search + scroll.
   const firstApply = useRef(true);
@@ -239,7 +245,7 @@ function ReporterDirectory() {
     return list;
   }, [all, haystacks, searched]);
 
-  const clearAll = () => { setQ(""); setCounty(""); setState(""); setLanguage(""); setMinYears(""); setTags([]); setSpecTags([]); setCertTags([]); setRushOnly(false); setNotaryOnly(false); setClaimedOnly(false); setSearched(null); setLimit(PAGE_SIZE); };
+  const clearAll = () => { setQ(""); setCounty(""); setState(""); setLanguage(""); setMinYears(""); setWorkMode(""); setTags([]); setSpecTags([]); setCertTags([]); setRushOnly(false); setNotaryOnly(false); setClaimedOnly(false); setSearched(null); setLimit(PAGE_SIZE); };
   // Featured only in browse mode - an active search shows a pure ranked list.
   const featured = browseMode ? weeklyFeatured(filtered.filter((r) => r.claimed), 4) : [];
   const featuredIds = new Set(featured.map((r) => r.id));
@@ -265,6 +271,16 @@ function ReporterDirectory() {
               {counties.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
             {county && <p style={{ fontSize: 12, color: "var(--dim)", margin: "7px 0 0", lineHeight: 1.45 }}>A county filter hides remote-only reporters, since they don't appear in person. Clear it to include them.</p>}
+          </FilterGroup>
+          <FilterGroup label="Work mode">
+            {/* Backed by the reporter's own "How do you work?" answer at claim. "In person" excludes
+                only remote-only reporters (the same line the county filter draws); "Remote" matches
+                anyone who works remotely (remote-only or in-person-and-remote). */}
+            <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={workMode} onChange={(e) => { setWorkMode(e.target.value); setLimit(PAGE_SIZE); }}>
+              <option value="">Any work mode</option>
+              <option value="inperson">Appears in person</option>
+              <option value="remote">Works remotely</option>
+            </select>
           </FilterGroup>
           {otherStates.length > 0 && (
             <FilterGroup label="Also certified in">

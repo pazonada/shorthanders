@@ -3523,7 +3523,7 @@ const PAGE_SIZE = 24;
 // directory" lands you exactly where you were. Cleared only by a full reload - the right lifetime
 // for one browsing session.
 const dirCache = {
-  q: "", county: "", state: "", language: "", minYears: "",
+  q: "", county: "", state: "", language: "", minYears: "", workMode: "",
   tags: [], specTags: [], certTags: [],
   rushOnly: false, notaryOnly: false, claimedOnly: false,
   searched: null, limit: PAGE_SIZE, scrollY: 0,
@@ -3567,6 +3567,11 @@ function matchesCriteria(r, s, haystacks) {
     if (!covers || r.workMode === "remote") return false;
   }
   if (s.state && !(r.otherStates || []).includes(s.state)) return false;
+  // Work mode. "remote" = does remote work at all (remote-only OR both); "inperson" = appears in
+  // person (excludes only remote-only) - the same line the county filter draws, so unclaimed public
+  // records (no workMode set) count as in-person, since a licensed CSR reported somewhere physical.
+  if (s.workMode === "remote" && !(r.workMode === "remote" || r.workMode === "both")) return false;
+  if (s.workMode === "inperson" && r.workMode === "remote") return false;
   if (s.claimedOnly && !r.claimed) return false;
   if (s.rushOnly && !r.rush) return false;
   if (s.notaryOnly && !r.notary) return false;
@@ -3592,6 +3597,7 @@ function ReporterDirectory() {
   const [state, setState] = useState(dirCache.state);
   const [language, setLanguage] = useState(dirCache.language);
   const [minYears, setMinYears] = useState(dirCache.minYears);
+  const [workMode, setWorkMode] = useState(dirCache.workMode);   // "", "inperson", or "remote"
   const [tags, setTags] = useState(dirCache.tags);       // selected proceeding / service tags
   const [specTags, setSpecTags] = useState(dirCache.specTags);   // selected specialties (multi, OR within group)
   const [certTags, setCertTags] = useState(dirCache.certTags);   // selected credentials (multi, OR within group)
@@ -3608,8 +3614,8 @@ function ReporterDirectory() {
 
   // Persist the live browse state back to dirCache so a trip to a profile and back restores it.
   useEffect(() => {
-    Object.assign(dirCache, { q, county, state, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit });
-  }, [q, county, state, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit]);
+    Object.assign(dirCache, { q, county, state, language, minYears, workMode, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit });
+  }, [q, county, state, language, minYears, workMode, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly, searched, limit]);
   // Restore scroll on return. Runs before paint so there's no flash of the top after the router's
   // scroll-to-top fires on the hashchange back into the directory.
   useLayoutEffect(() => {
@@ -3655,15 +3661,15 @@ function ReporterDirectory() {
 
   // Signatures let us tell "draft differs from what's applied" (dirty) and "nothing is applied"
   // (browse) cheaply. Arrays are sorted so checkbox order doesn't create false dirtiness.
-  const sig = (o) => JSON.stringify([o.q, o.county, o.state, o.language, o.minYears, [...o.tags].sort(), [...o.specTags].sort(), [...o.certTags].sort(), o.rushOnly, o.notaryOnly, o.claimedOnly]);
-  const draft = { q, county, state, language, minYears, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly };
-  const EMPTY_SIG = sig({ q: "", county: "", state: "", language: "", minYears: "", tags: [], specTags: [], certTags: [], rushOnly: false, notaryOnly: false, claimedOnly: false });
+  const sig = (o) => JSON.stringify([o.q, o.county, o.state, o.language, o.minYears, o.workMode, [...o.tags].sort(), [...o.specTags].sort(), [...o.certTags].sort(), o.rushOnly, o.notaryOnly, o.claimedOnly]);
+  const draft = { q, county, state, language, minYears, workMode, tags, specTags, certTags, rushOnly, notaryOnly, claimedOnly };
+  const EMPTY_SIG = sig({ q: "", county: "", state: "", language: "", minYears: "", workMode: "", tags: [], specTags: [], certTags: [], rushOnly: false, notaryOnly: false, claimedOnly: false });
   const draftSig = sig(draft);
   const searchedSig = searched ? sig(searched) : EMPTY_SIG;
   const browseMode = searchedSig === EMPTY_SIG;   // nothing applied -> featured + everyone
   const dirty = draftSig !== searchedSig;          // controls changed since last Search
   const anyDraft = draftSig !== EMPTY_SIG;
-  const runSearch = () => { setSearched(draftSig === EMPTY_SIG ? null : { q, county, state, language, minYears, tags: [...tags], specTags: [...specTags], certTags: [...certTags], rushOnly, notaryOnly, claimedOnly }); setLimit(PAGE_SIZE); };
+  const runSearch = () => { setSearched(draftSig === EMPTY_SIG ? null : { q, county, state, language, minYears, workMode, tags: [...tags], specTags: [...specTags], certTags: [...certTags], rushOnly, notaryOnly, claimedOnly }); setLimit(PAGE_SIZE); };
   // Live filtering: apply the draft automatically whenever a control changes (no "Search" button).
   // Skip the very first run so returning from a profile keeps the restored applied search + scroll.
   const firstApply = useRef(true);
@@ -3689,7 +3695,7 @@ function ReporterDirectory() {
     return list;
   }, [all, haystacks, searched]);
 
-  const clearAll = () => { setQ(""); setCounty(""); setState(""); setLanguage(""); setMinYears(""); setTags([]); setSpecTags([]); setCertTags([]); setRushOnly(false); setNotaryOnly(false); setClaimedOnly(false); setSearched(null); setLimit(PAGE_SIZE); };
+  const clearAll = () => { setQ(""); setCounty(""); setState(""); setLanguage(""); setMinYears(""); setWorkMode(""); setTags([]); setSpecTags([]); setCertTags([]); setRushOnly(false); setNotaryOnly(false); setClaimedOnly(false); setSearched(null); setLimit(PAGE_SIZE); };
   // Featured only in browse mode - an active search shows a pure ranked list.
   const featured = browseMode ? weeklyFeatured(filtered.filter((r) => r.claimed), 4) : [];
   const featuredIds = new Set(featured.map((r) => r.id));
@@ -3715,6 +3721,16 @@ function ReporterDirectory() {
               {counties.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
             {county && <p style={{ fontSize: 12, color: "var(--dim)", margin: "7px 0 0", lineHeight: 1.45 }}>A county filter hides remote-only reporters, since they don't appear in person. Clear it to include them.</p>}
+          </FilterGroup>
+          <FilterGroup label="Work mode">
+            {/* Backed by the reporter's own "How do you work?" answer at claim. "In person" excludes
+                only remote-only reporters (the same line the county filter draws); "Remote" matches
+                anyone who works remotely (remote-only or in-person-and-remote). */}
+            <select className="ds-input" style={{ padding: "9px 12px", fontSize: 14 }} value={workMode} onChange={(e) => { setWorkMode(e.target.value); setLimit(PAGE_SIZE); }}>
+              <option value="">Any work mode</option>
+              <option value="inperson">Appears in person</option>
+              <option value="remote">Works remotely</option>
+            </select>
           </FilterGroup>
           {otherStates.length > 0 && (
             <FilterGroup label="Also certified in">
@@ -5756,14 +5772,6 @@ function FirmDashboard() {
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);
   const firmInvoices = store.invoices.filter((i) => i.client === store.firmName);
   const toPay = firmInvoices.filter((i) => i.status === "sent" || i.status === "overdue").length;
-  // Firm-side "agency markup avoided" ESTIMATE (mirror of the reporter savings card; see
-  // docs/roadmap.md + never-invent-data rule). Markup = what an agency adds ON TOP of the reporter's
-  // rate: from the real CA invoice (research/agency_invoice_evidence.md, the same one the homepage
-  // uses) the agency added ~$907 on a ~$1,404 direct rate = AGENCY_CUT/(1-AGENCY_CUT) of direct spend.
-  // Prototype basis = the demo's paid invoices (no real firm-payment data yet); always labeled est.
-  const firmPaid = store.invoices.filter((i) => i.status === "paid").reduce((s, i) => s + i.amount, 0);
-  const AGENCY_CUT = 0.39;
-  const firmMarkupAvoided = Math.round(firmPaid * (AGENCY_CUT / (1 - AGENCY_CUT)));
   const tabs = [
     { id: "saved", label: "Saved reporters", badge: saved.length || null },
     { id: "messages", label: "Messages", badge: unread || null },
@@ -5774,12 +5782,6 @@ function FirmDashboard() {
     <DashLayout title={store.firmName} subtitle="Firm account · Legal Operations" tabs={tabs} active={tab} onTab={setTab}>
       {tab === "saved" && (
         <>
-        <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Sample data</strong> – the payment figure below is an illustrative placeholder for the prototype.</span></div>
-        {firmPaid > 0 && (
-          <div style={{ maxWidth: 300, marginBottom: 22 }}>
-            <StatCard icon="star" label="Saved" value={"~$" + firmMarkupAvoided.toLocaleString()} sub="Estimated agency markup avoided" />
-          </div>
-        )}
         {saved.length ? (
           <>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, flexWrap: "wrap", gap: 10 }}>
@@ -5789,7 +5791,11 @@ function FirmDashboard() {
                 <button className="btn btn-primary" onClick={() => setBulkOpen(true)}><Icon name="message" size={16} /> Message reporters</button>
               </div>
             </div>
-            <div className="ds-grid ds-dir-grid">{saved.map((r) => <RepCard key={r.id} r={r} />)}</div>
+            {/* List view (same RepRow as the directory), not stacked cards or a horizontal
+                scroller - a firm's saved set is a working list to scan and manage, and grows well
+                past what cards or a carousel handle. The filled save-heart on each row is the
+                un-save affordance. */}
+            <div className="dir-list">{saved.map((r) => <RepRow key={r.id} r={r} />)}</div>
           </>
         ) : (
           <div className="ds-panel" style={{ textAlign: "center", padding: 56 }}>

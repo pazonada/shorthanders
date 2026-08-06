@@ -8,14 +8,6 @@ function FirmDashboard() {
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);
   const firmInvoices = store.invoices.filter((i) => i.client === store.firmName);
   const toPay = firmInvoices.filter((i) => i.status === "sent" || i.status === "overdue").length;
-  // Firm-side "agency markup avoided" ESTIMATE (mirror of the reporter savings card; see
-  // docs/roadmap.md + never-invent-data rule). Markup = what an agency adds ON TOP of the reporter's
-  // rate: from the real CA invoice (research/agency_invoice_evidence.md, the same one the homepage
-  // uses) the agency added ~$907 on a ~$1,404 direct rate = AGENCY_CUT/(1-AGENCY_CUT) of direct spend.
-  // Prototype basis = the demo's paid invoices (no real firm-payment data yet); always labeled est.
-  const firmPaid = store.invoices.filter((i) => i.status === "paid").reduce((s, i) => s + i.amount, 0);
-  const AGENCY_CUT = 0.39;
-  const firmMarkupAvoided = Math.round(firmPaid * (AGENCY_CUT / (1 - AGENCY_CUT)));
   const tabs = [
     { id: "saved", label: "Saved reporters", badge: saved.length || null },
     { id: "messages", label: "Messages", badge: unread || null },
@@ -26,12 +18,6 @@ function FirmDashboard() {
     <DashLayout title={store.firmName} subtitle="Firm account · Legal Operations" tabs={tabs} active={tab} onTab={setTab}>
       {tab === "saved" && (
         <>
-        <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Sample data</strong> – the payment figure below is an illustrative placeholder for the prototype.</span></div>
-        {firmPaid > 0 && (
-          <div style={{ maxWidth: 300, marginBottom: 22 }}>
-            <StatCard icon="star" label="Saved" value={"~$" + firmMarkupAvoided.toLocaleString()} sub="Estimated agency markup avoided" />
-          </div>
-        )}
         {saved.length ? (
           <>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, flexWrap: "wrap", gap: 10 }}>
@@ -41,7 +27,11 @@ function FirmDashboard() {
                 <button className="btn btn-primary" onClick={() => setBulkOpen(true)}><Icon name="message" size={16} /> Message reporters</button>
               </div>
             </div>
-            <div className="ds-grid ds-dir-grid">{saved.map((r) => <RepCard key={r.id} r={r} />)}</div>
+            {/* List view (same RepRow as the directory), not stacked cards or a horizontal
+                scroller - a firm's saved set is a working list to scan and manage, and grows well
+                past what cards or a carousel handle. The filled save-heart on each row is the
+                un-save affordance. */}
+            <div className="dir-list">{saved.map((r) => <RepRow key={r.id} r={r} />)}</div>
           </>
         ) : (
           <div className="ds-panel" style={{ textAlign: "center", padding: 56 }}>
