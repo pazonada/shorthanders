@@ -203,6 +203,7 @@ function StoreProvider({ children }) {
     enterAsFirm: (name) => { setRole("firm"); if (name && name.trim()) setFirmName(name.trim()); },
     logout: () => setRole(null),
     upgradeFirm: () => setFirmPlan("pro"),
+    downgradeFirm: () => setFirmPlan("free"),
     toggleSaved: (id) => setSaved((s) => s.includes(id) ? s.filter((x) => x !== id) : [...s, id]),
     inviteFirm: (firm) => setInvitedFirms((xs) => [firm, ...xs]),
     // A firm arriving on a reporter's invite link: create their free account, save + unlock the inviter.

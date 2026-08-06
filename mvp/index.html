@@ -5056,7 +5056,7 @@ function ReporterPayments({ invoices, paidThisMonth }) {
       </div>
       <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
-          <h3 style={{ fontSize: 20 }}>Your plan</h3>
+          <h3 style={{ fontSize: 22 }}>Your plan</h3>
           <span className="pill pill-claimed"><Icon name="check" size={13} /> Pay per invoice</span>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
@@ -5073,7 +5073,7 @@ function ReporterPayments({ invoices, paidThisMonth }) {
         </div>
       </div>
       <div className="ds-card" style={{ padding: 0, overflow: "hidden" }}>
-        <div style={{ padding: "18px 22px", borderBottom: "1px solid var(--rule)" }}><h3 style={{ fontSize: 18 }}>Recent payments</h3></div>
+        <div style={{ padding: "18px 22px", borderBottom: "1px solid var(--rule)" }}><h3 style={{ fontSize: 22 }}>Recent payments</h3></div>
         <div style={{ overflowX: "auto" }}>
           <table className="ds-table">
             <thead><tr><th>Invoice</th><th>Client</th><th>Method</th><th>Date</th><th style={{ textAlign: "right" }}>Amount</th></tr></thead>
@@ -5084,7 +5084,7 @@ function ReporterPayments({ invoices, paidThisMonth }) {
       <div className="ds-card" style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
         <div style={{ width: 48, height: 48, borderRadius: 12, background: "#635BFF", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="bank" size={24} /></div>
         <div style={{ flex: 1, minWidth: 180 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}><h3 style={{ fontSize: 20 }}>Stripe Connect</h3><span className="pill pill-claimed"><Icon name="check" size={13} /> Active</span></div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}><h3 style={{ fontSize: 22 }}>Stripe Connect</h3><span className="pill pill-claimed"><Icon name="check" size={13} /> Active</span></div>
           <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>Payouts to Bank of America •••• 4471 · Identity & tax verified</div>
         </div>
         <button className="btn btn-secondary">Manage on Stripe</button>
@@ -5943,34 +5943,28 @@ function FirmSubscription() {
   ];
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-      <div className="ds-card" style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
-        <div style={{ width: 48, height: 48, borderRadius: 12, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="building" size={24} /></div>
-        <div style={{ flex: 1, minWidth: 220 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}><h3 style={{ fontSize: 20 }}>Firm plan</h3><span className={isPro ? "pill pill-verified" : "pill pill-tag"}>{isPro ? "Pro" : "Free"}</span></div>
-          <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>{isPro ? "You're on Pro – full profiles, search, and messaging unlocked." : "You're on the free plan. The membership is $49/month per user, or $539/year (1 month free). Firm-wide plans coming soon."}</div>
-        </div>
-        {isPro
-          ? <button className="btn btn-secondary">Manage billing</button>
-          : <button className="btn btn-primary" onClick={() => store.upgradeFirm()}><Icon name="arrow" size={16} /> Upgrade to Pro</button>}
-      </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
-        <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}><h3 style={{ fontSize: 18 }}>Free</h3>{!isPro && <span className="pill pill-claimed"><Icon name="check" size={13} /> Your plan</span>}</div>
+      {/* Just the two plan cards - the current plan is outlined (2px ink), matching the reporter
+          Payments page. No separate "Firm plan" summary row (redundant, and "firm plan" misreads:
+          we only sell per-seat individual accounts today, not firm-wide). */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16, alignItems: "stretch" }}>
+        <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 12, ...(!isPro ? { borderColor: "var(--ink)", borderWidth: 2 } : null) }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}><h3 style={{ fontSize: 22 }}>Free</h3>{!isPro && <span className="pill pill-claimed"><Icon name="check" size={13} /> Your plan</span>}</div>
           <p style={{ fontSize: 13.5, color: "var(--muted)", margin: 0 }}>Work with the reporters you already know.</p>
           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10, margin: 0, padding: 0 }}>
             {free.map((f) => <li key={f} style={{ display: "flex", gap: 10, fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.5 }}><Icon name="check" size={16} style={{ color: "var(--ink-soft)", flexShrink: 0, marginTop: 2 }} />{f}</li>)}
           </ul>
+          {isPro && <button className="btn btn-secondary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.downgradeFirm()}>Downgrade to free</button>}
         </div>
-        <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 12, borderColor: "var(--brand-pale)", background: "var(--brand-soft)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}><h3 style={{ fontSize: 18 }}>Pro</h3>{isPro ? <span className="pill pill-verified"><Icon name="check" size={13} /> Your plan</span> : <span className="pill pill-verified">Subscription</span>}</div>
+        <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 12, ...(isPro ? { borderColor: "var(--ink)", borderWidth: 2 } : null) }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}><h3 style={{ fontSize: 22 }}>Pro</h3>{isPro ? <span className="pill pill-verified"><Icon name="check" size={13} /> Your plan</span> : <span className="pill pill-verified">Subscription</span>}</div>
           <p style={{ fontSize: 13.5, color: "var(--muted)", margin: 0 }}>Discover and reach reporters you don't know yet.</p>
-          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>$49<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}>/month per user · or $539/year</span></div>
+          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)", lineHeight: 1 }}>$49<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13.5, color: "var(--muted)", fontWeight: 400 }}>/month per user · or $539/year (1 month free)</span></div>
           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10, margin: 0, padding: 0 }}>
             {pro.map((f) => <li key={f} style={{ display: "flex", gap: 10, fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.5 }}><Icon name="check" size={16} style={{ color: "var(--brand-dark)", flexShrink: 0, marginTop: 2 }} />{f}</li>)}
           </ul>
+          {!isPro && <button className="btn btn-primary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.upgradeFirm()}><Icon name="arrow" size={16} /> Upgrade to Pro</button>}
         </div>
       </div>
-      <div className="banner banner-info"><Icon name="dollar" size={18} style={{ flexShrink: 0 }} /><div>You only pay the subscription. There are no booking fees or commissions – the rate you agree with a reporter is the rate you pay them directly.</div></div>
     </div>
   );
 }
@@ -6179,6 +6173,7 @@ function StoreProvider({ children }) {
     enterAsFirm: (name) => { setRole("firm"); if (name && name.trim()) setFirmName(name.trim()); },
     logout: () => setRole(null),
     upgradeFirm: () => setFirmPlan("pro"),
+    downgradeFirm: () => setFirmPlan("free"),
     toggleSaved: (id) => setSaved((s) => s.includes(id) ? s.filter((x) => x !== id) : [...s, id]),
     inviteFirm: (firm) => setInvitedFirms((xs) => [firm, ...xs]),
     // A firm arriving on a reporter's invite link: create their free account, save + unlock the inviter.

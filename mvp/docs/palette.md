@@ -123,6 +123,17 @@ to read.
   `<h2>` used for "About", "Coverage", etc.).
 - This is the indigo accent doing a wayfinding job – consistent with "navy anchors, indigo accents."
 
+There is a **second, larger kind of subhead**: the **serif section heading** that titles a card or a
+panel of content (not a field-group label). These are the **Instrument Serif** `h3`-style headings.
+
+- Size: **22px**, Instrument Serif, `color: var(--ink)` (navy), normal weight – the same size as the
+  directory **"Filters"** sidebar heading and a directory reporter card's name. Standardized 2026-08-06;
+  bumped up from the earlier 18–20px so section headings read as headings.
+- Use it for card/section titles like the plan cards' **"Free" / "Pro"**, **"Your plan"**, **"Recent
+  payments"**, **"Stripe Connect"** on the dashboards. Reference: `FirmSubscription` in `_app_10_firm.jsx`.
+- Not to be confused with the small uppercase indigo field labels above (those stay ~12–15px), or with
+  page **titles** (`h1`, the clamp() sizes bumped ~15% in commit b771104).
+
 ## Icons
 
 - **Library: Phosphor** (`@phosphor-icons`), **regular** weight, drawn on a 256 grid. Chosen over

@@ -360,7 +360,7 @@ function ReporterPayments({ invoices, paidThisMonth }) {
       </div>
       <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
-          <h3 style={{ fontSize: 20 }}>Your plan</h3>
+          <h3 style={{ fontSize: 22 }}>Your plan</h3>
           <span className="pill pill-claimed"><Icon name="check" size={13} /> Pay per invoice</span>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
@@ -377,7 +377,7 @@ function ReporterPayments({ invoices, paidThisMonth }) {
         </div>
       </div>
       <div className="ds-card" style={{ padding: 0, overflow: "hidden" }}>
-        <div style={{ padding: "18px 22px", borderBottom: "1px solid var(--rule)" }}><h3 style={{ fontSize: 18 }}>Recent payments</h3></div>
+        <div style={{ padding: "18px 22px", borderBottom: "1px solid var(--rule)" }}><h3 style={{ fontSize: 22 }}>Recent payments</h3></div>
         <div style={{ overflowX: "auto" }}>
           <table className="ds-table">
             <thead><tr><th>Invoice</th><th>Client</th><th>Method</th><th>Date</th><th style={{ textAlign: "right" }}>Amount</th></tr></thead>
@@ -388,7 +388,7 @@ function ReporterPayments({ invoices, paidThisMonth }) {
       <div className="ds-card" style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
         <div style={{ width: 48, height: 48, borderRadius: 12, background: "#635BFF", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name="bank" size={24} /></div>
         <div style={{ flex: 1, minWidth: 180 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}><h3 style={{ fontSize: 20 }}>Stripe Connect</h3><span className="pill pill-claimed"><Icon name="check" size={13} /> Active</span></div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}><h3 style={{ fontSize: 22 }}>Stripe Connect</h3><span className="pill pill-claimed"><Icon name="check" size={13} /> Active</span></div>
           <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 4 }}>Payouts to Bank of America •••• 4471 · Identity & tax verified</div>
         </div>
         <button className="btn btn-secondary">Manage on Stripe</button>

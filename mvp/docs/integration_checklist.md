@@ -83,8 +83,13 @@ Two serverless stubs already exist and fall back to demo behavior:
 - [ ] **The platform fee** – take **2% (Pro) / 5% (Free)** via Connect `application_fee_amount`
   on each payment; pick the tier from the reporter's plan. (This is the site's stated pricing –
   see the money-comparison section + `open_strategic_decisions.md`.)
-- [ ] **Default large invoices to ACH** – card fee (~2.9%) is the reporter's cost; ACH (~0.8%,
-  cap $5) is far cheaper on big transcripts. Nudge/steer accordingly. (Roadmap item.)
+- [ ] **Default large invoices to ACH – offer BOTH, pre-select ACH at ≥ $1,000 (LEAN 2026-08-06).**
+  The firm (payer) chooses card/ACH on the Stripe hosted page; the reporter does **not** hard-lock a
+  method (current lean = keep both, no ACH-only restriction). Card fee (~2.9% + $0.30) is the
+  reporter's cost; ACH (~0.8%, cap $5) is far cheaper on big transcripts (~$29 vs $5 at $1,000), so
+  **pre-select ACH once the invoice is ≥ $1,000**, card still one tap away; card stays default below.
+  Threshold is **tunable** against real invoice sizes. Full rationale in `open_strategic_decisions.md`
+  ("Invoice payment method – card vs ACH"). Open: whether a reporter may ever hard-restrict to ACH-only.
 - [ ] **Firm-side receive & pay** – the firm dashboard now has an **Invoices tab** (`FirmInvoices`,
   `_app_10_firm.jsx`) listing invoices addressed to the firm (`client === firmName`) with a **Pay
   now** button; paying is **simulated** today (flips status to paid). Wire it to the reporter's real
