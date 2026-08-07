@@ -210,6 +210,11 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
   const [preview, setPreview] = useState(false);
   const [sending, setSending] = useState(false);
   const [toast, setToast] = useState("");
+  // Dirty = anything changed from what we opened with -> drives the unsaved-changes guard.
+  const initialSnapshot = useRef(null);
+  const snapshot = JSON.stringify({ f, lines });
+  if (initialSnapshot.current === null) initialSnapshot.current = snapshot;
+  useUnsavedGuard(snapshot !== initialSnapshot.current);
 
   const setLine = (i, k, v) => setLines((xs) => xs.map((l, j) => j === i ? { ...l, [k]: v } : l));
   const addLine = () => setLines((xs) => [...xs, { desc: "", kind: "flat", qty: "1", rate: "" }]);
@@ -326,9 +331,12 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
           <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)" }}>${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
         </div>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
-          <button className="btn btn-primary" disabled={!valid || sending} style={{ opacity: valid && !sending ? 1 : 0.4 }} onClick={sendInvoice}><Icon name="mail" size={16} /> {sending ? "Sending…" : "Send invoice"}</button>
-          <button className="btn btn-secondary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={saveDraft}>Save as draft</button>
-          <button type="button" disabled={!valid} onClick={() => setPreview(true)} style={{ marginLeft: "auto", background: "none", border: "none", color: valid ? "var(--brand-dark)" : "var(--dim)", cursor: valid ? "pointer" : "default", fontSize: 14, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 5, padding: "6px 4px" }}><Icon name="eye" size={15} /> Preview</button>
+          <button type="button" disabled={!valid} onClick={() => setPreview(true)} style={{ background: "none", border: "none", color: valid ? "var(--brand-dark)" : "var(--dim)", cursor: valid ? "pointer" : "default", fontSize: 14, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 5, padding: "6px 4px" }}><Icon name="eye" size={15} /> Preview</button>
+          <div style={{ marginLeft: "auto", display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+            <button className="btn btn-secondary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={saveDraft}>Save as draft</button>
+            <button className="btn btn-secondary" onClick={onCancel}>Cancel</button>
+            <button className="btn btn-primary" disabled={!valid || sending} style={{ opacity: valid && !sending ? 1 : 0.4 }} onClick={sendInvoice}><Icon name="mail" size={16} /> {sending ? "Sending…" : "Send invoice"}</button>
+          </div>
         </div>
       </div>
       <Toast msg={toast} onClose={() => setToast("")} />

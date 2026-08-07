@@ -2767,6 +2767,34 @@ function useRoute() {
 function navigate(path) { window.location.hash = path; }
 function navigateBack(fallback) { if (window.history.length > 1) window.history.back(); else navigate(fallback || "/"); }
 
+// Guard a form against silently losing unsaved edits. While `isDirty`, leaving prompts to confirm –
+// via tab close/refresh (native beforeunload) AND the browser Back button (a trap history entry +
+// popstate confirm). In-app Cancel/back controls should just call navigateBack()/history.back(); they
+// funnel through the same trap, so there's one confirm no matter how you try to leave. See palette.md.
+function useUnsavedGuard(isDirty) {
+  const dirtyRef = useRef(isDirty);
+  dirtyRef.current = isDirty;
+  const MSG = "Discard your changes? Anything you've entered on this form won't be saved.";
+  useEffect(() => {
+    const onBeforeUnload = (e) => { if (dirtyRef.current) { e.preventDefault(); e.returnValue = ""; } };
+    window.addEventListener("beforeunload", onBeforeUnload);
+    return () => window.removeEventListener("beforeunload", onBeforeUnload);
+  }, []);
+  useEffect(() => {
+    if (!isDirty) return;
+    window.history.pushState({ dsGuard: true }, "");   // trap entry (same URL) to catch the first Back
+    const onPop = () => {
+      if (window.confirm(MSG)) { window.removeEventListener("popstate", onPop); window.history.back(); }
+      else { window.history.pushState({ dsGuard: true }, ""); }   // re-trap: stay put
+    };
+    window.addEventListener("popstate", onPop);
+    return () => {
+      window.removeEventListener("popstate", onPop);
+      if (window.history.state && window.history.state.dsGuard) window.history.back();   // drop the trap on save/unmount
+    };
+  }, [isDirty]);
+}
+
 // ─── Icon set ──────────────────────────────────────────────────────
 const P = { fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round" };
 function Icon({ name, size = 18, style }) {
@@ -5399,6 +5427,11 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
   const [preview, setPreview] = useState(false);
   const [sending, setSending] = useState(false);
   const [toast, setToast] = useState("");
+  // Dirty = anything changed from what we opened with -> drives the unsaved-changes guard.
+  const initialSnapshot = useRef(null);
+  const snapshot = JSON.stringify({ f, lines });
+  if (initialSnapshot.current === null) initialSnapshot.current = snapshot;
+  useUnsavedGuard(snapshot !== initialSnapshot.current);
 
   const setLine = (i, k, v) => setLines((xs) => xs.map((l, j) => j === i ? { ...l, [k]: v } : l));
   const addLine = () => setLines((xs) => [...xs, { desc: "", kind: "flat", qty: "1", rate: "" }]);
@@ -5515,9 +5548,12 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
           <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)" }}>${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
         </div>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
-          <button className="btn btn-primary" disabled={!valid || sending} style={{ opacity: valid && !sending ? 1 : 0.4 }} onClick={sendInvoice}><Icon name="mail" size={16} /> {sending ? "Sending…" : "Send invoice"}</button>
-          <button className="btn btn-secondary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={saveDraft}>Save as draft</button>
-          <button type="button" disabled={!valid} onClick={() => setPreview(true)} style={{ marginLeft: "auto", background: "none", border: "none", color: valid ? "var(--brand-dark)" : "var(--dim)", cursor: valid ? "pointer" : "default", fontSize: 14, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 5, padding: "6px 4px" }}><Icon name="eye" size={15} /> Preview</button>
+          <button type="button" disabled={!valid} onClick={() => setPreview(true)} style={{ background: "none", border: "none", color: valid ? "var(--brand-dark)" : "var(--dim)", cursor: valid ? "pointer" : "default", fontSize: 14, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 5, padding: "6px 4px" }}><Icon name="eye" size={15} /> Preview</button>
+          <div style={{ marginLeft: "auto", display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+            <button className="btn btn-secondary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={saveDraft}>Save as draft</button>
+            <button className="btn btn-secondary" onClick={onCancel}>Cancel</button>
+            <button className="btn btn-primary" disabled={!valid || sending} style={{ opacity: valid && !sending ? 1 : 0.4 }} onClick={sendInvoice}><Icon name="mail" size={16} /> {sending ? "Sending…" : "Send invoice"}</button>
+          </div>
         </div>
       </div>
       <Toast msg={toast} onClose={() => setToast("")} />

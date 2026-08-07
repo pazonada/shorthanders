@@ -17,6 +17,34 @@ function useRoute() {
 function navigate(path) { window.location.hash = path; }
 function navigateBack(fallback) { if (window.history.length > 1) window.history.back(); else navigate(fallback || "/"); }
 
+// Guard a form against silently losing unsaved edits. While `isDirty`, leaving prompts to confirm –
+// via tab close/refresh (native beforeunload) AND the browser Back button (a trap history entry +
+// popstate confirm). In-app Cancel/back controls should just call navigateBack()/history.back(); they
+// funnel through the same trap, so there's one confirm no matter how you try to leave. See palette.md.
+function useUnsavedGuard(isDirty) {
+  const dirtyRef = useRef(isDirty);
+  dirtyRef.current = isDirty;
+  const MSG = "Discard your changes? Anything you've entered on this form won't be saved.";
+  useEffect(() => {
+    const onBeforeUnload = (e) => { if (dirtyRef.current) { e.preventDefault(); e.returnValue = ""; } };
+    window.addEventListener("beforeunload", onBeforeUnload);
+    return () => window.removeEventListener("beforeunload", onBeforeUnload);
+  }, []);
+  useEffect(() => {
+    if (!isDirty) return;
+    window.history.pushState({ dsGuard: true }, "");   // trap entry (same URL) to catch the first Back
+    const onPop = () => {
+      if (window.confirm(MSG)) { window.removeEventListener("popstate", onPop); window.history.back(); }
+      else { window.history.pushState({ dsGuard: true }, ""); }   // re-trap: stay put
+    };
+    window.addEventListener("popstate", onPop);
+    return () => {
+      window.removeEventListener("popstate", onPop);
+      if (window.history.state && window.history.state.dsGuard) window.history.back();   // drop the trap on save/unmount
+    };
+  }, [isDirty]);
+}
+
 // ─── Icon set ──────────────────────────────────────────────────────
 const P = { fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round" };
 function Icon({ name, size = 18, style }) {

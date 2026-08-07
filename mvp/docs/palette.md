@@ -108,15 +108,18 @@ account and save Marguerite."
   button dims to ~40% opacity and reads as grey until its required input is filled – e.g. "Send" in
   the invite modal stays grey until a contact email is entered, then turns navy. Grey is not a color
   choice here, it's the disabled state.
-- **Placement (modals).** Modal action buttons are **right-aligned** (`justify-content: flex-end`),
-  **Cancel (secondary) then the primary** on the far right – matching RequestInvoiceModal and the
-  firm modals. A tertiary text link (e.g. "Copy the message") can sit on the left of the same row.
-- **Placement (full-page flows).** On a **page** (not a modal), the **cancel/back is a text link at
-  the top** (the `backLink` style, e.g. "Back to invoices" / "Cancel" in ClaimFlow, FirmSignup) –
-  **not** a button in the bottom row. The primary action sits at the **bottom, primary first** (e.g.
-  `Send invoice`, then secondary `Save as draft`); a tertiary like `Preview` is a right-aligned text
-  link. **Don't** also put a bottom "Cancel" button – it just duplicates the top back-link
-  (`InvoiceBuilder`, 2026-08-07).
+- **Placement – ONE rule, modals AND page forms (2026-08-07).** Action rows are **right-aligned** with
+  the **primary button rightmost** and **Cancel (secondary) immediately to its left**; any other
+  secondary (e.g. `Save as draft`) sits left of Cancel; a tertiary text link (`Preview`, "Copy the
+  message") sits on the far left of the same row. Same everywhere – modals (RequestInvoiceModal) and
+  full-page forms (`InvoiceBuilder`, profile editor, ClaimFlow, FirmSignup). **Page forms get an
+  explicit bottom Cancel button** (not only a top back-link – users don't hunt for those). A top
+  "Back to X" link can still exist, but the bottom row is the discoverable exit.
+- **Unsaved-changes guard.** Any form with explicit Save/Send (not auto-save) must guard against silent
+  loss: leaving **with edits** – via Cancel, a back link, the **browser Back button**, or tab
+  close/refresh – prompts **"Discard your changes?"**. Use the `useUnsavedGuard(isDirty)` hook
+  (`_app_01_core.jsx`); in-app Cancel/back just calls `history.back()` and funnels through the same
+  trap, so there's one confirm no matter how you leave. Rationale + rollout: `project_form_ixd_convention` memory.
 
 ## Subheads and section labels
 
