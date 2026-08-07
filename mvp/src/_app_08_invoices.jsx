@@ -143,9 +143,10 @@ function TemplatePicker({ prefill, onCancel, onPick }) {
   return (
     <div>
       <button onClick={onCancel} style={backLink}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
-      <h2 style={{ fontSize: 26, marginBottom: 6 }}>Start a new invoice</h2>
-      <p style={{ color: "var(--muted)", marginBottom: 20 }}>Pick a starter for the kind of work you're billing. You can edit every line, or start blank.</p>
-      {prefill && <div className="banner banner-info" style={{ marginBottom: 20 }}><Icon name="invoice" size={18} style={{ flexShrink: 0 }} /><div>Invoicing <strong style={{ fontWeight: 600 }}>{prefill.firmName}</strong>'s request{prefill.matter ? " · " + prefill.matter : ""}. Pick a structure – the firm and matter come pre-filled. Choose <strong style={{ fontWeight: 600 }}>Blank invoice</strong> to just bill the requested amount.</div></div>}
+      <h2 style={{ fontSize: 26, marginBottom: 6 }}>{prefill ? "New invoice for " + prefill.firmName : "Start a new invoice"}</h2>
+      {prefill
+        ? <p style={{ color: "var(--muted)", marginBottom: 22, lineHeight: 1.55, maxWidth: 680 }}>From their request{prefill.matter ? " · " + prefill.matter : ""}. Pick a structure below – the firm and matter come pre-filled. Or choose <strong style={{ color: "var(--ink-soft)", fontWeight: 600 }}>Blank invoice</strong> to just bill the requested amount.</p>
+        : <p style={{ color: "var(--muted)", marginBottom: 20 }}>Pick a starter for the kind of work you're billing. You can edit every line, or start blank.</p>}
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))" }}>
         {INVOICE_TEMPLATES.map((t) => (
           <button key={t.id} className="rep-card" style={{ cursor: "pointer" }} onClick={() => onPick(t)}>
@@ -222,10 +223,6 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
   const valid = f.client && total > 0;
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
 
-  const saveTemplate = () => {
-    const name = (window.prompt && window.prompt("Name this template", (template ? template.name : "Invoice") + " (mine)")) || null;
-    if (name) { store.addTemplate({ id: "custom", name, lines: lines.map((l) => ({ ...l })) }); setToast("Template saved"); }
-  };
   // Build the stored invoice object at a given status. Reuses the id when editing a draft.
   const build = (status, extra) => Object.assign({
     id: editInv ? editInv.id : ("INV-" + (++INV_SEQ)),
@@ -328,12 +325,11 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
           <span style={{ color: "var(--muted)", fontSize: 14 }}>Total due</span>
           <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: "var(--ink)" }}>${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
         </div>
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <button className="btn btn-primary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={() => setPreview(true)}><Icon name="eye" size={16} /> Preview</button>
-          <button className="btn btn-secondary" disabled={!valid || sending} style={{ opacity: valid && !sending ? 1 : 0.4 }} onClick={sendInvoice}><Icon name="mail" size={16} /> {sending ? "Sending…" : "Send invoice"}</button>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+          <button className="btn btn-primary" disabled={!valid || sending} style={{ opacity: valid && !sending ? 1 : 0.4 }} onClick={sendInvoice}><Icon name="mail" size={16} /> {sending ? "Sending…" : "Send invoice"}</button>
           <button className="btn btn-secondary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={saveDraft}>Save as draft</button>
-          <button className="btn btn-secondary" onClick={saveTemplate}><Icon name="star" size={16} /> Save as my template</button>
           <button className="btn btn-secondary" onClick={onCancel}>Cancel</button>
+          <button type="button" disabled={!valid} onClick={() => setPreview(true)} style={{ marginLeft: "auto", background: "none", border: "none", color: valid ? "var(--brand-dark)" : "var(--dim)", cursor: valid ? "pointer" : "default", fontSize: 14, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 5, padding: "6px 4px" }}><Icon name="eye" size={15} /> Preview</button>
         </div>
       </div>
       <Toast msg={toast} onClose={() => setToast("")} />
@@ -412,6 +408,7 @@ function InvoiceModal({ inv, viewer, onClose }) {
   const store = useStore();
   const meMeta = useMemo(() => buildDirectory().find((x) => x.id === store.myCsr), [store.myCsr]);
   const [copied, setCopied] = useState(false);
+  const [tplSaved, setTplSaved] = useState(false);
   const paid = inv.status === "paid";
   // Reporter viewing their own invoice -> full identity; firm viewing -> the reporter name the
   // invoice carries (inv.from).
@@ -422,6 +419,12 @@ function InvoiceModal({ inv, viewer, onClose }) {
   const items = inv.lineItems && inv.lineItems.length ? inv.lineItems : [{ desc: inv.desc, flat: true, amount: inv.amount }];
   const payLink = inv.payLink || ("https://pay.deweysholes.com/i/" + inv.id.toLowerCase());
   const copy = () => { navigator.clipboard.writeText(payLink); setCopied(true); setTimeout(() => setCopied(false), 1800); };
+  // Save this invoice's line structure as a reusable template. Only the line labels + their
+  // metered/flat kind carry over - not the firm, matter, dates, or amounts (those are per-invoice).
+  const saveAsTemplate = () => {
+    const name = (window.prompt && window.prompt("Name this template. Only the line labels are saved, not the firm or the amounts.", "My invoice layout")) || null;
+    if (name) { store.addTemplate({ id: "custom", name, lines: items.map((li) => ({ desc: li.desc, kind: li.flat ? "flat" : "unit", qty: "1", rate: "" })) }); setTplSaved(true); }
+  };
   const payNow = () => { store.updateInvoice(inv.id, { status: "paid", method: "Card", paidAt: "2026-07-17" }); onClose(); };
 
   return (
@@ -443,6 +446,10 @@ function InvoiceModal({ inv, viewer, onClose }) {
                 <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
                   <div className="ds-panel" style={{ flex: 1, minWidth: 220, padding: "12px 14px", fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: "var(--ink-soft)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{payLink}</div>
                   <button className="btn btn-secondary" onClick={copy}><Icon name="link" size={16} /> {copied ? "Copied!" : "Copy link"}</button>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--muted)", borderTop: "1px solid var(--rule)", paddingTop: 12 }}>
+                  <span>Bill work like this often?</span>
+                  <button type="button" onClick={saveAsTemplate} disabled={tplSaved} style={{ background: "none", border: "none", color: tplSaved ? "var(--muted)" : "var(--brand-dark)", cursor: tplSaved ? "default" : "pointer", fontWeight: 600, fontSize: 13, display: "inline-flex", alignItems: "center", gap: 5, padding: 0 }}><Icon name={tplSaved ? "check" : "star"} size={14} /> {tplSaved ? "Template saved" : "Save as new template"}</button>
                 </div>
               </div>
             ) : viewer === "firm" && !paid ? (
