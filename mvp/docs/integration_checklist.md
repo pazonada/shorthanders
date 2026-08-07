@@ -87,6 +87,17 @@ Two serverless stubs already exist and fall back to demo behavior:
   calculator (rush/expedited as % of subtotal), kept manual for now. Viewing any invoice/payment is
   a **shared modal** (reporter Payments/Invoices + firm Invoices), printable as a receipt (green
   PAID stamp); drafts open the editable builder. See the state-model notes in `palette.md`/build.
+- [ ] **Preserve the route-driven new-invoice FLOW (2026-08-07).** The steps are real URLs so the
+  browser Back and in-app Back always agree: **`/reporter/invoices`** (list) → **`/invoices/new`**
+  (template picker) → **`/invoices/build`** (builder, needs a `src`). The builder's Back is
+  `window.history.back()`. Keep it URL-driven when moving to real data – do **not** revert to the old
+  view-state model (that plus a URL-reset hack is what made the two Backs diverge). **Creating an
+  invoice from a firm's request goes through the picker:** `acceptRequest` marks the `paymentRequest`
+  fulfilled and navigates to the picker carrying the request; the reporter then picks a structure with
+  the **firm + matter pre-filled** – a real template gives itemized, rate-pre-filled lines, while
+  **Blank** keeps the firm's requested amount as a single line. The server flow should mirror this
+  (mark request fulfilled, open the builder pre-filled the same way), not drop the reporter straight
+  into a bare builder.
 - [ ] **Gate Connect onboarding at FIRST INVOICE (decided 2026-07-30), not at claim.** Keep
   listing/claim friction-free (no KYC just to appear in the directory); require the reporter to
   complete Express/Connect onboarding the first time they **send** an invoice / accept payment.
