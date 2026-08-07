@@ -111,6 +111,12 @@ account and save Marguerite."
 - **Placement (modals).** Modal action buttons are **right-aligned** (`justify-content: flex-end`),
   **Cancel (secondary) then the primary** on the far right – matching RequestInvoiceModal and the
   firm modals. A tertiary text link (e.g. "Copy the message") can sit on the left of the same row.
+- **Placement (full-page flows).** On a **page** (not a modal), the **cancel/back is a text link at
+  the top** (the `backLink` style, e.g. "Back to invoices" / "Cancel" in ClaimFlow, FirmSignup) –
+  **not** a button in the bottom row. The primary action sits at the **bottom, primary first** (e.g.
+  `Send invoice`, then secondary `Save as draft`); a tertiary like `Preview` is a right-aligned text
+  link. **Don't** also put a bottom "Cancel" button – it just duplicates the top back-link
+  (`InvoiceBuilder`, 2026-08-07).
 
 ## Subheads and section labels
 

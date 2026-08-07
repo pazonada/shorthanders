@@ -5517,7 +5517,6 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
           <button className="btn btn-primary" disabled={!valid || sending} style={{ opacity: valid && !sending ? 1 : 0.4 }} onClick={sendInvoice}><Icon name="mail" size={16} /> {sending ? "Sending…" : "Send invoice"}</button>
           <button className="btn btn-secondary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={saveDraft}>Save as draft</button>
-          <button className="btn btn-secondary" onClick={onCancel}>Cancel</button>
           <button type="button" disabled={!valid} onClick={() => setPreview(true)} style={{ marginLeft: "auto", background: "none", border: "none", color: valid ? "var(--brand-dark)" : "var(--dim)", cursor: valid ? "pointer" : "default", fontSize: 14, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 5, padding: "6px 4px" }}><Icon name="eye" size={15} /> Preview</button>
         </div>
       </div>
