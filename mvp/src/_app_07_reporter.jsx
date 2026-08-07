@@ -241,8 +241,9 @@ function ReporterProfileEditor({ me }) {
   const expStr = (v) => {
     const lo = (v.low || "").toString().trim(), hi = (v.high || "").toString().trim();
     if (!lo && !hi) return null;
-    if (expUnit !== "percent") return rateStr(v);
-    return lo && hi ? lo + "%–" + hi + "%" : "+" + (lo || hi) + "%";
+    if (expUnit === "percent") return lo && hi ? lo + "%–" + hi + "%" : "+" + (lo || hi) + "%";
+    // $ amount: append the unit so the profile reads clearly (a flat fee vs a per-page surcharge).
+    return rateStr(v) + (expUnit === "flat" ? " flat" : " / page");
   };
   const buildRateLines = () => [
     ["Transcript – original (per page)", rateStr(rates.pageOriginal)],
@@ -319,7 +320,7 @@ function ReporterProfileEditor({ me }) {
             <RateRow label="Half day - appearance" unit="$ per half day" value={rates.halfDay} onChange={setRate("halfDay")} />
             <RateRow label="Full day - appearance" unit="$ per day" value={rates.fullDay} onChange={setRate("fullDay")} />
             <RateRow label="Trial day" unit="$ per day" value={rates.trialDay} onChange={setRate("trialDay")} />
-            <RateRow label="Expedited / rush" unit={expUnit === "percent" ? "% surcharge on base rate" : "$ per page"} value={rates.expedited} onChange={setRate("expedited")} extra={<select className="ds-input" style={{ width: 162 }} value={expUnit} onChange={(e) => setExpUnit(e.target.value)}><option value="percent">% surcharge</option><option value="perpage">Per page</option></select>} />
+            <RateRow label="Expedited / rush" unit={expUnit === "percent" ? "% surcharge on base rate" : expUnit === "flat" ? "$ flat fee" : "$ per page"} value={rates.expedited} onChange={setRate("expedited")} extra={<select className="ds-input" style={{ width: 162 }} value={expUnit} onChange={(e) => setExpUnit(e.target.value)}><option value="percent">% surcharge</option><option value="perpage">Per page</option><option value="flat">Flat fee</option></select>} />
             <RateRow label="Realtime / rough draft add-on" unit="$ per page or day" value={rates.realtime} onChange={setRate("realtime")} />
             {customRates.map((cr, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
