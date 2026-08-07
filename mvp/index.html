@@ -5281,14 +5281,6 @@ function ReporterInvoices() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18, flexWrap: "wrap", gap: 12 }}>
-        <div style={{ display: "flex", gap: 20, fontSize: 14, color: "var(--muted)" }}>
-          <span><strong style={{ color: "var(--ink)" }}>{invoices.filter((i) => i.status === "draft").length}</strong> draft</span>
-          <span><strong style={{ color: "var(--ink)" }}>{invoices.filter((i) => i.status === "sent").length}</strong> sent</span>
-          <span><strong style={{ color: "var(--ink)" }}>{invoices.filter((i) => i.status === "overdue").length}</strong> overdue</span>
-          <span><strong style={{ color: "var(--ink)" }}>{invoices.filter((i) => i.status === "paid").length}</strong> paid</span>
-        </div>
-      </div>
       {requests.length > 0 && (
         <div className="ds-card flat" style={{ marginBottom: 18, background: "var(--brand-soft)", borderColor: "var(--brand-pale)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}><Icon name="invoice" size={18} style={{ color: "var(--brand-dark)" }} /><h3 style={{ fontSize: 22 }}>Invoice requests from firms</h3></div>
