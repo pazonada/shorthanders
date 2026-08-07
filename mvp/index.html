@@ -6111,7 +6111,7 @@ function SettingsPage() {
         </nav>
         <div style={{ display: "flex", flexDirection: "column", gap: 24, minWidth: 0 }}>
           <section id="plan" className="settings-card" style={{ scrollMarginTop: 88 }}>
-            {head("Plan & billing", isReporter ? "You're free to list and get found — you only pay a small fee when you collect payment." : "Browse, invite, and pay for free. A membership unlocks full search and reaching any reporter.")}
+            {head("Plan & billing", isReporter ? "You're free to list and get found. You only pay a small fee when you collect payment." : "Browse, invite, and pay for free. A membership unlocks full search and reaching any reporter.")}
             {isFirm ? <FirmSubscription /> : <ReporterPlanCards />}
           </section>
           <section id="notifications" className="settings-card" style={{ scrollMarginTop: 88 }}>
