@@ -66,31 +66,36 @@ function invoiceToLines(inv) {
 
 function ReporterInvoices() {
   const store = useStore();
-  const [view, setView] = useState("list");   // list | template | build
-  const [src, setSrc] = useState(null);        // builder source: { template } | { prefill } | { invoice }
+  const [src, setSrc] = useState(null);            // builder source: { template } | { prefill } | { invoice } | { template, prefill }
+  const [pendingReq, setPendingReq] = useState(null);  // a firm's request, carried through the picker into the builder
   const [modalInv, setModalInv] = useState(null);
   const invoices = store.invoices;
-  // The one pervasive "New invoice" button (in the dashboard header) routes here; open the builder
-  // and then reset the route so the button works again next time.
+  // View is DERIVED FROM THE URL so the browser Back button and the in-app Back button can't diverge:
+  // /invoices = list, /invoices/new = template picker, /invoices/build = the builder (needs a src).
   const route = useRoute();
-  useEffect(() => { if (/\/invoices\/new$/.test(route)) { setSrc(null); setView("template"); navigate("/reporter/invoices"); } }, [route]);
+  const view = /\/invoices\/build$/.test(route) ? (src ? "build" : "template")
+    : /\/invoices\/new$/.test(route) ? "template" : "list";
+  const pickerPrefill = pendingReq || (src && src.prefill) || null;
   const myName = useMemo(() => { const r = buildDirectory().find((x) => x.id === store.myCsr); return r ? r.name : ""; }, [store.myCsr]);
   const requests = store.paymentRequests.filter((q) => q.status === "pending" && q.reporterName === myName);
-  // A firm asked us to invoice them - accepting drops the reporter into the builder, pre-filled and
-  // fully editable, so they can itemize / add surcharges / switch templates before sending.
-  const acceptRequest = (q) => { store.fulfillRequest(q.id); setSrc({ prefill: q }); setView("build"); };
+  // A firm asked us to invoice them. Route through the template picker (carrying the request) so the
+  // reporter picks a structure - the firm + matter come pre-filled, and picking "Blank" keeps the
+  // firm's requested amount as a single line.
+  const acceptRequest = (q) => { store.fulfillRequest(q.id); setPendingReq(q); setSrc(null); navigate("/reporter/invoices/new"); };
+  const pickTemplate = (t) => { setSrc(pickerPrefill ? { template: t, prefill: pickerPrefill } : { template: t }); navigate("/reporter/invoices/build"); };
+  const cancelPicker = () => { setPendingReq(null); setSrc(null); navigate("/reporter/invoices"); };
 
   // Draft persisted or updated from the builder. When it's sent, open the read-only modal on it.
   const onSubmit = (inv, opts) => {
     if (opts.editing) store.updateInvoice(inv.id, inv); else store.addInvoice(inv);
-    setView("list"); setSrc(null);
+    setSrc(null); setPendingReq(null); navigate("/reporter/invoices");
     if (opts.send) setModalInv({ ...inv });
   };
   // Clicking a row: drafts open the builder (editable); sent/paid open the read-only modal.
-  const openInvoice = (i) => { if (i.status === "draft") { setSrc({ invoice: i }); setView("build"); } else setModalInv(i); };
+  const openInvoice = (i) => { if (i.status === "draft") { setSrc({ invoice: i }); navigate("/reporter/invoices/build"); } else setModalInv(i); };
 
-  if (view === "template") return <TemplatePicker onCancel={() => setView("list")} onPick={(t) => { setSrc({ template: t }); setView("build"); }} />;
-  if (view === "build") return <InvoiceBuilder src={src} onCancel={() => { setView("list"); setSrc(null); }} onSubmit={onSubmit} />;
+  if (view === "template") return <TemplatePicker prefill={pickerPrefill} onCancel={cancelPicker} onPick={pickTemplate} />;
+  if (view === "build") return <InvoiceBuilder src={src} onCancel={() => window.history.back()} onSubmit={onSubmit} />;
 
   return (
     <div>
@@ -132,7 +137,7 @@ function ReporterInvoices() {
   );
 }
 
-function TemplatePicker({ onCancel, onPick }) {
+function TemplatePicker({ prefill, onCancel, onPick }) {
   const store = useStore();
   const custom = store.customTemplates || [];
   return (
@@ -140,6 +145,7 @@ function TemplatePicker({ onCancel, onPick }) {
       <button onClick={onCancel} style={backLink}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
       <h2 style={{ fontSize: 26, marginBottom: 6 }}>Start a new invoice</h2>
       <p style={{ color: "var(--muted)", marginBottom: 20 }}>Pick a starter for the kind of work you're billing. You can edit every line, or start blank.</p>
+      {prefill && <div className="banner banner-info" style={{ marginBottom: 20 }}><Icon name="invoice" size={18} style={{ flexShrink: 0 }} /><div>Invoicing <strong style={{ fontWeight: 600 }}>{prefill.firmName}</strong>'s request{prefill.matter ? " · " + prefill.matter : ""}. Pick a structure – the firm and matter come pre-filled. Choose <strong style={{ fontWeight: 600 }}>Blank invoice</strong> to just bill the requested amount.</div></div>}
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))" }}>
         {INVOICE_TEMPLATES.map((t) => (
           <button key={t.id} className="rep-card" style={{ cursor: "pointer" }} onClick={() => onPick(t)}>
@@ -191,12 +197,15 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
     if (l.rateKey && me && me.rates) { const n = parseRate(me.rates[l.rateKey]); if (n != null) return String(n); }
     return "";
   };
-  const [lines, setLines] = useState(
-    editInv ? invoiceToLines(editInv)
-    : prefill ? [{ desc: prefill.desc || "", kind: "flat", qty: "1", rate: prefill.amount ? String(prefill.amount) : "" }]
-    : (template.lines || [{ desc: "", kind: "unit", qty: "1", rate: "" }]).map((l) => ({ desc: l.desc, kind: l.kind || "unit", qty: l.qty, rate: fillFromProfile(l) }))
-  );
-  const didPrefill = useMemo(() => !editInv && !prefill && !!template && (template.lines || []).some((l) => l.rateKey && me && me.rates && parseRate(me.rates[l.rateKey]) != null), []);
+  const [lines, setLines] = useState(() => {
+    if (editInv) return invoiceToLines(editInv);
+    // A real (non-blank) template wins even when there's a request prefill - the reporter chose to itemize.
+    if (template && template.id !== "blank" && template.lines) return template.lines.map((l) => ({ desc: l.desc, kind: l.kind || "unit", qty: l.qty, rate: fillFromProfile(l) }));
+    // Blank template on a request (or a bare request): keep the firm's requested amount as one line.
+    if (prefill) return [{ desc: prefill.desc || "", kind: "flat", qty: "1", rate: prefill.amount ? String(prefill.amount) : "" }];
+    return ((template && template.lines) || [{ desc: "", kind: "unit", qty: "1", rate: "" }]).map((l) => ({ desc: l.desc, kind: l.kind || "unit", qty: l.qty, rate: fillFromProfile(l) }));
+  });
+  const didPrefill = useMemo(() => !editInv && !!template && template.id !== "blank" && (template.lines || []).some((l) => l.rateKey && me && me.rates && parseRate(me.rates[l.rateKey]) != null), []);
   const [preview, setPreview] = useState(false);
   const [sending, setSending] = useState(false);
   const [toast, setToast] = useState("");
