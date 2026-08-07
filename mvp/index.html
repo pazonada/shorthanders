@@ -2563,12 +2563,13 @@
   @media (max-width: 620px) { .ds-feature-grid { grid-template-columns: 1fr; } }
 
   .rep-card {
-    background: var(--bg); border: 1px solid var(--rule); border-radius: 18px;
-    padding: 22px; display: flex; flex-direction: column; gap: 14px; min-width: 0;
-    transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+    background: var(--bg); border: 1px solid var(--border-light); border-radius: 18px;
+    padding: 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.05), 0 12px 30px -16px rgba(15,23,42,0.14);
+    transition: box-shadow .18s ease, transform .18s ease;
     cursor: pointer; text-align: left;
   }
-  .rep-card:hover { border-color: var(--rule-strong); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .rep-card:hover { box-shadow: 0 2px 8px rgba(15,23,42,0.08), 0 20px 44px -18px rgba(15,23,42,0.24); transform: translateY(-3px); }
   .rep-card.unclaimed { background: var(--bg-soft); border-style: dashed; }
 
   .rep-avatar {
@@ -5324,16 +5325,16 @@ function TemplatePicker({ onCancel, onPick }) {
   const store = useStore();
   const custom = store.customTemplates || [];
   return (
-    <div style={{ maxWidth: 760 }}>
+    <div>
       <button onClick={onCancel} style={backLink}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
       <h2 style={{ fontSize: 26, marginBottom: 6 }}>Start a new invoice</h2>
       <p style={{ color: "var(--muted)", marginBottom: 20 }}>Pick a starter for the kind of work you're billing. You can edit every line, or start blank.</p>
-      <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
+      <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))" }}>
         {INVOICE_TEMPLATES.map((t) => (
           <button key={t.id} className="rep-card" style={{ cursor: "pointer" }} onClick={() => onPick(t)}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="invoice" size={19} /></div>
-              <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 19 }}>{t.name}</span>
+              <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22 }}>{t.name}</span>
             </div>
             <div style={{ fontSize: 13, color: "var(--muted)" }}>{t.hint}</div>
             <div style={{ fontSize: 12.5, color: "var(--brand-dark)", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4 }}>Use template <Icon name="arrow" size={13} /></div>
@@ -5343,7 +5344,7 @@ function TemplatePicker({ onCancel, onPick }) {
           <button key={"c" + i} className="rep-card" style={{ cursor: "pointer" }} onClick={() => onPick(t)}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="star" size={19} /></div>
-              <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 19 }}>{t.name}</span>
+              <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22 }}>{t.name}</span>
             </div>
             <div style={{ fontSize: 13, color: "var(--muted)" }}>Your saved template</div>
             <div style={{ fontSize: 12.5, color: "var(--brand-dark)", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4 }}>Use template <Icon name="arrow" size={13} /></div>

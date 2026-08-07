@@ -136,16 +136,16 @@ function TemplatePicker({ onCancel, onPick }) {
   const store = useStore();
   const custom = store.customTemplates || [];
   return (
-    <div style={{ maxWidth: 760 }}>
+    <div>
       <button onClick={onCancel} style={backLink}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
       <h2 style={{ fontSize: 26, marginBottom: 6 }}>Start a new invoice</h2>
       <p style={{ color: "var(--muted)", marginBottom: 20 }}>Pick a starter for the kind of work you're billing. You can edit every line, or start blank.</p>
-      <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
+      <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))" }}>
         {INVOICE_TEMPLATES.map((t) => (
           <button key={t.id} className="rep-card" style={{ cursor: "pointer" }} onClick={() => onPick(t)}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="invoice" size={19} /></div>
-              <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 19 }}>{t.name}</span>
+              <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22 }}>{t.name}</span>
             </div>
             <div style={{ fontSize: 13, color: "var(--muted)" }}>{t.hint}</div>
             <div style={{ fontSize: 12.5, color: "var(--brand-dark)", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4 }}>Use template <Icon name="arrow" size={13} /></div>
@@ -155,7 +155,7 @@ function TemplatePicker({ onCancel, onPick }) {
           <button key={"c" + i} className="rep-card" style={{ cursor: "pointer" }} onClick={() => onPick(t)}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="star" size={19} /></div>
-              <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 19 }}>{t.name}</span>
+              <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22 }}>{t.name}</span>
             </div>
             <div style={{ fontSize: 13, color: "var(--muted)" }}>Your saved template</div>
             <div style={{ fontSize: 12.5, color: "var(--brand-dark)", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4 }}>Use template <Icon name="arrow" size={13} /></div>
