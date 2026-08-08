@@ -4372,44 +4372,9 @@ function AlreadyClaimed({ r }) {
 }
 
 // ═══ Profile claiming flow ═════════════════════════════════════════
-// Searchable, alphabetized multi-select for long option lists (areas of law, languages) - matches
-// the directory's option sets. Selected items show as removable tags; a search filters the list.
-function MultiSelect({ options, value, onChange, placeholder }) {
-  const [open, setOpen] = useState(false);
-  const [q, setQ] = useState("");
-  const opts = useMemo(() => options.slice().sort((a, b) => a.localeCompare(b)), [options]);
-  const toggle = (o) => onChange(value.includes(o) ? value.filter((x) => x !== o) : [...value, o]);
-  const filtered = opts.filter((o) => o.toLowerCase().includes(q.trim().toLowerCase()));
-  return (
-    <div>
-      <div className="ds-input" style={{ height: "auto", minHeight: 40, display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center", cursor: "text", padding: 6 }} onClick={() => setOpen((v) => !v)}>
-        {value.length === 0 && <span style={{ color: "var(--dim)", padding: "0 4px", fontSize: 14 }}>{placeholder || "Select all that apply"}</span>}
-        {value.map((v) => (
-          <span key={v} style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "var(--brand-soft)", color: "var(--brand-dark)", borderRadius: 6, padding: "3px 8px", fontSize: 13.5 }}>
-            {v}<Icon name="x" size={14} style={{ cursor: "pointer" }} onClick={(e) => { e.stopPropagation(); toggle(v); }} />
-          </span>
-        ))}
-        <Icon name="chevron" size={16} style={{ marginLeft: "auto", color: "var(--dim)" }} />
-      </div>
-      {open && (
-        <div style={{ border: "1px solid var(--rule)", borderRadius: 10, marginTop: 6, background: "var(--bg)", overflow: "hidden" }}>
-          <input className="ds-input" style={{ margin: 6, width: "calc(100% - 12px)" }} placeholder="Search…" value={q} onChange={(e) => setQ(e.target.value)} autoFocus />
-          <div style={{ maxHeight: 220, overflowY: "auto", padding: 4 }}>
-            {filtered.map((o) => {
-              const on = value.includes(o);
-              return (
-                <div key={o} onMouseDown={(e) => e.preventDefault()} onClick={() => toggle(o)} style={{ display: "flex", alignItems: "center", gap: 9, padding: "8px 9px", borderRadius: 6, cursor: "pointer", fontSize: 14.5, color: "var(--ink)" }}>
-                  <Icon name={on ? "check" : "plus"} size={16} style={{ color: on ? "var(--brand-dark)" : "var(--dim)" }} />{o}
-                </div>
-              );
-            })}
-            {filtered.length === 0 && <div style={{ padding: "10px 9px", fontSize: 13.5, color: "var(--muted)" }}>No matches.</div>}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+// Area of law / states / languages use the shared TagSearchAdd widget (defined in _app_07), same as
+// the reporter profile editor and firm signup - searchable, with type-your-own where the list isn't
+// exhaustive (areas, languages). Replaced the old bespoke MultiSelect dropdown for consistency.
 
 function ClaimFlow({ reporterId }) {
   const store = useStore();
@@ -4603,7 +4568,7 @@ function ClaimFlow({ reporterId }) {
               </div>
               <div>
                 <label className="ds-label">Area of law (case types you've covered)</label>
-                <MultiSelect options={SPECIALTY_TYPES} value={form.specialties} onChange={(v) => setForm({ ...form, specialties: v })} />
+                <TagSearchAdd options={SPECIALTY_TYPES} selected={form.specialties} onChange={(v) => setForm({ ...form, specialties: v })} placeholder="Search areas of law, or type your own" allowOther />
               </div>
               <div>
                 <label className="ds-label">Certifications</label>
@@ -4611,11 +4576,11 @@ function ClaimFlow({ reporterId }) {
               </div>
               <div>
                 <label className="ds-label">Also certified in (other states)</label>
-                <MultiSelect options={US_STATES} value={form.otherStates} onChange={(v) => setForm({ ...form, otherStates: v })} />
+                <TagSearchAdd options={US_STATES} selected={form.otherStates} onChange={(v) => setForm({ ...form, otherStates: v })} placeholder="Search states" />
               </div>
               <div>
                 <label className="ds-label">Languages (beyond English)</label>
-                <MultiSelect options={LANGUAGES} value={form.languages} onChange={(v) => setForm({ ...form, languages: v })} />
+                <TagSearchAdd options={LANGUAGES} selected={form.languages} onChange={(v) => setForm({ ...form, languages: v })} placeholder="Search languages, or type your own" allowOther />
               </div>
               <label style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 15, color: "var(--ink-soft)", cursor: "pointer" }}>
                 <input type="checkbox" checked={form.rush} onChange={(e) => setForm({ ...form, rush: e.target.checked })} style={{ width: 18, height: 18 }} /> I accept rush / expedited turnaround jobs
