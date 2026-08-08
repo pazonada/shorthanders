@@ -70,6 +70,52 @@ function LoginModal({ onClose }) {
   );
 }
 
+// First-run orientation modal. Shown once, right after signup, on the first dashboard view - gated on
+// the in-memory `justJoined` flag (not persisted, cleared on first mount), so it never reappears on a
+// refresh or a later login. Role-aware content points at the 2-3 real things each side can do next.
+function WelcomeModal({ role, name, onClose }) {
+  const isFirm = role === "firm";
+  const first = (!isFirm && name) ? name.split(" ")[0] : "";
+  const items = isFirm ? [
+    { icon: "search", title: "Search every California reporter", body: "Filter by county, area of law, language, and turnaround, then open full profiles." },
+    { icon: "message", title: "Message reporters directly", body: "Agree scope, dates, and rates yourselves - no agency in the middle." },
+    { icon: "bank", title: "Pay invoices online", body: "Reporters bill you here; pay by card or ACH, with no agency markup." },
+  ] : [
+    { icon: "badge", title: "Polish your profile and set rates", body: "Firms browsing the directory see what you fill in - the more complete, the better." },
+    { icon: "mail", title: "Invite the firms you already work with", body: "They join free and save you as a favorite, so they reach you first next time." },
+    { icon: "invoice", title: "Invoice and get paid", body: "Send an invoice in a couple of clicks; firms pay by card or ACH, no agency cut." },
+  ];
+  const primary = isFirm
+    ? { label: "Browse the directory", onClick: () => { onClose(); navigate("/directory"); } }
+    : { label: "Explore my dashboard", onClick: onClose };
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="ds-card" style={{ maxWidth: 500, width: "92%" }} onClick={(e) => e.stopPropagation()}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+          <div>
+            <span className="pill pill-tag" style={{ marginBottom: 12, display: "inline-flex" }}>{isFirm ? "Your firm account is ready" : "Your profile is claimed"}</span>
+            <h3 style={{ fontSize: 26 }}>Welcome to Dewey Sholes{first ? ", " + first : ""}</h3>
+            <p style={{ color: "var(--muted)", fontSize: 14.5, marginTop: 6, lineHeight: 1.55 }}>Here's what you can do from here.</p>
+          </div>
+          <button onClick={onClose} title="Close" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", padding: 4, flexShrink: 0 }}><Icon name="x" size={20} /></button>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, margin: "20px 0 22px" }}>
+          {items.map((it) => (
+            <div key={it.title} style={{ display: "flex", gap: 13, alignItems: "flex-start" }}>
+              <div style={{ width: 40, height: 40, borderRadius: 11, background: "var(--brand-soft)", color: "var(--brand-dark)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name={it.icon} size={20} /></div>
+              <div>
+                <div style={{ fontWeight: 600, color: "var(--ink)", fontSize: 15 }}>{it.title}</div>
+                <div style={{ color: "var(--muted)", fontSize: 13.5, marginTop: 2, lineHeight: 1.5 }}>{it.body}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={primary.onClick}>{primary.label}</button>
+      </div>
+    </div>
+  );
+}
+
 // ─── Footer ────────────────────────────────────────────────────────
 function Footer() {
   const col = (title, links) => (

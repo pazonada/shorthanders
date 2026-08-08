@@ -34,6 +34,7 @@ function ReporterDashboard() {
   // Greet a brand-new reporter with "Welcome"; returning reporters with "Nice to see you". Capture the
   // flag once on mount so the title is stable, then clear it so later visits read as returns.
   const [firstVisit] = useState(store.justJoined);
+  const [showWelcome, setShowWelcome] = useState(firstVisit);   // first-run orientation modal (once, post-signup)
   useEffect(() => { if (store.justJoined) store.clearJustJoined(); }, []);
   const [tab, setTab] = useRouteTab("/reporter", ["overview", "profile", "payments", "invoices", "messages"], "overview");
   const [inviteOpen, setInviteOpen] = useState(false);
@@ -98,6 +99,7 @@ function ReporterDashboard() {
       {tab === "payments" && <ReporterPayments invoices={invoices} paidThisMonth={paidThisMonth} />}
       {tab === "invoices" && <ReporterInvoices />}
       {tab === "messages" && <MessagesPanel embedded />}
+      {showWelcome && <WelcomeModal role="reporter" name={me.name} onClose={() => setShowWelcome(false)} />}
     </DashLayout>
   );
 }

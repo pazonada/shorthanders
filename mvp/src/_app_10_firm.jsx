@@ -3,6 +3,9 @@ function FirmDashboard() {
   const store = useStore();
   const [tab, setTab] = useRouteTab("/firm", ["overview", "saved", "messages", "invoices"], "overview");
   const [bulkOpen, setBulkOpen] = useState(false);
+  // First-run orientation modal (once, right after signup) - mirrors the reporter dashboard.
+  const [showWelcome, setShowWelcome] = useState(store.justJoined);
+  useEffect(() => { if (store.justJoined) store.clearJustJoined(); }, []);
   const all = useMemo(() => buildDirectory(), []);
   const saved = all.filter((r) => store.saved.includes(r.id));
   const unread = store.convos.reduce((n, c) => n + c.unread, 0);
@@ -66,6 +69,7 @@ function FirmDashboard() {
       {tab === "messages" && <MessagesPanel embedded />}
       {tab === "invoices" && <FirmInvoices />}
       {bulkOpen && <BulkMessageModal reporters={saved} onClose={() => setBulkOpen(false)} />}
+      {showWelcome && <WelcomeModal role="firm" onClose={() => setShowWelcome(false)} />}
     </DashLayout>
   );
 }
