@@ -108,13 +108,20 @@ account and save Marguerite."
   button dims to ~40% opacity and reads as grey until its required input is filled – e.g. "Send" in
   the invite modal stays grey until a contact email is entered, then turns navy. Grey is not a color
   choice here, it's the disabled state.
-- **Placement – ONE rule, modals AND page forms (2026-08-07).** Action rows are **right-aligned** with
-  the **primary button rightmost** and **Cancel (secondary) immediately to its left**; any other
-  secondary (e.g. `Save as draft`) sits left of Cancel; a tertiary text link (`Preview`, "Copy the
-  message") sits on the far left of the same row. Same everywhere – modals (RequestInvoiceModal) and
-  full-page forms (`InvoiceBuilder`, profile editor, ClaimFlow, FirmSignup). **Page forms get an
-  explicit bottom Cancel button** (not only a top back-link – users don't hunt for those). A top
-  "Back to X" link can still exist, but the bottom row is the discoverable exit.
+- **Placement (2026-08-07, refined 2026-08-08).** Action rows put the **primary button rightmost**. A
+  **`Cancel`/dismiss** secondary clusters with it on the **right, immediately to its left** (any other
+  secondary like `Save as draft` sits left of Cancel); a tertiary text link (`Preview`, "Copy the
+  message") sits on the far left. This right-cluster is the **form/dialog** shape – modals
+  (RequestInvoiceModal), the invoice builder, the profile editor.
+- **`Back` is the exception – it goes far LEFT.** A control that returns to a **previous step or view**
+  (a wizard `Back`, the invoice preview's `Back to edit`, `That's not me`) is directional, not a
+  dismiss, so the row is **spread** (`justify-content: space-between`): Back on the left, primary
+  (`Continue`/`Next`/`Save`) on the right – the standard wizard pattern. Don't park `Back` next to the
+  primary on the right. Reference: `ClaimFlow` / `FirmSignup` steps, the `InvoiceBuilder` preview row.
+- **Flat forms get an explicit bottom Cancel** (profile editor, invoice builder) – users don't hunt for
+  a top back-link. **Wizards and pure navigation surfaces don't** – they rely on the guarded browser
+  Back plus the persistent site nav (see "rely on the browser's Back button" below). No grey top
+  "Cancel"/"Back to X" text links anywhere (off the link-colour rule and the no-back-links rule).
 - **Unsaved-changes guard.** Any form with explicit Save/Send (not auto-save) must guard against silent
   loss: leaving **with edits** – via Cancel, a back link, the **browser Back button**, or tab
   close/refresh – prompts **"Discard your changes?"**. Use the `useUnsavedGuard(isDirty)` hook

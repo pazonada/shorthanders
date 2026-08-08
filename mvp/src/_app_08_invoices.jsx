@@ -268,10 +268,12 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
     <div style={{ maxWidth: 680 }}>
       <div className="banner banner-info" style={{ marginBottom: 16 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div>This is how {f.client || "the firm"} will see your invoice.</div></div>
       <InvoicePreviewCard me={me} f={f} lines={lines} total={total} />
-      <div style={{ display: "flex", gap: 12, marginTop: 18, flexWrap: "wrap", justifyContent: "flex-end" }}>
-        <button className="btn btn-secondary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={saveDraft}>Save as draft</button>
+      <div style={{ display: "flex", gap: 12, marginTop: 18, flexWrap: "wrap", justifyContent: "space-between", alignItems: "center" }}>
         <button className="btn btn-secondary" onClick={() => setPreview(false)}>Back to edit</button>
-        <button className="btn btn-primary" disabled={!valid || sending} style={{ opacity: valid && !sending ? 1 : 0.4 }} onClick={sendInvoice}><Icon name="mail" size={16} /> {sending ? "Sending…" : "Send invoice"}</button>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+          <button className="btn btn-secondary" disabled={!valid} style={{ opacity: valid ? 1 : 0.4 }} onClick={saveDraft}>Save as draft</button>
+          <button className="btn btn-primary" disabled={!valid || sending} style={{ opacity: valid && !sending ? 1 : 0.4 }} onClick={sendInvoice}><Icon name="mail" size={16} /> {sending ? "Sending…" : "Send invoice"}</button>
+        </div>
       </div>
     </div>
   );

@@ -243,8 +243,8 @@ function ClaimFlow({ reporterId }) {
   return (
     <Page>
       <div style={{ maxWidth: 680, margin: "0 auto" }}>
-        <button onClick={() => navigateBack("/reporters/" + reporterId)} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 22 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Cancel</button>
-
+        {/* No top "Cancel" link (grey + undiscoverable, off styleguide). Leaving is the guarded browser
+            Back, the persistent site nav, or "That's not me" on step 1. */}
         {/* stepper */}
         <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 30 }}>
           {steps.map((s, i) => (
@@ -270,7 +270,7 @@ function ClaimFlow({ reporterId }) {
                 </div>
               </div>
               <p style={{ color: "var(--ink-soft)", fontSize: 15, lineHeight: 1.6 }}>Claiming this profile lets you control how firms see you and unlocks invoicing and payments. You'll verify your identity in a moment so firms know it's really you.</p>
-              <div style={{ display: "flex", gap: 12, justifyContent: "flex-end" }}>
+              <div style={{ display: "flex", gap: 12, justifyContent: "space-between", flexWrap: "wrap" }}>
                 <button className="btn btn-secondary" onClick={() => navigateBack("/directory")}>That's not me</button>
                 <button className="btn btn-primary" onClick={() => setStep(1)}>Yes, this is me <Icon name="arrow" size={16} /></button>
               </div>
@@ -286,7 +286,7 @@ function ClaimFlow({ reporterId }) {
                 <div><label className="ds-label">Create a password</label><input className="ds-input" type="password" placeholder="••••••••" /></div>
                 <div><label className="ds-label">Mobile (for sign-in codes)</label><input className="ds-input" type="tel" placeholder="(555) 000-0000" /></div>
               </div>
-              <div style={{ display: "flex", gap: 12, marginTop: 4, justifyContent: "flex-end" }}>
+              <div style={{ display: "flex", gap: 12, marginTop: 4, justifyContent: "space-between", flexWrap: "wrap" }}>
                 <button className="btn btn-secondary" onClick={() => setStep(0)}>Back</button>
                 <button className="btn btn-primary" onClick={() => setStep(2)}>Continue <Icon name="arrow" size={16} /></button>
               </div>
@@ -311,7 +311,7 @@ function ClaimFlow({ reporterId }) {
                   {stripeState === "connecting" ? "Redirecting to Stripe…" : <>Continue to Stripe <Icon name="arrow" size={16} /></>}
                 </button>
               )}
-              <div style={{ display: "flex", gap: 12, justifyContent: "flex-end" }}>
+              <div style={{ display: "flex", gap: 12, justifyContent: "space-between", flexWrap: "wrap" }}>
                 <button className="btn btn-secondary" onClick={() => setStep(1)}>Back</button>
                 <button className="btn btn-primary" disabled={stripeState !== "done"} style={{ opacity: stripeState === "done" ? 1 : 0.4 }} onClick={() => setStep(3)}>Continue <Icon name="arrow" size={16} /></button>
               </div>
@@ -415,7 +415,7 @@ function ClaimFlow({ reporterId }) {
                 )}
               </div>
 
-              <div style={{ marginTop: 4, display: "flex", gap: 12, justifyContent: "flex-end" }}>
+              <div style={{ marginTop: 4, display: "flex", gap: 12, justifyContent: "space-between", flexWrap: "wrap" }}>
                 <button className="btn btn-secondary" onClick={() => setStep(2)}>Back</button>
                 <button className="btn btn-primary" onClick={finish}><Icon name="check" size={16} /> Save to my profile</button>
               </div>
@@ -448,8 +448,6 @@ function FirmSignup() {
   useUnsavedGuard(snapshot !== initialSnapshot.current);
   const steps = ["About your firm", "Create your login"];
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
-  const togglePractice = (p) => setForm((f) => ({ ...f, practices: f.practices.includes(p) ? f.practices.filter((x) => x !== p) : [...f.practices, p] }));
-  const PRACTICE = ["Insurance defense", "Personal injury", "Family law", "Employment", "Medical malpractice", "Civil / commercial", "Probate / trust"];
   const step0Valid = form.firm.trim().length > 1 && form.name.trim().length > 1;
   const step1Valid = /.+@.+\..+/.test(form.email) && form.pw.length >= 1;
   const finish = () => {
@@ -462,7 +460,8 @@ function FirmSignup() {
     <Page>
       {legal && <LegalModal docKey={legal} onClose={() => setLegal(null)} />}
       <div style={{ maxWidth: 640, margin: "0 auto" }}>
-        <button onClick={() => navigateBack("/for-firms")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 22 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Cancel</button>
+        {/* No top "Cancel" link (grey + undiscoverable, off styleguide). Leaving is the guarded browser
+            Back, the persistent site nav, or step 2's Back. */}
         <div style={{ textAlign: "center" }}>
           <span className="pill pill-tag" style={{ marginBottom: 14, display: "inline-flex" }}>Free for firms</span>
           <h1 style={{ fontSize: "clamp(34px, 4.4vw, 54px)" }}>Create your firm account</h1>
@@ -494,7 +493,7 @@ function FirmSignup() {
               </div>
               <div>
                 <label className="ds-label">Area of law (optional)</label>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{PRACTICE.map((p) => <button key={p} type="button" className={"chip-filter" + (form.practices.includes(p) ? " on" : "")} onClick={() => togglePractice(p)}>{p}</button>)}</div>
+                <TagSearchAdd options={SPECIALTY_TYPES} selected={form.practices} onChange={(v) => setForm({ ...form, practices: v })} placeholder="Search areas of law, or type your own" allowOther />
               </div>
               {/* teamInterest: demo-only gauge of firm-wide-plan demand; not stored on this fake submit - wire on real signup */}
               <div style={{ background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 12, padding: "16px 18px" }}>
@@ -514,7 +513,7 @@ function FirmSignup() {
               <div><label className="ds-label">Work email *</label><input className="ds-input" type="email" placeholder="you@firm.com" value={form.email} onChange={set("email")} /></div>
               <div><label className="ds-label">Create a password *</label><input className="ds-input" type="password" placeholder="••••••••" value={form.pw} onChange={set("pw")} /></div>
               <p style={{ fontSize: 12.5, color: "var(--dim)", lineHeight: 1.5 }}>By creating an account you agree to the <button onClick={() => setLegal("terms")} style={claimLinkBtn}>Terms</button> and <button onClick={() => setLegal("privacy")} style={claimLinkBtn}>Privacy</button>.</p>
-              <div style={{ display: "flex", gap: 12, marginTop: 4, justifyContent: "flex-end" }}>
+              <div style={{ display: "flex", gap: 12, marginTop: 4, justifyContent: "space-between", flexWrap: "wrap" }}>
                 <button className="btn btn-secondary" onClick={() => setStep(0)}>Back</button>
                 <button className="btn btn-primary" disabled={!step1Valid} style={{ opacity: step1Valid ? 1 : 0.4 }} onClick={finish}><Icon name="check" size={16} /> Create account</button>
               </div>
