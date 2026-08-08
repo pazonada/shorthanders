@@ -652,7 +652,7 @@ function ChipRow({ items, rush }) {
   );
 }
 function TagList({ items, tone }) {
-  const cls = tone === "sage" ? "pill-claimed" : tone === "plum" ? "pill-tag" : "pill-verified";
+  const cls = tone === "plum" ? "pill-tag" : "pill-verified";
   return <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{(items || []).map((it, i) => <span key={i} className={"pill " + cls} style={{ fontSize: 13, padding: "6px 13px" }}>{it}</span>)}</div>;
 }
 

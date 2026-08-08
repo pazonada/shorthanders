@@ -125,13 +125,6 @@ function Avatar({ name, size = 52, claimed = true, photo }) {
     </svg>
   );
 }
-function Meter({ value }) {
-  return (
-    <div style={{ height: 8, background: "var(--bg-soft)", borderRadius: 999, overflow: "hidden", border: "1px solid var(--rule)" }}>
-      <div style={{ height: "100%", width: value + "%", background: value >= 80 ? "var(--sage)" : value >= 50 ? "var(--brand)" : "var(--ochre)", borderRadius: 999, transition: "width .4s ease" }} />
-    </div>
-  );
-}
 function Toast({ msg, onClose }) {
   useEffect(() => { if (!msg) return; const t = setTimeout(onClose, 3200); return () => clearTimeout(t); }, [msg]);
   if (!msg) return null;

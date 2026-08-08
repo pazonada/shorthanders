@@ -269,7 +269,7 @@ function CtaStrip({ title, button }) {
 
 // Pricing lives inline on the For firms / For reporters pages – no standalone pricing page.
 function PriceCard({ tone, featured, name, price, unit, blurb, features, cta, note }) {
-  const fg = tone === "sage" ? "var(--sage-deep)" : "var(--brand-dark)";
+  const fg = "var(--brand-dark)";
   return (
     <div className="ds-card" style={{ borderColor: featured ? "var(--brand)" : "var(--rule)", borderWidth: featured ? 2 : 1, position: "relative", display: "flex", flexDirection: "column", gap: 16 }}>
       <div>

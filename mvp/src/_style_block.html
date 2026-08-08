@@ -28,9 +28,8 @@
     --ochre: #7A7F3F;
     --ochre-soft: #ECEEDD;
     --ochre-deep: #565A2B;
-    --sage: #7E9B7C;
-    --sage-soft: #E8EFE5;
-    --sage-deep: #4F6F4D;
+    --sage-soft: #E8EFE5;   /* only for .inv-paid (the allowed PAID stamp) */
+    --sage-deep: #4F6F4D;   /* only for .inv-paid + a few pricing/usecase rules */
     --plum: #6B4A6E;
     --plum-soft: #F0E6F0;
 
@@ -1755,7 +1754,6 @@
   .trust span { display: inline-flex; align-items: center; gap: 8px; }
   .trust .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); display: inline-block; }
   .trust .dot.ochre { background: var(--ochre); }
-  .trust .dot.sage { background: var(--sage); }
   .trust .dot.plum { background: var(--plum); }
 
   /* section primitives */
@@ -2040,7 +2038,6 @@
   @media (max-width: 720px) { .usecase { padding: 28px; } }
   .usecase-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--brand); }
   .usecase-bar.ochre { background: var(--ochre); }
-  .usecase-bar.sage { background: var(--sage); }
   .usecase-icon {
     width: 52px; height: 52px; border-radius: 14px;
     background: var(--brand-soft); color: var(--brand);

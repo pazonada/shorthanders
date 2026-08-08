@@ -59,9 +59,8 @@
     --ochre: #7A7F3F;
     --ochre-soft: #ECEEDD;
     --ochre-deep: #565A2B;
-    --sage: #7E9B7C;
-    --sage-soft: #E8EFE5;
-    --sage-deep: #4F6F4D;
+    --sage-soft: #E8EFE5;   /* only for .inv-paid (the allowed PAID stamp) */
+    --sage-deep: #4F6F4D;   /* only for .inv-paid + a few pricing/usecase rules */
     --plum: #6B4A6E;
     --plum-soft: #F0E6F0;
 
@@ -1786,7 +1785,6 @@
   .trust span { display: inline-flex; align-items: center; gap: 8px; }
   .trust .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); display: inline-block; }
   .trust .dot.ochre { background: var(--ochre); }
-  .trust .dot.sage { background: var(--sage); }
   .trust .dot.plum { background: var(--plum); }
 
   /* section primitives */
@@ -2071,7 +2069,6 @@
   @media (max-width: 720px) { .usecase { padding: 28px; } }
   .usecase-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--brand); }
   .usecase-bar.ochre { background: var(--ochre); }
-  .usecase-bar.sage { background: var(--sage); }
   .usecase-icon {
     width: 52px; height: 52px; border-radius: 14px;
     background: var(--brand-soft); color: var(--brand);
@@ -3191,13 +3188,6 @@ function Avatar({ name, size = 52, claimed = true, photo }) {
     </svg>
   );
 }
-function Meter({ value }) {
-  return (
-    <div style={{ height: 8, background: "var(--bg-soft)", borderRadius: 999, overflow: "hidden", border: "1px solid var(--rule)" }}>
-      <div style={{ height: "100%", width: value + "%", background: value >= 80 ? "var(--sage)" : value >= 50 ? "var(--brand)" : "var(--ochre)", borderRadius: 999, transition: "width .4s ease" }} />
-    </div>
-  );
-}
 function Toast({ msg, onClose }) {
   useEffect(() => { if (!msg) return; const t = setTimeout(onClose, 3200); return () => clearTimeout(t); }, [msg]);
   if (!msg) return null;
@@ -3474,7 +3464,7 @@ function CtaStrip({ title, button }) {
 
 // Pricing lives inline on the For firms / For reporters pages – no standalone pricing page.
 function PriceCard({ tone, featured, name, price, unit, blurb, features, cta, note }) {
-  const fg = tone === "sage" ? "var(--sage-deep)" : "var(--brand-dark)";
+  const fg = "var(--brand-dark)";
   return (
     <div className="ds-card" style={{ borderColor: featured ? "var(--brand)" : "var(--rule)", borderWidth: featured ? 2 : 1, position: "relative", display: "flex", flexDirection: "column", gap: 16 }}>
       <div>
@@ -4147,7 +4137,7 @@ function ChipRow({ items, rush }) {
   );
 }
 function TagList({ items, tone }) {
-  const cls = tone === "sage" ? "pill-claimed" : tone === "plum" ? "pill-tag" : "pill-verified";
+  const cls = tone === "plum" ? "pill-tag" : "pill-verified";
   return <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{(items || []).map((it, i) => <span key={i} className={"pill " + cls} style={{ fontSize: 13, padding: "6px 13px" }}>{it}</span>)}</div>;
 }
 
