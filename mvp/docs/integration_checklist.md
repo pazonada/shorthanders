@@ -33,6 +33,13 @@ Nothing is really authenticated today; the UI just flips `store.role` and picks 
   optional firm-wide-plan interest answer – see §8).
 - [ ] **Sessions + role** – replace `store.role` / `enterAsReporter` / `enterAsFirm` / `logout`
   with real session state. `store.firmName` is currently in-memory only (set from signup).
+- [ ] **First-run welcome modal – persist an `onboarded` flag per user (added 2026-08-08).** The
+  one-time `WelcomeModal` (`_app_03_shell.jsx`, shown on the firm + reporter dashboards) is gated on
+  the in-memory `store.justJoined` flag (`markJustJoined` at signup, cleared on first dashboard
+  mount). In the prototype that means "once per signup session" – it correctly never re-shows on
+  refresh or later login, but it's not durable across devices/browsers. Back it with a per-user
+  `onboarded` boolean in the DB (set the first time the modal is dismissed), and gate the modal on
+  that instead of `justJoined`, so it's truly once-per-user-ever.
 - [ ] Password reset, email verification, "remember me".
 
 ## 2. Database – Supabase Postgres
