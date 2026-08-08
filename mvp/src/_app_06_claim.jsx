@@ -417,7 +417,7 @@ function FirmSignup() {
   const step1Valid = /.+@.+\..+/.test(form.email) && form.pw.length >= 1;
   const finish = () => {
     store.markJustJoined();   // first-run welcome modal on the firm dashboard (same flag the reporter side uses)
-    store.enterAsFirm(form.firm);
+    store.enterAsFirm(form.firm, form.name);   // form.name = the person this account belongs to (greeted on the dashboard)
     store.completeSave();
     if (store.pendingMessage != null) { store.startConvoWith(store.pendingMessage); store.queueMessage(null); navigate("/messages"); }
     else navigate("/firm");

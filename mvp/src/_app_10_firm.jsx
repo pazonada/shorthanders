@@ -28,7 +28,7 @@ function FirmDashboard() {
     { id: "invoices", label: "Invoices", badge: toPay || null },
   ];
   return (
-    <DashLayout title={store.firmName} subtitle="Firm account · Legal Operations" tabs={tabs} active={tab} onTab={setTab}>
+    <DashLayout title={"Hello, " + (store.firmContact || store.firmName).split(" ")[0]} subtitle={store.firmName + " · Firm account"} tabs={tabs} active={tab} onTab={setTab}>
       {tab === "overview" && (
         <>
         <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Sample data</strong> – the payment figures and estimated savings here are illustrative placeholders for the prototype.</span></div>

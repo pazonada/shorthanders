@@ -4686,7 +4686,7 @@ function FirmSignup() {
   const step1Valid = /.+@.+\..+/.test(form.email) && form.pw.length >= 1;
   const finish = () => {
     store.markJustJoined();   // first-run welcome modal on the firm dashboard (same flag the reporter side uses)
-    store.enterAsFirm(form.firm);
+    store.enterAsFirm(form.firm, form.name);   // form.name = the person this account belongs to (greeted on the dashboard)
     store.completeSave();
     if (store.pendingMessage != null) { store.startConvoWith(store.pendingMessage); store.queueMessage(null); navigate("/messages"); }
     else navigate("/firm");
@@ -4793,8 +4793,8 @@ function useRouteTab(base, tabIds, defaultTab) {
 // ═══ Reporter dashboard ════════════════════════════════════════════
 function ReporterDashboard() {
   const store = useStore();
-  // Greet a brand-new reporter with "Welcome"; returning reporters with "Nice to see you". Capture the
-  // flag once on mount so the title is stable, then clear it so later visits read as returns.
+  // `justJoined`, captured once on mount then cleared, marks a brand-new signup - it drives the
+  // one-time welcome modal below. The title itself just greets "Hello, {first name}" every visit.
   const [firstVisit] = useState(store.justJoined);
   const [showWelcome, setShowWelcome] = useState(firstVisit);   // first-run orientation modal (once, post-signup)
   useEffect(() => { if (store.justJoined) store.clearJustJoined(); }, []);
@@ -4826,7 +4826,7 @@ function ReporterDashboard() {
   ];
 
   return (
-    <DashLayout title={(firstVisit ? "Welcome, " : "Nice to see you, ") + me.name.split(" ")[0]} subtitle={"CSR #" + me.csrNumber + " · " + (isOutOfState(me) ? "Out of state" : me.city + ", CA")} tabs={tabs} active={tab} onTab={setTab}
+    <DashLayout title={"Hello, " + me.name.split(" ")[0]} subtitle={"CSR #" + me.csrNumber + " · " + (isOutOfState(me) ? "Out of state" : me.city + ", CA")} tabs={tabs} active={tab} onTab={setTab}
       headerRight={
         <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
           <button className="btn btn-secondary" onClick={() => setTab("profile")}>Edit profile</button>
@@ -5951,7 +5951,7 @@ function FirmDashboard() {
     { id: "invoices", label: "Invoices", badge: toPay || null },
   ];
   return (
-    <DashLayout title={store.firmName} subtitle="Firm account · Legal Operations" tabs={tabs} active={tab} onTab={setTab}>
+    <DashLayout title={"Hello, " + (store.firmContact || store.firmName).split(" ")[0]} subtitle={store.firmName + " · Firm account"} tabs={tabs} active={tab} onTab={setTab}>
       {tab === "overview" && (
         <>
         <div className="ds-note"><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span><strong style={{ fontWeight: 600, color: "var(--ink-soft)" }}>Sample data</strong> – the payment figures and estimated savings here are illustrative placeholders for the prototype.</span></div>
@@ -6455,6 +6455,7 @@ function StoreProvider({ children }) {
   const [reporterPlan, setReporterPlan] = useState("payg");   // 'payg' (pay per invoice, 5%) | 'pro' ($29/mo + 2%)
   const [notifPrefs, setNotifPrefs] = useState({ newMessage: true, invoicePaid: true, inviteAccepted: true, weeklyDigest: false });   // Settings > Notifications toggles
   const [firmName, setFirmName] = useState("Morgan & Reyes LLP"); // demo default; set from signup
+  const [firmContact, setFirmContact] = useState("Jordan Reyes"); // the person the firm account belongs to (signup "Your name"); demo default for the login persona. No firm-wide accounts yet, so every account is one person.
   // Reporters a free firm may fully view/message: the ones who invited or are connected to them.
   const [unlockedReporters, setUnlockedReporters] = useState(["900004", "900003", "900005"]);
   // Reporters a free firm reached by an EXACT name/license search - "I already know who I want" is
@@ -6471,7 +6472,7 @@ function StoreProvider({ children }) {
   const [justJoined, setJustJoined] = useState(false);  // set on claim/signup finish so the dashboard greets first-timers with "Welcome" not "Welcome back"
 
   const store = {
-    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, invitedReporters, firmPlan, reporterPlan, firmName, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, myProfile, saveMyProfile: (patch) => setMyProfile((p) => ({ ...p, ...patch })), pendingSave, pendingMessage, justJoined,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, invitedReporters, firmPlan, reporterPlan, firmName, firmContact, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, myProfile, saveMyProfile: (patch) => setMyProfile((p) => ({ ...p, ...patch })), pendingSave, pendingMessage, justJoined,
     // Record that this firm invited an unclaimed reporter (idempotent).
     noteInvite: (id) => setInvitedReporters((xs) => xs.includes(id) ? xs : [...xs, id]),
     // A free firm searched a reporter's exact name or license number - unlock just that reporter.
@@ -6483,7 +6484,7 @@ function StoreProvider({ children }) {
     enterAsReporter: () => setRole("reporter"),
     markJustJoined: () => setJustJoined(true),
     clearJustJoined: () => setJustJoined(false),
-    enterAsFirm: (name) => { setRole("firm"); if (name && name.trim()) setFirmName(name.trim()); },
+    enterAsFirm: (name, contact) => { setRole("firm"); if (name && name.trim()) setFirmName(name.trim()); if (contact && contact.trim()) setFirmContact(contact.trim()); },
     logout: () => setRole(null),
     upgradeFirm: () => setFirmPlan("pro"),
     downgradeFirm: () => setFirmPlan("free"),

@@ -177,6 +177,7 @@ function StoreProvider({ children }) {
   const [reporterPlan, setReporterPlan] = useState("payg");   // 'payg' (pay per invoice, 5%) | 'pro' ($29/mo + 2%)
   const [notifPrefs, setNotifPrefs] = useState({ newMessage: true, invoicePaid: true, inviteAccepted: true, weeklyDigest: false });   // Settings > Notifications toggles
   const [firmName, setFirmName] = useState("Morgan & Reyes LLP"); // demo default; set from signup
+  const [firmContact, setFirmContact] = useState("Jordan Reyes"); // the person the firm account belongs to (signup "Your name"); demo default for the login persona. No firm-wide accounts yet, so every account is one person.
   // Reporters a free firm may fully view/message: the ones who invited or are connected to them.
   const [unlockedReporters, setUnlockedReporters] = useState(["900004", "900003", "900005"]);
   // Reporters a free firm reached by an EXACT name/license search - "I already know who I want" is
@@ -193,7 +194,7 @@ function StoreProvider({ children }) {
   const [justJoined, setJustJoined] = useState(false);  // set on claim/signup finish so the dashboard greets first-timers with "Welcome" not "Welcome back"
 
   const store = {
-    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, invitedReporters, firmPlan, reporterPlan, firmName, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, myProfile, saveMyProfile: (patch) => setMyProfile((p) => ({ ...p, ...patch })), pendingSave, pendingMessage, justJoined,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, invitedReporters, firmPlan, reporterPlan, firmName, firmContact, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, myProfile, saveMyProfile: (patch) => setMyProfile((p) => ({ ...p, ...patch })), pendingSave, pendingMessage, justJoined,
     // Record that this firm invited an unclaimed reporter (idempotent).
     noteInvite: (id) => setInvitedReporters((xs) => xs.includes(id) ? xs : [...xs, id]),
     // A free firm searched a reporter's exact name or license number - unlock just that reporter.
@@ -205,7 +206,7 @@ function StoreProvider({ children }) {
     enterAsReporter: () => setRole("reporter"),
     markJustJoined: () => setJustJoined(true),
     clearJustJoined: () => setJustJoined(false),
-    enterAsFirm: (name) => { setRole("firm"); if (name && name.trim()) setFirmName(name.trim()); },
+    enterAsFirm: (name, contact) => { setRole("firm"); if (name && name.trim()) setFirmName(name.trim()); if (contact && contact.trim()) setFirmContact(contact.trim()); },
     logout: () => setRole(null),
     upgradeFirm: () => setFirmPlan("pro"),
     downgradeFirm: () => setFirmPlan("free"),

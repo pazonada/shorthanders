@@ -31,8 +31,8 @@ function useRouteTab(base, tabIds, defaultTab) {
 // ═══ Reporter dashboard ════════════════════════════════════════════
 function ReporterDashboard() {
   const store = useStore();
-  // Greet a brand-new reporter with "Welcome"; returning reporters with "Nice to see you". Capture the
-  // flag once on mount so the title is stable, then clear it so later visits read as returns.
+  // `justJoined`, captured once on mount then cleared, marks a brand-new signup - it drives the
+  // one-time welcome modal below. The title itself just greets "Hello, {first name}" every visit.
   const [firstVisit] = useState(store.justJoined);
   const [showWelcome, setShowWelcome] = useState(firstVisit);   // first-run orientation modal (once, post-signup)
   useEffect(() => { if (store.justJoined) store.clearJustJoined(); }, []);
@@ -64,7 +64,7 @@ function ReporterDashboard() {
   ];
 
   return (
-    <DashLayout title={(firstVisit ? "Welcome, " : "Nice to see you, ") + me.name.split(" ")[0]} subtitle={"CSR #" + me.csrNumber + " · " + (isOutOfState(me) ? "Out of state" : me.city + ", CA")} tabs={tabs} active={tab} onTab={setTab}
+    <DashLayout title={"Hello, " + me.name.split(" ")[0]} subtitle={"CSR #" + me.csrNumber + " · " + (isOutOfState(me) ? "Out of state" : me.city + ", CA")} tabs={tabs} active={tab} onTab={setTab}
       headerRight={
         <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
           <button className="btn btn-secondary" onClick={() => setTab("profile")}>Edit profile</button>
