@@ -5384,7 +5384,6 @@ function TemplatePicker({ prefill, onCancel, onPick }) {
   const custom = store.customTemplates || [];
   return (
     <div>
-      <button onClick={onCancel} style={backLink}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
       <h2 style={{ fontSize: 26, marginBottom: 6 }}>{prefill ? "New invoice for " + prefill.firmName : "Start a new invoice"}</h2>
       {prefill
         ? <p style={{ color: "var(--muted)", marginBottom: 22, lineHeight: 1.55, maxWidth: 680 }}>From their request{prefill.matter ? " · " + prefill.matter : ""}. Pick a structure below – the firm and matter come pre-filled. Or choose <strong style={{ color: "var(--ink-soft)", fontWeight: 600 }}>Blank invoice</strong> to just bill the requested amount.</p>
@@ -5457,6 +5456,15 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
   const snapshot = JSON.stringify({ f, lines });
   if (initialSnapshot.current === null) initialSnapshot.current = snapshot;
   useUnsavedGuard(snapshot !== initialSnapshot.current);
+  // Toggling Preview keeps the same route, so the global scroll-to-top-on-navigation never fires and
+  // you'd stay wherever you were (typically scrolled to the Preview control at the bottom of the form).
+  // Reset scroll on each toggle: once immediately, then again next frame so it wins over the browser's
+  // scroll clamp when the new view is shorter (same reason the ClaimFlow / FirmSignup step change defers
+  // a frame). The immediate pass also covers backgrounded tabs, where rAF is paused.
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "instant" }));
+  }, [preview]);
 
   const setLine = (i, k, v) => setLines((xs) => xs.map((l, j) => j === i ? { ...l, [k]: v } : l));
   const addLine = () => setLines((xs) => [...xs, { desc: "", kind: "flat", qty: "1", rate: "" }]);
@@ -5500,7 +5508,6 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
 
   if (preview) return (
     <div style={{ maxWidth: 680 }}>
-      <button onClick={() => setPreview(false)} style={backLink}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to edit</button>
       <div className="banner banner-info" style={{ marginBottom: 16 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div>This is how {f.client || "the firm"} will see your invoice.</div></div>
       <InvoicePreviewCard me={me} f={f} lines={lines} total={total} />
       <div style={{ display: "flex", gap: 12, marginTop: 18, flexWrap: "wrap", justifyContent: "flex-end" }}>
@@ -5513,7 +5520,6 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
 
   return (
     <div style={{ maxWidth: 760 }}>
-      <button onClick={onCancel} style={backLink}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to invoices</button>
       <div className="ds-card" style={{ display: "flex", flexDirection: "column", gap: 18 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
           <h2 style={{ fontSize: 26 }}>{editInv ? "Edit invoice" : "New invoice"}</h2>
@@ -5714,8 +5720,6 @@ function InvoiceModal({ inv, viewer, onClose }) {
     </div>
   );
 }
-
-const backLink = { background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 18 };
 // ═══ Messaging (text + pass-through secure links; no file storage) ══
 // Normalize + lightly validate a pasted link: add https:// if the scheme is missing, and require a
 // host with a dot so random text ("hello") can't pass as a URL. Returns the clean URL, or null.
