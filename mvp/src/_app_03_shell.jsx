@@ -85,12 +85,9 @@ function WelcomeModal({ role, name, onClose }) {
     { icon: "mail", title: "Invite the firms you already work with", body: "They join free and save you as a favorite, so they reach you first next time." },
     { icon: "invoice", title: "Invoice and get paid", body: "Send an invoice in a couple of clicks; firms pay by card or ACH, no agency cut." },
   ];
-  const primary = isFirm
-    ? { label: "Browse the directory", onClick: () => { onClose(); navigate("/directory"); } }
-    : { label: "Explore my dashboard", onClick: onClose };
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="ds-card" style={{ maxWidth: 500, width: "92%" }} onClick={(e) => e.stopPropagation()}>
+      <div className="ds-card" style={{ maxWidth: 540, width: "92%" }} onClick={(e) => e.stopPropagation()}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
           <div>
             <span className="pill pill-tag" style={{ marginBottom: 12, display: "inline-flex" }}>{isFirm ? "Your firm account is ready" : "Your profile is claimed"}</span>
@@ -110,7 +107,17 @@ function WelcomeModal({ role, name, onClose }) {
             </div>
           ))}
         </div>
-        <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={primary.onClick}>{primary.label}</button>
+        {isFirm ? (
+          // Firm's #1 next action (the directory) lives elsewhere, so offer both paths rather than
+          // implying the blurred page behind is the directory: dismiss-here + go-there.
+          <div style={{ display: "flex", gap: 12, justifyContent: "flex-end", flexWrap: "wrap" }}>
+            <button className="btn btn-secondary" onClick={onClose}>Go to my dashboard</button>
+            <button className="btn btn-primary" onClick={() => { onClose(); navigate("/directory"); }}><Icon name="search" size={16} /> Browse the directory</button>
+          </div>
+        ) : (
+          // Reporter's next actions all live on the dashboard, so a single dismiss keeps them home.
+          <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={onClose}>Explore my dashboard</button>
+        )}
       </div>
     </div>
   );

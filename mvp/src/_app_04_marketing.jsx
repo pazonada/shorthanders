@@ -48,7 +48,7 @@ function LandingPage() {
           <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))" }}>
             <Step n="1" title="Search or get found" body="Firms search the directory. Reporters claim their profile and add more details so they show up in search results." art={<StepArt kind="search" />} />
             <Step n="2" title="Message directly" body="Reach out through Dewey Sholes. Discuss scope, dates, and rates yourselves." art={<StepArt kind="message" />} />
-            <Step n="3" title="Do the work" body="You agree terms and handle the hearing, deposition, or transcript-from-audio directly." art={<StepArt kind="work" />} />
+            <Step n="3" title="Do the work" body="You agree on terms and handle the hearing, deposition, or transcript-from-audio directly." art={<StepArt kind="work" />} />
             <Step n="4" title="Invoice & get paid" body="The reporter sends an invoice; the firm pays by card or ACH. Status tracked automatically." art={<StepArt kind="invoice" />} />
           </div>
         </div>
@@ -160,7 +160,7 @@ function ForFirmsPage() {
   return (
     <Page roomy>
       <MarketingHero eyebrow="For law firms" title="Stop calling agencies. Find the reporter yourself."
-        sub="Every licensed CSR in California, for depositions, trials, and hearings. Search by the things that actually matter – county, area of law, language, and whether they take rush work – then message them directly and agree terms without a middleman marking up the rate." />
+        sub="Every licensed CSR in California, for depositions, trials, and hearings. Search by the things that actually matter – county, area of law, language, and whether they take rush work – then message them directly and agree on terms without a middleman marking up the rate." />
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 8 }}>
         <FeatureBlock icon="search" title="Detailed search" body="Filter every licensed California reporter by county, city, language, years of experience, area of law, proceedings, services, and rush availability." />
         <FeatureBlock icon="badge" title="Verified profiles" body="Claimed reporters verify their identity through Stripe. You see who you're hiring before you reach out." />
