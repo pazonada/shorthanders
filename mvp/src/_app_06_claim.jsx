@@ -199,6 +199,12 @@ function ClaimFlow({ reporterId }) {
   React.useEffect(() => { requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })); }, [step]);
   const rOOS = r && isOutOfState(r);
   const [form, setForm] = useState({ bio: "", yearsExp: "", city: (r && !rOOS && r.city) || "", county: (r && !rOOS && r.county) || "", workMode: rOOS ? "remote" : "", baseState: "California", coverage: (r && !rOOS && r.county) || "", rates: {}, publishRates: false, rush: false, notary: false, proceedings: [], services: [], specialties: [], certifications: [], languages: [], otherStates: (r && r.otherStates) || [] });
+  // Guard the profile-build entries against a silent loss on Cancel / browser Back. Called before the
+  // early returns below so the hook order stays stable. finish() navigates away, so no re-baseline needed.
+  const initialSnapshot = useRef(null);
+  const snapshot = JSON.stringify(form);
+  if (initialSnapshot.current === null) initialSnapshot.current = snapshot;
+  useUnsavedGuard(snapshot !== initialSnapshot.current);
 
   if (!r) return (
     <Page><div className="ds-panel" style={{ textAlign: "center", padding: 60, maxWidth: 520, margin: "0 auto" }}>
@@ -264,9 +270,9 @@ function ClaimFlow({ reporterId }) {
                 </div>
               </div>
               <p style={{ color: "var(--ink-soft)", fontSize: 15, lineHeight: 1.6 }}>Claiming this profile lets you control how firms see you and unlocks invoicing and payments. You'll verify your identity in a moment so firms know it's really you.</p>
-              <div style={{ display: "flex", gap: 12 }}>
-                <button className="btn btn-primary" onClick={() => setStep(1)}>Yes, this is me <Icon name="arrow" size={16} /></button>
+              <div style={{ display: "flex", gap: 12, justifyContent: "flex-end" }}>
                 <button className="btn btn-secondary" onClick={() => navigateBack("/directory")}>That's not me</button>
+                <button className="btn btn-primary" onClick={() => setStep(1)}>Yes, this is me <Icon name="arrow" size={16} /></button>
               </div>
             </div>
           )}
@@ -280,9 +286,9 @@ function ClaimFlow({ reporterId }) {
                 <div><label className="ds-label">Create a password</label><input className="ds-input" type="password" placeholder="••••••••" /></div>
                 <div><label className="ds-label">Mobile (for sign-in codes)</label><input className="ds-input" type="tel" placeholder="(555) 000-0000" /></div>
               </div>
-              <div style={{ display: "flex", gap: 12, marginTop: 4 }}>
-                <button className="btn btn-primary" onClick={() => setStep(2)}>Continue <Icon name="arrow" size={16} /></button>
+              <div style={{ display: "flex", gap: 12, marginTop: 4, justifyContent: "flex-end" }}>
                 <button className="btn btn-secondary" onClick={() => setStep(0)}>Back</button>
+                <button className="btn btn-primary" onClick={() => setStep(2)}>Continue <Icon name="arrow" size={16} /></button>
               </div>
             </div>
           )}
@@ -305,9 +311,9 @@ function ClaimFlow({ reporterId }) {
                   {stripeState === "connecting" ? "Redirecting to Stripe…" : <>Continue to Stripe <Icon name="arrow" size={16} /></>}
                 </button>
               )}
-              <div style={{ display: "flex", gap: 12 }}>
-                <button className="btn btn-primary" disabled={stripeState !== "done"} style={{ opacity: stripeState === "done" ? 1 : 0.4 }} onClick={() => setStep(3)}>Continue <Icon name="arrow" size={16} /></button>
+              <div style={{ display: "flex", gap: 12, justifyContent: "flex-end" }}>
                 <button className="btn btn-secondary" onClick={() => setStep(1)}>Back</button>
+                <button className="btn btn-primary" disabled={stripeState !== "done"} style={{ opacity: stripeState === "done" ? 1 : 0.4 }} onClick={() => setStep(3)}>Continue <Icon name="arrow" size={16} /></button>
               </div>
             </div>
           )}
@@ -409,7 +415,8 @@ function ClaimFlow({ reporterId }) {
                 )}
               </div>
 
-              <div style={{ marginTop: 4 }}>
+              <div style={{ marginTop: 4, display: "flex", gap: 12, justifyContent: "flex-end" }}>
+                <button className="btn btn-secondary" onClick={() => setStep(2)}>Back</button>
                 <button className="btn btn-primary" onClick={finish}><Icon name="check" size={16} /> Save to my profile</button>
               </div>
             </div>
@@ -433,6 +440,12 @@ function FirmSignup() {
   React.useEffect(() => { requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })); }, [step]);
   const [form, setForm] = useState({ firm: "", name: "", role: "", location: "", size: "", practices: [], teamInterest: "", email: "", pw: "" });
   const [legal, setLegal] = useState(null); // null | "terms" | "privacy" – shown in a modal so opening it doesn't discard the form
+  // Guard the entered account details against a silent loss on Cancel / browser Back. finish() navigates
+  // away, so no re-baseline needed.
+  const initialSnapshot = useRef(null);
+  const snapshot = JSON.stringify(form);
+  if (initialSnapshot.current === null) initialSnapshot.current = snapshot;
+  useUnsavedGuard(snapshot !== initialSnapshot.current);
   const steps = ["About your firm", "Create your login"];
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
   const togglePractice = (p) => setForm((f) => ({ ...f, practices: f.practices.includes(p) ? f.practices.filter((x) => x !== p) : [...f.practices, p] }));
@@ -449,7 +462,7 @@ function FirmSignup() {
     <Page>
       {legal && <LegalModal docKey={legal} onClose={() => setLegal(null)} />}
       <div style={{ maxWidth: 640, margin: "0 auto" }}>
-        <button onClick={() => navigate("/for-firms")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 22 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Cancel</button>
+        <button onClick={() => navigateBack("/for-firms")} style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, marginBottom: 22 }}><Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Cancel</button>
         <div style={{ textAlign: "center" }}>
           <span className="pill pill-tag" style={{ marginBottom: 14, display: "inline-flex" }}>Free for firms</span>
           <h1 style={{ fontSize: "clamp(34px, 4.4vw, 54px)" }}>Create your firm account</h1>
@@ -490,7 +503,7 @@ function FirmSignup() {
                 <p style={{ fontSize: 12.5, color: "var(--ink-soft)", lineHeight: 1.5, margin: "6px 0 10px" }}>Today, membership is $49/month per user. A firm-wide plan – one price for your whole office – doesn't exist yet; your answer just helps us decide whether to build it.</p>
                 <select className="ds-input" value={form.teamInterest} onChange={set("teamInterest")}><option value="">Select…</option><option>Yes – one plan for our whole office</option><option>Maybe later</option><option>No – just me for now</option></select>
               </div>
-              <div style={{ marginTop: 4 }}>
+              <div style={{ marginTop: 4, display: "flex", justifyContent: "flex-end" }}>
                 <button className="btn btn-primary" disabled={!step0Valid} style={{ opacity: step0Valid ? 1 : 0.4 }} onClick={() => setStep(1)}>Continue <Icon name="arrow" size={16} /></button>
               </div>
             </div>
@@ -501,9 +514,9 @@ function FirmSignup() {
               <div><label className="ds-label">Work email *</label><input className="ds-input" type="email" placeholder="you@firm.com" value={form.email} onChange={set("email")} /></div>
               <div><label className="ds-label">Create a password *</label><input className="ds-input" type="password" placeholder="••••••••" value={form.pw} onChange={set("pw")} /></div>
               <p style={{ fontSize: 12.5, color: "var(--dim)", lineHeight: 1.5 }}>By creating an account you agree to the <button onClick={() => setLegal("terms")} style={claimLinkBtn}>Terms</button> and <button onClick={() => setLegal("privacy")} style={claimLinkBtn}>Privacy</button>.</p>
-              <div style={{ display: "flex", gap: 12, marginTop: 4 }}>
-                <button className="btn btn-primary" disabled={!step1Valid} style={{ opacity: step1Valid ? 1 : 0.4 }} onClick={finish}><Icon name="check" size={16} /> Create account</button>
+              <div style={{ display: "flex", gap: 12, marginTop: 4, justifyContent: "flex-end" }}>
                 <button className="btn btn-secondary" onClick={() => setStep(0)}>Back</button>
+                <button className="btn btn-primary" disabled={!step1Valid} style={{ opacity: step1Valid ? 1 : 0.4 }} onClick={finish}><Icon name="check" size={16} /> Create account</button>
               </div>
             </div>
           )}

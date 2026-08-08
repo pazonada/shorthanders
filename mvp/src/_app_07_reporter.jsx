@@ -221,6 +221,14 @@ function ReporterProfileEditor({ me }) {
   const [expUnit, setExpUnit] = useState((me._rateDraft && me._rateDraft.expUnit) || "percent");
   const [customRates, setCustomRates] = useState(() => (me._rateDraft && me._rateDraft.customRates) || []);
 
+  // Dirty = anything changed from what we opened with -> drives the unsaved-changes guard. Unlike the
+  // invoice builder (which navigates away on save), this editor stays mounted, so Save re-baselines the
+  // snapshot to disarm the guard.
+  const initialSnapshot = useRef(null);
+  const snapshot = JSON.stringify({ photo, bio, years, proceedings, services, areas, languages, certs, coverage, otherStates, notary, rush, accepting, showRates, rates, expUnit, customRates });
+  if (initialSnapshot.current === null) initialSnapshot.current = snapshot;
+  useUnsavedGuard(snapshot !== initialSnapshot.current);
+
   const toggleIn = (setter) => (v) => setter((cur) => cur.includes(v) ? cur.filter((x) => x !== v) : cur.concat([v]));
   const setRate = (key) => (val) => setRates((r) => Object.assign({}, r, { [key]: val }));
   const updateCustom = (i, k, v) => setCustomRates((cur) => cur.map((c, j) => j === i ? Object.assign({}, c, { [k]: v }) : c));
@@ -264,6 +272,7 @@ function ReporterProfileEditor({ me }) {
       publishRates: showRates, rateLines, _rateDraft: { rates, expUnit, customRates },
     });
     store.setMyAccepting(accepting);
+    initialSnapshot.current = snapshot;   // re-baseline: saved state is the new clean state, disarm the guard
     setToast("Profile saved");
   };
 
@@ -336,9 +345,12 @@ function ReporterProfileEditor({ me }) {
         ) : null}
       </div>
 
-      <div style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
-        <button className="btn btn-primary" onClick={saveProfile}><Icon name="check" size={16} /> Save changes</button>
+      <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
         <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--brand)", cursor: "pointer", fontSize: 14, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 6, padding: 0 }}><Icon name="eye" size={15} /> View public profile</button>
+        <div style={{ marginLeft: "auto", display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+          <button className="btn btn-secondary" onClick={() => navigateBack("/reporter")}>Cancel</button>
+          <button className="btn btn-primary" onClick={saveProfile}><Icon name="check" size={16} /> Save changes</button>
+        </div>
       </div>
       <Toast msg={toast} onClose={() => setToast("")} />
     </div>
