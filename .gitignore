@@ -4,3 +4,6 @@ _private/
 
 # OS cruft
 .DS_Store
+
+# transient QA review target
+qa/_review_target.diff
