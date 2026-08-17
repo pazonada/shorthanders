@@ -89,16 +89,23 @@ function Icon({ name, size = 18, style }) {
 }
 
 // ─── Brand logo ────────────────────────────────────────────────────
-// Canonical brand lockup: navy icon + SHORTHANDERS in brand blue, Courier New.
-// light=true for dark backgrounds.
-function Logo({ onClick, light }) {
-  const word = light ? "#818CF8" : "#4361EE";
+// Canonical brand wordmark: SHORTHANDERS in Courier, with the spiral icon
+// set inside the first "O". light=true recolors it for dark backgrounds.
+// height sizes the mark (nav and footer pass their own).
+function Logo({ onClick, light, height = 44 }) {
+  const word  = light ? "#FFFFFF" : "#4361EE"; // letters
+  const disc  = light ? "#818CF8" : "#0F172A"; // the O-disc
+  const swirl = light ? "#0F172A" : "#FFFFFF"; // spiral inside the O
   return (
     <button onClick={onClick} aria-label="Shorthanders home" style={{ display: "flex", alignItems: "center", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-      <svg height="34" viewBox="0 0 252 60" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
-        <rect x="0" y="0" width="60" height="60" rx="13" fill="#0F172A" />
-        <path d="M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50" fill="none" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
-        <text x="76" y="39" fontFamily="'Courier New',Courier,monospace" fontSize="17" fontWeight="700" fill={word} letterSpacing="2">SHORTHANDERS</text>
+      <svg height={height} viewBox="0 0 340 60" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
+        {/* Full wordmark; the real O sits under the disc that replaces it. */}
+        <text x="0" y="47" fontFamily="'Courier New',Courier,monospace" fontSize="40" fontWeight="700" fill={word} letterSpacing="3">SHORTHANDERS</text>
+        {/* O-disc + spiral, centered on the first O (char index 2). */}
+        <circle cx="66" cy="34" r="18" fill={disc} />
+        <g transform="translate(51,19) scale(0.5)">
+          <path d="M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50" fill="none" stroke={swirl} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+        </g>
       </svg>
     </button>
   );
