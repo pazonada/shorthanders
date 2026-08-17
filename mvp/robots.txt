@@ -8,4 +8,4 @@ Disallow: /marketing/
 Disallow: /csr_profiles.js
 Disallow: /src/
 
-Sitemap: https://dsmvp.vercel.app/sitemap.xml
+Sitemap: https://shorthanders.vercel.app/sitemap.xml

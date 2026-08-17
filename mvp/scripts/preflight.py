@@ -21,7 +21,7 @@ MVP = os.path.dirname(HERE)
 
 # The public origin the MVP will be served from. Update at launch if the
 # domain changes; canonical / og:url are checked against it.
-SITE_URL = "https://dsmvp.vercel.app"
+SITE_URL = "https://shorthanders.vercel.app"
 
 results = []
 
