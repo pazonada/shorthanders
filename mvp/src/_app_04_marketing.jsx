@@ -47,7 +47,7 @@ function LandingPage() {
           </div>
           <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))" }}>
             <Step n="1" title="Search or get found" body="Firms search the directory. Reporters claim their profile and add more details so they show up in search results." art={<StepArt kind="search" />} />
-            <Step n="2" title="Message directly" body="Reach out through Dewey Sholes. Discuss scope, dates, and rates yourselves." art={<StepArt kind="message" />} />
+            <Step n="2" title="Message directly" body="Reach out through Shorthanders. Discuss scope, dates, and rates yourselves." art={<StepArt kind="message" />} />
             <Step n="3" title="Do the work" body="You agree on terms and handle the hearing, deposition, or transcript-from-audio directly." art={<StepArt kind="work" />} />
             <Step n="4" title="Invoice & get paid" body="The reporter sends an invoice; the firm pays by card or ACH. Status tracked automatically." art={<StepArt kind="invoice" />} />
           </div>
@@ -76,7 +76,7 @@ function LandingPage() {
         <Icon name="shield" size={30} style={{ margin: "0 auto", color: "var(--brand)" }} />
         <h2 style={{ fontSize: 30, marginTop: 14 }}>A directory and a payment tool</h2>
         <p style={{ color: "var(--ink-soft)", marginTop: 14, fontSize: 16, lineHeight: 1.7 }}>
-          Dewey Sholes helps a firm find a reporter and helps a reporter get paid. We don't employ reporters, guarantee work, negotiate rates, or hold your files. Your service agreement is strictly between the firm and the reporter.
+          Shorthanders helps a firm find a reporter and helps a reporter get paid. We don't employ reporters, guarantee work, negotiate rates, or hold your files. Your service agreement is strictly between the firm and the reporter.
         </p>
         <button className="btn btn-secondary" style={{ marginTop: 22 }} onClick={() => navigate("/terms")}>Read how this works</button>
       </section>
@@ -145,12 +145,12 @@ function MoneyComparison() {
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter earns $1,404 (61%)</span><span style={{ color: "var(--ink)", fontWeight: 600 }}>Agency takes $908 (39%)</span></div>
         </div>
         <div>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8, flexWrap: "wrap", gap: 4 }}><span style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Through Dewey Sholes</span><span style={{ color: "var(--muted)" }}>Firm pays the reporter's rate</span></div>
-          <Bar segments={[{ w: "95%", bg: "var(--ink)", label: "Reporter" }, { w: "5%", bg: "var(--brand)", label: "Dewey Sholes" }]} />
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter keeps their rate</span><span style={{ color: "var(--brand-dark)", fontWeight: 600 }}>Dewey Sholes takes 2% (Pro) or 5% (Free)</span></div>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8, flexWrap: "wrap", gap: 4 }}><span style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Through Shorthanders</span><span style={{ color: "var(--muted)" }}>Firm pays the reporter's rate</span></div>
+          <Bar segments={[{ w: "95%", bg: "var(--ink)", label: "Reporter" }, { w: "5%", bg: "var(--brand)", label: "Shorthanders" }]} />
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter keeps their rate</span><span style={{ color: "var(--brand-dark)", fontWeight: 600 }}>Shorthanders takes 2% (Pro) or 5% (Free)</span></div>
         </div>
       </div>
-      <p style={{ textAlign: "center", color: "var(--dim)", fontSize: 12.5, marginTop: 26, lineHeight: 1.5 }}>Agency figures from a real anonymized California invoice (a 319-page arbitration transcript). On Dewey Sholes the reporter sets their own rate, and our small fee comes from their side – the firm never pays a platform fee. Illustrative.</p>
+      <p style={{ textAlign: "center", color: "var(--dim)", fontSize: 12.5, marginTop: 26, lineHeight: 1.5 }}>Agency figures from a real anonymized California invoice (a 319-page arbitration transcript). On Shorthanders the reporter sets their own rate, and our small fee comes from their side – the firm never pays a platform fee. Illustrative.</p>
     </section>
   );
 }

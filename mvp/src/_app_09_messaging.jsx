@@ -93,7 +93,7 @@ function MessagesPanel({ embedded }) {
 
           <div ref={threadRef} style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "18px 20px", display: "flex", flexDirection: "column", gap: 12, background: "var(--bg-soft)" }}>
             {store.role === "firm" && withRep && notAcceptingJobs(withRep) && <div className="banner banner-warn" style={{ fontSize: 12.5, padding: "10px 14px" }}><Icon name="info" size={15} style={{ flexShrink: 0 }} /><div><strong>{active.with.split(" ")[0]} isn't accepting new jobs right now.</strong> They may still help with a past transcript or an existing matter, but likely won't take on new work.</div></div>}
-            <div style={{ display: "flex", gap: 6, alignItems: "flex-start", justifyContent: "center", maxWidth: 620, margin: "0 auto", padding: "2px 16px 8px", fontSize: 11.5, lineHeight: 1.55, color: "var(--dim)", textAlign: "center" }}><Icon name="shield" size={13} style={{ flexShrink: 0, marginTop: 2 }} /><span>Dewey Sholes carries your messages and links but never stores files – share deliverables through your own secure link. Terms are between you and {active.with}.</span></div>
+            <div style={{ display: "flex", gap: 6, alignItems: "flex-start", justifyContent: "center", maxWidth: 620, margin: "0 auto", padding: "2px 16px 8px", fontSize: 11.5, lineHeight: 1.55, color: "var(--dim)", textAlign: "center" }}><Icon name="shield" size={13} style={{ flexShrink: 0, marginTop: 2 }} /><span>Shorthanders carries your messages and links but never stores files – share deliverables through your own secure link. Terms are between you and {active.with}.</span></div>
             {active.msgs.map((m, i) => (
               <div key={i} className={"msg-bubble " + (m.from === "me" ? "msg-me" : "msg-them")}>
                 {m.t && <div>{m.t}</div>}
@@ -118,7 +118,7 @@ function MessagesPanel({ embedded }) {
                 {linkUrl.trim() ? (
                   <div style={{ display: "flex", gap: 7, alignItems: "flex-start", marginTop: 8, fontSize: 12, color: "var(--ink-soft)", background: "#F7F8C6", border: "1px solid #DCE224", borderRadius: 9, padding: "8px 11px" }}>
                     <Icon name="shield" size={14} style={{ flexShrink: 0, marginTop: 1 }} />
-                    <span>Only share links you control access to (private, access-controlled, or expiring). Dewey Sholes doesn't store, secure, or check your files or links. You're responsible for how sensitive material is shared.</span>
+                    <span>Only share links you control access to (private, access-controlled, or expiring). Shorthanders doesn't store, secure, or check your files or links. You're responsible for how sensitive material is shared.</span>
                   </div>
                 ) : null}
               </div>
@@ -135,7 +135,7 @@ function MessagesPanel({ embedded }) {
               <textarea className="ds-input" rows={1} style={{ flex: 1, resize: "none", padding: "11px 14px" }} placeholder={"Message " + active.with + "…"} value={draft} onChange={(e) => setDraft(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }} />
               <button className="btn btn-primary" style={{ padding: "12px 20px" }} onClick={send}>Send</button>
             </div>
-            <div style={{ fontSize: 11, color: "var(--dim)", marginTop: 8, textAlign: "center" }}>Sending as {meLabel} · Dewey Sholes doesn't participate in or store your negotiation.</div>
+            <div style={{ fontSize: 11, color: "var(--dim)", marginTop: 8, textAlign: "center" }}>Sending as {meLabel} · Shorthanders doesn't participate in or store your negotiation.</div>
           </div>
         </div>
       ) : (
@@ -145,7 +145,7 @@ function MessagesPanel({ embedded }) {
   );
 }
 
-// A firm asks a reporter to bill them through Dewey Sholes, so the payment lands on-platform
+// A firm asks a reporter to bill them through Shorthanders, so the payment lands on-platform
 // instead of a check off-site. The reporter gets a one-tap prompt to issue the invoice.
 function RequestInvoiceModal({ reporterName, onSend, onClose }) {
   const [matter, setMatter] = useState("");
@@ -158,7 +158,7 @@ function RequestInvoiceModal({ reporterName, onSend, onClose }) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
           <div>
             <h3 style={{ fontSize: 22 }}>Request an invoice</h3>
-            <p style={{ color: "var(--muted)", fontSize: 13.5, marginTop: 4, lineHeight: 1.5 }}>Ask {first} to bill you through Dewey Sholes so you can pay by card or ACH. They get a one-tap prompt to send it.</p>
+            <p style={{ color: "var(--muted)", fontSize: 13.5, marginTop: 4, lineHeight: 1.5 }}>Ask {first} to bill you through Shorthanders so you can pay by card or ACH. They get a one-tap prompt to send it.</p>
           </div>
           <button onClick={onClose} title="Close" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", padding: 4, flexShrink: 0 }}><Icon name="x" size={20} /></button>
         </div>
@@ -182,7 +182,7 @@ function MessagingPage() {
   return (
     <Page wide>
       <h1 style={{ fontSize: "clamp(32px, 4vw, 46px)", marginBottom: 6 }}>Messages</h1>
-      <p style={{ color: "var(--muted)", marginBottom: 24 }}>Talk directly with {store.role === "reporter" ? "law firms" : "reporters"}. Dewey Sholes is the channel – the working relationship is yours.</p>
+      <p style={{ color: "var(--muted)", marginBottom: 24 }}>Talk directly with {store.role === "reporter" ? "law firms" : "reporters"}. Shorthanders is the channel – the working relationship is yours.</p>
       <MessagesPanel />
     </Page>
   );

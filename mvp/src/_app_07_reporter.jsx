@@ -424,7 +424,7 @@ function InviteFirmModal({ me, onClose }) {
   const link = "https://dsmvp.vercel.app/#/invite/" + me.id;
   const [firm, setFirm] = useState("");
   const [email, setEmail] = useState("");
-  const [msg, setMsg] = useState("Hi there,\n\nI'm now listed on Dewey Sholes, where you can hire me, message me, and pay my invoices in one place. It's free for your firm to join, and you can pay me by card or ACH right from your account.\n\nCreate your free account and save my profile here:\n" + link + "\n\nThanks,\n" + first);
+  const [msg, setMsg] = useState("Hi there,\n\nI'm now listed on Shorthanders, where you can hire me, message me, and pay my invoices in one place. It's free for your firm to join, and you can pay me by card or ACH right from your account.\n\nCreate your free account and save my profile here:\n" + link + "\n\nThanks,\n" + first);
   const [sent, setSent] = useState(false);
   const [copied, setCopied] = useState("");
   const emailValid = /.+@.+\..+/.test(email);
@@ -464,7 +464,7 @@ function InviteFirmModal({ me, onClose }) {
             </div>
 
             <div style={{ marginTop: 20 }}>
-              <div style={subhead}>Or send through Dewey Sholes</div>
+              <div style={subhead}>Or send through Shorthanders</div>
               <p style={{ color: "var(--muted)", fontSize: 12.5, margin: "5px 0 12px", lineHeight: 1.5 }}>We'll email the firm your invite – add their email and hit Send.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>

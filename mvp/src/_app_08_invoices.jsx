@@ -10,7 +10,7 @@ function InvStatus({ status, viewer }) {
 }
 
 // Regime-aware starter templates (see mvp/docs/csr_profile_field_taxonomy.md).
-// Line-item STRUCTURE only – no prefilled rates. Dewey Sholes doesn't set rates;
+// Line-item STRUCTURE only – no prefilled rates. Shorthanders doesn't set rates;
 // reporters fill in their own.
 // `rateKey` maps a line to a field in the reporter's saved `rates` (RATE_FIELDS in _app_02_data),
 // so the builder can pre-fill the Rate cell from their own profile. Only clean per-unit-dollar
@@ -287,7 +287,7 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
         </div>
         {prefill && <div className="ds-note" style={{ marginBottom: 0 }}><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span>{prefill.firmName} asked you to bill them. We filled in what they sent – edit anything, add mileage or other fees, then send.</span></div>}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-          <div><label className="ds-label">Client / firm *</label><input className="ds-input" placeholder="Morgan & Reyes LLP" value={f.client} onChange={set("client")} /><div style={{ fontSize: 12, color: "var(--dim)", marginTop: 5, lineHeight: 1.45 }}>New to Dewey Sholes? They get a free account to view and pay, and you're saved to their firm.</div></div>
+          <div><label className="ds-label">Client / firm *</label><input className="ds-input" placeholder="Morgan & Reyes LLP" value={f.client} onChange={set("client")} /><div style={{ fontSize: 12, color: "var(--dim)", marginTop: 5, lineHeight: 1.45 }}>New to Shorthanders? They get a free account to view and pay, and you're saved to their firm.</div></div>
           <div><label className="ds-label">Matter reference</label><input className="ds-input" placeholder="Ramos v. Delta Freight (24CV01188)" value={f.matter} onChange={set("matter")} /></div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
@@ -395,13 +395,13 @@ function InvoiceDocument({ reporterName, reporterSub, invoiceId, client, matter,
         <div style={{ padding: "16px 28px 22px" }}>
           <div className="banner banner-ok" style={{ marginBottom: 0 }}>
             <Icon name="check" size={18} style={{ color: "var(--brand-dark)", flexShrink: 0 }} />
-            <div><strong style={{ color: "var(--ink)", fontWeight: 600 }}>Paid in full.</strong>{method ? " By " + method : ""}{paidAt ? " on " + paidAt : ""} · via Stripe, powered by Dewey Sholes.</div>
+            <div><strong style={{ color: "var(--ink)", fontWeight: 600 }}>Paid in full.</strong>{method ? " By " + method : ""}{paidAt ? " on " + paidAt : ""} · via Stripe, powered by Shorthanders.</div>
           </div>
         </div>
       ) : showPayBar ? (
         <div style={{ padding: "18px 28px 24px" }}>
           <div className="btn btn-primary" style={{ width: "100%", justifyContent: "center", cursor: "default", pointerEvents: "none" }}><Icon name="lock" size={15} /> Pay by card or ACH</div>
-          <div style={{ fontSize: 11.5, color: "var(--dim)", textAlign: "center", marginTop: 10 }}>Secure payment via Stripe · powered by Dewey Sholes</div>
+          <div style={{ fontSize: 11.5, color: "var(--dim)", textAlign: "center", marginTop: 10 }}>Secure payment via Stripe · powered by Shorthanders</div>
         </div>
       ) : null}
     </div>
@@ -457,7 +457,7 @@ function InvoiceModal({ inv, viewer, onClose }) {
           <div className="no-print" style={{ marginTop: 16 }}>
             {viewer === "reporter" && !paid ? (
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                <div className="banner banner-ok"><Icon name="mail" size={18} style={{ flexShrink: 0 }} /><div>Sent to {inv.client}. They can pay by card or ACH from the link below. If new to Dewey Sholes, the email invites them to create a free account to view and pay, which saves you to their firm.</div></div>
+                <div className="banner banner-ok"><Icon name="mail" size={18} style={{ flexShrink: 0 }} /><div>Sent to {inv.client}. They can pay by card or ACH from the link below. If new to Shorthanders, the email invites them to create a free account to view and pay, which saves you to their firm.</div></div>
                 <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
                   <div className="ds-panel" style={{ flex: 1, minWidth: 220, padding: "12px 14px", fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: "var(--ink-soft)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{payLink}</div>
                   <button className="btn btn-secondary" onClick={copy}><Icon name="link" size={16} /> {copied ? "Copied!" : "Copy link"}</button>

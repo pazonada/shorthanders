@@ -261,7 +261,7 @@ function ClaimFlow({ reporterId }) {
           {step === 2 && (
             <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
               <h1 style={{ fontSize: 30 }}>Verify your identity</h1>
-              <p style={{ color: "var(--ink-soft)", fontSize: 15, lineHeight: 1.6 }}>We use <strong>Stripe Connect</strong> to confirm you're a licensed reporter and to set up payouts. Stripe handles identity, tax, and banking – Dewey Sholes never sees your bank details or ID documents.</p>
+              <p style={{ color: "var(--ink-soft)", fontSize: 15, lineHeight: 1.6 }}>We use <strong>Stripe Connect</strong> to confirm you're a licensed reporter and to set up payouts. Stripe handles identity, tax, and banking – Shorthanders never sees your bank details or ID documents.</p>
               <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <StripeCheck label="Confirm your legal name & license" />
                 <StripeCheck label="Verify your identity (ID document)" />

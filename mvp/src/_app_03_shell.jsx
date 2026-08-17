@@ -91,7 +91,7 @@ function WelcomeModal({ role, name, onClose }) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
           <div>
             <span className="pill pill-tag" style={{ marginBottom: 12, display: "inline-flex" }}>{isFirm ? "Your firm account is ready" : "Your profile is claimed"}</span>
-            <h3 style={{ fontSize: 26 }}>Welcome to Dewey Sholes{first ? ", " + first : ""}</h3>
+            <h3 style={{ fontSize: 26 }}>Welcome to Shorthanders{first ? ", " + first : ""}</h3>
             <p style={{ color: "var(--muted)", fontSize: 14.5, marginTop: 6, lineHeight: 1.55 }}>Here's what you can do from here.</p>
           </div>
           <button onClick={onClose} title="Close" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", padding: 4, flexShrink: 0 }}><Icon name="x" size={20} /></button>
@@ -144,7 +144,7 @@ function Footer() {
           </div>
         </div>
         <div style={{ marginTop: 44, paddingTop: 24, borderTop: "1px solid rgba(255,255,255,.13)", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12, fontSize: 13, color: "rgba(255,255,255,.5)" }}>
-          <span>© 2026 Studio Crux, LLC. Dewey Sholes is a directory and payment facilitator, not a court reporting agency.</span>
+          <span>© 2026 Studio Crux, LLC. Shorthanders is a directory and payment facilitator, not a court reporting agency.</span>
           <span>Now serving California. Certified license data sourced from public CSR records.</span>
         </div>
       </div>
@@ -166,7 +166,7 @@ function Page({ children, wide, roomy }) {
 }
 
 // ─── Small shared bits ─────────────────────────────────────────────
-// Default avatar = the Dewey Sholes mark (brand-blue when claimed, grey when not).
+// Default avatar = the Shorthanders mark (brand-blue when claimed, grey when not).
 // A claimed reporter can override it with their own photo.
 function Avatar({ name, size = 52, claimed = true, photo }) {
   if (photo) return <img src={photo} alt={name} style={{ width: size, height: size, borderRadius: Math.round(size * 0.26), objectFit: "cover", flexShrink: 0, display: "block" }} />;

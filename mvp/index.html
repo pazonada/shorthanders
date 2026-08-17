@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dewey Sholes: Where law firms and CA court reporters connect</title>
-<meta property="og:title" content="Dewey Sholes: Where law firms and CA court reporters connect" />
+<title>Shorthanders: Find any California court reporter and hire them directly</title>
+<meta property="og:title" content="Shorthanders: Find any California court reporter and hire them directly" />
 <meta property="og:description" content="Every licensed California court reporter, searchable in one place. Law firms can search and message verified reporters directly, and CSRs can enhance their profile to get discovered. Optional tools are available for CSRs to invoice and get paid, with no agency in the middle." />
 <meta property="og:type" content="website" />
 <meta name="description" content="Every licensed California court reporter in one directory. Firms message reporters directly; reporters get discovered and get paid – no agency involved." />
 <!-- Update these three if the public domain changes, and update SITE_URL in scripts/preflight.py to match. -->
 <link rel="canonical" href="https://dsmvp.vercel.app/" />
 <meta property="og:url" content="https://dsmvp.vercel.app/" />
-<meta property="og:site_name" content="Dewey Sholes" />
+<meta property="og:site_name" content="Shorthanders" />
 <!-- og:image must be an absolute URL - relative paths are ignored by every scraper. -->
-<meta property="og:image" content="https://dsmvp.vercel.app/graphics/DS-share-image.png" />
+<meta property="og:image" content="https://dsmvp.vercel.app/graphics/social-share-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Dewey Sholes - the directory of certified court reporters" />
+<meta property="og:image:alt" content="Shorthanders - find any California court reporter and hire them directly" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://dsmvp.vercel.app/graphics/DS-share-image.png" />
-<meta name="twitter:title" content="Dewey Sholes: Where law firms and CA court reporters connect" />
+<meta name="twitter:image" content="https://dsmvp.vercel.app/graphics/social-share-image.png" />
+<meta name="twitter:title" content="Shorthanders: Find any California court reporter and hire them directly" />
 <meta name="twitter:description" content="Every licensed California court reporter in one directory. Firms message reporters directly; reporters get discovered and get paid – no agency involved." />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
@@ -2746,7 +2746,7 @@
 <script type="text/babel">
 const { useState, useEffect, useLayoutEffect, useRef, createContext, useContext, useMemo } = React;
 // ═══════════════════════════════════════════════════════════════════
-//  DEWEY SHOLES – Reduced-scope MVP prototype
+//  SHORTHANDERS – Reduced-scope MVP prototype
 //  Directory + profile claiming + messaging + Stripe/invoicing.
 //  No job matching, scheduling, escrow, ratings. See mvp/prd-v1.
 // ═══════════════════════════════════════════════════════════════════
@@ -2836,18 +2836,16 @@ function Icon({ name, size = 18, style }) {
 }
 
 // ─── Brand logo ────────────────────────────────────────────────────
-// Canonical brand lockup: navy icon + DEWEY (navy) / SHOLES (brand blue) in Courier New.
-// Ported from the v1 site (logos/final/bs-gregg-navy.svg). light=true for dark backgrounds.
+// Canonical brand lockup: navy icon + SHORTHANDERS in brand blue, Courier New.
+// light=true for dark backgrounds.
 function Logo({ onClick, light }) {
-  const dewey = light ? "#FFFFFF" : "#0F172A";
-  const sholes = light ? "#818CF8" : "#4361EE";
+  const word = light ? "#818CF8" : "#4361EE";
   return (
-    <button onClick={onClick} aria-label="Dewey Sholes home" style={{ display: "flex", alignItems: "center", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-      <svg height="34" viewBox="0 0 310 60" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
+    <button onClick={onClick} aria-label="Shorthanders home" style={{ display: "flex", alignItems: "center", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+      <svg height="34" viewBox="0 0 252 60" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
         <rect x="0" y="0" width="60" height="60" rx="13" fill="#0F172A" />
         <path d="M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50" fill="none" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
-        <text x="76" y="27" fontFamily="'Courier New',Courier,monospace" fontSize="18" fontWeight="700" fill={dewey} letterSpacing="4">DEWEY</text>
-        <text x="76" y="53" fontFamily="'Courier New',Courier,monospace" fontSize="18" fontWeight="700" fill={sholes} letterSpacing="4">SHOLES</text>
+        <text x="76" y="39" fontFamily="'Courier New',Courier,monospace" fontSize="17" fontWeight="700" fill={word} letterSpacing="2">SHORTHANDERS</text>
       </svg>
     </button>
   );
@@ -3154,7 +3152,7 @@ function WelcomeModal({ role, name, onClose }) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
           <div>
             <span className="pill pill-tag" style={{ marginBottom: 12, display: "inline-flex" }}>{isFirm ? "Your firm account is ready" : "Your profile is claimed"}</span>
-            <h3 style={{ fontSize: 26 }}>Welcome to Dewey Sholes{first ? ", " + first : ""}</h3>
+            <h3 style={{ fontSize: 26 }}>Welcome to Shorthanders{first ? ", " + first : ""}</h3>
             <p style={{ color: "var(--muted)", fontSize: 14.5, marginTop: 6, lineHeight: 1.55 }}>Here's what you can do from here.</p>
           </div>
           <button onClick={onClose} title="Close" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", padding: 4, flexShrink: 0 }}><Icon name="x" size={20} /></button>
@@ -3207,7 +3205,7 @@ function Footer() {
           </div>
         </div>
         <div style={{ marginTop: 44, paddingTop: 24, borderTop: "1px solid rgba(255,255,255,.13)", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12, fontSize: 13, color: "rgba(255,255,255,.5)" }}>
-          <span>© 2026 Studio Crux, LLC. Dewey Sholes is a directory and payment facilitator, not a court reporting agency.</span>
+          <span>© 2026 Studio Crux, LLC. Shorthanders is a directory and payment facilitator, not a court reporting agency.</span>
           <span>Now serving California. Certified license data sourced from public CSR records.</span>
         </div>
       </div>
@@ -3229,7 +3227,7 @@ function Page({ children, wide, roomy }) {
 }
 
 // ─── Small shared bits ─────────────────────────────────────────────
-// Default avatar = the Dewey Sholes mark (brand-blue when claimed, grey when not).
+// Default avatar = the Shorthanders mark (brand-blue when claimed, grey when not).
 // A claimed reporter can override it with their own photo.
 function Avatar({ name, size = 52, claimed = true, photo }) {
   if (photo) return <img src={photo} alt={name} style={{ width: size, height: size, borderRadius: Math.round(size * 0.26), objectFit: "cover", flexShrink: 0, display: "block" }} />;
@@ -3295,7 +3293,7 @@ function LandingPage() {
           </div>
           <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))" }}>
             <Step n="1" title="Search or get found" body="Firms search the directory. Reporters claim their profile and add more details so they show up in search results." art={<StepArt kind="search" />} />
-            <Step n="2" title="Message directly" body="Reach out through Dewey Sholes. Discuss scope, dates, and rates yourselves." art={<StepArt kind="message" />} />
+            <Step n="2" title="Message directly" body="Reach out through Shorthanders. Discuss scope, dates, and rates yourselves." art={<StepArt kind="message" />} />
             <Step n="3" title="Do the work" body="You agree on terms and handle the hearing, deposition, or transcript-from-audio directly." art={<StepArt kind="work" />} />
             <Step n="4" title="Invoice & get paid" body="The reporter sends an invoice; the firm pays by card or ACH. Status tracked automatically." art={<StepArt kind="invoice" />} />
           </div>
@@ -3324,7 +3322,7 @@ function LandingPage() {
         <Icon name="shield" size={30} style={{ margin: "0 auto", color: "var(--brand)" }} />
         <h2 style={{ fontSize: 30, marginTop: 14 }}>A directory and a payment tool</h2>
         <p style={{ color: "var(--ink-soft)", marginTop: 14, fontSize: 16, lineHeight: 1.7 }}>
-          Dewey Sholes helps a firm find a reporter and helps a reporter get paid. We don't employ reporters, guarantee work, negotiate rates, or hold your files. Your service agreement is strictly between the firm and the reporter.
+          Shorthanders helps a firm find a reporter and helps a reporter get paid. We don't employ reporters, guarantee work, negotiate rates, or hold your files. Your service agreement is strictly between the firm and the reporter.
         </p>
         <button className="btn btn-secondary" style={{ marginTop: 22 }} onClick={() => navigate("/terms")}>Read how this works</button>
       </section>
@@ -3393,12 +3391,12 @@ function MoneyComparison() {
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter earns $1,404 (61%)</span><span style={{ color: "var(--ink)", fontWeight: 600 }}>Agency takes $908 (39%)</span></div>
         </div>
         <div>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8, flexWrap: "wrap", gap: 4 }}><span style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Through Dewey Sholes</span><span style={{ color: "var(--muted)" }}>Firm pays the reporter's rate</span></div>
-          <Bar segments={[{ w: "95%", bg: "var(--ink)", label: "Reporter" }, { w: "5%", bg: "var(--brand)", label: "Dewey Sholes" }]} />
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter keeps their rate</span><span style={{ color: "var(--brand-dark)", fontWeight: 600 }}>Dewey Sholes takes 2% (Pro) or 5% (Free)</span></div>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8, flexWrap: "wrap", gap: 4 }}><span style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Through Shorthanders</span><span style={{ color: "var(--muted)" }}>Firm pays the reporter's rate</span></div>
+          <Bar segments={[{ w: "95%", bg: "var(--ink)", label: "Reporter" }, { w: "5%", bg: "var(--brand)", label: "Shorthanders" }]} />
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter keeps their rate</span><span style={{ color: "var(--brand-dark)", fontWeight: 600 }}>Shorthanders takes 2% (Pro) or 5% (Free)</span></div>
         </div>
       </div>
-      <p style={{ textAlign: "center", color: "var(--dim)", fontSize: 12.5, marginTop: 26, lineHeight: 1.5 }}>Agency figures from a real anonymized California invoice (a 319-page arbitration transcript). On Dewey Sholes the reporter sets their own rate, and our small fee comes from their side – the firm never pays a platform fee. Illustrative.</p>
+      <p style={{ textAlign: "center", color: "var(--dim)", fontSize: 12.5, marginTop: 26, lineHeight: 1.5 }}>Agency figures from a real anonymized California invoice (a 319-page arbitration transcript). On Shorthanders the reporter sets their own rate, and our small fee comes from their side – the firm never pays a platform fee. Illustrative.</p>
     </section>
   );
 }
@@ -4064,7 +4062,7 @@ function ReporterProfile({ reporterId, invited }) {
   };
   return (
     <Page>
-      {invited && <div className="banner banner-ok" style={{ marginBottom: 14 }}><Icon name="heart" size={18} style={{ flexShrink: 0 }} /><div><strong>{first} invited you to Dewey Sholes.</strong> Create a free account to message {first}, pay their invoices, and save them to your firm. Joining is free for your firm.</div></div>}
+      {invited && <div className="banner banner-ok" style={{ marginBottom: 14 }}><Icon name="heart" size={18} style={{ flexShrink: 0 }} /><div><strong>{first} invited you to Shorthanders.</strong> Create a free account to message {first}, pay their invoices, and save them to your firm. Joining is free for your firm.</div></div>}
       {r.sample && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This is a fictional demo profile – the name, license number, and every detail are made up to show how a claimed profile looks. Not a real reporter.</div></div>}
       {notAccepting && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="info" size={18} style={{ flexShrink: 0 }} /><div><strong>This reporter is not accepting new jobs right now,</strong> but can still view messages.</div></div>}
       {isOwner && (
@@ -4150,7 +4148,7 @@ function ReporterProfile({ reporterId, invited }) {
                 {store.role === "firm" && (reqSent
                   ? <div className="banner banner-ok" style={{ marginTop: 10, fontSize: 12.5, padding: "10px 12px" }}><Icon name="check" size={15} style={{ flexShrink: 0 }} /><div>Invoice request sent to {first}. When they send it, pay it under <button onClick={() => navigate("/firm/invoices")} style={{ background: "none", border: "none", padding: 0, color: "var(--brand-dark)", cursor: "pointer", textDecoration: "underline", font: "inherit" }}>Invoices</button>.</div></div>
                   : <button className="btn btn-secondary" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} onClick={() => setReqOpen(true)}><Icon name="invoice" size={16} /> Request an invoice</button>)}
-                <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>Terms are agreed directly between you and the reporter. Dewey Sholes is a communication channel only.</p>
+                <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>Terms are agreed directly between you and the reporter. Shorthanders is a communication channel only.</p>
                 {reqOpen && <RequestInvoiceModal reporterName={r.name} onSend={sendRequest} onClose={() => setReqOpen(false)} />}
               </>
             )}
@@ -4245,7 +4243,7 @@ function UnclaimedProfile({ r }) {
                 <div style={{ width: 46, height: 46, borderRadius: 12, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="mail" size={22} /></div>
                 <div style={{ flex: 1, minWidth: 220 }}>
                   <div style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Worked with {first} before?</div>
-                  <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 2 }}>Invite them to Dewey Sholes so you can message and pay them here. We'll let them know your firm is looking for them{store.role === "firm" ? "" : " once you create a free account"}.</div>
+                  <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 2 }}>Invite them to Shorthanders so you can message and pay them here. We'll let them know your firm is looking for them{store.role === "firm" ? "" : " once you create a free account"}.</div>
                 </div>
                 <button className="btn btn-primary" style={{ flexShrink: 0 }} onClick={doInvite}><Icon name="mail" size={16} /> Invite this reporter</button>
               </div>
@@ -4530,7 +4528,7 @@ function ClaimFlow({ reporterId }) {
           {step === 2 && (
             <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
               <h1 style={{ fontSize: 30 }}>Verify your identity</h1>
-              <p style={{ color: "var(--ink-soft)", fontSize: 15, lineHeight: 1.6 }}>We use <strong>Stripe Connect</strong> to confirm you're a licensed reporter and to set up payouts. Stripe handles identity, tax, and banking – Dewey Sholes never sees your bank details or ID documents.</p>
+              <p style={{ color: "var(--ink-soft)", fontSize: 15, lineHeight: 1.6 }}>We use <strong>Stripe Connect</strong> to confirm you're a licensed reporter and to set up payouts. Stripe handles identity, tax, and banking – Shorthanders never sees your bank details or ID documents.</p>
               <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <StripeCheck label="Confirm your legal name & license" />
                 <StripeCheck label="Verify your identity (ID document)" />
@@ -5186,7 +5184,7 @@ function InviteFirmModal({ me, onClose }) {
   const link = "https://dsmvp.vercel.app/#/invite/" + me.id;
   const [firm, setFirm] = useState("");
   const [email, setEmail] = useState("");
-  const [msg, setMsg] = useState("Hi there,\n\nI'm now listed on Dewey Sholes, where you can hire me, message me, and pay my invoices in one place. It's free for your firm to join, and you can pay me by card or ACH right from your account.\n\nCreate your free account and save my profile here:\n" + link + "\n\nThanks,\n" + first);
+  const [msg, setMsg] = useState("Hi there,\n\nI'm now listed on Shorthanders, where you can hire me, message me, and pay my invoices in one place. It's free for your firm to join, and you can pay me by card or ACH right from your account.\n\nCreate your free account and save my profile here:\n" + link + "\n\nThanks,\n" + first);
   const [sent, setSent] = useState(false);
   const [copied, setCopied] = useState("");
   const emailValid = /.+@.+\..+/.test(email);
@@ -5226,7 +5224,7 @@ function InviteFirmModal({ me, onClose }) {
             </div>
 
             <div style={{ marginTop: 20 }}>
-              <div style={subhead}>Or send through Dewey Sholes</div>
+              <div style={subhead}>Or send through Shorthanders</div>
               <p style={{ color: "var(--muted)", fontSize: 12.5, margin: "5px 0 12px", lineHeight: 1.5 }}>We'll email the firm your invite – add their email and hit Send.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -5262,7 +5260,7 @@ function InvStatus({ status, viewer }) {
 }
 
 // Regime-aware starter templates (see mvp/docs/csr_profile_field_taxonomy.md).
-// Line-item STRUCTURE only – no prefilled rates. Dewey Sholes doesn't set rates;
+// Line-item STRUCTURE only – no prefilled rates. Shorthanders doesn't set rates;
 // reporters fill in their own.
 // `rateKey` maps a line to a field in the reporter's saved `rates` (RATE_FIELDS in _app_02_data),
 // so the builder can pre-fill the Rate cell from their own profile. Only clean per-unit-dollar
@@ -5539,7 +5537,7 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
         </div>
         {prefill && <div className="ds-note" style={{ marginBottom: 0 }}><Icon name="info" size={15} style={{ flexShrink: 0, color: "var(--dim)" }} /><span>{prefill.firmName} asked you to bill them. We filled in what they sent – edit anything, add mileage or other fees, then send.</span></div>}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-          <div><label className="ds-label">Client / firm *</label><input className="ds-input" placeholder="Morgan & Reyes LLP" value={f.client} onChange={set("client")} /><div style={{ fontSize: 12, color: "var(--dim)", marginTop: 5, lineHeight: 1.45 }}>New to Dewey Sholes? They get a free account to view and pay, and you're saved to their firm.</div></div>
+          <div><label className="ds-label">Client / firm *</label><input className="ds-input" placeholder="Morgan & Reyes LLP" value={f.client} onChange={set("client")} /><div style={{ fontSize: 12, color: "var(--dim)", marginTop: 5, lineHeight: 1.45 }}>New to Shorthanders? They get a free account to view and pay, and you're saved to their firm.</div></div>
           <div><label className="ds-label">Matter reference</label><input className="ds-input" placeholder="Ramos v. Delta Freight (24CV01188)" value={f.matter} onChange={set("matter")} /></div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
@@ -5647,13 +5645,13 @@ function InvoiceDocument({ reporterName, reporterSub, invoiceId, client, matter,
         <div style={{ padding: "16px 28px 22px" }}>
           <div className="banner banner-ok" style={{ marginBottom: 0 }}>
             <Icon name="check" size={18} style={{ color: "var(--brand-dark)", flexShrink: 0 }} />
-            <div><strong style={{ color: "var(--ink)", fontWeight: 600 }}>Paid in full.</strong>{method ? " By " + method : ""}{paidAt ? " on " + paidAt : ""} · via Stripe, powered by Dewey Sholes.</div>
+            <div><strong style={{ color: "var(--ink)", fontWeight: 600 }}>Paid in full.</strong>{method ? " By " + method : ""}{paidAt ? " on " + paidAt : ""} · via Stripe, powered by Shorthanders.</div>
           </div>
         </div>
       ) : showPayBar ? (
         <div style={{ padding: "18px 28px 24px" }}>
           <div className="btn btn-primary" style={{ width: "100%", justifyContent: "center", cursor: "default", pointerEvents: "none" }}><Icon name="lock" size={15} /> Pay by card or ACH</div>
-          <div style={{ fontSize: 11.5, color: "var(--dim)", textAlign: "center", marginTop: 10 }}>Secure payment via Stripe · powered by Dewey Sholes</div>
+          <div style={{ fontSize: 11.5, color: "var(--dim)", textAlign: "center", marginTop: 10 }}>Secure payment via Stripe · powered by Shorthanders</div>
         </div>
       ) : null}
     </div>
@@ -5709,7 +5707,7 @@ function InvoiceModal({ inv, viewer, onClose }) {
           <div className="no-print" style={{ marginTop: 16 }}>
             {viewer === "reporter" && !paid ? (
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                <div className="banner banner-ok"><Icon name="mail" size={18} style={{ flexShrink: 0 }} /><div>Sent to {inv.client}. They can pay by card or ACH from the link below. If new to Dewey Sholes, the email invites them to create a free account to view and pay, which saves you to their firm.</div></div>
+                <div className="banner banner-ok"><Icon name="mail" size={18} style={{ flexShrink: 0 }} /><div>Sent to {inv.client}. They can pay by card or ACH from the link below. If new to Shorthanders, the email invites them to create a free account to view and pay, which saves you to their firm.</div></div>
                 <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
                   <div className="ds-panel" style={{ flex: 1, minWidth: 220, padding: "12px 14px", fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: "var(--ink-soft)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{payLink}</div>
                   <button className="btn btn-secondary" onClick={copy}><Icon name="link" size={16} /> {copied ? "Copied!" : "Copy link"}</button>
@@ -5827,7 +5825,7 @@ function MessagesPanel({ embedded }) {
 
           <div ref={threadRef} style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "18px 20px", display: "flex", flexDirection: "column", gap: 12, background: "var(--bg-soft)" }}>
             {store.role === "firm" && withRep && notAcceptingJobs(withRep) && <div className="banner banner-warn" style={{ fontSize: 12.5, padding: "10px 14px" }}><Icon name="info" size={15} style={{ flexShrink: 0 }} /><div><strong>{active.with.split(" ")[0]} isn't accepting new jobs right now.</strong> They may still help with a past transcript or an existing matter, but likely won't take on new work.</div></div>}
-            <div style={{ display: "flex", gap: 6, alignItems: "flex-start", justifyContent: "center", maxWidth: 620, margin: "0 auto", padding: "2px 16px 8px", fontSize: 11.5, lineHeight: 1.55, color: "var(--dim)", textAlign: "center" }}><Icon name="shield" size={13} style={{ flexShrink: 0, marginTop: 2 }} /><span>Dewey Sholes carries your messages and links but never stores files – share deliverables through your own secure link. Terms are between you and {active.with}.</span></div>
+            <div style={{ display: "flex", gap: 6, alignItems: "flex-start", justifyContent: "center", maxWidth: 620, margin: "0 auto", padding: "2px 16px 8px", fontSize: 11.5, lineHeight: 1.55, color: "var(--dim)", textAlign: "center" }}><Icon name="shield" size={13} style={{ flexShrink: 0, marginTop: 2 }} /><span>Shorthanders carries your messages and links but never stores files – share deliverables through your own secure link. Terms are between you and {active.with}.</span></div>
             {active.msgs.map((m, i) => (
               <div key={i} className={"msg-bubble " + (m.from === "me" ? "msg-me" : "msg-them")}>
                 {m.t && <div>{m.t}</div>}
@@ -5852,7 +5850,7 @@ function MessagesPanel({ embedded }) {
                 {linkUrl.trim() ? (
                   <div style={{ display: "flex", gap: 7, alignItems: "flex-start", marginTop: 8, fontSize: 12, color: "var(--ink-soft)", background: "#F7F8C6", border: "1px solid #DCE224", borderRadius: 9, padding: "8px 11px" }}>
                     <Icon name="shield" size={14} style={{ flexShrink: 0, marginTop: 1 }} />
-                    <span>Only share links you control access to (private, access-controlled, or expiring). Dewey Sholes doesn't store, secure, or check your files or links. You're responsible for how sensitive material is shared.</span>
+                    <span>Only share links you control access to (private, access-controlled, or expiring). Shorthanders doesn't store, secure, or check your files or links. You're responsible for how sensitive material is shared.</span>
                   </div>
                 ) : null}
               </div>
@@ -5869,7 +5867,7 @@ function MessagesPanel({ embedded }) {
               <textarea className="ds-input" rows={1} style={{ flex: 1, resize: "none", padding: "11px 14px" }} placeholder={"Message " + active.with + "…"} value={draft} onChange={(e) => setDraft(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }} />
               <button className="btn btn-primary" style={{ padding: "12px 20px" }} onClick={send}>Send</button>
             </div>
-            <div style={{ fontSize: 11, color: "var(--dim)", marginTop: 8, textAlign: "center" }}>Sending as {meLabel} · Dewey Sholes doesn't participate in or store your negotiation.</div>
+            <div style={{ fontSize: 11, color: "var(--dim)", marginTop: 8, textAlign: "center" }}>Sending as {meLabel} · Shorthanders doesn't participate in or store your negotiation.</div>
           </div>
         </div>
       ) : (
@@ -5879,7 +5877,7 @@ function MessagesPanel({ embedded }) {
   );
 }
 
-// A firm asks a reporter to bill them through Dewey Sholes, so the payment lands on-platform
+// A firm asks a reporter to bill them through Shorthanders, so the payment lands on-platform
 // instead of a check off-site. The reporter gets a one-tap prompt to issue the invoice.
 function RequestInvoiceModal({ reporterName, onSend, onClose }) {
   const [matter, setMatter] = useState("");
@@ -5892,7 +5890,7 @@ function RequestInvoiceModal({ reporterName, onSend, onClose }) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
           <div>
             <h3 style={{ fontSize: 22 }}>Request an invoice</h3>
-            <p style={{ color: "var(--muted)", fontSize: 13.5, marginTop: 4, lineHeight: 1.5 }}>Ask {first} to bill you through Dewey Sholes so you can pay by card or ACH. They get a one-tap prompt to send it.</p>
+            <p style={{ color: "var(--muted)", fontSize: 13.5, marginTop: 4, lineHeight: 1.5 }}>Ask {first} to bill you through Shorthanders so you can pay by card or ACH. They get a one-tap prompt to send it.</p>
           </div>
           <button onClick={onClose} title="Close" style={{ background: "none", border: "none", cursor: "pointer", color: "var(--dim)", padding: 4, flexShrink: 0 }}><Icon name="x" size={20} /></button>
         </div>
@@ -5916,7 +5914,7 @@ function MessagingPage() {
   return (
     <Page wide>
       <h1 style={{ fontSize: "clamp(32px, 4vw, 46px)", marginBottom: 6 }}>Messages</h1>
-      <p style={{ color: "var(--muted)", marginBottom: 24 }}>Talk directly with {store.role === "reporter" ? "law firms" : "reporters"}. Dewey Sholes is the channel – the working relationship is yours.</p>
+      <p style={{ color: "var(--muted)", marginBottom: 24 }}>Talk directly with {store.role === "reporter" ? "law firms" : "reporters"}. Shorthanders is the channel – the working relationship is yours.</p>
       <MessagesPanel />
     </Page>
   );
@@ -6010,7 +6008,7 @@ function FirmInvoices() {
     <div className="ds-panel" style={{ textAlign: "center", padding: 56 }}>
       <Icon name="invoice" size={30} style={{ margin: "0 auto", color: "var(--dim)" }} />
       <h3 style={{ fontSize: 22, marginTop: 12 }}>No invoices yet</h3>
-      <p style={{ color: "var(--muted)", marginTop: 8, maxWidth: 440, margin: "8px auto 0" }}>When a reporter sends you an invoice through Dewey Sholes, it lands here to pay by card or ACH. Ask a reporter for one from their profile or your messages.</p>
+      <p style={{ color: "var(--muted)", marginTop: 8, maxWidth: 440, margin: "8px auto 0" }}>When a reporter sends you an invoice through Shorthanders, it lands here to pay by card or ACH. Ask a reporter for one from their profile or your messages.</p>
       <button className="btn btn-primary" style={{ marginTop: 22 }} onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Find a reporter</button>
     </div>
   );
@@ -6213,7 +6211,7 @@ function SettingsPage() {
             {isFirm ? <FirmSubscription /> : <ReporterPlanCards />}
           </section>
           <section id="notifications" className="settings-card" style={{ scrollMarginTop: 88 }}>
-            {head("Notifications", "Choose what Dewey Sholes emails or notifies you about.")}
+            {head("Notifications", "Choose what Shorthanders emails or notifies you about.")}
             <div style={{ display: "flex", flexDirection: "column" }}>
               {notifs.map((n, i) => (
                 <div key={n.key} onClick={() => store.toggleNotif(n.key)} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "16px 0", borderTop: i ? "1px solid var(--rule)" : "none", cursor: "pointer" }}>
@@ -6242,7 +6240,7 @@ function SettingsPage() {
             ) : (
               <>
                 {head("Payment methods", "How you pay reporters' invoices.")}
-                <p style={{ color: "var(--ink-soft)", fontSize: 14.5, lineHeight: 1.6, margin: 0 }}>You choose card or ACH on each invoice's secure Stripe page – nothing is stored here. Card and bank details never touch Dewey Sholes.</p>
+                <p style={{ color: "var(--ink-soft)", fontSize: 14.5, lineHeight: 1.6, margin: 0 }}>You choose card or ACH on each invoice's secure Stripe page – nothing is stored here. Card and bank details never touch Shorthanders.</p>
               </>
             )}
           </section>
@@ -6300,18 +6298,18 @@ function LegalPage({ title, intro, sections }) {
 // Terms + Privacy content, kept as data so the SAME text renders both as a full page (footer /
 // marketing links) and inside a modal (the sign-up flow – see LegalModal).
 const TERMS_DOC = {
-  title: "How Dewey Sholes works",
+  title: "How Shorthanders works",
   intro: "Plain-language summary of the platform's role. This is prototype copy for review, not final legal terms of service.",
   sections: [
-    { h: "What Dewey Sholes is", p: ["Dewey Sholes plays exactly three roles, and no others:"], list: ["A directory provider – a searchable listing of licensed California court reporters, built from public licensing data.", "A communication platform – a channel for law firms and reporters to message each other.", "A payment facilitator – a way for reporters to invoice firms and collect payment through Stripe."] },
-    { h: "What Dewey Sholes is not", p: ["Dewey Sholes does not, and will not:"], list: ["Employ reporters or treat them as agents of the platform.", "Guarantee the quality, accuracy, or completeness of any reporter's work.", "Guarantee that any invoice will be paid.", "Negotiate, set, or influence rates between the parties.", "Mediate, arbitrate, or resolve disputes between a firm and a reporter.", "Store, host, or take custody of audio files, transcripts, or other work product.", "Become a party to any agreement between a firm and a reporter."] },
-    { h: "The agreement is between you", p: ["Any service agreement exists solely between the law firm and the court reporter. Scope, deadlines, rates, confidentiality, and delivery are agreed directly between those two parties. Dewey Sholes is not a signatory and assumes no obligations under that agreement."] },
+    { h: "What Shorthanders is", p: ["Shorthanders plays exactly three roles, and no others:"], list: ["A directory provider – a searchable listing of licensed California court reporters, built from public licensing data.", "A communication platform – a channel for law firms and reporters to message each other.", "A payment facilitator – a way for reporters to invoice firms and collect payment through Stripe."] },
+    { h: "What Shorthanders is not", p: ["Shorthanders does not, and will not:"], list: ["Employ reporters or treat them as agents of the platform.", "Guarantee the quality, accuracy, or completeness of any reporter's work.", "Guarantee that any invoice will be paid.", "Negotiate, set, or influence rates between the parties.", "Mediate, arbitrate, or resolve disputes between a firm and a reporter.", "Store, host, or take custody of audio files, transcripts, or other work product.", "Become a party to any agreement between a firm and a reporter."] },
+    { h: "The agreement is between you", p: ["Any service agreement exists solely between the law firm and the court reporter. Scope, deadlines, rates, confidentiality, and delivery are agreed directly between those two parties. Shorthanders is not a signatory and assumes no obligations under that agreement."] },
     { h: "Files and confidential material", p: [
-      "Dewey Sholes does not store, host, secure, or review any files. When you exchange audio, transcripts, or other deliverables, you share a link to your own storage through messaging. The file stays with you, never on our servers.",
-      "You are solely responsible for how you share materials, including choosing links that are private, access-controlled, or expiring, and for complying with any confidentiality obligations or protective orders that apply. Dewey Sholes does not vet the links you share and is not responsible for how you or the other party store or secure files.",
+      "Shorthanders does not store, host, secure, or review any files. When you exchange audio, transcripts, or other deliverables, you share a link to your own storage through messaging. The file stays with you, never on our servers.",
+      "You are solely responsible for how you share materials, including choosing links that are private, access-controlled, or expiring, and for complying with any confidentiality obligations or protective orders that apply. Shorthanders does not vet the links you share and is not responsible for how you or the other party store or secure files.",
       "Because depositions and other proceedings can involve confidential or personal information, keeping custody of files with the parties, not the platform, protects everyone.",
     ] },
-    { h: "Identity verification & payments", p: ["Reporter identity verification and all payment processing are handled by Stripe, including KYC, identity, tax, and banking. Dewey Sholes stores only the status Stripe returns, never your bank details or ID documents."] },
+    { h: "Identity verification & payments", p: ["Reporter identity verification and all payment processing are handled by Stripe, including KYC, identity, tax, and banking. Shorthanders stores only the status Stripe returns, never your bank details or ID documents."] },
   ],
 };
 const PRIVACY_DOC = {
@@ -6320,7 +6318,7 @@ const PRIVACY_DOC = {
   sections: [
     { h: "Public license data", p: ["The base directory is built from publicly available California CSR licensing records – name, license number, and city. This information is public whether or not a reporter claims their profile."] },
     { h: "Claimed profiles", p: ["Information a reporter adds when claiming a profile (bio, areas of law, rates, etc.) is shown publicly by their choice. A reporter can edit or remove it at any time."] },
-    { h: "Payments & identity", p: ["Identity and banking information is collected and held by Stripe, not by Dewey Sholes. We store only verification status and invoice metadata."] },
+    { h: "Payments & identity", p: ["Identity and banking information is collected and held by Stripe, not by Shorthanders. We store only verification status and invoice metadata."] },
     { h: "Messages", p: ["Messages are carried by the platform so both parties have a record. We don't sell your data or use your conversations for advertising."] },
   ],
 };
@@ -6363,11 +6361,11 @@ function LegalModal({ docKey, onClose }) {
   );
 }
 function AboutPage() {
-  return <LegalPage title="About Dewey Sholes"
+  return <LegalPage title="About Shorthanders"
     intro="California's court reporters are independent professionals, but the tools around them assume an agency sits in the middle. We think that's backwards."
     sections={[
-      { h: "Why we built this", p: ["Law firms struggle to find independent reporters, and reporters lose a chunk of every job to agencies that mostly just handle discovery and billing. Dewey Sholes puts those two things – being found, and getting paid – directly in the hands of the people doing the work.", "We start narrow on purpose: a directory firms can search, and business tools reporters actually need."] },
-      { h: "How it started", p: ["Dewey Sholes is a women-owned business. It began with a question its founder put to a good friend, a California trial lawyer: what's the most broken part of your work you'd love to see fixed? The answer came fast – finding and paying court reporters, a process that's hard, opaque, and agency-dependent.", "So she built the fix, with that lawyer's guidance along the way. We stay close to the reporters and firms who use it, and build deliberately."] },
+      { h: "Why we built this", p: ["Law firms struggle to find independent reporters, and reporters lose a chunk of every job to agencies that mostly just handle discovery and billing. Shorthanders puts those two things – being found, and getting paid – directly in the hands of the people doing the work.", "We start narrow on purpose: a directory firms can search, and business tools reporters actually need."] },
+      { h: "How it started", p: ["Shorthanders is a women-owned business. It began with a question its founder put to a good friend, a California trial lawyer: what's the most broken part of your work you'd love to see fixed? The answer came fast – finding and paying court reporters, a process that's hard, opaque, and agency-dependent.", "So she built the fix, with that lawyer's guidance along the way. We stay close to the reporters and firms who use it, and build deliberately."] },
     ]} />;
 }
 function ContactChannel({ icon, title, children }) {

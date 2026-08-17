@@ -526,7 +526,7 @@ function ReporterProfile({ reporterId, invited }) {
   };
   return (
     <Page>
-      {invited && <div className="banner banner-ok" style={{ marginBottom: 14 }}><Icon name="heart" size={18} style={{ flexShrink: 0 }} /><div><strong>{first} invited you to Dewey Sholes.</strong> Create a free account to message {first}, pay their invoices, and save them to your firm. Joining is free for your firm.</div></div>}
+      {invited && <div className="banner banner-ok" style={{ marginBottom: 14 }}><Icon name="heart" size={18} style={{ flexShrink: 0 }} /><div><strong>{first} invited you to Shorthanders.</strong> Create a free account to message {first}, pay their invoices, and save them to your firm. Joining is free for your firm.</div></div>}
       {r.sample && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="eye" size={18} style={{ flexShrink: 0 }} /><div><strong>Sample profile.</strong> This is a fictional demo profile – the name, license number, and every detail are made up to show how a claimed profile looks. Not a real reporter.</div></div>}
       {notAccepting && <div className="banner banner-warn" style={{ marginBottom: 22 }}><Icon name="info" size={18} style={{ flexShrink: 0 }} /><div><strong>This reporter is not accepting new jobs right now,</strong> but can still view messages.</div></div>}
       {isOwner && (
@@ -612,7 +612,7 @@ function ReporterProfile({ reporterId, invited }) {
                 {store.role === "firm" && (reqSent
                   ? <div className="banner banner-ok" style={{ marginTop: 10, fontSize: 12.5, padding: "10px 12px" }}><Icon name="check" size={15} style={{ flexShrink: 0 }} /><div>Invoice request sent to {first}. When they send it, pay it under <button onClick={() => navigate("/firm/invoices")} style={{ background: "none", border: "none", padding: 0, color: "var(--brand-dark)", cursor: "pointer", textDecoration: "underline", font: "inherit" }}>Invoices</button>.</div></div>
                   : <button className="btn btn-secondary" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} onClick={() => setReqOpen(true)}><Icon name="invoice" size={16} /> Request an invoice</button>)}
-                <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>Terms are agreed directly between you and the reporter. Dewey Sholes is a communication channel only.</p>
+                <p style={{ fontSize: 12, color: "var(--dim)", marginTop: 14, lineHeight: 1.5, textAlign: "center" }}>Terms are agreed directly between you and the reporter. Shorthanders is a communication channel only.</p>
                 {reqOpen && <RequestInvoiceModal reporterName={r.name} onSend={sendRequest} onClose={() => setReqOpen(false)} />}
               </>
             )}
@@ -707,7 +707,7 @@ function UnclaimedProfile({ r }) {
                 <div style={{ width: 46, height: 46, borderRadius: 12, background: "var(--brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon name="mail" size={22} /></div>
                 <div style={{ flex: 1, minWidth: 220 }}>
                   <div style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Worked with {first} before?</div>
-                  <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 2 }}>Invite them to Dewey Sholes so you can message and pay them here. We'll let them know your firm is looking for them{store.role === "firm" ? "" : " once you create a free account"}.</div>
+                  <div style={{ fontSize: 14, color: "var(--ink-soft)", marginTop: 2 }}>Invite them to Shorthanders so you can message and pay them here. We'll let them know your firm is looking for them{store.role === "firm" ? "" : " once you create a free account"}.</div>
                 </div>
                 <button className="btn btn-primary" style={{ flexShrink: 0 }} onClick={doInvite}><Icon name="mail" size={16} /> Invite this reporter</button>
               </div>

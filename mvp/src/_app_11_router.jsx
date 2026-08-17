@@ -22,18 +22,18 @@ function LegalPage({ title, intro, sections }) {
 // Terms + Privacy content, kept as data so the SAME text renders both as a full page (footer /
 // marketing links) and inside a modal (the sign-up flow – see LegalModal).
 const TERMS_DOC = {
-  title: "How Dewey Sholes works",
+  title: "How Shorthanders works",
   intro: "Plain-language summary of the platform's role. This is prototype copy for review, not final legal terms of service.",
   sections: [
-    { h: "What Dewey Sholes is", p: ["Dewey Sholes plays exactly three roles, and no others:"], list: ["A directory provider – a searchable listing of licensed California court reporters, built from public licensing data.", "A communication platform – a channel for law firms and reporters to message each other.", "A payment facilitator – a way for reporters to invoice firms and collect payment through Stripe."] },
-    { h: "What Dewey Sholes is not", p: ["Dewey Sholes does not, and will not:"], list: ["Employ reporters or treat them as agents of the platform.", "Guarantee the quality, accuracy, or completeness of any reporter's work.", "Guarantee that any invoice will be paid.", "Negotiate, set, or influence rates between the parties.", "Mediate, arbitrate, or resolve disputes between a firm and a reporter.", "Store, host, or take custody of audio files, transcripts, or other work product.", "Become a party to any agreement between a firm and a reporter."] },
-    { h: "The agreement is between you", p: ["Any service agreement exists solely between the law firm and the court reporter. Scope, deadlines, rates, confidentiality, and delivery are agreed directly between those two parties. Dewey Sholes is not a signatory and assumes no obligations under that agreement."] },
+    { h: "What Shorthanders is", p: ["Shorthanders plays exactly three roles, and no others:"], list: ["A directory provider – a searchable listing of licensed California court reporters, built from public licensing data.", "A communication platform – a channel for law firms and reporters to message each other.", "A payment facilitator – a way for reporters to invoice firms and collect payment through Stripe."] },
+    { h: "What Shorthanders is not", p: ["Shorthanders does not, and will not:"], list: ["Employ reporters or treat them as agents of the platform.", "Guarantee the quality, accuracy, or completeness of any reporter's work.", "Guarantee that any invoice will be paid.", "Negotiate, set, or influence rates between the parties.", "Mediate, arbitrate, or resolve disputes between a firm and a reporter.", "Store, host, or take custody of audio files, transcripts, or other work product.", "Become a party to any agreement between a firm and a reporter."] },
+    { h: "The agreement is between you", p: ["Any service agreement exists solely between the law firm and the court reporter. Scope, deadlines, rates, confidentiality, and delivery are agreed directly between those two parties. Shorthanders is not a signatory and assumes no obligations under that agreement."] },
     { h: "Files and confidential material", p: [
-      "Dewey Sholes does not store, host, secure, or review any files. When you exchange audio, transcripts, or other deliverables, you share a link to your own storage through messaging. The file stays with you, never on our servers.",
-      "You are solely responsible for how you share materials, including choosing links that are private, access-controlled, or expiring, and for complying with any confidentiality obligations or protective orders that apply. Dewey Sholes does not vet the links you share and is not responsible for how you or the other party store or secure files.",
+      "Shorthanders does not store, host, secure, or review any files. When you exchange audio, transcripts, or other deliverables, you share a link to your own storage through messaging. The file stays with you, never on our servers.",
+      "You are solely responsible for how you share materials, including choosing links that are private, access-controlled, or expiring, and for complying with any confidentiality obligations or protective orders that apply. Shorthanders does not vet the links you share and is not responsible for how you or the other party store or secure files.",
       "Because depositions and other proceedings can involve confidential or personal information, keeping custody of files with the parties, not the platform, protects everyone.",
     ] },
-    { h: "Identity verification & payments", p: ["Reporter identity verification and all payment processing are handled by Stripe, including KYC, identity, tax, and banking. Dewey Sholes stores only the status Stripe returns, never your bank details or ID documents."] },
+    { h: "Identity verification & payments", p: ["Reporter identity verification and all payment processing are handled by Stripe, including KYC, identity, tax, and banking. Shorthanders stores only the status Stripe returns, never your bank details or ID documents."] },
   ],
 };
 const PRIVACY_DOC = {
@@ -42,7 +42,7 @@ const PRIVACY_DOC = {
   sections: [
     { h: "Public license data", p: ["The base directory is built from publicly available California CSR licensing records – name, license number, and city. This information is public whether or not a reporter claims their profile."] },
     { h: "Claimed profiles", p: ["Information a reporter adds when claiming a profile (bio, areas of law, rates, etc.) is shown publicly by their choice. A reporter can edit or remove it at any time."] },
-    { h: "Payments & identity", p: ["Identity and banking information is collected and held by Stripe, not by Dewey Sholes. We store only verification status and invoice metadata."] },
+    { h: "Payments & identity", p: ["Identity and banking information is collected and held by Stripe, not by Shorthanders. We store only verification status and invoice metadata."] },
     { h: "Messages", p: ["Messages are carried by the platform so both parties have a record. We don't sell your data or use your conversations for advertising."] },
   ],
 };
@@ -85,11 +85,11 @@ function LegalModal({ docKey, onClose }) {
   );
 }
 function AboutPage() {
-  return <LegalPage title="About Dewey Sholes"
+  return <LegalPage title="About Shorthanders"
     intro="California's court reporters are independent professionals, but the tools around them assume an agency sits in the middle. We think that's backwards."
     sections={[
-      { h: "Why we built this", p: ["Law firms struggle to find independent reporters, and reporters lose a chunk of every job to agencies that mostly just handle discovery and billing. Dewey Sholes puts those two things – being found, and getting paid – directly in the hands of the people doing the work.", "We start narrow on purpose: a directory firms can search, and business tools reporters actually need."] },
-      { h: "How it started", p: ["Dewey Sholes is a women-owned business. It began with a question its founder put to a good friend, a California trial lawyer: what's the most broken part of your work you'd love to see fixed? The answer came fast – finding and paying court reporters, a process that's hard, opaque, and agency-dependent.", "So she built the fix, with that lawyer's guidance along the way. We stay close to the reporters and firms who use it, and build deliberately."] },
+      { h: "Why we built this", p: ["Law firms struggle to find independent reporters, and reporters lose a chunk of every job to agencies that mostly just handle discovery and billing. Shorthanders puts those two things – being found, and getting paid – directly in the hands of the people doing the work.", "We start narrow on purpose: a directory firms can search, and business tools reporters actually need."] },
+      { h: "How it started", p: ["Shorthanders is a women-owned business. It began with a question its founder put to a good friend, a California trial lawyer: what's the most broken part of your work you'd love to see fixed? The answer came fast – finding and paying court reporters, a process that's hard, opaque, and agency-dependent.", "So she built the fix, with that lawyer's guidance along the way. We stay close to the reporters and firms who use it, and build deliberately."] },
     ]} />;
 }
 function ContactChannel({ icon, title, children }) {

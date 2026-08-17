@@ -87,7 +87,7 @@ function FirmInvoices() {
     <div className="ds-panel" style={{ textAlign: "center", padding: 56 }}>
       <Icon name="invoice" size={30} style={{ margin: "0 auto", color: "var(--dim)" }} />
       <h3 style={{ fontSize: 22, marginTop: 12 }}>No invoices yet</h3>
-      <p style={{ color: "var(--muted)", marginTop: 8, maxWidth: 440, margin: "8px auto 0" }}>When a reporter sends you an invoice through Dewey Sholes, it lands here to pay by card or ACH. Ask a reporter for one from their profile or your messages.</p>
+      <p style={{ color: "var(--muted)", marginTop: 8, maxWidth: 440, margin: "8px auto 0" }}>When a reporter sends you an invoice through Shorthanders, it lands here to pay by card or ACH. Ask a reporter for one from their profile or your messages.</p>
       <button className="btn btn-primary" style={{ marginTop: 22 }} onClick={() => navigate("/directory")}><Icon name="search" size={16} /> Find a reporter</button>
     </div>
   );
@@ -290,7 +290,7 @@ function SettingsPage() {
             {isFirm ? <FirmSubscription /> : <ReporterPlanCards />}
           </section>
           <section id="notifications" className="settings-card" style={{ scrollMarginTop: 88 }}>
-            {head("Notifications", "Choose what Dewey Sholes emails or notifies you about.")}
+            {head("Notifications", "Choose what Shorthanders emails or notifies you about.")}
             <div style={{ display: "flex", flexDirection: "column" }}>
               {notifs.map((n, i) => (
                 <div key={n.key} onClick={() => store.toggleNotif(n.key)} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "16px 0", borderTop: i ? "1px solid var(--rule)" : "none", cursor: "pointer" }}>
@@ -319,7 +319,7 @@ function SettingsPage() {
             ) : (
               <>
                 {head("Payment methods", "How you pay reporters' invoices.")}
-                <p style={{ color: "var(--ink-soft)", fontSize: 14.5, lineHeight: 1.6, margin: 0 }}>You choose card or ACH on each invoice's secure Stripe page – nothing is stored here. Card and bank details never touch Dewey Sholes.</p>
+                <p style={{ color: "var(--ink-soft)", fontSize: 14.5, lineHeight: 1.6, margin: 0 }}>You choose card or ACH on each invoice's secure Stripe page – nothing is stored here. Card and bank details never touch Shorthanders.</p>
               </>
             )}
           </section>

@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-//  DEWEY SHOLES – Reduced-scope MVP prototype
+//  SHORTHANDERS – Reduced-scope MVP prototype
 //  Directory + profile claiming + messaging + Stripe/invoicing.
 //  No job matching, scheduling, escrow, ratings. See mvp/prd-v1.
 // ═══════════════════════════════════════════════════════════════════
@@ -89,18 +89,16 @@ function Icon({ name, size = 18, style }) {
 }
 
 // ─── Brand logo ────────────────────────────────────────────────────
-// Canonical brand lockup: navy icon + DEWEY (navy) / SHOLES (brand blue) in Courier New.
-// Ported from the v1 site (logos/final/bs-gregg-navy.svg). light=true for dark backgrounds.
+// Canonical brand lockup: navy icon + SHORTHANDERS in brand blue, Courier New.
+// light=true for dark backgrounds.
 function Logo({ onClick, light }) {
-  const dewey = light ? "#FFFFFF" : "#0F172A";
-  const sholes = light ? "#818CF8" : "#4361EE";
+  const word = light ? "#818CF8" : "#4361EE";
   return (
-    <button onClick={onClick} aria-label="Dewey Sholes home" style={{ display: "flex", alignItems: "center", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-      <svg height="34" viewBox="0 0 310 60" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
+    <button onClick={onClick} aria-label="Shorthanders home" style={{ display: "flex", alignItems: "center", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+      <svg height="34" viewBox="0 0 252 60" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
         <rect x="0" y="0" width="60" height="60" rx="13" fill="#0F172A" />
         <path d="M 14,42 C 10,24 16,9 30,9 C 46,9 54,21 51,34 C 48,47 35,54 22,48 C 15,44 14,36 19,30 C 24,23 36,24 40,33 C 43,39 40,47 34,50" fill="none" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
-        <text x="76" y="27" fontFamily="'Courier New',Courier,monospace" fontSize="18" fontWeight="700" fill={dewey} letterSpacing="4">DEWEY</text>
-        <text x="76" y="53" fontFamily="'Courier New',Courier,monospace" fontSize="18" fontWeight="700" fill={sholes} letterSpacing="4">SHOLES</text>
+        <text x="76" y="39" fontFamily="'Courier New',Courier,monospace" fontSize="17" fontWeight="700" fill={word} letterSpacing="2">SHORTHANDERS</text>
       </svg>
     </button>
   );
