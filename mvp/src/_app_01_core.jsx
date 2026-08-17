@@ -92,8 +92,8 @@ function Icon({ name, size = 18, style }) {
 // Canonical brand wordmark (designed artwork exported from the PSD).
 // light=true swaps to the white-letter version for dark backgrounds.
 // height sizes the mark; nav and footer pass their own.
-function Logo({ onClick, light, height = 40 }) {
-  const src = light ? "graphics/logo-wordmark-light.png" : "graphics/logo-wordmark.png";
+function Logo({ onClick, light, height = 30 }) {
+  const src = light ? "graphics/logo-wordmark-light.png?v=2" : "graphics/logo-wordmark.png?v=2";
   return (
     <button onClick={onClick} aria-label="Shorthanders home" style={{ display: "flex", alignItems: "center", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
       <img src={src} alt="Shorthanders" style={{ display: "block", height: height, width: "auto" }} />
