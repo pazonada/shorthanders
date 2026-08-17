@@ -421,7 +421,7 @@ function ReporterPlanCards() {
 function InviteFirmModal({ me, onClose }) {
   const store = useStore();
   const first = me.name.split(" ")[0];
-  const link = "https://dsmvp.vercel.app/#/invite/" + me.id;
+  const link = "https://shorthanders.vercel.app/#/invite/" + me.id;
   const [firm, setFirm] = useState("");
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("Hi there,\n\nI'm now listed on Shorthanders, where you can hire me, message me, and pay my invoices in one place. It's free for your firm to join, and you can pay me by card or ACH right from your account.\n\nCreate your free account and save my profile here:\n" + link + "\n\nThanks,\n" + first);
