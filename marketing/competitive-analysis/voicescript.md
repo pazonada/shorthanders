@@ -91,20 +91,20 @@ What is NOT visible: actual feature screenshots, a working demo without contacti
 
 ---
 
-## Strengths vs. DS
+## Strengths vs. Shorthanders
 
-- **Scope ambition.** If they ship the full product across all three pillars (agency ops + AI copilot + court systems), they'd have a unified platform that DS doesn't match.
-- **Court system relationships.** If their courtroom product has real deployments in CA courts, that's a channel DS doesn't have and would be hard to replicate.
-- **AAERT targeting.** Reaching electronic reporters (as distinct from stenographic CSRs) broadens their supply base in a way DS currently doesn't address.
+- **Scope ambition.** If they ship the full product across all three pillars (agency ops + AI copilot + court systems), they'd have a unified platform that Shorthanders doesn't match.
+- **Court system relationships.** If their courtroom product has real deployments in CA courts, that's a channel Shorthanders doesn't have and would be hard to replicate.
+- **AAERT targeting.** Reaching electronic reporters (as distinct from stenographic CSRs) broadens their supply base in a way Shorthanders currently doesn't address.
 
 ---
 
-## Weaknesses vs. DS
+## Weaknesses vs. Shorthanders
 
-- **Nothing is shipping for attorneys today** (AI copilot is "Coming Soon"). DS will be live before this feature reaches market.
-- **Agency-dependent model.** The "no agency cut" angle DS uses is structurally impossible for VoiceScript to adopt – their entire agency-facing product depends on the agency staying in the middle.
+- **Nothing is shipping for attorneys today** (AI copilot is "Coming Soon"). Shorthanders will be live before this feature reaches market.
+- **Agency-dependent model.** The "no agency cut" angle Shorthanders uses is structurally impossible for VoiceScript to adopt – their entire agency-facing product depends on the agency staying in the middle.
 - **No individual CSR marketplace.** Reporters don't find new work through VoiceScript; they work within their existing agency.
-- **Sales-gated and demo-only.** High friction for the small-firm attorneys and legal assistants DS is targeting.
+- **Sales-gated and demo-only.** High friction for the small-firm attorneys and legal assistants Shorthanders is targeting.
 - **Not CA-specific.** No statutory rate compliance angle.
 - **Unverifiable claims.** "70%" and "2-3x" without citations will be questioned by sophisticated buyers.
 
@@ -112,7 +112,7 @@ What is NOT visible: actual feature screenshots, a working demo without contacti
 
 ## Overlap with our positioning
 
-| DS messaging pillar | VoiceScript overlap? | Notes |
+| Shorthanders messaging pillar | VoiceScript overlap? | Notes |
 |---|---|---|
 | Transparent pricing / statutory rates | No | Sales-gated, no pricing |
 | No agency cut | No | Agency layer is the product's target customer |
@@ -122,13 +122,13 @@ What is NOT visible: actual feature screenshots, a working demo without contacti
 | Simple / fast / modern UX | Partial | "productivity" framing, but not simplicity-focused |
 | Court-hearing focus | Partial | "Court Reporting Solutions" covers hearings implicitly, but depositions are the AI focus |
 
-**Tagline word overlap with DS:** No overlap with "Court transcripts, finally simple." Low direct conflict.
+**Tagline word overlap with Shorthanders:** No overlap with "Court transcripts, finally simple." Low direct conflict.
 
 ---
 
 ## Open questions
 
 - Is the court-reporting-agency product live and deployed anywhere? If so, which agencies and which states?
-- When does the Deposition-AI Copilot ship? If it arrives before DS launches its firm-side product, it could capture attorney mindshare.
+- When does the Deposition-AI Copilot ship? If it arrives before Shorthanders launches its firm-side product, it could capture attorney mindshare.
 - Any funding raised? "Coming Soon" on headline feature suggests either pre-seed or self-funded.
 - Is AAERT partnership formalized or aspirational?

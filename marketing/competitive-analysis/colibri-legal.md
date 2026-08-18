@@ -94,27 +94,27 @@ From the legal product page:
 
 ---
 
-## Strengths vs. DS
+## Strengths vs. Shorthanders
 
-- **AI live transcription.** Real-time rough drafts during proceedings are something DS does not offer. For attorneys who want immediate visibility into testimony, Colibri is ahead.
+- **AI live transcription.** Real-time rough drafts during proceedings are something Shorthanders does not offer. For attorneys who want immediate visibility into testimony, Colibri is ahead.
 - **Zoom native.** Built-in Zoom integration is low-friction for remote proceedings, which are now common post-COVID.
 - **Mature underlying tech.** Colibri.ai's core ASR is battle-tested across many industries.
 
 ---
 
-## Weaknesses vs. DS
+## Weaknesses vs. Shorthanders
 
 - **Not CA-statutory-rate compliant.** Colibri's CDR (Certified Deposition Reporter) model does not map to CA's certified shorthand reporter (CSR) statutory framework for public court hearings.
 - **Deposition-first framing.** Public court hearings as a use case are mentioned but not the product's focus or design center.
 - **Agency model persists.** The "national court reporting firm" behind the optional CDR appearances sits between the attorney and the reporter. No individual reporter identity.
-- **Opaque pricing.** "Low monthly subscription fee" without numbers is the opposite of DS's transparent statutory-rate positioning.
+- **Opaque pricing.** "Low monthly subscription fee" without numbers is the opposite of Shorthanders' transparent statutory-rate positioning.
 - **Legal vertical feels bolted on.** The main colibri.ai product is meeting notes for sales and general business – the legal positioning may not survive scrutiny from sophisticated legal buyers who notice this.
 
 ---
 
 ## Overlap with our positioning
 
-| DS messaging pillar | Colibri Legal overlap? | Notes |
+| Shorthanders messaging pillar | Colibri Legal overlap? | Notes |
 |---|---|---|
 | Transparent pricing / statutory rates | No | Opaque pricing; not CA-statutory-aligned |
 | No agency cut | No | "National court reporting firm" is the agency |
@@ -124,7 +124,7 @@ From the legal product page:
 | Simple / fast / modern UX | Partial | "Cloud-based, no installation required" |
 | Court-hearing focus | Partial | Listed as a use case but not design center |
 
-**Tagline word overlap with DS:** "Real-time transcription for depositions and court reporting" does not overlap with "Court transcripts, finally simple." No direct conflict.
+**Tagline word overlap with Shorthanders:** "Real-time transcription for depositions and court reporting" does not overlap with "Court transcripts, finally simple." No direct conflict.
 
 ---
 

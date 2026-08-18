@@ -76,13 +76,13 @@ Is this a real product with paying customers, a beta/waitlist, or a landing page
 
 ---
 
-## Strengths vs. DS
+## Strengths vs. Shorthanders
 
 Where they beat us today (features, funding, brand recognition, supply depth, geographic reach, etc.).
 
 ---
 
-## Weaknesses vs. DS
+## Weaknesses vs. Shorthanders
 
 Where we beat them – or where their model has structural gaps that our positioning can exploit.
 
@@ -90,7 +90,7 @@ Where we beat them – or where their model has structural gaps that our positio
 
 ## Overlap with our positioning
 
-Which DS messaging pillars do they share? Check against:
+Which Shorthanders messaging pillars do they share? Check against:
 - Transparent pricing / statutory rates
 - No agency cut
 - Direct CSR-to-attorney connection

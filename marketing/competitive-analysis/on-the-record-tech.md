@@ -1,7 +1,7 @@
 # On The Record
 
 **Last reviewed:** 2026-08-01 (re-verified: still reporter-side only, no attorney/firm-facing
-product – confirming DS's firm-facing directory + messaging + payment offer remains
+product – confirming Shorthanders' firm-facing directory + messaging + payment offer remains
 undifferentiated by this competitor – see `mvp/marketing/firm_go_to_market.md`)
 
 ---
@@ -109,29 +109,29 @@ What is NOT visible: attorney-facing booking, statutory rate data, CA CRB integr
 
 ---
 
-## Strengths vs. DS
+## Strengths vs. Shorthanders
 
-- **Live product with clear pricing.** Attorneys who try to Google alternatives to agencies may encounter this before DS if they're looking for "court reporter software."
+- **Live product with clear pricing.** Attorneys who try to Google alternatives to agencies may encounter this before Shorthanders if they're looking for "court reporter software."
 - **Reporter trust via founder identity.** Valerie is a working CSR who built this from lived experience – same founder-credibility play as CSR Suite.
-- **Scopist/proofreader network.** If they have a functioning marketplace of scopists, they have a real supply-side community DS does not yet have.
-- **Affordable entry.** $35/month or $300/year is low friction for reporters already running their own business. Worth having the comparison ready: DS is free to claim, list, and message, and only takes a small per-payment fee when a reporter actually collects money through the platform (5% on the free tier, or 2% plus a flat $29/month on Pro) – a reporter has to weigh On The Record's flat monthly cost against DS's pay-only-when-paid model.
-- **14-day free trial, no credit card.** A smooth, modern SaaS signup motion. Not clearly lower friction than DS, though – DS has no cost at all to claim a listing, message, or get started, so there's no upfront fee on DS's side to compare against.
+- **Scopist/proofreader network.** If they have a functioning marketplace of scopists, they have a real supply-side community Shorthanders does not yet have.
+- **Affordable entry.** $35/month or $300/year is low friction for reporters already running their own business. Worth having the comparison ready: Shorthanders is free to claim, list, and message, and only takes a small per-payment fee when a reporter actually collects money through the platform (5% on the free tier, or 2% plus a flat $29/month on Pro) – a reporter has to weigh On The Record's flat monthly cost against Shorthanders' pay-only-when-paid model.
+- **14-day free trial, no credit card.** A smooth, modern SaaS signup motion. Not clearly lower friction than Shorthanders, though – Shorthanders has no cost at all to claim a listing, message, or get started, so there's no upfront fee on Shorthanders' side to compare against.
 
 ---
 
-## Weaknesses vs. DS
+## Weaknesses vs. Shorthanders
 
 - **No demand side.** Attorneys and legal assistants cannot use On The Record. There is no product for the firm. This is a practice-management tool, not a marketplace.
 - **No court-hearing focus.** The workflow is built around depositions and transcript production. No evidence of public-hearing attendance, statutory rate compliance, or CA CRB verification.
-- **Geographic ambiguity.** No CA-specific compliance posture. DS's CA-specific positioning (statutory rates, CRB verification) is a meaningful differentiator for our launch window.
-- **MarketPlace is reporter-to-support-staff.** Their "MarketPlace" label could create confusion if attorneys search for it, but the product doesn't serve them. If DS gets compared to On The Record, we win on the "brings you new work" dimension immediately.
-- **Flat subscription vs. free-to-list-plus-per-payment-fee.** DS costs nothing to claim or list at all, and only charges a small fee when a reporter actually gets paid through the platform (5% on the free tier, or 2% plus a flat $29/month on Pro). For a reporter who picks up only occasional jobs, DS's pay-only-when-paid model is likely lower risk than On The Record's flat $35/month regardless of volume.
+- **Geographic ambiguity.** No CA-specific compliance posture. Shorthanders' CA-specific positioning (statutory rates, CRB verification) is a meaningful differentiator for our launch window.
+- **MarketPlace is reporter-to-support-staff.** Their "MarketPlace" label could create confusion if attorneys search for it, but the product doesn't serve them. If Shorthanders gets compared to On The Record, we win on the "brings you new work" dimension immediately.
+- **Flat subscription vs. free-to-list-plus-per-payment-fee.** Shorthanders costs nothing to claim or list at all, and only charges a small fee when a reporter actually gets paid through the platform (5% on the free tier, or 2% plus a flat $29/month on Pro). For a reporter who picks up only occasional jobs, Shorthanders' pay-only-when-paid model is likely lower risk than On The Record's flat $35/month regardless of volume.
 
 ---
 
 ## Overlap with our positioning
 
-| DS messaging pillar | On The Record overlap? | Notes |
+| Shorthanders messaging pillar | On The Record overlap? | Notes |
 |---|---|---|
 | Transparent pricing / statutory rates | Partial | They publish their own subscription pricing; no statutory rate focus |
 | No agency cut | No | Not a marketplace; doesn't address agency markup |
@@ -141,10 +141,10 @@ What is NOT visible: attorney-facing booking, statutory rate data, CA CRB integr
 | Simple / fast / modern UX | Yes | "One tool to manage your entire transcript workflow" |
 | Court-hearing focus | No | Deposition/transcript production focus implied |
 
-**Tagline word overlap with DS:**
+**Tagline word overlap with Shorthanders:**
 - "One tool to manage your entire transcript workflow" – shares "transcript" but not "simple" or "finally"
 - Subheading "Save time, never miss deadlines, and keep your finances in order" – no direct word overlap with our hero copy
-- Low direct tagline conflict with DS's "Court transcripts, finally simple."
+- Low direct tagline conflict with Shorthanders' "Court transcripts, finally simple."
 
 ---
 
@@ -153,5 +153,5 @@ What is NOT visible: attorney-facing booking, statutory rate data, CA CRB integr
 - Does Ronak have plans to build an attorney-facing demand side? That's the natural product extension if they get enough reporter supply.
 - What is their reporter count? Any public numbers shared in press/social?
 - Do they have ambitions to become a marketplace (reporter-to-attorney), or are they committed to the practice-management lane?
-- Does their flat $35/month resonate with CA CSRs vs. DS's free-to-list model plus a per-payment fee (5% free tier, or 2% plus $29/month on Pro)? A reporter doing only a handful of jobs a year pays little to nothing on DS but a flat $35/month regardless of volume on On The Record – worth testing how that comparison lands in CSR outreach.
+- Does their flat $35/month resonate with CA CSRs vs. Shorthanders' free-to-list model plus a per-payment fee (5% free tier, or 2% plus $29/month on Pro)? A reporter doing only a handful of jobs a year pays little to nothing on Shorthanders but a flat $35/month regardless of volume on On The Record – worth testing how that comparison lands in CSR outreach.
 - Are they marketing in CA specifically? Any presence at Cal-CCRA or NCRA events?

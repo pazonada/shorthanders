@@ -20,7 +20,7 @@ OPEN · TO-DO (an action, often needing an outside expert).
 
 ## 1. Monetization model – DECIDED (shape; FIRM price $49/user locked, reporter prices still TBD)
 
-**Question:** how does DS make money and recoup costs, given (a) CSR contact info is
+**Question:** how does Shorthanders make money and recoup costs, given (a) CSR contact info is
 already public, and (b) firms default to agencies unless they hire direct?
 
 **The model:**
@@ -49,7 +49,7 @@ already public, and (b) firms default to agencies unless they hire direct?
     where the fee often lands ~70% of total revenue. Upgrade point = Pro price ÷ (base − Pro
     fee); at $29 / (5%−2%) that's ~$967/mo of billing.
 - **The firm never sees a Shorthanders fee on an invoice.** They pay the exact amount the
-  reporter billed. Any DS fee comes out of the reporter's side. **This is what prevents the
+  reporter billed. Any Shorthanders fee comes out of the reporter's side. **This is what prevents the
   firm-balks-at-a-surprise-fee dispute Aud was worried about.**
 
 **What Stripe actually costs us (this is the key correction):**
@@ -100,19 +100,19 @@ Charging the scarce supply side to *respond to inbound demand we generate* would
 marketplace and the reporter-invite flywheel, and mirror the agency behaviour we position against.
 We charge each side for what IT values: firms pay for **access** (subscription); reporters pay a
 small fee for **getting paid**. The real risk isn't free messaging – it's **payment
-disintermediation** (parties meet on DS, transact off it). Mitigations:
+disintermediation** (parties meet on Shorthanders, transact off it). Mitigations:
 - **Let the firm pull the payment onto the rails.** Firms want electronic payment and dislike
   check-only reporters (see `firm_electronic_payment` memory), so firm-side convenience drags the
   transaction – and the fee – on-platform regardless of reporter habit. Strongest lever.
 - **Make on-platform payment strictly better** – instant payout, auto-invoice from the thread,
   tracking, 1099-K handling. Path of least resistance.
 - **Reviews-after-payment flywheel** – verified ratings only come from on-platform payments, so
-  reporters *want* to invoice through DS (`reviews_and_ratings.md`).
+  reporters *want* to invoice through Shorthanders (`reviews_and_ratings.md`).
 - **The firm subscription is the reliable, recurring anchor;** reporter per-payment fees are the
   variable upside that grows as the payment habit forms.
 
 **The one number to validate (OPEN):** the **digital-invoicing adoption rate** – what share of
-reporters who message on DS actually invoice/collect through DS vs. off-platform. The whole
+reporters who message on Shorthanders actually invoice/collect through Shorthanders vs. off-platform. The whole
 supply-side revenue line rides on it. Ask Rosie's network + pilot reporters/firms.
 
 **Invoice payment method – card vs ACH (LEAN 2026-08-06, confirm before the Stripe build):**
@@ -163,12 +163,12 @@ transcription work (where agencies are weakest).
 
 ## 2. Deposition scope & positioning – LEANING (show it; don't market it; one legal check)
 
-**Question:** the full-version DS avoided depositions (agency-saturated + feared liability).
+**Question:** the full-version Shorthanders avoided depositions (agency-saturated + feared liability).
 Should the reduced directory show whether a CSR does depos, and does that add liability?
 
 **Leaning / recommendation:**
 - **The "no depos" rule was an old-model rule.** That version sat *inside* the transaction
-  (matching/booking). The reduced model is a neutral directory + payment rail – DS is **not
+  (matching/booking). The reduced model is a neutral directory + payment rail – Shorthanders is **not
   the hiring party for any work** – so the depo-vs-transcription liability gap largely
   collapses; exposure is the same (near-zero by design) for both.
 - **"Allow hiring for depos" isn't a lever you have.** In a directory, the parties contract
@@ -191,18 +191,18 @@ rules; California has history/rules around reporting firms giving attorneys ince
 having undisclosed financial arrangements). Court-audio transcription does not carry this.
 
 **Action:** have a **court-reporting-industry attorney** – not Rosie (family-law, not a
-CSR-regulatory expert) – opine on whether DS's subscription/payment model implicates
+CSR-regulatory expert) – opine on whether Shorthanders' subscription/payment model implicates
 deposition-reporter neutrality/incentive rules **before** actively facilitating depo
-payments. Consider a terms line stating DS doesn't arrange depositions or act as a
+payments. Consider a terms line stating Shorthanders doesn't arrange depositions or act as a
 deposition officer.
 
 **Shareable brief for the lawyer (and Rosie):** `mvp/docs/legal_question_deposition_neutrality.md`
 – plain-English explanation + the exact question(s) to ask.
 
 **Update 2026-07-29 – Rosie's read (no written opinion needed):** Rosie says we do **not**
-need a formal legal opinion on whether DS can be a **pass-through / referral** for depo jobs.
+need a formal legal opinion on whether Shorthanders can be a **pass-through / referral** for depo jobs.
 Her reasoning: the concern about a non-reporter routing depo work rests on an **archaic law
-that doesn't apply to our situation** (directory + payment rail, DS is not the hiring party).
+that doesn't apply to our situation** (directory + payment rail, Shorthanders is not the hiring party).
 She's confident, so we're **not commissioning an opinion** on the broker/pass-through angle.
 Two things to keep straight so this green-light doesn't get over-read:
 - Her read covers the **broker/pass-through** question. The narrower concern this section was
@@ -211,7 +211,7 @@ Two things to keep straight so this green-light doesn't get over-read:
   with her whether "doesn't apply" also covers that, or only the broker angle, before we
   actively facilitate depo *payments*.
 - Separate issue, not covered here: **money custody** (money-transmitter/escrow) only arises
-  if DS ever *holds* funds. Using Stripe Connect (platform never holds the money) keeps us
+  if Shorthanders ever *holds* funds. Using Stripe Connect (platform never holds the money) keeps us
   clear; don't let this note be remembered as a green-light on holding money.
 
 ---
@@ -263,7 +263,7 @@ the way this is built already keeps the burden small.
 **Question:** what if a reporter shares a transcript (depo or hearing) through messaging via
 an insecure link (a public Google Doc, a personal server)?
 
-**Position:** low legal exposure, because DS is the **message pipe, not the file host** –
+**Position:** low legal exposure, because Shorthanders is the **message pipe, not the file host** –
 we don't store, secure, host, or vet files or links; we hold only the URL text in a message,
 like email or Slack. The person who chose the insecure link is responsible for it. The
 "store no files" rule is what keeps us out of custody – protect it.
@@ -273,7 +273,7 @@ if not our fault) and the fact that **deposition transcripts are more sensitive*
 hearing transcripts (hearings are usually public record; depos can be confidential/sealed).
 
 **How we handle it (cheap, keeps us out of custody):**
-- Terms clause spelling out that DS doesn't store/secure/vet files or links and that users are
+- Terms clause spelling out that Shorthanders doesn't store/secure/vet files or links and that users are
   solely responsible for how they share materials and for confidentiality/protective orders.
   *(Added to the prototype Terms page.)*
 - A nudge in the messaging composer when a link is pasted: "only share links you control;

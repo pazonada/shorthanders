@@ -9,7 +9,7 @@ DBA, and trademark items are worth one confirmation from the release-review atto
 
 | Account / service | Role for Shorthanders | Current state | What to do |
 |---|---|---|---|
-| **Legal entity** | Who owns/operates DS | Studio Crux, LLC (NJ) | Keep DS under it; brand via a DBA. Spin out a separate entity only on a real trigger (below). |
+| **Legal entity** | Who owns/operates Shorthanders | Studio Crux, LLC (NJ) | Keep Shorthanders under it; brand via a DBA. Spin out a separate entity only on a real trigger (below). |
 | **DBA / alternate name** | "Shorthanders" as a trade name | **Filed** (NJ Form C-150G, $50 / 5 yrs) | Done — Studio Crux can bank/contract/invoice as Shorthanders. The retired "Dewey Sholes" name is not filed and won't be. |
 | **Domain + DNS** | shorthanders.com (target) · deweysholes.com (legacy) | **shorthanders.com owned but NOT set up yet**; deweysholes.com still live at Gandi (SPF/DKIM/DMARC verified) | Before launch: stand up shorthanders.com DNS + email; keep deweysholes.com forwarding through the switch. Tighten DMARC `p=none → reject` later. |
 | **Email / Workspace** | Human/team mail | Google Workspace on **deweysholes.com** today (admin@, aud@, hello@) — migrate to shorthanders.com before launch | `aud@` = personal founder address (1:1, keep its reputation clean). Turn `hello@` into / alias **`support@`** for inbound support + "remove my listing" requests (free Group/alias, no seat). App + outreach email go elsewhere (below). |
@@ -34,10 +34,10 @@ base scales with revenue, not ahead of it.
 | Domain (Gandi) | ~$20/yr | Now | ~$2/mo amortized. |
 | Google Workspace | ~$7/seat/mo → **~$14/mo** (2 seats) | Now | Could run 1 seat (~$7) if you drop the separate super-admin; `hello@`/`support@` Groups are free. |
 | GitHub | **$0** | – | Private repos free. |
-| Vercel | **Shared** – already on Pro (~$20/mo, sometimes more) | Now, across projects | DS is another project on your existing Pro plan – **no new base fee, just incremental usage.** "Sometimes more" = usage overage → hold it down with lean builds + batched pushes + the `.vercelignore`. |
+| Vercel | **Shared** – already on Pro (~$20/mo, sometimes more) | Now, across projects | Shorthanders is another project on your existing Pro plan – **no new base fee, just incremental usage.** "Sometimes more" = usage overage → hold it down with lean builds + batched pushes + the `.vercelignore`. |
 | Resend | **$0** free tier, or ~$20/mo | Marginal (shared w/ other site) | **Transactional only.** Free tier ~3k emails/mo may cover launch. Claude Code plugin available. |
 | Trademark | ~$250–350 (paid) | Filed (ITU) | Priority date locked; SOU + possible extension fees still to come after the NOA. Old Dewey Sholes filing (99703235) sunk. |
-| Supabase | **Shared/marginal** – you already pay it (Disclosure Watch + iPhone app) | Now | Adding DS likely adds incremental compute, **not a fresh $25 base** – verify against your org billing. Keep DS as its **own project** (ideally its own org) so its data stays separable + transferable for a future spin-out/sale. |
+| Supabase | **Shared/marginal** – you already pay it (Disclosure Watch + iPhone app) | Now | Adding Shorthanders likely adds incremental compute, **not a fresh $25 base** – verify against your org billing. Keep Shorthanders as its **own project** (ideally its own org) so its data stays separable + transferable for a future spin-out/sale. |
 | Stripe (+ Connect) | **$0** base; ~$2/mo per *active* Connect account | Only when money moves | Processing fees are the reporter's cost, passed through. Offset by revenue. |
 | Mail-merge tool (outreach) | **$0–30/mo** | Campaign months only | YAMM ~$50/yr (cheapest, occasional) · GMass ~$30/mo (best, pausable) · Mailmeteor ~$10–25/mo. |
 | PostHog (analytics) | **$0** free tier (~1M events/mo) | Only at real scale | Product analytics; not a CRM. |
@@ -48,17 +48,17 @@ SaaS – overkill), SMS/Twilio (no SMS by product decision), file storage / S3 (
 only), a second email platform for outreach (the mail-merge tool is it).
 
 **Run-rate:** Vercel Pro, Supabase, and Resend are **already paid across your portfolio**
-(Disclosure Watch, the iPhone app, your other site), so DS mostly adds *usage*, not new base fees.
-- **DS-specific recurring today:** ~**$16/mo** – its own Workspace (~$14) + domain (~$2) – **plus**
+(Disclosure Watch, the iPhone app, your other site), so Shorthanders mostly adds *usage*, not new base fees.
+- **Shorthanders-specific recurring today:** ~**$16/mo** – its own Workspace (~$14) + domain (~$2) – **plus**
   incremental usage on the shared Vercel/Supabase/Resend, **plus** ~$30 in outreach-campaign months.
   One-offs: DBA $50, NJ report ~$75/yr.
-- **At scale:** the shared platforms tip into overage / additional Pro-compute as DS grows – but
+- **At scale:** the shared platforms tip into overage / additional Pro-compute as Shorthanders grows – but
   that lands once firm subs ($49/user) + reporter per-payment fees are flowing.
 
 **Levers:** hold shared-platform *usage* down (lean builds, batched pushes, the `.vercelignore` –
 these directly control Vercel's "sometimes more"); 1 Workspace seat vs 2 (~-$7/mo); YAMM annual vs
 GMass monthly. The old "move to Cloudflare to dodge Vercel's $20" barely applies now – that base is
-already sunk in your Pro plan, so it'd only shave DS's marginal usage, not a base fee.
+already sunk in your Pro plan, so it'd only shave Shorthanders' marginal usage, not a base fee.
 
 ## Two guiding decisions
 
@@ -66,9 +66,9 @@ already sunk in your Pro plan, so it'd only shave DS's marginal usage, not a bas
   other products and your consulting also stay under Studio Crux – one EIN, one bank relationship,
   one tax return. The only cost of sharing one entity is shared liability, which is minimal while
   everything is pre-revenue and payments aren't live.
-- **Keep DS infra cleanly separable from your other properties.** Its own domain/sending domain,
+- **Keep Shorthanders infra cleanly separable from your other properties.** Its own domain/sending domain,
   its own Vercel project, its own **Supabase project (ideally its own org)**, its own Stripe account,
-  its own repo. Riding on shared accounts is fine for *billing* (cheaper), but DS's **data and
+  its own repo. Riding on shared accounts is fine for *billing* (cheaper), but Shorthanders' **data and
   services should stay in their own project** so a later spin-out, rebrand, or sale is a clean
   hand-off, not a migration out of Disclosure Watch / the iPhone app's tables.
 

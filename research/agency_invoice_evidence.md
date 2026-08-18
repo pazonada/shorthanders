@@ -2,7 +2,7 @@
 
 **Captured:** 2026-05-13
 **Source:** Public post in "Court Reporter Rates Discussion" Facebook group (11K members), screenshot shared by Aud.
-**Why it's here:** Concrete proof that (a) agency markups consume a meaningful share of attorney invoices, (b) CSRs themselves see this as the core injustice in their industry, and (c) DS's marketplace structure directly addresses what CSRs are publicly demanding.
+**Why it's here:** Concrete proof that (a) agency markups consume a meaningful share of attorney invoices, (b) CSRs themselves see this as the core injustice in their industry, and (c) Shorthanders' marketplace structure directly addresses what CSRs are publicly demanding.
 
 ---
 
@@ -61,9 +61,9 @@ This sits in the middle of the 30–50% agency-take range CSRs have estimated an
 
 ---
 
-## Side-by-side: the same job on DS
+## Side-by-side: the same job on Shorthanders
 
-Same 319-page arbitration transcript, run through the proposed DS pricing model.
+Same 319-page arbitration transcript, run through the proposed Shorthanders pricing model.
 
 ### Agency invoice (this one, $2,311.49)
 
@@ -75,26 +75,26 @@ Same 319-page arbitration transcript, run through the proposed DS pricing model.
 | **CSR earns** | **$1,403.60 (61%)** |
 | Agency keeps | $907.89 (39%) |
 
-### Same job on DS (CSR at platform default $5.00/page, 12% buyer fee)
+### Same job on Shorthanders (CSR at platform default $5.00/page, 12% buyer fee)
 
 | | |
 |---|---|
 | Transcript: 319 × $5.00 | $1,595.00 |
 | Exhibit handling (CSR's per-page rate, kept by CSR) | $50.00 (est.) |
-| DS platform fee (12% on $1,645) | $197.40 |
+| Shorthanders platform fee (12% on $1,645) | $197.40 |
 | **Attorney pays** | **$1,842.40** |
 | **CSR earns** | **$1,645.00 (89%)** |
-| DS keeps | $197.40 (11%) |
+| Shorthanders keeps | $197.40 (11%) |
 
 ### The delta
 
-| | Agency | DS | Delta |
+| | Agency | Shorthanders | Delta |
 |---|---|---|---|
 | Attorney pays | $2,311.49 | $1,842.40 | **Saves $469.09 (20% lower)** |
 | CSR earns | $1,403.60 | $1,645.00 | **Earns $241.40 more (17% higher)** |
 | Platform/agency keeps | $907.89 | $197.40 | $710 less rake |
 
-**Both sides win, because the middleman is taking less.** This is the entire DS thesis in two columns.
+**Both sides win, because the middleman is taking less.** This is the entire Shorthanders thesis in two columns.
 
 ---
 
@@ -108,19 +108,19 @@ Engagement on the underlying post: 104 reactions, 162 comments, 2 shares. Heavy 
 
 ---
 
-## Why this matters for DS positioning
+## Why this matters for Shorthanders positioning
 
-Caldarella's comment, restated as a strategic blueprint that DS already implements:
+Caldarella's comment, restated as a strategic blueprint that Shorthanders already implements:
 
-| Caldarella says | DS delivers |
+| Caldarella says | Shorthanders delivers |
 |---|---|
-| "Reporters are NOT the ones overcharging" | DS invoice shows the CSR's rate, no hidden line items |
+| "Reporters are NOT the ones overcharging" | Shorthanders invoice shows the CSR's rate, no hidden line items |
 | "Tell attorneys what your charges are" | CSR's rate is published on their profile, visible at booking |
-| "Advocate for transparency laws" | DS *is* the transparency – no statute needed |
-| "We can't let stenographers go by way of the dinosaurs" | DS preserves CSR income by removing the agency rake |
-| "Held to statutory rates… 50-year-old rates" | DS lets CSRs set their own rate within platform bands, breaking the statutory anchor |
+| "Advocate for transparency laws" | Shorthanders *is* the transparency – no statute needed |
+| "We can't let stenographers go by way of the dinosaurs" | Shorthanders preserves CSR income by removing the agency rake |
+| "Held to statutory rates… 50-year-old rates" | Shorthanders lets CSRs set their own rate within platform bands, breaking the statutory anchor |
 
-The 11K-member group is **exactly the Phase 1 supply audience** identified in [marketing_plan_phase1_csr_supply.md](marketing_plan_phase1_csr_supply.md). The most-engaged commenters are publicly making the case for DS without having heard of DS.
+The 11K-member group is **exactly the Phase 1 supply audience** identified in [marketing_plan_phase1_csr_supply.md](marketing_plan_phase1_csr_supply.md). The most-engaged commenters are publicly making the case for Shorthanders without having heard of Shorthanders.
 
 ---
 
@@ -130,11 +130,11 @@ The 11K-member group is **exactly the Phase 1 supply audience** identified in [m
 
 Two side-by-side invoices, real numbers from this arbitration:
 - **Through an agency:** $2,311.49 to attorney, $1,403.60 to CSR
-- **Through DS:** $1,842.40 to attorney, $1,645.00 to CSR
+- **Through Shorthanders:** $1,842.40 to attorney, $1,645.00 to CSR
 
 Headline: *"Same reporter. Same transcript. Same hours of work. Different math."*
 
-Subhead: *"DS takes 11% as a transparent platform fee. The agencies took 39% in line items no one asked for."*
+Subhead: *"Shorthanders takes 11% as a transparent platform fee. The agencies took 39% in line items no one asked for."*
 
 This is probably the single most persuasive piece of marketing collateral we have access to. It deserves landing-page real estate.
 
@@ -144,7 +144,7 @@ When emailing law firms in Phase 2, include the invoice screenshot (anonymized) 
 
 ### 3. CSR-side recruitment proof
 
-For Phase 1 cold-email to CSRs, include a graphic showing the CSR-take side: *"$1,403 out of a $2,311 invoice is what this reporter actually earned. On DS, that same reporter would earn $1,645 – and her attorney would still pay $469 less. Want to see how?"*
+For Phase 1 cold-email to CSRs, include a graphic showing the CSR-take side: *"$1,403 out of a $2,311 invoice is what this reporter actually earned. On Shorthanders, that same reporter would earn $1,645 – and her attorney would still pay $469 less. Want to see how?"*
 
 ### 4. Outreach to Caldarella specifically
 
@@ -152,7 +152,7 @@ She's a working CSR, articulate, has a published rate sheet, holds authority in 
 
 ### 5. Press / earned-media angle
 
-Once we have a CA launch underway, this invoice + the DS comparison is a compelling story for legal-industry press (*Daily Journal*, *The Recorder*, *Law360* in CA). Lede: *"How a Bay Area startup is breaking the court-reporter agency model – by showing reporters where the money was going."*
+Once we have a CA launch underway, this invoice + the Shorthanders comparison is a compelling story for legal-industry press (*Daily Journal*, *The Recorder*, *Law360* in CA). Lede: *"How a Bay Area startup is breaking the court-reporter agency model – by showing reporters where the money was going."*
 
 ---
 
@@ -193,9 +193,9 @@ Pure-markup line items on this invoice:
 
 If the CSR is paid at Atkinson-Baker-style reporter-payout rates ($3.00–$4.40/pg, plus appearance + overtime split), the CSR cleared roughly **$1,200–$1,800** on this $4,186 invoice. **Agency kept 70–82%.**
 
-### Same job on DS – hypothetical
+### Same job on Shorthanders – hypothetical
 
-| | Agency | DS (proposed) |
+| | Agency | Shorthanders (proposed) |
 |---|---|---|
 | Original transcript (201 × $5.50) | $1,195.95 | $1,105.50 |
 | Copy transcript (133 × $1.75) | $498.75 | $232.75 |
@@ -222,7 +222,7 @@ Attorney saves **$1,571 (38% lower)**. CSR earns **$500–1,100 more**.
 
 ## Competitive context: EcoScribe Solutions (added 2026-05-13)
 
-[EcoScribe Solutions](https://ecoscribesolutions.com/the-ecoscribe-solutions-difference/) is a CA-based court-reporting agency running the **same "transparent pricing, no hidden fees" pitch DS has been designing** – but for depositions, not court hearings.
+[EcoScribe Solutions](https://ecoscribesolutions.com/the-ecoscribe-solutions-difference/) is a CA-based court-reporting agency running the **same "transparent pricing, no hidden fees" pitch Shorthanders has been designing** – but for depositions, not court hearings.
 
 ### Their positioning
 
@@ -248,27 +248,27 @@ Their list of "included" services maps almost exactly to the line items we ident
 
 This is direct validation that the line items we flagged as "pure agency markup" in the invoice analyses above are exactly the ones a modern transparency-positioned competitor absorbs into flat pricing.
 
-### Implications for DS
+### Implications for Shorthanders
 
 1. **The transparency pitch is market-validated.** Not theoretical – EcoScribe is doing it and has a marketing page about it.
-2. **DS can credibly claim bigger savings.** Invoice analyses show 20% (Caldarella) to 38% (#91319) DS savings vs. legacy agencies. Average ~30%. **"Up to 38%" or "30% average" beats EcoScribe's 27%.**
-3. **EcoScribe is depositions-only.** Not a today-competitor for DS's court-hearings scope. Becomes a competitor only if/when DS expands to depos in Year 3+.
-4. **DS's court-hearings-first wedge is the edge.** EcoScribe isn't in this segment; legacy agencies are unfocused on it (they prefer higher-margin depos). Path to dominant court-hearing platform position is open.
-5. **The "bundle aggressively" design decision is confirmed.** Two independent companies (DS, EcoScribe) arrived at the same conclusion from the same data. Market clearly rewards "no surprises" pricing in this category.
+2. **Shorthanders can credibly claim bigger savings.** Invoice analyses show 20% (Caldarella) to 38% (#91319) Shorthanders savings vs. legacy agencies. Average ~30%. **"Up to 38%" or "30% average" beats EcoScribe's 27%.**
+3. **EcoScribe is depositions-only.** Not a today-competitor for Shorthanders' court-hearings scope. Becomes a competitor only if/when Shorthanders expands to depos in Year 3+.
+4. **Shorthanders' court-hearings-first wedge is the edge.** EcoScribe isn't in this segment; legacy agencies are unfocused on it (they prefer higher-margin depos). Path to dominant court-hearing platform position is open.
+5. **The "bundle aggressively" design decision is confirmed.** Two independent companies (Shorthanders, EcoScribe) arrived at the same conclusion from the same data. Market clearly rewards "no surprises" pricing in this category.
 
-### Where DS goes further than EcoScribe (positioning-side)
+### Where Shorthanders goes further than EcoScribe (positioning-side)
 
 - **"CSR keeps 100% of stated rate."** EcoScribe doesn't make this claim – they're still an agency, presumably still keeping a meaningful share of the CSR's labor.
-- **Marketplace vs. agency model.** EcoScribe is a transparent agency; DS is a marketplace. Different AB-5 posture, different CSR-side pitch.
-- **CA-specific depth.** EcoScribe markets to a broader audience; DS launch is Bay Area first with deep local court / CSR knowledge.
+- **Marketplace vs. agency model.** EcoScribe is a transparent agency; Shorthanders is a marketplace. Different AB-5 posture, different CSR-side pitch.
+- **CA-specific depth.** EcoScribe markets to a broader audience; Shorthanders launch is Bay Area first with deep local court / CSR knowledge.
 
 ---
 
 ## Combined caveats worth flagging
 
 - **The exact CSR take-home is estimated**, not directly observed. We use Atkinson-Baker reporter-payout rates ($3.00–$4.40/pg depending on case type) as a proxy. Specific take-home varies by agency contract.
-- **Exhibit handling is real work** that someone has to do. On DS, either the CSR does it (and bills for it) or the firm handles its own exhibits. The "$50–$200 estimated" placeholders in the DS comparisons should be replaced once we decide DS's exhibit-handling model.
-- **Production Fee, Litigation Package, E-Bundle, Remote Set-Up, Printing Fee, Shipping (Electronic)** are all largely software-substitutable. On DS these are "auto-generate and email a PDF" – zero marginal cost. That's where the agency markup disappears, not because agencies are evil but because we have software they don't (the "streamline-not-eliminate" thesis, per Rosie 2026-05-13).
+- **Exhibit handling is real work** that someone has to do. On Shorthanders, either the CSR does it (and bills for it) or the firm handles its own exhibits. The "$50–$200 estimated" placeholders in the Shorthanders comparisons should be replaced once we decide Shorthanders' exhibit-handling model.
+- **Production Fee, Litigation Package, E-Bundle, Remote Set-Up, Printing Fee, Shipping (Electronic)** are all largely software-substitutable. On Shorthanders these are "auto-generate and email a PDF" – zero marginal cost. That's where the agency markup disappears, not because agencies are evil but because we have software they don't (the "streamline-not-eliminate" thesis, per Rosie 2026-05-13).
 - **Two invoices are a directional pattern, not a published rate range.** We can confidently say "agency take-rate ranges from ~39% on non-remote arbitrations to ~70-82% on remote depos" – but for marketing claims, 3-5 more anonymized invoices would let us publish averages with confidence intervals.
 - **The 2023 (invoice #91319) vs. 2025 (Caldarella) rate stability** ($5.95/pg → $5.50/pg, similar adjacent line items) suggests CA agency rates are roughly flat over time. Our recalibration anchor doesn't need an inflation adjustment.
 

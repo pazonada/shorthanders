@@ -102,28 +102,28 @@ Agency product (from Law.com reporting, not directly confirmed on site at time o
 
 ---
 
-## Strengths vs. DS
+## Strengths vs. Shorthanders
 
-- **Deposition AI is a genuine differentiation.** DS does not offer AI deposition prep, live coaching, or post-deposition analysis. Attorneys who discover Deposely for deposition work may not look for a separate transcript-ordering tool.
-- **Agency distribution channel.** Deposely for Agencies gives them access to agency rosters and agency billing relationships. Agencies using Deposely may actively steer their reporters away from marketplaces like DS.
-- **Press profile.** Law.com coverage raises awareness among legal tech buyers – the same audience DS is trying to reach.
+- **Deposition AI is a genuine differentiation.** Shorthanders does not offer AI deposition prep, live coaching, or post-deposition analysis. Attorneys who discover Deposely for deposition work may not look for a separate transcript-ordering tool.
+- **Agency distribution channel.** Deposely for Agencies gives them access to agency rosters and agency billing relationships. Agencies using Deposely may actively steer their reporters away from marketplaces like Shorthanders.
+- **Press profile.** Law.com coverage raises awareness among legal tech buyers – the same audience Shorthanders is trying to reach.
 - **"Second chair" framing.** Strong emotional resonance with litigators; positions the tool as indispensable rather than optional.
 
 ---
 
-## Weaknesses vs. DS
+## Weaknesses vs. Shorthanders
 
-- **Deposition-only.** Public court hearings – DS's V1 scope – are not served. An attorney ordering a transcript of a public court hearing cannot use Deposely.
-- **Agency-dependent supply model.** Deposely for Agencies keeps agencies in the middle. DS cuts agencies out, which is our value proposition to both reporters and firms.
-- **No individual CSR marketplace.** Reporters cannot list themselves on Deposely to find new work. DS offers reporters direct-to-attorney visibility that Deposely doesn't.
-- **Sales-gated.** Firms cannot try it without talking to sales first. DS is self-serve from day one.
+- **Deposition-only.** Public court hearings – Shorthanders' V1 scope – are not served. An attorney ordering a transcript of a public court hearing cannot use Deposely.
+- **Agency-dependent supply model.** Deposely for Agencies keeps agencies in the middle. Shorthanders cuts agencies out, which is our value proposition to both reporters and firms.
+- **No individual CSR marketplace.** Reporters cannot list themselves on Deposely to find new work. Shorthanders offers reporters direct-to-attorney visibility that Deposely doesn't.
+- **Sales-gated.** Firms cannot try it without talking to sales first. Shorthanders is self-serve from day one.
 - **Not CA-specific.** No statutory rate compliance, no CRB integration.
 
 ---
 
 ## Overlap with our positioning
 
-| DS messaging pillar | Deposely overlap? | Notes |
+| Shorthanders messaging pillar | Deposely overlap? | Notes |
 |---|---|---|
 | Transparent pricing / statutory rates | No | Sales-gated, no pricing |
 | No agency cut | No | Agency layer preserved (Deposely for Agencies actively empowers agencies) |
@@ -133,7 +133,7 @@ Agency product (from Law.com reporting, not directly confirmed on site at time o
 | Simple / fast / modern UX | Partial | "Better Depositions" implies ease, but the product is deposition-specific |
 | Court-hearing focus | No | Depositions only |
 
-**Tagline word overlap with DS:** "Better Depositions. Better Outcomes." does not conflict with "Court transcripts, finally simple." Low overlap.
+**Tagline word overlap with Shorthanders:** "Better Depositions. Better Outcomes." does not conflict with "Court transcripts, finally simple." Low overlap.
 
 ---
 

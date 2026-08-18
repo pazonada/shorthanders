@@ -36,7 +36,7 @@
 
 - **Model type:** All-inclusive / "one-line-item invoice"
 - **Rates:** Not publicly disclosed; specific rates require contact
-- **Notes:** "One-line-item invoice" is a differentiation claim – no hidden fees, bundled pricing. Actual rates are behind a sales contact. This is the opposite of DS's transparent statutory-rate model.
+- **Notes:** "One-line-item invoice" is a differentiation claim – no hidden fees, bundled pricing. Actual rates are behind a sales contact. This is the opposite of Shorthanders' transparent statutory-rate model.
 
 ---
 
@@ -96,29 +96,29 @@ From homepage:
 
 ---
 
-## Strengths vs. DS
+## Strengths vs. Shorthanders
 
-- **Named law firm clients.** Social proof is real and named – something DS does not yet have.
+- **Named law firm clients.** Social proof is real and named – something Shorthanders does not yet have.
 - **White-glove service model.** For large firms that want handholding, "on-call client success team" is a meaningful differentiator.
-- **One-line-item invoicing.** The promise of no billing surprises appeals to the same legal-assistant pain point DS targets.
-- **Established deposition practice.** If a firm is doing high-volume depositions, Remote Legal may already be embedded before DS arrives.
+- **One-line-item invoicing.** The promise of no billing surprises appeals to the same legal-assistant pain point Shorthanders targets.
+- **Established deposition practice.** If a firm is doing high-volume depositions, Remote Legal may already be embedded before Shorthanders arrives.
 
 ---
 
-## Weaknesses vs. DS
+## Weaknesses vs. Shorthanders
 
-- **Depositions only.** DS serves public court hearings – a segment Remote Legal does not address.
-- **Agency model.** The "platform-certified" veneer doesn't change that Remote Legal is the intermediary. DS removes the intermediary.
-- **Remote only.** For hearings requiring live in-person attendance (DS's V1 live-attendance product), Remote Legal has no offering.
+- **Depositions only.** Shorthanders serves public court hearings – a segment Remote Legal does not address.
+- **Agency model.** The "platform-certified" veneer doesn't change that Remote Legal is the intermediary. Shorthanders removes the intermediary.
+- **Remote only.** For hearings requiring live in-person attendance (Shorthanders' V1 live-attendance product), Remote Legal has no offering.
 - **Not CA-statutory-rate compliant.** No mention of CA statutory rates; likely priced as a managed service at their own rate structure.
-- **Not self-serve.** Can't sign up and order without sales contact. DS is self-serve.
+- **Not self-serve.** Can't sign up and order without sales contact. Shorthanders is self-serve.
 - **Opaque pricing.** "One-line-item invoice" is a simplification claim, not a transparency claim. You still don't know the rate until you call.
 
 ---
 
 ## Overlap with our positioning
 
-| DS messaging pillar | Remote Legal overlap? | Notes |
+| Shorthanders messaging pillar | Remote Legal overlap? | Notes |
 |---|---|---|
 | Transparent pricing / statutory rates | No | One-line-item ≠ transparent pricing |
 | No agency cut | No | Remote Legal IS the agency |
@@ -128,13 +128,13 @@ From homepage:
 | Simple / fast / modern UX | Partial | "One-line-item invoice" implies simplicity |
 | Court-hearing focus | No | Depositions only |
 
-**Tagline word overlap with DS:** "Don't Settle for an Outdated Court Reporting Service" uses "court reporting" but no overlap with "Court transcripts, finally simple." Low direct conflict.
+**Tagline word overlap with Shorthanders:** "Don't Settle for an Outdated Court Reporting Service" uses "court reporting" but no overlap with "Court transcripts, finally simple." Low direct conflict.
 
 ---
 
 ## Open questions
 
 - Are they expanding to CA? New York-origin companies frequently expand West; if Remote Legal targets CA firms, they'd be competing for the same legal-assistant users.
-- What does "one-line-item invoice" cost vs. statutory rates? If it's priced above CA statutory rates, that's a vulnerability DS can exploit in messaging.
+- What does "one-line-item invoice" cost vs. statutory rates? If it's priced above CA statutory rates, that's a vulnerability Shorthanders can exploit in messaging.
 - Do any of their named clients have CA offices? Jackson Lewis has a broad national presence including CA – worth investigating.
 - Any plans to serve public court hearings, not just depositions?

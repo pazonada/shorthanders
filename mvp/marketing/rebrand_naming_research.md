@@ -26,7 +26,7 @@ Full profiles live in `marketing/competitive-analysis/`; this is the naming-rele
 
 **Descriptive/literal names already in the market:**
 - **MyTexasCSR** (mytexascsr.com) – "Where court reporters connect with legal professionals." Run jointly by the two Texas trade associations (TCRA + TEXDRA), not a standalone company. This is the clearest in-market example of the direct/descriptive route, and it works there *because* it's backed by built-in trade-association distribution, not because the name itself is doing marketing work. We don't have that distribution advantage, which matters for how much weight a purely descriptive name can carry on its own. See `marketing/competitive-analysis/mytexascsr.md`.
-- **CSR Suite**, **On The Record** (On The Record Tech) – both direct competitors per our own competitive-analysis folder, both descriptive/plain-English names. "On The Record" in particular is a real, currently-operating competitor name – ruling that exact phrase out as a DS brand, not just as a trademark risk but as a direct name collision.
+- **CSR Suite**, **On The Record** (On The Record Tech) – both direct competitors per our own competitive-analysis folder, both descriptive/plain-English names. "On The Record" in particular is a real, currently-operating competitor name – ruling that exact phrase out as a Shorthanders brand, not just as a trademark risk but as a direct name collision.
 - **Court Reporters Clearinghouse**, **Worldwide Court Reporters**, **NNRC (National Network Reporting Company)** – older-generation agencies, literal descriptive names.
 
 **Evocative/craft-rooted names already in the market:**
@@ -79,7 +79,7 @@ Plain-English names built from the product itself. Easiest to explain in one sen
 | **Hire A Reporter** | Transactional, plain | Slightly staffing-agency-coded ("hire") which most independent reporters resist (they're not employees) | Fine, very clear intent | Travels | Instantly clear | "Hire" framing risks the exact AB-5/independent-contractor sensitivity reporters already have about agencies calling the shots – a bad connotation for the supply side specifically |
 | **CSR Directory** (existing owned domain, unmodified) | Literal | Reads correctly to a CA reporter | Confusing outside CA; jargon to a legal assistant who doesn't know "CSR" | **Fails travel/jargon constraint** – included only to be explicit about why it's ruled out as the primary brand | Domain already owned, decent CA-specific SEO value | Contains the exact acronym the brief rules out; keep as a feeder domain only, not the brand |
 
-**Overall read on this route:** viable as an SEO/landing-page layer (see domain section above), weak as the actual brand. None of these differentiate DS from MyTexasCSR's literal naming, and the whole point of dropping "Dewey Sholes" is to stop being confused for something we're not (a law firm) – a purely descriptive name solves that but trades it for "generic search-results page," which undersells the messaging + invoicing + payments product underneath.
+**Overall read on this route:** viable as an SEO/landing-page layer (see domain section above), weak as the actual brand. None of these differentiate Shorthanders from MyTexasCSR's literal naming, and the whole point of dropping "Dewey Sholes" is to stop being confused for something we're not (a law firm) – a purely descriptive name solves that but trades it for "generic search-results page," which undersells the messaging + invoicing + payments product underneath.
 
 ---
 

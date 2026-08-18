@@ -45,8 +45,8 @@ The video is the visual companion to the "agency invoice evidence" research and 
 - Clean, modern. Lots of white/light space, generous margins.
 - Soft, well-lit interiors. Realistic but slightly idealized (no clutter).
 - Subtle motion graphics for invoice line items – they appear one-by-one with light highlighting, not animated chaos.
-- Color palette pulls from DS brand: navy/indigo as primary, ochre/warm accent for highlights, white for surface backgrounds, periwinkle-soft for secondary surfaces (no cream / warm off-white).
-- Typography: serif for any large editorial text overlays (matches DS landing-page identity); sans-serif for invoice line items and UI mockups.
+- Color palette pulls from Shorthanders brand: navy/indigo as primary, ochre/warm accent for highlights, white for surface backgrounds, periwinkle-soft for secondary surfaces (no cream / warm off-white).
+- Typography: serif for any large editorial text overlays (matches Shorthanders landing-page identity); sans-serif for invoice line items and UI mockups.
 
 **Avoid:**
 - Cartoonish stock-corporate-explainer feel
@@ -213,7 +213,7 @@ Net deposit                                  $1,403.60
 - The split-screen divider cracks softly down the middle and is wiped away with a clean horizontal motion.
 - We're now in the attorney's office again, but the mood has shifted – warmer light, calmer composition.
 - She's on her laptop. Camera over-the-shoulder.
-- Browser shows `shorthanders.com`. The site loads with the actual DS hero page (real screenshot or recreation).
+- Browser shows `shorthanders.com`. The site loads with the actual Shorthanders hero page (real screenshot or recreation).
 - She clicks "Order a transcript." A clean, modern booking flow appears.
 - She fills in:
   - Court: SF Superior Court
@@ -237,7 +237,7 @@ Net deposit                                  $1,403.60
 
 **Visual:**
 - Split-screen returns, but this time without the heavy divider – just a soft visual separation.
-- Left half: attorney's new DS invoice arrives in her inbox. Camera pushes in. Line items appear cleanly:
+- Left half: attorney's new Shorthanders invoice arrives in her inbox. Camera pushes in. Line items appear cleanly:
 
 ```
 SHORTHANDERS – INVOICE #DS-2026-0142
@@ -302,11 +302,11 @@ Net deposit                                  $2,050.00  ✓ 100%
 
 **Visual:**
 - Clean end card. White background.
-- DS logo (centered, large).
+- Shorthanders logo (centered, large).
 - Tagline below logo: **"Court transcripts, finally simple."**
 - Smaller text below: **"California launch now accepting reporters and law firms."**
 - URL: **shorthanders.com**
-- Subtle DS brand-color accent line.
+- Subtle Shorthanders brand-color accent line.
 
 **Voiceover:** none – let the end card breathe.
 
@@ -348,13 +348,13 @@ Net deposit                                  $2,050.00  ✓ 100%
 |---|---|
 | Scenes 1–4 (current state) | Solo piano motif. Minor key. Slightly tense, building. Sparse. |
 | Transition (Scene 5 start) | A single sustained chord resolving, then a key change to major. |
-| Scenes 5–7 (DS state) | Same instrument family (piano + maybe a subtle string pad joining), major key, warmer, hopeful, restrained. |
+| Scenes 5–7 (Shorthanders state) | Same instrument family (piano + maybe a subtle string pad joining), major key, warmer, hopeful, restrained. |
 | Scene 7 high-five moment | A small chime or bell-like note when palms meet – celebratory but not loud. |
 | Scene 8 end card | Held final chord with gentle fadeout. |
 
 **Sound effects (subtle, almost subliminal):**
 - Soft typing in the law-office shots
-- A small "ding" when the new DS invoice arrives in the attorney's inbox (Scene 6)
+- A small "ding" when the new Shorthanders invoice arrives in the attorney's inbox (Scene 6)
 - A small notification chime when the CSR's payout email arrives (Scene 6)
 
 **Avoid:** stock corporate explainer music (the upbeat ukulele/whistle cliché). The video earns its emotional shifts; the music should be a partner, not a substitute.
@@ -363,7 +363,7 @@ Net deposit                                  $2,050.00  ✓ 100%
 
 ## On-screen text & graphics
 
-### Text overlays (lower third or floating, in DS brand typography)
+### Text overlays (lower third or floating, in Shorthanders brand typography)
 
 | Time | Text | Purpose |
 |---|---|---|
@@ -390,7 +390,7 @@ The "TOTAL" line gets a stronger highlight – slightly larger type, bold weight
 
 The line items in Scene 2 are pulled from invoice #91319 (March 2023, CA remote-Zoom depo) – documented in [agency_invoice_evidence.md](agency_invoice_evidence.md). The transcript-only line uses Caldarella's $5.50/pg rate (also documented).
 
-For the DS comparison (Scene 6), use the proposed DS recalibrated rates:
+For the Shorthanders comparison (Scene 6), use the proposed Shorthanders recalibrated rates:
 - Half-day attendance: $1,050
 - Per-page transcript: $5.00
 - Platform fee: 12%
@@ -410,7 +410,7 @@ vs. agency-equivalent (using #91319-style markup pattern):
 
 **Savings: $480 (17% lower).** Use that exact number in the on-screen counter.
 
-(Note: the more dramatic 38% savings example from invoice #91319 includes remote-services fees that don't apply to court hearings, which is DS's V1 scope. Sticking with the 17% number keeps the math defensible and the savings claim conservative.)
+(Note: the more dramatic 38% savings example from invoice #91319 includes remote-services fees that don't apply to court hearings, which is Shorthanders' V1 scope. Sticking with the 17% number keeps the math defensible and the savings claim conservative.)
 
 ---
 
@@ -445,9 +445,9 @@ Marketing agent or producer should pull stylistic cues from:
    - 30-second cut for paid social: skip Scene 1 hook, jump straight to invoice. End at high-five.
    - 15-second cut: just the side-by-side invoice comparison + tagline. No characters.
 
-5. **Localization**: this script is CA-specific. Future state cuts could swap "California launch" for "New York launch" / etc. when DS expands.
+5. **Localization**: this script is CA-specific. Future state cuts could swap "California launch" for "New York launch" / etc. when Shorthanders expands.
 
-6. **Compliance review:** before publishing, sanity-check the savings claim ("$480 saved" / "17% lower") against current real DS pricing + documented agency invoice averages. If pricing shifts post-launch, the on-screen number needs to be re-cut. Build the comparison numbers as a separate motion-graphic asset that can be swapped without re-shooting.
+6. **Compliance review:** before publishing, sanity-check the savings claim ("$480 saved" / "17% lower") against current real Shorthanders pricing + documented agency invoice averages. If pricing shifts post-launch, the on-screen number needs to be re-cut. Build the comparison numbers as a separate motion-graphic asset that can be swapped without re-shooting.
 
 7. **Accessibility:** burn-in optional captions for sound-off viewing. The voiceover script above is the caption text.
 

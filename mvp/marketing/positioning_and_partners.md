@@ -45,15 +45,15 @@ that sharpen the whole narrative:
   recording authorization for civil cases; **court-reporter unions (SEIU) blocked broader recording
   in 2023**, arguing humans give 100% accurate, clarifiable transcripts.
 
-**How this shapes DS (and one honesty caution):**
+**How this shapes Shorthanders (and one honesty caution):**
 1. **The shortage is a demand tailwind.** Firms genuinely can't find reporters. A searchable
    directory of who's licensed and available is a real answer to that – lead with "find a reporter,"
    not only "save money."
 2. **The job-loss fear is current, not abstract** – AB 882 is the "recorded hearings" threat Rosie
-   named. Reinforces DS's honest counter: cutting the agency markup keeps a human reporter
+   named. Reinforces Shorthanders' honest counter: cutting the agency markup keeps a human reporter
    price-competitive with recording. Frame as "helps," never "saves your job."
 3. **HONESTY CAUTION:** reporters are scarce and well-paid ($200k+/$3k+ per day) – so do NOT lean on
-   "reporters are underpaid/exploited." That's not the story. DS's honest angles are the agency
+   "reporters are underpaid/exploited." That's not the story. Shorthanders' honest angles are the agency
    **markup on freelance/depo work**, **findability**, and **keeping human reporting viable vs.
    recording** – not reporter poverty. (The shortage is partly *because* private work pays more,
    pulling reporters out of court jobs – which is the "pushed into freelance" dynamic.)
@@ -97,8 +97,8 @@ transcription specifically to cut a deposition's cost from about $4,000 to $1,50
 ([Harvard tag team / court order coverage](https://tagteam.harvard.edu/hub_feeds/3624/feed_items/14629622)).
 **The honest, provable claim: a meaningful share of that inflated cost is agency markup, not the
 reporter's rate – so cutting the markup helps keep human reporting price-competitive with the
-recording alternative that would otherwise replace it.** That's not "DS saves jobs" (we can't prove
-that on our own) – it's "DS removes a cost penalty that currently pushes the market toward
+recording alternative that would otherwise replace it.** That's not "Shorthanders saves jobs" (we can't prove
+that on our own) – it's "Shorthanders removes a cost penalty that currently pushes the market toward
 recording instead of a human reporter," which is a claim the invoice evidence actually supports.
 
 ### Why this matters – firms (and, indirectly, litigants)
@@ -155,7 +155,7 @@ draft options, not decided copy – pick, combine, or reject freely.
 | 5 | **"Help us keep more of the money with the people who did the work."** | Both | Direct descendant of Aud's floated line – "help us" makes the signup an act of participation, not a purchase. Slightly long for a hero but strong as a CTA button subhead or email close. |
 | 6 | **"Your invoice should say what actually happened. Now it can."** | Firms (leads), works for reporters too | Plain, concrete, ties to the real invoice evidence without needing to cite a stat inline. Good for cold email subject lines. |
 | 7 | **"Less to the agency. More to the record."** | Both | Compact, a little more poetic – "the record" nods to the court-reporting craft itself, not just money. Risk: "the record" may need one line of context on first use. |
-| 8 | **"Every job here is one less dollar going somewhere it shouldn't."** | Both, best for reporter recruitment emails | Participatory framing – casts using DS as a small act with a cumulative effect, which sets up the impact-metric tie-in in §3 nicely. Slightly long; trim for a hero. |
+| 8 | **"Every job here is one less dollar going somewhere it shouldn't."** | Both, best for reporter recruitment emails | Participatory framing – casts using Shorthanders as a small act with a cumulative effect, which sets up the impact-metric tie-in in §3 nicely. Slightly long; trim for a hero. |
 | 9 | **"We're not an agency. That's the whole idea."** | Both | Punchy, contrarian, good for ad copy or a landing-page subhead aimed at firms who already use an agency. Doesn't carry the "empower reporters" half on its own – pair with supporting copy. |
 | 10 | **"Sign up. Then help us make it fairer for the next reporter and the next client."** | Both, best as a post-signup or onboarding message rather than a hero | Most literal execution of Aud's original line (recruit as participant). Works better as an in-product moment (e.g., after claiming a profile, or after a firm's first paid invoice) than as top-of-funnel copy – it presumes the visitor already gets the mission. |
 | 11 | **"A fairer cut, built by the people who felt the unfair one."** | Reporters primary | Leans hardest into "movement" energy. Riskiest of the eleven – "felt the unfair one" is a little abstract for a first-time visitor with no context, and could read as adversarial toward agencies in a way that needs careful placement (not the very first thing a new agency-affiliated reporter reads). Save for reporter-specific channels (the CSR Facebook groups, the claim-invite email) where the audience already shares the frustration.
@@ -187,7 +187,7 @@ time they log in – exactly the role Too Good To Go's "meals saved" counter pla
 A mission statement is easy to skim past. A number that changes every time someone gets paid or
 pays an invoice is not. Too Good To Go doesn't tell users they're heroes – it shows them a
 running count of meals they personally saved, and lets the user do the feeling-good math
-themselves. The DS equivalent is the same move: don't say "you're helping fix the industry," show
+themselves. The Shorthanders equivalent is the same move: don't say "you're helping fix the industry," show
 "here's what avoiding the agency markup was actually worth this month," and let the number carry
 the message.
 
@@ -197,7 +197,7 @@ the message.
   ~39% agency markup, from a real CA invoice"* – linking or footnoting
   [`agency_invoice_evidence.md`](../../research/agency_invoice_evidence.md).
 - **Use the current pricing model** (reporter pays 2–5% to get paid; firm pays a subscription, no
-  transaction fee) – the "amount kept" math is against the agency's cut, not against DS's own fee,
+  transaction fee) – the "amount kept" math is against the agency's cut, not against Shorthanders' own fee,
   and it should reflect the real fee structure, not the retired 12%.
 - **Don't double-count.** The reporter's "cut you kept" and the firm's "markup avoided" describe the
   *same* dollars from two sides of one transaction – never imply the platform "created" savings
@@ -210,7 +210,7 @@ the message.
 
 - A StatCard on the reporter Overview tab ("cut you kept this month/year") and the firm dashboard
   ("agency markup avoided"), per the roadmap spec.
-- A lifetime running total once a user has enough history – this is the closest DS equivalent of
+- A lifetime running total once a user has enough history – this is the closest Shorthanders equivalent of
   Too Good To Go's "meals saved since you joined," and it rewards long-term use rather than any
   single transaction.
 - Keep the same real invoice/number the homepage `MoneyComparison` already uses, so the story is
@@ -249,14 +249,14 @@ around 2008 and forced into freelance or agency work to make a living – so thi
 further change to the status quo as a potential new threat, not automatically as help. Two things
 follow:
 
-1. **DS can honestly stand with them, not against them.** The precarious freelance/agency reality
-   they were pushed into is exactly what DS improves – it helps freelance reporters keep more of
+1. **Shorthanders can honestly stand with them, not against them.** The precarious freelance/agency reality
+   they were pushed into is exactly what Shorthanders improves – it helps freelance reporters keep more of
    what they bill and cuts the agency's 30–50% cut. That's a real, provable alliance, not spin.
-2. **DS must not read as "part of the problem."** Concretely, that means:
-   - **Champion licensed human court reporters, always.** DS is a directory of licensed CSRs, not
+2. **Shorthanders must not read as "part of the problem."** Concretely, that means:
+   - **Champion licensed human court reporters, always.** Shorthanders is a directory of licensed CSRs, not
      an electronic-recording or AI-transcription product. Never let outreach copy blur that line –
      replacing human stenographers is the single biggest fear in this community (see §4A/§4F), and
-     DS's actual model (human reporters, transparent rates) is the opposite of that threat.
+     Shorthanders' actual model (human reporters, transparent rates) is the opposite of that threat.
    - **Lead with the jobs angle, not just the money angle, when talking to this audience.** The
      honest chain: agency markup inflates the cost of hiring a human reporter (Judicial Council
      figures put a private reporter at roughly $3,300/day for a trial, $2,580/day for a deposition –
@@ -271,10 +271,10 @@ follow:
      the markup helps keep a human reporter price-competitive with the recording alternative that
      would otherwise take the work. Say it as *"helps keep human reporting affordable enough to
      stay the default"* – never as a guarantee that any specific job or position is saved.
-   - **Frame DS as fixing gig precarity, not adding to it.** The pitch is "keep more of what you
+   - **Frame Shorthanders as fixing gig precarity, not adding to it.** The pitch is "keep more of what you
      already bill," not "here's more flexible/on-demand work" – the second framing reads as more
      gig-economy commoditization, which is the wrong note for this audience.
-   - **Don't position against unions or official-reporter jobs.** DS has no stake in courtroom
+   - **Don't position against unions or official-reporter jobs.** Shorthanders has no stake in courtroom
      staffing policy; stay out of that fight entirely rather than look like a side in it.
    - **Lead outreach with empathy, not a signup pitch.** "We know reporters were pushed into
      freelance work that didn't used to exist, and we're trying to make that world fairer" comes
@@ -282,15 +282,15 @@ follow:
 
 ### 4A. Is there a court reporters' union? – the direct answer
 
-**Yes and no, and the distinction matters for how DS should talk to each group – but it's a
+**Yes and no, and the distinction matters for how Shorthanders should talk to each group – but it's a
 spectrum, not two separate camps, because many reporters work both sides of the line.**
 
-**Freelance/deposition reporters – DS's core supply – are independent contractors and are not
+**Freelance/deposition reporters – Shorthanders' core supply – are independent contractors and are not
 unionized.** Instead of a union, they're represented by trade associations:
 - **DRA / CalDRA (Deposition Reporters Association of California)** – by its own description, "the
   nation's largest trade association dedicated to the freelance deposition reporter," founded in
   1995 specifically because agencies were offering services/pricing to one side of litigation but
-  not the other – a founding mission almost identical to DS's transparency pitch
+  not the other – a founding mission almost identical to Shorthanders' transparency pitch
   ([caldra.org](https://www.caldra.org/), [cal-ccra.org](https://www.cal-ccra.org/index.php?option=com_content&view=article&id=59)).
 - **CCRA (California Court Reporters Association)** – broader membership: freelance, official,
   CART/captioning, students, **and firm owners** ([cal-ccra.org](https://www.cal-ccra.org/)).
@@ -320,7 +320,7 @@ Courts also lean on **pro tem/per diem reporters** to cover gaps
 ([courts.ca.gov fact sheet](https://courts.ca.gov/system/files/file/court-reporter-fact-sheet-jan-2025.pdf)),
 and there's direct evidence of reporters leaving staff jobs for private freelance work over working
 conditions even without layoffs (Contra Costa lost 10 staff reporters 2022–2024 –
-found via search of courts.ca.gov reporting). So a union member today may also be a DS user
+found via search of courts.ca.gov reporting). So a union member today may also be a Shorthanders user
 tomorrow for their side freelance work – the "help the people pushed into freelance work keep more
 of what they earn" story covers the full spectrum, not just the reporters who left staff jobs
 entirely.
@@ -346,24 +346,24 @@ of overreach the guardrails warn against.
    against electronic recording," which also reinforces their own broader argument that stenography
    is a viable profession worth investing in (useful to them in the electronic-recording fight, see
    §4F).
-3. **A standing invite to any CSR-facing DS event or webinar** as a guest voice on the
+3. **A standing invite to any CSR-facing Shorthanders event or webinar** as a guest voice on the
    official-reporter perspective – low-commitment, no product ask attached.
 4. **Do not ask for a public endorsement or co-branding.** It's the wrong shape of ask for a
    public-sector union and the union may not have a mechanism to grant it anyway.
 
-**Conflict to watch:** none of these unions or CCRA/DRA should ever hear DS described in a way that
+**Conflict to watch:** none of these unions or CCRA/DRA should ever hear Shorthanders described in a way that
 sounds like electronic recording, AI transcription, or "flexible gig work" – see the guardrails
 above. Frame every touchpoint around licensed human reporters keeping more of what they bill.
 
 ### 4C. Trade associations – the natural first partners (CA)
 
 - **DRA/CalDRA** is the closest values match: founded to fight exactly the agency-favoritism/
-  transparency problem DS's whole model addresses. Good targets: a mention or short piece in
+  transparency problem Shorthanders' whole model addresses. Good targets: a mention or short piece in
   *The Deposition Reporter* newsletter, attending/sponsoring (as budget allows – likely just
   attending, per the $0 constraint) their events, and specifically reaching out about a shared
-  interest in transparency once DS has real transaction data to point to.
+  interest in transparency once Shorthanders has real transaction data to point to.
 - **CCRA** reaches a wider audience (official + freelance + CART + students) but **its membership
-  includes firm/agency owners** – some of whom are the businesses DS's pitch positions against.
+  includes firm/agency owners** – some of whom are the businesses Shorthanders' pitch positions against.
   Engage CCRA on shared professional-standards ground (education, the shortage crisis, defending
   human stenography against electronic recording) rather than leading with the "cut the agency"
   message in that specific channel.
@@ -381,8 +381,8 @@ CCRA maintains a list of CA court reporting schools at
 the right starting roster rather than us naming specific schools we haven't independently verified.
 
 **Cross-promo idea:** a light-touch relationship with a handful of CA programs – guest a
-"what happens after you're certified" session on freelance income/DS, or sponsor a small student
-prize – gives DS visibility with the exact new-CSR cohort that has no agency relationships yet and
+"what happens after you're certified" session on freelance income/Shorthanders, or sponsor a small student
+prize – gives Shorthanders visibility with the exact new-CSR cohort that has no agency relationships yet and
 is deciding how to build their client base from day one. Low cost, long payoff, no conflict with
 the guardrails (this is pro-profession, not pro-replacing-reporters).
 
@@ -410,7 +410,7 @@ in §4A–4C) publicly opposed that petition
 **Recommendation: cite the shortage/cost statistics for narrative color (they're real and
 sourced), but do not pursue a formal partnership with Bay Area Legal Aid or the CA Access to
 Justice Commission.** Their solution (recording devices replacing human reporters) is the exact
-thing the guardrails in this doc warn DS away from being associated with. DS's actual position
+thing the guardrails in this doc warn Shorthanders away from being associated with. Shorthanders' actual position
 threads a genuinely different needle – cheaper access through *fairly priced human reporters*, not
 through replacing them – which is more aligned with CCRA/DRA than with Legal Aid's own proposal.
 Don't publicly take a side in that legislative fight either way; just don't seek this specific
@@ -420,7 +420,7 @@ partnership.
 
 Shorthanders is women-owned (Aud). Relevant, mostly free/low-cost networks:
 - **WBENC** certification runs through regional partners – **WBEC-Pacific** covers Northern
-  California/the Bay Area (where DS is based); **WBEC-West** covers Southern California/LA
+  California/the Bay Area (where Shorthanders is based); **WBEC-West** covers Southern California/LA
   ([wbec-pacific.org](https://wbec-pacific.org/certification/)). Note: WBENC certification
   typically involves a real review process and a fee – flag as a possible future cost item, not a
   $0 channel, before pursuing it.
@@ -447,11 +447,11 @@ Association, machine writers) and **TEXDRA** (Texas Deposition Reporters Associa
 both voice and machine writers) – open to any TX reporter, no association membership required
 ([texdra.org](https://www.texdra.org/who-we-are.html), site content via direct fetch). This is a
 genuine complication for the "Texas first" expansion plan: the two trade associations that would
-otherwise be DS's natural TX-launch partners (mirroring CCRA/DRA in CA) already co-own a competing
+otherwise be Shorthanders' natural TX-launch partners (mirroring CCRA/DRA in CA) already co-own a competing
 product. Full write-up now lives as a stub at
 [`marketing/competitive-analysis/mytexascsr.md`](../../marketing/competitive-analysis/mytexascsr.md)
 (added to the README's "watching" tier 2026-07-29) – worth a real look, and a direct conversation
-with TCRA/TEXDRA about whether DS complements or competes with it, before Texas expansion moves from
+with TCRA/TEXDRA about whether Shorthanders complements or competes with it, before Texas expansion moves from
 plan to action.
 
 ---

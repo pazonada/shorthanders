@@ -26,7 +26,7 @@ The survey opt-in invites respondents to volunteer for follow-up prototype testi
 - **Keep it under 7 minutes.** CSRs are busy professionals; longer surveys collapse the response rate.
 - **Mostly multiple choice and short numeric.** One or two free-text fields for richer feedback.
 - **Anonymous by default**, optional contact field for follow-up.
-- **No pricing-anchoring at the top.** Lead with their current reality, then introduce DS concepts. Avoids biasing answers.
+- **No pricing-anchoring at the top.** Lead with their current reality, then introduce Shorthanders concepts. Avoids biasing answers.
 - **Built in Google Forms or Typeform.** Both support conditional logic if needed.
 - **Distribution:** Rosie's network, CSR Facebook groups (Court Reporter Rates Discussion + CA-specific groups), Cal-CCRA outreach. Target 30–60 responses over 2 weeks.
 

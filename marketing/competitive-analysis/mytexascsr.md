@@ -49,9 +49,9 @@ Texas only.
 
 ## Service scope
 
-Depositions, hearings, and "meetings" – broader than DS's current CA scope note: this looks like
+Depositions, hearings, and "meetings" – broader than Shorthanders' current CA scope note: this looks like
 job-posting/booking (who's available for a specific assignment), not a full directory + messaging +
-invoicing product like DS. Needs a closer look before we expand to Texas.
+invoicing product like Shorthanders. Needs a closer look before we expand to Texas.
 
 ---
 
@@ -75,20 +75,20 @@ audit.
 
 ---
 
-## Strengths vs. DS
+## Strengths vs. Shorthanders
 
 - **Owned by the two Texas trade associations (TCRA + TEXDRA) jointly** – built-in distribution to
   the entire Texas freelance-reporter population without needing a separate courtship. That's a
-  real structural advantage DS doesn't have anywhere yet.
+  real structural advantage Shorthanders doesn't have anywhere yet.
 
 ---
 
-## Weaknesses vs. DS
+## Weaknesses vs. Shorthanders
 
 - Looks like a job board (post/apply to individual assignments), not a directory + profile +
-  messaging + get-paid product. If that's accurate, it doesn't compete with DS's core value prop
+  messaging + get-paid product. If that's accurate, it doesn't compete with Shorthanders' core value prop
   (find and directly message/pay a specific reporter you choose) so much as with ad-hoc staffing.
-- No visible money-model transparency pitch (DS's core differentiator vs. agencies).
+- No visible money-model transparency pitch (Shorthanders' core differentiator vs. agencies).
 
 ---
 
@@ -104,8 +104,8 @@ and pricing-transparency product. Needs a real look before the Texas expansion (
 
 - Is this free or does it charge either side?
 - Does it show reporter rates, or is pricing negotiated off-platform per job?
-- Since TCRA and TEXDRA co-own it, would either be receptive to DS as a complementary product
-  (directory + payments) rather than a competing job board – or would they see DS as a rival? Worth
+- Since TCRA and TEXDRA co-own it, would either be receptive to Shorthanders as a complementary product
+  (directory + payments) rather than a competing job board – or would they see Shorthanders as a rival? Worth
   a direct, low-key conversation before/at Texas launch rather than assuming adversarial.
 - Full profile deferred until Texas expansion is closer – this stub exists so we don't rediscover
   it from scratch later. Surfaced 2026-07-29 while researching Texas trade associations

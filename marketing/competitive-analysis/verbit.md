@@ -88,34 +88,34 @@ From public site and search results:
 - Named leadership team
 - Real product documentation and enterprise TOS
 
-**Assessment:** Verbit is a well-funded, established legal-tech company. Not a startup threat – an incumbent threat. The risk it poses to DS is indirect: it sets attorney expectations for "AI-enhanced" transcription that DS does not yet offer.
+**Assessment:** Verbit is a well-funded, established legal-tech company. Not a startup threat – an incumbent threat. The risk it poses to Shorthanders is indirect: it sets attorney expectations for "AI-enhanced" transcription that Shorthanders does not yet offer.
 
 ---
 
-## Strengths vs. DS
+## Strengths vs. Shorthanders
 
 - **Scale and brand recognition.** Known in the legal industry; enterprise buyers may default to Verbit for any transcription procurement.
 - **Hybrid AI + human quality assurance.** The blended model produces high-accuracy results at volume.
 - **Compliance credentials.** SOC 2, ISO 27001, HIPAA are procurement checkboxes at larger firms and courts.
-- **Court system relationships.** Direct contracts with state courts means Verbit is already embedded in some of the same courts DS reporters will be attending.
+- **Court system relationships.** Direct contracts with state courts means Verbit is already embedded in some of the same courts Shorthanders reporters will be attending.
 - **Funding.** Resources to market, build, and support at scale.
 
 ---
 
-## Weaknesses vs. DS
+## Weaknesses vs. Shorthanders
 
 - **Not a marketplace.** Attorneys cannot find or choose a specific reporter through Verbit. The human layer is opaque – you get Verbit's assigned transcriptionist, not a credentialed CSR you selected.
-- **Agency model persists.** Verbit is the agency – they sit between the attorney and the reporter. DS removes this intermediary.
+- **Agency model persists.** Verbit is the agency – they sit between the attorney and the reporter. Shorthanders removes this intermediary.
 - **Statutory rate compliance.** Verbit's pricing is not tied to CA statutory rates. For public court hearings in California where statutory rates govern, Verbit's pricing model is structurally misaligned.
 - **No individual reporter identity.** CSRs who want direct client relationships and their own brand cannot achieve that through Verbit.
-- **Enterprise sales cycle.** Small firms and solo practitioners can't just sign up. DS is self-serve.
-- **Cost opacity.** No public pricing. DS's transparent statutory-rate model is a direct counter.
+- **Enterprise sales cycle.** Small firms and solo practitioners can't just sign up. Shorthanders is self-serve.
+- **Cost opacity.** No public pricing. Shorthanders' transparent statutory-rate model is a direct counter.
 
 ---
 
 ## Overlap with our positioning
 
-| DS messaging pillar | Verbit overlap? | Notes |
+| Shorthanders messaging pillar | Verbit overlap? | Notes |
 |---|---|---|
 | Transparent pricing / statutory rates | No | Quote-only; not CA-statutory-aligned |
 | No agency cut | No | Verbit IS the agency |
@@ -125,7 +125,7 @@ From public site and search results:
 | Simple / fast / modern UX | Partial | "Fast turnaround" is a value prop |
 | Court-hearing focus | Yes | Explicitly serves courtroom transcription |
 
-**Tagline word overlap with DS:** "Courtroom transcription services for trials & legal proceedings" does not overlap with "Court transcripts, finally simple." Low direct conflict. Note they use "transcription" (process-focused) while DS uses "transcripts" (output-focused).
+**Tagline word overlap with Shorthanders:** "Courtroom transcription services for trials & legal proceedings" does not overlap with "Court transcripts, finally simple." Low direct conflict. Note they use "transcription" (process-focused) while Shorthanders uses "transcripts" (output-focused).
 
 ---
 
@@ -133,5 +133,5 @@ From public site and search results:
 
 - What is Verbit's current funding status and burn? Legal-tech AI companies have had mixed outcomes post-2022.
 - Does Verbit have a self-serve product in development? If they build a SMB-tier, they become a more direct competitor.
-- Which CA courts have active Verbit contracts? That's a list of courts where a DS reporter might face questions about "the other transcription option."
+- Which CA courts have active Verbit contracts? That's a list of courts where a Shorthanders reporter might face questions about "the other transcription option."
 - Is Verbit's reporter network composed of certified CSRs in CA, or only in states without statutory-rate regimes?

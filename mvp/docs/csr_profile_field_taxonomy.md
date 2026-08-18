@@ -147,7 +147,7 @@ Real language reporters use (themes, not individuals) – validates the payment-
 - **Standard rate shape confirmed:** `$X original / $Y copy per page + half-day / full-day
   per diem`, with **copy upcharges** negotiated and capped by agencies.
 - **Agency cut ≈ 30%:** "their rates, and I keep 70%," and agencies bill clients different
-  hourly rates ($65 vs $85) for the same reporter – the exact markup DS removes. Good marketing proof.
+  hourly rates ($65 vs $85) for the same reporter – the exact markup Shorthanders removes. Good marketing proof.
 - **Method is identity-level and touchy:** a heated machine-vs-voice legitimacy thread.
   Reinforces reporting **method** as a first-class, prefillable-from-license field.
 

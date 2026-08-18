@@ -54,11 +54,11 @@ A non-WC civil deposition typically delivers Original + 1 simultaneous copy (or 
 
 **Structural reason (statutory):** CA WC cases have at least three required-document recipients – applicant, defense/carrier, sometimes WCAB or defense expert. Lab. Code § 5710 and 8 CCR § 10579 drive the deliverable expectation. Industry practice is to bill all three upfront rather than chase per-party orders.
 
-**Implication for DS:**
+**Implication for Shorthanders:**
 
-1. **Multi-copy billing must be modeled cleanly.** Original rate ≠ copy rate. The default deliverable structure varies by case type (WC = auto O+2; civil non-WC = O+1 or O-only). The current DS pricing model has [simultaneousCopy: 0.65, separateCopy: 0.85] in `index.html:2747` but no mechanism to default a job to O+2 vs. O+1 vs. O-only based on case type.
+1. **Multi-copy billing must be modeled cleanly.** Original rate ≠ copy rate. The default deliverable structure varies by case type (WC = auto O+2; civil non-WC = O+1 or O-only). The current Shorthanders pricing model has [simultaneousCopy: 0.65, separateCopy: 0.85] in `index.html:2747` but no mechanism to default a job to O+2 vs. O+1 vs. O-only based on case type.
 
-2. **WCAB is a real revenue opportunity, not a fringe.** Rosie's 5/12 answer confirmed WCAB in scope. Tina's $200–264K/year income validates that the niche is meaningful, not anecdotal. Tina is the prototype DS supply target: remote, niche-focused, runs her own workflow, curates her hours.
+2. **WCAB is a real revenue opportunity, not a fringe.** Rosie's 5/12 answer confirmed WCAB in scope. Tina's $200–264K/year income validates that the niche is meaningful, not anecdotal. Tina is the prototype Shorthanders supply target: remote, niche-focused, runs her own workflow, curates her hours.
 
 3. **The "CSR shortage" pitch needs precision.** The shortage is acute for *in-person court attendance in under-served counties* (Contra Costa, San Diego). For *remote depo work in focused niches*, the CSRs who've adapted are thriving. Marketing should be specific about which CSR segment we're solving for.
 
@@ -88,15 +88,15 @@ Source: FB thread where Erin O'Hara McLemore (SoCal, self-described "new" CSR) a
 
 2. **WC page rates run higher than non-WC page rates.** $7.50/pg O+2 vs. our $5/pg baseline (which assumes O+1 or O-only). Roughly 50% higher on a per-page basis, and the auto-O+2 multiplier compounds the per-job revenue. Atkinson-Baker's $4.40/pg hearing rate (private agency, generic hearing) is a useful comp – it suggests WC commands a premium of $3+/pg over generic hearing work, plus the structural copy-count premium.
 
-3. **Interpreter add-on as flat vs. per-page.** Industry is split. Erin's $0.75/pg add-on is the older convention; Kristin's $50 flat is a simplification that works for the short-job WC norm. **DS implication:** when we eventually scope interpreter surcharges, the right answer is probably "flat fee added at order time, capped or scaled by job length" – not a per-page rider. Captures the CSR's time cost regardless of how many pages the job ultimately yields.
+3. **Interpreter add-on as flat vs. per-page.** Industry is split. Erin's $0.75/pg add-on is the older convention; Kristin's $50 flat is a simplification that works for the short-job WC norm. **Shorthanders implication:** when we eventually scope interpreter surcharges, the right answer is probably "flat fee added at order time, capped or scaled by job length" – not a per-page rider. Captures the CSR's time cost regardless of how many pages the job ultimately yields.
 
 4. **In-person and extra-device add-ons exist and are itemized.** Confirms a recurring theme: CA private CSRs make money on the add-ons, not just the base per-diem. Our marketplace pitch ("transparent rates, no hidden line items") will pop more if we explicitly call out which add-ons are baked in vs. which (if any) are billable line items.
 
 5. **The minimum-transcript floor is significant.** $450 minimum is much higher than our $50 floor. This is consistent with WC's O+2 multiplier (3 deliverables × any per-page rate adds up fast on short jobs) and with Kristin's "most WC cases are short" framing – the floor exists precisely to prevent CSRs from losing money on quick interpreted hearings that produce <50 pages of transcript.
 
-**Implication for DS scope:** WC is its own pricing micro-market with structural conventions (O+2, flat per-diem, higher page rate, big minimum, in-person add-on) that don't map cleanly to our current PRICING object. If we want WC supply at launch we either (a) carve out a WC-specific pricing model, or (b) recruit only WC CSRs who are willing to work on our standard model and accept the trade-offs. (a) is a real product investment; (b) means asking CSRs to take a pay cut on WC vs. their direct work. Neither is shippable as-is. Flagging for a separate decision before WC outreach.
+**Implication for Shorthanders scope:** WC is its own pricing micro-market with structural conventions (O+2, flat per-diem, higher page rate, big minimum, in-person add-on) that don't map cleanly to our current PRICING object. If we want WC supply at launch we either (a) carve out a WC-specific pricing model, or (b) recruit only WC CSRs who are willing to work on our standard model and accept the trade-offs. (a) is a real product investment; (b) means asking CSRs to take a pay cut on WC vs. their direct work. Neither is shippable as-is. Flagging for a separate decision before WC outreach.
 
-**Source:** Facebook screenshot, CSR rates discussion group, 2026-05-15. Anonymized in any public DS use; OK to cite Kristin and Erin by name in internal docs since they posted publicly.
+**Source:** Facebook screenshot, CSR rates discussion group, 2026-05-15. Anonymized in any public Shorthanders use; OK to cite Kristin and Erin by name in internal docs since they posted publicly.
 
 ---
 
@@ -167,7 +167,7 @@ In addition to the agency / court survey above, Aud shared 10+ images of working
 | Excel rate card (Card 2) | unknown | ~$300-400 | $150 first 2 hrs + hourly |
 | FL Lexitas state contract – court hearings | FL (state) | **$948.60** | Closest analog to "default market rate" for state CSR work |
 | FL Lexitas state contract – depositions | FL (state) | $805.80 | – |
-| FL Lexitas state contract – board / public meetings | FL (state) | $2,040 | Public meeting tier (out of DS scope) |
+| FL Lexitas state contract – board / public meetings | FL (state) | $2,040 | Public meeting tier (out of Shorthanders scope) |
 | Private CSR Card 5 – hearing w/ transcript ordered | unknown | ~$550 | $275 / first 4 hrs |
 | Private CSR Card 5 – hearing w/o transcript order | unknown | ~$1,000 | $500 / first 4 hrs (higher rate when no transcript revenue follows) |
 | Private CSR Card 6 (weekday in-person regular) | unknown | ~$910 | Extrapolated from Saturday jury-trial example |
@@ -189,19 +189,19 @@ CA data points cluster **$1,900-$3,600** (Denise Paddock published rate as the f
 - CA's statutory page rate is a floor that doesn't constrain appearance fees, leaving more room for private market premium
 - FL's heavy use of digital court reporting suppresses private-CSR demand and pricing
 
-### What this means for DS recalibration
+### What this means for Shorthanders recalibration
 
 The "Bay Area court statutory per-diem" anchors I previously leaned on ($316 half / $631 full SF) are **cost-recovery floors for court-employed reporters**, not market prices. Private CA reporters bill substantially above that.
 
-The right pricing anchors for the Bay Area private market are the CA-specific data points: **$1,800-3,600 full-day**. To position DS as meaningfully cheaper than agencies (per Rosie's "win-win" vision) while still paying CSRs well above agency take-out:
+The right pricing anchors for the Bay Area private market are the CA-specific data points: **$1,800-3,600 full-day**. To position Shorthanders as meaningfully cheaper than agencies (per Rosie's "win-win" vision) while still paying CSRs well above agency take-out:
 
 | Tier | Half-day | Full-day | Reasoning |
 |---|---|---|---|
 | Anchor – typical CA private agency | $1,800 | ~$2,500-3,600 | What Bay Area attorneys actually pay agencies today |
-| DS launch – ~50% below agency | $900 | $1,500 | Significant attorney savings; CSR keeps 100% (vs. 30-60% via agency); above FL Lexitas state contract |
-| **DS launch – split the difference** (recommended) | **$1,050** | **$1,650** | The "I don't want to undersell, but I don't want to overshoot before data" hedge – between the $900/$1,500 conservative and $1,200/$1,800 aggressive |
-| DS launch – more aggressive (~35% below agency) | $1,200 | $1,800 | Closer to private agency floor; strong CSR raise |
-| DS launch – conservative (~70% below agency) | $700 | $1,200 | Still well above court statutory ($596 Bay Area mean); safer if CSRs balk |
+| Shorthanders launch – ~50% below agency | $900 | $1,500 | Significant attorney savings; CSR keeps 100% (vs. 30-60% via agency); above FL Lexitas state contract |
+| **Shorthanders launch – split the difference** (recommended) | **$1,050** | **$1,650** | The "I don't want to undersell, but I don't want to overshoot before data" hedge – between the $900/$1,500 conservative and $1,200/$1,800 aggressive |
+| Shorthanders launch – more aggressive (~35% below agency) | $1,200 | $1,800 | Closer to private agency floor; strong CSR raise |
+| Shorthanders launch – conservative (~70% below agency) | $700 | $1,200 | Still well above court statutory ($596 Bay Area mean); safer if CSRs balk |
 | Floor I wouldn't go below | $500 | $900 | Anything lower undersells the work; CSRs do this rate through agencies today |
 
 Note: this revises the earlier "$600 half / $1,100 full" guess upward. The earlier number was anchored too heavily on FL rate cards and Bay Area court statutory; with CA-specific evidence properly weighted, the recommended landing zone is **$1,050 / $1,650** as the platform's *baseline guidance* number. Per the open-marketplace model (added 2026-05-24), CSRs set their own published rates per line item with no platform-imposed cap; the baseline is shown as guidance copy ("most CA reporters charge around $X"), not as a constrained band. Premium CSRs may position above the baseline; new or low-volume CSRs may sit below; firms see every applicant's rate when reviewing applications.
@@ -217,7 +217,7 @@ Current code: $2,200/trial-day. Most private cards add a *trial premium* on top 
 - Card 1 FL: $240 base + $240 in-person + $200 jury trial premium = $680 jury trial day
 - Card 7 FL: $570 weekday trial appearance (lower-tier rate card)
 
-If DS full-day lands at $1,500, **trial-day at 1.3-1.5× full-day = $1,950-$2,250**. Current $2,200 is roughly right under that math, but should be reframed in code as "full-day × trial premium" rather than a standalone number – so the trial rate updates when the full-day rate moves.
+If Shorthanders full-day lands at $1,500, **trial-day at 1.3-1.5× full-day = $1,950-$2,250**. Current $2,200 is roughly right under that math, but should be reframed in code as "full-day × trial premium" rather than a standalone number – so the trial rate updates when the full-day rate moves.
 
 ---
 

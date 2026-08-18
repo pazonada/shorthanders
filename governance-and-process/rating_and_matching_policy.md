@@ -96,15 +96,15 @@ The matching algorithm relies on two structured data sets: what CSRs *can* do (c
 
 CSRs declare their capabilities during onboarding and can edit them anytime in profile settings. Capabilities fall into four buckets:
 
-**1. Verified credentials** – DS verifies via external source.
+**1. Verified credentials** – Shorthanders verifies via external source.
 
-| Credential | What it is | How DS verifies |
+| Credential | What it is | How Shorthanders verifies |
 |---|---|---|
 | CRB license | Active CA Court Reporters Board certification | Auto-checked against CRB database on signup and periodically thereafter. Required to participate. |
 | RPR | NCRA Registered Professional Reporter | Verified via NCRA member directory lookup or CSR-uploaded certificate |
 | RMR | NCRA Registered Merit Reporter (advanced) | Same as RPR |
 | CRR | NCRA Certified Realtime Reporter | Same as RPR. Required to accept jobs that need realtime feed. |
-| CRC | NCRA Certified Realtime Captioner | Same as RPR. Required for CART/captioning work if DS ever supports it. |
+| CRC | NCRA Certified Realtime Captioner | Same as RPR. Required for CART/captioning work if Shorthanders ever supports it. |
 
 **2. Self-declared with optional proof** – CSR checks a box, optionally uploads supporting evidence. Profile shows "self-declared" until proof is attached, then shows "verified."
 
@@ -731,9 +731,9 @@ Without this rule, paid-or-promoted placement degenerates into "pay to win at ma
 
 Three structurally different approaches; we can use one, two, or all three at different surfaces.
 
-| Model | Who controls placement | Revenue to DS | Best fit |
+| Model | Who controls placement | Revenue to Shorthanders | Best fit |
 |---|---|---|---|
-| **Free editorial rotation** | DS staff curates | None | Community-building, cold-start visibility for new CSRs, pre-launch readiness |
+| **Free editorial rotation** | Shorthanders staff curates | None | Community-building, cold-start visibility for new CSRs, pre-launch readiness |
 | **Earned badges** | Algorithm picks based on rating, on-time rate, etc. | None | Quality signal; rewards good behavior; aligns with marketplace meritocracy |
 | **Paid promotion** | CSR pays for placement (monthly fee, per-impression, or per-favorite-conversion) | Recurring revenue line beyond listing fee + buyer fee | Year 2+ once we have data on attorney browse behavior |
 
@@ -800,7 +800,7 @@ Tagged `[NEEDS ROSIE]` inline above. Consolidated:
 4. **Ignored invites and CSR metrics** – do they count toward overload? toward a fairness-rotation cooldown so chronically unresponsive CSRs aren't repeatedly invited?
 5. **Drop the 3.5 rating floor entirely?** v1 said "above 3.5 enters the pool." v2 currently drops the floor in favor of the fairness slot. Confirm.
 6. **Capability surface to CSRs** (added 2026-05-13) – when an invite is sent, should the in-app job card show the CSR which of their declared specialties matched the job ("This job matches your Medical specialty")? Aud leans toward yes – gives CSRs information to decide whether to accept and reinforces the value of declaring specialties accurately.
-7. **Specialty self-declaration verification path** (added 2026-05-13) – for specialties without an NCRA equivalent (Medical, Technical, IP, etc.), is a soft "view supporting evidence" link sufficient (CSR uploads sample/credentials, no DS verification), or do we need light admin review? Aud leans toward the upload-and-display-only model with bad actors caught via job ratings.
+7. **Specialty self-declaration verification path** (added 2026-05-13) – for specialties without an NCRA equivalent (Medical, Technical, IP, etc.), is a soft "view supporting evidence" link sufficient (CSR uploads sample/credentials, no Shorthanders verification), or do we need light admin review? Aud leans toward the upload-and-display-only model with bad actors caught via job ratings.
 8. **Starting specialty list** (added 2026-05-13) – confirm the ~15 standardized specialties listed under "Self-declared with optional proof." Anything missing that's high-frequency in CA hearing/arbitration work and worth shipping in V1? Anything on the list that's so rare it should start in the free-text field rather than the controlled vocabulary?
 9. **Specialty-request threshold** (added 2026-05-13) – proposed: 5+ requests within 90 days promotes a free-text specialty into the controlled vocabulary. Confirm the threshold or adjust based on Rosie's read of CA-market niche-specialty frequency.
 

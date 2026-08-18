@@ -22,16 +22,16 @@ About **70% of attorneys work for insurance carriers** (see `insurance_carrier_c
 and carriers care intensely about litigation cost – which makes them the best possible audience for
 our pitch: *skip the agency markup, pay reporters direct, and see the savings.* The realistic order:
 
-1. **Get insurance-defense firms in California actually using DS** and routing their payments through
+1. **Get insurance-defense firms in California actually using Shorthanders** and routing their payments through
    it (start LA + Bay Area, per `../marketing/firm_go_to_market.md`).
 2. **Prove the savings with real numbers** – the "money saved vs. an agency" figure (see that section
    below), measured from real jobs.
-3. **Then approach a carrier** with that data and ask them to push DS to their whole panel of defense
+3. **Then approach a carrier** with that data and ask them to push Shorthanders to their whole panel of defense
    firms. The firms are the proof; the carrier is what makes it spread widely. A carrier won't push an
    unproven site, so this has to be earned bottom-up, not led with.
    - **Legal check first:** a carrier steering firms to a site that has payment arrangements with
      reporters touches the deposition-neutrality question already queued for a reporting-industry
-     attorney – confirm DS (a neutral directory + payment rail, *not* choosing the reporter) stays
+     attorney – confirm Shorthanders (a neutral directory + payment rail, *not* choosing the reporter) stays
      clear before building the carrier push. See `open_strategic_decisions.md` §3.
 
 ### Product roadmap (runs alongside the California push)
@@ -47,7 +47,7 @@ our pitch: *skip the agency markup, pay reporters direct, and see the savings.* 
    both confirmed pre-loadable, but outreach differs by state and reporters use different credential
    letters – see `research/state_csr_public_data_map.md` + `state_expansion_checklist.md`. Texas stays
    deprioritized (its public data got more restricted in 2025, plus the MyTexasCSR competitor).
-4. **DS-assigned matching (premium, opt-in tier)** – research seamless ways for DS to match/assign a
+4. **Shorthanders-assigned matching (premium, opt-in tier)** – research seamless ways for Shorthanders to match/assign a
    reporter to a firm's job (we review + assign, instead of the firm picking), likely a **new paid
    tier** people opt into. Detail below.
 
@@ -191,13 +191,13 @@ skippable, one screen. Firm rates reporter only (a reporter-rates-firm direction
 
 ## "Money saved vs. an agency" – stickiness metric (Jay/Rosie, 2026-07-29)
 
-A dashboard number for BOTH sides showing money kept out of a middleman's hands by using DS. Jay's
+A dashboard number for BOTH sides showing money kept out of a middleman's hands by using Shorthanders. Jay's
 "make it sticky" advice; the tangible proof behind Rosie's "movement" framing (below / in marketing).
 
-- **Reporter view:** "cut you kept" ≈ your DS-collected billings × a typical agency cut, minus the
-  small DS fee. Only counts for work they'd otherwise route through an agency (many already work
+- **Reporter view:** "cut you kept" ≈ your Shorthanders-collected billings × a typical agency cut, minus the
+  small Shorthanders fee. Only counts for work they'd otherwise route through an agency (many already work
   direct – don't imply otherwise).
-- **Firm view:** "agency markup avoided" ≈ what you paid reporters through DS × a typical agency
+- **Firm view:** "agency markup avoided" ≈ what you paid reporters through Shorthanders × a typical agency
   markup (what an agency would have added on top).
 - **HARD RULES ([[feedback_never_invent_data]]):**
   - It is an **ESTIMATE, labeled as such** with the basis shown inline ("est. vs. a typical ~39%
@@ -205,7 +205,7 @@ A dashboard number for BOTH sides showing money kept out of a middleman's hands 
     exact claim.
   - Benchmark = the **real 39%** (or the 30–50% range), NOT the retired "11%" in that evidence doc.
   - Use the **current** pricing model (reporter 2–5%, firm subscription), not old fee schemes.
-  - The two views are the SAME agency margin seen from two sides – **don't double-count** or imply DS
+  - The two views are the SAME agency margin seen from two sides – **don't double-count** or imply Shorthanders
     "creates" 2× savings company-wide.
   - Needs real transactions; in the prototype it's illustrative/demo data, clearly flagged.
 - Fits as a StatCard on the reporter Overview + firm dashboard. Could roll up to a lifetime total for
@@ -235,7 +235,7 @@ recorded there too; cascade is kept as a deferred fallback. Revive that spec whe
 right reporters (county coverage, work mode, services, languages); whether the job board is free or
 gated to a paid tier; how it coexists with the reporter-invites flywheel.
 
-## DS-assigned matching (premium, opt-in tier) – ROADMAP / RESEARCH
+## Shorthanders-assigned matching (premium, opt-in tier) – ROADMAP / RESEARCH
 
 **What it is:** instead of a firm browsing (or posting a job and picking), **Shorthanders reviews
 the job and assigns a specific reporter** – a done-for-you match. Likely a **new paid membership
@@ -251,10 +251,10 @@ it doesn't drag Shorthanders into manual scheduling and coordination on every jo
 retired **auto-match / cascade** model (kept as a deferred fallback in the matching policy) and to
 **featured / promoted listings** (parking lot).
 
-**Open questions:** who pays (firm, reporter, or both)? how is "assign" done without DS taking on
+**Open questions:** who pays (firm, reporter, or both)? how is "assign" done without Shorthanders taking on
 scheduling/coordination labor and liability – algorithmic match, or a human reviewing? how does it
 coexist with the self-serve directory + job board (do premium firms get all three)? neutrality /
-AB-5 §2778 implications of DS choosing the reporter rather than the parties choosing each other.
+AB-5 §2778 implications of Shorthanders choosing the reporter rather than the parties choosing each other.
 
 ## Reverse discovery – reporters browse/pitch firms – ROADMAP / VALIDATE FIRST
 

@@ -38,7 +38,7 @@ bands, or cascade (all of which the abandoned "v1" full marketplace had).
     volume and can be the **biggest revenue line (~70% in the model)**. Upgrade point =
     Pro price ÷ (base − Pro fee) ≈ **$967/mo of billing** at $29 / 5% / 2%.
 - **Stripe's processing fee** (~2.9% card / ~0.8% ACH) is the **reporter's** cost, passed through,
-  never DS's. DS's real cost ≈ **$2/mo per active Stripe Connect account**.
+  never Shorthanders'. Shorthanders' real cost ≈ **$2/mo per active Stripe Connect account**.
 - **Prices are UNSET / working numbers** (never invent – see rules). Aud floated $29 (firm sub &
   reporter Pro) and 5%/2% fees; the site now states **"Shorthanders takes 2% (Pro) or 5% (Free)."**
 - Detail: `open_strategic_decisions.md` §1 · `../marketing/pro_pricing_worksheet.md` ·
@@ -66,7 +66,7 @@ payment pulls reporters onto the rails. Detail: `../marketing/growth_strategy.md
 ## What's built in the prototype (current state)
 
 - **Marketing:** landing (hero, two-sided value cards, "how it works" with pen-and-ink step
-  illustrations, the agency-vs-DS **money-comparison** bars, directory preview, **dark footer**),
+  illustrations, the agency-vs-Shorthanders **money-comparison** bars, directory preview, **dark footer**),
   For firms, For reporters (each with an inline "What it costs" pricing section – there is no
   standalone Pricing page), About, Terms, Privacy, Contact.
 - **Directory:** **sidebar-filter** search (county / **work mode** / experience / language / method

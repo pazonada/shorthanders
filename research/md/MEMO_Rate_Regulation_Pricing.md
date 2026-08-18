@@ -9,7 +9,7 @@
 
 ## Important clarification (added 2026-05-13)
 
-This memo originally treated the Gov. Code § 69950 rate as a hard cap on all transcripts of CA court proceedings. That framing is **overly broad and likely incorrect** as applied to DS.
+This memo originally treated the Gov. Code § 69950 rate as a hard cap on all transcripts of CA court proceedings. That framing is **overly broad and likely incorrect** as applied to Shorthanders.
 
 After review on 2026-05-12 (Rosie + Aud), we believe:
 
@@ -18,7 +18,7 @@ After review on 2026-05-12 (Rosie + Aud), we believe:
 - **Appearance / per-diem fees are unregulated** (per Rosie). Private agencies charge $1,800+ for a half-day hearing in Contra Costa, $3,000+ for full-day hearings in other CA markets – without statutory constraint.
 - **Deposition transcripts are not statutorily capped at all** in CA. CCP § 2025.510 governs procedure, not price. Market sets the rate.
 
-**What this means for DS:** our pricing is meaningfully less constrained than this memo originally suggested. We are a marketplace for privately-retained CSRs, not a court-administered transcript service. The recalibration analysis in [csr_agency_live_attendance_rates.md](../csr_agency_live_attendance_rates.md) and [pricing_questions_rosie_and_csrs.md](../pricing_questions_rosie_and_csrs.md) reflects the updated read.
+**What this means for Shorthanders:** our pricing is meaningfully less constrained than this memo originally suggested. We are a marketplace for privately-retained CSRs, not a court-administered transcript service. The recalibration analysis in [csr_agency_live_attendance_rates.md](../csr_agency_live_attendance_rates.md) and [pricing_questions_rosie_and_csrs.md](../pricing_questions_rosie_and_csrs.md) reflects the updated read.
 
 **Open follow-up:** a written legal opinion from a CA attorney with court-reporter-statute experience is worth $500–1,000 of outside-counsel time. Confirms what's above before launch, and gives us defensible posture if a buyer or competitor challenges our pricing.
 

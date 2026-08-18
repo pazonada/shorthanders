@@ -1,4 +1,4 @@
-# Competitive comparison matrix – DS vs. the major players
+# Competitive comparison matrix – Shorthanders vs. the major players
 
 One place to compare Shorthanders against every real competitor on the axes that decide the market.
 Built 2026-08-04 from the individual profiles in this folder. Prices are working numbers / as-found —
@@ -6,12 +6,12 @@ Built 2026-08-04 from the individual profiles in this folder. Prices are working
 
 ## The one-sentence story
 
-**The market splits in two, and DS is the only one in the middle:**
+**The market splits in two, and Shorthanders is the only one in the middle:**
 - **Complete directories that *don't* transact** – StenoScout, CourtReporters.com. Thin listing sites,
   payment happens off-platform. They are **free to list** (a free base tier) and monetize the supply
   side via **paid featured/placement upgrades** – i.e. charging reporters to *be found*, before firm
   demand is proven. A fragile sequencing. **Note:** "free to list" is table stakes across this whole
-  segment – it is NOT a DS differentiator; DS's real wedges are on-platform payment + messaging + day-one
+  segment – it is NOT a Shorthanders differentiator; Shorthanders' real wedges are on-platform payment + messaging + day-one
   CA completeness. A **softer** add is **optional reporter-set rate visibility** – but it's opt-in
   per reporter (`publishRates`) AND shown only to paying Pro firms, so it's a capability others lack,
   not blanket "rate transparency." Don't oversell it.
@@ -31,10 +31,10 @@ Built 2026-08-04 from the individual profiles in this folder. Prices are working
 | StenoScout | Thin listing directory + lead-gen | National (claims 47 states) | ✗ – claim-only (Yelp-style) | **✗ off-platform** | ✗ (quote-request form) | **Free to list**; paid **Featured $79/mo / City Pro $249/mo** (one-per-city exclusivity); attorneys free |
 | CourtReporters.com | Thin listing directory + lead-gen (brand new, ~Jul 2026) | National | ✗ – claim; "first 500 founding members" | **✗ off-platform** ("Schedule" = a form) | ✗ (contact form) | **Free to list**; paid **Featured / founding-member placement** (freemium – pay to stand out, not to appear) |
 
-## DS's value prop, mapped to columns no competitor wins
+## Shorthanders' value prop, mapped to columns no competitor wins
 
 1. **Statewide + reporters pre-loaded** – *every* competitor is claim-only or register-one-by-one.
-   DS is the only one where a firm can search **any** CA reporter on day one (from public CRB data).
+   Shorthanders is the only one where a firm can search **any** CA reporter on day one (from public CRB data).
 2. **Transactions on the site** – the two look-alike directories (StenoScout, CourtReporters.com)
    don't do this at all; only the marketplaces do – and they lack #1.
 3. **Reporter-friendly economics** – reporters keep their own clients (Steno takes them), and the
@@ -43,13 +43,13 @@ Built 2026-08-04 from the individual profiles in this folder. Prices are working
 ## The eCourt Reporters wedge (the one real transaction rival)
 
 eCourt Reporters proves the two-sided transaction-fee marketplace works in this exact category – the
-same bet DS makes – so it's validation, not a reason to doubt the model. But it's also DS's clearest
-reporter-recruiting pitch, on **corrected** DS pricing:
+same bet Shorthanders makes – so it's validation, not a reason to doubt the model. But it's also Shorthanders' clearest
+reporter-recruiting pitch, on **corrected** Shorthanders pricing:
 - **eCourt taxes both sides, uncapped, forever:** attorneys **10%** of every invoice, reporters
-  **5–20%**. DS charges **firms nothing per transaction** (a flat subscription instead) and reporters
+  **5–20%**. Shorthanders charges **firms nothing per transaction** (a flat subscription instead) and reporters
   a **lower 2–5%** – with a **Pro flat option** ($29/mo + 2%) that caps the effective rate for heavy
-  billers. So DS is cheaper for reporters *and* doesn't hit firms with a per-job tax.
-- eCourt is **claim-only** – no day-one CA-directory completeness, no state-specific depth. DS's
+  billers. So Shorthanders is cheaper for reporters *and* doesn't hit firms with a per-job tax.
+- eCourt is **claim-only** – no day-one CA-directory completeness, no state-specific depth. Shorthanders'
   public-data seeding is the supply advantage eCourt structurally lacks.
 
 *(The earlier "$99/year listing fee" figure was the retired v1 model – current reporter pricing is

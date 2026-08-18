@@ -245,10 +245,10 @@ Worth running both – the time-cost survey feeds the marketing claim ("firms sa
 - Doesn't affect my interest
 - I primarily care about court hearings – depos aren't relevant
 
-**Q21.** If the platform supported deposition booking but required your firm to handle scheduling (notice, subpoena, party coordination) – DS would only handle finding the reporter and managing billing – would that still be useful?
+**Q21.** If the platform supported deposition booking but required your firm to handle scheduling (notice, subpoena, party coordination) – Shorthanders would only handle finding the reporter and managing billing – would that still be useful?
 - Yes – that's how we already operate
 - Yes if it's faster than my current process
-- Only if DS handled scheduling too
+- Only if Shorthanders handled scheduling too
 - Not useful
 
 **Q22.** Do you also book reporters for any of these? (select all that apply)
@@ -290,11 +290,11 @@ Worth running both – the time-cost survey feeds the marketing claim ("firms sa
 | Section | Success looks like | Failure looks like |
 |---|---|---|
 | Firm and practice | Mix across practice types and firm sizes | Survey only reached one segment |
-| Process pain | Surprise line items + agency markup show up as top frustrations (Q8, Q9) – validates DS thesis | Pain is elsewhere (slow delivery, quality) – we may be solving the wrong problem |
+| Process pain | Surprise line items + agency markup show up as top frustrations (Q8, Q9) – validates Shorthanders thesis | Pain is elsewhere (slow delivery, quality) – we may be solving the wrong problem |
 | Concept reaction | "Very interested" + "Somewhat interested" ≥ 50%; top concerns are operational (pool depth, reliability), not conceptual | Top concerns are conceptual ("I trust my agency"; "I don't want to learn a new tool") |
 | Featured reporter (Q14) | >40% useful – validates discovery feature | <20% – defer feature indefinitely |
 | Matching flow (Q15a–Q15e) | Majority say applicant-pool feels "right" or "mostly right" (Q15a); Q15b clusters around rating + on-time + specialty + prior relationship (validates what the Review Applicants screen surfaces); Q15c "Fine for favorites" or "Fine" is at least 50% (validates the live-viewing design); Q15d pre-selection messaging usage clusters around "Sometimes" (justifies v1 build); Q15e identifies a clear set of case types where auto-match is wanted (informs whether to build an auto-match fallback in v1.x). | Majority say applicant-pool is burdensome (Q15a) – the model doesn't land with firms and we need an auto-match alternative. OR: Q15c discomfort >50% – we need a guaranteed-window-before-select feature. OR: Q15d "Never" majority – pre-selection messaging is unjustified v1 build cost, defer to v1.1. |
-| Pricing (Q17–Q18) | 12% feels at-or-below current spend; line-item-frustration responses confirm DS positioning thesis | 12% feels expensive – we have a positioning problem |
+| Pricing (Q17–Q18) | 12% feels at-or-below current spend; line-item-frustration responses confirm Shorthanders positioning thesis | 12% feels expensive – we have a positioning problem |
 | Founding-firm perks (Q19) | At least "somewhat important" for ~30%+ – non-pricing perks are doing real work as a sign-up incentive | "Doesn't matter" majority – founding-firm framing isn't adding anything; lean harder on functional pitch (transparency, no agency markup) |
 | Depositions (Q20–Q21) | Strong "yes if you handle scheduling, fine if you don't" – validates the matching-only future path | Strong "only useful with full depo support" – confirms our depo strategy ceiling |
 | WCAB/NLRB/agency (Q22) | Meaningful demand – confirms expanded-scope opportunity per Rosie | Low demand – keep scope tight |

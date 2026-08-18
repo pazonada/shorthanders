@@ -68,9 +68,9 @@ Dashboard
   |     Release job modal: reason, when-did-you-know
   |
   ├── [Tab] Calendar
-  |     Unified view: DS jobs + external jobs + onboarded cases
+  |     Unified view: Shorthanders jobs + external jobs + onboarded cases
   |     Add external job modal (court appointment, direct hire, agency)
-  |     Color-coded: DS (blue), external (orange), past (gray)
+  |     Color-coded: Shorthanders (blue), external (orange), past (gray)
   |
   └── [Tab] Earnings
         Stats: this month, pending, completed

@@ -52,8 +52,8 @@ Solo litigators are a massive secondary market (~16,000-20,000) but are harder t
 - Personally feel the pain of finding reporters (no dedicated staff for it)
 - More willing to try a new platform (less institutional inertia)
 - Two-segment value prop depending on how they source today (per `project_attorney_channel_mix.md`):
-  - **Agency-switchers:** DS at 12% is a discount vs. 30–50% agency markups
-  - **Direct-relationship attorneys:** DS at 12% is a premium for the managed-platform layer (license re-verification, escrow billing, matter-ref invoicing, correction workflow, cloud storage)
+  - **Agency-switchers:** Shorthanders at 12% is a discount vs. 30–50% agency markups
+  - **Direct-relationship attorneys:** Shorthanders at 12% is a premium for the managed-platform layer (license re-verification, escrow billing, matter-ref invoicing, correction workflow, cloud storage)
 
 ---
 

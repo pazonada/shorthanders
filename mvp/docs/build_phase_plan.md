@@ -10,12 +10,12 @@ engineering-support plan. Owner tags: **YOU** (decision) · **CLAUDE** (I scaffo
 **real money does not turn on until Milestone 8 (legal gates) passes.**
 
 ## M0 – Foundations (do first; unblocks everything) — YOU + CLAUDE
-- [ ] **Lock the payments entity BEFORE any Stripe/Connect wiring** (Studio Crux vs a new DS entity –
+- [ ] **Lock the payments entity BEFORE any Stripe/Connect wiring** (Studio Crux vs a new Shorthanders entity –
       see `project_entity_dba_and_infra`). Cheapest to decide now, zero migration.
 - [ ] Set a **Vercel spend limit**; confirm Standard build machine; **re-enable `api/` + `package.json`
       in `.vercelignore`** so functions deploy again. Env/secrets in Vercel (Stripe, Supabase, Resend).
-- [ ] Create DS's **own Supabase project** (separable), its own Stripe account (under the decided
-      entity), and Resend **sending-domain auth** (SPF/DKIM/DMARC on a DS domain) – all in test mode.
+- [ ] Create Shorthanders' **own Supabase project** (separable), its own Stripe account (under the decided
+      entity), and Resend **sending-domain auth** (SPF/DKIM/DMARC on a Shorthanders domain) – all in test mode.
 
 ## M1 – Auth + accounts (Supabase) — ENGINEER + CLAUDE
 - [ ] Real email/password sign-in; **derive role (reporter/firm) from the account**, not a hardcoded

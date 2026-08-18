@@ -247,7 +247,7 @@ Two serverless stubs already exist and fall back to demo behavior:
   the CSR rate research, values reporter-entered) shown in a dedicated **profile body section**, not
   the sidebar. Onboarding collects `rates` + `publishRates` (`ClaimFlow`, `_app_06_claim.jsx`; the
   opt-in toggle appears once any rate is entered); persist both and add the same builder+toggle to the
-  dashboard profile editor. Keeping DS rate-neutral (opt-in, firm-only) also supports the
+  dashboard profile editor. Keeping Shorthanders rate-neutral (opt-in, firm-only) also supports the
   reporter-independence / AB-5 §2778 argument.
   - **Store rates as number + unit, not display strings.** The prototype saves rates as free-text
     (`"$4.50"`, `"$1.25/pg"`, `"+50%"`), and the invoice builder's rate-prefill (Tier 1) parses them

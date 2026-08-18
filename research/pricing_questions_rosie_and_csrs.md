@@ -8,7 +8,7 @@
 
 ## Why this exists
 
-Current DS pricing (half $255 / full $509 / trial $2,200, page rate $3.67) was anchored to a single data point (LA Superior statutory per-diem, minus one-third) without a comp survey behind it. Recent research has surfaced gaps. Before we change the numbers we need (a) Rosie's domain read on the legal and market context, and (b) CSR feedback on whether the gaps we found are real to them.
+Current Shorthanders pricing (half $255 / full $509 / trial $2,200, page rate $3.67) was anchored to a single data point (LA Superior statutory per-diem, minus one-third) without a comp survey behind it. Recent research has surfaced gaps. Before we change the numbers we need (a) Rosie's domain read on the legal and market context, and (b) CSR feedback on whether the gaps we found are real to them.
 
 ---
 
@@ -18,13 +18,13 @@ Current DS pricing (half $255 / full $509 / trial $2,200, page rate $3.67) was a
 What parties pay courts when an official court-employed reporter attends a civil proceeding. Surveyed 11 CA courts (see [csr_agency_live_attendance_rates.md](csr_agency_live_attendance_rates.md)).
 - **Bay Area mean:** $298 half-day / $596 full-day (SF $316/$631, Alameda $280/$560)
 - **LA Superior outlier:** $382 / $764
-- DS's current $255/$509 sits *below* the Bay Area court rate. CSR keeps 100% of it, but the headline number is lower than what attorneys pay the court for the same service.
+- Shorthanders' current $255/$509 sits *below* the Bay Area court rate. CSR keeps 100% of it, but the headline number is lower than what attorneys pay the court for the same service.
 
 ### Private agency live-attendance rates
 Surveyed 17 CA agencies. **15 are quote-walled.** Only Denise Paddock CSR (OC solo) publishes – $1,900/day for private hearing work. Judicial Council via Bay Area Legal Aid cites ~$3,300/day average for private hearing reporters (wide-band aggregate). **This is the data gap user testing should close.**
 
 ### Out-of-state rate cards (8 cards reviewed 2026-05-12)
-Private CSRs and one CA agency (Atkinson-Baker) reporter-payout sheet. The relevant signals for DS court-only scope:
+Private CSRs and one CA agency (Atkinson-Baker) reporter-payout sheet. The relevant signals for Shorthanders court-only scope:
 - **Atkinson-Baker pays its CSRs $4.40/pg for hearings/trials/arbitrations** (vs. $3.00/pg for personal-injury depos). This is the CA agency take-out rate, not the client rate.
 - Private CSRs charge $5–7/pg direct for hearings.
 - Standard surcharges across all cards: interpreter (+$0.25–0.70/pg), medical/expert (+$0.20–0.70/pg), in-person modality (+$125–$240 per appearance), jury trial (+$100–$200/day), after-hours ($40–$100/hr), travel ($50/hr or 40¢/mi past 100 miles), weekend (varies).
@@ -33,7 +33,7 @@ Private CSRs and one CA agency (Atkinson-Baker) reporter-payout sheet. The relev
 ### CSR Facebook group (Court Reporter Rates Discussion, 11K members)
 Public group but feed gated to members. Only the pinned Featured post was visible: a CA CSR asking about per-page rates for interpreted depositions, complaining that Steno's $0.50 interpreter surcharge doesn't compensate for the slashed page count (60 pages in 4 hours). Replies: $1–2/pg. **Confirms interpreter surcharge is a live pain point in the CA market.** Aud cannot join (not a CSR); CSR user testing or Rosie's network is the path to more.
 
-### What current DS pricing already covers
+### What current Shorthanders pricing already covers
 - Page rate, simultaneous-copy rate, separate-copy rate (Gov. Code § 69950 baseline)
 - Turnaround multipliers (rush 1.5x, standard 1.0x, economy 0.85x)
 - Half / full / trial-day attendance
@@ -43,7 +43,7 @@ Public group but feed gated to members. Only the pinned Featured post was visibl
 - Court hearings only – depos, rough draft, realtime, video, exhibits explicitly out of scope
 
 ### The headline gap
-Atkinson-Baker pays its reporters **more per page for hearing transcripts ($4.40)** than DS's flat $3.67. A CSR moving an Atkinson-Baker hearing to DS would earn less per page even keeping 100%. That's the recalibration question.
+Atkinson-Baker pays its reporters **more per page for hearing transcripts ($4.40)** than Shorthanders' flat $3.67. A CSR moving an Atkinson-Baker hearing to Shorthanders would earn less per page even keeping 100%. That's the recalibration question.
 
 ---
 
@@ -61,7 +61,7 @@ Both produce a certified written record, but the workflow and pricing logic diff
 | Appellate acceptance | Standard | Court-dependent; some CA depts. require a CSR-prepared transcript for appeal |
 | Risk for the CSR | Live skill on the day | Hours of careful playback work |
 
-Implication: hearing transcript and audio transcription are different products and probably shouldn't share a page rate. The current DS model treats them identically.
+Implication: hearing transcript and audio transcription are different products and probably shouldn't share a page rate. The current Shorthanders model treats them identically.
 
 ---
 
@@ -72,12 +72,12 @@ Grouped by theme. Domain/legal answers we can't get from web research or CSR use
 ### A. Legal status of the $3.67 page rate
 
 1. Is Gov. Code § 69950's page rate a **legal cap** for any party who orders a hearing transcript from a privately-hired CA CSR, or is it the cap only when the *court* (or court-paid reporter) is producing the transcript?
-2. If a private CSR takes down a public court hearing through DS, what does CA law say about their per-page rate? Is there freedom to charge above $3.67/pg, and if so, what would be the legal exposure for DS if a buyer challenged a $5/pg rate?
+2. If a private CSR takes down a public court hearing through Shorthanders, what does CA law say about their per-page rate? Is there freedom to charge above $3.67/pg, and if so, what would be the legal exposure for Shorthanders if a buyer challenged a $5/pg rate?
 3. Are there appellate-courts-specific rules in CA that require a CSR-prepared transcript (vs. audio-derived) for the record to be accepted on appeal? Want to confirm before we describe audio transcription as a "substitute" anywhere in marketing.
 
 ### B. Hearing transcript vs. audio pricing
 
-4. Should hearing transcript and audio transcription have **different page rates** in DS? Your gut: how much higher should hearing transcript be?
+4. Should hearing transcript and audio transcription have **different page rates** in Shorthanders? Your gut: how much higher should hearing transcript be?
 5. From your practice, what's the typical attorney's perceived value gap between an audio-derived transcript and a CSR-prepared one? Would attorneys pay more for the CSR-prepared transcript?
 
 ### C. Agency economics
@@ -87,7 +87,7 @@ Grouped by theme. Domain/legal answers we can't get from web research or CSR use
 
 ### D. Pricing dimensions we haven't modeled
 
-8. **In-person vs. remote** – do CA courts and CSRs see this as different work, priced differently? Your sense of whether DS should differentiate.
+8. **In-person vs. remote** – do CA courts and CSRs see this as different work, priced differently? Your sense of whether Shorthanders should differentiate.
 9. **Jury vs. non-jury trial** – material enough to price separately, or is a single trial-day rate fine for V1?
 10. **Interpreter surcharges** – is this a real expectation in CA hearing work (not just depos)? What's the rate to look like?
 11. **Travel** – does the CA market treat travel time as billable, or absorbed in the per-diem? Bay Area launch will have CSRs covering multiple counties.
@@ -96,22 +96,22 @@ Grouped by theme. Domain/legal answers we can't get from web research or CSR use
 
 ### E. Scope edge cases
 
-14. **Public meetings / public hearings / agency hearings** (city council, school board, ALJ) – in DS scope or out? Many CSRs do this work; rate-card data suggests it's a separate quote-only category.
+14. **Public meetings / public hearings / agency hearings** (city council, school board, ALJ) – in Shorthanders scope or out? Many CSRs do this work; rate-card data suggests it's a separate quote-only category.
 15. **Workers Comp hearings at WCAB** – they're public quasi-court. In scope?
 16. **Daily transcript copy during multi-day trials** – when an attorney orders next-morning delivery of each trial day. Do you order this in your practice? How is it typically priced (per-day with rush multiplier, or flat)?
-17. **Multi-copy billing structure by case type** *(added 2026-05-13)* – Tina Sherman (CA WC reporter, Facebook 5/13) confirmed CA WC is **automatic O+2** (Original + 2 certified copies on every transcript). General civil depo is typically O+1 (or O-only). The CSR's rate applies to each deliverable, so WC effectively bills ~2x per page count vs. an O-only job. Two product questions for you: (a) Should the DS booking flow default to O+2 for WC jobs, O+1 for civil depos, O-only for court hearings – or let the ordering attorney choose? (b) Should the per-copy rate be CSR-settable within bands (consistent with our broader rate-setting design) or platform-fixed at the simultaneous-copy / separate-copy rates already in `index.html:2747`? This affects the multi-party cost-splitting UX and the billing engine.
+17. **Multi-copy billing structure by case type** *(added 2026-05-13)* – Tina Sherman (CA WC reporter, Facebook 5/13) confirmed CA WC is **automatic O+2** (Original + 2 certified copies on every transcript). General civil depo is typically O+1 (or O-only). The CSR's rate applies to each deliverable, so WC effectively bills ~2x per page count vs. an O-only job. Two product questions for you: (a) Should the Shorthanders booking flow default to O+2 for WC jobs, O+1 for civil depos, O-only for court hearings – or let the ordering attorney choose? (b) Should the per-copy rate be CSR-settable within bands (consistent with our broader rate-setting design) or platform-fixed at the simultaneous-copy / separate-copy rates already in `index.html:2747`? This affects the multi-party cost-splitting UX and the billing engine.
 
 ### F. Cancellation and CNA realism
 
 17. Is our 24-hour cancellation cutoff realistic, lenient, or strict by CA market norms?
 18. CNA frequency – in your practice, roughly how often does a hearing happen where the CSR shows up but no testimony is taken? Helps us size the pricing-risk exposure.
-19. Jury-trial cancellations are penalized more heavily in the private market ($400 vs. $150 for non-trial). Worth tiering in DS, or over-engineering?
+19. Jury-trial cancellations are penalized more heavily in the private market ($400 vs. $150 for non-trial). Worth tiering in Shorthanders, or over-engineering?
 
 ### G. Recalibration framing
 
 > **Update 2026-05-13:** After full review of the 10+ rate cards Aud shared (folded into [csr_agency_live_attendance_rates.md § 4](csr_agency_live_attendance_rates.md)), the recalibration anchors have shifted materially. The court-statutory options below (a, b, c) are now understood as *cost-recovery floors for court-employed reporters*, not market prices. Private CA hearing rates cluster at **$1,800-3,600 full-day** (Denise Paddock's published $1,900, Rosie's Contra Costa ~$3,600, Judicial Council aggregate ~$3,300). The recalibration target is no longer "what does the court charge" but "what's a defensible private-market price that's clearly cheaper than agency but still pays CSRs above their agency take-out."
 
-20. **(Revised 2026-05-13)** Of the recalibrated options for the live-attendance base rate – (a) DS launch ~50% below agency at **$900 half / $1,500 full**, (b) split-the-difference at **$1,050 half / $1,650 full** (between a and c – the "I don't want to undersell, but I don't want to overshoot before data" hedge), (c) more aggressive at **$1,200 half / $1,800 full** (closer to private-agency floor), (d) conservative at **$700 half / $1,200 full** (above court statutory but still well below market), or (e) hold current $255/$509 pending data – which is right, given the CA-vs-FL premium and your Contra Costa experience?
+20. **(Revised 2026-05-13)** Of the recalibrated options for the live-attendance base rate – (a) Shorthanders launch ~50% below agency at **$900 half / $1,500 full**, (b) split-the-difference at **$1,050 half / $1,650 full** (between a and c – the "I don't want to undersell, but I don't want to overshoot before data" hedge), (c) more aggressive at **$1,200 half / $1,800 full** (closer to private-agency floor), (d) conservative at **$700 half / $1,200 full** (above court statutory but still well below market), or (e) hold current $255/$509 pending data – which is right, given the CA-vs-FL premium and your Contra Costa experience?
 
 > **Practical note:** Aud's read after the rate-card review (2026-05-13, revised 2026-05-24 to reflect the open-marketplace model) is that **option (b) – $1,050 half / $1,650 full – is the smartest hedge for launch as the platform's *baseline guidance* number**. It's still ~40-50% below typical CA agency rates ($1,800-3,000), ~75% above court statutory ($596 Bay Area mean), and gives CSRs a substantial raise vs. agency take-out. The platform shows this baseline as guidance copy ("most CA reporters charge around $X") next to each rate field; CSRs set whatever number they want with no platform-imposed cap. Premium CSRs may position above the baseline; new or low-volume CSRs may sit below; the baseline is meant as an anchor, not a ceiling or floor. Final baseline number should be validated by Stage 1 CSR survey results (Q7/Q8 ask CSRs their own private-direct rates). If 30-60 CSR survey responses cluster materially above or below $1,650 full-day private rate, adjust accordingly before launch. Note: the rate-band design (standard ±20% / opt-in ±50% with matching-priority penalty) was retired 2026-05-24 in favor of the open-marketplace model where CSRs publish whatever rate they want and firms see every applicant's rate when reviewing applications.
 
@@ -132,9 +132,9 @@ The existing [user_testing_csr_guide.md](user_testing_csr_guide.md) covers the b
 2. What's your current per-page rate for (a) hearings, (b) audio transcription, (c) depositions if applicable?
 3. When you work through an agency, what percentage of the attorney's payment do you keep? Best estimate is fine; not asking for contracts.
 
-### B. Reaction to DS pricing
+### B. Reaction to Shorthanders pricing
 
-4. *Show DS's current rates: $255 half / $509 full / $2,200 trial, page rate $3.67, 12% buyer fee, CSR keeps 100% minus optional $99/yr listing.*
+4. *Show Shorthanders' current rates: $255 half / $509 full / $2,200 trial, page rate $3.67, 12% buyer fee, CSR keeps 100% minus optional $99/yr listing.*
    - Where does this sit relative to what you currently earn? Surprised? Reasonable? Insulting?
    - If we raised the hearing transcript page rate to $5, would that change your answer?
 5. What would make this an obvious "yes" for you – what's the floor?
@@ -143,7 +143,7 @@ The existing [user_testing_csr_guide.md](user_testing_csr_guide.md) covers the b
 
 For each dimension below, ask:
 - **Do you currently charge for this? At what rate?**
-- **If DS supported this, would it matter to you? Or feel like over-complication?**
+- **If Shorthanders supported this, would it matter to you? Or feel like over-complication?**
 
 6. **In-person vs. remote** modality differential
 7. **Jury trial vs. non-jury trial** premium
@@ -159,13 +159,13 @@ For each dimension below, ask:
 
 15. What's your current cancellation policy for attorneys who cancel? Cutoff time, fee amount.
 16. CNA – when this happens to you, how is it currently priced? Full attendance fee? Reduced?
-17. DS proposes: full attendance fee owed if attorney cancels within 24 hours, full fee if CSR shows up. Does this match your expectation?
+17. Shorthanders proposes: full attendance fee owed if attorney cancels within 24 hours, full fee if CSR shows up. Does this match your expectation?
 
-### E. The agency-vs-DS comparison
+### E. The agency-vs-Shorthanders comparison
 
 18. If you keep 100% of your stated rates (with attorney paying a 12% buyer fee on top), what page rate would you set for a hearing transcript? Free-text.
 19. What's the deal-breaker – what would make you immediately say "no, this rate is too low to be worth my time"?
-20. What pricing dimensions in your existing agency contracts feel like over-engineering when you read them? Anything DS could *simplify out* without losing CSRs?
+20. What pricing dimensions in your existing agency contracts feel like over-engineering when you read them? Anything Shorthanders could *simplify out* without losing CSRs?
 
 ### F. Hearing transcript vs. audio specifically
 
@@ -197,9 +197,9 @@ Added 2026-05-13 after Rosie's reaction to the Caldarella agency invoice (see [a
 
 **Why this matters:** the agency invoice from Caldarella's Facebook post had four "admin" line items totaling **$557 (24% of the bill)** – Administrative/Account Service Fee, Production Fee, E-Bundle, Electronic Delivery, plus exhibit handling. Each is a real task someone has to perform: scheduling, formatting the PDF, bundling files, sending the email, scanning exhibits.
 
-**The DS thesis isn't that these tasks are fake.** It's that software does them at near-zero marginal cost where the agency does them with paid humans:
+**The Shorthanders thesis isn't that these tasks are fake.** It's that software does them at near-zero marginal cost where the agency does them with paid humans:
 
-| Agency line item | On DS |
+| Agency line item | On Shorthanders |
 |---|---|
 | Admin / scheduling | Built into booking flow – pennies of compute |
 | Production fee (PDF assembly) | Template + CSR upload – zero |
@@ -212,11 +212,11 @@ That's how a 24%-of-invoice agency markup compresses to an 11–12% platform fee
 **Why this is a better brand pitch than "agencies are evil":**
 
 - It's the truth (agencies do real work)
-- It positions DS as a peer / replacement, not an attacker
+- It positions Shorthanders as a peer / replacement, not an attacker
 - It's the same story as DoorDash vs. restaurant phone delivery, or Stripe vs. merchant-services brokers – software automating coordination work humans used to do
 - It survives any future direct comparison: agencies can match a fee rate, but they can't match a fee rate plus near-zero per-job overhead
 
-This framing belongs in landing-page copy, cold-email body text, and the eventual CSR pitch deck. **It's also a quote we should attribute back to Rosie** if/when DS does press – she said it cleanest.
+This framing belongs in landing-page copy, cold-email body text, and the eventual CSR pitch deck. **It's also a quote we should attribute back to Rosie** if/when Shorthanders does press – she said it cleanest.
 
 ---
 
@@ -224,9 +224,9 @@ This framing belongs in landing-page copy, cold-email body text, and the eventua
 
 Also from her 2026-05-12 answers:
 
-> "My vision for this is that DS will charge law firms less than the current standard, but reporters will keep more of it versus agencies, so it's a win-win."
+> "My vision for this is that Shorthanders will charge law firms less than the current standard, but reporters will keep more of it versus agencies, so it's a win-win."
 
-That's the brand positioning thesis in 27 words. The agency invoice evidence in [agency_invoice_evidence.md](agency_invoice_evidence.md) shows it's quantitatively true: same $2,311 agency invoice becomes $1,842 on DS – attorney saves $469, CSR earns $241 more. Win-win is not aspirational; it's the math.
+That's the brand positioning thesis in 27 words. The agency invoice evidence in [agency_invoice_evidence.md](agency_invoice_evidence.md) shows it's quantitatively true: same $2,311 agency invoice becomes $1,842 on Shorthanders – attorney saves $469, CSR earns $241 more. Win-win is not aspirational; it's the math.
 
 ---
 
@@ -236,7 +236,7 @@ Captured from her 2026-05-12 written response. **Important caveat:** Q1–Q5 (le
 
 ### Headline data points (new, not in any prior research)
 
-- **Contra Costa private-agency rate:** ~$1,800 for a half-day hearing. (Rosie, from a recent matter she handled.) This is the first published-by-someone-actually-paying-it CA private hearing rate we've captured. Our current DS half-day rate ($255) is **7x below** this figure. Even the SF-rate proposal ($316) is 6x below.
+- **Contra Costa private-agency rate:** ~$1,800 for a half-day hearing. (Rosie, from a recent matter she handled.) This is the first published-by-someone-actually-paying-it CA private hearing rate we've captured. Our current Shorthanders half-day rate ($255) is **7x below** this figure. Even the SF-rate proposal ($316) is 6x below.
 - **LA market:** "Attorney fee rates are close to twice Bay area rates, and as I recall deposition reporters charged a lot more too." Confirms LA is the high-rate outlier in CA, consistent with the statutory per-diem survey.
 - **Appearance fees are unregulated.** Rosie: "Showing up and being at the hearing is different, and I think it's pretty unregulated." Consistent with the 2026-05-13 statutory clarification – § 69950 doesn't reach appearance/per-diem fees regardless of how it's read.
 
@@ -319,6 +319,6 @@ Open product / governance changes worth landing before launch:
 - [csr_agency_live_attendance_rates.md](csr_agency_live_attendance_rates.md) – court statutory per-diem survey + the agency rate gap
 - [user_testing_csr_guide.md](user_testing_csr_guide.md) – full CSR user testing protocol (this doc adds pricing depth)
 - [marketing_strategy_master.md](marketing_strategy_master.md) – overall launch strategy
-- [../governance-and-process/founding_member_program.md](../governance-and-process/founding_member_program.md) – current DS pricing in code
-- [../governance-and-process/minimum_fees_and_waiting_time.md](../governance-and-process/minimum_fees_and_waiting_time.md) – what DS explicitly leaves out and why
+- [../governance-and-process/founding_member_program.md](../governance-and-process/founding_member_program.md) – current Shorthanders pricing in code
+- [../governance-and-process/minimum_fees_and_waiting_time.md](../governance-and-process/minimum_fees_and_waiting_time.md) – what Shorthanders explicitly leaves out and why
 - [../governance-and-process/cancellation_and_cna_policy.md](../governance-and-process/cancellation_and_cna_policy.md) – current cancellation/CNA stance

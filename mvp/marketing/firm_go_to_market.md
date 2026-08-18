@@ -80,7 +80,7 @@ cold email subject lines.
    firms are already hitting this wall.
 
 **What NOT to lead with:** the platform fee/commission language from the old model is gone –
-never say "12%," "buyer fee," or imply DS takes a cut of the job. The firm never sees a DS charge
+never say "12%," "buyer fee," or imply Shorthanders takes a cut of the job. The firm never sees a Shorthanders charge
 on an invoice, and that's a selling point, not a footnote.
 
 ---

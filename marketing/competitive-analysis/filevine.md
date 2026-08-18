@@ -92,27 +92,27 @@ From the product page:
 - Filevine has named firm customers and significant press coverage
 - Custom pricing with sales contact – typical of an enterprise product add-on
 
-**Why Depositions by Filevine is a limited direct threat to DS:**
+**Why Depositions by Filevine is a limited direct threat to Shorthanders:**
 - It's an add-on to an existing platform that small CA litigation firms may not use
 - Requires the firm to already be a Filevine customer – not a standalone competitive entry
 - Court reporter booking is a convenience feature of the scheduling flow, not a marketplace for finding and evaluating reporters
 
-**Assessment:** Real product, real company, real funding. The competitive threat is indirect: firms using Filevine already have a court reporter booking path and may not look for DS.
+**Assessment:** Real product, real company, real funding. The competitive threat is indirect: firms using Filevine already have a court reporter booking path and may not look for Shorthanders.
 
 ---
 
-## Strengths vs. DS
+## Strengths vs. Shorthanders
 
 - **Existing platform integration.** For Filevine customers, the deposition scheduling is already where they live. No switching cost.
-- **AI preparation tools.** DS has no equivalent for deposition prep (nor is it in our V1 scope).
+- **AI preparation tools.** Shorthanders has no equivalent for deposition prep (nor is it in our V1 scope).
 - **Enterprise trust.** Filevine is a known, funded legal tech company. Procurement teams may default to an existing vendor.
-- **Concierge booking.** Filevine booking the reporter for the firm reduces attorney effort further than DS's self-serve model.
+- **Concierge booking.** Filevine booking the reporter for the firm reduces attorney effort further than Shorthanders' self-serve model.
 
 ---
 
-## Weaknesses vs. DS
+## Weaknesses vs. Shorthanders
 
-- **Filevine lock-in.** Only accessible to Filevine subscribers. DS is platform-agnostic.
+- **Filevine lock-in.** Only accessible to Filevine subscribers. Shorthanders is platform-agnostic.
 - **Depositions only.** Public court hearings are not in scope.
 - **Agency model for reporter booking.** Reporter identity is hidden. No individual reporter profiles, ratings, or direct relationships.
 - **Not CA-statutory-rate compliant.** No mention of CA statutory rates in the deposition scheduling flow.
@@ -123,7 +123,7 @@ From the product page:
 
 ## Overlap with our positioning
 
-| DS messaging pillar | Filevine overlap? | Notes |
+| Shorthanders messaging pillar | Filevine overlap? | Notes |
 |---|---|---|
 | Transparent pricing / statutory rates | No | Custom/opaque pricing |
 | No agency cut | No | Filevine handles reporter booking – agency model |
@@ -133,7 +133,7 @@ From the product page:
 | Simple / fast / modern UX | Yes | "Master Every Deposition" – ease of use is central |
 | Court-hearing focus | No | Depositions only |
 
-**Tagline word overlap with DS:** "Master Every Deposition" does not conflict with "Court transcripts, finally simple." No direct overlap.
+**Tagline word overlap with Shorthanders:** "Master Every Deposition" does not conflict with "Court transcripts, finally simple." No direct overlap.
 
 ---
 
@@ -142,4 +142,4 @@ From the product page:
 - How many CA litigation firms are Filevine customers? This determines the addressable market overlap.
 - Does Filevine's court reporter booking use a specific agency network in CA? If so, which agencies? That's a supply-competition signal.
 - Will Filevine extend to public court hearing scheduling? If they add that, they become a more direct competitor in the CA market.
-- What is the per-seat pricing for Depositions by Filevine? If it's bundled into a high-cost suite, smaller CA litigation firms won't be using it – which leaves them available for DS.
+- What is the per-seat pricing for Depositions by Filevine? If it's bundled into a high-cost suite, smaller CA litigation firms won't be using it – which leaves them available for Shorthanders.

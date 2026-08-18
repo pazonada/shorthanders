@@ -109,7 +109,7 @@ A small note on the calculator clarifies: "Orders below $50 are billed at our $5
 
 ### Travel-time billable
 
-Per Rosie 5/12 ("Travel time is very billable and it's usually a pretty big expense") and rate-card review showing $50/hr as the consistent industry rate, **DS adds a travel-time line item to V1**.
+Per Rosie 5/12 ("Travel time is very billable and it's usually a pretty big expense") and rate-card review showing $50/hr as the consistent industry rate, **Shorthanders adds a travel-time line item to V1**.
 
 **How it works:**
 

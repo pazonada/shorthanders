@@ -169,14 +169,14 @@ This is the single biggest variable in the financial model. Only 2 counties in C
 
 > **Decision (3/27):** Standardized rates for live attendance, set at 1/3 below average agency rates. Win-win: attorneys pay less than agency rates, CSRs earn more than they would through an agency (because they keep 100%).
 >
-> **Standardized DS attendance rates (based on LA Superior Court baseline):**
+> **Standardized Shorthanders attendance rates (based on LA Superior Court baseline):**
 >
-> | | Agency rate | DS rate (1/3 off) | CSR keeps |
+> | | Agency rate | Shorthanders rate (1/3 off) | CSR keeps |
 > |---|---|---|---|
 > | **Half day (up to 4 hours)** | $382 | **$255** | $255 (100%) |
 > | **Full day (4+ hours)** | $764 | **$509** | $509 (100%) |
 >
-> For context: through an agency at $382/half day, the CSR typically gets ~$190 (agencies keep 50%+). Through DS at $255/half day, the CSR gets $255 – a 34% raise while the attorney pays 33% less.
+> For context: through an agency at $382/half day, the CSR typically gets ~$190 (agencies keep 50%+). Through Shorthanders at $255/half day, the CSR gets $255 – a 34% raise while the attorney pays 33% less.
 >
 > 12% platform fee applies to the total booking (attendance + per-page transcript rate).
 >

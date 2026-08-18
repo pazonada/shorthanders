@@ -76,7 +76,7 @@ the numbers – set real caps and read the real results.
    - **Demand, not supply.** Reporters are already free to reach via the claim email + Facebook, so
      don't spend ad money chasing supply. The paid dollar goes to firm search intent.
    - Land on a page that proves the value fast (directory results in their county + the
-     agency-vs-DS money comparison) and makes firm signup one click.
+     agency-vs-Shorthanders money comparison) and makes firm signup one click.
 
 2. **ChatGPT / AI-assistant advertising (emerging).** More people now ask an AI assistant "how do
    I find a court reporter in <place>" than a search box. Two plays, and they're different:
@@ -94,11 +94,11 @@ the numbers – set real caps and read the real results.
      data.** Competitive research (2026-08-04) found that CourtReporters.com runs exactly this play
      – a `/court-reporter-rates` page and a "How Much Does a Court Reporter Cost?" blog post as an
      SEO/organic-acquisition funnel into their directory. It's a proven pattern in this category, and
-     DS is better positioned to do it credibly: we already have real CA rate research (per-page,
+     Shorthanders is better positioned to do it credibly: we already have real CA rate research (per-page,
      per-diem, and workers'-comp-specific data points) in `research/csr_agency_live_attendance_rates.md`
      and `research/agency_invoice_evidence.md`, not a generic national estimate. **Hard constraint:
      never invent or round a rate that isn't sourced** ([[feedback_never_invent_data]] – blank or
-     CSR-entered, prefer real CRB/invoice data over a made-up number). A DS rate guide built on real
+     CSR-entered, prefer real CRB/invoice data over a made-up number). A Shorthanders rate guide built on real
      invoices and real reporter-reported data would be more trustworthy than a competitor's
      unsourced page, which is a genuine differentiator if we do it – but only if every number on the
      page can be traced to a real source. Not sized or scheduled yet; a candidate for the content/SEO

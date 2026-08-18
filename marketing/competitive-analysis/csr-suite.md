@@ -1,6 +1,6 @@
 # CSR Suite
 
-**Last reviewed:** 2026-08-01 (re-verified: still no demand-side/firm product, confirming DS's
+**Last reviewed:** 2026-08-01 (re-verified: still no demand-side/firm product, confirming Shorthanders'
 firm-facing directory + messaging + payment offer remains undifferentiated by this competitor –
 see `mvp/marketing/firm_go_to_market.md`)
 
@@ -100,7 +100,7 @@ What is NOT visible: actual in-app screens, integration details, export/reportin
 
 ---
 
-## Strengths vs. DS
+## Strengths vs. Shorthanders
 
 - **Founder credibility:** Built by a working SF Bay Area CSR – exactly the audience we're recruiting. Karla's "built by a reporter, for reporters" positioning has strong authenticity.
 - **Supply-side insight:** Deep empathy with CSR pain points (cancellation fees, chasing payment). If they build well, reporters may prefer a tool purpose-built for their business management.
@@ -109,11 +109,11 @@ What is NOT visible: actual in-app screens, integration details, export/reportin
 
 ---
 
-## Weaknesses vs. DS
+## Weaknesses vs. Shorthanders
 
-- **Not a marketplace.** CSR Suite does not bring reporters new work – it only manages existing clients. DS does bring new work, which is a stronger value proposition for CSRs who want to grow their book.
+- **Not a marketplace.** CSR Suite does not bring reporters new work – it only manages existing clients. Shorthanders does bring new work, which is a stronger value proposition for CSRs who want to grow their book.
 - **No demand-side product.** Attorneys or legal assistants cannot use CSR Suite to find a reporter. They're entirely absent from the platform.
-- **Restricted scope:** Private deposition-style work appears to be the implicit focus. DS serves public court hearings, which is a regulated and underserved niche CSR Suite does not address.
+- **Restricted scope:** Private deposition-style work appears to be the implicit focus. Shorthanders serves public court hearings, which is a regulated and underserved niche CSR Suite does not address.
 - **Pre-revenue beta.** No evidence of paying users. Subject to the classic startup risk of not surviving to full launch.
 - **No transparent pricing.** We can't evaluate their fee structure, but the absence of pricing page is a trust signal that works in our favor when we publish ours.
 
@@ -121,7 +121,7 @@ What is NOT visible: actual in-app screens, integration details, export/reportin
 
 ## Overlap with our positioning
 
-| DS messaging pillar | CSR Suite overlap? | Notes |
+| Shorthanders messaging pillar | CSR Suite overlap? | Notes |
 |---|---|---|
 | Transparent pricing / statutory rates | No | No pricing visible at all |
 | No agency cut | Implied | "Your rates. Your terms." resonates with reporter autonomy, but doesn't call out agency structure |
@@ -131,15 +131,15 @@ What is NOT visible: actual in-app screens, integration details, export/reportin
 | Simple / fast / modern UX | Yes | "A faster way to book, bill, and get paid" |
 | Court-hearing focus | No | No court-hearing focus visible |
 
-The "Your rates. Your terms." headline is directionally similar to DS's "no agency cut" angle, but CSR Suite is serving the self-management use case (working with existing clients) rather than the marketplace use case (finding new clients). The overlap is at the value-system level, not the product level.
+The "Your rates. Your terms." headline is directionally similar to Shorthanders' "no agency cut" angle, but CSR Suite is serving the self-management use case (working with existing clients) rather than the marketplace use case (finding new clients). The overlap is at the value-system level, not the product level.
 
-**Tagline word overlap with DS:** CSR Suite does not use "simple" or "simplified." Low direct tagline conflict.
+**Tagline word overlap with Shorthanders:** CSR Suite does not use "simple" or "simplified." Low direct tagline conflict.
 
 ---
 
 ## Open questions
 
 - Is there a closed beta the public can't see? What features are actually shipped?
-- Does Karla know about DS? Rosie may already know her through SF Bay Area CSR community. If so, this is a potential intro worth having – not as a competitor to neutralize, but to understand whether her roadmap diverges from ours or converges on marketplace functionality.
+- Does Karla know about Shorthanders? Rosie may already know her through SF Bay Area CSR community. If so, this is a potential intro worth having – not as a competitor to neutralize, but to understand whether her roadmap diverges from ours or converges on marketplace functionality.
 - Will CSR Suite add a demand-side product (attorney-facing booking)? That would be the step that turns it from a practice-management tool into a direct competitor.
 - Pricing model when they exit beta – subscription, transaction fee, or both?

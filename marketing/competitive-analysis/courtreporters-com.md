@@ -54,7 +54,7 @@ Nationwide by claim, with individual state/city landing pages found in search re
 
 ## Service scope
 
-Broader than most other entries in this competitive set – six categories in one directory (court reporting agencies, interpreters, notaries, process servers, scopists, legal videographers), not just individual freelance court reporters. This is a meaningfully wider net than DS's current CA-reporter-only directory scope, though it also means court reporters specifically are one category among several rather than the sole focus.
+Broader than most other entries in this competitive set – six categories in one directory (court reporting agencies, interpreters, notaries, process servers, scopists, legal videographers), not just individual freelance court reporters. This is a meaningfully wider net than Shorthanders' current CA-reporter-only directory scope, though it also means court reporters specifically are one category among several rather than the sole focus.
 
 Source: search-result summary of the "How It Works" page
 
@@ -64,7 +64,7 @@ Source: search-result summary of the "How It Works" page
 
 **Pay-to-list, with a stated review/verification step** – professionals visit a "list services" page, select their service type, and complete a profile; the site's own copy claims "the team reviews every submission to verify credentials and ensure quality listings" before a listing goes live. This is a real point of difference from most other directories in this set (StenoScout, eCourt Reporters), which don't describe an explicit human credential-review step. **Not independently verified** – no detail found on what "verify credentials" actually checks against (a state licensing board, a document upload, or something lighter).
 
-**Not seeded from public license data** – like every other claim-based directory profiled so far, a reporter has to actively sign up and be listed; the directory does not start from a complete public licensing-board dataset the way DS's CA directory does.
+**Not seeded from public license data** – like every other claim-based directory profiled so far, a reporter has to actively sign up and be listed; the directory does not start from a complete public licensing-board dataset the way Shorthanders' CA directory does.
 
 **Reporters keep their own client relationship and their own money** – since payment is confirmed off-platform (see Pricing model), CourtReporters.com never touches the transaction. This is the same "we introduce, you transact" model as StenoScout, and notably different from eCourt Reporters (which takes a percentage of the job).
 
@@ -79,7 +79,7 @@ Confirmed via founder browsing 2026-08-04:
 
 From search results:
 - Attorney service requests trigger immediate email + text notification to the professional, who can accept or decline directly from the notification; both parties are then notified of the outcome via email and text. This request/accept/decline flow is a real, somewhat more structured mechanic than a plain "email us" quote request (StenoScout's flow), even though it still ends with payment happening off-platform.
-- State-by-state content: a "Court Reporter Rates by State (2026)" page and a "How Much Does a Court Reporter Cost?" blog post – SEO content aimed at organic search traffic (see the Task B marketing-idea note in `mvp/marketing/growth_strategy.md` for how DS might use the same content pattern with real sourced data).
+- State-by-state content: a "Court Reporter Rates by State (2026)" page and a "How Much Does a Court Reporter Cost?" blog post – SEO content aimed at organic search traffic (see the Task B marketing-idea note in `mvp/marketing/growth_strategy.md` for how Shorthanders might use the same content pattern with real sourced data).
 - Blog content beyond rates: "How to Become a Court Reporter," "What Is RPR Certification for Court Reporters?" – general educational SEO content, consistent with a new site building organic search presence pre-scale.
 
 ---
@@ -89,37 +89,37 @@ From search results:
 - **Brand new** – launch tied to a specific conference date (NCRA 2026, Bellevue WA, July 16-19), which is a real, checkable, recent event
 - Claims **12,000+ certified court reporters, videographers, and interpreters** searchable – a large claimed number for a directory this new, which likely reflects an aggregated/pre-populated dataset across all six service categories rather than 12,000 reporters who have individually signed up and paid to list (the founding-member program explicitly frames signing up as something professionals still need to actively do). **Treat the 12,000 figure as an unverified platform claim, not a confirmed count of paying or even claimed listings.**
 - Real content infrastructure already live (blog, per-state rate page, per-city landing pages, a formal "how it works" page) – more built-out at launch than a bare landing page, suggesting real pre-launch investment
-- Founding-member program with named individual founders and a direct-access pitch ("direct communication with Marisa and Jillian") – small, founder-led team framing, similar in spirit to DS's own bootstrapped, founder-accessible positioning
+- Founding-member program with named individual founders and a direct-access pitch ("direct communication with Marisa and Jillian") – small, founder-led team framing, similar in spirit to Shorthanders' own bootstrapped, founder-accessible positioning
 - Site blocks automated fetching (403 to this pass's tool) – not itself a maturity signal, but it does mean this profile is less rigorously verified than others in this folder and should be rechecked with a different method (e.g., a real browser session) before being treated as fully current
 
 ---
 
-## Strengths vs. DS
+## Strengths vs. Shorthanders
 
-- **Broader category coverage in one directory** (six professional types, not just reporters) – a firm that needs an interpreter or a process server alongside a reporter has one more reason to land on CourtReporters.com than on DS's reporter-only directory.
-- **A claimed credential-review step before a listing goes live** – if real and rigorous, this is a trust signal DS's own CRB-sourced approach can match or beat (DS's data comes directly from the licensing board, not a manual review), but it's worth knowing a competitor is at least claiming manual vetting.
+- **Broader category coverage in one directory** (six professional types, not just reporters) – a firm that needs an interpreter or a process server alongside a reporter has one more reason to land on CourtReporters.com than on Shorthanders' reporter-only directory.
+- **A claimed credential-review step before a listing goes live** – if real and rigorous, this is a trust signal Shorthanders' own CRB-sourced approach can match or beat (Shorthanders' data comes directly from the licensing board, not a manual review), but it's worth knowing a competitor is at least claiming manual vetting.
 - **Structured request/accept/decline notification flow** (email + text) is a slightly more polished lead-gen mechanic than a plain emailed quote request – closer to feeling like a real product interaction, even though the underlying model is still lead-gen, not a transaction.
-- **Timed, event-anchored launch** (NCRA 2026) and a founding-member program are both real marketing moves DS itself uses in spirit (founding-cohort framing) – worth watching how their program performs as a comparison point for DS's own.
+- **Timed, event-anchored launch** (NCRA 2026) and a founding-member program are both real marketing moves Shorthanders itself uses in spirit (founding-cohort framing) – worth watching how their program performs as a comparison point for Shorthanders' own.
 
 ---
 
-## Weaknesses vs. DS – where DS specifically wins
+## Weaknesses vs. Shorthanders – where Shorthanders specifically wins
 
 - **This is a StenoScout-style thin listing directory, not a transaction platform.** The "Schedule this reporter" button opens a request form, not a booking – and payment happens entirely off-platform (confirmed via founder browsing). Once a request is sent, CourtReporters.com has no further visibility or role in the actual job.
-- **No in-platform messaging, invoicing, or get-paid tooling** – the two things eCourt Reporters has and CourtReporters.com does not. DS's reporter get-paid tools have no equivalent here at all.
-- **Structurally can't take a cut of the job, so it has to monetize the supply side before demand is proven.** Because payment never touches the platform, CourtReporters.com's only revenue lever is charging professionals to list – which means it needs real listing-fee revenue from reporters before it has any evidence firms are actually booking through it in volume. This is a genuinely fragile sequencing: charging supply for access to a demand side that's unproven feels backwards compared to DS's model, where reporters claim, list, and message for free, and DS's real economic bets are a flat $49/user/month (or $539/year) firm subscription that gates searching for *new* reporters, plus a small per-payment fee taken only when a reporter actually collects money through the platform (5% on the free tier, or 2% plus a flat $29/month on Pro). DS doesn't need to charge reporters just to appear before demand is proven (working numbers – confirm before quoting externally).
-- **No day-one directory completeness.** Same gap as every claim-based directory profiled so far – CourtReporters.com's 12,000-professional claim depends on people actively signing up (founding-member enrollment is explicitly framed as something professionals still need to do), unlike DS's CA directory, which is complete from public CRB data regardless of whether a reporter has claimed their listing yet.
-- **Free-to-list vs. pay-to-list, near-term.** During the founding-member window, listing is free "until launch," but the standing model charges professionals to list. DS's model is free to claim, list, and message with no fee to appear in the directory at all – DS instead monetizes through a firm-side $49/user/month discovery subscription and a reporter per-payment fee taken only when they actually collect money through the platform. Worth contrasting directly once CourtReporters.com's real post-launch pricing becomes public.
+- **No in-platform messaging, invoicing, or get-paid tooling** – the two things eCourt Reporters has and CourtReporters.com does not. Shorthanders' reporter get-paid tools have no equivalent here at all.
+- **Structurally can't take a cut of the job, so it has to monetize the supply side before demand is proven.** Because payment never touches the platform, CourtReporters.com's only revenue lever is charging professionals to list – which means it needs real listing-fee revenue from reporters before it has any evidence firms are actually booking through it in volume. This is a genuinely fragile sequencing: charging supply for access to a demand side that's unproven feels backwards compared to Shorthanders' model, where reporters claim, list, and message for free, and Shorthanders' real economic bets are a flat $49/user/month (or $539/year) firm subscription that gates searching for *new* reporters, plus a small per-payment fee taken only when a reporter actually collects money through the platform (5% on the free tier, or 2% plus a flat $29/month on Pro). Shorthanders doesn't need to charge reporters just to appear before demand is proven (working numbers – confirm before quoting externally).
+- **No day-one directory completeness.** Same gap as every claim-based directory profiled so far – CourtReporters.com's 12,000-professional claim depends on people actively signing up (founding-member enrollment is explicitly framed as something professionals still need to do), unlike Shorthanders' CA directory, which is complete from public CRB data regardless of whether a reporter has claimed their listing yet.
+- **Free-to-list vs. pay-to-list, near-term.** During the founding-member window, listing is free "until launch," but the standing model charges professionals to list. Shorthanders' model is free to claim, list, and message with no fee to appear in the directory at all – Shorthanders instead monetizes through a firm-side $49/user/month discovery subscription and a reporter per-payment fee taken only when they actually collect money through the platform. Worth contrasting directly once CourtReporters.com's real post-launch pricing becomes public.
 - **No CA-specific or IL-specific depth or compliance framing found.** Broad six-category national directory, not a state-deep one.
 
 ---
 
 ## Overlap with our positioning
 
-| DS messaging pillar | CourtReporters.com overlap? | Notes |
+| Shorthanders messaging pillar | CourtReporters.com overlap? | Notes |
 |---|---|---|
 | Transparent pricing / no hidden fees | Partial | Reporter's actual job rate is set by the reporter and paid off-platform, framed as a pricing benefit in their own blog copy ("you pay the reporter's actual rate"); CourtReporters.com's own listing-fee pricing is not public |
-| No agency cut | Yes | Off-platform payment means no transaction cut at all for CourtReporters.com. DS doesn't charge firms a per-job transaction fee either – DS's firm-side revenue is a flat $49/user/month subscription that gates searching for new reporters, not a cut of the booking; DS's per-payment fee applies only on the reporter side when they collect money through the platform (5% free tier, or 2% plus $29/month on Pro) |
+| No agency cut | Yes | Off-platform payment means no transaction cut at all for CourtReporters.com. Shorthanders doesn't charge firms a per-job transaction fee either – Shorthanders' firm-side revenue is a flat $49/user/month subscription that gates searching for new reporters, not a cut of the booking; Shorthanders' per-payment fee applies only on the reporter side when they collect money through the platform (5% free tier, or 2% plus $29/month on Pro) |
 | Direct CSR-to-attorney connection | Yes | Introduction is direct; no intermediary in the actual booking |
 | Reporter keeps the relationship and the money | Yes | Full pass-through, same as StenoScout |
 | Verified credentials | Partial | Claims a manual review step; not confirmed what it actually checks |
@@ -128,7 +128,7 @@ From search results:
 | In-platform messaging + payments | **No** | Same core gap as StenoScout – confirmed no messaging thread, and payment is explicitly off-platform |
 | Founding-cohort / founder-accessible framing | Yes | Real overlap in marketing approach – worth watching as a direct positioning comparison |
 
-**Strategic read:** CourtReporters.com is a StenoScope-style thin listing directory dressed up with a broader category set (six professional types) and a more structured request notification flow than plain email – but it is not a transaction platform, and its off-platform-payment design means it structurally cannot take a cut of the job the way eCourt Reporters does. That leaves it with one real revenue lever (charge professionals to list), which it's using before it has any visible proof that its free attorney side is generating real demand – a fragile sequencing compared to DS's own model, where reporters list and message for free and DS's real economic bets are a flat $49/user/month firm subscription (for discovering new reporters) and a small per-payment fee only when a reporter actually gets paid (5% free tier, or 2% plus $29/month on Pro). DS's sharpest, most concrete differentiators against this specific competitor are the on-platform payment/get-paid layer, the free path to being listed, and day-one CA public-data completeness that doesn't depend on reporters actively signing up first.
+**Strategic read:** CourtReporters.com is a StenoScope-style thin listing directory dressed up with a broader category set (six professional types) and a more structured request notification flow than plain email – but it is not a transaction platform, and its off-platform-payment design means it structurally cannot take a cut of the job the way eCourt Reporters does. That leaves it with one real revenue lever (charge professionals to list), which it's using before it has any visible proof that its free attorney side is generating real demand – a fragile sequencing compared to Shorthanders' own model, where reporters list and message for free and Shorthanders' real economic bets are a flat $49/user/month firm subscription (for discovering new reporters) and a small per-payment fee only when a reporter actually gets paid (5% free tier, or 2% plus $29/month on Pro). Shorthanders' sharpest, most concrete differentiators against this specific competitor are the on-platform payment/get-paid layer, the free path to being listed, and day-one CA public-data completeness that doesn't depend on reporters actively signing up first.
 
 ---
 
