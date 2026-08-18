@@ -26,8 +26,8 @@ Nothing is really authenticated today; the UI just flips `store.role` and picks 
 - [ ] **Reporter signup** (`ClaimFlow` step 1, `_app_06_claim.jsx`) – real account creation tied
   to the claimed CSR record. (Currently email/password/mobile fields go nowhere.)
 - [ ] **Persist the "Build your profile" form + make it editable later.** `ClaimFlow` step 4
-  collects the full profile (bio, years, rate, proceedings, services, specialties, certifications,
-  languages, coverage, rush, notary) but `finish()` just navigates – nothing is saved. And the
+  collects the full profile (bio, website, years, rate, proceedings, services, specialties,
+  certifications, languages, coverage, rush, notary) but `finish()` just navigates – nothing is saved. And the
   dashboard profile tab (`ReporterProfileEditor`, `_app_07_reporter.jsx`) is a **read-only
   preview** with a faked "Save changes" button. Wire both to the reporter record: save on claim,
   and make the dashboard editor a real editable form (reuse the same fields/constants) so a
