@@ -27,9 +27,9 @@ These two groups need *different* accommodations from the platform. This policy 
 - **Email support.** SRLs without a firm behind them get the same response time as any other user.
 - **Same pricing as everyone else.** SRLs pay the statutory rate plus the platform fee. Being an SRL by itself does not unlock a discount or fee waiver; that's a separate determination made by the court (see below).
 
-### What being an SRL does NOT entitle a person to on Dewey Sholes
+### What being an SRL does NOT entitle a person to on Shorthanders
 
-- **A fee waiver.** Fee waivers are granted by courts, not by Dewey Sholes. An SRL who has not applied for or been granted a fee waiver pays full statutory rates.
+- **A fee waiver.** Fee waivers are granted by courts, not by Shorthanders. An SRL who has not applied for or been granted a fee waiver pays full statutory rates.
 - **TRF reimbursement.** TRF (see below) is keyed to fee-waiver status, not to SRL status. A wealthy SRL has no TRF claim.
 - **Free legal advice.** We do not provide legal advice, recommend attorneys, or interpret court orders. We are a marketplace for transcript ordering.
 
@@ -37,7 +37,7 @@ These two groups need *different* accommodations from the platform. This policy 
 
 - The homepage SRL callout addresses ordering accommodation only – no fee-waiver claim attached.
 - Do NOT bundle "fee waiver" into SRL marketing language. They are separate.
-- Do NOT imply Dewey Sholes is a legal-aid service. We are a marketplace.
+- Do NOT imply Shorthanders is a legal-aid service. We are a marketplace.
 
 ## Fee-waiver / TRF policy
 
@@ -51,9 +51,9 @@ The platform never floats a fee-waiver order. The flow is:
 
 1. The customer (firm, legal aid org, pro-bono attorney, or SRL) places an order and checks "fee waiver applies."
 2. **The customer pays the statutory transcript rate at checkout, exactly like any other order.** Stripe charge clears immediately.
-3. **Dewey Sholes pays the CSR on the standard payout schedule** – exactly like any other order. The CSR experience is identical regardless of fee-waiver status.
+3. **Shorthanders pays the CSR on the standard payout schedule** – exactly like any other order. The CSR experience is identical regardless of fee-waiver status.
 4. After delivery, the customer separately submits TRF reimbursement paperwork to the court.
-5. The state reimburses *the customer* directly (not Dewey Sholes), 8-10 weeks later, up to $2,500 per case, subject to TRF fund availability.
+5. The state reimburses *the customer* directly (not Shorthanders), 8-10 weeks later, up to $2,500 per case, subject to TRF fund availability.
 
 The customer carries the float. We do not. This rule is non-negotiable – see [TRF Research Memo](../research/) for the underlying analysis.
 

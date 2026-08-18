@@ -4,7 +4,7 @@
 **Last updated:** 2026-05-02
 **Status:** Confirmed for MVP / launch
 
-This is the authoritative document for how CSR (Certified Shorthand Reporter) accounts work on Dewey Sholes from signup through deactivation. It consolidates and references existing policies; deep dives on specific topics live in their dedicated docs.
+This is the authoritative document for how CSR (Certified Shorthand Reporter) accounts work on Shorthanders from signup through deactivation. It consolidates and references existing policies; deep dives on specific topics live in their dedicated docs.
 
 ---
 
@@ -19,7 +19,7 @@ For the 6-month launch window, **only solo CSR accounts are supported**. Each ac
 CSR firm accounts (3-10 reporters under one account with consolidated billing and a firm-wide availability dashboard) are **deferred to v2**. There aren't enough small CSR firms in CA to justify building this at launch.
 
 **During the launch window, CSRs from boutique firms** can either:
-- Sign up individually and use Dewey Sholes solo (preferred path)
+- Sign up individually and use Shorthanders solo (preferred path)
 - Indicate during onboarding they'd be interested in a future firm account, so we can gauge demand
 
 The CSR onboarding flow includes a single checkbox at signup:
@@ -99,7 +99,7 @@ If the CSR skips these, their account stays Pending until profile is at least mi
 
 - **Firms you regularly work with.** Structured field – list of firm names + (optional) the city the firm is in. Each firm the CSR enters becomes a **trigger** that adds (or annotates) a row in the firm outreach tracker (`research/firm_outreach_tracker_template.csv`), tagging the CSR's license number into the firm's `cited_by_csr_licenses` field.
 
-  This is what powers the personalized Phase 2 firm outreach: when we email these firms, the copy reads *"Sarah Chen, a court reporter you've worked with, is now using Dewey Sholes..."* (per the Tier-1A path in `research/marketing_plan_phase2_law_firms.md`).
+  This is what powers the personalized Phase 2 firm outreach: when we email these firms, the copy reads *"Sarah Chen, a court reporter you've worked with, is now using Shorthanders..."* (per the Tier-1A path in `research/marketing_plan_phase2_law_firms.md`).
 
   Distinct from the "recent cases" field – cases are about showcasing experience; firms are about marketplace network signaling. Both are collected, both are useful.
 
@@ -213,7 +213,7 @@ A CSR's public profile page (visible to attorneys browsing the directory or arri
 **What does NOT appear on the public profile in v1:**
 
 - **Recent cases worked.** The reporter onboarding collects up to 10 recent cases for matching/discovery purposes, but those are not displayed publicly. Confidentiality concerns + signal-to-noise: most attorneys won't browse cases when evaluating; they'll check rating + courts covered + availability.
-- **Job count completed on Dewey Sholes.** Avoids creating a cold-start penalty for new CSRs during the launch window, and avoids implying a "leaderboard" dynamic.
+- **Job count completed on Shorthanders.** Avoids creating a cold-start penalty for new CSRs during the launch window, and avoids implying a "leaderboard" dynamic.
 
 **Status of these decisions:** v1 only. Both questions are tagged for user testing (see `research/user_testing_legal_assistant_guide.md` and `research/user_testing_csr_guide.md`):
 
@@ -227,8 +227,8 @@ Revisit for v1.1 once user-testing data lands. Until then, the data is collected
 **Every CSR profile is identified by their California CSR license number.** This is the canonical, stable identifier across the entire system.
 
 **URL pattern (real build):**
-- Canonical: `deweysholes.com/csr/<license-number>` (e.g., `deweysholes.com/csr/14892`)
-- A slug variant resolves and 301s to the canonical URL: `deweysholes.com/csr/jane-doe-14892` → `deweysholes.com/csr/14892`
+- Canonical: `shorthanders.com/csr/<license-number>` (e.g., `shorthanders.com/csr/14892`)
+- A slug variant resolves and 301s to the canonical URL: `shorthanders.com/csr/jane-doe-14892` → `shorthanders.com/csr/14892`
 
 **Why license number, not an internal id or username:**
 - Already unique under California regulation (issued by the CA Court Reporters Board; no two CSRs share one).
@@ -253,9 +253,9 @@ The current React-in-HTML prototype uses internal mock ids (`rep-1`, `rep-2`, et
 
 The same canonical-identifier principle applies on the buyer side, but with practical limits:
 
-- **When an attorney signs up directly: use their CA Bar number** as the canonical identifier. URL pattern: `deweysholes.com/atty/<bar-number>`. Same logic as CSR licenses – already unique by state regulation, stable, public information, what we use for verification.
+- **When an attorney signs up directly: use their CA Bar number** as the canonical identifier. URL pattern: `shorthanders.com/atty/<bar-number>`. Same logic as CSR licenses – already unique by state regulation, stable, public information, what we use for verification.
 - **In practice, most accounts will be created by assistants signing up as themselves**, not by the attorney directly. Assistants don't have a bar number and aren't impersonating the attorney. For these accounts, fall back to:
-  - **Firm-level canonical URL** – `deweysholes.com/firm/<firm-slug>` for the firm's public/marketing-facing presence, with the firm slug derived from the firm's name and a disambiguating suffix if needed.
+  - **Firm-level canonical URL** – `shorthanders.com/firm/<firm-slug>` for the firm's public/marketing-facing presence, with the firm slug derived from the firm's name and a disambiguating suffix if needed.
   - **Internal account id** for the assistant's own account record (no public URL – assistants typically don't have public-facing profiles the way CSRs do).
 - **Firm accounts that include an attorney with a verified bar number** can have both URLs resolve to the same canonical record (the bar-number URL 301s to the firm URL, or vice versa, depending on which we pick as canonical).
 

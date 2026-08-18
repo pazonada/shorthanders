@@ -8,7 +8,7 @@ what's still open. Update as decisions land.
 OPEN · TO-DO (an action, often needing an outside expert).
 
 ## Settled anchors (context)
-- Dewey Sholes is a **neutral directory + messaging + payment facilitator** – never a
+- Shorthanders is a **neutral directory + messaging + payment facilitator** – never a
   party to the firm↔reporter agreement. Governs the whole liability posture.
 - **Never invent data** – rates/prices/amounts ship blank or user-entered. (See the
   hard rule in memory / the invoice templates.)
@@ -48,7 +48,7 @@ already public, and (b) firms default to agencies unless they hire direct?
     "Pro waives the fee" call.** Modeled on the "Revenue model" tab of `revenue_model.xlsx`,
     where the fee often lands ~70% of total revenue. Upgrade point = Pro price ÷ (base − Pro
     fee); at $29 / (5%−2%) that's ~$967/mo of billing.
-- **The firm never sees a Dewey Sholes fee on an invoice.** They pay the exact amount the
+- **The firm never sees a Shorthanders fee on an invoice.** They pay the exact amount the
   reporter billed. Any DS fee comes out of the reporter's side. **This is what prevents the
   firm-balks-at-a-surprise-fee dispute Aud was worried about.**
 
@@ -268,7 +268,7 @@ we don't store, secure, host, or vet files or links; we hold only the URL text i
 like email or Slack. The person who chose the insecure link is responsible for it. The
 "store no files" rule is what keeps us out of custody – protect it.
 
-Two real risks to manage anyway: **reputation** (a leak "through Dewey Sholes" looks bad even
+Two real risks to manage anyway: **reputation** (a leak "through Shorthanders" looks bad even
 if not our fault) and the fact that **deposition transcripts are more sensitive** than
 hearing transcripts (hearings are usually public record; depos can be confidential/sealed).
 

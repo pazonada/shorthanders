@@ -2,7 +2,7 @@
 
 **Owner:** marketing-strategist agent
 **Last updated:** 2026-08-04
-**Purpose:** Track how the competitive landscape around Dewey Sholes evolves so positioning, tagline, channel, and pricing decisions are grounded in current reality rather than assumptions.
+**Purpose:** Track how the competitive landscape around Shorthanders evolves so positioning, tagline, channel, and pricing decisions are grounded in current reality rather than assumptions.
 
 ---
 

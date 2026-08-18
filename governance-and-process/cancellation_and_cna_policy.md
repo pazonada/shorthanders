@@ -102,7 +102,7 @@ For the CNA-with-transcript option, the CSR uploads the brief CNA document the s
 
 Some attorneys may ask "why am I paying full attendance for a job where nothing happened?" The answer: **the CSR did everything they were asked to do.** They blocked their day, traveled, set up, and stood ready. The witness's failure to appear is not the CSR's responsibility – and in most cases, it's the attorney's responsibility (their client, their adversary's client, or their subpoena that didn't get served properly).
 
-This is consistent with industry standard. Charging less for CNAs would penalize CSRs for events outside their control, which would make Dewey Sholes a worse deal for them than agencies – defeating the whole purpose of the platform.
+This is consistent with industry standard. Charging less for CNAs would penalize CSRs for events outside their control, which would make Shorthanders a worse deal for them than agencies – defeating the whole purpose of the platform.
 
 ---
 

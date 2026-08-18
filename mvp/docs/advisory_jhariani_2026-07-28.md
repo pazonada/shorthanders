@@ -1,7 +1,7 @@
 # Advisory call – Jay Hariani (founder, GovTribe) · 2026-07-28
 
 Notes from an advisory call with **Jay Hariani**, a CTO-type founder (founded **GovTribe**, a
-government-contracting data/SaaS product). Aud walked him through Dewey Sholes – the pivot from a
+government-contracting data/SaaS product). Aud walked him through Shorthanders – the pivot from a
 complex matching platform to a scaled-back directory + messaging + invoicing, the California market,
 the two-sided pricing, and the co-founder/advisor and entity questions. This captures his advice and
 the agreed next steps. (Meeting logistics and personal/background chat are omitted.)
@@ -48,7 +48,7 @@ the agreed next steps. (Meeting logistics and personal/background chat are omitt
 ### Marketing / growth
 - **SEO** and **paid ads** as acquisition channels.
 - **Be discoverable through AI / "integrate with ChatGPT"** – think about how a lawyer asking an AI
-  assistant "find me a court reporter in LA" could surface Dewey Sholes, and about an **AI-powered,
+  assistant "find me a court reporter in LA" could surface Shorthanders, and about an **AI-powered,
   personalized onboarding** experience for both reporters and firms (an agent that helps a reporter
   build a good profile, or helps a firm find who they need).
 - **Make it sticky for both sides** – give reporters and firms reasons to keep coming back (the

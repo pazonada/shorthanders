@@ -21,7 +21,7 @@ Per Rosie (4/11): "Our cost-split feature should only be for people who've alrea
 
 ### Flow
 
-1. **Ordering attorney** creates a transcript order through Dewey Sholes
+1. **Ordering attorney** creates a transcript order through Shorthanders
 2. In the pricing step, they toggle **"Split cost with other parties"**
 3. They add co-paying attorneys (name, email, share percentage) – up to 5 co-payers
 4. Each co-payer receives an email with a **secure payment link** to confirm and pay their share
@@ -36,7 +36,7 @@ Per Rosie (4/11): "Our cost-split feature should only be for people who've alrea
 
 - An email: "[Attorney Name] has invited you to split the cost of a transcript for [Case Name / Number]"
 - A secure page showing: case details, their share amount, and a payment form
-- **No Dewey Sholes account required** – guest checkout via payment link
+- **No Shorthanders account required** – guest checkout via payment link
 - After paying, they see a confirmation and a nudge to create an account for future orders
 
 ### What we do NOT do

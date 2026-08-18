@@ -1,4 +1,4 @@
-# Dewey Sholes – video explainer spec sheet
+# Shorthanders – video explainer spec sheet
 
 **Owner:** Aud (drafted), marketing agent (to refine + execute)
 **Last updated:** 2026-05-13
@@ -8,7 +8,7 @@
 
 ## Purpose
 
-A short explainer video that shows the **current state** (an attorney getting a high agency bill while the CSR who did the work earns a small share) versus the **Dewey Sholes future state** (same job, transparent line items, attorney pays less, reporter keeps 100%). Both parties end the video happy and high-fiving across a split-screen, breaking the fourth wall to address the viewer.
+A short explainer video that shows the **current state** (an attorney getting a high agency bill while the CSR who did the work earns a small share) versus the **Shorthanders future state** (same job, transparent line items, attorney pays less, reporter keeps 100%). Both parties end the video happy and high-fiving across a split-screen, breaking the fourth wall to address the viewer.
 
 The video is the visual companion to the "agency invoice evidence" research and the "streamline-not-eliminate" brand thesis – it makes the math viscerally clear in 60–75 seconds.
 
@@ -16,7 +16,7 @@ The video is the visual companion to the "agency invoice evidence" research and 
 
 ## Distribution targets
 
-- **Dewey Sholes landing page** – hero or above-the-fold position
+- **Shorthanders landing page** – hero or above-the-fold position
 - **LinkedIn** – paid + organic, targeting CA litigation attorneys and CA CSRs
 - **Phase 1 cold-email campaigns** – embedded preview in attorney + CSR outreach
 - **Facebook CSR groups** – shareable proof of concept (Court Reporter Rates Discussion, Cal-CCRA member groups)
@@ -60,12 +60,12 @@ The video is the visual companion to the "agency invoice evidence" research and 
 
 | Asset | Where to find / how to specify |
 |---|---|
-| Logo | Dewey Sholes wordmark – pull from [index.html](../index.html) hero/nav |
+| Logo | Shorthanders wordmark – pull from [index.html](../index.html) hero/nav |
 | Primary color | Navy / indigo (`#1E2756` or similar – pull exact value from CSS variables in index.html) |
 | Accent color | Ochre / warm gold (`--ochre-deep` from the live site) |
 | Surface | White or `--periwinkle-soft` |
 | Typography | Match the live site – serif headline + sans body (Aud can supply exact font names) |
-| Reference URL | [deweysholes.vercel.app](https://deweysholes.vercel.app) |
+| Reference URL | [shorthanders.vercel.app](https://shorthanders.vercel.app) |
 
 ---
 
@@ -207,13 +207,13 @@ Net deposit                                  $1,403.60
 
 ---
 
-### Scene 5 – Transition to Dewey Sholes (0:38–0:50)
+### Scene 5 – Transition to Shorthanders (0:38–0:50)
 
 **Visual:**
 - The split-screen divider cracks softly down the middle and is wiped away with a clean horizontal motion.
 - We're now in the attorney's office again, but the mood has shifted – warmer light, calmer composition.
 - She's on her laptop. Camera over-the-shoulder.
-- Browser shows `deweysholes.com`. The site loads with the actual DS hero page (real screenshot or recreation).
+- Browser shows `shorthanders.com`. The site loads with the actual DS hero page (real screenshot or recreation).
 - She clicks "Order a transcript." A clean, modern booking flow appears.
 - She fills in:
   - Court: SF Superior Court
@@ -224,7 +224,7 @@ Net deposit                                  $1,403.60
 - She clicks "Book."
 
 **Voiceover (0:38):**
-> "Dewey Sholes connects California attorneys directly with certified court reporters. No agency. No hidden line items."
+> "Shorthanders connects California attorneys directly with certified court reporters. No agency. No hidden line items."
 
 **Voiceover (0:46):**
 > "Every charge on your invoice is the work that was done – at a transparent platform fee."
@@ -240,7 +240,7 @@ Net deposit                                  $1,403.60
 - Left half: attorney's new DS invoice arrives in her inbox. Camera pushes in. Line items appear cleanly:
 
 ```
-DEWEY SHOLES – INVOICE #DS-2026-0142
+SHORTHANDERS – INVOICE #DS-2026-0142
 Live attendance (half day)                   $1,050.00
 Transcript (200 pages × $5.00)               $1,000.00
                                               ─────
@@ -255,7 +255,7 @@ TOTAL DUE                                    $2,296.00
 - Right half: CSR's pay statement appears.
 
 ```
-DEWEY SHOLES – PAYOUT
+SHORTHANDERS – PAYOUT
 Job #DS-2026-0142
 Live attendance (half day)                   $1,050.00
 Transcript (200 pages × $5.00)               $1,000.00
@@ -274,7 +274,7 @@ Net deposit                                  $2,050.00  ✓ 100%
 > "Same job. Same reporter. Lower total for the firm. And the reporter keeps a hundred percent of her stated rate."
 
 **Voiceover (0:58):**
-> "Dewey Sholes just automates the work the agency was charging extra for."
+> "Shorthanders just automates the work the agency was charging extra for."
 
 **Music:** Warm motif builds gently.
 
@@ -292,7 +292,7 @@ Net deposit                                  $2,050.00  ✓ 100%
 - Both smile – slight wink or knowing look. **Fourth wall is broken**; they're addressing the viewer directly: *this is how it should be*.
 
 **Voiceover (1:05):**
-> "Dewey Sholes. Court transcripts, finally simple."
+> "Shorthanders. Court transcripts, finally simple."
 
 **Music:** Warm motif resolves on a satisfying major chord with a soft chime.
 
@@ -305,7 +305,7 @@ Net deposit                                  $2,050.00  ✓ 100%
 - DS logo (centered, large).
 - Tagline below logo: **"Court transcripts, finally simple."**
 - Smaller text below: **"California launch now accepting reporters and law firms."**
-- URL: **deweysholes.com**
+- URL: **shorthanders.com**
 - Subtle DS brand-color accent line.
 
 **Voiceover:** none – let the end card breathe.
@@ -326,15 +326,15 @@ Net deposit                                  $2,050.00  ✓ 100%
 >
 > *[0:30]* Attorneys overpay. Reporters underearn. Everyone loses except the middleman.
 >
-> *[0:38]* Dewey Sholes connects California attorneys directly with certified court reporters. No agency. No hidden line items.
+> *[0:38]* Shorthanders connects California attorneys directly with certified court reporters. No agency. No hidden line items.
 >
 > *[0:46]* Every charge on your invoice is the work that was done – at a transparent platform fee.
 >
 > *[0:50]* Same job. Same reporter. Lower total for the firm. And the reporter keeps a hundred percent of her stated rate.
 >
-> *[0:58]* Dewey Sholes just automates the work the agency was charging extra for.
+> *[0:58]* Shorthanders just automates the work the agency was charging extra for.
 >
-> *[1:05]* Dewey Sholes. Court transcripts, finally simple."
+> *[1:05]* Shorthanders. Court transcripts, finally simple."
 
 **Word count:** ~150 words. Pace: ~145 wpm = about 62 seconds. Total video duration target 65–75 seconds with breathing room.
 
@@ -372,7 +372,7 @@ Net deposit                                  $2,050.00  ✓ 100%
 | 0:34 | "Same job. Different sides. Same problem." | Punctuates Scene 4 tension |
 | 0:55 | "You saved $480" (animated counter from $0) | Visual reward |
 | 1:02 | "Reporter keeps 100%" with green checkmark | Visual reward, CSR side |
-| 1:14 | "deweysholes.com" + tagline | CTA |
+| 1:14 | "shorthanders.com" + tagline | CTA |
 
 ### Invoice line-item animations
 

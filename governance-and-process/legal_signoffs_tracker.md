@@ -11,7 +11,7 @@
 **Status:** Needs employment attorney review
 
 ### Our position
-CSRs on Dewey Sholes are independent contractors. We score favorably on 8-9 of 11 Borello factors.
+CSRs on Shorthanders are independent contractors. We score favorably on 8-9 of 11 Borello factors.
 
 ### Key question: Which legal test applies?
 - **If AB 3136 or AB 2257 exempts CSRs from AB 5:** Borello test applies. IC classification is defensible.
@@ -30,7 +30,7 @@ CSRs on Dewey Sholes are independent contractors. We score favorably on 8-9 of 1
 - **Open-marketplace rate-setting exposed in CSR settings UI** (revised 2026-05-24, supersedes the earlier hybrid-band design from 2026-05-14): CSRs set their own rate per line item (per-page, half-day, full-day, trial-day, travel/hr) via direct numeric inputs in their profile settings. There is no platform-imposed cap, no soft cap, no algorithmic discrimination, and no matching-priority penalty for any rate. The platform shows a baseline as guidance copy ("most CA reporters charge around $X") next to each input but the actual number is the CSR's choice. This directly addresses CA Labor Code §2778(b)(2)(B): *"The individual has the ability to set or negotiate their own rates for the services performed."* The open-marketplace design is *more* compliant with §2778 than the earlier hybrid-band design – there's no plausible argument that we're constraining the §2778 right when there's no constraint at all. See [matching_applicant_pool_policy.md](matching_applicant_pool_policy.md) for the matching model that pairs with this rate-setting approach.
 
 ### Onboarding language (already in prototype – updated 2026-05-24)
-"By joining Dewey Sholes, you confirm that you are an independent professional, not an employee of Dewey Sholes or its parent company. You choose which jobs to accept, set your own schedule, **set your own rates per line item with no platform-imposed cap**, and control how you perform your work. The platform shows what most reporters in your region charge as guidance only – the number is yours."
+"By joining Shorthanders, you confirm that you are an independent professional, not an employee of Shorthanders or its parent company. You choose which jobs to accept, set your own schedule, **set your own rates per line item with no platform-imposed cap**, and control how you perform your work. The platform shows what most reporters in your region charge as guidance only – the number is yours."
 
 The Terms of service "Independent contractor relationship" section also explicitly cites the open-marketplace rate-setting model as part of what makes CSRs independent contractors under §2778. The earlier hybrid rate-band design (standard ±20% / opt-in ±50% with matching-priority penalty) is preserved in `rating_and_matching_policy.md` as a deferred-fallback model; it was retired from v1 in favor of the simpler and arguably more §2778-aligned open marketplace.
 
@@ -52,7 +52,7 @@ The Terms of service "Independent contractor relationship" section also explicit
 **Status:** Needs litigation attorney review (or Rosie sign-off on TOS language)
 
 ### Our position
-Dewey Sholes is a technology marketplace, not a court reporting agency. The reporter bears primary professional responsibility via their personal certification under penalty of perjury.
+Shorthanders is a technology marketplace, not a court reporting agency. The reporter bears primary professional responsibility via their personal certification under penalty of perjury.
 
 ### Why we're likely NOT liable
 - No editorial involvement – we transfer files, don't edit or review content

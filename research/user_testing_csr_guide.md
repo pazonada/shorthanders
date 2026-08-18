@@ -58,7 +58,7 @@ Describe the model one piece at a time, pausing for reactions. Don't sell. The g
   - Listen for: how loud is too loud? Are they comfortable being on the favorite list of 5 firms and getting 5 louder pings? Would they want any way to mute a specific firm?
 
 **The whole picture (10 min)**
-- *"If I described this to a CSR friend who hasn't heard of Dewey Sholes, would they be interested? Skeptical? Why?"*
+- *"If I described this to a CSR friend who hasn't heard of Shorthanders, would they be interested? Skeptical? Why?"*
 - *"What's the single biggest reason a working CSR would say 'no thanks' to this?"*
 - *"If we built this exactly the way I described, would you sign up at launch? What would you want to know before deciding?"*
 - *"What would change your mind if you started as a no?"*
@@ -213,7 +213,7 @@ Show the Favorited-by-firms banner on the CSR dashboard ("You're a favorite at 4
 
 **Business cards concept (5-7 min)**
 
-Show mockup: card with the CSR's name, license number, profile QR code, "Find me on Dewey Sholes" tagline.
+Show mockup: card with the CSR's name, license number, profile QR code, "Find me on Shorthanders" tagline.
 
 - **Open question J:** Would you actually hand these out at the end of a hearing? In what context?
 - Would the platform branding bother you? Would you prefer a card with no platform branding (just your info + a generic site URL)?

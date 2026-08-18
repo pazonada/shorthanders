@@ -1,6 +1,6 @@
 # Competitive comparison matrix – DS vs. the major players
 
-One place to compare Dewey Sholes against every real competitor on the axes that decide the market.
+One place to compare Shorthanders against every real competitor on the axes that decide the market.
 Built 2026-08-04 from the individual profiles in this folder. Prices are working numbers / as-found —
 **verify before quoting; never invent** (see the never-invent-data rule).
 
@@ -17,14 +17,14 @@ Built 2026-08-04 from the individual profiles in this folder. Prices are working
   not blanket "rate transparency." Don't oversell it.
 - **Transaction platforms *without* a complete directory** – eCourt Reporters, AppearMe, Steno. They
   handle the money, but reporters must sign up one by one; there's no day-one full roster.
-- **Dewey Sholes does both** – a complete, public-data-seeded directory **and** on-site transactions.
+- **Shorthanders does both** – a complete, public-data-seeded directory **and** on-site transactions.
   That combination is the value prop: **statewide · reporters pre-loaded · transactions on the site.**
 
 ## The matrix
 
 | Player | Type | Scope | Reporters pre-loaded? | On-site payment? | Messaging? | Pricing (who pays) |
 |---|---|---|---|---|---|---|
-| **Dewey Sholes** | Directory + messaging + payment rail | **Statewide (CA → IL)** | **✓ all ~5,700 CA licensees, seeded from public CRB data** | **✓ card/ACH + invoicing** | **✓** | Firms: subscription ($49/user, working). Reporters: **free to list**, per-payment fee **only when paid** (5% / 2% Pro + $29/mo, working). **No firm transaction fee.** |
+| **Shorthanders** | Directory + messaging + payment rail | **Statewide (CA → IL)** | **✓ all ~5,700 CA licensees, seeded from public CRB data** | **✓ card/ACH + invoicing** | **✓** | Firms: subscription ($49/user, working). Reporters: **free to list**, per-payment fee **only when paid** (5% / 2% Pro + $29/mo, working). **No firm transaction fee.** |
 | Steno | Full-service agency | National | ✗ – ICs pick jobs from Steno's marketplace; **Steno owns the client** | ✓ (as the agency) | ✓ | Agency markup on the job + financing (DelayPay); firms pay |
 | eCourt Reporters | Transaction marketplace | National | ✗ – claim-only, not seeded | **✓** (messaging + payments) | ✓ | **%-of-invoice both sides**: attorneys **10%**, reporters **5%** self-produced / up to **20%** if eCourt produces the transcript; free to list *(verify)* |
 | AppearMe | On-demand dispatch (generalist legal; reporters are one category) | National | ✗ – register; real-time first-accept | ✓ (automated through payment) | ✓ | Transaction fee (dispatch) *(verify specifics)* |

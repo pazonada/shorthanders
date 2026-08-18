@@ -32,7 +32,7 @@ whichever tier is cheaper for their volume, and you make money either way.
 
 1. **Stripe processing fee (~2.9% + 30¢ card, ~0.8% ACH).** The **reporter's** cost, on
    **both** plans. Never your money; Pro does **not** waive it.
-2. **Dewey Sholes fee (the per-invoice %).** Your revenue on pay-per-invoice. This is the
+2. **Shorthanders fee (the per-invoice %).** Your revenue on pay-per-invoice. This is the
    only part Pro waives.
 3. **Your cost per active reporter (~$2/mo).** A flat Stripe Connect account fee, whether
    or not they run payments. That's essentially your whole per-reporter cost.

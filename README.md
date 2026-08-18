@@ -1,4 +1,4 @@
-# Dewey Sholes
+# Shorthanders
 
 A court transcript marketplace for California attorneys and court reporters, operated by Studio Crux, LLC.
 
@@ -7,7 +7,7 @@ This repo holds the landing page, the interactive prototype, and the governance 
 ## Two products live here – read this first
 
 - **The current product is the MVP, in `mvp/`** – a directory of California court reporters
-  plus messaging and invoicing. Live at https://dsmvp.vercel.app. Start at
+  plus messaging and invoicing. Live at https://shorthanders.vercel.app. Start at
   `mvp/docs/PROJECT_OVERVIEW.md`.
 - **v1, the original full marketplace** (12% attorney fee, matching, escrow, rate bands), is
   archived but still deployed as a prototype at https://dewey-sholes.vercel.app, served from

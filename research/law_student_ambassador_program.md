@@ -11,7 +11,7 @@
 We need physical presence at events where legal assistants and paralegals gather (bar association meetings, paralegal CE seminars, professional association events). But we can't afford to fly Aud or Rosie to every event, and we definitely can't afford full-cost sponsorships at most of them.
 
 **Hire law students as paid event ambassadors.** They want to attend these events anyway for networking. We pay them an hourly rate to:
-- Wear branded Dewey Sholes gear (jacket, hat, button/pin, polo)
+- Wear branded Shorthanders gear (jacket, hat, button/pin, polo)
 - Hand out branded swag (stickers, business cards, postcards with QR codes)
 - Make conversation with attendees, especially legal assistants and paralegals
 - Collect business cards or contact info from interested attendees
@@ -25,7 +25,7 @@ This is cheaper than sponsorship, more scalable than founder attendance, and giv
 ## Why law students specifically
 
 - **They want to be there anyway.** Networking at legal industry events is part of how they build their early careers. Getting paid to do it is a bonus.
-- **They look the part.** A 25-year-old in a polo with a Dewey Sholes logo is more credible than a 22-year-old marketing intern who's never been in a courtroom.
+- **They look the part.** A 25-year-old in a polo with a Shorthanders logo is more credible than a 22-year-old marketing intern who's never been in a courtroom.
 - **They speak the language.** They've taken civ pro, they know what a deposition is, they understand what a transcript is. Conversation with attendees flows naturally.
 - **They're cheap.** $20-30/hour for event work is well above minimum wage for them, well below what a full-time hire costs us.
 - **They're motivated.** Most are looking for any excuse to network. They'll genuinely engage.
@@ -61,7 +61,7 @@ This is cheaper than sponsorship, more scalable than founder attendance, and giv
 ## How we equip them
 
 ### Branded gear (provided by us, kept by them)
-- Polo or quarter-zip with Dewey Sholes logo (~$25 each from Custom Ink or similar)
+- Polo or quarter-zip with Shorthanders logo (~$25 each from Custom Ink or similar)
 - Optional: branded baseball cap (~$15)
 - Pin/button to attach to existing professional clothing for less branded events (~$2)
 

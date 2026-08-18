@@ -8,7 +8,7 @@
 
 ## Problem we're solving
 
-Dewey Sholes is supply-heavy and demand-light at the start of the launch window. We need attorneys / law firms on the platform for our growing CSR base to actually get jobs.
+Shorthanders is supply-heavy and demand-light at the start of the launch window. We need attorneys / law firms on the platform for our growing CSR base to actually get jobs.
 
 Every CSR who joins comes in with 5–20 existing law-firm relationships. That's our highest-leverage demand-acquisition channel – far warmer than any outbound marketing. A new CSR has direct, motivated reasons to bring their existing book of business onto the platform: more jobs flow to them, and the firms they already trust get founding-firm onboarding perks (direct founder access, first dibs on new features, a say in the roadmap).
 
@@ -34,7 +34,7 @@ Three tiers, scaling with the value the referral actually delivers to the platfo
 | Trigger | Reward to referring CSR | Cost to us | Notes |
 |---|---|---|---|
 | Firm signs up via the CSR's invite link | **Auto-favorite status** with that firm's account – referring CSR is at the top of the firm's reporter list by default | $0 | Pure platform mechanic. Free, and directly aligns CSR incentive with firm activation. |
-| Firm completes their **1st job** on Dewey Sholes (with any CSR, not just the referring CSR) | **$25 Starbucks gift card** | $25 cash equivalent | Triggers on real platform value (a real job, real revenue). Small enough to scale to early launch-window volume. |
+| Firm completes their **1st job** on Shorthanders (with any CSR, not just the referring CSR) | **$25 Starbucks gift card** | $25 cash equivalent | Triggers on real platform value (a real job, real revenue). Small enough to scale to early launch-window volume. |
 | Firm completes **3+ jobs in 90+ days** | **$50 cash** | $50 cash | Triggers on sustained platform value – the firm has stuck. Bigger reward justified because we now have evidence of recurring revenue. |
 
 **Things deliberately not in the program:**

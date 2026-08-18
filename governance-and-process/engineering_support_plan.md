@@ -4,11 +4,11 @@
 **Last updated:** 2026-05-16 · bootstrapped-reality note added 2026-08-13
 **Status:** Living document – update as the engineering picture changes
 
-This is the plan for human engineering support around Dewey Sholes. It exists because, candidly, Claude (the AI co-builder) can write a lot of code but can't watch error logs, take responsibility for a live system, pick up the phone when Stripe rejects webhooks, or sleep through alerts. Disclosurewatch's reliability pain (vendor outages, silent cron failures, queued emails that don't send) is the failure mode we're explicitly avoiding here.
+This is the plan for human engineering support around Shorthanders. It exists because, candidly, Claude (the AI co-builder) can write a lot of code but can't watch error logs, take responsibility for a live system, pick up the phone when Stripe rejects webhooks, or sleep through alerts. Disclosurewatch's reliability pain (vendor outages, silent cron failures, queued emails that don't send) is the failure mode we're explicitly avoiding here.
 
 > ## Bootstrapped reality (added 2026-08-13) — read this first
 >
-> This doc was written assuming Dewey Sholes might pay for ongoing engineering support. The actual path is **solo, no budget, built with Claude Code**, with limited time — and Aud will pay for **one** thing. So the four roles below collapse for now:
+> This doc was written assuming Shorthanders might pay for ongoing engineering support. The actual path is **solo, no budget, built with Claude Code**, with limited time — and Aud will pay for **one** thing. So the four roles below collapse for now:
 >
 > - **Role 1 (pre-launch code review) is the only genuine must-pay.** One senior-engineer pass over the money / PII / court-record paths before a real dollar moves (the review scope is the bullet list under Role 1). Likely **deferred or a favor** via Aud's senior-engineer friend — so **cash-to-launch can be ~$0**.
 > - **Roles 2–4 (on-call retainer, quarterly architecture review, vendor-failure response) are NOT paid line items yet.** They're replaced by **reliability-by-design** (see that section) + the **free monitoring stack** (Sentry free / UptimeRobot free / Healthchecks ~$5) + the engineer-friend as an informal buddy. They become real spend only once there's **revenue and scale**.

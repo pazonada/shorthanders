@@ -1,6 +1,6 @@
 # Polish pass – punch list
 
-Goal: prototype at dsmvp.vercel.app looks right, flows make sense, copy is tight –
+Goal: prototype at shorthanders.vercel.app looks right, flows make sense, copy is tight –
 ready to put in front of user testers. Not building real backend here.
 
 Status key: ☐ open · ☑ done · ◐ needs a decision from Aud

@@ -39,7 +39,7 @@ A separate Judicial-Council remote-CSR pilot launched July 2025 in 13 counties. 
 
 Pilot counties: **Alameda, Contra Costa, Los Angeles, Mendocino, Monterey, Orange, San Bernardino, San Diego, San Joaquin, San Mateo, Santa Clara, Tulare, Ventura.**
 
-The strategic implication for Dewey Sholes: in these 13 counties the courts have already accepted the principle that the reporter doesn't have to be physically present, which makes remote-CSR booking via our marketplace politically easier than in counties that haven't run the pilot.
+The strategic implication for Shorthanders: in these 13 counties the courts have already accepted the principle that the reporter doesn't have to be physically present, which makes remote-CSR booking via our marketplace politically easier than in counties that haven't run the pilot.
 
 ---
 
@@ -226,7 +226,7 @@ This is the supply-side breakdown that pairs with the demand-side tiering above.
 
 ### What NOT to do in CSR recruiting
 
-Do not pitch this as anti-CSR or pro-ER. The CSR union is actively hostile to ER expansion. Position Dewey Sholes as pro-CSR-income: we're helping reporters monetize the same work better, including new revenue from transcribing court audio that's currently going to nobody. Open-marketplace framing (CSRs set their own rates, keep 100%) reinforces this.
+Do not pitch this as anti-CSR or pro-ER. The CSR union is actively hostile to ER expansion. Position Shorthanders as pro-CSR-income: we're helping reporters monetize the same work better, including new revenue from transcribing court audio that's currently going to nobody. Open-marketplace framing (CSRs set their own rates, keep 100%) reinforces this.
 
 ---
 

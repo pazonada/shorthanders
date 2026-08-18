@@ -78,7 +78,7 @@ These are table stakes. Any litigation firm will ask about these, and the answer
 
 **What it is in plain language:** HIPAA is the federal law that governs how medical information is handled. If you're a "covered entity" (healthcare provider, insurer) or a "business associate" (you handle medical data on their behalf), you must follow HIPAA rules – encryption, access controls, breach notification, audit trails, and a formal compliance program.
 
-**Why this likely doesn't apply to Dewey Sholes:** We handle court transcripts from public hearings, not depositions. Court proceedings are public record – anyone could have walked into the courtroom and heard everything. There's no PHI to protect because the transcript is a legal document recording public proceedings, not a medical record.
+**Why this likely doesn't apply to Shorthanders:** We handle court transcripts from public hearings, not depositions. Court proceedings are public record – anyone could have walked into the courtroom and heard everything. There's no PHI to protect because the transcript is a legal document recording public proceedings, not a medical record.
 
 The HIPAA concern only arises with **deposition transcripts** (private proceedings), specifically medical malpractice depositions where doctors testify about patient diagnoses and treatment. Since we're focused on court transcripts, HIPAA is essentially off the table.
 

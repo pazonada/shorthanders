@@ -216,7 +216,7 @@ Tier C counties (Orange, Riverside, SF, plus the long tail) still have court-pro
 
 Per Rosie (4/11): ~70% of attorneys functionally work for insurance companies. Carriers pay for the defense, audit every line item, and pressure firms to keep costs down. The firm has to submit estimated budgets and negotiate back and forth about what it will cost to defend the suit. Carriers have entire systems to audit and benchmark what firms typically spend on specific tasks.
 
-### Why this matters for Dewey Sholes
+### Why this matters for Shorthanders
 
 - **One carrier relationship could unlock dozens/hundreds of panel firms.** Carriers maintain approved vendor lists and panel firm guidelines.
 - **The platform naturally generates the cost data carriers want:** spend per matter, cost by case type, turnaround metrics, statutory rate compliance.

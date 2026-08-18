@@ -4,7 +4,7 @@
 (family-law advisor) can read it now for context; the actual opinion needs a lawyer who
 knows court-reporter regulation.
 
-## What Dewey Sholes is (context for the lawyer)
+## What Shorthanders is (context for the lawyer)
 
 A website that (1) lists California court reporters in a searchable directory, (2) lets law
 firms message them, and (3) lets reporters send invoices and collect payment through the

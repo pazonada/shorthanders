@@ -15,7 +15,7 @@ Not all litigation generates equal transcript volume. The ranking below is based
 
 | Priority | Practice area | Why |
 |----------|---------------|-----|
-| 1 | Insurance defense | Mirror image of PI plaintiff but with strategic upside the plaintiff side doesn't have. High deposition volume (often 30+ orders/month at mid-size firms). Very price-sensitive because carriers audit every line item. Critically: defense firms are the on-ramp to direct-to-carrier outreach. Once a defense firm is on the platform and seeing cost savings, carriers can be pitched on pressuring ALL their panel firms to use Dewey Sholes – a top-down sales channel reaching ~70% of attorneys (per `~/.claude/projects/.../memory/project_insurance_carrier_channel.md`). See Section 1.5 below for the strategic logic. |
+| 1 | Insurance defense | Mirror image of PI plaintiff but with strategic upside the plaintiff side doesn't have. High deposition volume (often 30+ orders/month at mid-size firms). Very price-sensitive because carriers audit every line item. Critically: defense firms are the on-ramp to direct-to-carrier outreach. Once a defense firm is on the platform and seeing cost savings, carriers can be pitched on pressuring ALL their panel firms to use Shorthanders – a top-down sales channel reaching ~70% of attorneys (per `~/.claude/projects/.../memory/project_insurance_carrier_channel.md`). See Section 1.5 below for the strategic logic. |
 | 2 | Personal injury – plaintiff | Every PI case involves depositions: defendants, witnesses, treating physicians, expert witnesses. Active PI firm with 5+ attorneys = 10-20+ deposition orders/month. Contingency model = cost-conscious, receptive to transparent pricing. |
 | 3 | Family law – contested/high-asset | Contested custody + high-asset divorces involve depositions (custody evaluators, forensic accountants, vocational experts) and court appearance transcripts. |
 | 4 | Employment law – plaintiff side | Discrimination, wrongful termination, harassment cases are deposition-heavy. California's strong employment protections keep caseloads high. |
@@ -29,7 +29,7 @@ Not all litigation generates equal transcript volume. The ranking below is based
 
 The user position (Aud, 2026-05-09): insurance defense firms are deliberately high priority not just because they buy a lot of transcripts but because **they're the on-ramp to direct-to-carrier outreach**. The long-term play:
 
-1. Get a meaningful cluster of insurance defense firms on Dewey Sholes during the launch window.
+1. Get a meaningful cluster of insurance defense firms on Shorthanders during the launch window.
 2. Document their cost savings vs. agency markups (transparent statutory rate + 12% platform fee vs. typical 50-85% agency premium).
 3. Pitch carriers (auto, GL, professional liability, workers' comp insurers) directly: *"Your panel firms are saving $X per case on transcripts via this platform. You can require it across your panel for the same savings."*
 4. Carriers pressure ALL their panel firms to switch – a top-down distribution channel reaching the ~70% of attorneys whose work flows through carrier relationships (per `project_insurance_carrier_channel.md`).
@@ -48,7 +48,7 @@ The user position (Aud, 2026-05-09): insurance defense firms are deliberately hi
 
 ### Geography priorities within the Bay Area
 
-The Bay Area is prioritized for one specific reason: **Rosie has expressed interest in attending paralegal events in SF.** Those events are a venue to make in-person contact with paralegals who work at our target firms – handing them a postcard, a Dewey Sholes pitch, or a CSR business card. That's the channel advantage SF has over LA or San Diego, not any pre-existing firm relationships.
+The Bay Area is prioritized for one specific reason: **Rosie has expressed interest in attending paralegal events in SF.** Those events are a venue to make in-person contact with paralegals who work at our target firms – handing them a postcard, a Shorthanders pitch, or a CSR business card. That's the channel advantage SF has over LA or San Diego, not any pre-existing firm relationships.
 
 | Submarket | Priority | Rationale |
 |-----------|----------|-----------|

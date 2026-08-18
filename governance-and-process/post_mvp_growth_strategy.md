@@ -21,7 +21,7 @@ Anything in MVP scope should be captured in `marketing_strategy_master.md`, the 
 
 **The pain:** Today, law firms pay roughly **$100 to dispatch a "court runner" (courier)** to physically pick up a CD or paper transcript from a courthouse. This is a recurring cost that firms grumble about – the courier itself isn't doing skilled work, but the firm needs the physical handoff.
 
-**The idea:** Once Dewey Sholes has volume, we develop relationships with court-runner services and bulk-purchase pickups. We then offer firms courier pickup as an add-on at a **lower price than $100** – perhaps $40-60 – wrapped into the order. Best fit for non-rush jobs where we can batch pickups.
+**The idea:** Once Shorthanders has volume, we develop relationships with court-runner services and bulk-purchase pickups. We then offer firms courier pickup as an add-on at a **lower price than $100** – perhaps $40-60 – wrapped into the order. Best fit for non-rush jobs where we can batch pickups.
 
 **Why this could work:**
 - Real, recurring pain point firms already pay for.
@@ -68,7 +68,7 @@ Anything in MVP scope should be captured in `marketing_strategy_master.md`, the 
 - Liability: do we need a different insurance posture for depositions vs. court proceedings? (Probably yes – exhibit handling and confidentiality stakes are higher.)
 - Scheduling: depositions need calendar coordination among multiple parties (witness, counsel for each side, CSR, possibly videographer). Court proceedings already have a fixed time and place.
 - Confidentiality / data-retention: deposition transcripts often have sealed portions, protective orders, and longer retention requirements.
-- Do we add deposition support inside Dewey Sholes, or spin up a sibling product?
+- Do we add deposition support inside Shorthanders, or spin up a sibling product?
 
 **Trigger condition for revisiting:** Launch has demonstrated marketplace fit (≥ 50 firms, ≥ 200 active CSRs, sustained order volume) AND we have legal sign-off on the additional liability exposure.
 

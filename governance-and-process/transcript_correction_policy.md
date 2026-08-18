@@ -16,7 +16,7 @@ CSRs guarantee 100% accuracy under their professional certification (signed unde
 
 ## Platform position
 
-Dewey Sholes does **not** adjudicate transcript accuracy. The reporter's professional certification is the accuracy guarantee. Our role is limited to:
+Shorthanders does **not** adjudicate transcript accuracy. The reporter's professional certification is the accuracy guarantee. Our role is limited to:
 
 1. Facilitating delivery of the transcript
 2. Providing a mechanism for attorneys to flag issues

@@ -3,12 +3,12 @@
 import json, csv, os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = "/Users/audubondougherty/Desktop/AI_experiments/dewey-sholes"
+REPO = "/Users/audubondougherty/Desktop/AI_experiments/shorthanders"
 rows = json.load(open(os.path.join(HERE, "crb_all_raw.json")))
 
 ACTIVE = {"Active", "Active (Pending Renewal)"}
 # Base URL of the deployed MVP. Override with:  DS_CLAIM_BASE=https://your-url.vercel.app python3 build_spreadsheet.py
-CLAIM_BASE = os.environ.get("DS_CLAIM_BASE", "https://dsmvp.vercel.app").rstrip("/")
+CLAIM_BASE = os.environ.get("DS_CLAIM_BASE", "https://shorthanders.vercel.app").rstrip("/")
 
 def titlecase(s):
     if not s:

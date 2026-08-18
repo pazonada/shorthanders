@@ -64,7 +64,7 @@ Best from Rosie if she's willing – sender carries weight as a CA-licensed atto
 > Sincerely,
 >
 > [Name]
-> [Title – e.g., Co-founder, Dewey Sholes, a product of Studio Crux, LLC]
+> [Title – e.g., Co-founder, Shorthanders, a product of Studio Crux, LLC]
 > [Email]
 > [Phone]
 

@@ -19,7 +19,7 @@
 
 Per Rosie (2026-05-14): *"As the law firm side is keeping track of which client matter the cost is attached to, the firm can reconcile its internal billing when billing time comes."*
 
-To support that reconciliation cleanly, every Dewey Sholes invoice must include the following identifying fields prominently (not buried in fine print):
+To support that reconciliation cleanly, every Shorthanders invoice must include the following identifying fields prominently (not buried in fine print):
 
 | Field | Source | Purpose |
 |---|---|---|

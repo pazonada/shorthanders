@@ -67,7 +67,7 @@ These are what we measure success by, in order of importance:
 
 Most marketplace marketing focuses on the principal buyer (in this case, attorneys). But attorneys aren't shopping – they're delegating. The legal assistant is the actual user, the actual evaluator, and the actual referrer. If we make their job easier and reward them personally for using the platform, they will:
 
-1. Default to Dewey Sholes when their boss asks for a transcript
+1. Default to Shorthanders when their boss asks for a transcript
 2. Tell other legal assistants in their network about it
 3. Push back if their firm tries to switch them off the platform
 
@@ -150,7 +150,7 @@ Most marketplace marketing focuses on the principal buyer (in this case, attorne
 
 ## Marketing budget reality check
 
-**Total available:** Aud's severance, with maybe $2-3K allocable to Dewey Sholes marketing before survival concerns kick in.
+**Total available:** Aud's severance, with maybe $2-3K allocable to Shorthanders marketing before survival concerns kick in.
 
 **Phase 1 budget (CSR acquisition):** ~$0
 - Cold email is free

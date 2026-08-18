@@ -4,9 +4,9 @@
 **Last updated:** 2026-05-24
 **Status:** v1 spec. Confirmed by Aud and Rosie 2026-05-23 in conversation. This supersedes the job-board "first-to-claim-wins" model previously specified in `mvp_scope_v1.md` and supersedes the cascade + veto-window design in `rating_and_matching_policy.md` (which now stands as a deferred post-v1 alternative).
 
-The matching surface in Dewey Sholes is **applicant-pool review**, modeled on Care.com / dating-app applicant flows rather than on Uber-style auto-match or first-claim-wins. The model: firm posts a job → qualified CSRs apply → application window closes per turnaround tier → firm reviews applicant profiles + prices → firm selects one CSR (or none) → selected CSR confirms availability → job locks in.
+The matching surface in Shorthanders is **applicant-pool review**, modeled on Care.com / dating-app applicant flows rather than on Uber-style auto-match or first-claim-wins. The model: firm posts a job → qualified CSRs apply → application window closes per turnaround tier → firm reviews applicant profiles + prices → firm selects one CSR (or none) → selected CSR confirms availability → job locks in.
 
-This puts choice in the firm's hands, makes price a comparison axis at the moment of selection, and gives CSRs visibility into what they're applying for. It also exposes Dewey Sholes as an open marketplace at the matching layer, not just at the pricing layer.
+This puts choice in the firm's hands, makes price a comparison axis at the moment of selection, and gives CSRs visibility into what they're applying for. It also exposes Shorthanders as an open marketplace at the matching layer, not just at the pricing layer.
 
 ---
 
@@ -116,7 +116,7 @@ If we ever want to test hiding price ("we'll set it on selection"), do it as a d
 - **Async, text-only.** No real-time chat (no typing indicators, no presence). No attachments – defer to v1.1. Parties can email PDFs out-of-band if they need to.
 - **Notifications:** push (Web Push via the PWA) for immediacy, email digest as fallback. Per the existing notifications plan.
 - **Anti-spam: trust-first.** No hard rate limits in v1. Either party can mute a thread (no future notifications). We instrument per-firm message volume + reply rate; if abuse patterns emerge post-launch, we add limits.
-- **Non-privileged disclaimer.** First message in any thread is preceded by a system notice: "Messages on Dewey Sholes are not a privileged channel. Do not send privileged attorney-client communications here." This is shown once per thread, not on every message.
+- **Non-privileged disclaimer.** First message in any thread is preceded by a system notice: "Messages on Shorthanders are not a privileged channel. Do not send privileged attorney-client communications here." This is shown once per thread, not on every message.
 - **Admin visibility.** Admin can read threads for dispute resolution. Disclosed in the TOS. Threads are not visible to attorneys outside the originating firm or to other CSRs.
 - **Retention.** Threads archived 90 days after the order moves to `delivered` or `closed_no_selection`. After that, they're soft-deleted from the user-facing view (admin retains for the legal-hold period defined in `transcript_retention_and_custody_policy.md`).
 - **Identity disclosure on first message.** When a firm opens a thread with an applicant, the applicant sees the firm name + initiating attorney's name (already visible to applicants on the job posting; this is informational consistency, not new disclosure).

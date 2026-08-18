@@ -1,4 +1,4 @@
-# Launch prep – everything that has to happen before Dewey Sholes is real
+# Launch prep – everything that has to happen before Shorthanders is real
 
 A working to-do list. Tick things off as they're done. Last updated 2026-07-24.
 
@@ -24,9 +24,12 @@ confirm it** – the site currently shows working numbers, not decisions.
       real numbers? See `open_strategic_decisions.md` and `../marketing/pro_pricing_worksheet.md`. **YOU**
 - [ ] **Confirm the Pro monthly price.** $29 has been floated, never decided. **YOU**
 - [ ] **Confirm the firm subscription price**, or decide firms launch free. **YOU**
-- [ ] **Pick the real domain.** Right now it's `dsmvp.vercel.app`. If you want
-      `deweysholes.com`, buy it before launch, not after – changing the address later costs you
+- [ ] **Point the real domain.** Right now it's `shorthanders.vercel.app`. You already own
+      `shorthanders.com` — point it before launch, not after – changing the address later costs you
       any search traffic you've built. **YOU**
+- [ ] **File the federal trademark for "Shorthanders."** Deferred until you're committed to launch
+      + revenue (name already cleared via TESS; use ™, not ®, until it registers). The old
+      "Dewey Sholes" application (Serial 99703235) is sunk — abandon it. ~$250–350/class. **YOU**
 
 ## Phase 2 – Design work you owe
 
@@ -149,7 +152,7 @@ This is the big one, and it's real engineering. Everything here is spelled out i
       firms can filter to claimed profiles only.
 
       **Resolved 2026-07-21:** rather than asking reporters to maintain a status, activity is
-      computed from their sign-ins and shown as "Recently active on Dewey Sholes" when true, and
+      computed from their sign-ins and shown as "Recently active on Shorthanders" when true, and
       not shown otherwise. Reasoning and open parameters: `activity_signal_design.md`. Still open
       is whether unclaimed listings should say more plainly that nobody has confirmed
       availability. **YOU**
@@ -241,7 +244,7 @@ Pricing, For Firms, and so on. That's a consequence of how the site is put toget
 
 What it means practically: the one description you wrote is the only description Google will
 ever show, for everything. It also means a reporter searching their own name will not find their
-Dewey Sholes profile.
+Shorthanders profile.
 
 If search traffic turns out to matter – especially reporters finding themselves – fixing it is a
 real project, not a setting. Worth deciding before you spend money on marketing, and much

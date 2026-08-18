@@ -1,5 +1,9 @@
 # v1 archive – the original full marketplace
 
+> **Naming note:** the product was renamed **Dewey Sholes → Shorthanders** (Aug 2026). The
+> "Dewey Sholes" name and the `dewey-sholes.vercel.app` URL below are preserved as v1-era
+> historical record. The current MVP now lives at `shorthanders.vercel.app`.
+
 **What v1 was:** the first Dewey Sholes product – a full two-sided marketplace where attorneys
 submitted orders, the platform matched them to a CSR, and money moved through escrow. Its
 money model was a **flat 12% attorney-only buyer fee plus a $99/yr CSR listing fee**, with
@@ -12,7 +16,7 @@ v1 was **not abandoned as wrong** – it's the fuller version of the idea and ma
 toward again. Nothing here has been deleted.
 
 **Status:** still deployed as a prototype at **https://dewey-sholes.vercel.app**, served from
-the repo root. The current MVP is separate, at **https://dsmvp.vercel.app**, served from
+the repo root. The current MVP is separate, at **https://shorthanders.vercel.app**, served from
 `mvp/`. Keep them separate – see the warning at the bottom.
 
 Last updated 2026-07-21.

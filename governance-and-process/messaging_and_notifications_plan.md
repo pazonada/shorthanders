@@ -118,7 +118,7 @@ The v1 matching model lets firms message CSRs both before selection (to vet appl
 
 ### Compliance + safety
 
-- **Non-privileged disclaimer.** First message in any thread is preceded by a system notice: *"Messages on Dewey Sholes are not a privileged channel. Do not send privileged attorney-client communications here. If you need to share privileged material, use a secure channel outside the platform."* Shown once per thread, not on every message.
+- **Non-privileged disclaimer.** First message in any thread is preceded by a system notice: *"Messages on Shorthanders are not a privileged channel. Do not send privileged attorney-client communications here. If you need to share privileged material, use a secure channel outside the platform."* Shown once per thread, not on every message.
 - **Admin visibility.** Admin can read thread contents for dispute resolution. Disclosed in the TOS. Threads are not visible to attorneys outside the originating firm, to other CSRs, or to anyone else.
 - **Reportable content.** Either party can flag a message as abusive (harassment, threats, off-platform-job solicitation, etc.). Reports route to admin; admin reviews within a service-level commitment to be defined in the moderation policy.
 - **Retention.** Threads archived 90 days after the order moves to `delivered` or `closed_no_selection`. After archival, the user-facing view soft-deletes them; admin retention follows the legal-hold period in `transcript_retention_and_custody_policy.md`.

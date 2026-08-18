@@ -11,7 +11,7 @@
 
 ## Why supply comes first
 
-Dewey Sholes is a two-sided marketplace. Law firms won't use a platform with no reporters, and reporters won't stay on a platform with no jobs. We break the chicken-and-egg problem by loading supply first:
+Shorthanders is a two-sided marketplace. Law firms won't use a platform with no reporters, and reporters won't stay on a platform with no jobs. We break the chicken-and-egg problem by loading supply first:
 
 1. Sign up CSRs at $99/yr. The hook is non-pricing: open marketplace where they set their own rates, keep 100%, founder access, first dibs on new features, a say in the roadmap.
 2. Once we have enough supply in our Tier A counties (Santa Clara, Contra Costa, Alameda) to reliably fill jobs → market to firms
@@ -40,7 +40,7 @@ These are the four supply pools, ranked by how easily we can capture them and ho
 
 ### Cohort 2 – Freelance CSRs frustrated with depo agency cuts
 
-**Why.** Veritext and US Legal Support take 30–50% off the top. Dewey Sholes charges CSRs $0 transaction fee (just the $99/yr listing) and applies a 12% attorney-side fee instead. These CSRs already have the workflow, equipment, and pro tempore experience – they'll fill scheduling gaps with our court work between depo bookings.
+**Why.** Veritext and US Legal Support take 30–50% off the top. Shorthanders charges CSRs $0 transaction fee (just the $99/yr listing) and applies a 12% attorney-side fee instead. These CSRs already have the workflow, equipment, and pro tempore experience – they'll fill scheduling gaps with our court work between depo bookings.
 
 **Reach them through.** CSR Facebook groups (specifically the "complain about agencies" threads), CRB-list cold email targeted at known freelancers, Rosie's network, conference attendee lists.
 
@@ -56,7 +56,7 @@ These are the four supply pools, ranked by how easily we can capture them and ho
 
 ### Cohort 4 – Out-of-state CSRs and qualified transcriptionists (for the audio SKU)
 
-**Why.** Once an ER recording exists, the transcription work doesn't require a CA-licensed CSR being physically present – it requires someone qualified to produce a certified transcript from audio. This dramatically widens our labor pool and is where Dewey Sholes can scale supply faster than any competitor stuck in the live-only model.
+**Why.** Once an ER recording exists, the transcription work doesn't require a CA-licensed CSR being physically present – it requires someone qualified to produce a certified transcript from audio. This dramatically widens our labor pool and is where Shorthanders can scale supply faster than any competitor stuck in the live-only model.
 
 **Reach them through.** NCRA member lists, transcript-production specialist Facebook groups, LinkedIn outreach to certified transcriptionists, partnerships with transcription bureaus that want a CA channel.
 
@@ -66,7 +66,7 @@ These are the four supply pools, ranked by how easily we can capture them and ho
 
 ### What NOT to do in CSR recruiting
 
-Do not pitch this as anti-CSR or pro-ER. The court reporter union has accused LA Superior Court of misspending CSR recruitment funds and actively opposes electronic recording – that hostility will extend to us if we're not careful. Position Dewey Sholes as **pro-CSR-income**: we're helping reporters monetize the same work better, including new revenue from transcribing court audio that's currently going to nobody.
+Do not pitch this as anti-CSR or pro-ER. The court reporter union has accused LA Superior Court of misspending CSR recruitment funds and actively opposes electronic recording – that hostility will extend to us if we're not careful. Position Shorthanders as **pro-CSR-income**: we're helping reporters monetize the same work better, including new revenue from transcribing court audio that's currently going to nobody.
 
 ## The pitch to CSRs (open marketplace framing)
 
@@ -100,7 +100,7 @@ Per Rosie, roughly half of the 4,733 CRB licensees are court-employed (regularly
 3. **Rest of state freelance** – every remaining freelance licensee.
 
 **Phase 1B – Court-employed CSRs (secondary target):**
-Court-employed CSRs aren't out of the game – they may take freelance work occasionally and they may have transcripts from court appearances they could deliver via Dewey Sholes. They are not the urgent supply, but they're worth a separate, later batch with **different messaging** that emphasizes:
+Court-employed CSRs aren't out of the game – they may take freelance work occasionally and they may have transcripts from court appearances they could deliver via Shorthanders. They are not the urgent supply, but they're worth a separate, later batch with **different messaging** that emphasizes:
 - Side-income for occasional freelance jobs.
 - A simple delivery rail for transcripts they've already produced from their court work.
 - Not asking them to leave or replace their primary court employment.
@@ -120,7 +120,7 @@ This isn't a filter (we email everyone in the universe eventually); it's a batch
 - Honest disclosure: **the platform doesn't open to law firms until we onboard a minimum number of CSRs**, so signing up now is signing up to be among the first reporters firms see when demand goes live.
 
 **Email sequence (3 touches over 2 weeks per CSR):**
-1. Introduction: what Dewey Sholes is, why it exists, free launch signup, the feedback expectation, the "we're not opening to firms until we have enough CSRs" framing.
+1. Introduction: what Shorthanders is, why it exists, free launch signup, the feedback expectation, the "we're not opening to firms until we have enough CSRs" framing.
 2. Follow-up: address common concerns (IC status, how payment works, no exclusivity, statutory rate honored 100%).
 3. Final: social proof (how many reporters have signed up, Rosie's endorsement as a practicing attorney, the firms-side waitlist progress).
 
@@ -150,7 +150,7 @@ This isn't a filter (we email everyone in the universe eventually); it's a batch
 **Approach:**
 - Join groups, engage authentically (not just spam a link)
 - Share content about the CSR shortage, statutory rate transparency, problems with agency model
-- When relevant, mention Dewey Sholes as a solution
+- When relevant, mention Shorthanders as a solution
 - Rosie's credibility as a 22-year attorney adds weight
 
 **Target:** 5-15 signups
@@ -212,13 +212,13 @@ If there's $500-750 to spare:
 
 ## CSR business cards (open idea, captured 2026-05-08)
 
-**The idea (Aud + Rosie, in active discussion):** Mail free branded business cards to each CSR who completes onboarding and gets license-verified. Cards include the CSR's name and license number, a tagline like "Find me on Dewey Sholes for a transcription!", and a direct link/QR to their Dewey Sholes profile.
+**The idea (Aud + Rosie, in active discussion):** Mail free branded business cards to each CSR who completes onboarding and gets license-verified. Cards include the CSR's name and license number, a tagline like "Find me on Shorthanders for a transcription!", and a direct link/QR to their Shorthanders profile.
 
 **The specific problem these cards solve (sharpened 2026-05-08):**
 
 Today, when an attorney finishes a court hearing and later realizes they need a transcript, they have to track down which CSR was on the record – often days or weeks after the fact. The CSR's name might be in the minute order, but contact info isn't. Calling the court clerk, hunting on CSR association directories, asking colleagues who they used last time – it's a real, recurring pain point in civil practice.
 
-**The use case:** at the end of a live hearing, the CSR who reported it hands the attorneys present a Dewey Sholes business card. The card is the attorney's shortcut to ordering the transcript later – they scan the QR or type the URL and land directly on the CSR's profile with a one-click "Request a transcript from a recent hearing" CTA pre-filled with what we know.
+**The use case:** at the end of a live hearing, the CSR who reported it hands the attorneys present a Shorthanders business card. The card is the attorney's shortcut to ordering the transcript later – they scan the QR or type the URL and land directly on the CSR's profile with a one-click "Request a transcript from a recent hearing" CTA pre-filled with what we know.
 
 **Why this framing sharpens the strategy:**
 - It's not generic networking swag. It's a *workflow* tool that solves a concrete attorney pain point.
@@ -239,7 +239,7 @@ The sharpened use case (above) basically settles this: the attorney has a specif
 
 | Option | Pros | Cons |
 |---|---|---|
-| **A. Direct profile link** (`deweysholes.com/csr/<license-number>`) | Solves the use case directly. Attorney scans → lands on the CSR's profile → one tap to request a transcript. Standard marketplace pattern (Yelp, LinkedIn, Etsy). | Visiting attorney sees only that CSR's profile in isolation. Mitigated by making profile pages a fully-featured marketplace landing (logo, search, "browse all CSRs" prompt) so the brand impression still happens. |
+| **A. Direct profile link** (`shorthanders.com/csr/<license-number>`) | Solves the use case directly. Attorney scans → lands on the CSR's profile → one tap to request a transcript. Standard marketplace pattern (Yelp, LinkedIn, Etsy). | Visiting attorney sees only that CSR's profile in isolation. Mitigated by making profile pages a fully-featured marketplace landing (logo, search, "browse all CSRs" prompt) so the brand impression still happens. |
 | **B. Homepage URL** + tell them to search | Brand impression first. | Reintroduces the exact pain point the card was supposed to fix. Attorney has to remember the CSR's name, type it in, hope the search works. If they bounce, they lose us the order. |
 
 **Decision (Aud, 2026-05-08): Option A.** The card's job is to be a precision tool, not a billboard.
@@ -257,7 +257,7 @@ The sharpened use case (above) basically settles this: the attorney has a specif
 **When to launch:** tied to onboarding completion + license verification. Available initially to CSRs who indicated they accept **live attendance** jobs (the use case where cards apply); CSRs who only do audio transcription don't need cards yet. CSR triggers "send me my cards" from the dashboard once verified; we ship in monthly batches.
 
 **Risks / open issues:**
-- **Compliance with CSR's own branding.** Many CSRs already have firm-issued or self-issued cards. Frame ours as a "Dewey Sholes referral card" – additive, not replacement.
+- **Compliance with CSR's own branding.** Many CSRs already have firm-issued or self-issued cards. Frame ours as a "Shorthanders referral card" – additive, not replacement.
 - **Distribution overhead.** Shipping individual orders is operationally heavy. Batch quarterly or use a print-on-demand integration (Moo / Sticker Mule / Vistaprint API).
 - **Card aging.** A paused or deplatformed CSR has cards in circulation. The profile-identifier policy already handles this gracefully (paused → "this CSR is taking a break" page; deplatformed → generic "no longer available"). Verify before launch.
 

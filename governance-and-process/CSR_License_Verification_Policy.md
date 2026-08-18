@@ -8,7 +8,7 @@
 
 ## Purpose
 
-Ensure all reporters listed on Dewey Sholes hold active, valid CSR licenses issued by the California Court Reporters Board (CRB). Protect attorneys from being matched with unlicensed reporters and protect the platform from negligent-matching liability.
+Ensure all reporters listed on Shorthanders hold active, valid CSR licenses issued by the California Court Reporters Board (CRB). Protect attorneys from being matched with unlicensed reporters and protect the platform from negligent-matching liability.
 
 ---
 

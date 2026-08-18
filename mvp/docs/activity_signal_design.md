@@ -5,7 +5,7 @@ needs auth (see `integration_checklist.md`).
 
 ## The decision
 
-A claimed profile shows one line of italic metadata – **"Recently active on Dewey Sholes"** –
+A claimed profile shows one line of italic metadata – **"Recently active on Shorthanders"** –
 computed automatically from the reporter's own sign-ins. Nothing is shown when it isn't true.
 
 ## What we rejected, and why

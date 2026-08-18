@@ -174,9 +174,9 @@ Two serverless stubs already exist and fall back to demo behavior:
   - **Self-send (built, no backend needed):** the modal now offers **Copy message** / **Copy link**
     so the reporter pastes the invite into their *own* email or text. For firms the reporter already
     works with this is usually the best-delivering, most-trusted path – keep it prominent.
-  - **Platform-send ("Send through Dewey Sholes") – currently simulated** ("no email is actually
+  - **Platform-send ("Send through Shorthanders") – currently simulated** ("no email is actually
     sent"). When wired: send server-side via the authenticated domain, but attribute to the reporter –
-    **From:** `"<Reporter> via Dewey Sholes <invite@deweysholes.com>"`, **Reply-To:** the reporter's
+    **From:** `"<Reporter> via Shorthanders <invite@shorthanders.com>"`, **Reply-To:** the reporter's
     own email (so replies go to them). Requires SPF/DKIM/DMARC on the sending domain or it spam-folders
     (see the deliverability discipline in `open_strategic_decisions.md` §4). Contains the reporter's
     message + the personalized `/#/invite/<id>` link + create-account CTA. Firm name is now optional;
@@ -186,7 +186,7 @@ Two serverless stubs already exist and fall back to demo behavior:
   today just saves them + records `store.invitedReporters` + shows an **"Invite sent"** badge on the
   saved/browse rows; **no real email goes out.** When wired: send a claim invite to the reporter's
   public license email (`r.email`) if we have one, on the authenticated domain – "**<Firm> is looking
-  for you on Dewey Sholes**" + the `/#/claim/<id>` link. **If there's no public email on file, send
+  for you on Shorthanders**" + the `/#/claim/<id>` link. **If there's no public email on file, send
   nothing** (the UI already says so) – no other channel. Persist the invite + **flip the badge from
   "Invite sent" to a connected profile when the reporter claims** (the growth loop's payoff). This is
   transactional/permission-ish (a firm vouching for a specific named reporter), so Resend is fine here
@@ -205,7 +205,7 @@ Two serverless stubs already exist and fall back to demo behavior:
   notifications) – that's permission-based and AUP-fine.
 - [ ] **"Remove my unclaimed listing" requests – a SEPARATE, data-side flow** (not an email-tool or
   CRM job). A reporter asking to be taken off the directory is a data request, not an email
-  unsubscribe: a link to `support@deweysholes.com` (or a small form) → flag that reporter as
+  unsubscribe: a link to `support@shorthanders.com` (or a small form) → flag that reporter as
   **suppressed / do-not-list** in the directory data → the **quarterly CRB refresh must honor the
   suppression** so they aren't re-added on the next sync (see `roster_refresh_policy.md`). Handle
   manually while solo; build a one-tap request link on unclaimed profiles when the backend lands.
@@ -284,7 +284,7 @@ Two serverless stubs already exist and fall back to demo behavior:
 ## 7. Data exposure / reporter PII (fixed 2026-07-28 – keep it fixed)
 
 **What happened:** Vercel serves the whole `mvp/` root, so internal working files were publicly
-downloadable. `dsmvp.vercel.app/data/email_campaign.csv` and `.../data/csr_active_directory.csv`
+downloadable. `shorthanders.vercel.app/data/email_campaign.csv` and `.../data/csr_active_directory.csv`
 exposed **~5,700 reporters' raw emails and street addresses** in one request – a ready-made spam
 list, worse than crawling. `docs/` and `marketing/` (internal strategy) were public too.
 

@@ -1,6 +1,6 @@
 # Agent actions
 
-Automated processes that keep Dewey Sholes running, content fresh, and data accurate. Each file describes a specific agent responsibility, its trigger/schedule, inputs, outputs, and escalation rules.
+Automated processes that keep Shorthanders running, content fresh, and data accurate. Each file describes a specific agent responsibility, its trigger/schedule, inputs, outputs, and escalation rules.
 
 ## Index
 

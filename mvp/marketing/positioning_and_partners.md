@@ -1,6 +1,6 @@
 # Movement positioning and partner strategy
 
-Rosie's framing (2026-07-29): Dewey Sholes isn't just a directory – it's a push to (a) let
+Rosie's framing (2026-07-29): Shorthanders isn't just a directory – it's a push to (a) let
 independent court reporters keep more of what they earn, and (b) reduce how much of a litigant's
 money gets absorbed by a middleman on the way to a transcript. This doc turns that into usable
 copy, a tagline shortlist, a plan for the "money saved vs. an agency" dashboard metric already
@@ -18,7 +18,7 @@ Companion docs: [`README.md`](README.md) (channel index) · [`growth_strategy.md
 
 ### The core positioning statement
 
-**Dewey Sholes exists because a court reporter's invoice has two very different stories on it: what
+**Shorthanders exists because a court reporter's invoice has two very different stories on it: what
 the reporter did, and what the agency added on top. We built a way for the person who did the work
 and the person who's paying for it to deal with each other directly – so less of the money in
 between goes to a markup neither of them asked for.**
@@ -75,7 +75,7 @@ attorneys are turning on us, saying we're making too much... Tell attorneys what
 (full quote in [`agency_invoice_evidence.md`](../../research/agency_invoice_evidence.md)).
 
 **The reporter-facing narrative:** *You didn't choose to become a freelancer competing against
-agency markups – the system pushed you there. Dewey Sholes doesn't ask you to take on more risk.
+agency markups – the system pushed you there. Shorthanders doesn't ask you to take on more risk.
 It removes the markup that was never yours in the first place. Your rate is your rate. The attorney
 sees it before they confirm. You keep more of what you bill.*
 
@@ -105,7 +105,7 @@ recording instead of a human reporter," which is a claim the invoice evidence ac
 
 **Precision matters here – Rosie is a lawyer, and this claim has to survive a lawyer's read.** The
 honest chain is: agencies mark up transcripts by 30–50% on line items the reporter never performed
-→ a firm using Dewey Sholes pays a fair reporter rate plus a modest platform fee instead of that
+→ a firm using Shorthanders pays a fair reporter rate plus a modest platform fee instead of that
 markup → **whether that specific saving reaches the litigant depends on how the firm bills its
 client.** We do not control that, and we should never claim it as a guarantee.
 
@@ -116,7 +116,7 @@ bring down the cost of getting to trial"** or **"less markup between the work an
 
 **The firm-facing narrative:** *Attorney fees already include court-reporting costs, and those costs
 often carry an agency markup that has nothing to do with the reporter's skill or the transcript's
-accuracy. Dewey Sholes lets you deal with the reporter directly – see their real rate before you
+accuracy. Shorthanders lets you deal with the reporter directly – see their real rate before you
 confirm, pay it, done. Less of what your client is ultimately billed for goes to a markup that
 served no one but the agency.*
 
@@ -130,7 +130,7 @@ served no one but the agency.*
 > turning to electronic recording instead. We think the person who does the work should keep what
 > they earn, the person paying for a transcript should be able to see exactly where the money goes,
 > and a licensed human reporter should be able to compete on price with a recording device instead
-> of losing the job to one. Dewey Sholes is a directory, a way to message directly, and a way to get
+> of losing the job to one. Shorthanders is a directory, a way to message directly, and a way to get
 > paid – built so less money sits between the two of you, and so human court reporting can stay in
 > the room.
 
@@ -162,7 +162,7 @@ draft options, not decided copy – pick, combine, or reject freely.
 
 **On #2 specifically – never overclaim.** "Helps make human reporting more affordable relative to
 electronic recording" is a claim the invoice/cost evidence supports (see §1's "core defensive
-angle" and the sourcing there). "Dewey Sholes saves reporter jobs" is not something we can prove
+angle" and the sourcing there). "Shorthanders saves reporter jobs" is not something we can prove
 and should never be said as a guarantee – always frame as *helps*, *removes a cost penalty*, or
 *makes it more possible*, never as a promise of outcome.
 
@@ -220,7 +220,7 @@ the message.
 ### Later: an aggregate community figure
 
 Once there's enough real transaction volume to compute one honestly, a single community-wide
-number ("$X kept from agencies across every Dewey Sholes reporter and firm") is a strong earned-
+number ("$X kept from agencies across every Shorthanders reporter and firm") is a strong earned-
 media and homepage hook – but it has real preconditions:
 
 - It needs actual aggregate transaction data, not an extrapolation from a handful of early users.
@@ -341,7 +341,7 @@ of overreach the guardrails warn against.
    reporter more expensive than the recording alternative – which helps freelance/per diem work
    (including their own members' side work) stay price-competitive. That's the opener, before any
    mention of signing up.
-2. **A mention in member communications**, if they're willing – not "endorse Dewey Sholes," but
+2. **A mention in member communications**, if they're willing – not "endorse Shorthanders," but
    "here's a resource that helps freelance/per diem reporting pay more fairly and stay affordable
    against electronic recording," which also reinforces their own broader argument that stenography
    is a viable profession worth investing in (useful to them in the electronic-recording fight, see
@@ -418,7 +418,7 @@ partnership.
 
 ### 4G. Women-owned business networks
 
-Dewey Sholes is women-owned (Aud). Relevant, mostly free/low-cost networks:
+Shorthanders is women-owned (Aud). Relevant, mostly free/low-cost networks:
 - **WBENC** certification runs through regional partners – **WBEC-Pacific** covers Northern
   California/the Bay Area (where DS is based); **WBEC-West** covers Southern California/LA
   ([wbec-pacific.org](https://wbec-pacific.org/certification/)). Note: WBENC certification

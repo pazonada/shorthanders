@@ -46,7 +46,7 @@ Pulled straight from the live `For firms` page so this plan never overpromises:
   save reporters, pay any invoice by card or ACH.
 - **$49/user/month (or $539/yr):** full claimed profiles + advanced search/filters across *every*
   reporter, not just the ones you already know, plus saved/shared team lists.
-- **Never:** a Dewey Sholes fee on the invoice. The firm pays exactly what the reporter billed.
+- **Never:** a Shorthanders fee on the invoice. The firm pays exactly what the reporter billed.
 - **Always:** a matter-reference field on every invoice, and a receipt/invoice history for AP.
 
 ---
@@ -175,8 +175,7 @@ together, not separately.
 **Step 3 – the payment habit forms.** Once a firm is paying *one* reporter through the site
 (because it's easier than a check, and the receipt lands in one place for AP), that's the behavior
 that matters most for revenue – **the reporter's per-payment fee, not the firm subscription, is
-the platform's largest revenue line, and it only exists on payments actually routed through Dewey
-Sholes.** So every piece of firm-facing copy should nudge "pay through the site" as a firm
+the platform's largest revenue line, and it only exists on payments actually routed through Shorthanders.** So every piece of firm-facing copy should nudge "pay through the site" as a firm
 convenience, even for firms that never upgrade to Pro. A free firm paying its reporters on-platform
 is not a failed conversion – it's the outcome the business model most needs.
 
@@ -232,7 +231,7 @@ Navigator or paid email-finder tools, deluxe/commissioned mailers, swag, any pai
 | **"Switching is a hassle / another system to learn."** | There's nothing to switch. The free tier runs alongside whatever you already do; the name-lookup path takes about the same time as a phone call and needs no setup. |
 | **"We don't need another subscription."** | Correct – most firms don't need one on day one. The subscription only matters the day your usual reporter is busy or retired and you need to find someone new. Until then, it's free. |
 | **"How is this different from just calling the agency for a quote?"** | You see the reporter's real, published rate and profile immediately and message them directly – no phone tag, no waiting for a callback. |
-| **"Is this legit – will our reporter actually get paid right?"** | Payments run on Stripe, the same rails as most modern invoicing tools. Dewey Sholes never holds the money and never adds a fee to your invoice – you pay exactly what the reporter billed. |
+| **"Is this legit – will our reporter actually get paid right?"** | Payments run on Stripe, the same rails as most modern invoicing tools. Shorthanders never holds the money and never adds a fee to your invoice – you pay exactly what the reporter billed. |
 | **"What if our reporter doesn't want to be listed?"** | Every licensed CA reporter is already public record through the state (CRB); we didn't add anyone. Building out a full profile is the reporter's choice and entirely in their control. |
 
 **Tone guardrails for all firm copy:** plain language, sentence case, en-dashes – no "moat,"

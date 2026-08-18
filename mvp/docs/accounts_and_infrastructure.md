@@ -1,4 +1,4 @@
-# Dewey Sholes – accounts & infrastructure reference
+# Shorthanders – accounts & infrastructure reference
 
 A single place for **each account/service you have (or will need), what it's for, its current
 state, and what to do with it.** Pulled together from the entity, payments, email, and rebrand
@@ -7,19 +7,19 @@ DBA, and trademark items are worth one confirmation from the release-review atto
 
 ## At a glance
 
-| Account / service | Role for Dewey Sholes | Current state | What to do |
+| Account / service | Role for Shorthanders | Current state | What to do |
 |---|---|---|---|
 | **Legal entity** | Who owns/operates DS | Studio Crux, LLC (NJ) | Keep DS under it; brand via a DBA. Spin out a separate entity only on a real trigger (below). |
-| **DBA / alternate name** | "Dewey Sholes" as a trade name | Not filed | File NJ Form C-150G ($50, 5 yrs) so Studio Crux can bank/contract/invoice as Dewey Sholes. Do before contracting/taking money under the name. |
-| **Domain + DNS** | deweysholes.com | Live at Gandi; SPF/DKIM/DMARC verified | Keep. Point the site + email here. Tighten DMARC `p=none → reject` later. |
-| **Email / Workspace** | Human/team mail | Google Workspace, DNS done; admin@, aud@, hello@ | `aud@` = personal founder address (1:1, keep its reputation clean). Turn `hello@` into / alias **`support@`** for inbound support + "remove my listing" requests (free Group/alias, no seat). App + outreach email go elsewhere (below). |
-| **Resend** | **Transactional** app email only | Already paying (other site) | Use for permission-based app mail (invite-accepted, invoices, receipts, notifications) on its own authenticated DS sending domain. **Do NOT send the cold CSR campaign here – against AUP.** Postmark is the fallback only if transactional deliverability still flakes. |
+| **DBA / alternate name** | "Shorthanders" as a trade name | **Filed** (NJ Form C-150G, $50 / 5 yrs) | Done — Studio Crux can bank/contract/invoice as Shorthanders. The retired "Dewey Sholes" name is not filed and won't be. |
+| **Domain + DNS** | shorthanders.com (target) · deweysholes.com (legacy) | **shorthanders.com owned but NOT set up yet**; deweysholes.com still live at Gandi (SPF/DKIM/DMARC verified) | Before launch: stand up shorthanders.com DNS + email; keep deweysholes.com forwarding through the switch. Tighten DMARC `p=none → reject` later. |
+| **Email / Workspace** | Human/team mail | Google Workspace on **deweysholes.com** today (admin@, aud@, hello@) — migrate to shorthanders.com before launch | `aud@` = personal founder address (1:1, keep its reputation clean). Turn `hello@` into / alias **`support@`** for inbound support + "remove my listing" requests (free Group/alias, no seat). App + outreach email go elsewhere (below). |
+| **Resend** | **Transactional** app email only | Already paying (other site) | Use for permission-based app mail (invite-accepted, invoices, receipts, notifications) on its own authenticated Shorthanders sending domain. **Do NOT send the cold CSR campaign here – against AUP.** Postmark is the fallback only if transactional deliverability still flakes. |
 | **CSR outreach tool** | Cold invite campaign | Not set up | A Workspace **mail-merge tool (GMass / YAMM / Mailmeteor)** sending from a **dedicated outreach identity** – ideally an `outreach.`/`go.` subdomain (secondary domain in Workspace, no extra seat; its own SPF/DKIM/DMARC), warmed + dripped. The tool manages email **unsubscribes**. Not Resend/Postmark (AUP); not HubSpot (overkill). |
-| **GitHub** | Source of record | `pazonada/dewey-sholes` (private) | Keep. **Reporter PII is in git history** – scrub with filter-repo/BFG before ever going public. |
-| **Vercel** | Hosting | `dsmvp.vercel.app` = MVP (`mvp/`); root = v1 (`dewey-sholes.vercel.app`) | Keep the two split. **Set a spend limit.** `.vercelignore` excludes `api/` + `package.json` for build cost – remove those two when the real backend is wired. |
+| **GitHub** | Source of record | `pazonada/shorthanders` (private; renamed from dewey-sholes) | Keep. **Reporter PII is in git history** – scrub with filter-repo/BFG before ever going public. |
+| **Vercel** | Hosting | `shorthanders.vercel.app` = MVP (`mvp/`); root = v1 (old `dewey-sholes.vercel.app`) | Keep the two split. **Set a spend limit.** `.vercelignore` excludes `api/` + `package.json` for build cost – remove those two when the real backend is wired. |
 | **Supabase** | Auth + database + usage events | Not built (all faked today) | Stand up when building the backend: auth, tables (reporters, profiles, firms, invoices, messages), and the events log that feeds recommendations. Free tier at launch. |
-| **Stripe (+ Connect)** | Payments, payouts, subscriptions | Faked (stubs fall back to demo) | **Decide the payments entity BEFORE wiring real Connect** (see sequencing). Then: Express/Connect onboarding, 2%/5% application fee, card/ACH, subscriptions, webhooks. Set the business name/descriptor to Dewey Sholes. |
-| **Trademark** | "Dewey Sholes" mark | Pending, Serial No. 99703235 | Keep pursuing under the current name. If the brand ever changes, abandon this and file for the new name. |
+| **Stripe (+ Connect)** | Payments, payouts, subscriptions | Faked (stubs fall back to demo) | **Decide the payments entity BEFORE wiring real Connect** (see sequencing). Then: Express/Connect onboarding, 2%/5% application fee, card/ACH, subscriptions, webhooks. Set the business name/descriptor to Shorthanders (via the filed DBA). |
+| **Trademark** | "Shorthanders" mark | Not filed — **deferred to launch**; old "Dewey Sholes" application (Serial 99703235) to be abandoned (sunk) | Name cleared via TESS. File the Shorthanders mark when committed to launch + revenue; use ™ (not ®) until it issues. |
 
 ## Cost & financial sense-check
 
@@ -30,13 +30,13 @@ base scales with revenue, not ahead of it.
 | Account / service | Cost | You pay… | Notes |
 |---|---|---|---|
 | Studio Crux, LLC | ~$75/yr (NJ annual report) | Now (existing) | Formation already done. |
-| DBA / alternate name | **$50 one-time** | When you brand as Dewey Sholes | Free to keep; renew in 5 yrs. |
+| DBA / alternate name | **$50 one-time** | Paid (filed as Shorthanders) | Free to keep; renew in 5 yrs. |
 | Domain (Gandi) | ~$20/yr | Now | ~$2/mo amortized. |
 | Google Workspace | ~$7/seat/mo → **~$14/mo** (2 seats) | Now | Could run 1 seat (~$7) if you drop the separate super-admin; `hello@`/`support@` Groups are free. |
 | GitHub | **$0** | – | Private repos free. |
 | Vercel | **Shared** – already on Pro (~$20/mo, sometimes more) | Now, across projects | DS is another project on your existing Pro plan – **no new base fee, just incremental usage.** "Sometimes more" = usage overage → hold it down with lean builds + batched pushes + the `.vercelignore`. |
 | Resend | **$0** free tier, or ~$20/mo | Marginal (shared w/ other site) | **Transactional only.** Free tier ~3k emails/mo may cover launch. Claude Code plugin available. |
-| Trademark | ~$250–350 one-time | Already filed | Sunk (Serial 99703235). |
+| Trademark | ~$250–350 one-time | Deferred to launch | Old Dewey Sholes filing (Serial 99703235) is sunk; the Shorthanders mark is a fresh future filing. |
 | Supabase | **Shared/marginal** – you already pay it (Disclosure Watch + iPhone app) | Now | Adding DS likely adds incremental compute, **not a fresh $25 base** – verify against your org billing. Keep DS as its **own project** (ideally its own org) so its data stays separable + transferable for a future spin-out/sale. |
 | Stripe (+ Connect) | **$0** base; ~$2/mo per *active* Connect account | Only when money moves | Processing fees are the reporter's cost, passed through. Offset by revenue. |
 | Mail-merge tool (outreach) | **$0–30/mo** | Campaign months only | YAMM ~$50/yr (cheapest, occasional) · GMass ~$30/mo (best, pausable) · Mailmeteor ~$10–25/mo. |
@@ -62,7 +62,7 @@ already sunk in your Pro plan, so it'd only shave DS's marginal usage, not a bas
 
 ## Two guiding decisions
 
-- **Everything stays under Studio Crux, LLC for now**, branded as Dewey Sholes via the DBA. Your
+- **Everything stays under Studio Crux, LLC for now**, branded as Shorthanders via the DBA. Your
   other products and your consulting also stay under Studio Crux – one EIN, one bank relationship,
   one tax return. The only cost of sharing one entity is shared liability, which is minimal while
   everything is pre-revenue and payments aren't live.
@@ -74,14 +74,14 @@ already sunk in your Pro plan, so it'd only shave DS's marginal usage, not a bas
 
 ## Sequencing / triggers (what changes the answers above)
 
-1. **Rosie / name:** get her signed (or, if she goes quiet or over-asks, the internal rename
-   fallback in `_private/`) **before** cementing "Dewey" into public records (DBA, trademark, a
-   future entity).
+1. **Rosie / name:** RESOLVED — renamed to **Shorthanders** (Rosie went quiet past the Aug 15, 2026
+   deadline; the internal rename was executed). DBA filed under the new name; no "Dewey" cemented in
+   public records. The old Dewey Sholes TM application is being abandoned.
 2. **Before Stripe go-live:** lock the payments entity. Standing up Connect under Studio Crux is a
    perfectly valid choice and sidesteps the connected-account migration entirely. What you want to
    avoid is onboarding real reporters/subscriptions and *then* moving to a different entity – that's
    a Stripe-assisted migration, and it gets harder with every user.
-3. **A separate Dewey Sholes, LLC** becomes worth it only on: real money + PII at scale (liability
+3. **A separate Shorthanders, LLC** becomes worth it only on: real money + PII at scale (liability
    ring-fencing), raising outside money (→ Delaware C-Corp, not just an LLC), or a sale conversation.
    None of these are "is the LLC making revenue."
 

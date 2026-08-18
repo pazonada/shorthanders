@@ -154,11 +154,11 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 
 ---
 
-### Section 4 – What you think of Dewey Sholes (6 questions)
+### Section 4 – What you think of Shorthanders (6 questions)
 
 **Read this first, then answer the questions below.**
 
-> Dewey Sholes is a new website that lets California attorneys hire court reporters directly for live court hearings. (We can also handle audio transcription in the rare cases where no reporter was on the record and the court approves releasing the audio.)
+> Shorthanders is a new website that lets California attorneys hire court reporters directly for live court hearings. (We can also handle audio transcription in the rare cases where no reporter was on the record and the court approves releasing the audio.)
 >
 > Here's how it works for you, the reporter:
 > - You keep 100% of your rate. No agency cut. No platform commission on your earnings.
@@ -213,7 +213,7 @@ These absorb the concept-validation parts of the prior CSR interview guide. We c
 - Daily or weekly digest of available work
 - Other (please describe)
 
-> **Note on text messages:** Dewey Sholes is push + email only. We don't send SMS – it adds carrier fees, paperwork, and phone-number requirements without making the notification any faster than push. If your gut answer was "text me," we'd love to hear why in Q16 below.
+> **Note on text messages:** Shorthanders is push + email only. We don't send SMS – it adds carrier fees, paperwork, and phone-number requirements without making the notification any faster than push. If your gut answer was "text me," we'd love to hear why in Q16 below.
 
 **Q15a.** *(New, 2026-05-24)* If a firm you've worked with before favorites you, we send a louder notification (push + email both on by default) when they post a new job. Other firms' jobs send the regular alert. How does that sound?
 - Great – I want to make sure I don't miss jobs from firms I have a relationship with
@@ -264,7 +264,7 @@ The old Section 5 (band-positioning questions) was retired 2026-05-24 when the r
 
 ### Section 6 – Would you sign up? (5 questions)
 
-**Read this first.** Dewey Sholes charges reporters a flat $99 per year for a listing. There's no agency cut on your earnings – you keep 100% of what you charge per job. The $99/year is the only fee you'd pay us.
+**Read this first.** Shorthanders charges reporters a flat $99 per year for a listing. There's no agency cut on your earnings – you keep 100% of what you charge per job. The $99/year is the only fee you'd pay us.
 
 **Q19.** Would you sign up at $99/year?
 - Yes

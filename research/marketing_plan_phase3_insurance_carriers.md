@@ -33,7 +33,7 @@ This is the highest-leverage sales channel available, but it requires:
 
 ## The pitch to carriers
 
-**Core message:** "Your panel firms are overpaying for court reporting through agencies. Dewey Sholes connects them directly with licensed reporters at statutory rates – transparent pricing, faster delivery, and cost data you can actually audit."
+**Core message:** "Your panel firms are overpaying for court reporting through agencies. Shorthanders connects them directly with licensed reporters at statutory rates – transparent pricing, faster delivery, and cost data you can actually audit."
 
 **What carriers care about:**
 - Reducing ALAE (allocated loss adjustment expenses) – court reporting is a line item they audit
@@ -43,7 +43,7 @@ This is the highest-leverage sales channel available, but it requires:
 - Compliance: all reporters CSR-verified, license checked quarterly
 
 **What we'd offer carriers:**
-- Anonymized cost-savings data from our launch cohort (e.g., "firms using Dewey Sholes saved X% on transcript costs vs. agency rates")
+- Anonymized cost-savings data from our launch cohort (e.g., "firms using Shorthanders saved X% on transcript costs vs. agency rates")
 - Carrier-specific reporting dashboard (stretch goal): spend by panel firm, by case type, vs. industry benchmarks
 - A direct line to the founders to surface carrier-specific reporting or workflow needs that aren't in V1
 - No integration required – panel firms just use the platform at the standard 12% flat fee

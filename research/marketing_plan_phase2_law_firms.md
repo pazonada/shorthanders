@@ -121,7 +121,7 @@ Once Phase 1 has hit the **100-CSR floor** (the prerequisite condition before an
 Cold email goes out to paralegals/legal-assistants at every firm on the broader Phase 2 research list.
 
 **Priority order within the email send:**
-1. **Firms named by signed-up CSRs** as recurring clients. These get personalized copy: *"A court reporter you've previously hired is now using Dewey Sholes to streamline transcription delivery..."* – strongest social proof we have.
+1. **Firms named by signed-up CSRs** as recurring clients. These get personalized copy: *"A court reporter you've previously hired is now using Shorthanders to streamline transcription delivery..."* – strongest social proof we have.
 2. **Bay Area firms** in target practice areas (litigation, family law, PI, probate).
 3. **Other priority CA firms** (LA, San Diego, OC, Sacramento).
 
@@ -131,7 +131,7 @@ Cold email goes out to paralegals/legal-assistants at every firm on the broader 
 
 A subset of the email-outreach list – **max 100 firms** – gets a physical handwritten postcard. The postcard:
 
-- Front: a small custom comic illustration explaining how Dewey Sholes works and the value prop to a law firm. Light, friendly, something a paralegal might pin to their bulletin board.
+- Front: a small custom comic illustration explaining how Shorthanders works and the value prop to a law firm. Light, friendly, something a paralegal might pin to their bulletin board.
 - Back: a short handwritten note (Aud or Rosie's actual handwriting) addressed to a specific paralegal/assistant by name, with the founding-firm pitch and a custom URL/QR.
 - UTM: `?source=postcard&firm=<firm-slug>`.
 
@@ -160,7 +160,7 @@ A subset of Tier 1 – **max 25 firms** – gets the postcard *plus* a box of ch
 
 ### CSR-cited firms: signup-triggered firm tracker population
 
-The strongest personalization angle in Phase 2 is **"a court reporter you've worked with is now on Dewey Sholes."** That requires data flowing in the other direction from the halo effect – CSRs supply the firm names, and the firm tracker picks up new entries automatically.
+The strongest personalization angle in Phase 2 is **"a court reporter you've worked with is now on Shorthanders."** That requires data flowing in the other direction from the halo effect – CSRs supply the firm names, and the firm tracker picks up new entries automatically.
 
 Trigger flow:
 
@@ -176,7 +176,7 @@ This is engineering work – the platform has to write to the firm tracker on si
 
 ### Halo effect: CSR signups triggered by firm signups
 
-When a firm signs up and names a specific CSR as a favorite, the platform sends an **automated email** to that CSR: *"A firm you've previously worked with – [Firm name] – just signed up to Dewey Sholes. Sign up to be on their favorites list and get more jobs from them in the future."*
+When a firm signs up and names a specific CSR as a favorite, the platform sends an **automated email** to that CSR: *"A firm you've previously worked with – [Firm name] – just signed up to Shorthanders. Sign up to be on their favorites list and get more jobs from them in the future."*
 
 This is a *product feature* (auto-email triggered by favorite-tagging on a new firm signup) AND a marketing channel (halo effect from firm to CSR).
 

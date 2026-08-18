@@ -1,4 +1,4 @@
-# QA kit — Dewey Sholes
+# QA kit — Shorthanders
 
 A **layered gate**: no single tool covers launch confidence, so each layer catches what the others
 miss. Lives at repo root, outside the deployed `mvp/` path — nothing here ships.

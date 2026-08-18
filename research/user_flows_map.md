@@ -1,4 +1,4 @@
-# Dewey Sholes – User flows map
+# Shorthanders – User flows map
 
 **Last updated:** 2026-05-14
 **Status:** Prototype audit – what exists vs. what's needed for real build

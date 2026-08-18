@@ -1,6 +1,6 @@
 # State-by-state CSR public-data feasibility map
 
-A pre-load feasibility map for expanding Dewey Sholes' day-one directory completeness beyond
+A pre-load feasibility map for expanding Shorthanders' day-one directory completeness beyond
 California. Companion to `mvp/docs/state_expansion_checklist.md` (the code/copy checklist for
 adding a state) – this doc answers the question that checklist flags but doesn't fully resolve:
 **which states can we actually pre-load, and in which of those can the CA-style cold-email claim

@@ -1,6 +1,6 @@
 # Feedback session guide – a demand-side lawyer
 
-For an informal feedback chat with a practicing lawyer about Dewey Sholes' features and flows.
+For an informal feedback chat with a practicing lawyer about Shorthanders' features and flows.
 First use: the Chicago in-house counsel (nonprofit) who asked to talk. Created 2026-07-21.
 
 ## What we want out of this
@@ -26,7 +26,7 @@ on the *experience*.
 > to like it – I need you to tell me where it's confusing, wrong for how you work, or missing
 > something. Think out loud as you go; the 'ums' and hesitations are the useful part."
 
-Logistics (adjust to her time): screen-share the live site (dsmvp.vercel.app), let *her* drive the
+Logistics (adjust to her time): screen-share the live site (shorthanders.vercel.app), let *her* drive the
 mouse if possible, ~30–45 min. Ask permission to take notes or record. Don't demo it *to* her –
 give her a task and watch.
 

@@ -10,7 +10,7 @@
 
 CSRs operate under a regulated licensing regime (BPC 8016-8019, 16 CCR 2403). Their regulated duties include maintaining stenographic notes, certifying transcripts, and distributing copies. Any entity that edges into these functions risks being seen as engaging in the unlicensed practice of shorthand reporting (misdemeanor under BPC 8019) or triggering firm registration requirements under BPC 8051.
 
-Dewey Sholes must draw a clear line: **we are a technology marketplace that facilitates connections and transfers files. We are not a court reporting service, a custodian of the record, or a distributor of transcripts.**
+Shorthanders must draw a clear line: **we are a technology marketplace that facilitates connections and transfers files. We are not a court reporting service, a custodian of the record, or a distributor of transcripts.**
 
 ---
 
@@ -74,7 +74,7 @@ While the platform does not sell or fulfill transcript copies, it does facilitat
 
 ### How it works
 
-1. A party to an existing case (or their counsel) searches Dewey Sholes by case number or case name
+1. A party to an existing case (or their counsel) searches Shorthanders by case number or case name
 2. The platform returns minimal information: case name, case number, court, hearing date, and the original CSR's name and license number
 3. The requester sends a copy request to the CSR via the platform, identifying themselves and their role in the case
 4. The CSR receives the request and decides whether to fulfill it
@@ -112,7 +112,7 @@ The requester must already know the case number to find it, which means they're 
 
 ### When the original CSR is unreachable
 
-If a CSR is no longer active on Dewey Sholes (retired, deceased, or paused account), the platform displays a notice directing the requester to:
+If a CSR is no longer active on Shorthanders (retired, deceased, or paused account), the platform displays a notice directing the requester to:
 - Contact the California Court Reporters Board for guidance
 - Contact the court clerk if the proceeding was on the record
 
@@ -154,7 +154,7 @@ This is informational only. We do not enforce or monitor compliance — that is 
 
 BPC 8051 requires registration for entities that engage in conduct under BPC 8050(b): employing, independently contracting with, or recruiting CSRs to report or transcribe deposition testimony.
 
-Dewey Sholes is a **marketplace** where:
+Shorthanders is a **marketplace** where:
 - The contract for reporting services is between the **attorney and the CSR directly**
 - The platform does not employ CSRs or contract with them to perform reporting
 - The platform does not assign, dispatch, or direct CSRs to jobs — CSRs choose which jobs to accept

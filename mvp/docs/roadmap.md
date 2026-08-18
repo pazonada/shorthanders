@@ -75,7 +75,7 @@ without an account, a plain browser bookmark is the natural fallback.
 ## Reporter business card generator – ROADMAP
 
 **What it is:** a link on a reporter's profile/dashboard that generates a printable,
-Dewey-Sholes-branded business card pulled from their profile, with a QR code / short link
+Shorthanders-branded business card pulled from their profile, with a QR code / short link
 back to their profile. The reporter prints it and hands it to attorneys at hearings, so the
 attorney can find them later to order the transcript.
 
@@ -83,12 +83,12 @@ attorney can find them later to order the transcript.
 - **Free, professional marketing for the reporter** – a real reason to claim and keep their
   profile current.
 - **Brings firms in at the exact moment of need** – an attorney at a hearing who needs a
-  transcript gets a card, scans it, and lands on Dewey Sholes. That's a warm way to get firms
+  transcript gets a card, scans it, and lands on Shorthanders. That's a warm way to get firms
   signing up, driven by the reporters themselves.
 
 **How it would work:**
 1. Reporter clicks "Create my business card" (dashboard or profile).
-2. We generate a card in a DS-branded template using **only their real profile info** – name,
+2. We generate a card in a Shorthanders-branded template using **only their real profile info** – name,
    "Certified Shorthand Reporter, CSR #___," method, city/county, maybe top specialties and
    coverage – plus a **QR code + short link** to their public profile.
 3. Output: a print-ready PDF (standard card size), **plus a button to order physical cards
@@ -96,7 +96,7 @@ attorney can find them later to order the transcript.
    reporter clicks, the design is handed off, they order a batch and it ships to them. Later,
    maybe a digital/shareable version too (a mobile card page or a vCard).
 4. The reporter hands the cards out at hearings.
-5. An attorney scans/opens it → the reporter's Dewey Sholes profile → they can reach out. To
+5. An attorney scans/opens it → the reporter's Shorthanders profile → they can reach out. To
    message or hire through the platform they'd sign up; if the reporter lists direct contact,
    the attorney can also just email them. (This lines up with the access model: basic info is
    free; messaging sits behind sign-up/subscription.)
@@ -107,13 +107,13 @@ attorney can find them later to order the transcript.
 - **Direct contact vs. drive-to-platform** – does the card push everything through the profile
   (to encourage sign-ups), or show the reporter's direct email too? Likely the profile link is
   primary, and the profile itself offers "email directly" (if the reporter opts in) or "message
-  on Dewey Sholes (sign up)."
+  on Shorthanders (sign up)."
 - **Print:** two paths – download a print-ready PDF, and/or a button that hands the design to
   a print-on-demand service (Vistaprint / Moo / GotPrint / Amazon) to order physical cards.
   Which vendor(s) is a to-do; each has a slightly different hand-off (some take an uploaded
   print-ready file, some have a design API). A vendor **affiliate/referral link** could earn
-  Dewey Sholes a small cut when a reporter orders – a tiny bonus revenue line, worth noting.
-- **Design:** needs a DS-branded card template (logo + shorthand motif). Keep it clean and
+  Shorthanders a small cut when a reporter orders – a tiny bonus revenue line, worth noting.
+- **Design:** needs a Shorthanders-branded card template (logo + shorthand motif). Keep it clean and
   professional – attorneys are the audience.
 - **Never invent** – every field comes from the reporter's real profile; blank if they haven't
   filled it in.
@@ -237,7 +237,7 @@ gated to a paid tier; how it coexists with the reporter-invites flywheel.
 
 ## DS-assigned matching (premium, opt-in tier) – ROADMAP / RESEARCH
 
-**What it is:** instead of a firm browsing (or posting a job and picking), **Dewey Sholes reviews
+**What it is:** instead of a firm browsing (or posting a job and picking), **Shorthanders reviews
 the job and assigns a specific reporter** – a done-for-you match. Likely a **new paid membership
 tier**: firms (and possibly reporters) opt in and pay for matching.
 
@@ -247,7 +247,7 @@ version of the product, and a natural premium upsell above the $49 discovery sub
 **The hard part (flag):** this is close to the **concierge / booking-agent role we deliberately
 said NO to** ([[project_no_concierge_depos]] – "scheduling complexity is the blocker, not legal
 risk"). So the research is specifically: how to make assignment **seamless/automated** enough that
-it doesn't drag Dewey Sholes into manual scheduling and coordination on every job. Relates to the
+it doesn't drag Shorthanders into manual scheduling and coordination on every job. Relates to the
 retired **auto-match / cascade** model (kept as a deferred fallback in the matching policy) and to
 **featured / promoted listings** (parking lot).
 

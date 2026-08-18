@@ -27,15 +27,15 @@
 
 At law firms, the **partner says "get me the transcript."** The **legal assistant or paralegal decides which platform to use**. They're the operational decision-maker, the actual user, and the de facto buyer.
 
-If we treat them as a buyer – including rewarding them for using us – they become evangelists for Dewey Sholes inside their firm and across their professional network. That's how we win the demand side without spending on paid ads.
+If we treat them as a buyer – including rewarding them for using us – they become evangelists for Shorthanders inside their firm and across their professional network. That's how we win the demand side without spending on paid ads.
 
-This program rewards the legal assistant personally for jobs they book through Dewey Sholes. The rewards go to the *individual*, not the firm.
+This program rewards the legal assistant personally for jobs they book through Shorthanders. The rewards go to the *individual*, not the firm.
 
 ---
 
 ## Points-based reward economy
 
-Legal assistants earn **10 points per completed order** through Dewey Sholes. They redeem points for rewards from a catalog. Points accumulate continuously – they don't expire during the launch window – and users choose what to redeem for and when.
+Legal assistants earn **10 points per completed order** through Shorthanders. They redeem points for rewards from a catalog. Points accumulate continuously – they don't expire during the launch window – and users choose what to redeem for and when.
 
 **Why points instead of fixed tiers:** different people want different things. Some legal assistants will cash out a Starbucks card every month for the dopamine hit; others will save up for the Stanley. The flexibility is a feature, not a bug – it lets people self-select what motivates them.
 
@@ -68,7 +68,7 @@ Legal assistants earn **10 points per completed order** through Dewey Sholes. Th
 The legal assistant's dashboard shows:
 
 ```
-🎯 Your Dewey Sholes points
+🎯 Your Shorthanders points
 You have 40 points (4 orders earned)
 
 What you can redeem now:
@@ -133,11 +133,11 @@ If 100 legal assistants each redeem a Stanley during the launch window, that's $
 
 ### First time they hit 30 points (eligible for first redemption)
 
-> **Subject:** You can redeem your first Dewey Sholes reward
+> **Subject:** You can redeem your first Shorthanders reward
 >
 > Hi [name],
 >
-> You've earned 30 points by booking 3 transcripts through Dewey Sholes – thank you for being one of our early users.
+> You've earned 30 points by booking 3 transcripts through Shorthanders – thank you for being one of our early users.
 >
 > You can redeem 30 points for a $10 Starbucks gift card right now, or save up:
 > - **30 points** → $10 Starbucks gift card
@@ -149,15 +149,15 @@ If 100 legal assistants each redeem a Stanley during the launch window, that's $
 > Points stay on your account until you redeem them. (Rewards are part of our launch-window program – only available to legal assistants who sign up during the first 6 months.)
 >
 > – Aud
-> Founder, Dewey Sholes
+> Founder, Shorthanders
 
 ### When they redeem the Stanley (100 points)
 
-> **Subject:** Your Dewey Sholes Stanley is on its way
+> **Subject:** Your Shorthanders Stanley is on its way
 >
 > Hi [name],
 >
-> 10 transcripts! You're officially a Dewey Sholes power user. Your real Stanley tumbler is on its way.
+> 10 transcripts! You're officially a Shorthanders power user. Your real Stanley tumbler is on its way.
 >
 > Reply to this email with the address you'd like it shipped to. (Use your office address if that works – we'll address it to you.)
 >
@@ -175,7 +175,7 @@ Built into the system:
 2. **Minimum order value** – $50 floor prevents gaming with tiny orders
 3. **Refunds revoke points** – if an order is refunded, the points it earned are removed (even if already redeemed; we don't claw back delivered rewards but we do log the deficit)
 4. **Anti-fraud review on Stanley redemptions** – human review before shipping the $60 reward (look for anomalous patterns like 25 orders all from the same firm in 2 days)
-5. **Single-account enforcement** – one Dewey Sholes account per legal assistant (verified via email + firm)
+5. **Single-account enforcement** – one Shorthanders account per legal assistant (verified via email + firm)
 6. **No transferable points** – points belong to the individual account that earned them; can't be gifted, sold, or pooled
 
 ---

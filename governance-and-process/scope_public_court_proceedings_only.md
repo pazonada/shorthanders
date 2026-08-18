@@ -8,7 +8,7 @@
 
 ## The scope
 
-**Dewey Sholes serves public court proceedings only.** This includes:
+**Shorthanders serves public court proceedings only.** This includes:
 
 - Live attendance at courtroom hearings (motions, family law calendars, civil hearings, criminal hearings, probate, etc.)
 - Post-hearing audio transcription of court audio (where the court permits recording and the audio is available)
@@ -95,7 +95,7 @@ Some court hearings are sensitive (custody disputes, criminal cases involving mi
 - No custody of the certified record itself (CSR retains)
 - No platform processing of content beyond file transfer
 
-This is sufficient for public court records. If a sealed-record scenario arises, the attorney should not order through Dewey Sholes – they should work directly with the courtroom CSR per the court's sealed-record handling rules.
+This is sufficient for public court records. If a sealed-record scenario arises, the attorney should not order through Shorthanders – they should work directly with the courtroom CSR per the court's sealed-record handling rules.
 
 ### Hearings transcribed from court-supplied audio
 

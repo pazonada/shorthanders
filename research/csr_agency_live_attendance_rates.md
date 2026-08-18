@@ -1,6 +1,6 @@
 # California CSR Live-Attendance Rate Survey
 
-**Purpose:** Inform Dewey Sholes pricing for live court-attendance (per-diem / appearance-fee) bookings. Focus is **court hearings**, not depositions. Depositions are a separate, generally higher-priced private market and are flagged but excluded from the hearing-only averages.
+**Purpose:** Inform Shorthanders pricing for live court-attendance (per-diem / appearance-fee) bookings. Focus is **court hearings**, not depositions. Depositions are a separate, generally higher-priced private market and are flagged but excluded from the hearing-only averages.
 
 **Observation date:** 2026-05-12. All amounts are USD.
 
@@ -231,7 +231,7 @@ If DS full-day lands at $1,500, **trial-day at 1.3-1.5× full-day = $1,950-$2,25
 - **OAH contract rates** are real but live inside a "Price Book" document that the DGS contract page links to rather than displaying. The annual rate is current to the 2025-04-01 to 2026-03-31 cycle.
 - **Distinction between hearing and deposition pricing was conflated** in many secondary sources (legal-blog summaries). I have tried to keep them separate, but if a published rate did not clearly state "court appearance" it was excluded from the hearing-only count.
 - **Multi-day trial rates were not separately published** by any surveyed agency. The standard practice (per Denise Paddock's site) is that full-day per-diem applies, with possible expedited-transcript premiums.
-- **No agency published a discount tier for repeat or marketplace bookings**, which is the relevant pricing comp for Dewey Sholes' 12% buyer-fee model.
+- **No agency published a discount tier for repeat or marketplace bookings**, which is the relevant pricing comp for Shorthanders' 12% buyer-fee model.
 
 ---
 

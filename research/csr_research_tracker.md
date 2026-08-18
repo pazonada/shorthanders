@@ -106,7 +106,7 @@ Identifying who's court-employed is the highest-value enrichment. Suggested appr
 
 **Tooling decision (locked, 2026-05-09):**
 
-The live tracker lives in **Google Sheets**, not in the Dewey Sholes platform backend. Reasoning:
+The live tracker lives in **Google Sheets**, not in the Shorthanders platform backend. Reasoning:
 
 - Building admin CRM features into a platform that doesn't yet exist would push launch back by weeks for tooling that's operational, not customer-facing.
 - Sheets handles 4,700 rows without breaking a sweat.

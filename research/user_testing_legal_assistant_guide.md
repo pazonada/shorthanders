@@ -25,7 +25,7 @@ This is **discovery and validation**, not usability testing of a polished produc
 3. **What does the assistant's workflow actually look like** – order frequency, where the order info comes from, how it gets billed back to the case?
 4. **What signals do they use to evaluate an unfamiliar CSR?** Specifically: rating, on-time rate, recent cases, courts covered, prior firm relationship. Which actually matter at the moment of *selecting an applicant*?
 5. **What kills trust in a new transcript marketplace?** Pricing transparency, certification authenticity, dispute handling, data security.
-6. **Will firms actually use Dewey Sholes** if it works as designed, given their existing CSR relationships? What would make them switch?
+6. **Will firms actually use Shorthanders** if it works as designed, given their existing CSR relationships? What would make them switch?
 7. **Is pre-selection messaging actually useful?** When would they message an applicant before picking? What would they ask?
 8. **Is the cost-splitting feature a real win?** Or a feature that sounds good but doesn't get used?
 9. **Does the legal-assistant incentive program** (points-for-redemption catalog) actually motivate them?
@@ -93,7 +93,7 @@ This section is new (2026-05-24). We've changed the matching model twice in a mo
 - **Pre-selection messaging.** If they say they'd never use it ("I don't have time"), it's worth questioning whether messaging deserves v1 build cost or should defer.
 - **What's missing.** Anything they expected to hear that we didn't describe? That's a hint about what their mental model is.
 
-### Reactions to Dewey Sholes (15-18 min)
+### Reactions to Shorthanders (15-18 min)
 
 Walk through prototype on screen-share. Now they've validated (or pushed back on) the model in plain language; the prototype walkthrough lets them see whether the actual UX delivers on the description.
 
@@ -118,12 +118,12 @@ Walk through prototype on screen-share. Now they've validated (or pushed back on
   - **Open question L:** Would you want to see recent cases this CSR has worked on? Would that change the booking decision?
   - **Open question M:** Would you want to see a count of jobs they've completed on the platform? Would a low number turn you off?
   - The profile has two CTAs: "Book this reporter" (for an upcoming hearing) and "Request a transcript copy" (for a hearing already done). Does that distinction make sense?
-- Show the business-card scenario. *Frame:* "Imagine the CSR who reported your firm's hearing hands the attorney this card on the way out. The QR code goes directly to that CSR's Dewey Sholes profile, where you can request a transcript with one click."
+- Show the business-card scenario. *Frame:* "Imagine the CSR who reported your firm's hearing hands the attorney this card on the way out. The QR code goes directly to that CSR's Shorthanders profile, where you can request a transcript with one click."
   - **Open question N:** Would the attorney actually keep this card? Would it land on your desk? Would you scan it?
   - Would you prefer the card link to go to the CSR's profile, or to a homepage where you search?
   - Would your firm take this seriously, or would it feel like marketing spam?
 - Show the legal-assistant incentive program (`research/legal_assistant_incentive_program.md`).
-  - Would the points catalog motivate you to choose Dewey Sholes for an order?
+  - Would the points catalog motivate you to choose Shorthanders for an order?
   - Which reward in the catalog is most appealing? Which feels off?
   - Do you have firm policies that would prevent you from accepting personal rewards?
 
@@ -143,7 +143,7 @@ Walk through prototype on screen-share. Now they've validated (or pushed back on
 
 ### Hypothetical decisions (5-7 min)
 
-- If you needed a transcript tomorrow, would you try Dewey Sholes? What would make you not try it?
+- If you needed a transcript tomorrow, would you try Shorthanders? What would make you not try it?
 - How would your firm's procurement / vendor-onboarding process treat a new platform like this? Are there blockers (W-9, MSA, COI, security review)?
 - Firms that sign up during our 6-month launch window are tagged as "founding firms" – founder-led onboarding, direct access to the team, first dibs on new features. Pricing is the same flat 12% for everyone. Do those founding-firm perks matter to your firm, or would you sign up either way?
 
@@ -197,19 +197,19 @@ Some firm-side questions are worth asking eventually but don't belong in this fi
 
 ### Courier / court-runner cost validation (deferred from 2026-05-09)
 
-**Hypothesis to validate:** Per Rosie, firms currently pay ~$100 to dispatch a "court runner" to physically pick up a CD or transcript from a courthouse. The post-MVP growth idea is for Dewey Sholes to develop bulk-pickup relationships and offer the service at a lower price-point, especially for non-rush jobs (see `governance-and-process/post_mvp_growth_strategy.md`).
+**Hypothesis to validate:** Per Rosie, firms currently pay ~$100 to dispatch a "court runner" to physically pick up a CD or transcript from a courthouse. The post-MVP growth idea is for Shorthanders to develop bulk-pickup relationships and offer the service at a lower price-point, especially for non-rush jobs (see `governance-and-process/post_mvp_growth_strategy.md`).
 
 **Why it's round 2, not round 1:**
 - The MVP doesn't include courier handling. Asking about it now risks the firm thinking we're already pitching it, which confuses the round-1 conversation.
 - The validation only matters if we hit marketplace fit on the core transcript flow. If we don't, the courier idea is moot anyway.
-- Round-2 conversations can be grounded in the firm's actual experience with Dewey Sholes rather than speculation about a service they haven't used.
+- Round-2 conversations can be grounded in the firm's actual experience with Shorthanders rather than speculation about a service they haven't used.
 
 **Questions to ask in round 2:**
 - How often does your firm dispatch a courier to a courthouse (or anywhere) to pick up a CD, paper transcript, or other deliverable?
 - Roughly how much does it cost per dispatch? Is that a flat rate or hourly?
 - Who handles the logistics – you, an admin, an outside service?
 - Is this a recurring pain point or a once-in-a-while annoyance?
-- If Dewey Sholes offered bulk-pickup as an add-on bundled into the order, what price would feel like a meaningful win? Probe specific price points (e.g., "if we charged $40 for non-rush pickup, would you use it? $60? $80?").
+- If Shorthanders offered bulk-pickup as an add-on bundled into the order, what price would feel like a meaningful win? Probe specific price points (e.g., "if we charged $40 for non-rush pickup, would you use it? $60? $80?").
 - For rush jobs specifically, would you still want a courier option even at parity with current pricing, just for the convenience of one-click logistics?
 - Are there cases where the current CD-pickup model is a hard blocker – e.g., a courthouse that hasn't moved to digital delivery – vs. cases where you'd just take digital if available?
 

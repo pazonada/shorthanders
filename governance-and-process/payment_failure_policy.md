@@ -8,7 +8,7 @@
 
 ## How money flows through the platform
 
-Dewey Sholes uses Stripe Connect as the payment layer. Money never sits in Studio Crux's business bank account – Stripe holds funds and routes them.
+Shorthanders uses Stripe Connect as the payment layer. Money never sits in Studio Crux's business bank account – Stripe holds funds and routes them.
 
 ```
 Attorney pays $215 via Stripe

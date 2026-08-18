@@ -1,4 +1,4 @@
-# Rename runbook — "Dewey Sholes" → [NEW NAME]
+# Rename runbook — "Dewey Sholes" → "Shorthanders"
 
 **Why:** renaming off "Dewey Sholes" to remove the name-based risk from the Rosie situation
 (she's non-responsive; "Dewey" is her late mother's surname). See the rosie-advisor memory +

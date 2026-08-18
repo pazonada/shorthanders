@@ -21,7 +21,7 @@ Not a marketing list – a single send, from a real person, that people can repl
 ```
 {{greeting}},
 
-I'm Aud, and I'm building Dewey Sholes – a more robust directory of independent California court reporters. The idea is to help law firms find and hire you directly, so you keep your full rate instead of handing a cut to an agency, and run your practice on your own terms as an independent professional.
+I'm Aud, and I'm building Shorthanders – a more robust directory of independent California court reporters. The idea is to help law firms find and hire you directly, so you keep your full rate instead of handing a cut to an agency, and run your practice on your own terms as an independent professional.
 
 Your public license info is already listed (every active CSR is in the state's database), and you can claim your profile for free to add your specialties, coverage, languages, and rates so firms can find and reach you. Claiming is free, always. If it's ever useful, you can also send invoices, collect card or ACH payments, and pull tax-ready records right from your profile –  those are all optional features as part of the Pro account.
 
@@ -32,7 +32,7 @@ That's really the whole reason I'm writing; this is a one-time note, and I won't
 Thank you!
 
 Aud
-Founder, Dewey Sholes
+Founder, Shorthanders
 
 Studio Crux, LLC • 70 W 35th St. Bayonne, NJ 07002
 ```
@@ -40,12 +40,12 @@ Studio Crux, LLC • 70 W 35th St. Bayonne, NJ 07002
 ## How to send it (personal, not a blast)
 
 - **Tool:** GMass or YAMM (Yet Another Mail Merge), sending through your Google Workspace inbox
-  so it comes from a real Dewey Sholes address and replies land with you.
-- **From:** a real person's address (e.g. `aud@deweysholes.com`), not `hello@` – feels like a
+  so it comes from a real Shorthanders address and replies land with you.
+- **From:** a real person's address (e.g. `aud@shorthanders.com`), not `hello@` – feels like a
   person wrote it. Be ready for a handful of "take me down" and "thanks/suggestion" replies.
 - **Drip it:** ~a few hundred a day over ~2–3 weeks, not all at once. Sending 5,000 in one go
   trips spam filters no matter how personal the words are.
-- **Domain choice:** sending from `deweysholes.com` puts some wear on that domain's reputation
+- **Domain choice:** sending from `shorthanders.com` puts some wear on that domain's reputation
   (it also carries your real business email). This email is low-complaint by nature, so dripping
   from a real address is probably fine – but if you want to fully protect the main domain, send
   from a close-cousin domain set up just for outreach.
@@ -145,15 +145,15 @@ directory removal always implies email-suppression too.
 ## Authenticate your sending domain (SPF, DKIM, DMARC)
 The single biggest lever for staying out of spam. Do this before any real volume.
 - **Send from your own domain, not `@gmail.com`.** You can't set these records for gmail.com
-  (Google owns it). Send from `deweysholes.com` via Google Workspace – ideally bulk outreach from a
-  **subdomain** like `go.deweysholes.com`, so it doesn't wear on your main business mail.
+  (Google owns it). Send from `shorthanders.com` via Google Workspace – ideally bulk outreach from a
+  **subdomain** like `go.shorthanders.com`, so it doesn't wear on your main business mail.
 - **Three DNS records,** added at your DNS host (registrar / Cloudflare / Vercel):
   - **SPF** (one `TXT`): who may send as you – e.g. `v=spf1 include:_spf.google.com ~all`. Keep a
     single SPF record and merge an "include" for each sender (Google, HubSpot, Resend).
   - **DKIM** (`TXT`/`CNAME`): a signature proving the mail is really yours. The sending tool
     generates the exact record – you paste it in, you don't invent it. Each sender needs its own.
-  - **DMARC** (`TXT` at `_dmarc.deweysholes.com`): start in monitor mode –
-    `v=DMARC1; p=none; rua=mailto:you@deweysholes.com` – then tighten to `p=quarantine`, then
+  - **DMARC** (`TXT` at `_dmarc.shorthanders.com`): start in monitor mode –
+    `v=DMARC1; p=none; rua=mailto:you@shorthanders.com` – then tighten to `p=quarantine`, then
     `p=reject`, once the reports look clean.
 - **Verify + test:** click Verify in each sending tool, then send a test to **mail-tester.com** for
   a 0–10 score that flags anything missing (MXToolbox works too).

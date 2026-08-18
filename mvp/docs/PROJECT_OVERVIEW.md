@@ -1,4 +1,4 @@
-# Dewey Sholes – project overview (start here)
+# Shorthanders – project overview (start here)
 
 The single "current state" doc. Read this first, then follow the pointers. Last updated 2026-07-20.
 
@@ -9,7 +9,7 @@ A **reduced-scope MVP**: a searchable **directory of every licensed California c
 **reporter invoicing / getting paid**. That's it – no job matching, scheduling, escrow, rate
 bands, or cascade (all of which the abandoned "v1" full marketplace had).
 
-- **Live:** https://dsmvp.vercel.app (Vercel project root = `mvp/`).
+- **Live:** https://shorthanders.vercel.app (Vercel project root = `mvp/`).
 - **Build:** a single-file React-via-Babel app. `mvp/build.sh` concatenates `mvp/src/_*.jsx` +
   `_head.html` / `_style_block.html` / `_body_open.html` / `_tail.html` into `mvp/index.html`.
   Edit the `src/` parts, run `bash build.sh`, commit + push (auto-deploys). Hash router (`#/route`).
@@ -29,7 +29,7 @@ bands, or cascade (all of which the abandoned "v1" full marketplace had).
 - **Firms:** free to browse basic public info and to **fully view / message / pay reporters who
   invited or are connected to them**. A **monthly subscription gates *discovery*** – searching the
   directory for *new* reporters + full claimed profiles of everyone. Free firm signup. **Firms
-  never pay a Dewey Sholes fee** (avoids the surprise-fee dispute).
+  never pay a Shorthanders fee** (avoids the surprise-fee dispute).
 - **Reporters:** free to claim, list, and message. To *get paid* through the site, a **two-tier
   per-payment fee** taken from the reporter's side (invisible to the firm):
   - **Base fee (pay-per-invoice)** – ~5%, no monthly cost. For occasional reporters.
@@ -40,7 +40,7 @@ bands, or cascade (all of which the abandoned "v1" full marketplace had).
 - **Stripe's processing fee** (~2.9% card / ~0.8% ACH) is the **reporter's** cost, passed through,
   never DS's. DS's real cost ≈ **$2/mo per active Stripe Connect account**.
 - **Prices are UNSET / working numbers** (never invent – see rules). Aud floated $29 (firm sub &
-  reporter Pro) and 5%/2% fees; the site now states **"Dewey Sholes takes 2% (Pro) or 5% (Free)."**
+  reporter Pro) and 5%/2% fees; the site now states **"Shorthanders takes 2% (Pro) or 5% (Free)."**
 - Detail: `open_strategic_decisions.md` §1 · `../marketing/pro_pricing_worksheet.md` ·
   `revenue_model.xlsx` (3 tabs: Revenue model, CSR conversion, Net target).
 
@@ -89,8 +89,9 @@ payment pulls reporters onto the rails. Detail: `../marketing/growth_strategy.md
   tab; the reporter Payments tab is now just stats + recent payments.
 - **Auth:** a login modal (email/pw + reporter/firm signup links + prototype persona shortcuts).
   **All auth/data is faked** – nothing persists past refresh.
-- **Brand:** DEWEY (navy) / SHOLES (`#4361EE`) Courier-New lockup; brand blue `#4361EE`; the old
-  ochre/brown was replaced site-wide with **olive `#7A7F3F`**.
+- **Brand:** the **SHORTHANDERS** wordmark with the spiral icon set inside the first "O"
+  (dark-navy letters + blue "O" in the nav; white-letter version on the dark footer); brand blue
+  `#4361EE`; the old ochre/brown was replaced site-wide with **olive `#7A7F3F`**.
 
 ## Hard rules / constraints (do NOT violate)
 

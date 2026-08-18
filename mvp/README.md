@@ -1,4 +1,4 @@
-# Dewey Sholes — reduced-scope MVP prototype
+# Shorthanders — reduced-scope MVP prototype
 
 A second, parallel prototype that implements the narrowed MVP in [`prd-v1.rtf`](prd-v1.rtf):
 a **searchable directory of independent California court reporters** plus the
@@ -66,7 +66,7 @@ Every active CSR gets a one-click claim link:
 <base>/#/claim/<licenseNumber>
 ```
 
-e.g. `https://deweysholes-mvp.vercel.app/#/claim/11964` drops that reporter
+e.g. `https://shorthanders-mvp.vercel.app/#/claim/11964` drops that reporter
 straight onto their "Is this you?" confirmation, skipping the lookup. The
 `csr_active_directory.csv` already has a **Claim URL** column for mail merge —
 regenerate it with your real domain:
@@ -84,7 +84,7 @@ A separate Vercel project keeps this MVP on its own URL while the original
 full-vision prototype (root `index.html`) stays on its current URL. One-time
 setup in the Vercel dashboard:
 
-1. **New Project** → import the same GitHub repo (`pazonada/dewey-sholes`).
+1. **New Project** → import the same GitHub repo (`pazonada/shorthanders`).
 2. **Root Directory** → `mvp`.
 3. Framework preset: **Other**. No build command; Vercel serves `index.html`
    statically and auto-detects the `api/` folder as serverless functions.

@@ -16,10 +16,10 @@
 ### Private / privileged audio
 - Responsibility for handling attorney-client privileged audio rests with the **law firm**, not the CSR or the platform
 - The CSR is not implicated in confidentiality breaches — the firm controls what audio they share and how
-- Dewey Sholes does not need an NDA at reporter onboarding for this reason
+- Shorthanders does not need an NDA at reporter onboarding for this reason
 
 ### Platform position
-- Dewey Sholes transfers files; we do not review, edit, or retain audio beyond the retention period
+- Shorthanders transfers files; we do not review, edit, or retain audio beyond the retention period
 - No contractual confidentiality language is required for CSRs regarding attorney-client privilege
 - If a firm uploads privileged audio, that is the firm's decision and responsibility
 

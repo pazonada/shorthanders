@@ -20,7 +20,7 @@ In v1, rating is **a sort option, not an algorithmic ranking factor.** This is a
   - Attorneys can manually switch to "Highest rated," "Most experienced," or "Fastest turnaround" if they want. Those are sort options, not the default.
 - **Review Applicants screen** (Care.com-style applicant review): firms see every qualified applicant and can sort by any column (favorites first / rate / rating / completed jobs / distance). Rating is one sortable column among several.
 - **No algorithmic gate.** Rating does not influence whether a CSR is shown a job alert, whether their application appears in the firm's review pool, or anything other than the sort the firm picks.
-- **"New on Dewey Sholes" badge:** CSRs with fewer than 5 completed jobs on the platform get a small "New on Dewey Sholes" badge on their profile, directory card, and Review Applicants card. This is an honest signal of newness (the badge tells firms their stats are still building, not that they're inexperienced reporters) and avoids the cold-start visibility penalty of pure rating-sorted ranking.
+- **"New on Shorthanders" badge:** CSRs with fewer than 5 completed jobs on the platform get a small "New on Shorthanders" badge on their profile, directory card, and Review Applicants card. This is an honest signal of newness (the badge tells firms their stats are still building, not that they're inexperienced reporters) and avoids the cold-start visibility penalty of pure rating-sorted ranking.
 
 ### Why this matters
 
@@ -73,7 +73,7 @@ A **composite score** (weighted average of all three) is calculated for matching
 ## Comments
 
 - Attorneys can leave free-text comments after each job
-- Comments are visible **only to Dewey Sholes admin**, not to CSRs
+- Comments are visible **only to Shorthanders admin**, not to CSRs
 - Admin reviews comments, flags patterns, and surfaces sanitized feedback when appropriate
 - Admin monitors for abusive/vindictive commenting patterns and discounts those attorneys' influence
 
@@ -473,7 +473,7 @@ The v3 flow assumes attorneys are OK with the post-acceptance veto pattern (casc
 
 These are captured for survey + interview research in:
 - `research/attorney_survey_questions.md – Section 3a: How the matching flow should work` (Q15a–Q15d)
-- `research/user_testing_legal_assistant_guide.md – Reactions to Dewey Sholes` (Open questions D–H)
+- `research/user_testing_legal_assistant_guide.md – Reactions to Shorthanders` (Open questions D–H)
 
 Post-launch we should instrument the veto-window screen to track: time-to-confirm distribution, veto rate by case type, veto reason distribution, distribution of how many CSRs were proposed before lock-in. Behavioral data + survey data together tell us whether the friction level is right.
 
@@ -643,7 +643,7 @@ If 72 hours pass from order placement with still no acceptance, the cascade give
 
 | Trigger | Order type | Action |
 |---|---|---|
-| 72 hours from placement, no acceptance | Standard / Expedited | Phase 3b all-call begins **and** Dewey Sholes ops is notified to manually outreach / problem-solve. |
+| 72 hours from placement, no acceptance | Standard / Expedited | Phase 3b all-call begins **and** Shorthanders ops is notified to manually outreach / problem-solve. |
 | **12 hours before deadline, no acceptance** | **Any** | **Auto-cancel + full refund.** Notify the attorney that no CSR accepted, the refund has been issued, and they can either re-place the order with an extended deadline (which restarts the cascade) or work with another provider. All live invites are closed at this moment. |
 
 Auto-cancelling at the 12h-before-deadline mark – instead of waiting for the deadline itself – gives the attorney runway to rebook. We don't leave them hanging until the moment of failure.

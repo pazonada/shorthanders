@@ -1,4 +1,4 @@
--- Dewey Sholes MVP — Supabase schema (Phase 1: claims, Stripe, invoices, messaging)
+-- Shorthanders MVP — Supabase schema (Phase 1: claims, Stripe, invoices, messaging)
 --
 -- Design: the 5,705 UNCLAIMED CSR records stay static in csr_profiles.js. This
 -- database only holds rows that are actually created by users — claimed profiles,

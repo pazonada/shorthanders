@@ -36,7 +36,7 @@ The system pings the CSR during the job to keep delivery on track:
 | 1st late delivery or quality complaint | Warning + notation on internal record |
 | 2nd–4th offense | Warning + notation; patterns surfaced to admin |
 | **5th offense** | Account suspended |
-| Suspension appeal | CSR can appeal to Dewey Sholes admin; reviewed within 5 business days |
+| Suspension appeal | CSR can appeal to Shorthanders admin; reviewed within 5 business days |
 
 **Quality complaints** include: transcript delivered with significant errors, wrong case delivered, missing certification page, or unprofessional conduct reported by attorney.
 

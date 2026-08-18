@@ -37,7 +37,7 @@ are real as of this writing; **verify current rates** (they change).
   the top of that range is defensible **if** they use it.
 - **Supply-side** money (Fiverr's cut, Thumbtack's leads, legal-directory listings) is all over
   the place; the lesson is to keep the **reporter** side **light** so reporters actually join.
-- Your value story is strong: agencies take ~30–40%, so **any** Dewey Sholes fee looks cheap.
+- Your value story is strong: agencies take ~30–40%, so **any** Shorthanders fee looks cheap.
   The hard part isn't justifying the price – it's getting firms to change their habit.
 
 ---
@@ -56,7 +56,7 @@ Notes:
 - **Annual option:** offer ~2 months free (pay for 10, get 12) to pull firms onto yearly plans.
 - **Reporters:** free to claim and list. The flat Pro plan is for heavy users; the per-payment
   fee is for occasional/part-time reporters (they pay nothing in months they don't use it).
-  Both come out of the reporter's side – the firm never sees a Dewey Sholes fee.
+  Both come out of the reporter's side – the firm never sees a Shorthanders fee.
 - **Free trial for firms** (e.g., 14 days) is important – it lets them feel the value before paying.
 
 ---

@@ -27,7 +27,7 @@ fully delete it on the highest-stakes code.
 
 ### Codex prompt (paste with the diff)
 
-> You are reviewing a diff for Dewey Sholes, a California court-reporter directory + invoicing app
+> You are reviewing a diff for Shorthanders, a California court-reporter directory + invoicing app
 > (static frontend, Supabase for DB/auth, Stripe Connect for payments, Postmark for email). Find
 > correctness bugs first, then security. Be specific: cite the file/line and give a concrete failing
 > input → wrong result. Pay special attention to the hotlist: Stripe Connect fee math and payout

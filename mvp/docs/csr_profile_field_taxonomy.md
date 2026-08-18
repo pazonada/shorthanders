@@ -1,6 +1,6 @@
 # CSR profile field taxonomy – research synthesis
 
-**Purpose:** figure out what information belongs in a reporter's Dewey Sholes profile,
+**Purpose:** figure out what information belongs in a reporter's Shorthanders profile,
 beyond the starting list in the PRD. Feeds the reduced-scope MVP directory + claim flow.
 
 **Sources**

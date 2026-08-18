@@ -2,7 +2,7 @@
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment
 
-OUT = "/Users/audubondougherty/Desktop/AI_experiments/dewey-sholes/mvp/docs/revenue_model.xlsx"
+OUT = "/Users/audubondougherty/Desktop/AI_experiments/shorthanders/mvp/docs/revenue_model.xlsx"
 
 wb = openpyxl.Workbook()
 ws = wb.active
@@ -28,7 +28,7 @@ PCT = '0.0%'
 INT = '#,##0'
 
 # ============ Sheet 1: revenue model (two-tier per-payment fee) ============
-ws["A1"] = "Dewey Sholes – revenue model"
+ws["A1"] = "Shorthanders – revenue model"
 ws["A1"].font = TITLE
 ws.merge_cells("A1:F1")
 ws["A2"] = ("Illustrative, to frame the decision – not a forecast. Change the blue and yellow cells; everything "
@@ -143,7 +143,7 @@ ws.freeze_panes = "B6"
 # ============ Sheet 2: CSR email -> Pro conversion funnel ============
 ws2 = wb.create_sheet("CSR conversion")
 
-ws2["A1"] = "Dewey Sholes – CSR email to Pro conversion"
+ws2["A1"] = "Shorthanders – CSR email to Pro conversion"
 ws2["A1"].font = TITLE
 ws2.merge_cells("A1:C1")
 ws2["A2"] = ("Illustrative and adjustable. Change the blue cells. The last step (claim to paid Pro) is the "
@@ -226,7 +226,7 @@ ws2.freeze_panes = "A5"
 # ============ Sheet 3: what it takes to net a target ============
 ws3 = wb.create_sheet("Net target")
 
-ws3["A1"] = "Dewey Sholes – what it takes to net a target"
+ws3["A1"] = "Shorthanders – what it takes to net a target"
 ws3["A1"].font = TITLE
 ws3.merge_cells("A1:C1")
 ws3["A2"] = ("Two paths to the same take-home, side by side. Change the blue cells. "

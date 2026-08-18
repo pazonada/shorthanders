@@ -1,4 +1,4 @@
-# Dewey Sholes – Open decisions
+# Shorthanders – Open decisions
 *Updated March 27, 2026 – incorporates Rosie call (March 27)*
 
 ---
@@ -18,7 +18,7 @@ How many late deliveries or quality complaints before a reporter gets suspended?
 > **Ratings system:**
 > - Three dimensions: communication/responsiveness, timeliness, transcript quality – plus a composite score for matching
 > - Aggregate ratings shown to CSRs monthly (not individual attributions)
-> - Comments visible only to Dewey Sholes admin team (moderation layer)
+> - Comments visible only to Shorthanders admin team (moderation layer)
 > - Trimmed mean calculation (drop highest and lowest each quarter)
 > - Algorithmically reduce influence of attorneys whose ratings consistently diverge from consensus
 >
@@ -94,7 +94,7 @@ Attorney cancels after a reporter has been assigned. Who eats the cost? What if 
 
 **9. AB 5 / Independent contractor classification**
 
-*Our position:* Licensed CSRs on Dewey Sholes are independent contractors, not employees.
+*Our position:* Licensed CSRs on Shorthanders are independent contractors, not employees.
 
 *The threshold question – which test applies?*
 - **Borello test** applies if CSRs are exempt from AB 5 (via AB 3136 or AB 2257). We score favorably on 8-9 of 11 Borello factors. IC classification is defensible.
@@ -109,7 +109,7 @@ Attorney cancels after a reporter has been assigned. Who eats the cost? What if 
 - Pay per job (per-page statutory rate), not per hour.
 - Verify credentials and enforce court rules only – no quality control that resembles supervision.
 
-*Onboarding language:* "By joining Dewey Sholes, you confirm that you are an independent professional, not an employee of Dewey Sholes or its parent company. You choose which jobs to accept, set your own schedule, and control how you perform your work."
+*Onboarding language:* "By joining Shorthanders, you confirm that you are an independent professional, not an employee of Shorthanders or its parent company. You choose which jobs to accept, set your own schedule, and control how you perform your work."
 
 *Risk matrix:*
 | Risk | Likelihood | Severity |
@@ -123,7 +123,7 @@ Attorney cancels after a reporter has been assigned. Who eats the cost? What if 
 
 **10. Platform liability when transcripts are challenged**
 
-*Our position:* Dewey Sholes is a technology marketplace, not a court reporting agency. The reporter bears primary professional responsibility for transcript accuracy via their personal certification under penalty of perjury.
+*Our position:* Shorthanders is a technology marketplace, not a court reporting agency. The reporter bears primary professional responsibility for transcript accuracy via their personal certification under penalty of perjury.
 
 *Why we're likely NOT liable:*
 - No editorial involvement – we transfer files, we don't edit or review transcript content.
@@ -190,7 +190,7 @@ This is the single biggest variable in the financial model. Only 2 counties in C
 
 These are locked. Included here so we don't re-discuss them.
 
-- Entity: Studio Crux, LLC (d/b/a Dewey Sholes, not raising capital)
+- Entity: Studio Crux, LLC (d/b/a Shorthanders, not raising capital)
 - Platform fee: Flat 12% buyer-side, day one, everyone (the prior "8% during the launch window, locked for 1 year" tier was retired 2026-05-14 – see #6 above)
 - CSR listing fee: $99/year individual, $79/reporter/year firm tier (3-10 reporters)
 - Payment timing: 2 business days after delivery
@@ -204,5 +204,5 @@ These are locked. Included here so we don't re-discuss them.
 - Audio retention: 90 days post-delivery (pending UCC research)
 - Late delivery grace period: 24 hours with mid-job check-ins
 - Deplatforming threshold: 5 strikes (late deliveries or quality complaints)
-- IC confirmation language: "independent professional, not an employee of Dewey Sholes or its parent company"
+- IC confirmation language: "independent professional, not an employee of Shorthanders or its parent company"
 - Live attendance: Standardized at 1/3 below agency rates ($255/half day, $509/full day). CSR keeps 100%.

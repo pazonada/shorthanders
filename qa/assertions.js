@@ -1,4 +1,4 @@
-// Dewey Sholes — reusable browser-QA assertions.
+// Shorthanders — reusable browser-QA assertions.
 // Paste/eval this in the app tab (via the browser tool's javascript_tool) to get window.dsQA.
 // These cover DOM / route / state / PII checks. Console + network checks come from the browser
 // tool itself (read_console_messages / read_network_requests), not page JS — the page can't read

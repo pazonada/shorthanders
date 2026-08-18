@@ -116,7 +116,7 @@ Worth running both – the time-cost survey feeds the marketing claim ("firms sa
 
 **Concept paragraph shown to respondents (~85 words):**
 
-> Dewey Sholes is a new platform that connects California attorneys directly with court reporters for live-attended court hearings (with court-audio transcription supported when a reporter wasn't on the record and the court has released the audio). You book a reporter through the platform, and the reporter delivers the transcript to you directly. The platform handles scheduling, billing, and transcript delivery – replacing the agency middleman. Reporters keep 100% of their stated rate; you pay the reporter's rate plus a 12% platform fee. Pricing is transparent, with no surprise line items. Reporters are licensed CSRs verified through the California Court Reporters Board.
+> Shorthanders is a new platform that connects California attorneys directly with court reporters for live-attended court hearings (with court-audio transcription supported when a reporter wasn't on the record and the court has released the audio). You book a reporter through the platform, and the reporter delivers the transcript to you directly. The platform handles scheduling, billing, and transcript delivery – replacing the agency middleman. Reporters keep 100% of their stated rate; you pay the reporter's rate plus a 12% platform fee. Pricing is transparent, with no surprise line items. Reporters are licensed CSRs verified through the California Court Reporters Board.
 
 **Q11.** Based on that description alone, how interested would you be in trying this platform?
 - Very interested

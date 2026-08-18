@@ -1,4 +1,4 @@
-# Marketing & outreach – Dewey Sholes (reduced-scope MVP)
+# Marketing & outreach – Shorthanders (reduced-scope MVP)
 
 The tactical folder index. The one-page *direction* is [growth_strategy.md](growth_strategy.md);
 read it first. Built for the reality we're in: **two people, ~$0 budget, no staff. Supply runs

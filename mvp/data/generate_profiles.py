@@ -10,7 +10,7 @@ maskEmail() in _app_05_directory.jsx.
 import json, os, re, csv
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = "/Users/audubondougherty/Desktop/AI_experiments/dewey-sholes"
+REPO = "/Users/audubondougherty/Desktop/AI_experiments/shorthanders"
 rows = json.load(open(os.path.join(HERE, "crb_all_raw.json")))
 ACTIVE = {"Active", "Active (Pending Renewal)"}
 
