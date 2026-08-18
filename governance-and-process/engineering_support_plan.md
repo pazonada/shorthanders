@@ -137,4 +137,4 @@ That's why this plan exists. Claude is a force multiplier on the engineering wor
 
 - `governance-and-process/payment_failure_policy.md` – what happens when payments fail (the live-system failure modes we're protecting against)
 - `governance-and-process/mvp_scope_v1.md` – the smallest defensible MVP (the surface area we're committing to support)
-- `~/.claude/projects/-Users-audubondougherty-Desktop-AI-experiments-dewey-sholes/memory/project_phone_is_comms_only.md` – no SMS provider, PWA push + email only
+- `~/.claude/projects/-Users-audubondougherty-Desktop-AI-experiments-shorthanders/memory/project_phone_is_comms_only.md` – no SMS provider, PWA push + email only

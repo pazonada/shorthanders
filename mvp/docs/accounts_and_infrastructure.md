@@ -19,7 +19,7 @@ DBA, and trademark items are worth one confirmation from the release-review atto
 | **Vercel** | Hosting | `shorthanders.vercel.app` = MVP (`mvp/`); root = v1 (old `dewey-sholes.vercel.app`) | Keep the two split. **Set a spend limit.** `.vercelignore` excludes `api/` + `package.json` for build cost – remove those two when the real backend is wired. |
 | **Supabase** | Auth + database + usage events | Not built (all faked today) | Stand up when building the backend: auth, tables (reporters, profiles, firms, invoices, messages), and the events log that feeds recommendations. Free tier at launch. |
 | **Stripe (+ Connect)** | Payments, payouts, subscriptions | Faked (stubs fall back to demo) | **Decide the payments entity BEFORE wiring real Connect** (see sequencing). Then: Express/Connect onboarding, 2%/5% application fee, card/ACH, subscriptions, webhooks. Set the business name/descriptor to Shorthanders (via the filed DBA). |
-| **Trademark** | "Shorthanders" mark | Not filed — **deferred to launch**; old "Dewey Sholes" application (Serial 99703235) to be abandoned (sunk) | Name cleared via TESS. File the Shorthanders mark when committed to launch + revenue; use ™ (not ®) until it issues. |
+| **Trademark** | "Shorthanders" mark | **ITU application filed** (1(b); Serial _add #_) — priority date locked. Old "Dewey Sholes" app (Serial 99703235) being abandoned | Watch for the USPTO Notice of Allowance, then file the Statement of Use (live-site specimen) or buy extensions — after launch. Use ™ (not ®) until it registers. |
 
 ## Cost & financial sense-check
 
@@ -36,7 +36,7 @@ base scales with revenue, not ahead of it.
 | GitHub | **$0** | – | Private repos free. |
 | Vercel | **Shared** – already on Pro (~$20/mo, sometimes more) | Now, across projects | DS is another project on your existing Pro plan – **no new base fee, just incremental usage.** "Sometimes more" = usage overage → hold it down with lean builds + batched pushes + the `.vercelignore`. |
 | Resend | **$0** free tier, or ~$20/mo | Marginal (shared w/ other site) | **Transactional only.** Free tier ~3k emails/mo may cover launch. Claude Code plugin available. |
-| Trademark | ~$250–350 one-time | Deferred to launch | Old Dewey Sholes filing (Serial 99703235) is sunk; the Shorthanders mark is a fresh future filing. |
+| Trademark | ~$250–350 (paid) | Filed (ITU) | Priority date locked; SOU + possible extension fees still to come after the NOA. Old Dewey Sholes filing (99703235) sunk. |
 | Supabase | **Shared/marginal** – you already pay it (Disclosure Watch + iPhone app) | Now | Adding DS likely adds incremental compute, **not a fresh $25 base** – verify against your org billing. Keep DS as its **own project** (ideally its own org) so its data stays separable + transferable for a future spin-out/sale. |
 | Stripe (+ Connect) | **$0** base; ~$2/mo per *active* Connect account | Only when money moves | Processing fees are the reporter's cost, passed through. Offset by revenue. |
 | Mail-merge tool (outreach) | **$0–30/mo** | Campaign months only | YAMM ~$50/yr (cheapest, occasional) · GMass ~$30/mo (best, pausable) · Mailmeteor ~$10–25/mo. |
@@ -76,7 +76,8 @@ already sunk in your Pro plan, so it'd only shave DS's marginal usage, not a bas
 
 1. **Rosie / name:** RESOLVED — renamed to **Shorthanders** (Rosie went quiet past the Aug 15, 2026
    deadline; the internal rename was executed). DBA filed under the new name; no "Dewey" cemented in
-   public records. The old Dewey Sholes TM application is being abandoned.
+   public records. Shorthanders **ITU trademark filed** (priority date locked); the old Dewey Sholes
+   application is being abandoned.
 2. **Before Stripe go-live:** lock the payments entity. Standing up Connect under Studio Crux is a
    perfectly valid choice and sidesteps the connected-account migration entirely. What you want to
    avoid is onboarding real reporters/subscriptions and *then* moving to a different entity – that's
