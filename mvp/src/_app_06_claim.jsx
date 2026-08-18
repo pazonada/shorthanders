@@ -163,7 +163,7 @@ function ClaimFlow({ reporterId }) {
   // shorter step's height - a direct scroll in the effect gets overridden by that clamp.
   React.useEffect(() => { requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })); }, [step]);
   const rOOS = r && isOutOfState(r);
-  const [form, setForm] = useState({ bio: "", yearsExp: "", city: (r && !rOOS && r.city) || "", county: (r && !rOOS && r.county) || "", workMode: rOOS ? "remote" : "", baseState: "California", coverage: (r && !rOOS && r.county) || "", rates: {}, publishRates: false, rush: false, notary: false, proceedings: [], services: [], specialties: [], certifications: [], languages: [], otherStates: (r && r.otherStates) || [] });
+  const [form, setForm] = useState({ bio: "", website: "", yearsExp: "", city: (r && !rOOS && r.city) || "", county: (r && !rOOS && r.county) || "", workMode: rOOS ? "remote" : "", baseState: "California", coverage: (r && !rOOS && r.county) || "", rates: {}, publishRates: false, rush: false, notary: false, proceedings: [], services: [], specialties: [], certifications: [], languages: [], otherStates: (r && r.otherStates) || [] });
   // Guard the profile-build entries against a silent loss on Cancel / browser Back. Called before the
   // early returns below so the hook order stays stable. finish() navigates away, so no re-baseline needed.
   const initialSnapshot = useRef(null);
@@ -308,6 +308,7 @@ function ClaimFlow({ reporterId }) {
               </div>
 
               <div><label className="ds-label">Short bio</label><textarea className="ds-input" rows={3} placeholder="Tell firms who you are and what you're great at" value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} /></div>
+              <div><label className="ds-label">Website <span style={{ fontWeight: 400, color: "var(--dim)" }}>(optional)</span></label><input className="ds-input" type="url" placeholder="Your own site or booking page, e.g. yoursite.com" value={form.website} onChange={(e) => setForm({ ...form, website: e.target.value })} /></div>
               <div style={{ maxWidth: 240 }}><label className="ds-label">Years of experience</label><input className="ds-input" type="number" placeholder="e.g. 12" value={form.yearsExp} onChange={(e) => setForm({ ...form, yearsExp: e.target.value })} /></div>
 
               <div>

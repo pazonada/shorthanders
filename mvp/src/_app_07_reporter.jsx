@@ -327,7 +327,10 @@ function ReporterProfileEditor({ me }) {
             <label className="ds-label" style={{ marginBottom: 3 }}>Rates</label>
             <div style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.5 }}>Share as much or as little as you like - one number for a set rate, a low and high for a range, or leave a line blank to keep it private.</div>
           </div>
-          <button type="button" onClick={() => setShowRates(!showRates)} style={chipStyle(showRates)}>{showRates ? <Icon name="eye" size={13} /> : null}{showRates ? "Shown on profile" : "Hidden - tap to show"}</button>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
+            <ToggleSwitch on={showRates} onClick={() => setShowRates(!showRates)} />
+            <span style={{ fontSize: 14, fontWeight: 500, color: showRates ? "var(--ink)" : "var(--muted)" }}>{showRates ? "Shown on profile" : "Hidden from profile"}</span>
+          </div>
         </div>
         {showRates ? (
           <div style={{ marginTop: 18, display: "flex", flexDirection: "column", gap: 14 }}>
