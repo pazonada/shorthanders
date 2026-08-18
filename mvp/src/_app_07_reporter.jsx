@@ -355,7 +355,7 @@ function ReporterProfileEditor({ me }) {
         ) : null}
       </div>
 
-      <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end" }}>
+      <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end", marginTop: 16 }}>
         <button onClick={() => navigate("/reporters/" + me.id)} style={{ background: "none", border: "none", color: "var(--brand)", cursor: "pointer", fontSize: 14, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 6, padding: 0, marginRight: 6 }}><Icon name="eye" size={15} /> View public profile</button>
         <button className="btn btn-secondary" onClick={() => navigateBack("/reporter")}>Cancel</button>
         <button className="btn btn-primary" onClick={saveProfile}><Icon name="check" size={16} /> Save changes</button>
