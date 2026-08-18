@@ -193,7 +193,7 @@ Two serverless stubs already exist and fall back to demo behavior:
   for you on Shorthanders**" + the `/#/claim/<id>` link. **If there's no public email on file, send
   nothing** (the UI already says so) – no other channel. Persist the invite + **flip the badge from
   "Invite sent" to a connected profile when the reporter claims** (the growth loop's payoff). This is
-  transactional/permission-ish (a firm vouching for a specific named reporter), so Resend is fine here
+  transactional/permission-ish (a firm vouching for a specific named reporter), so Postmark is fine here
   – distinct from the bulk cold CSR campaign below.
 - [ ] **CSR outreach campaign** – the claim invite to the ~5,145 independent CSRs (`mvp/docs/
   csr_email_outreach.md`, `data/email_campaign.csv`), recurring per state as we expand.
@@ -205,7 +205,7 @@ Two serverless stubs already exist and fall back to demo behavior:
   `outreach.`/`go.` subdomain, or at minimum a non-primary address) so a rough campaign can't torch
   the primary domain's reputation; its own SPF/DKIM/DMARC; validate the list first (low bounces);
   **warm up + drip over days**, not big same-day batches; CAN-SPAM (physical address + honored
-  opt-out). **Transactional app email stays on Resend** (invites-accepted, invoices, receipts,
+  opt-out). **Transactional app email stays on Postmark** (invites-accepted, invoices, receipts,
   notifications) – that's permission-based and AUP-fine.
 - [ ] **"Remove my unclaimed listing" requests – a SEPARATE, data-side flow** (not an email-tool or
   CRM job). A reporter asking to be taken off the directory is a data request, not an email
@@ -216,10 +216,11 @@ Two serverless stubs already exist and fall back to demo behavior:
   HubSpot is **not** the tool for this (it's a sales CRM, not the directory DB) – don't add it.
 - [ ] **In-app messaging** (`MessagingPage`, `_app_09_messaging.jsx`) – persist threads and make
   them real-time (Supabase Realtime). Async threads, not live chat.
-- [ ] **Notifications** – new message, invoice paid, invite accepted, favorite job alerts.
-  Web Push (PWA) primary + **email fallback**, NO SMS. Delivery reliability: DB-triggered sends,
-  delivery webhooks, retries; Postmark as a Resend fallback. (See
-  `governance-and-process/messaging_and_notifications_plan.md`.)
+- [ ] **Notifications** – **full per-event catalog: `notification_catalog.md`** (accounts, messaging,
+  invoicing/payments, invites, billing, support, marketing; each with recipient, channels, stream,
+  default). Web Push (PWA) primary + **email fallback**, NO SMS. Delivery reliability: DB-triggered
+  sends, delivery webhooks, retries. **Postmark = the transactional sender** (Resend was the earlier
+  pick, now the fallback). (See `governance-and-process/messaging_and_notifications_plan.md`.)
 - [ ] **Transactional email** – welcome, verification, password reset, receipts.
 - [ ] **"You're featured this week" email** (Aud, 2026-07-21). Featured slots rotate weekly
       (`weeklyFeatured`, `_app_02_data.jsx`), so the three reporters up that week can be emailed

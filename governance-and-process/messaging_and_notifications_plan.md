@@ -58,6 +58,8 @@ A weekly background job should also send a silent test push to all subscriptions
 
 ## Channels and defaults
 
+> **Full per-event catalog — every notification across all flows (accounts, messaging, invoicing/payments, invites, billing, support, marketing, matching) — is `mvp/docs/notification_catalog.md`.** The table below is the matching/applicant-pool subset; the catalog subsumes it.
+
 User preferences live in Settings → Notifications. Email is verified at signup. Push subscription is created when the user grants permission after installing the PWA.
 
 | Event | Default channel(s) | User can change to |
