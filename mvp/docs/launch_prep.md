@@ -93,7 +93,9 @@ confirm it** – the site currently shows working numbers, not decisions.
 
 ## Phase 3 – Making it actually work
 
-This is the big one, and it's real engineering. Everything here is spelled out in
+This is the big one, and it's real engineering. Reliability, webhook safety, monitoring, and the
+go/no-go gate live in `reliability_monitoring_plan.md`; the full service list is in
+`services_registry.md`. The wiring itself is spelled out in
 `integration_checklist.md`.
 
 > **NOTE TO SELF (Claude) – "ENGINEER" below = me + Aud; there is no separate engineer.** When I wire

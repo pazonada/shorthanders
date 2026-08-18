@@ -7,6 +7,10 @@ serverless stubs under `mvp/api/` fall back to a demo path when no backend answe
 
 Grep for **"Prototype"** and **"demo"** in `mvp/src/` to find the fake spots in the UI.
 
+> **Reliability rides alongside this build.** As each service gets wired, follow
+> `reliability_monitoring_plan.md` (webhook idempotency, graceful failure, Sentry, PII guards,
+> the launch-readiness gate). Full service list + plain-English purposes: `services_registry.md`.
+
 ---
 
 ## 1. Auth – Supabase Auth (or similar)
