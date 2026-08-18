@@ -46,6 +46,20 @@ confirm it** – the site currently shows working numbers, not decisions.
          cancel the old Workspace (2 seats billed annually, so cancel/downgrade). Then update the
          Stripe descriptor, the site's contact/pay addresses, and any lingering `@deweysholes.com`.
       (DNS steps happen at whatever registrar/host holds shorthanders.com.)
+
+      **IN PROGRESS (2026-08-18):** shorthanders.com added to the existing Workspace + verified;
+      **MX done** (5× ASPMX at Gandi, status Complete); **SPF edited** to Google-only
+      `v=spf1 include:_spf.google.com ~all`; **DKIM generated for shorthanders.com** (gotcha: the
+      Authenticate-email page defaults to deweysholes.com — must switch "Selected domain" to
+      shorthanders.com first; each domain has its OWN key) + TXT added at Gandi + **Start
+      authentication clicked**; DKIM/SPF verified **All ok**. **shorthanders.com MADE PRIMARY
+      2026-08-18** — users renamed to `@shorthanders.com` (old `@deweysholes.com` kept as aliases);
+      re-login as `admin@shorthanders.com`. **REMAINING:** (b) `hello@`/`support@` Group (enable
+      external posting; watch for new-domain spam-filtering); (c) **DMARC** `_dmarc` TXT; (d) redo
+      `aud@` "Send mail as"/app-password + verify pazonada@gmail forwarding; (e) **remove
+      deweysholes.com** (strip its user aliases + old hello@ group first) + rename org (still "Dewey
+      Sholes"); (f) drop to 1 seat at **renewal** (annual plan locks the count until then). Billing
+      is per-seat, not per-domain.
 - [x] **Trademark — Shorthanders ITU filed** (Section 1(b), Serial 50056186; priority date locked; use ™, not ®,
       until it registers). Next: after the USPTO **Notice of Allowance**, file the **Statement of
       Use** with a live-site specimen (or buy extensions) — once the site is actually launched.
