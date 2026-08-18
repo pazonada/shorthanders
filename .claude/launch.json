@@ -4,7 +4,7 @@
     {
       "name": "dev",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-l", "8080", "/Users/audubondougherty/Desktop/AI_experiments/dewey-sholes"],
+      "runtimeArgs": ["serve", "-l", "8080", "/Users/audubondougherty/Desktop/AI_experiments/shorthanders"],
       "port": 8080
     }
   ]
