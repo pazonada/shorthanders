@@ -53,8 +53,11 @@ confirm it** – the site currently shows working numbers, not decisions.
       Authenticate-email page defaults to deweysholes.com — must switch "Selected domain" to
       shorthanders.com first; each domain has its OWN key) + TXT added at Gandi + **Start
       authentication clicked**; DKIM/SPF verified **All ok**. **shorthanders.com MADE PRIMARY
-      2026-08-18** — users renamed to `@shorthanders.com` (old `@deweysholes.com` kept as aliases);
-      re-login as `admin@shorthanders.com`. **REMAINING:** (b) `hello@`/`support@` Group (enable
+      2026-08-18.** GOTCHA: changing the primary domain does **NOT** auto-rename users — the accounts
+      stay `@deweysholes.com` and you keep logging in with the old address until you manually
+      **rename each user** (Directory → Users → ⋮ Rename user → change domain to shorthanders.com;
+      old address auto-kept as an alias), then re-login as `admin@shorthanders.com`. **REMAINING:**
+      rename the users, then (b) `hello@`/`support@` Group (enable
       external posting; watch for new-domain spam-filtering); (c) **DMARC** `_dmarc` TXT; (d) redo
       `aud@` "Send mail as"/app-password + verify pazonada@gmail forwarding; (e) **remove
       deweysholes.com** (strip its user aliases + old hello@ group first) + rename org (still "Dewey
