@@ -119,7 +119,7 @@ function ContactPage() {
               </p>
               <div style={{ marginTop: 36, display: "flex", flexDirection: "column", gap: 22 }}>
                 <ContactChannel icon="mail" title="Email us directly">
-                  <a href="mailto:hello@deweysholes.com" className="contact-textlink">hello@deweysholes.com</a>
+                  <a href="mailto:hello@shorthanders.com" className="contact-textlink">hello@shorthanders.com</a>
                 </ContactChannel>
                 <ContactChannel icon="user" title="Court reporters">
                   Every licensed California reporter is already listed. <button className="contact-textlink" onClick={() => navigate("/for-reporters")}>Claim your profile</button>.

@@ -5499,7 +5499,7 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
   // let the parent open the read-only modal on it.
   const sendInvoice = async () => {
     setSending(true);
-    let payLink = "https://pay.deweysholes.com/i/" + (editInv ? editInv.id : "INV-" + (INV_SEQ + 1)).toLowerCase();
+    let payLink = "https://pay.shorthanders.com/i/" + (editInv ? editInv.id : "INV-" + (INV_SEQ + 1)).toLowerCase();
     const inv = build("sent");
     try {
       const resp = await fetch("api/pay/create-payment-link", {
@@ -5679,7 +5679,7 @@ function InvoiceModal({ inv, viewer, onClose }) {
     ? "Certified Shorthand Reporter · CSR #" + meMeta.csrNumber + (meMeta.city ? " · " + meMeta.city + ", CA" : "")
     : "Certified Shorthand Reporter";
   const items = inv.lineItems && inv.lineItems.length ? inv.lineItems : [{ desc: inv.desc, flat: true, amount: inv.amount }];
-  const payLink = inv.payLink || ("https://pay.deweysholes.com/i/" + inv.id.toLowerCase());
+  const payLink = inv.payLink || ("https://pay.shorthanders.com/i/" + inv.id.toLowerCase());
   const copy = () => { navigator.clipboard.writeText(payLink); setCopied(true); setTimeout(() => setCopied(false), 1800); };
   // Save this invoice's line structure as a reusable template. Only the line labels + their
   // metered/flat kind carry over - not the firm, matter, dates, or amounts (those are per-invoice).
@@ -6392,7 +6392,7 @@ function ContactPage() {
               </p>
               <div style={{ marginTop: 36, display: "flex", flexDirection: "column", gap: 22 }}>
                 <ContactChannel icon="mail" title="Email us directly">
-                  <a href="mailto:hello@deweysholes.com" className="contact-textlink">hello@deweysholes.com</a>
+                  <a href="mailto:hello@shorthanders.com" className="contact-textlink">hello@shorthanders.com</a>
                 </ContactChannel>
                 <ContactChannel icon="user" title="Court reporters">
                   Every licensed California reporter is already listed. <button className="contact-textlink" onClick={() => navigate("/for-reporters")}>Claim your profile</button>.

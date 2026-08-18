@@ -10,5 +10,5 @@ cat \
   src/_app_09_messaging.jsx src/_app_10_firm.jsx src/_app_11_router.jsx src/_tail.html \
   > index.html
 echo "Built index.html ($(wc -l < index.html | tr -d ' ') lines)"
-# Note: do NOT mirror to the repo root. The root serves the v1 prototype
-# at dewey-sholes.vercel.app; this build only serves dsmvp.vercel.app.
+# Note: do NOT mirror to the repo root. The repo root holds the retired v1
+# prototype; this build serves the current app at shorthanders.vercel.app.

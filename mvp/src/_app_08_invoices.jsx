@@ -252,7 +252,7 @@ function InvoiceBuilder({ src, onCancel, onSubmit }) {
   // let the parent open the read-only modal on it.
   const sendInvoice = async () => {
     setSending(true);
-    let payLink = "https://pay.deweysholes.com/i/" + (editInv ? editInv.id : "INV-" + (INV_SEQ + 1)).toLowerCase();
+    let payLink = "https://pay.shorthanders.com/i/" + (editInv ? editInv.id : "INV-" + (INV_SEQ + 1)).toLowerCase();
     const inv = build("sent");
     try {
       const resp = await fetch("api/pay/create-payment-link", {
@@ -432,7 +432,7 @@ function InvoiceModal({ inv, viewer, onClose }) {
     ? "Certified Shorthand Reporter · CSR #" + meMeta.csrNumber + (meMeta.city ? " · " + meMeta.city + ", CA" : "")
     : "Certified Shorthand Reporter";
   const items = inv.lineItems && inv.lineItems.length ? inv.lineItems : [{ desc: inv.desc, flat: true, amount: inv.amount }];
-  const payLink = inv.payLink || ("https://pay.deweysholes.com/i/" + inv.id.toLowerCase());
+  const payLink = inv.payLink || ("https://pay.shorthanders.com/i/" + inv.id.toLowerCase());
   const copy = () => { navigator.clipboard.writeText(payLink); setCopied(true); setTimeout(() => setCopied(false), 1800); };
   // Save this invoice's line structure as a reusable template. Only the line labels + their
   // metered/flat kind carry over - not the firm, matter, dates, or amounts (those are per-invoice).
