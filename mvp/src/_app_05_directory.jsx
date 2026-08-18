@@ -562,6 +562,7 @@ function ReporterProfile({ reporterId, invited }) {
           </div>
 
           <ProfileSection title="About"><p style={{ fontSize: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>{r.bio}</p></ProfileSection>
+          {r.website ? <ProfileSection title="Website"><a href={/^https?:\/\//i.test(r.website) ? r.website : "https://" + r.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: 16, color: "var(--brand)", wordBreak: "break-all" }}>{r.website.replace(/^https?:\/\//i, "")}</a></ProfileSection> : null}
           <ProfileSection title="Area of law"><ChipRow items={r.specialties} /></ProfileSection>
           <ProfileSection title="Proceedings covered"><ChipRow items={r.proceedings} /></ProfileSection>
           {((r.services || []).length > 0 || r.rush) && <ProfileSection title="Services offered"><ChipRow items={r.services} rush={r.rush} /></ProfileSection>}

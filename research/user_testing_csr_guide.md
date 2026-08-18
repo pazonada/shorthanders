@@ -257,6 +257,8 @@ These are the specific things prototype testing is explicitly designed to answer
 | Is the "firm picks within minutes" scenario demoralizing or fine? | Mixed – some will feel it's how this work has always operated, others will feel cheated. | Whether to add a delay before firms can select, or to surface "X new applicants applied after you" as transparency. |
 | Are the favorite-from defaults too aggressive? | Probably fine for CSRs favorited by 1–3 firms; possibly too loud at 5+. | Whether to add a per-firm mute affordance in v1.1. |
 | Where does the onboarding flow lose people? | First friction point: license-verification step (assumed easy but may have edge cases). | Where to invest in onboarding polish. |
+| Would reporters want to show union / professional-association membership on their profile? | ICs and union members will want it; agency-affiliated may be indifferent or wary of a forced disclosure. | Whether (and how) to build the "affiliations" field, and which bodies to seed. |
+| Do reporters have (and want to show) their own website / booking page? | ICs running their own business will; agency-only reporters won't. | Confirms the optional Website field (shipped) is used, and how prominently to surface it. |
 
 ---
 

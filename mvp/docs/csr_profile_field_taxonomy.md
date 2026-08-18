@@ -83,9 +83,20 @@ PDF · ASCII · E-Transcript (PTX) · condensed/min-u-script · word index · li
 
 ## C. Trust & discovery signals (lightweight, high ROI)
 
+> **Shipped 2026-08-18:** optional **Website** field (reporter's own site / booking page) added to
+> the profile editor + public profile. Neutral label, always optional. Caveat logged in
+> `open_strategic_decisions.md`: any external link is a mild disintermediation vector (a firm could
+> book/pay off-platform, around the per-payment fee) — fine at the feedback/recruiting stage; revisit
+> at payment-rails launch. Deliberately NOT an "agency link" field (that would route firms off-platform
+> and blur the direct-hire positioning).
+
 - **Verified license** badge (we already verify via the CRB roll + Stripe identity).
-- **Professional affiliations**: NCRA, CCRA (California Court Reporters Assn), DRA/CalDRA
-  (Deposition Reporters Assn). Recognizable to firms.
+- **Professional associations & unions**: NCRA, CCRA (California Court Reporters Assn), DRA/CalDRA
+  (Deposition Reporters Assn), and **unions** (e.g. IFPTE Local 21). Recognizable to firms; also a
+  supply-side *belonging* signal ("this platform is for us"). **PROPOSED field — validate first (see §F).**
+  Build as tags (reuse the specialties `TagSearchAdd` pattern) with a controlled list + "other"; frame
+  strictly as *associations & unions*, NOT "who you work with" (keeps agencies out). Self-reported (no
+  "verified" label). Distinct from certifications (those = competency; affiliations = membership).
 - **E&O / professional insurance** (yes/no).
 - **Sample transcript** or redacted work sample.
 - **Willing to travel** (radius / counties) – distinct from "coverage."
@@ -155,6 +166,9 @@ Real language reporters use (themes, not individuals) – validates the payment-
 > expert. CSR-side taxonomy must come from reporters (user testing) + sources like these groups.
 
 ## F. Open questions to validate (with reporters, via user testing)
+- **Affiliations/unions:** would reporters want to show union + professional-association membership on
+  their profile? Which bodies actually matter — and would agency-affiliated reporters feel it forces an
+  awkward disclosure? Drives whether/how to build the affiliations field (§C) and which bodies to seed.
 - Which *national* certs do CA firms actually recognize/care about vs. noise?
 - Is a structured rate builder worth the friction, or does free-text + "contact for quote"
   convert better? (The rates group's antitrust caution suggests reporters are wary of

@@ -316,3 +316,12 @@ to subscribe); rate-limiting/anti-spam when it's wired to real messaging.
 - [ ] Set prices when ready – don't invent them (firm sub, reporter flat plan, reporter per-payment %).
 - [ ] Engage a reporting-industry attorney on the deposition-neutrality question (§3).
 - [ ] Confirm positioning: lead with transcription/direct-hire; directory still shows depos (§2).
+- [x] **Optional reporter Website field – SHIPPED 2026-08-18.** Neutral "your own site / booking page"
+  field (deliberately NOT an agency link — that routes firms off-platform and blurs direct-hire
+  positioning). **Caveat to revisit at payment-rails launch:** any external link is a mild
+  disintermediation vector (a firm could find a reporter here, then book/pay off-platform around the
+  per-payment fee). Acceptable now — it's a low-cost, reporter-friendly gesture that helps recruiting.
+  Mitigations already in the model: contact-via-Invite (no raw emails) + on-platform payment tools.
+- [ ] **Affiliations/unions profile field – PROPOSED, validate before building.** Tag-based
+  associations & unions (NCRA/CCRA/DRA + IFPTE Local 21); credibility + belonging signal, no
+  disintermediation risk. Ask in CSR user testing first. See `csr_profile_field_taxonomy.md` §C/§F.

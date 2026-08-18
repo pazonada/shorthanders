@@ -205,6 +205,7 @@ function ReporterProfileEditor({ me }) {
   const counties = useMemo(() => Array.from(new Set(buildDirectory().map((r) => r.county).filter((c) => c && c !== "Out of State"))).sort(), []);
   const [photo, setPhoto] = useState(me.photo || "");
   const [bio, setBio] = useState(me.bio || "");
+  const [website, setWebsite] = useState(me.website || "");
   const [years, setYears] = useState(me.yearsExp || "");
   const [proceedings, setProceedings] = useState(me.proceedings || []);
   const [services, setServices] = useState(me.services || []);
@@ -227,7 +228,7 @@ function ReporterProfileEditor({ me }) {
   // invoice builder (which navigates away on save), this editor stays mounted, so Save re-baselines the
   // snapshot to disarm the guard.
   const initialSnapshot = useRef(null);
-  const snapshot = JSON.stringify({ photo, bio, years, proceedings, services, areas, languages, certs, coverage, otherStates, notary, rush, accepting, showRates, rates, expUnit, customRates });
+  const snapshot = JSON.stringify({ photo, bio, website, years, proceedings, services, areas, languages, certs, coverage, otherStates, notary, rush, accepting, showRates, rates, expUnit, customRates });
   if (initialSnapshot.current === null) initialSnapshot.current = snapshot;
   useUnsavedGuard(snapshot !== initialSnapshot.current);
 
@@ -269,7 +270,7 @@ function ReporterProfileEditor({ me }) {
   const saveProfile = () => {
     const rateLines = buildRateLines();
     store.saveMyProfile({
-      photo, bio, yearsExp: years, proceedings, services, specialties: areas, languages,
+      photo, bio, website: website.trim(), yearsExp: years, proceedings, services, specialties: areas, languages,
       certifications: ["CSR #" + me.csrNumber].concat(certs), coverage, otherStates, notary, rush,
       publishRates: showRates, rateLines, _rateDraft: { rates, expUnit, customRates },
     });
@@ -292,6 +293,10 @@ function ReporterProfileEditor({ me }) {
 
       <FieldBlock label="Bio">
         <textarea className="ds-input" rows={4} value={bio} onChange={(e) => setBio(e.target.value)} placeholder="A few sentences about your practice, experience, and how you work." />
+      </FieldBlock>
+
+      <FieldBlock label="Website" hint="Your own site or online booking page, if you have one. Optional.">
+        <input className="ds-input" type="url" value={website} onChange={(e) => setWebsite(e.target.value)} placeholder="yoursite.com" />
       </FieldBlock>
 
       <div style={{ maxWidth: 200 }}>
