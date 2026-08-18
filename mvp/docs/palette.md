@@ -110,8 +110,10 @@ account and save Marguerite."
   choice here, it's the disabled state.
 - **Placement (2026-08-07, refined 2026-08-08).** Action rows put the **primary button rightmost**. A
   **`Cancel`/dismiss** secondary clusters with it on the **right, immediately to its left** (any other
-  secondary like `Save as draft` sits left of Cancel); a tertiary text link (`Preview`, "Copy the
-  message") sits on the far left. This right-cluster is the **form/dialog** shape – modals
+  secondary like `Save as draft` sits left of Cancel); **a tertiary utility text link** (`Preview`,
+  `View public profile`, "Copy the message") **also clusters on the right, left of Cancel – NOT far-left**
+  (corrected 2026-08-18: a tertiary utility link isn't a directional `Back`, so it stays in the right
+  cluster). This right-cluster is the **form/dialog** shape – modals
   (RequestInvoiceModal), the invoice builder, the profile editor.
 - **`Back` is the exception – it goes far LEFT.** A control that returns to a **previous step or view**
   (a wizard `Back`, the invoice preview's `Back to edit`, `That's not me`) is directional, not a
