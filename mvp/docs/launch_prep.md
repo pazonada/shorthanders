@@ -28,9 +28,10 @@ confirm it** – the site currently shows working numbers, not decisions.
       `shorthanders.com` — point it before launch, not after – changing the address later costs you
       any search traffic you've built. **YOU**
 - [ ] **Set up email on `shorthanders.com` (Google Workspace).** Same moves you did for
-      deweysholes.com, on the new domain. Add it as a **secondary domain** now, then flip it to
-      **primary** at launch (keep deweysholes.com as a secondary so old mail still arrives). All in
-      the Admin console (admin.google.com): **YOU**
+      deweysholes.com, on the new domain. deweysholes.com holds **no real mail** (test-only), so
+      there's nothing to preserve — either swap this Workspace's **primary domain** to
+      shorthanders.com and drop deweysholes.com, or start a **fresh Workspace** on shorthanders.com
+      and cancel the old one. All in the Admin console (admin.google.com): **YOU**
       1. Account → Domains → Manage domains → **Add a domain** → `shorthanders.com` (secondary domain).
       2. **Verify** ownership — add the TXT record Google gives you at shorthanders.com's DNS host.
       3. **MX**: add `1  smtp.google.com.` at shorthanders.com's DNS (or the legacy 5× `ASPMX` set).
@@ -41,8 +42,9 @@ confirm it** – the site currently shows working numbers, not decisions.
          tighten to `quarantine` → `reject` after ~2 clean weeks.
       7. Create `aud@shorthanders.com` (user or alias); make `hello@`/`support@` a **free Group**
          (no paid seat) for inbound support + "remove my listing" requests.
-      8. At launch: set shorthanders.com **primary**; then update the Stripe descriptor, the site's
-         contact/pay addresses, and any lingering `@deweysholes.com` references.
+      8. At launch: **remove deweysholes.com** — swap primary to shorthanders.com then drop it, or
+         cancel the old Workspace (2 seats billed annually, so cancel/downgrade). Then update the
+         Stripe descriptor, the site's contact/pay addresses, and any lingering `@deweysholes.com`.
       (DNS steps happen at whatever registrar/host holds shorthanders.com.)
 - [x] **Trademark — Shorthanders ITU filed** (Section 1(b), Serial 50056186; priority date locked; use ™, not ®,
       until it registers). Next: after the USPTO **Notice of Allowance**, file the **Statement of
