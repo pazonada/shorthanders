@@ -19,7 +19,7 @@ DBA, and trademark items are worth one confirmation from the release-review atto
 | **Vercel** | Hosting | `shorthanders.vercel.app` = MVP (`mvp/`); root = v1 (old `dewey-sholes.vercel.app`) | Keep the two split. **Set a spend limit.** `.vercelignore` excludes `api/` + `package.json` for build cost – remove those two when the real backend is wired. |
 | **Supabase** | Auth + database + usage events | Not built (all faked today) | Stand up when building the backend: auth, tables (reporters, profiles, firms, invoices, messages), and the events log that feeds recommendations. Free tier at launch. |
 | **Stripe (+ Connect)** | Payments, payouts, subscriptions | Faked (stubs fall back to demo) | **Decide the payments entity BEFORE wiring real Connect** (see sequencing). Then: Express/Connect onboarding, 2%/5% application fee, card/ACH, subscriptions, webhooks. Set the business name/descriptor to Shorthanders (via the filed DBA). |
-| **Trademark** | "Shorthanders" mark | **ITU application filed** (1(b); Serial _add #_) — priority date locked. Old "Dewey Sholes" app (Serial 99703235) being abandoned | Watch for the USPTO Notice of Allowance, then file the Statement of Use (live-site specimen) or buy extensions — after launch. Use ™ (not ®) until it registers. |
+| **Trademark** | "Shorthanders" mark | **ITU application filed** (1(b); Serial 50056186) — priority date locked. Old "Dewey Sholes" app (Serial 99703235) being abandoned | Watch for the USPTO Notice of Allowance, then file the Statement of Use (live-site specimen) or buy extensions — after launch. Use ™ (not ®) until it registers. |
 
 ## Cost & financial sense-check
 

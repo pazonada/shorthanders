@@ -27,7 +27,7 @@ confirm it** – the site currently shows working numbers, not decisions.
 - [ ] **Point the real domain.** Right now it's `shorthanders.vercel.app`. You already own
       `shorthanders.com` — point it before launch, not after – changing the address later costs you
       any search traffic you've built. **YOU**
-- [x] **Trademark — Shorthanders ITU filed** (Section 1(b); priority date locked; use ™, not ®,
+- [x] **Trademark — Shorthanders ITU filed** (Section 1(b), Serial 50056186; priority date locked; use ™, not ®,
       until it registers). Next: after the USPTO **Notice of Allowance**, file the **Statement of
       Use** with a live-site specimen (or buy extensions) — once the site is actually launched.
       Separately, let the old "Dewey Sholes" application (Serial 99703235) go abandoned. **YOU**
