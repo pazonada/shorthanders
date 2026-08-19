@@ -257,7 +257,7 @@ function SettingsPage() {
     { key: "newMessage", label: "New messages", sub: "When a firm messages you" },
     { key: "favoriteSaved", label: "Saved by a firm", sub: "When a firm saves your profile" },
     { key: "inviteAccepted", label: "Invited firm joins", sub: "When a firm you invited creates an account" },
-    { key: "profileTips", label: "Tips & profile reminders", sub: "Occasional nudges to complete or improve your profile" },
+    { key: "profileTips", label: "Tips & reminders", sub: "Nudges to complete and refresh your profile, plus occasional tips" },
     { key: "productNews", label: "Product news", sub: "Occasional updates about new features" },
   ] : [
     { key: "newMessage", label: "New messages", sub: "When a reporter messages you" },

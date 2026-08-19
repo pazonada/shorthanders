@@ -76,7 +76,21 @@ The authoritative list of **every notification the product sends**, by event/flo
 |---|---|---|---|---|---|
 | "Remove my listing" acknowledgment | Reporter | email | TX | always | Confirms the removal request (via the Google Form → `support@`) and the timeline. Legal-adjacent — always send. |
 
-## H. Marketing / lifecycle  · broadcast stream, separate reputation
+## H. Reminders & re-engagement (lifecycle nudges)  · a few MVP, most later
+
+The nudge class. **Anti-annoyance rules for this whole section** (or they hurt trust + deliverability): **frequency-capped** (≤ ~1 nudge/week/type; **back off after 2–3 ignored**), **all opt-out** (gated by the "Tips & reminders" pref), and the pure re-engagement ones ride the **broadcast** stream so they never touch transactional/receipt reputation. Everything here is **v1.1-ish** except the first profile nudge (already in §A).
+
+| Event / trigger | Who gets it | Channels | Stream | Default | Purpose |
+|---|---|---|---|---|---|
+| **Unanswered message reminder** | Recipient with an unread/unreplied message after ~48h | email + in-app | TX (lifecycle) | opt-out | Don't let a firm's inquiry — a possible booking — go cold. Higher-stakes than a pure nudge. |
+| **Complete your profile** (ongoing) | Reporter still below ~X% complete after N days | email + in-app | TX (lifecycle) | opt-out | Fill the gaps (completeness → ranking + firm trust). Escalation of §A's first nudge; capped. |
+| **Keep your profile fresh / come back** | Reporter inactive ~30–60 days | email | BC | opt-out | "Update your availability + rates so firms see you as active." Classic re-engagement. |
+| **Availability check-in** | Reporter whose "accepting jobs" toggle is untouched ~60–90 days | email + in-app | BC | opt-out | Keep availability honest so firms don't message someone who's actually out. |
+| **New reporters / activity in your area** (firm) | Firm inactive ~30+ days | email | BC | opt-out | Pull dormant firms back with relevant new supply. |
+
+> The **overdue-invoice** (§D) and **subscription-renewal** (§E) reminders are also "reminders," but they're transactional/always-on and live in their own flows. This section is the *engagement* nudges. Settings mapping: profile/freshness/availability nudges are gated by **"Tips & reminders"**; the unanswered-message reminder rides under **"New messages"**; dormant-firm re-engagement is a broadcast (product-news-adjacent).
+
+## I. Marketing / lifecycle  · broadcast stream, separate reputation
 
 | Event / trigger | Who gets it | Channels | Stream | Default | Purpose |
 |---|---|---|---|---|---|
@@ -85,7 +99,7 @@ The authoritative list of **every notification the product sends**, by event/flo
 
 > **Not in this catalog:** the **cold reporter-recruitment campaign** (emailing CSRs who never signed up) is *outreach*, not a triggered notification, and it goes through the **Workspace mail-merge tool**, never Postmark. See `services_registry.md` + `csr_email_outreach.md`.
 
-## I. Matching / applicant pool  · DEFERRED (v1 spec, not built)
+## J. Matching / applicant pool  · DEFERRED (v1 spec, not built)
 
 From `messaging_and_notifications_plan.md` §"Channels and defaults." Listed for completeness; wire only if/when the applicant-pool flow ships.
 
