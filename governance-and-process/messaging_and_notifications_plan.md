@@ -1,5 +1,7 @@
 # Messaging & Notifications Plan
 
+> **DECISION UPDATED 2026-08-18: Web Push DEFERRED to v1.1. MVP ships email + in-app only.** Rationale: iOS Web Push requires the user to Add-to-Home-Screen (Apple restriction), install rates are low, and the build cost (service worker, VAPID keys, push service, subscription mgmt) isn't justified when email already reaches 100%. Everything below about PWA/push stands as the **v1.1** plan; for MVP, wherever this doc says "push," read "in-app + email." Per-event map: `mvp/docs/notification_catalog.md`.
+
 ## Operating assumption
 
 **Desktop is where the work happens. Phone is for comms only.** Legal users (firms, legal assistants, attorneys, CSRs) do their actual work – placing orders, reviewing transcripts, managing schedules – on a computer. The phone is a notification surface for time-sensitive prompts ("a job needs your response", "your CSR canceled") and short replies. No native app is planned, ever, because there's no on-phone workflow to wrap.

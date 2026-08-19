@@ -2,6 +2,8 @@
 
 The authoritative list of **every notification the product sends**, by event/flow: trigger → who gets it → channels → stream → default → plain-English purpose. This is the input the backend + Postmark wiring implements (event → template → stream → recipient). Channel *strategy* (why push-primary, email-fallback, no SMS) lives in `../../governance-and-process/messaging_and_notifications_plan.md`; this is the per-event map.
 
+> **MVP scope (decided 2026-08-18): in-app + email only. Web Push is DEFERRED to v1.1.** iOS only delivers Web Push to home-screen-installed PWAs (Apple restriction), install rates are low, and it's real build cost — while email already reaches everyone. Where a row below says "push if installed, else email," read it for MVP as **email (+ in-app)**; the push column lights up in v1.1.
+
 ## How to read this
 
 - **Channels:** `in-app` (bell/badge in the UI, always) · `push` (Web Push, only if the user installed the PWA) · `email` (the universal fallback + record). Rule of thumb: **push if installed, else email; critical events also email as belt-and-suspenders even if push was sent.**
