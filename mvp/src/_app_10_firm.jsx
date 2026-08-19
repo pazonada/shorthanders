@@ -252,12 +252,21 @@ function SettingsPage() {
     );
   }
   const go = (id) => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); };
-  const notifs = [
-    { key: "newMessage", label: "New messages", sub: "When a firm or reporter messages you" },
-    { key: "invoicePaid", label: isReporter ? "Invoice paid" : "Payment receipts", sub: isReporter ? "When a firm pays one of your invoices" : "When a payment you made goes through" },
-    { key: "inviteAccepted", label: isReporter ? "Firm accepts your invite" : "Reporter joins from your invite", sub: "When someone you invited creates an account" },
-    { key: "weeklyDigest", label: "Weekly summary", sub: "A once-a-week recap by email" },
+  // Opt-out email notifications (default on). Payments + security are always-on and shown below, not toggleable.
+  const notifs = isReporter ? [
+    { key: "newMessage", label: "New messages", sub: "When a firm messages you" },
+    { key: "favoriteSaved", label: "Saved by a firm", sub: "When a firm saves your profile" },
+    { key: "inviteAccepted", label: "Invited firm joins", sub: "When a firm you invited creates an account" },
+    { key: "profileTips", label: "Tips & profile reminders", sub: "Occasional nudges to complete or improve your profile" },
+    { key: "productNews", label: "Product news", sub: "Occasional updates about new features" },
+  ] : [
+    { key: "newMessage", label: "New messages", sub: "When a reporter messages you" },
+    { key: "inviteAccepted", label: "Reporter joins from your invite", sub: "When a reporter you invited creates an account" },
+    { key: "productNews", label: "Product news", sub: "Occasional updates about new features" },
   ];
+  const alwaysOn = isReporter
+    ? ["Invoice, payment, and payout notifications", "Account & security alerts"]
+    : ["Invoice, receipt, and payment notifications", "Account & security alerts"];
   const nav = [
     { id: "plan", icon: "dollar", label: "Plan & billing" },
     { id: "notifications", icon: "mail", label: "Notifications" },
@@ -290,7 +299,7 @@ function SettingsPage() {
             {isFirm ? <FirmSubscription /> : <ReporterPlanCards />}
           </section>
           <section id="notifications" className="settings-card" style={{ scrollMarginTop: 88 }}>
-            {head("Notifications", "Choose what Shorthanders emails or notifies you about.")}
+            {head("Notifications", "Choose which emails you get. Payment and account alerts are always sent.")}
             <div style={{ display: "flex", flexDirection: "column" }}>
               {notifs.map((n, i) => (
                 <div key={n.key} onClick={() => store.toggleNotif(n.key)} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "16px 0", borderTop: i ? "1px solid var(--rule)" : "none", cursor: "pointer" }}>
@@ -300,6 +309,12 @@ function SettingsPage() {
                   </div>
                   <Toggle on={!!store.notifPrefs[n.key]} />
                 </div>
+              ))}
+            </div>
+            <div style={{ marginTop: 18, paddingTop: 16, borderTop: "1px solid var(--rule)" }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "var(--muted)", marginBottom: 8 }}>Always sent (can't be turned off)</div>
+              {alwaysOn.map((t) => (
+                <div key={t} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13.5, color: "var(--muted)", padding: "4px 0" }}><Icon name="lock" size={13} /> {t}</div>
               ))}
             </div>
           </section>

@@ -175,7 +175,7 @@ function StoreProvider({ children }) {
   const [invitedReporters, setInvitedReporters] = useState([]);
   const [firmPlan, setFirmPlan] = useState("free");   // 'free' | 'pro'
   const [reporterPlan, setReporterPlan] = useState("payg");   // 'payg' (pay per invoice, 5%) | 'pro' ($29/mo + 2%)
-  const [notifPrefs, setNotifPrefs] = useState({ newMessage: true, invoicePaid: true, inviteAccepted: true, weeklyDigest: false });   // Settings > Notifications toggles
+  const [notifPrefs, setNotifPrefs] = useState({ newMessage: true, favoriteSaved: true, inviteAccepted: true, profileTips: true, productNews: true });   // Settings > Notifications: opt-out toggles (default on). Always-on notifs (payments, security) aren't stored here - they can't be disabled.
   const [firmName, setFirmName] = useState("Morgan & Reyes LLP"); // demo default; set from signup
   const [firmContact, setFirmContact] = useState("Jordan Reyes"); // the person the firm account belongs to (signup "Your name"); demo default for the login persona. No firm-wide accounts yet, so every account is one person.
   // Reporters a free firm may fully view/message: the ones who invited or are connected to them.
