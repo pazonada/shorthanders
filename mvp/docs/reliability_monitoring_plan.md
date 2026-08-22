@@ -47,6 +47,29 @@ A runaway Vercel/Supabase serverless bill is its own kind of outage when the fou
 
 DB-as-source-of-truth for invoices + payments means the DB is irreplaceable. **Enable and verify Supabase backups / point-in-time recovery** before real money or accounts exist. Test a restore once.
 
+## [AMENDMENT 4] Domain reputation is a silent failure mode (shorthanders.com is COLD)
+
+Mail that gets filtered produces **no error anywhere**. Postmark reports it delivered, the app logs success, Sentry stays quiet, and the reporter simply never claims their profile. It is the same class of failure as a runaway bill: real damage, no alarm.
+
+**Observed 2026-08-22, and the reason this amendment exists.** Two messages, same Google Workspace account, same authenticated sending path, both with SPF, DKIM and DMARC passing:
+
+- from `aud@shorthanders.com` to a personal Gmail: **landed in Spam**
+- from `amd@studiocrux.com` (send-as, same account) to the same inbox: **landed in the Inbox**
+
+The only variable was the domain. studiocrux.com has years of history. **shorthanders.com was registered in mid-August 2026** (SPF/DKIM live 08-18, DMARC 08-20) and has effectively zero sending reputation. Authentication proves identity. It does not buy trust, and receivers treat a brand-new domain with suspicion no matter how clean its DNS is.
+
+**Why this is a launch risk, not a curiosity.** Transactional mail will run through **Postmark on a `notify.shorthanders.com` subdomain**. A subdomain builds its own reputation from zero and inherits a cold parent. Every launch-critical flow is an email: claim-your-profile invites, message notifications, invoice sent, payment received. If those land in spam at launch, the product looks broken and nothing in the stack will say so.
+
+**Warm the domain before launch. Start early, because this takes weeks, not hours.**
+
+- Send genuine one-to-one mail from `@shorthanders.com` addresses now, to people who reply. Replies are the strongest positive signal a receiver can see.
+- Ramp launch volume gradually. Never open with a single large blast from a cold domain.
+- Keep DMARC at `p=none` until reports look clean, then tighten to `quarantine`, then `reject`. Both shorthanders.com and studiocrux.com are at `p=none` as of 2026-08-20.
+- Keep streams separate: transactional on the `notify.` subdomain, marketing and outreach on the main domain via Workspace. A spam complaint against a marketing blast must never poison invoice receipts.
+- Research and cold outreach send from `amd@studiocrux.com`, the domain with actual history. See `project_email_outreach_and_analytics` (memory).
+
+**Make it monitored, not assumed.** Wire Postmark's bounce and spam-complaint webhooks into the same alerting path as everything else, and treat bounce rate and complaint rate as first-class metrics. Before launch, run a seed test: send each critical template to real Gmail, Yahoo, Outlook and iCloud accounts and confirm inbox placement rather than mere delivery. Re-run it after any DNS or sending-domain change.
+
 ## Critical integration flows (the things that must not silently break)
 
 - **Account creation:** sign up → Supabase account → profile → login.
@@ -105,7 +128,7 @@ This is where a solo founder gets burned (double-charges, silent missed payments
 
 ## Launch-readiness gate (go / no-go)
 
-Sentry verified (test error) · uptime monitor verified · Vercel spend limit set · Supabase auth + RLS tested · Supabase backup/restore verified · Postmark send + failure tested · Stripe test payments + **signature verification + idempotency + retry** tested · messaging E2E · message-email E2E · invoice lifecycle E2E · payment→webhook→DB→dashboard→email E2E · smoke tests run automatically · **no reporter PII on any public URL; no secrets in source** · privacy/retention documented · incident procedure exists (identify → contain → diagnose → fix → test → deploy → verify).
+Sentry verified (test error) · uptime monitor verified · Vercel spend limit set · Supabase auth + RLS tested · Supabase backup/restore verified · Postmark send + failure tested · **shorthanders.com warmed + seed-inbox test passed across Gmail/Yahoo/Outlook/iCloud; Postmark bounce + complaint webhooks wired to alerts** · Stripe test payments + **signature verification + idempotency + retry** tested · messaging E2E · message-email E2E · invoice lifecycle E2E · payment→webhook→DB→dashboard→email E2E · smoke tests run automatically · **no reporter PII on any public URL; no secrets in source** · privacy/retention documented · incident procedure exists (identify → contain → diagnose → fix → test → deploy → verify).
 
 ## What NOT to build yet
 
