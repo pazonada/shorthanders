@@ -204,9 +204,9 @@ function ForReportersPage() {
   return (
     <Page roomy>
       <MarketingHero eyebrow="For court reporters" title="Your whole business, minus the agency."
-        sub="You're already in our directory – every licensed California CSR is. Claiming your profile is free, and firms can find and message you at no cost. Use the site to invoice and get paid, and you keep far more than any agency leaves you." />
+        sub="You're already in our directory. Every licensed California CSR is listed, steno and voice. Claiming your profile is free, and firms can find and message you at no cost. Use the site to invoice and get paid, and you keep far more than any agency leaves you." />
       <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 8 }}>
-        <FeatureBlock icon="user" title="Get discovered" body="A professional profile firms find when they search by county, area of law, language, and turnaround – without building a website of your own." />
+        <FeatureBlock icon="user" title="Get discovered" body="A professional profile firms find when they search by county, area of law, language, and turnaround. Steno and voice reporters are listed the same way, and you never need a website of your own." />
         <FeatureBlock icon="message" title="Firms come to you" body="Firms message you directly through the platform. You choose who to work with, and on what terms – no agency deciding for you." />
         <FeatureBlock icon="dollar" title="No agency cut" body="Agencies take 30–50% off the top. Here there's none – just a small fee when you collect payment through the site, so you keep the rest. Your practice, your rate, your call." />
         <FeatureBlock icon="invoice" title="Invoicing in seconds" body="Create an invoice with the client, matter, and line items, and send it as a payment link. Every invoice is saved – a clean record of your whole book." />
