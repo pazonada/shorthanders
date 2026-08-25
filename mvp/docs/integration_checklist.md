@@ -116,8 +116,9 @@ Two serverless stubs already exist and fall back to demo behavior:
   wired the money would not route to them – pass it (plus the platform `application_fee_amount`) on
   the real payment link/charge, and block the first send until onboarding is verified.
 - [ ] **The platform fee** – take **5%, capped at $99 per invoice** via Connect `application_fee_amount`
-  on each payment; pick the tier from the reporter's plan. (This is the site's stated pricing –
-  see the money-comparison section + `open_strategic_decisions.md`.)
+  on each payment. One rate for everyone – there is no reporter plan to look up (Pro retired
+  2026-08-24). Compute it as `min(round(0.05 * invoice_cents), 9900)`; `application_fee_amount` is
+  an integer in cents, so $99 = 9900. (Site pricing – see `open_strategic_decisions.md`.)
 - [ ] **Default large invoices to ACH – offer BOTH, pre-select ACH at ≥ $1,000 (LEAN 2026-08-06).**
   The firm (payer) chooses card/ACH on the Stripe hosted page; the reporter does **not** hard-lock a
   method (current lean = keep both, no ACH-only restriction). Card fee (~2.9% + $0.30) is the
