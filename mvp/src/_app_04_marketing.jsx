@@ -147,7 +147,7 @@ function MoneyComparison() {
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8, flexWrap: "wrap", gap: 4 }}><span style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Through Shorthanders</span><span style={{ color: "var(--muted)" }}>Firm pays the reporter's rate</span></div>
           <Bar segments={[{ w: "95%", bg: "var(--ink)", label: "Reporter" }, { w: "5%", bg: "var(--brand)", label: "Shorthanders" }]} />
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter keeps their rate</span><span style={{ color: "var(--brand-dark)", fontWeight: 600 }}>Shorthanders takes 2% (Pro) or 5% (Free)</span></div>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter keeps their rate</span><span style={{ color: "var(--brand-dark)", fontWeight: 600 }}>Shorthanders takes 5%, capped at $99</span></div>
         </div>
       </div>
       <p style={{ textAlign: "center", color: "var(--dim)", fontSize: 12.5, marginTop: 26, lineHeight: 1.5 }}>Agency figures from a real anonymized California invoice (a 319-page arbitration transcript). On Shorthanders the reporter sets their own rate, and our small fee comes from their side – the firm never pays a platform fee. Illustrative.</p>
@@ -216,17 +216,13 @@ function ForReportersPage() {
       <section style={{ marginTop: "clamp(56px, 7vw, 88px)", background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>
         <div style={{ textAlign: "center", margin: "0 0 28px" }}>
           <h2 style={{ fontSize: "clamp(26px, 3.2vw, 40px)", lineHeight: 1.1 }}>What it costs</h2>
-          <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Getting listed and messaging firms is free. You only pay a small fee when you collect payment through the site – pay as you go, or a lower fee on Pro.</p>
+          <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Getting listed and messaging firms is free. You only pay when you collect payment through the site, and never more than $99 on any one invoice. No monthly fee, no plan to choose.</p>
         </div>
         <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
-          <PriceCard tone="brand" name="Free" price="$0" unit="/mo"
-            blurb="Get listed, get found, and message firms – all free. Get paid as you go."
-            features={["Claim your public profile", "Appear in the directory & search", "Add areas of law, coverage & rates", "Message firms directly", "Invoice & collect card / ACH payments for a small fee per transaction"]}
-            cta={["Claim your profile", "/claim"]} note="Free to list and message. Getting paid costs 5% per payment, no monthly fee. Standard Stripe fees apply." />
-          <PriceCard tone="brand" featured name="Pro" price="$29" unit="/month"
-            blurb="Everything in Free, at a lower payment fee. Best once you invoice often."
-            features={["Everything in the free plan", "2% per payment, not 5%", "The more you invoice, the more you save"]}
-            cta={["Claim your profile", "/claim"]} note="$29/month + 2% per payment. Worth it once you're collecting roughly $970+/month. Standard Stripe fees apply." />
+          <PriceCard tone="brand" featured name="Free to list" price="5%" unit=" per payment"
+            blurb="Get listed, get found, and message firms – all free. You only pay when you actually get paid."
+            features={["Claim your public profile", "Appear in the directory & search", "Add areas of law, coverage & rates", "Message firms directly", "Invoice & collect card / ACH payments", "Never more than $99 of fee on any one invoice"]}
+            cta={["Claim your profile", "/claim"]} note="No monthly fee and no plan to choose. Nothing is owed in a month you don't get paid. Standard Stripe fees apply." />
         </div>
       </section>
       <div style={{ background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 18, padding: 32, marginTop: "clamp(56px, 7vw, 88px)", textAlign: "center" }}>

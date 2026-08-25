@@ -20,7 +20,7 @@ confirm it** – the site currently shows working numbers, not decisions.
 - [ ] **What does "launch" mean?** A quiet opening to a handful of reporters is a very different
       list from a public launch. Pick one, because it changes how much of Phase 3 you actually
       need on day one. **YOU**
-- [ ] **Confirm the reporter fee.** The site currently says 2% (Pro) or 5% (Free). Are those the
+- [ ] **Confirm the reporter fee.** The site currently says 5%, capped at $99 per invoice. Are those the
       real numbers? See `open_strategic_decisions.md` and `../marketing/pro_pricing_worksheet.md`. **YOU**
 - [ ] **Confirm the Pro monthly price.** $29 has been floated, never decided. **YOU**
 - [ ] **Confirm the firm subscription price**, or decide firms launch free. **YOU**

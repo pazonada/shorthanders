@@ -40,7 +40,7 @@ engineering-support plan. Owner tags: **YOU** (decision) · **CLAUDE** (I scaffo
 ## M4 – Payments (Stripe) — ENGINEER-led  *(needs M1–M2; TEST mode until M8)*
 - [ ] **Connect onboarding gated at FIRST INVOICE**, not at claim.
 - [ ] Invoicing: real card+ACH payment links; **pass `connectedAccountId` + `application_fee_amount`
-      (2% Pro / 5% Free by plan)** – the current send call omits these.
+      (5% capped at $99 per invoice by plan)** – the current send call omits these.
 - [ ] Firm-side pay = real Stripe hosted page; invoice status from **webhooks**
       (`account.updated`, `payment_intent`/`invoice`, subscription events).
 - [ ] Subscriptions: firm **$49/user or $539/yr**, reporter Pro **$29/mo**; drive plan state. 1099-K.
@@ -103,7 +103,7 @@ Vercel serverless functions. Two-sided marketplace: **court reporters** (get pai
      (LoginModal), `_app_06_claim.jsx` (signup).
 2. **Payments — Stripe Connect — risk: money misrouted or your fee lost.** ~**6–12 h** (the meatiest).
    - Review the Connect integration: each payment routes to the right reporter's connected account
-     and takes the platform **application fee (2% Pro / 5% Free)** — the current send call
+     and takes the platform **application fee (5% capped at $99 per invoice)** — the current send call
      (`src/_app_08_invoices.jsx` → `api/pay/create-payment-link`) omits `connectedAccountId` +
      `application_fee_amount`, so as-wired the money wouldn't route or the fee wouldn't be taken.
      Also: **idempotency** (no double-charge on retries), failures/disputes, Connect onboarding

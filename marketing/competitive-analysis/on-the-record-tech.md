@@ -114,7 +114,7 @@ What is NOT visible: attorney-facing booking, statutory rate data, CA CRB integr
 - **Live product with clear pricing.** Attorneys who try to Google alternatives to agencies may encounter this before Shorthanders if they're looking for "court reporter software."
 - **Reporter trust via founder identity.** Valerie is a working CSR who built this from lived experience – same founder-credibility play as CSR Suite.
 - **Scopist/proofreader network.** If they have a functioning marketplace of scopists, they have a real supply-side community Shorthanders does not yet have.
-- **Affordable entry.** $35/month or $300/year is low friction for reporters already running their own business. Worth having the comparison ready: Shorthanders is free to claim, list, and message, and only takes a small per-payment fee when a reporter actually collects money through the platform (5% on the free tier, or 2% plus a flat $29/month on Pro) – a reporter has to weigh On The Record's flat monthly cost against Shorthanders' pay-only-when-paid model.
+- **Affordable entry.** $35/month or $300/year is low friction for reporters already running their own business. Worth having the comparison ready: Shorthanders is free to claim, list, and message, and only takes a small per-payment fee when a reporter actually collects money through the platform (5% on the free tier, or capped at $99 on any one invoice) – a reporter has to weigh On The Record's flat monthly cost against Shorthanders' pay-only-when-paid model.
 - **14-day free trial, no credit card.** A smooth, modern SaaS signup motion. Not clearly lower friction than Shorthanders, though – Shorthanders has no cost at all to claim a listing, message, or get started, so there's no upfront fee on Shorthanders' side to compare against.
 
 ---
@@ -125,7 +125,7 @@ What is NOT visible: attorney-facing booking, statutory rate data, CA CRB integr
 - **No court-hearing focus.** The workflow is built around depositions and transcript production. No evidence of public-hearing attendance, statutory rate compliance, or CA CRB verification.
 - **Geographic ambiguity.** No CA-specific compliance posture. Shorthanders' CA-specific positioning (statutory rates, CRB verification) is a meaningful differentiator for our launch window.
 - **MarketPlace is reporter-to-support-staff.** Their "MarketPlace" label could create confusion if attorneys search for it, but the product doesn't serve them. If Shorthanders gets compared to On The Record, we win on the "brings you new work" dimension immediately.
-- **Flat subscription vs. free-to-list-plus-per-payment-fee.** Shorthanders costs nothing to claim or list at all, and only charges a small fee when a reporter actually gets paid through the platform (5% on the free tier, or 2% plus a flat $29/month on Pro). For a reporter who picks up only occasional jobs, Shorthanders' pay-only-when-paid model is likely lower risk than On The Record's flat $35/month regardless of volume.
+- **Flat subscription vs. free-to-list-plus-per-payment-fee.** Shorthanders costs nothing to claim or list at all, and only charges a small fee when a reporter actually gets paid through the platform (5% on the free tier, or capped at $99 on any one invoice). For a reporter who picks up only occasional jobs, Shorthanders' pay-only-when-paid model is likely lower risk than On The Record's flat $35/month regardless of volume.
 
 ---
 
@@ -153,5 +153,5 @@ What is NOT visible: attorney-facing booking, statutory rate data, CA CRB integr
 - Does Ronak have plans to build an attorney-facing demand side? That's the natural product extension if they get enough reporter supply.
 - What is their reporter count? Any public numbers shared in press/social?
 - Do they have ambitions to become a marketplace (reporter-to-attorney), or are they committed to the practice-management lane?
-- Does their flat $35/month resonate with CA CSRs vs. Shorthanders' free-to-list model plus a per-payment fee (5% free tier, or 2% plus $29/month on Pro)? A reporter doing only a handful of jobs a year pays little to nothing on Shorthanders but a flat $35/month regardless of volume on On The Record – worth testing how that comparison lands in CSR outreach.
+- Does their flat $35/month resonate with CA CSRs vs. Shorthanders' free-to-list model plus a per-payment fee (5% free tier, or capped at $99 on any one invoice)? A reporter doing only a handful of jobs a year pays little to nothing on Shorthanders but a flat $35/month regardless of volume on On The Record – worth testing how that comparison lands in CSR outreach.
 - Are they marketing in CA specifically? Any presence at Cal-CCRA or NCRA events?

@@ -40,7 +40,7 @@ bands, or cascade (all of which the abandoned "v1" full marketplace had).
 - **Stripe's processing fee** (~2.9% card / ~0.8% ACH) is the **reporter's** cost, passed through,
   never Shorthanders'. Shorthanders' real cost ≈ **$2/mo per active Stripe Connect account**.
 - **Prices are UNSET / working numbers** (never invent – see rules). Aud floated $29 (firm sub &
-  reporter Pro) and 5%/2% fees; the site now states **"Shorthanders takes 2% (Pro) or 5% (Free)."**
+  reporter Pro) and 5%/2% fees; the site now states **"Shorthanders takes 5%, capped at $99 per invoice."**
 - Detail: `open_strategic_decisions.md` §1 · `../marketing/pro_pricing_worksheet.md` ·
   `revenue_model.xlsx` (3 tabs: Revenue model, CSR conversion, Net target).
 

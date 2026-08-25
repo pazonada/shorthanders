@@ -174,7 +174,6 @@ function StoreProvider({ children }) {
   // "Invite sent" until they claim (the flag keys off !claimed, so it clears when they sign up).
   const [invitedReporters, setInvitedReporters] = useState([]);
   const [firmPlan, setFirmPlan] = useState("free");   // 'free' | 'pro'
-  const [reporterPlan, setReporterPlan] = useState("payg");   // 'payg' (pay per invoice, 5%) | 'pro' ($29/mo + 2%)
   const [notifPrefs, setNotifPrefs] = useState({ newMessage: true, favoriteSaved: true, inviteAccepted: true, profileTips: true, productNews: true });   // Settings > Notifications: opt-out toggles (default on). Always-on notifs (payments, security) aren't stored here - they can't be disabled.
   const [firmName, setFirmName] = useState("Morgan & Reyes LLP"); // demo default; set from signup
   const [firmContact, setFirmContact] = useState("Jordan Reyes"); // the person the firm account belongs to (signup "Your name"); demo default for the login persona. No firm-wide accounts yet, so every account is one person.
@@ -194,7 +193,7 @@ function StoreProvider({ children }) {
   const [justJoined, setJustJoined] = useState(false);  // set on claim/signup finish so the dashboard greets first-timers with "Welcome" not "Welcome back"
 
   const store = {
-    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, invitedReporters, firmPlan, reporterPlan, firmName, firmContact, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, myProfile, saveMyProfile: (patch) => setMyProfile((p) => ({ ...p, ...patch })), pendingSave, pendingMessage, justJoined,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, invitedReporters, firmPlan, firmName, firmContact, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, myProfile, saveMyProfile: (patch) => setMyProfile((p) => ({ ...p, ...patch })), pendingSave, pendingMessage, justJoined,
     // Record that this firm invited an unclaimed reporter (idempotent).
     noteInvite: (id) => setInvitedReporters((xs) => xs.includes(id) ? xs : [...xs, id]),
     // A free firm searched a reporter's exact name or license number - unlock just that reporter.
@@ -210,8 +209,6 @@ function StoreProvider({ children }) {
     logout: () => setRole(null),
     upgradeFirm: () => setFirmPlan("pro"),
     downgradeFirm: () => setFirmPlan("free"),
-    upgradeReporter: () => setReporterPlan("pro"),
-    downgradeReporter: () => setReporterPlan("payg"),
     notifPrefs,
     toggleNotif: (key) => setNotifPrefs((p) => ({ ...p, [key]: !p[key] })),
     toggleSaved: (id) => setSaved((s) => s.includes(id) ? s.filter((x) => x !== id) : [...s, id]),

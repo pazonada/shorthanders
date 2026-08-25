@@ -7,6 +7,21 @@ what's still open. Update as decisions land.
 **Status legend:** DECIDED · LEANING (a recommendation, not yet confirmed by Aud) ·
 OPEN · TO-DO (an action, often needing an outside expert).
 
+
+## DECIDED 2026-08-24 — reporter Pro tier retired; one plan, 5% capped at $99 per invoice
+
+**The reporter side has one plan: free to list, 5% when you actually get paid, and the fee never exceeds $99 on any single invoice.** The $29/month + 2% Pro tier is retired (deferred, not deleted).
+
+Why:
+- **Remove the decision.** The immediate goal is getting reporters onto the platform at all. An upgrade choice is friction on the one path that matters, and "no plan to choose" is a simpler pitch than any two-tier table.
+- **Pro earned less, not more.** Above ~$970/mo of collections a reporter should rationally switch to Pro, and above that point Shorthanders earns *less* per dollar than on free (at $3,000/mo: $150 free vs $89 Pro). The discount tier cannibalised exactly the accounts that route the most money.
+- **The cap does Pro's job better.** Leakage risk is concentrated in large invoices, where the absolute fee becomes shocking (5% of $10,000 = $500 and that reporter sends a PDF and takes a check instead). A per-invoice cap targets that directly. It starts binding at an invoice of $1,980.
+- **Scope.** No reporter-side subscription billing to build in Phase 3, on the riskiest part of the build.
+- **Honest caveat:** if typical CA deposition invoices run under ~$2,000, the cap rarely binds. It is a generous-sounding promise that costs little. Revisit once real invoice-size data exists.
+- Competitor check: **free to list is table stakes** across the segment (StenoScout, CourtReporters.com, eCourt Reporters). StenoScout's $79/mo is *Featured placement*, not listing — the validated willingness-to-pay here is **promotion, not presence**. That is the shape any future paid reporter tier should take.
+
+Firm pricing is unchanged: free tier, or $49/user/month ($539/yr).
+
 ## Settled anchors (context)
 - Shorthanders is a **neutral directory + messaging + payment facilitator** – never a
   party to the firm↔reporter agreement. Governs the whole liability posture.
@@ -41,7 +56,7 @@ already public, and (b) firms default to agencies unless they hire direct?
   - **Base fee (pay-per-invoice)** – the higher per-payment fee, no monthly cost. Best for
     part-timers, who pay nothing in months they don't bill through us.
   - **Pro (flat monthly + a lower per-payment fee)** – for heavier billers, the flat fee plus
-    a reduced cut beats the base fee. Working numbers ~5% base / ~2% Pro (not final).
+    a reduced cut beats the base fee. Working numbers 5% capped at $99 per invoice (Pro tier retired 2026-08-24).
   - **Two-tier fee DECIDED 2026-07-20:** Pro **reduces** the fee, it does **not waive** it –
     so the per-payment fee scales with total volume across *all* reporters instead of being
     capped, and Pro users pay the sub AND a smaller fee. This **reverses the earlier

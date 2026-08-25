@@ -24,7 +24,7 @@ Built 2026-08-04 from the individual profiles in this folder. Prices are working
 
 | Player | Type | Scope | Reporters pre-loaded? | On-site payment? | Messaging? | Pricing (who pays) |
 |---|---|---|---|---|---|---|
-| **Shorthanders** | Directory + messaging + payment rail | **Statewide (CA → IL)** | **✓ all ~5,700 CA licensees, seeded from public CRB data** | **✓ card/ACH + invoicing** | **✓** | Firms: subscription ($49/user, working). Reporters: **free to list**, per-payment fee **only when paid** (5% / 2% Pro + $29/mo, working). **No firm transaction fee.** |
+| **Shorthanders** | Directory + messaging + payment rail | **Statewide (CA → IL)** | **✓ all ~5,700 CA licensees, seeded from public CRB data** | **✓ card/ACH + invoicing** | **✓** | Firms: subscription ($49/user, working). Reporters: **free to list**, per-payment fee **only when paid** (5%, capped at $99 per invoice – working). **No firm transaction fee.** |
 | Steno | Full-service agency | National | ✗ – ICs pick jobs from Steno's marketplace; **Steno owns the client** | ✓ (as the agency) | ✓ | Agency markup on the job + financing (DelayPay); firms pay |
 | eCourt Reporters | Transaction marketplace | National | ✗ – claim-only, not seeded | **✓** (messaging + payments) | ✓ | **%-of-invoice both sides**: attorneys **10%**, reporters **5%** self-produced / up to **20%** if eCourt produces the transcript; free to list *(verify)* |
 | AppearMe | On-demand dispatch (generalist legal; reporters are one category) | National | ✗ – register; real-time first-accept | ✓ (automated through payment) | ✓ | Transaction fee (dispatch) *(verify specifics)* |

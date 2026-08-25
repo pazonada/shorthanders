@@ -115,7 +115,7 @@ Two serverless stubs already exist and fall back to demo behavior:
   Note the frontend send call currently does **not** pass the reporter's `connectedAccountId`, so as
   wired the money would not route to them – pass it (plus the platform `application_fee_amount`) on
   the real payment link/charge, and block the first send until onboarding is verified.
-- [ ] **The platform fee** – take **2% (Pro) / 5% (Free)** via Connect `application_fee_amount`
+- [ ] **The platform fee** – take **5%, capped at $99 per invoice** via Connect `application_fee_amount`
   on each payment; pick the tier from the reporter's plan. (This is the site's stated pricing –
   see the money-comparison section + `open_strategic_decisions.md`.)
 - [ ] **Default large invoices to ACH – offer BOTH, pre-select ACH at ≥ $1,000 (LEAN 2026-08-06).**

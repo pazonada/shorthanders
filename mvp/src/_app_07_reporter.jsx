@@ -393,32 +393,14 @@ function ReporterPayments({ invoices, paidThisMonth }) {
   );
 }
 
-// The reporter's plan chooser (pay-per-invoice vs Pro). Lives in Settings now, not the dashboard.
-// Current plan is outlined; the switch button sits on the OTHER card - same pattern as the firm's.
+// The reporter's plan, shown in Settings. There is only one plan now - free to list, 5% when you
+// actually get paid, capped at $99 on any single invoice - so there is nothing to choose or upgrade.
 function ReporterPlanCards() {
-  const store = useStore();
-  const isPro = store.reporterPlan === "pro";
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12, alignItems: "stretch" }}>
-      {/* Each panel is header-group + button as two flex children, with a generous gap (28) between
-          them - so the button always has clear room above it (min 28, more when the panel stretches),
-          while the header and description stay tight (10). */}
-      <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 28, ...(!isPro ? { border: "2px solid var(--ink)" } : null) }}>
-        <div>
-          <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice{!isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
-          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, marginTop: 12 }}>5%<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}> per payment</span></div>
-          <p style={{ fontSize: 13.5, color: "var(--muted)", margin: "10px 0 0", lineHeight: 1.55 }}>No monthly cost. Best if you invoice occasionally.</p>
-        </div>
-        {isPro && <button className="btn btn-secondary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.downgradeReporter()}>Switch to pay-per-invoice</button>}
-      </div>
-      <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 28, ...(isPro ? { border: "2px solid var(--ink)" } : null) }}>
-        <div>
-          <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pro{isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
-          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, marginTop: 12 }}>$29<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}>/month + 2% per payment</span></div>
-          <p style={{ fontSize: 13.5, color: "var(--muted)", margin: "10px 0 0", lineHeight: 1.55 }}>A lower per-payment fee. Best once you invoice often or in large amounts.</p>
-        </div>
-        {!isPro && <button className="btn btn-primary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.upgradeReporter()}><Icon name="arrow" size={16} /> Switch to Pro</button>}
-      </div>
+    <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pay when you get paid</span>
+      <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1 }}>5%<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}> per payment, capped at $99 per invoice</span></div>
+      <p style={{ fontSize: 13.5, color: "var(--muted)", margin: 0, lineHeight: 1.55 }}>No monthly fee. Listing, messaging, and invoicing are free, and nothing is owed in a month you don't get paid. On a large invoice the fee never goes above $99. Standard Stripe fees apply.</p>
     </div>
   );
 }

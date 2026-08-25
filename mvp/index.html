@@ -3390,7 +3390,7 @@ function MoneyComparison() {
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8, flexWrap: "wrap", gap: 4 }}><span style={{ fontWeight: 700, color: "var(--brand-dark)" }}>Through Shorthanders</span><span style={{ color: "var(--muted)" }}>Firm pays the reporter's rate</span></div>
           <Bar segments={[{ w: "95%", bg: "var(--ink)", label: "Reporter" }, { w: "5%", bg: "var(--brand)", label: "Shorthanders" }]} />
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter keeps their rate</span><span style={{ color: "var(--brand-dark)", fontWeight: 600 }}>Shorthanders takes 2% (Pro) or 5% (Free)</span></div>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 8, color: "var(--muted)", flexWrap: "wrap", gap: 4 }}><span>Reporter keeps their rate</span><span style={{ color: "var(--brand-dark)", fontWeight: 600 }}>Shorthanders takes 5%, capped at $99</span></div>
         </div>
       </div>
       <p style={{ textAlign: "center", color: "var(--dim)", fontSize: 12.5, marginTop: 26, lineHeight: 1.5 }}>Agency figures from a real anonymized California invoice (a 319-page arbitration transcript). On Shorthanders the reporter sets their own rate, and our small fee comes from their side – the firm never pays a platform fee. Illustrative.</p>
@@ -3459,17 +3459,13 @@ function ForReportersPage() {
       <section style={{ marginTop: "clamp(56px, 7vw, 88px)", background: "#F1F5F9", border: "1px solid var(--rule-strong)", borderRadius: 20, padding: "clamp(40px, 5vw, 60px) clamp(16px, 2vw, 24px)" }}>
         <div style={{ textAlign: "center", margin: "0 0 28px" }}>
           <h2 style={{ fontSize: "clamp(26px, 3.2vw, 40px)", lineHeight: 1.1 }}>What it costs</h2>
-          <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Getting listed and messaging firms is free. You only pay a small fee when you collect payment through the site – pay as you go, or a lower fee on Pro.</p>
+          <p style={{ fontSize: 17, color: "var(--ink-soft)", marginTop: 12, lineHeight: 1.6 }}>Getting listed and messaging firms is free. You only pay when you collect payment through the site, and never more than $99 on any one invoice. No monthly fee, no plan to choose.</p>
         </div>
         <div className="ds-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
-          <PriceCard tone="brand" name="Free" price="$0" unit="/mo"
-            blurb="Get listed, get found, and message firms – all free. Get paid as you go."
-            features={["Claim your public profile", "Appear in the directory & search", "Add areas of law, coverage & rates", "Message firms directly", "Invoice & collect card / ACH payments for a small fee per transaction"]}
-            cta={["Claim your profile", "/claim"]} note="Free to list and message. Getting paid costs 5% per payment, no monthly fee. Standard Stripe fees apply." />
-          <PriceCard tone="brand" featured name="Pro" price="$29" unit="/month"
-            blurb="Everything in Free, at a lower payment fee. Best once you invoice often."
-            features={["Everything in the free plan", "2% per payment, not 5%", "The more you invoice, the more you save"]}
-            cta={["Claim your profile", "/claim"]} note="$29/month + 2% per payment. Worth it once you're collecting roughly $970+/month. Standard Stripe fees apply." />
+          <PriceCard tone="brand" featured name="Free to list" price="5%" unit=" per payment"
+            blurb="Get listed, get found, and message firms – all free. You only pay when you actually get paid."
+            features={["Claim your public profile", "Appear in the directory & search", "Add areas of law, coverage & rates", "Message firms directly", "Invoice & collect card / ACH payments", "Never more than $99 of fee on any one invoice"]}
+            cta={["Claim your profile", "/claim"]} note="No monthly fee and no plan to choose. Nothing is owed in a month you don't get paid. Standard Stripe fees apply." />
         </div>
       </section>
       <div style={{ background: "var(--brand-soft)", border: "1px solid var(--brand-pale)", borderRadius: 18, padding: 32, marginTop: "clamp(56px, 7vw, 88px)", textAlign: "center" }}>
@@ -5152,32 +5148,14 @@ function ReporterPayments({ invoices, paidThisMonth }) {
   );
 }
 
-// The reporter's plan chooser (pay-per-invoice vs Pro). Lives in Settings now, not the dashboard.
-// Current plan is outlined; the switch button sits on the OTHER card - same pattern as the firm's.
+// The reporter's plan, shown in Settings. There is only one plan now - free to list, 5% when you
+// actually get paid, capped at $99 on any single invoice - so there is nothing to choose or upgrade.
 function ReporterPlanCards() {
-  const store = useStore();
-  const isPro = store.reporterPlan === "pro";
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12, alignItems: "stretch" }}>
-      {/* Each panel is header-group + button as two flex children, with a generous gap (28) between
-          them - so the button always has clear room above it (min 28, more when the panel stretches),
-          while the header and description stay tight (10). */}
-      <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 28, ...(!isPro ? { border: "2px solid var(--ink)" } : null) }}>
-        <div>
-          <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pay per invoice{!isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
-          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, marginTop: 12 }}>5%<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}> per payment</span></div>
-          <p style={{ fontSize: 13.5, color: "var(--muted)", margin: "10px 0 0", lineHeight: 1.55 }}>No monthly cost. Best if you invoice occasionally.</p>
-        </div>
-        {isPro && <button className="btn btn-secondary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.downgradeReporter()}>Switch to pay-per-invoice</button>}
-      </div>
-      <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 28, ...(isPro ? { border: "2px solid var(--ink)" } : null) }}>
-        <div>
-          <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pro{isPro && <span className="pill pill-tag" style={{ marginLeft: 6 }}>Current</span>}</span>
-          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1, marginTop: 12 }}>$29<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}>/month + 2% per payment</span></div>
-          <p style={{ fontSize: 13.5, color: "var(--muted)", margin: "10px 0 0", lineHeight: 1.55 }}>A lower per-payment fee. Best once you invoice often or in large amounts.</p>
-        </div>
-        {!isPro && <button className="btn btn-primary" style={{ marginTop: "auto", justifyContent: "center" }} onClick={() => store.upgradeReporter()}><Icon name="arrow" size={16} /> Switch to Pro</button>}
-      </div>
+    <div className="ds-panel" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <span style={{ fontWeight: 700, color: "var(--ink)" }}>Pay when you get paid</span>
+      <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: "var(--ink)", lineHeight: 1 }}>5%<span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12.5, color: "var(--muted)", fontWeight: 400 }}> per payment, capped at $99 per invoice</span></div>
+      <p style={{ fontSize: 13.5, color: "var(--muted)", margin: 0, lineHeight: 1.55 }}>No monthly fee. Listing, messaging, and invoicing are free, and nothing is owed in a month you don't get paid. On a large invoice the fee never goes above $99. Standard Stripe fees apply.</p>
     </div>
   );
 }
@@ -6470,7 +6448,6 @@ function StoreProvider({ children }) {
   // "Invite sent" until they claim (the flag keys off !claimed, so it clears when they sign up).
   const [invitedReporters, setInvitedReporters] = useState([]);
   const [firmPlan, setFirmPlan] = useState("free");   // 'free' | 'pro'
-  const [reporterPlan, setReporterPlan] = useState("payg");   // 'payg' (pay per invoice, 5%) | 'pro' ($29/mo + 2%)
   const [notifPrefs, setNotifPrefs] = useState({ newMessage: true, favoriteSaved: true, inviteAccepted: true, profileTips: true, productNews: true });   // Settings > Notifications: opt-out toggles (default on). Always-on notifs (payments, security) aren't stored here - they can't be disabled.
   const [firmName, setFirmName] = useState("Morgan & Reyes LLP"); // demo default; set from signup
   const [firmContact, setFirmContact] = useState("Jordan Reyes"); // the person the firm account belongs to (signup "Your name"); demo default for the login persona. No firm-wide accounts yet, so every account is one person.
@@ -6490,7 +6467,7 @@ function StoreProvider({ children }) {
   const [justJoined, setJustJoined] = useState(false);  // set on claim/signup finish so the dashboard greets first-timers with "Welcome" not "Welcome back"
 
   const store = {
-    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, invitedReporters, firmPlan, reporterPlan, firmName, firmContact, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, myProfile, saveMyProfile: (patch) => setMyProfile((p) => ({ ...p, ...patch })), pendingSave, pendingMessage, justJoined,
+    role, myCsr, saved, convos, invoices, paymentRequests, customTemplates, invitedFirms, invitedReporters, firmPlan, firmName, firmContact, unlockedReporters, directUnlocked, myAccepting, setMyAccepting, myProfile, saveMyProfile: (patch) => setMyProfile((p) => ({ ...p, ...patch })), pendingSave, pendingMessage, justJoined,
     // Record that this firm invited an unclaimed reporter (idempotent).
     noteInvite: (id) => setInvitedReporters((xs) => xs.includes(id) ? xs : [...xs, id]),
     // A free firm searched a reporter's exact name or license number - unlock just that reporter.
@@ -6506,8 +6483,6 @@ function StoreProvider({ children }) {
     logout: () => setRole(null),
     upgradeFirm: () => setFirmPlan("pro"),
     downgradeFirm: () => setFirmPlan("free"),
-    upgradeReporter: () => setReporterPlan("pro"),
-    downgradeReporter: () => setReporterPlan("payg"),
     notifPrefs,
     toggleNotif: (key) => setNotifPrefs((p) => ({ ...p, [key]: !p[key] })),
     toggleSaved: (id) => setSaved((s) => s.includes(id) ? s.filter((x) => x !== id) : [...s, id]),
